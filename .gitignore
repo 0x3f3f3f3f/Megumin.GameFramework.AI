@@ -14,7 +14,6 @@ ExportedObj/
 .consulo/
 Remote/Properties/PublishProfiles/
 packages/
-!UnityPackage/Packages
 
 # 2021年5月9日
 
@@ -81,7 +80,7 @@ sysinfo.txt
 
 UnityAI/*.csproj
 UnityAI/*.sln
-
+!UnityAI/Packages
 
 
 
