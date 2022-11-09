@@ -6,5 +6,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class Controller
     {
+        public BehaviorTree BehaviorTree { get; set; }
+        public object Controlled { get; set; }
     }
 }
