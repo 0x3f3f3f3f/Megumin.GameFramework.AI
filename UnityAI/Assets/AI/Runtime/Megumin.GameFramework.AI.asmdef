@@ -1,0 +1,14 @@
+{
+    "name": "Megumin.GameFramework.AI",
+    "rootNamespace": "Megumin.GameFramework.AI",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

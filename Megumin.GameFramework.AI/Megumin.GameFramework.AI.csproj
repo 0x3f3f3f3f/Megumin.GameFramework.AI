@@ -12,9 +12,9 @@
     <!--包配置-->
     <Product>MeguminAI</Product>
     <!--指定生成的包的名称。 如果未指定，pack 操作将默认使用 AssemblyName 或目录名称作为包的名称。-->
-    <PackageId>Megumin.AI</PackageId>
-    <AssemblyName>Megumin.AI</AssemblyName>
-    <RootNamespace>Megumin.AI</RootNamespace>
+    <PackageId>Megumin.GameFramework.AI</PackageId>
+    <AssemblyName>Megumin.GameFramework.AI</AssemblyName>
+    <RootNamespace>Megumin.GameFramework.AI</RootNamespace>
     <PackageTags>net,dotnetstandard2.1,unity</PackageTags>
     <Description>游戏AI模块</Description>
     <RepositoryUrl>https://github.com/KumoKyaku/Megumin.Net</RepositoryUrl>

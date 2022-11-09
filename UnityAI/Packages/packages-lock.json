@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.settings-manager": "1.0.3"
       },
-      "hash": "baf02e825705a8625a3df3314316954801473b2b"
+      "hash": "a00b0557d4409a38d80f4a873ef41a41a176c77a"
     },
     "com.unity.burst": {
       "version": "1.7.3",
