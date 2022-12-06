@@ -60,8 +60,9 @@ namespace Megumin.Binding
         public string Key;
         public bool IsBinding;
         public string BindingString;
-
         public int DefaultValue;
+        public GameObject extnalObj;
+        public int xOffset = 0, yOffset = 0;
 
         BindResult ParseResult = BindResult.None;
         Func<int> Getter;
@@ -94,37 +95,49 @@ namespace Megumin.Binding
             {
                 var path = BindingString.Split('/');
                 GameObject gameObject = agent as GameObject;
+                if (extnalObj)
+                {
+                    gameObject = extnalObj;
+                }
 
-                var type = GetCompnentType(path[0]);
-
-                var comp = gameObject.GetComponentInChildren(type);
+                object instance = GetBindInstance(path[0], gameObject);
 
                 {
                     //≥¢ ‘∞Û∂®propertyInfo
-                    var propertyInfo = comp.GetType().GetProperty(path[1]);
+                    var propertyInfo = instance.GetType().GetProperty(path[1]);
                     if (propertyInfo.CanRead)
                     {
                         var getMethod = propertyInfo.GetGetMethod();
-                        Getter = (Func<int>)Delegate.CreateDelegate(typeof(Func<int>), comp, getMethod);
+                        Getter = (Func<int>)Delegate.CreateDelegate(typeof(Func<int>), instance, getMethod);
                         ParseResult |= BindResult.Get;
                     }
 
                     if (propertyInfo.CanWrite)
                     {
                         var setMethod = propertyInfo.GetSetMethod();
-                        Setter = (Action<int>)Delegate.CreateDelegate(typeof(Action<int>), comp, setMethod);
+                        Setter = (Action<int>)Delegate.CreateDelegate(typeof(Action<int>), instance, setMethod);
                         ParseResult |= BindResult.Set;
                     }
                 }
 
                 {
                     //≥¢ ‘∞Û∂®field
-                    var fieldInfo = comp.GetType().GetField(path[1]);
+                    var fieldInfo = instance.GetType().GetField(path[1]);
 
                 }
-
-
             }
+        }
+
+        private static object GetBindInstance(string compName, GameObject gameObject)
+        {
+            if (compName == "UnityEngine.GameObject")
+            {
+                return gameObject;
+            }
+
+            var type = GetCompnentType(compName);
+            var comp = gameObject.GetComponentInChildren(type);
+            return comp;
         }
 
         [Flags]

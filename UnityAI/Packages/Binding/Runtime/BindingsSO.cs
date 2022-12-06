@@ -11,6 +11,7 @@ namespace Megumin.Binding
         public IData<GameObject> MyGameObject;
 
         public BindableIntValue BindInt;
+        public BindableIntValue BindInt22;
         public string BindStr;
 
 

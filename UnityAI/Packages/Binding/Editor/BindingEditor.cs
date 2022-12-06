@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using static Megumin.Binding.Editor.BindingEditor;
+using static UnityEditor.Progress;
 
 namespace Megumin.Binding.Editor
 {
@@ -24,19 +26,27 @@ namespace Megumin.Binding.Editor
                 if (ms is List<MemberInfo> members)
                 {
                     string str = "";
-                    foreach (var item in members)
+
+                    
+                    for (int i = 0; i < members.Count; i++)
                     {
+                        var item = members[i];   
                         if (item is TypeInfo typeInfo)
                         {
                             str += $"{typeInfo.FullName}/";
                         }
                         else
                         {
-                            str += $"{item.Name}/";
+                            if (i == members.Count - 1)
+                            {
+                                str += $"{item.Name}";
+                            }
+                            else
+                            {
+                                str += $"{item.Name}/";
+                            }
                         }
-
                     }
-                    str = str.TrimEnd('/');
                     source.SetResult(str);
                 }
             };
@@ -75,16 +85,16 @@ namespace Megumin.Binding.Editor
                 {
                     List<MemberInfo> members = new List<MemberInfo>();
                     members.Add(type);
-                    members.Add(member);
+                    members.Add(member.Member);
 
                     var FirstC = type.Name[0].ToString().ToUpper();
-                    if (member.DeclaringType == type)
+                    if (member.Member.DeclaringType == type)
                     {
-                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/{member.Name}"), false, func, members);
+                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{member.ValueType.Name}]"), false, func, members);
                     }
                     else
                     {
-                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name}"), false, func, members);
+                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{member.ValueType.Name}]"), false, func, members);
                     }
                 }
             }
@@ -97,12 +107,24 @@ namespace Megumin.Binding.Editor
             public List<MemberInfo> Members { get; internal set; }
         }
 
-        public static IEnumerable<MemberInfo> GetMembers(Type type, Type matchType)
+        public class MyMember
         {
-            var fields = type.GetFields().Where(f => matchType.IsAssignableFrom(f.FieldType)).Cast<MemberInfo>();
-            var propertie = type.GetProperties().Where(f => matchType.IsAssignableFrom(f.PropertyType)).Cast<MemberInfo>();
+            public string Name { get; internal set; }
+            public MemberInfo Member { get; internal set; }
+            public Type ValueType { get; internal set; }
+        }
+
+        public static IOrderedEnumerable<MyMember> GetMembers(Type type, Type matchType)
+        {
+            var fields = type.GetFields().Where(f => matchType.IsAssignableFrom(f.FieldType));
+            var allf = from f in fields
+                       select new MyMember() { Name = f.Name, Member = f , ValueType = f.FieldType};
+            var propertie = type.GetProperties().Where(f => matchType.IsAssignableFrom(f.PropertyType));
+
+            var  allPorp = from p in propertie
+                           select new MyMember() { Name = p.Name, Member = p, ValueType = p.PropertyType };
             //var methods = type.GetMethods().Where(MatchMethod<T>).Cast<MemberInfo>();
-            return fields.Concat(propertie).OrderBy(m => m.Name)/*.Concat(methods)*/;
+            return allf.Concat(allPorp).OrderBy(m => m.Name)/*.Concat(methods)*/;
         }
 
         public static bool MatchMethod(MethodInfo method, Type matchType)

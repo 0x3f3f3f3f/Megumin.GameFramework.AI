@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -405,76 +405,242 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1052252144
-GameObject:
+--- !u!1001 &8049335968415055142
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1052252145}
-  - component: {fileID: 1052252146}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1052252145
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052252144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1052252146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052252144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ebcdbad0d784346b86be1322ff6066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TestSO: {fileID: 11400000, guid: 60ffa9e55b58b7548af1fb4e2965a036, type: 2}
-  IBindables:
-  - rid: 7949862816670547968
-  - rid: 7949862816670547969
-  - rid: 7949862816670547971
-  references:
-    version: 2
-    RefIds:
-    - rid: 7949862816670547968
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
-      data:
-        Key: TestBindingInt
-        IsBinding: 1
-        BindingString: Transform/Position/x
-        Value: 
-    - rid: 7949862816670547969
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
-      data:
-        Key: MyStrName
-        IsBinding: 0
-        BindingString: 
-        Value: 
-    - rid: 7949862816670547971
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
-      data:
-        Key: MyGameObject
-        IsBinding: 0
-        BindingString: 
-        Value: 
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int11.Key
+      value: Megumin.DebugMeshData/DataTypeParam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int22.Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int11.xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int11.yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int11.extnalObj
+      value: 
+      objectReference: {fileID: 330585543}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int11.BindingString
+      value: UnityEngine.UI.Image/depth
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: Int22.BindingString
+      value: Megumin.DebugMeshData/DataTypeParam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: IBindables.Array.data[0]
+      value: 7949862841862062080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: IBindables.Array.data[1]
+      value: 7949862841862062081
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: IBindables.Array.data[2]
+      value: 7949862841862062082
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080]
+      value: Megumin.Binding Megumin.Binding.BindableIntValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081]
+      value: Megumin.Binding Megumin.Binding.BindableIntValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082]
+      value: Megumin.Binding Megumin.Binding.BindableIntValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].DefaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].DefaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].DefaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062080].BindingString
+      value: UnityEngine.UI.MaskableGraphic/depth
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062081].BindingString
+      value: UnityEngine.Terrain/groupingID
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949862841862062082].BindingString
+      value: TMPro.TextMeshProUGUI/depth
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_Name
+      value: GameObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993303, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d729452bea648e24f99d9f6826e71053, type: 3}
