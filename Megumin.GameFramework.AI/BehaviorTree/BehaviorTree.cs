@@ -9,5 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public object Agent { get; set; }
         public static object GlobalAgent { get; set; }
         public Controller Controller { get; set; }
+
+        public Task RootTask { get; set; }
     }
 }

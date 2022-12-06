@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -405,3 +405,76 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1052252144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052252145}
+  - component: {fileID: 1052252146}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1052252145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052252144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1052252146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052252144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ebcdbad0d784346b86be1322ff6066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestSO: {fileID: 11400000, guid: 60ffa9e55b58b7548af1fb4e2965a036, type: 2}
+  IBindables:
+  - rid: 7949862816670547968
+  - rid: 7949862816670547969
+  - rid: 7949862816670547971
+  references:
+    version: 2
+    RefIds:
+    - rid: 7949862816670547968
+      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
+      data:
+        Key: TestBindingInt
+        IsBinding: 1
+        BindingString: Transform/Position/x
+        Value: 
+    - rid: 7949862816670547969
+      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
+      data:
+        Key: MyStrName
+        IsBinding: 0
+        BindingString: 
+        Value: 
+    - rid: 7949862816670547971
+      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
+      data:
+        Key: MyGameObject
+        IsBinding: 0
+        BindingString: 
+        Value: 

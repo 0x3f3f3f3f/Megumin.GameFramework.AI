@@ -1,13 +1,18 @@
 {
   "dependencies": {
-    "com.megumin.explosion4unity": {
-      "version": "https://github.com/KumoKyaku/Megumin.Explosion.git?path=Megumin.UnityPackage/Packages/megumin.explosion4unity",
+    "com.megumin.binding": {
+      "version": "file:Binding",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.megumin.explosion4unity": {
+      "version": "file:W:/Git/Megumin.Explosion/Megumin.UnityPackage/Packages/megumin.explosion4unity",
+      "depth": 0,
+      "source": "local",
       "dependencies": {
         "com.unity.settings-manager": "1.0.3"
-      },
-      "hash": "a00b0557d4409a38d80f4a873ef41a41a176c77a"
+      }
     },
     "com.unity.burst": {
       "version": "1.7.3",
