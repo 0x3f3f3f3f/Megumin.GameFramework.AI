@@ -17,4 +17,15 @@ MonoBehaviour:
     IsBinding: 0
     BindingString: UnityEngine.GameObject/layer
     DefaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  BindInt22:
+    Key: 
+    IsBinding: 0
+    BindingString: UnityEngine.EventSystems.BaseInput/touchCount
+    DefaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
   BindStr: UnityEngine.GameObject/layer

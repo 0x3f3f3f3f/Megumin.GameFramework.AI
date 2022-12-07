@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Reflection;
 using System.Linq;
+using static Megumin.Binding.BindableIntValue;
 
 namespace Megumin.Binding
 {
@@ -51,24 +52,26 @@ namespace Megumin.Binding
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Serializable]
-    public class BindableIntValue
+    public class TestG<T> : IData<T> 
+    {
+        public T mValue;
+        public T Value { get; set; }
+    }
+
+    [Serializable]
+    public class BindableValue<T>
     {
         public string Key;
         public bool IsBinding;
         public string BindingString;
-        public int DefaultValue;
+        public T DefaultValue;
         public GameObject extnalObj;
         public int xOffset = 0, yOffset = 0;
-
-        BindResult ParseResult = BindResult.None;
-        Func<int> Getter;
-        Action<int> Setter;
-
-        public int Value
+        protected BindResult ParseResult = BindResult.None;
+        protected Func<T> Getter;
+        protected Action<T> Setter;
+        public T Value
         {
             get { return (Getter != null ? Getter() : DefaultValue); }
             set
@@ -83,6 +86,15 @@ namespace Megumin.Binding
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class BindableIntValue: BindableValue<int>
+    {
+
 
         public void InitializeBinding(object agent)
         {

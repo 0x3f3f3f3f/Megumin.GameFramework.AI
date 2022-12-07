@@ -424,6 +424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
+      propertyPath: G111.mValue
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
       propertyPath: Int11.xOffset
       value: 0
       objectReference: {fileID: 0}
@@ -439,13 +444,33 @@ PrefabInstance:
       objectReference: {fileID: 330585543}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
+      propertyPath: G111.DefaultValue
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: G111.BindingString
+      value: UnityEngine.EventSystems.BaseInput/touchCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
       propertyPath: Int11.BindingString
-      value: UnityEngine.UI.Image/depth
+      value: UnityEngine.EventSystems.BaseInput/touchCount
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: Int22.BindingString
       value: Megumin.DebugMeshData/DataTypeParam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: GString222.DefaultValue
+      value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: GString222.BindingString
+      value: test
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
@@ -570,17 +595,17 @@ PrefabInstance:
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: managedReferences[7949862841862062080].BindingString
-      value: UnityEngine.UI.MaskableGraphic/depth
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: managedReferences[7949862841862062081].BindingString
-      value: UnityEngine.Terrain/groupingID
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993300, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: managedReferences[7949862841862062082].BindingString
-      value: TMPro.TextMeshProUGUI/depth
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}

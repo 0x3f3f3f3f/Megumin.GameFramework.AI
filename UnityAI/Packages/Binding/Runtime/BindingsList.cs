@@ -12,7 +12,10 @@ namespace Megumin.Binding
         public SerializeValue Test11;
         public BindableIntValue Int11;
         public BindableIntValue Int22;
-
+        public BindableValue<int> G111;
+        public BindableValue<string> GString222;
+        //[SerializeReference]
+        //public IData G222 = new TestG<int>();
         [SerializeReference]
         public List<BindableIntValue> IBindables=new List<BindableIntValue>();
 

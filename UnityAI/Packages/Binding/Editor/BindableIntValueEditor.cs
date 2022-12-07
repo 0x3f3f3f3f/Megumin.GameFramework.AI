@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Megumin.Binding.Editor
 {
+    [CustomPropertyDrawer(typeof(BindableValue<>), true)]
     [CustomPropertyDrawer(typeof(BindableIntValue))]
     public class BindableIntValueEditor : PropertyDrawer
     {
@@ -29,7 +30,7 @@ namespace Megumin.Binding.Editor
                 int xo = xoffset.intValue;
                 var yoffset = property.FindPropertyRelative("yOffset");
                 int yo = yoffset.intValue;
-                if (results.TryGetValue(property.propertyPath,out var str))
+                if (results.TryGetValue(property.propertyPath, out var str))
                 {
                     results.Remove(property.propertyPath);
                     bindp.stringValue = str;
@@ -51,7 +52,7 @@ namespace Megumin.Binding.Editor
 
         }
 
-        Dictionary<string,string> results = new Dictionary<string,string>();
+        Dictionary<string, string> results = new Dictionary<string, string>();
         private async void NewMethod(string propertyPath)
         {
             var str = await BindingEditor.GetBindStr<int>();
