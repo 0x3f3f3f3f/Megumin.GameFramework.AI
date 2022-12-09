@@ -30,11 +30,11 @@ namespace Megumin.Binding.Editor
                 int xo = xoffset.intValue;
                 var yoffset = property.FindPropertyRelative("yOffset");
                 int yo = yoffset.intValue;
-                if (results.TryGetValue(property.propertyPath, out var str))
-                {
-                    results.Remove(property.propertyPath);
-                    bindp.stringValue = str;
-                }
+                //if (results.TryGetValue(property.propertyPath, out var str))
+                //{
+                //    results.Remove(property.propertyPath);
+                //    bindp.stringValue = str;
+                //}
                 var test = property.FindPropertyRelative("Key");
 
                 //Rect rect = GUILayoutUtility.GetLastRect();
@@ -43,20 +43,20 @@ namespace Megumin.Binding.Editor
                 //EditorGUI.DrawRect(rect, Color.green);
                 if (property.isExpanded)
                 {
-                    if (GUILayout.Button($"{property.propertyPath}_Bind"))
+                    //if (GUILayout.Button($"{property.propertyPath}_Bind"))
+                    //{
+                    //    NewMethod(property.propertyPath);
+                    //}
+
+                    if (bindp.GetBindintString(GUILayout.Button($"{bindp.propertyPath}_Bind"), out var res))
                     {
-                        NewMethod(property.propertyPath);
+                        bindp.stringValue = res;
                     }
                 }
             }
 
         }
 
-        Dictionary<string, string> results = new Dictionary<string, string>();
-        private async void NewMethod(string propertyPath)
-        {
-            var str = await BindingEditor.GetBindStr<int>();
-            results[propertyPath] = str;
-        }
+        
     }
 }

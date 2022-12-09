@@ -4,15 +4,41 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding.Editor;
 using UnityEditor;
 using UnityEngine;
-using static Megumin.Binding.Editor.BindingEditor;
-using static UnityEditor.Progress;
+
+public static class EditorEx_445E7B9AEE5D4CC4B63B3B742F5430FB
+{
+    public static bool GetBindintString(this SerializedProperty property, bool click, out string str)
+    {
+        if (click)
+        {
+            BindingEditor.GetBindStr(property.propertyPath);
+        }
+
+        if (BindingEditor.cacheResult.TryGetValue(property.propertyPath, out str))
+        {
+            BindingEditor.cacheResult.Remove(property.propertyPath);
+            return true;
+        }
+        str = default;
+        return false;
+    }
+}
 
 namespace Megumin.Binding.Editor
 {
     public class BindingEditor
     {
+        public static Dictionary<string, string> cacheResult = new Dictionary<string, string>();
+        public static async void GetBindStr(string propertyPath)
+        {
+            var str = await BindingEditor.GetBindStr<int>();
+            cacheResult[propertyPath] = str;
+        }
+
+
         public static Task<string> GetBindStr<T>()
         {
             return GetBindStr(typeof(T));
@@ -27,10 +53,10 @@ namespace Megumin.Binding.Editor
                 {
                     string str = "";
 
-                    
+
                     for (int i = 0; i < members.Count; i++)
                     {
-                        var item = members[i];   
+                        var item = members[i];
                         if (item is TypeInfo typeInfo)
                         {
                             str += $"{typeInfo.FullName}/";
@@ -118,11 +144,11 @@ namespace Megumin.Binding.Editor
         {
             var fields = type.GetFields().Where(f => matchType.IsAssignableFrom(f.FieldType));
             var allf = from f in fields
-                       select new MyMember() { Name = f.Name, Member = f , ValueType = f.FieldType};
+                       select new MyMember() { Name = f.Name, Member = f, ValueType = f.FieldType };
             var propertie = type.GetProperties().Where(f => matchType.IsAssignableFrom(f.PropertyType));
 
-            var  allPorp = from p in propertie
-                           select new MyMember() { Name = p.Name, Member = p, ValueType = p.PropertyType };
+            var allPorp = from p in propertie
+                          select new MyMember() { Name = p.Name, Member = p, ValueType = p.PropertyType };
             //var methods = type.GetMethods().Where(MatchMethod<T>).Cast<MemberInfo>();
             return allf.Concat(allPorp).OrderBy(m => m.Name)/*.Concat(methods)*/;
         }

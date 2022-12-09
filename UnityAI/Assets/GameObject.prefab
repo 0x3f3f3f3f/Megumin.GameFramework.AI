@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8049335969395993300}
   m_Layer: 4
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,34 +53,63 @@ MonoBehaviour:
   Int11:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.GameObject/layer
+    BindingString: 
     DefaultValue: 0
     extnalObj: {fileID: 0}
-  IBindables:
-  - rid: 7949862816670547968
-  - rid: 7949862816670547969
-  - rid: 7949862816670547971
+    xOffset: 0
+    yOffset: 0
+  Int22:
+    Key: 
+    IsBinding: 0
+    BindingString: 
+    DefaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  G111:
+    Key: 
+    IsBinding: 0
+    BindingString: 
+    DefaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  GString222:
+    Key: 
+    IsBinding: 0
+    BindingString: 
+    DefaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  G333:
+    Key: 
+    IsBinding: 0
+    BindingString: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  GFloat444:
+    Key: 
+    IsBinding: 0
+    BindingString: UnityEngine.Time/captureDeltaTime
+    DefaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+  IBindables: []
+  InterfaceTest:
+  - rid: 7949862899823411200
   references:
     version: 2
     RefIds:
-    - rid: 7949862816670547968
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
+    - rid: 7949862899823411200
+      type: {class: BindableIntValue, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
-        Key: TestBindingInt
-        IsBinding: 1
-        BindingString: Transform/Position/x
-        Value: 
-    - rid: 7949862816670547969
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
-      data:
-        Key: MyStrName
+        Key: 
         IsBinding: 0
         BindingString: 
-        Value: 
-    - rid: 7949862816670547971
-      type: {class: SerializeValue, ns: Megumin.Binding, asm: Megumin.Binding}
-      data:
-        Key: MyGameObject
-        IsBinding: 0
-        BindingString: 
-        Value: 
+        DefaultValue: 0
+        extnalObj: {fileID: 0}
+        xOffset: 0
+        yOffset: 0

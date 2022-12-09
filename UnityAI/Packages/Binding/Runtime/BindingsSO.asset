@@ -15,15 +15,15 @@ MonoBehaviour:
   BindInt:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.GameObject/layer
-    DefaultValue: 0
+    BindingString: UnityEngine.Camera/allCamerasCount
+    DefaultValue: 163
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
   BindInt22:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.EventSystems.BaseInput/touchCount
+    BindingString: UnityEngine.UI.HorizontalLayoutGroup/layoutPriority
     DefaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
