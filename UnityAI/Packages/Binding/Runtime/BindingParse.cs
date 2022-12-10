@@ -109,8 +109,6 @@ namespace Megumin.Binding
             }
         }
 
-
-
         static Dictionary<string, Type> cache = new Dictionary<string, Type>();
         private static Type CacheGetType(string typeFullName)
         {
@@ -125,13 +123,6 @@ namespace Megumin.Binding
                 cache[firsttype.FullName] = firsttype;
                 return firsttype;
             }
-
-            var componentTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => typeof(UnityEngine.Object).IsAssignableFrom(t))
-                .Where(t => t.IsPublic).ToList();
-
-            componentTypes = componentTypes.OrderBy(t => t.Name).ToList();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Megumin.Binding.Editor
 {
     [CustomPropertyDrawer(typeof(BindableValue<>), true)]
-    [CustomPropertyDrawer(typeof(BindableIntValue))]
+    [CustomPropertyDrawer(typeof(BindableValueInt))]
     public class BindableIntValueEditor : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -25,7 +25,7 @@ namespace Megumin.Binding.Editor
             using (new EditorGUI.PropertyScope(position, label, property))
             {
                 var ex = EditorGUI.PropertyField(position, property, label, true);
-                var bindp = property.FindPropertyRelative("BindingString");
+                var bindp = property.FindPropertyRelative("BindingPath");
                 var xoffset = property.FindPropertyRelative("xOffset");
                 int xo = xoffset.intValue;
                 var yoffset = property.FindPropertyRelative("yOffset");

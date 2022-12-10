@@ -15,17 +15,36 @@ MonoBehaviour:
   BindInt:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.GameObject/layer
-    DefaultValue: 163
+    BindingPath: UnityEngine.GameObject/layer
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
-  BindInt22:
+    IsStatic: 0
+    IsMatch: 0
+  NeedOverrideInt1:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.UI.HorizontalLayoutGroup/layoutPriority
-    DefaultValue: 0
+    BindingPath: UnityEngine.Time/captureFramerate
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
-  BindStr: UnityEngine.GameObject/layer
+    IsStatic: 0
+    IsMatch: 0
+  NeedOverrideInt2:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.SceneManagement.SceneManager/sceneCountInBuildSettings
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  NeedOverrideInt3:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.Application/targetFrameRate
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0

@@ -45,71 +45,100 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TestSO: {fileID: 11400000, guid: 60ffa9e55b58b7548af1fb4e2965a036, type: 2}
-  Test11:
+  GameObjectTag:
     Key: 
     IsBinding: 0
-    BindingString: 
-    Value: 
-  Int11:
-    Key: 
-    IsBinding: 0
-    BindingString: 
-    DefaultValue: 0
-    extnalObj: {fileID: 0}
-    xOffset: 0
-    yOffset: 0
-  Int22:
-    Key: 
-    IsBinding: 0
-    BindingString: 
-    DefaultValue: 0
-    extnalObj: {fileID: 0}
-    xOffset: 0
-    yOffset: 0
-  G111:
-    Key: 
-    IsBinding: 0
-    BindingString: 
-    DefaultValue: 0
-    extnalObj: {fileID: 0}
-    xOffset: 0
-    yOffset: 0
-  GString222:
-    Key: 
-    IsBinding: 0
-    BindingString: 
+    BindingPath: UnityEngine.GameObject/tag
     DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
-  G333:
+    IsStatic: 0
+    IsMatch: 0
+  GameObjectTransformTag:
     Key: 
     IsBinding: 0
-    BindingString: 
+    BindingPath: UnityEngine.GameObject/transform/tag
+    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
-  GFloat444:
+    IsStatic: 0
+    IsMatch: 0
+  ApplicationVersion:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.Time/fixedDeltaTime
+    BindingPath: UnityEngine.Application/version
+    DefaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  TimeFixedDeltaTime:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.Time/fixedDeltaTime
     DefaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  DateTimeOffsetOffset:
+    Key: 
+    IsBinding: 0
+    BindingPath: System.DateTimeOffset/LocalDateTime
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  Test1:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.GameObject/ToString()
+    DefaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  Test2:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.Application/version
+    DefaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  Test3:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.Application/version
+    DefaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949862923891114010
+  - rid: 7949862931452133377
   references:
     version: 2
     RefIds:
-    - rid: 7949862923891114010
-      type: {class: BindableIntValue, ns: Megumin.Binding, asm: Megumin.Binding}
+    - rid: 7949862931452133377
+      type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
         IsBinding: 0
-        BindingString: 
+        BindingPath: UnityEngine.GameObject/layer
         DefaultValue: 0
         extnalObj: {fileID: 0}
         xOffset: 0
         yOffset: 0
+        IsStatic: 0
+        IsMatch: 0
