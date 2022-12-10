@@ -15,7 +15,7 @@ MonoBehaviour:
   BindInt:
     Key: 
     IsBinding: 0
-    BindingString: UnityEngine.Camera/allCamerasCount
+    BindingString: UnityEngine.GameObject/layer
     DefaultValue: 163
     extnalObj: {fileID: 0}
     xOffset: 0

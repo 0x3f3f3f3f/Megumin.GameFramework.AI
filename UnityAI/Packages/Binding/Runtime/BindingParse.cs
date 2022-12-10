@@ -55,14 +55,24 @@ namespace Megumin.Binding
                     if (propertyInfo.CanRead)
                     {
                         var getMethod = propertyInfo.GetGetMethod();
-                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
+                        var firstArgs = instance;
+                        if (getMethod.IsStatic)
+                        {
+                            firstArgs = null;
+                        }
+                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), firstArgs, getMethod);
                         ParseResult |= BindResult.Get;
                     }
 
                     if (propertyInfo.CanWrite)
                     {
                         var setMethod = propertyInfo.GetSetMethod();
-                        Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
+                        var firstArgs = instance;
+                        if (setMethod.IsStatic)
+                        {
+                            firstArgs = null;
+                        }
+                        Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), firstArgs, setMethod);
                         ParseResult |= BindResult.Set;
                     }
                 }

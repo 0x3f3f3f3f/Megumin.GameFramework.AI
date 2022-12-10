@@ -1,16 +1,14 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Megumin;
-using System.Runtime.Serialization;
-using System;
 
 namespace Megumin.Binding
 {
-    public class BindingsList : MonoBehaviour
+    public class BindTestBehaviour : MonoBehaviour
     {
-
-        /// [SerializeReference]²»Ö§³Ö·ºĞÍ£¬ÎŞÂÛÊµÀıÀàĞÍÊÇ·ºĞÍ£¬»¹ÊÇ±ê¼ÇÀàĞÍÊÇ·ºĞÍ£¬¶¼²»ÄÜÖ§³Ö¡£
+        /// 2023 åŠä»¥åç‰ˆæœ¬æ²¡æœ‰æ³›å‹é™åˆ¶ã€‚
+        /// [SerializeReference]ä¸æ”¯æŒæ³›å‹ï¼Œæ— è®ºå®ä¾‹ç±»å‹æ˜¯æ³›å‹ï¼Œè¿˜æ˜¯æ ‡è®°ç±»å‹æ˜¯æ³›å‹ï¼Œéƒ½ä¸èƒ½æ”¯æŒã€‚
         /// A class derived from a generic type, but not a specific specialization of a generic type (inflated type). For example, you can't use the [SerializeReference] attribute with the type , instead you must create a non-generic subclass of your generic instance type and use that as the field type instead, like this:
         /// 
         /// 
@@ -51,18 +49,51 @@ namespace Megumin.Binding
         [Button]
         public void Parse()
         {
-            var b = TestSO.BindInt;
-            b = Int11;
-            var bstr = b.BindingString;
-            b.InitializeBinding(gameObject);
-            Debug.Log(b.Value);
+            //var b = TestSO.BindInt;
+            //b.InitializeBinding(gameObject);
+            //Debug.Log(b.Value);
 
             //GString222.InitializeBinding(gameObject);
             //Debug.Log(GString222.Value);
-
+            Debug.Log(Time.fixedDeltaTime);
             var f = GFloat444;
             f.InitializeBinding(gameObject);
             Debug.Log(f.Value);
         }
+
+#if UNITY_2023_1_OR_NEWER
+
+        [Header("UNITY_2023_1_OR_NEWER  SerializeReference æ³›å‹ç‰¹åŒ–æ”¯æŒ")]
+        [SerializeReference]
+        public IData mydata1 = new BindableIntValue();
+
+        [SerializeReference]
+        public IData<int> mydata2 = new BindableIntValue();
+
+        [SerializeReference]
+        public IData<int> mydata3 = new BindableValue<int>();
+
+        [SerializeReference]
+        public IData mydata4 = new BindableValue<int>();
+
+        [SerializeReference]
+        public List<IData> DatasList1 = new List<IData>()
+        {
+            new BindableIntValue(){ Value = 101},
+            new BindableValue<int>{ Value = 102},
+            new BindableValue<string>{Value = "MydataList_102"}
+        };
+
+        [SerializeReference]
+        public List<IData<int>> DatasList2 = new List<IData<int>>()
+        {
+            new BindableIntValue(){ Value = 101},
+            new BindableValue<int>{ Value = 102},
+        };
+
+#endif
     }
 }
+
+
+
