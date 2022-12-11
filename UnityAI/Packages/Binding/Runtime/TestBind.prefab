@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8049335969395993303}
+  - component: {fileID: 2264805207875259474}
   - component: {fileID: -6861045395110770367}
   m_Layer: 4
   m_Name: TestBind
@@ -32,6 +33,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2264805207875259474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049335969395993302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955ba293f90a1ad4aa2e0e647154a368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyIntField1: 100
+  MyIntField2: 200
+  <MyIntProperty1>k__BackingField: 100
+  MystringField1: HelloWorld1
+  MystringField2: HelloWorld1
+  <MystringProperty1>k__BackingField: MystringPropertyHelloWorld1
 --- !u!114 &-6861045395110770367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,6 +68,17 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/tag
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  CustomTestField:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.CostomTest/MystringField1
+    defaultValue: MathFailure
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -58,6 +88,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/transform/tag
+    defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -67,6 +98,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
+    defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -76,6 +108,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Time/fixedDeltaTime
+    defaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -103,6 +136,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/ToString()
+    defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -112,6 +146,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
+    defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -121,6 +156,7 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
+    defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -138,6 +174,7 @@ MonoBehaviour:
         Key: 
         IsBinding: 0
         BindingPath: UnityEngine.GameObject/layer
+        defaultValue: 0
         extnalObj: {fileID: 0}
         xOffset: 0
         yOffset: 0

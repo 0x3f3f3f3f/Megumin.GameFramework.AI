@@ -19,7 +19,17 @@ namespace Megumin.Binding
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
-        /// 多级字段绑定
+        /// 字段绑定
+        /// </summary>
+        public BindableValue<string> CustomTestField
+            = new BindableValue<string>() 
+            { 
+                DefaultValue = "MathFailure",
+                BindingPath = "Megumin.Binding.CostomTest/MystringField1" 
+            };
+
+        /// <summary>
+        /// 多级成员绑定
         /// </summary>
         public BindableValue<string> GameObjectTransformTag
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/transform/tag" };
@@ -96,24 +106,27 @@ namespace Megumin.Binding
         [Editor]
         public void Parse()
         {
-            var b = TestSO.BindInt;
-            b.InitializeBinding(gameObject);
-            Debug.Log(b.Value);
+            //var b = TestSO.BindInt;
+            //b.InitializeBinding(gameObject);
+            //Debug.Log(b.Value);
 
             //GString222.InitializeBinding(gameObject);
             //Debug.Log(GString222.Value);
 
             //Debug.Log(Time.fixedDeltaTime);
 
-            var f = ApplicationVersion;
+            var f = CustomTestField;
             f.InitializeBinding(gameObject);
             Debug.Log(f.Value);
         }
 
         [Editor]
-        public void Test(int aaa)
+        public void SetValue()
         {
-
+            var f = CustomTestField;
+            f.InitializeBinding(gameObject);
+            CustomTestField.Value = "MySetValueTest";
+            Debug.Log(f.Value);
         }
 
 #if UNITY_2023_1_OR_NEWER

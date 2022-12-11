@@ -13,7 +13,7 @@ namespace Megumin.Binding
         public string Key;
         public bool IsBinding;
         public string BindingPath;
-        private T defaultValue;
+        public T defaultValue;
         public GameObject extnalObj;
         public int xOffset = 0, yOffset = 0;
         public bool IsStatic = false;
@@ -42,10 +42,12 @@ namespace Megumin.Binding
 
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
-        public void InitializeBinding(GameObject gameObject)
+        public void InitializeBinding(GameObject gameObject, bool force = false)
         {
-            (ParseResult, Getter, Setter) = 
-                BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
+            if (ParseResult == BindResult.None || force)
+            {
+                (ParseResult, Getter, Setter) = BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
+            }
         }
     }
 

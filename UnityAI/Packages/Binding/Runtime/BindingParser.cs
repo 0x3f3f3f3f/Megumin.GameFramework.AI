@@ -12,8 +12,8 @@ namespace Megumin.Binding
     public enum BindResult
     {
         None = 0,
-        Get = 1,
-        Set = 2,
+        Get = 1 << 0,
+        Set = 1 << 1,
         Both = Get | Set,
     }
 
