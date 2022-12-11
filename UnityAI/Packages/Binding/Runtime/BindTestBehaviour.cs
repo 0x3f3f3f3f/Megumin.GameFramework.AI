@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -82,7 +83,8 @@ namespace Megumin.Binding
             new BindableValueInt() { BindingPath = "UnityEngine.GameObject/layer" },
         };
 
-        [Button]
+        [ContextMenu(nameof(AddMiss))]
+        [Editor]
         public void AddMiss()
         {
             IBindables.Clear();
@@ -91,7 +93,7 @@ namespace Megumin.Binding
             IBindables.Add(new BindableValueInt() { Key = nameof(TestSO.NeedOverrideInt3) });
         }
 
-        [Button]
+        [Editor]
         public void Parse()
         {
             var b = TestSO.BindInt;
@@ -106,6 +108,12 @@ namespace Megumin.Binding
             var f = ApplicationVersion;
             f.InitializeBinding(gameObject);
             Debug.Log(f.Value);
+        }
+
+        [Editor]
+        public void Test(int aaa)
+        {
+
         }
 
 #if UNITY_2023_1_OR_NEWER

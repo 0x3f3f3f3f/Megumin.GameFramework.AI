@@ -49,7 +49,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/tag
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -59,7 +58,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/transform/tag
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -69,7 +67,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -79,7 +76,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Time/fixedDeltaTime
-    DefaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -94,11 +90,19 @@ MonoBehaviour:
     yOffset: 0
     IsStatic: 0
     IsMatch: 0
+  BindType:
+    Key: 
+    IsBinding: 0
+    BindingPath: System.DateTimeOffset
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
   Test1:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/ToString()
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -108,7 +112,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -118,7 +121,6 @@ MonoBehaviour:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.Application/version
-    DefaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -136,7 +138,6 @@ MonoBehaviour:
         Key: 
         IsBinding: 0
         BindingPath: UnityEngine.GameObject/layer
-        DefaultValue: 0
         extnalObj: {fileID: 0}
         xOffset: 0
         yOffset: 0

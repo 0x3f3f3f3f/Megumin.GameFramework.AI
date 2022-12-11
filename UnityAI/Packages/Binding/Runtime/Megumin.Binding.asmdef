@@ -1,9 +1,7 @@
 {
     "name": "Megumin.Binding",
     "rootNamespace": "Megumin.Binding",
-    "references": [
-        "GUID:dfb0db5c949e20746befeff7a094fa1c"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,

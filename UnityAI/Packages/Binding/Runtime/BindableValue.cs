@@ -44,8 +44,8 @@ namespace Megumin.Binding
 
         public void InitializeBinding(GameObject gameObject)
         {
-            UnityBindingParse parse = new UnityBindingParse();
-            (ParseResult, Getter, Setter) = parse.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
+            (ParseResult, Getter, Setter) = 
+                BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
         }
     }
 
