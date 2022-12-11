@@ -9,6 +9,10 @@ using UnityEngine;
 
 namespace Megumin.Binding
 {
+    /// <summary>
+    /// 解析格式。  [组件类|静态类|接口]/成员/....../成员/成员。
+    /// 最后一个成员的类型满足绑定类型，或者可以通过类型适配器转换成绑定类型。
+    /// </summary>
     public class UnityBindingParser : BindingParser
     {
 
@@ -19,6 +23,7 @@ namespace Megumin.Binding
         public static void Init()
         {
             Instance = new UnityBindingParser();
+            CacheAllTypesAsync();
         }
 
         public override (BindResult ParseResult, Func<T> Getter, Action<T> Setter)
@@ -45,15 +50,15 @@ namespace Megumin.Binding
                 var (instance, bindType) = GetBindInstanceAndType(path[0], gameObject);
 
                 //处理中间层级
-                //var (nextI, nextT) = GetInstanceAndType(path[1], instance, bindType);
-                return CreateDelegate<T>(path[1], instance, bindType);
+                //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
+                return CreateDelegate<T>(bindType, instance, path[1]);
             }
 
             return (ParseResult, Getter, Setter);
         }
 
-        private static (BindResult ParseResult, Func<T> Getter, Action<T> Setter)
-            CreateDelegate<T>(string memberName, object instance, Type bindType)
+        public static (BindResult ParseResult, Func<T> Getter, Action<T> Setter)
+            CreateDelegate<T>(Type instanceType, object instance, string memberName)
         {
             BindResult ParseResult = BindResult.None;
             Func<T> Getter = null;
@@ -63,7 +68,7 @@ namespace Megumin.Binding
             {
                 //尝试绑定propertyInfo
                 {
-                    var propertyInfo = bindType.GetProperty(memberName);
+                    var propertyInfo = instanceType.GetProperty(memberName);
                     if (propertyInfo != null)
                     {
                         if (propertyInfo.CanRead)
@@ -118,7 +123,7 @@ namespace Megumin.Binding
 
                 //尝试绑定field
                 {
-                    var fieldInfo = bindType.GetField(memberName);
+                    var fieldInfo = instanceType.GetField(memberName);
                     if (fieldInfo != null)
                     {
                         {
@@ -185,7 +190,7 @@ namespace Megumin.Binding
                         //TODO 泛型函数
                     }
 
-                    var methodInfo = bindType.GetMethod(methodName);
+                    var methodInfo = instanceType.GetMethod(methodName);
                     if (methodInfo != null && typeof(T).IsAssignableFrom(methodInfo.ReturnType))
                     {
                         var paras = methodInfo.GetParameters();
@@ -217,7 +222,8 @@ namespace Megumin.Binding
             return (ParseResult, Getter, Setter);
         }
 
-        private static (object nextIntance, Type memberType) GetInstanceAndType(string memberName, object instance, Type instanceType)
+        public static (object nextIntance, Type memberType)
+            GetInstanceAndType(Type instanceType, object instance, string memberName)
         {
             //必须传instance 和Type,可能是静态类型。
             var nextmember = instanceType.GetProperty(memberName);
@@ -226,20 +232,35 @@ namespace Megumin.Binding
             return (nextIntance, memberType);
         }
 
-        private static (object Object, Type Type) GetBindInstanceAndType(string typeFullName, GameObject gameObject)
+        /// <summary>
+        /// Unity和纯C#运行时解析逻辑时不一样的，unity中第一个字符串表示组件，在纯C#运行时可能会忽略第一个字符串。
+        /// </summary>
+        /// <param name="typeFullName"></param>
+        /// <param name="gameObject"></param>
+        /// <returns></returns>
+        public static (object Instance, Type InstanceType)
+            GetBindInstanceAndType(string typeFullName, GameObject gameObject)
         {
             if (typeFullName == "UnityEngine.GameObject")
             {
                 return (gameObject, typeof(UnityEngine.GameObject));
             }
 
+            //TODO，绑定接口，通过接口取得组件
             var type = GeComponentType(typeFullName);
-
 
             if (type == null)
             {
                 type = GetCustomType(typeFullName);
-                return (gameObject, type);
+                var comp = gameObject.GetComponentInChildren(type);
+                if (comp)
+                {
+                    return (comp, comp.GetType());
+                }
+                else
+                {
+                    return (gameObject, type);
+                }
             }
             else
             {
@@ -326,6 +347,10 @@ namespace Megumin.Binding
             }
         }
 
+        /// <summary>
+        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
+        /// </summary>
+        /// <param name="force"></param>
         public static void CacheAllTypes(bool force = false)
         {
             if (CacheTypeInit == false || force)

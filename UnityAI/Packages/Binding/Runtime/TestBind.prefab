@@ -74,11 +74,51 @@ MonoBehaviour:
     yOffset: 0
     IsStatic: 0
     IsMatch: 0
+  TypeAdpterTest:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.GameObject/layer
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
   CustomTestField:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.CostomTest/MystringMethod1()
+    BindingPath: Megumin.Binding.CostomTest/MystringField1
     defaultValue: MathFailure
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  CustomTestFieldByInterface:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.ICostomTestInterface/MystringField1
+    defaultValue: MathFailure_CustomTestFieldByInterface
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  CustomTestFieldByInterface2:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.ICostomTestInterface2/MystringField1
+    defaultValue: MathFailure_CustomTestFieldByInterface2
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  CustomTestFieldByCostomTestClass:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.CostomTestClass/MystringField1
+    defaultValue: MathFailure_CostomTestClass
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -164,11 +204,11 @@ MonoBehaviour:
     IsMatch: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949862931452133377
+  - rid: 7949862948569874437
   references:
     version: 2
     RefIds:
-    - rid: 7949862931452133377
+    - rid: 7949862948569874437
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 

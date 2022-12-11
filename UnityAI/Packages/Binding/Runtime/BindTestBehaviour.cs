@@ -15,11 +15,20 @@ namespace Megumin.Binding
 
         public BindingsSO TestSO;
 
+        /// <summary>
+        /// 属性绑定 ✅
+        /// </summary>
         public BindableValue<string> GameObjectTag
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
-        /// 字段绑定
+        /// 类型自动适配，自动转型
+        /// </summary>
+        public BindableValue<string> TypeAdpterTest
+            = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/layer" };
+
+        /// <summary>
+        /// 字段绑定 ✅
         /// </summary>
         public BindableValue<string> CustomTestField
             = new BindableValue<string>()
@@ -29,19 +38,49 @@ namespace Megumin.Binding
             };
 
         /// <summary>
+        /// 接口字段绑定。接口是用来取得Component的，后续字符串成员不一定时接口的成员。
+        /// </summary>
+        public BindableValue<string> CustomTestFieldByInterface
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface",
+                BindingPath = "Megumin.Binding.ICostomTestInterface/MystringField1"
+            };
+
+        /// <summary>
+        /// 接口字段绑定。测试绑定为接口但是无法找到组件。 预期结果： 无法解析，但是不能造成崩溃。
+        /// </summary>
+        public BindableValue<string> CustomTestFieldByInterface2
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface2",
+                BindingPath = "Megumin.Binding.ICostomTestInterface2/MystringField1"
+            };
+
+        /// <summary>
+        /// 接口字段绑定。测试绑定为非组件非静态类型。 预期结果： 无法解析，但是不能造成崩溃。
+        /// </summary>
+        public BindableValue<string> CustomTestFieldByCostomTestClass
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CostomTestClass",
+                BindingPath = "Megumin.Binding.CostomTestClass/MystringField1"
+            };
+
+        /// <summary>
         /// 多级成员绑定
         /// </summary>
         public BindableValue<string> GameObjectTransformTag
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/transform/tag" };
 
         /// <summary>
-        /// 静态类型绑定
+        /// 静态类型绑定 ✅
         /// </summary>
         public BindableValue<string> ApplicationVersion
             = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };
 
         /// <summary>
-        /// 静态类型绑定
+        /// 静态类型绑定 ✅
         /// </summary>
         public BindableValue<float> TimeFixedDeltaTime
             = new BindableValue<float>() { BindingPath = "UnityEngine.Time/fixedDeltaTime" };
@@ -67,7 +106,7 @@ namespace Megumin.Binding
             };
 
         /// <summary>
-        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> Test1
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/ToString()" };
@@ -115,7 +154,7 @@ namespace Megumin.Binding
 
             //Debug.Log(Time.fixedDeltaTime);
 
-            var f = CustomTestField;
+            var f = CustomTestFieldByInterface;
             f.InitializeBinding(gameObject, true);
             Debug.Log(f.Value);
         }
@@ -123,7 +162,7 @@ namespace Megumin.Binding
         [Editor]
         public void SetValue()
         {
-            var f = CustomTestField;
+            var f = CustomTestFieldByInterface;
             f.InitializeBinding(gameObject, true);
             CustomTestField.Value = "MySetValueTest";
             Debug.Log(f.Value);

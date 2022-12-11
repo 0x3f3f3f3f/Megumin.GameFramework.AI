@@ -4,7 +4,30 @@ using UnityEngine;
 
 namespace Megumin.Binding
 {
-    public class CostomTest : MonoBehaviour
+    public interface ICostomTestInterface
+    {
+        int MyIntProperty1 { get; set; }
+        int MyIntProperty2 { get; }
+        string MystringProperty1 { get; set; }
+        string MystringProperty2 { get; }
+
+        int MyIntMethod1();
+        int MyIntMethod2(GameObject game);
+        string MystringMethod1();
+        string MystringMethod2(GameObject game);
+    }
+
+    public interface ICostomTestInterface222
+    {
+
+    }
+
+    public class CostomTestClass : ICostomTestInterface222
+    {
+
+    }
+
+    public class CostomTest : MonoBehaviour, ICostomTestInterface
     {
         public int MyIntField1 = 100;
         public int MyIntField2 = 200;
