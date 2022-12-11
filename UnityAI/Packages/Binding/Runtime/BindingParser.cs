@@ -11,6 +11,9 @@ namespace Megumin.Binding
     [Flags]
     public enum BindResult
     {
+        /// <summary>
+        /// Get Set 均解析失败
+        /// </summary>
         None = 0,
         Get = 1 << 0,
         Set = 1 << 1,

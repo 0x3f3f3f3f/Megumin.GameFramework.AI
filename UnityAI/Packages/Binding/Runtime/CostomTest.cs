@@ -25,7 +25,7 @@ namespace Megumin.Binding
 
 
         public string MystringField1 = "HelloWorld1";
-        public string MystringField2 = "HelloWorld1";
+        public string MystringField2 = "HelloWorld2";
 
         [field: SerializeField]
         public string MystringProperty1 { get; set; } = "MystringPropertyHelloWorld1";

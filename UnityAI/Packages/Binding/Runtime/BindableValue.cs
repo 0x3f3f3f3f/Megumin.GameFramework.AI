@@ -18,20 +18,51 @@ namespace Megumin.Binding
         public int xOffset = 0, yOffset = 0;
         public bool IsStatic = false;
         public bool IsMatch = false;
-        protected BindResult ParseResult = BindResult.None;
+        /// <summary>
+        /// null表示还没有解析绑定
+        /// </summary>
+        protected BindResult? ParseResult = null;
         protected Func<T> Getter;
         protected Action<T> Setter;
 
 
-
+        /// <summary>
+        /// 没有调用<see cref="InitializeBinding(GameObject, bool)"/>时，映射到<see cref="defaultValue"/>。<para/> 
+        /// 调用<see cref="InitializeBinding(GameObject, bool)"/>后，无论是否成功绑定，都不会在映射到映射到<see cref="defaultValue"/>。
+        /// </summary>
         public T Value
         {
-            get { return (Getter != null ? Getter() : defaultValue); }
+            get
+            {
+                if (ParseResult.HasValue)
+                {
+                    if (Getter == null)
+                    {
+                        Debug.LogWarning($"{BindingPath} cant Get");
+                        return default;
+                    }
+                    else
+                    {
+                        return Getter();
+                    }
+                }
+                else
+                {
+                    return defaultValue;
+                }
+            }
             set
             {
-                if (Setter != null)
+                if (ParseResult.HasValue)
                 {
-                    Setter(value);
+                    if (Setter == null)
+                    {
+                        Debug.LogWarning($"{BindingPath} cant Set");
+                    }
+                    else
+                    {
+                        Setter(value);
+                    }
                 }
                 else
                 {
@@ -44,7 +75,7 @@ namespace Megumin.Binding
 
         public void InitializeBinding(GameObject gameObject, bool force = false)
         {
-            if (ParseResult == BindResult.None || force)
+            if (ParseResult == null || force)
             {
                 (ParseResult, Getter, Setter) = BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
             }

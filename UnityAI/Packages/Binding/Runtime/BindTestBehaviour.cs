@@ -22,10 +22,10 @@ namespace Megumin.Binding
         /// 字段绑定
         /// </summary>
         public BindableValue<string> CustomTestField
-            = new BindableValue<string>() 
-            { 
+            = new BindableValue<string>()
+            {
                 DefaultValue = "MathFailure",
-                BindingPath = "Megumin.Binding.CostomTest/MystringField1" 
+                BindingPath = "Megumin.Binding.CostomTest/MystringField1"
             };
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace Megumin.Binding
         /// </summary>
         public BindableValue<DateTimeOffset> DateTimeOffsetOffset
             = new BindableValue<DateTimeOffset>()
-            { 
-                DefaultValue = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default) ,
+            {
+                DefaultValue = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default),
                 BindingPath = "System.DateTimeOffset/LocalDateTime",
             };
 
@@ -116,7 +116,7 @@ namespace Megumin.Binding
             //Debug.Log(Time.fixedDeltaTime);
 
             var f = CustomTestField;
-            f.InitializeBinding(gameObject);
+            f.InitializeBinding(gameObject, true);
             Debug.Log(f.Value);
         }
 
@@ -124,7 +124,7 @@ namespace Megumin.Binding
         public void SetValue()
         {
             var f = CustomTestField;
-            f.InitializeBinding(gameObject);
+            f.InitializeBinding(gameObject, true);
             CustomTestField.Value = "MySetValueTest";
             Debug.Log(f.Value);
         }
