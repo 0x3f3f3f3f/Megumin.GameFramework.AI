@@ -38,7 +38,7 @@ namespace Megumin.Binding
             };
 
         /// <summary>
-        /// 接口字段绑定。接口是用来取得Component的，后续字符串成员不一定时接口的成员。
+        /// 接口字段绑定。接口是用来取得Component的，后续字符串成员不一定时接口的成员。 ✅
         /// </summary>
         public BindableValue<string> CustomTestFieldByInterface
             = new BindableValue<string>()
@@ -48,7 +48,7 @@ namespace Megumin.Binding
             };
 
         /// <summary>
-        /// 接口字段绑定。测试绑定为接口但是无法找到组件。 预期结果： 无法解析，但是不能造成崩溃。
+        /// 接口字段绑定。测试绑定为接口但是无法找到组件。 预期结果： 无法解析，但是不能造成崩溃。 ✅
         /// </summary>
         public BindableValue<string> CustomTestFieldByInterface2
             = new BindableValue<string>()
@@ -58,7 +58,7 @@ namespace Megumin.Binding
             };
 
         /// <summary>
-        /// 接口字段绑定。测试绑定为非组件非静态类型。 预期结果： 无法解析，但是不能造成崩溃。
+        /// 接口字段绑定。测试绑定为非组件非静态类型。 预期结果： 无法解析，但是不能造成崩溃。 ✅
         /// </summary>
         public BindableValue<string> CustomTestFieldByCostomTestClass
             = new BindableValue<string>()
@@ -154,18 +154,18 @@ namespace Megumin.Binding
 
             //Debug.Log(Time.fixedDeltaTime);
 
-            var f = CustomTestFieldByInterface;
+            var f = GameObjectTransformTag;
             f.InitializeBinding(gameObject, true);
-            Debug.Log(f.Value);
+            Debug.Log($"{f.BindingPath}   {f.Value}");
         }
 
         [Editor]
         public void SetValue()
         {
-            var f = CustomTestFieldByInterface;
+            var f = GameObjectTransformTag;
             f.InitializeBinding(gameObject, true);
             CustomTestField.Value = "MySetValueTest";
-            Debug.Log(f.Value);
+            Debug.Log($"{f.BindingPath}   {f.Value}");
         }
 
 #if UNITY_2023_1_OR_NEWER

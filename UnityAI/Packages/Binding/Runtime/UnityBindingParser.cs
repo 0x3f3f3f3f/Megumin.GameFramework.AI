@@ -5,17 +5,21 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEditor.Search;
 using UnityEngine;
+using static PlasticGui.PlasticTableCell;
 
 namespace Megumin.Binding
 {
     /// <summary>
-    /// 解析格式。  [组件类|静态类|接口]/成员/....../成员/成员。
-    /// 最后一个成员的类型满足绑定类型，或者可以通过类型适配器转换成绑定类型。
+    /// BindingString格式:  [组件类|静态类|接口]/成员/....../成员/成员。
+    /// 最后一个成员的类型需要满足绑定类型，或者可以通过类型适配器转换成绑定类型。
     /// </summary>
     public class UnityBindingParser : BindingParser
     {
-
+        /// <summary>
+        /// 这里自动初始化，如果导致项目启动过慢，请修改此处，并手动在适当位置初始化。
+        /// </summary>
 #if UNITY_EDITOR
         [UnityEditor.InitializeOnLoadMethod]
 #endif
@@ -23,6 +27,8 @@ namespace Megumin.Binding
         public static void Init()
         {
             Instance = new UnityBindingParser();
+
+            ///预调用
             CacheAllTypesAsync();
         }
 
@@ -47,14 +53,244 @@ namespace Megumin.Binding
                     gameObject = ex;
                 }
 
-                var (instance, bindType) = GetBindInstanceAndType(path[0], gameObject);
+                var (instance, instanceType) = GetBindInstanceAndType(path[0], gameObject);
 
-                //处理中间层级
-                //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
-                return CreateDelegate<T>(bindType, instance, path[1]);
+                if (instanceType != null)
+                {
+                    //处理中间层级
+                    //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
+                    return CreateDelegate<T>(instanceType, instance, path[1]);
+                }
+                else
+                {
+                    Debug.LogWarning($"没有找到指定类型 {path[0]}");
+                }
             }
 
             return (ParseResult, Getter, Setter);
+        }
+
+        /// <summary>
+        /// 尝试绑定propertyInfo
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="ParseResult"></param>
+        /// <param name="Getter"></param>
+        /// <param name="Setter"></param>
+        /// <returns>是否含有成员</returns>
+        public static bool TryCreatePropertyDelegate<T>(Type instanceType,
+                                                     object instance,
+                                                     string memberName,
+                                                     out BindResult ParseResult,
+                                                     out Func<T> Getter,
+                                                     out Action<T> Setter)
+        {
+            ParseResult = BindResult.None;
+            Getter = null;
+            Setter = null;
+
+            var propertyInfo = instanceType.GetProperty(memberName);
+            if (propertyInfo != null)
+            {
+                if (propertyInfo.CanRead)
+                {
+                    var getMethod = propertyInfo.GetGetMethod();
+
+                    if (getMethod.IsStatic)
+                    {
+                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, getMethod);
+                        ParseResult |= BindResult.Get;
+                    }
+                    else
+                    {
+                        if (instance == null)
+                        {
+                            Debug.LogError("instance is null");
+                        }
+                        else
+                        {
+                            Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
+                            ParseResult |= BindResult.Get;
+                        }
+                    }
+                }
+
+                if (propertyInfo.CanWrite)
+                {
+                    var setMethod = propertyInfo.GetSetMethod();
+                    if (setMethod.IsStatic)
+                    {
+                        Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), null, setMethod);
+                        ParseResult |= BindResult.Set;
+                    }
+                    else
+                    {
+                        if (instance == null)
+                        {
+                            Debug.LogError("instance is null");
+                        }
+                        else
+                        {
+                            Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
+                            ParseResult |= BindResult.Set;
+                        }
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 尝试绑定field
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="ParseResult"></param>
+        /// <param name="Getter"></param>
+        /// <param name="Setter"></param>
+        /// <returns>是否含有成员</returns>
+        public static bool TryCreateFieldDelegate<T>(Type instanceType,
+                                                     object instance,
+                                                     string memberName,
+                                                     out BindResult ParseResult,
+                                                     out Func<T> Getter,
+                                                     out Action<T> Setter)
+        {
+            ParseResult = BindResult.None;
+            Getter = null;
+            Setter = null;
+
+            var fieldInfo = instanceType.GetField(memberName);
+            if (fieldInfo != null)
+            {
+                {
+                    if (fieldInfo.IsStatic)
+                    {
+                        Getter = () =>
+                        {
+                            return (T)fieldInfo.GetValue(null);
+                        };
+                        ParseResult |= BindResult.Get;
+                    }
+                    else
+                    {
+                        if (instance == null)
+                        {
+                            Debug.LogError("instance is null");
+                        }
+                        else
+                        {
+                            Getter = () =>
+                            {
+                                return (T)fieldInfo.GetValue(instance);
+                            };
+                            ParseResult |= BindResult.Get;
+                        }
+                    }
+                }
+
+                if (!fieldInfo.IsInitOnly)
+                {
+                    if (fieldInfo.IsStatic)
+                    {
+                        Setter = (value) =>
+                        {
+                            fieldInfo.SetValue(null, value);
+                        };
+                        ParseResult |= BindResult.Set;
+                    }
+                    else
+                    {
+                        if (instance == null)
+                        {
+                            Debug.LogError("instance is null");
+                        }
+                        else
+                        {
+                            Setter = (value) =>
+                            {
+                                fieldInfo.SetValue(instance, value);
+                            };
+                            ParseResult |= BindResult.Set;
+                        }
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 尝试绑定method
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="ParseResult"></param>
+        /// <param name="Getter"></param>
+        /// <param name="Setter"></param>
+        /// <returns>是否含有成员</returns>
+        public static bool TryCreateMethodDelegate<T>(Type instanceType,
+                                                     object instance,
+                                                     string memberName,
+                                                     out BindResult ParseResult,
+                                                     out Func<T> Getter,
+                                                     out Action<T> Setter)
+        {
+            ParseResult = BindResult.None;
+            Getter = null;
+            Setter = null;
+
+            var methodName = memberName;
+            if (memberName.EndsWith("()"))
+            {
+                methodName = memberName.Replace("()", "");
+                //TODO 泛型函数
+            }
+
+            var methodInfo = instanceType.GetMethod(methodName);
+            if (methodInfo != null && typeof(T).IsAssignableFrom(methodInfo.ReturnType))
+            {
+                var paras = methodInfo.GetParameters();
+                if (paras.Length == 0)
+                {
+                    if (methodInfo.IsStatic)
+                    {
+                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, methodInfo);
+                        ParseResult |= BindResult.Get;
+                    }
+                    else
+                    {
+                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, methodInfo);
+                        ParseResult |= BindResult.Get;
+                    }
+                }
+                else
+                {
+                    //Todo
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static (BindResult ParseResult, Func<T> Getter, Action<T> Setter)
@@ -66,152 +302,21 @@ namespace Megumin.Binding
 
             try
             {
-                //尝试绑定propertyInfo
+                //属性 字段 方法 逐一尝试绑定。
+
+                if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
                 {
-                    var propertyInfo = instanceType.GetProperty(memberName);
-                    if (propertyInfo != null)
-                    {
-                        if (propertyInfo.CanRead)
-                        {
-                            var getMethod = propertyInfo.GetGetMethod();
-
-                            if (getMethod.IsStatic)
-                            {
-                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, getMethod);
-                                ParseResult |= BindResult.Get;
-                            }
-                            else
-                            {
-                                if (instance == null)
-                                {
-                                    Debug.LogError("instance is null");
-                                }
-                                else
-                                {
-                                    Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
-                                    ParseResult |= BindResult.Get;
-                                }
-                            }
-                        }
-
-                        if (propertyInfo.CanWrite)
-                        {
-                            var setMethod = propertyInfo.GetSetMethod();
-                            if (setMethod.IsStatic)
-                            {
-                                Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), null, setMethod);
-                                ParseResult |= BindResult.Set;
-                            }
-                            else
-                            {
-                                if (instance == null)
-                                {
-                                    Debug.LogError("instance is null");
-                                }
-                                else
-                                {
-                                    Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
-                                    ParseResult |= BindResult.Set;
-                                }
-                            }
-                        }
-
-                        return (ParseResult, Getter, Setter);
-                    }
-
+                    return (ParseResult, Getter, Setter);
                 }
 
-                //尝试绑定field
+                if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
                 {
-                    var fieldInfo = instanceType.GetField(memberName);
-                    if (fieldInfo != null)
-                    {
-                        {
-                            if (fieldInfo.IsStatic)
-                            {
-                                Getter = () =>
-                                {
-                                    return (T)fieldInfo.GetValue(null);
-                                };
-                                ParseResult |= BindResult.Get;
-                            }
-                            else
-                            {
-                                if (instance == null)
-                                {
-                                    Debug.LogError("instance is null");
-                                }
-                                else
-                                {
-                                    Getter = () =>
-                                    {
-                                        return (T)fieldInfo.GetValue(instance);
-                                    };
-                                    ParseResult |= BindResult.Get;
-                                }
-                            }
-                        }
-
-                        if (!fieldInfo.IsInitOnly)
-                        {
-                            if (fieldInfo.IsStatic)
-                            {
-                                Setter = (value) =>
-                                {
-                                    fieldInfo.SetValue(null, value);
-                                };
-                                ParseResult |= BindResult.Set;
-                            }
-                            else
-                            {
-                                if (instance == null)
-                                {
-                                    Debug.LogError("instance is null");
-                                }
-                                else
-                                {
-                                    Setter = (value) =>
-                                    {
-                                        fieldInfo.SetValue(instance, value);
-                                    };
-                                    ParseResult |= BindResult.Set;
-                                }
-                            }
-                        }
-                    }
+                    return (ParseResult, Getter, Setter);
                 }
 
-                // 尝试绑定method
+                if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
                 {
-                    var methodName = memberName;
-                    if (memberName.EndsWith("()"))
-                    {
-                        methodName = memberName.Replace("()", "");
-                        //TODO 泛型函数
-                    }
-
-                    var methodInfo = instanceType.GetMethod(methodName);
-                    if (methodInfo != null && typeof(T).IsAssignableFrom(methodInfo.ReturnType))
-                    {
-                        var paras = methodInfo.GetParameters();
-                        if (paras.Length == 0)
-                        {
-                            if (methodInfo.IsStatic)
-                            {
-                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, methodInfo);
-                                ParseResult |= BindResult.Get;
-                            }
-                            else
-                            {
-                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, methodInfo);
-                                ParseResult |= BindResult.Get;
-                            }
-                        }
-                        else
-                        {
-                            //Todo
-                        }
-                    }
+                    return (ParseResult, Getter, Setter);
                 }
             }
             catch (Exception e)
@@ -219,6 +324,7 @@ namespace Megumin.Binding
                 Debug.LogWarning($"BindParse {e}");
             }
 
+            Debug.LogWarning($"{instanceType.FullName} 没有找到成员 {memberName}");
             return (ParseResult, Getter, Setter);
         }
 
@@ -252,15 +358,16 @@ namespace Megumin.Binding
             if (type == null)
             {
                 type = GetCustomType(typeFullName);
-                var comp = gameObject.GetComponentInChildren(type);
-                if (comp)
+                if (type != null && type.IsInterface)
                 {
-                    return (comp, comp.GetType());
+                    var comp = gameObject.GetComponentInChildren(type);
+                    if (comp)
+                    {
+                        return (comp, comp.GetType());
+                    }
                 }
-                else
-                {
-                    return (gameObject, type);
-                }
+
+                return (gameObject, type);
             }
             else
             {
@@ -355,9 +462,11 @@ namespace Megumin.Binding
         {
             if (CacheTypeInit == false || force)
             {
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
+                var debugabs = assemblies.ToArray();
                 foreach (var assembly in assemblies)
                 {
+                    var debug = assembly.GetTypes();
                     foreach (var extype in assembly.GetTypes())
                     {
                         AddToDic(allType, extype);

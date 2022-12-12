@@ -17,12 +17,12 @@ namespace Megumin.Binding
         string MystringMethod2(GameObject game);
     }
 
-    public interface ICostomTestInterface222
+    public interface ICostomTestInterface2
     {
 
     }
 
-    public class CostomTestClass : ICostomTestInterface222
+    public class CostomTestClass : ICostomTestInterface2
     {
 
     }
