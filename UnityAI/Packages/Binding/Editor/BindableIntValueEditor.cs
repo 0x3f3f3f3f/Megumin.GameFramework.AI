@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -52,11 +53,33 @@ namespace Megumin.Binding.Editor
                     {
                         bindp.stringValue = res;
                     }
+
+                    if (property.serializedObject.targetObject is Component)
+                    {
+                        if (GUILayout.Button($"{property.propertyPath}_TestParse"))
+                        {
+                            //Debug.Log(property.serializedObject.targetObject);
+                            var obj = property.serializedObject.targetObject;
+                            Type type = obj.GetType();
+                            var fieldInfo = type.GetField(property.propertyPath);
+                            var fValue = fieldInfo.GetValue(obj);
+                            if (fValue is IUnityBindingParseable parseable)
+                            {
+                                GameObject gameObject = obj as GameObject;
+                                if (obj is Component component)
+                                {
+                                    gameObject = component.gameObject;
+                                }
+                                parseable.InitializeBinding(gameObject, true);
+                                parseable.DebugParseResult();
+                            }
+                        }
+                    }
                 }
             }
 
         }
 
-        
+
     }
 }

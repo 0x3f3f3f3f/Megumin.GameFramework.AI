@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Megumin.Binding
 {
     [Serializable]
-    public class BindableValue<T> : IData<T>, IBindable<T>
+    public class BindableValue<T> : IData<T>, IBindable<T>, IUnityBindingParseable
     {
         public string Key;
         public bool IsBinding;
@@ -79,6 +79,11 @@ namespace Megumin.Binding
             {
                 (ParseResult, Getter, Setter) = BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
             }
+        }
+
+        public void DebugParseResult()
+        {
+            Debug.Log($"ParseResult:{ParseResult}    {Value}");
         }
     }
 

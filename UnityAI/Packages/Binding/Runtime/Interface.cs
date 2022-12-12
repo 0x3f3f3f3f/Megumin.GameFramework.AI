@@ -26,4 +26,11 @@ namespace Megumin.Binding
     {
         //T DefaultValue { get; set; }
     }
+
+    public interface IUnityBindingParseable
+    {
+        void InitializeBinding(GameObject gameObject, bool force = false);
+
+        void DebugParseResult();
+    }
 }
