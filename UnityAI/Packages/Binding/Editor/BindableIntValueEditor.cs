@@ -54,26 +54,56 @@ namespace Megumin.Binding.Editor
                         bindp.stringValue = res;
                     }
 
-                    if (property.serializedObject.targetObject is Component)
+                    if (GUILayout.Button($"{property.propertyPath}_TestParse"))
                     {
-                        if (GUILayout.Button($"{property.propertyPath}_TestParse"))
+                        var obj = property.serializedObject.targetObject;
+                        object data = null;
+                        if (property.propertyPath.EndsWith("]"))
                         {
-                            //Debug.Log(property.serializedObject.targetObject);
-                            var obj = property.serializedObject.targetObject;
-                            Type type = obj.GetType();
-                            var fieldInfo = type.GetField(property.propertyPath);
-                            var fValue = fieldInfo.GetValue(obj);
-                            if (fValue is IUnityBindingParseable parseable)
-                            {
-                                GameObject gameObject = obj as GameObject;
-                                if (obj is Component component)
-                                {
-                                    gameObject = component.gameObject;
-                                }
-                                parseable.InitializeBinding(gameObject, true);
-                                parseable.DebugParseResult();
-                            }
+                            data = property.managedReferenceValue;
                         }
+                        else
+                        {
+                            data = this.fieldInfo.GetValue(obj);
+                        }
+
+                        if (data == null)
+                        {
+
+                        }
+
+                        if (data is IBindingParseable parseable)
+                        {
+                            GameObject gameObject = obj as GameObject;
+                            if (obj is Component component)
+                            {
+                                gameObject = component.gameObject;
+                            }
+                            parseable.ParseBinding(gameObject, true);
+                            parseable.DebugParseResult();
+                        }
+
+                        //fieldInfo = this.fieldInfo; 
+                        //var field2 = this.fieldInfo;
+                        //var v = field2.GetValue(property.serializedObject.targetObject);
+                        //var index = property.enumValueIndex;
+
+                        ////Debug.Log(property.serializedObject.targetObject);
+                        
+                        //Type type = obj.GetType();
+                        //var fieldInfo = type.GetField(property.propertyPath);
+                        //var fValue = fieldInfo.GetValue(obj);
+
+                        //if (fValue is IBindingParseable parseable)
+                        //{
+                        //    GameObject gameObject = obj as GameObject;
+                        //    if (obj is Component component)
+                        //    {
+                        //        gameObject = component.gameObject;
+                        //    }
+                        //    parseable.ParseBinding(gameObject, true);
+                        //    parseable.DebugParseResult();
+                        //}
                     }
                 }
             }

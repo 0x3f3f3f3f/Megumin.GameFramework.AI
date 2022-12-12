@@ -130,6 +130,7 @@ namespace Megumin.Binding
         public List<IData> InterfaceTest = new List<IData>()
         {
             new BindableValueInt() { BindingPath = "UnityEngine.GameObject/layer" },
+            new BindableValueString() { BindingPath = "UnityEngine.GameObject/tag" },
         };
 
         [ContextMenu(nameof(AddMiss))]
@@ -146,16 +147,16 @@ namespace Megumin.Binding
         public void Parse()
         {
             //var b = TestSO.BindInt;
-            //b.InitializeBinding(gameObject);
+            //b.ParseBinding(gameObject);
             //Debug.Log(b.Value);
 
-            //GString222.InitializeBinding(gameObject);
+            //GString222.ParseBinding(gameObject);
             //Debug.Log(GString222.Value);
 
             //Debug.Log(Time.fixedDeltaTime);
 
             var f = GameObjectTransformTag;
-            f.InitializeBinding(gameObject, true);
+            f.ParseBinding(gameObject, true);
             Debug.Log($"{f.BindingPath}   {f.Value}");
         }
 
@@ -163,7 +164,7 @@ namespace Megumin.Binding
         public void SetValue()
         {
             var f = GameObjectTransformTag;
-            f.InitializeBinding(gameObject, true);
+            f.ParseBinding(gameObject, true);
             CustomTestField.Value = "MySetValueTest";
             Debug.Log($"{f.BindingPath}   {f.Value}");
         }

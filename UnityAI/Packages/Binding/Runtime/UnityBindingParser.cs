@@ -455,35 +455,43 @@ namespace Megumin.Binding
         }
 
         /// <summary>
+        /// 防止多个线程同时缓存浪费性能。
+        /// </summary>
+        static readonly object cachelock = new object();
+
+        /// <summary>
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
         /// </summary>
         /// <param name="force"></param>
         public static void CacheAllTypes(bool force = false)
         {
-            if (CacheTypeInit == false || force)
+            lock (cachelock)
             {
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
-                var debugabs = assemblies.ToArray();
-                foreach (var assembly in assemblies)
+                if (CacheTypeInit == false || force)
                 {
-                    var debug = assembly.GetTypes();
-                    foreach (var extype in assembly.GetTypes())
+                    var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
+                    var debugabs = assemblies.ToArray();
+                    foreach (var assembly in assemblies)
                     {
-                        AddToDic(allType, extype);
-
-                        if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
+                        var debug = assembly.GetTypes();
+                        foreach (var extype in assembly.GetTypes())
                         {
-                            AddToDic(allUnityObjectType, extype);
+                            AddToDic(allType, extype);
 
-                            if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
+                            if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
                             {
-                                AddToDic(allComponentType, extype);
+                                AddToDic(allUnityObjectType, extype);
+
+                                if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
+                                {
+                                    AddToDic(allComponentType, extype);
+                                }
                             }
                         }
                     }
-                }
 
-                CacheTypeInit = true;
+                    CacheTypeInit = true;
+                }
             }
         }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Megumin.Binding
 {
     [Serializable]
-    public class BindableValue<T> : IData<T>, IBindable<T>, IUnityBindingParseable
+    public class BindableValue<T> : IData<T>, IBindable<T>, IBindingParseable
     {
         public string Key;
         public bool IsBinding;
@@ -27,8 +27,8 @@ namespace Megumin.Binding
 
 
         /// <summary>
-        /// 没有调用<see cref="InitializeBinding(GameObject, bool)"/>时，映射到<see cref="defaultValue"/>。<para/> 
-        /// 调用<see cref="InitializeBinding(GameObject, bool)"/>后，无论是否成功绑定，都不会在映射到映射到<see cref="defaultValue"/>。
+        /// 没有调用<see cref="ParseBinding(GameObject, bool)"/>时，映射到<see cref="defaultValue"/>。<para/> 
+        /// 调用<see cref="ParseBinding(GameObject, bool)"/>后，无论是否成功绑定，都不会在映射到映射到<see cref="defaultValue"/>。
         /// </summary>
         public T Value
         {
@@ -73,11 +73,12 @@ namespace Megumin.Binding
 
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
-        public void InitializeBinding(GameObject gameObject, bool force = false)
+        public void ParseBinding(object bindInstance, bool force = false)
         {
             if (ParseResult == null || force)
             {
-                (ParseResult, Getter, Setter) = BindingParser.Instance.InitializeBinding<T>(BindingPath, gameObject, extnalObj);
+                (ParseResult, Getter, Setter) =
+                    BindingParser.Instance.InitializeBinding<T>(BindingPath, bindInstance, extnalObj);
             }
         }
 
@@ -87,11 +88,14 @@ namespace Megumin.Binding
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Serializable]
     public class BindableValueInt : BindableValue<int>
+    {
+
+    }
+
+    [Serializable]
+    public class BindableValueString : BindableValue<string>
     {
 
     }

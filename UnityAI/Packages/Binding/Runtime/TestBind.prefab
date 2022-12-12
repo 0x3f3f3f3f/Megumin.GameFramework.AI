@@ -204,17 +204,30 @@ MonoBehaviour:
     IsMatch: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949862948569874437
+  - rid: 7949862977550417920
+  - rid: 7949862977550417921
   references:
     version: 2
     RefIds:
-    - rid: 7949862948569874437
+    - rid: 7949862977550417920
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
         IsBinding: 0
         BindingPath: UnityEngine.GameObject/layer
         defaultValue: 0
+        extnalObj: {fileID: 0}
+        xOffset: 0
+        yOffset: 0
+        IsStatic: 0
+        IsMatch: 0
+    - rid: 7949862977550417921
+      type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
+      data:
+        Key: 
+        IsBinding: 0
+        BindingPath: UnityEngine.GameObject/tag
+        defaultValue: 
         extnalObj: {fileID: 0}
         xOffset: 0
         yOffset: 0

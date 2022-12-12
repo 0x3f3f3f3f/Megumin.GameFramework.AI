@@ -27,10 +27,9 @@ namespace Megumin.Binding
         //T DefaultValue { get; set; }
     }
 
-    public interface IUnityBindingParseable
+    public interface IBindingParseable
     {
-        void InitializeBinding(GameObject gameObject, bool force = false);
-
+        void ParseBinding(object bindInstance, bool force = false);
         void DebugParseResult();
     }
 }
