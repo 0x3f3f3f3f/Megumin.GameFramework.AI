@@ -68,10 +68,16 @@ namespace Megumin.Binding
             };
 
         /// <summary>
-        /// 多级成员绑定
+        /// 多级成员绑定 ✅
         /// </summary>
         public BindableValue<string> GameObjectTransformTag
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/transform/tag" };
+
+        /// <summary>
+        /// 多级成员绑定 ✅
+        /// </summary>
+        public BindableValue<string> MyTestInnerClass
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
         /// 静态类型绑定 ✅
@@ -86,7 +92,7 @@ namespace Megumin.Binding
             = new BindableValue<float>() { BindingPath = "UnityEngine.Time/fixedDeltaTime" };
 
         /// <summary>
-        /// 绑定非序列化类型
+        /// 绑定非序列化类型 ✅
         /// </summary>
         public BindableValue<DateTimeOffset> DateTimeOffsetOffset
             = new BindableValue<DateTimeOffset>()
@@ -153,6 +159,7 @@ namespace Megumin.Binding
             IBindables.Add(new BindableValueInt() { Key = nameof(TestSO.NeedOverrideInt3) });
         }
 
+
         [Editor]
         public void Parse()
         {
@@ -175,7 +182,7 @@ namespace Megumin.Binding
         {
             var f = GameObjectTransformTag;
             f.ParseBinding(gameObject, true);
-            CustomTestField.Value = "MySetValueTest";
+            f.Value = "Finish";
             Debug.Log($"{f.BindingPath}   {f.Value}");
         }
 

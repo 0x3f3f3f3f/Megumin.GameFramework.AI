@@ -30,6 +30,8 @@ namespace Megumin.Binding
 
     }
 
+
+
     public class CostomTest : MonoBehaviour, ICostomTestInterface
     {
         public int MyIntField1 = 100;
@@ -68,5 +70,35 @@ namespace Megumin.Binding
         {
             return MystringField2;
         }
+
+        public TestInnerClass MyTestInnerClassField = new TestInnerClass();
+    }
+
+    public class TestInnerClass
+    {
+        public int MyIntField1 = 100;
+        public int MyIntField2 = 200;
+
+
+        public int MyIntProperty1 { get; set; } = 100;
+        public int MyIntProperty2 => MyIntProperty2;
+
+        public int MyIntMethod1()
+        {
+            return MyIntField1;
+        }
+
+        public int MyIntMethod2(GameObject game)
+        {
+            return MyIntField2;
+        }
+
+
+        public string MystringField1 = "TestInnerClass_HelloWorld1";
+        public string MystringField2 = "TestInnerClass_HelloWorld2";
+
+        [field: SerializeField]
+        public string MystringProperty1 { get; set; } = "MystringPropertyHelloWorld1";
+        public string MystringProperty2 => MystringProperty2;
     }
 }

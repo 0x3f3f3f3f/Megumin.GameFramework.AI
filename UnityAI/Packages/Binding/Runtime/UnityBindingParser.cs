@@ -73,13 +73,53 @@ namespace Megumin.Binding
                             }
                         }
                     }
-                    else
+                    else if (path.Length == 2)
                     {
-                        //处理中间层级
-                        //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
                         return CreateDelegate<T>(instanceType, instance, path[1]);
                     }
+                    else
+                    {
+                        if (true)
+                        {
+                            //使用委托链的方式处理多级层级绑定
+                            //https://zhuanlan.zhihu.com/p/105292546
 
+                            Delegate getInstaneceDelegate = null;
+                            Type innerInStanceType = instanceType;
+                            (getInstaneceDelegate, innerInStanceType) = GetGetInstanceDelegateAndReturnType(innerInStanceType, instance, path[1]);
+
+                            for (int i = 2; i < path.Length - 1; i++)
+                            {
+                                (getInstaneceDelegate, innerInStanceType) =
+                                    GetGetInstanceDelegateAndReturnType(innerInStanceType, getInstaneceDelegate, path[i], true);
+                            }
+
+                            if (innerInStanceType != null)
+                            {
+                                return CreateDelegate<T>(innerInStanceType, getInstaneceDelegate, path[path.Length - 1], true);
+                            }
+                        }
+                        else
+                        {
+                            //使用实例链的方式处理多级层级绑定
+                            object innerIntance = instance;
+                            Type innerInStanceType = instanceType;
+                            for (int i = 1; i < path.Length - 1; i++)
+                            {
+                                var member = path[i];
+                                //处理中间层级 每级都取得实例，优点是最终生成的委托性能较高。缺点是中间级别如果对象重新赋值，需要重新绑定。
+                                (innerIntance, innerInStanceType) = GetInstanceAndType(innerInStanceType, innerIntance, member);
+                            }
+
+                            if (innerInStanceType != null)
+                            {
+                                return CreateDelegate<T>(innerInStanceType, innerIntance, path[path.Length - 1]);
+                            }
+
+                        }
+
+                        Debug.LogWarning($"无法处理多层级绑定 {path[0]}");
+                    }
                 }
                 else
                 {
@@ -100,13 +140,16 @@ namespace Megumin.Binding
         /// <param name="ParseResult"></param>
         /// <param name="Getter"></param>
         /// <param name="Setter"></param>
+        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
+        /// </param>
         /// <returns>是否含有成员</returns>
         public static bool TryCreatePropertyDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
                                                      out BindResult ParseResult,
                                                      out Func<T> Getter,
-                                                     out Action<T> Setter)
+                                                     out Action<T> Setter,
+                                                     bool instanceIsGetDelegate = false)
         {
             ParseResult = BindResult.None;
             Getter = null;
@@ -128,12 +171,35 @@ namespace Megumin.Binding
                     {
                         if (instance == null)
                         {
-                            Debug.LogError("instance is null");
+                            Debug.LogError("instanceDelegate is null");
                         }
                         else
                         {
-                            Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
-                            ParseResult |= BindResult.Get;
+                            if (instanceIsGetDelegate)
+                            {
+                                if (instance is Delegate getInstance)
+                                {
+                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, typeof(T));
+
+                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                                    //Debug.Log(message);
+
+                                    var getDeletgate = getMethod.CreateDelegate(getterDelegateType);
+
+                                    Getter = () =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        var r = getDeletgate.DynamicInvoke(temp);
+                                        return (T)r;
+                                    };
+                                    ParseResult |= BindResult.Get;
+                                }
+                            }
+                            else
+                            {
+                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
+                                ParseResult |= BindResult.Get;
+                            }
                         }
                     }
                 }
@@ -150,12 +216,33 @@ namespace Megumin.Binding
                     {
                         if (instance == null)
                         {
-                            Debug.LogError("instance is null");
+                            Debug.LogError("instanceDelegate is null");
                         }
                         else
                         {
-                            Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
-                            ParseResult |= BindResult.Set;
+                            if (instanceIsGetDelegate)
+                            {
+                                if (instance is Delegate getInstance)
+                                {
+                                    Type setterDelegateType = typeof(Action<,>).MakeGenericType(instanceType, typeof(T));
+
+                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                                    //Debug.Log(message);
+
+                                    var setDelegate = setMethod.CreateDelegate(setterDelegateType);
+                                    Setter = (value) =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        setDelegate.DynamicInvoke(temp, value);
+                                    };
+                                    ParseResult |= BindResult.Set;
+                                }
+                            }
+                            else
+                            {
+                                Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
+                                ParseResult |= BindResult.Set;
+                            }
                         }
                     }
                 }
@@ -168,6 +255,7 @@ namespace Megumin.Binding
             }
         }
 
+
         /// <summary>
         /// 尝试绑定field
         /// </summary>
@@ -178,13 +266,15 @@ namespace Megumin.Binding
         /// <param name="ParseResult"></param>
         /// <param name="Getter"></param>
         /// <param name="Setter"></param>
+        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
         /// <returns>是否含有成员</returns>
         public static bool TryCreateFieldDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
                                                      out BindResult ParseResult,
                                                      out Func<T> Getter,
-                                                     out Action<T> Setter)
+                                                     out Action<T> Setter,
+                                                     bool instanceIsGetDelegate = false)
         {
             ParseResult = BindResult.None;
             Getter = null;
@@ -206,15 +296,31 @@ namespace Megumin.Binding
                     {
                         if (instance == null)
                         {
-                            Debug.LogError("instance is null");
+                            Debug.LogError("instanceDelegate is null");
                         }
                         else
                         {
-                            Getter = () =>
+                            if (instanceIsGetDelegate)
                             {
-                                return (T)fieldInfo.GetValue(instance);
-                            };
-                            ParseResult |= BindResult.Get;
+                                if (instance is Delegate getInstance)
+                                {
+                                    Getter = () =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        var r = fieldInfo.GetValue(temp);
+                                        return (T)r;
+                                    };
+                                    ParseResult |= BindResult.Get;
+                                }
+                            }
+                            else
+                            {
+                                Getter = () =>
+                                {
+                                    return (T)fieldInfo.GetValue(instance);
+                                };
+                                ParseResult |= BindResult.Get;
+                            }
                         }
                     }
                 }
@@ -233,15 +339,30 @@ namespace Megumin.Binding
                     {
                         if (instance == null)
                         {
-                            Debug.LogError("instance is null");
+                            Debug.LogError("instanceDelegate is null");
                         }
                         else
                         {
-                            Setter = (value) =>
+                            if (instanceIsGetDelegate)
                             {
-                                fieldInfo.SetValue(instance, value);
-                            };
-                            ParseResult |= BindResult.Set;
+                                if (instance is Delegate getInstance)
+                                {
+                                    Setter = (value) =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        fieldInfo.SetValue(temp, value);
+                                    };
+                                    ParseResult |= BindResult.Set;
+                                }
+                            }
+                            else
+                            {
+                                Setter = (value) =>
+                                {
+                                    fieldInfo.SetValue(instance, value);
+                                };
+                                ParseResult |= BindResult.Set;
+                            }
                         }
                     }
                 }
@@ -264,13 +385,15 @@ namespace Megumin.Binding
         /// <param name="ParseResult"></param>
         /// <param name="Getter"></param>
         /// <param name="Setter"></param>
+        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
         /// <returns>是否含有成员</returns>
         public static bool TryCreateMethodDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
                                                      out BindResult ParseResult,
                                                      out Func<T> Getter,
-                                                     out Action<T> Setter)
+                                                     out Action<T> Setter,
+                                                     bool instanceIsGetDelegate = false)
         {
             ParseResult = BindResult.None;
             Getter = null;
@@ -296,8 +419,38 @@ namespace Megumin.Binding
                     }
                     else
                     {
-                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, methodInfo);
-                        ParseResult |= BindResult.Get;
+                        if (instance == null)
+                        {
+                            Debug.LogError("instanceDelegate is null");
+                        }
+                        else
+                        {
+                            if (instanceIsGetDelegate)
+                            {
+                                if (instance is Delegate getInstance)
+                                {
+                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, typeof(T));
+
+                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                                    //Debug.Log(message);
+
+                                    var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
+
+                                    Getter = () =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        var r = getDeletgate.DynamicInvoke(temp);
+                                        return (T)r;
+                                    };
+                                    ParseResult |= BindResult.Get;
+                                }
+                            }
+                            else
+                            {
+                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, methodInfo);
+                                ParseResult |= BindResult.Get;
+                            }
+                        }
                     }
                 }
                 else
@@ -313,8 +466,20 @@ namespace Megumin.Binding
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instanceIsGetDelegate">instance 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate时会出现冲突。
+        /// <returns></returns>
         public static (BindResult ParseResult, Func<T> Getter, Action<T> Setter)
-            CreateDelegate<T>(Type instanceType, object instance, string memberName)
+            CreateDelegate<T>(Type instanceType,
+                              object instance,
+                              string memberName,
+                              bool instanceIsGetDelegate = false)
         {
             BindResult ParseResult = BindResult.None;
             Func<T> Getter = null;
@@ -324,17 +489,17 @@ namespace Megumin.Binding
             {
                 //属性 字段 方法 逐一尝试绑定。
 
-                if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
+                if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
                 {
                     return (ParseResult, Getter, Setter);
                 }
 
-                if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
+                if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
                 {
                     return (ParseResult, Getter, Setter);
                 }
 
-                if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter))
+                if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
                 {
                     return (ParseResult, Getter, Setter);
                 }
@@ -348,14 +513,131 @@ namespace Megumin.Binding
             return (ParseResult, Getter, Setter);
         }
 
-        public static (object nextIntance, Type memberType)
+        /// <summary>
+        /// 生成一个获取实例的委托。
+        /// </summary>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <returns></returns>
+        public static (Delegate GetInstanceDelegate, Type InstanceType)
+            GetGetInstanceDelegateAndReturnType(Type instanceType,
+            object instance,
+            string memberName,
+                              bool instanceIsGetDelegate = false)
+        {
+            //必须传instance 和Type,可能是静态类型。
+            {
+                var propertyInfo = instanceType.GetProperty(memberName);
+                if (propertyInfo != null)
+                {
+                    if (propertyInfo.CanRead)
+                    {
+                        var getMethod = propertyInfo.GetGetMethod();
+                        if (getMethod.IsStatic)
+                        {
+                            var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), null, getMethod);
+                            return (getInstanceDelegate, getMethod.ReturnType);
+                        }
+                        else
+                        {
+                            if (instance == null)
+                            {
+                                Debug.LogError("instanceDelegate is null");
+                                return (null, getMethod.ReturnType);
+                            }
+                            else
+                            {
+                                if (instanceIsGetDelegate)
+                                {
+
+                                }
+                                else
+                                {
+                                    var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), instance, getMethod);
+                                    return (getInstanceDelegate, getMethod.ReturnType);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            {
+                var fieldInfo = instanceType.GetField(memberName);
+                if (fieldInfo != null)
+                {
+                    if (fieldInfo.IsStatic)
+                    {
+                        Func<object> d = () => { return fieldInfo.GetValue(null); };
+                        Type memberType = fieldInfo.FieldType;
+                        return (d, memberType);
+                    }
+                    else
+                    {
+                        Func<object> d = () => { return fieldInfo.GetValue(instance); };
+                        Type memberType = fieldInfo.FieldType;
+                        return (d, memberType);
+                    }
+                }
+            }
+
+            {
+                var methodInfo = instanceType.GetMethod(memberName);
+                if (methodInfo != null)
+                {
+                    if (methodInfo.IsStatic)
+                    {
+                        var d = Delegate.CreateDelegate(typeof(Func<object>), null, methodInfo);
+                        return (d, methodInfo.ReturnType);
+                    }
+                    else
+                    {
+                        var d = Delegate.CreateDelegate(typeof(Func<object>), instance, methodInfo);
+                        return (d, methodInfo.ReturnType);
+                    }
+                }
+            }
+
+            return (null, null);
+        }
+
+
+        public static (object Intance, Type InstanceType)
             GetInstanceAndType(Type instanceType, object instance, string memberName)
         {
             //必须传instance 和Type,可能是静态类型。
-            var nextmember = instanceType.GetProperty(memberName);
-            var nextIntance = nextmember.GetValue(instance, null);
-            Type memberType = nextmember.PropertyType;
-            return (nextIntance, memberType);
+            {
+                var propertyInfo = instanceType.GetProperty(memberName);
+                if (propertyInfo != null)
+                {
+                    var nextIntance = propertyInfo.GetValue(instance, null);
+                    Type memberType = propertyInfo.PropertyType;
+                    return (nextIntance, memberType);
+                }
+            }
+
+            {
+                var fieldInfo = instanceType.GetField(memberName);
+                if (fieldInfo != null)
+                {
+                    var nextIntance = fieldInfo.GetValue(instance);
+                    Type memberType = fieldInfo.FieldType;
+                    return (nextIntance, memberType);
+                }
+            }
+
+            {
+                var methodInfo = instanceType.GetMethod(memberName);
+                if (methodInfo != null)
+                {
+                    var nextIntance = methodInfo.Invoke(instance, null);
+                    Type memberType = methodInfo.ReturnType;
+                    return (nextIntance, memberType);
+                }
+            }
+
+            return (null, null);
         }
 
         /// <summary>
