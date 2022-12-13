@@ -21,7 +21,7 @@ namespace Megumin.Binding
         /// <summary>
         /// null表示还没有解析绑定
         /// </summary>
-        protected BindResult? ParseResult = null;
+        protected ParseBindingResult? ParseResult = null;
         protected Func<T> Getter;
         protected Action<T> Setter;
 

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -31,5 +31,17 @@ namespace Megumin.Binding
     {
         void ParseBinding(object bindInstance, bool force = false);
         string DebugParseResult();
+    }
+
+    [Flags]
+    public enum ParseBindingResult
+    {
+        /// <summary>
+        /// Get Set 均解析失败
+        /// </summary>
+        None = 0,
+        Get = 1 << 0,
+        Set = 1 << 1,
+        Both = Get | Set,
     }
 }
