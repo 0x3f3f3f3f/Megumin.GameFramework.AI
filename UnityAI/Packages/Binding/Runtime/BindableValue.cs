@@ -77,8 +77,15 @@ namespace Megumin.Binding
         {
             if (ParseResult == null || force)
             {
+                object instance = bindInstance;
+                if (extnalObj != null && extnalObj)
+                {
+                    //有限使用自己保存的对象
+                    instance = extnalObj;
+                }
+
                 (ParseResult, Getter, Setter) =
-                    BindingParser.Instance.InitializeBinding<T>(BindingPath, bindInstance, extnalObj);
+                    BindingParser.Instance.InitializeBinding<T>(BindingPath, instance);
             }
         }
 

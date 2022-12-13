@@ -9,6 +9,8 @@ namespace Megumin.Binding
     /// <summary>
     /// BindingString格式:  (组件类|静态类|接口)/成员/....../成员/成员。  
     /// 最后一个成员的类型需要满足绑定类型，或者可以通过类型适配器转换成绑定类型。
+    /// 
+    /// https://codeblog.jonskeet.uk/2008/08/09/making-reflection-fly-and-exploring-delegates/
     /// </summary>
     public class UnityBindingParser : BindingParser
     {
@@ -23,8 +25,11 @@ namespace Megumin.Binding
         {
             Instance = new UnityBindingParser();
 
-            ///预调用
-            CacheAllTypesAsync();
+            if (Application.isPlaying) ///编辑器模式不要预调研，频繁修改代码会很卡并且打印警告
+            {
+                ///预调用
+                CacheAllTypesAsync();
+            }
         }
 
         /// <summary>
@@ -33,27 +38,31 @@ namespace Megumin.Binding
         public bool DeepParseMode = true;
 
         public override (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
-            InitializeBinding<T>(string BindingString, object agent, object extnalObj)
+            InitializeBinding<T>(string bindingString, object bindingInstance)
         {
             ParseBindingResult ParseResult = ParseBindingResult.None;
             Func<T> Getter = null;
             Action<T> Setter = null;
 
 
-            if (string.IsNullOrEmpty(BindingString))
+            if (string.IsNullOrEmpty(bindingString))
             {
 
             }
             else
             {
-                var path = BindingString.Split('/');
-                GameObject gameObject = agent as GameObject;
-                if (extnalObj is GameObject ex && ex)
+                var path = bindingString.Split('/');
+                GameObject rootInstance = bindingInstance as GameObject;
+
+                if (!rootInstance)
                 {
-                    gameObject = ex;
+                    if (bindingInstance is Component component)
+                    {
+                        rootInstance = component.gameObject;
+                    }
                 }
 
-                var (instance, instanceType) = GetBindInstanceAndType(path[0], gameObject);
+                var (instance, instanceType) = GetBindInstanceAndType(path[0], rootInstance);
 
                 if (instanceType != null)
                 {
@@ -316,6 +325,13 @@ namespace Megumin.Binding
                             }
                             else
                             {
+                                //TODO: fieldInfo.GetValue 是否有必要转换成委托？
+                                //Func<object, object> func = fieldInfo.GetValue;
+                                //Getter = () =>
+                                //{
+                                //    return (T)func(instance);
+                                //};
+
                                 Getter = () =>
                                 {
                                     return (T)fieldInfo.GetValue(instance);
