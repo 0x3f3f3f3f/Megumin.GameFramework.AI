@@ -172,7 +172,7 @@ namespace Megumin.Binding
 
             //Debug.Log(Time.fixedDeltaTime);
 
-            var f = GameObjectTransformTag;
+            var f = MyTestInnerClass;
             f.ParseBinding(gameObject, true);
             Debug.Log($"{f.BindingPath}   {f.Value}");
         }
@@ -180,7 +180,7 @@ namespace Megumin.Binding
         [Editor]
         public void SetValue()
         {
-            var f = GameObjectTransformTag;
+            var f = MyTestInnerClass;
             f.ParseBinding(gameObject, true);
             f.Value = "Finish";
             Debug.Log($"{f.BindingPath}   {f.Value}");
@@ -217,6 +217,48 @@ namespace Megumin.Binding
         };
 
 #endif
+
+        private string debugString;
+        private void OnGUI()
+        {
+            ///打包测试
+
+
+            GUILayout.BeginArea(new Rect(100, Screen.height / 2, Screen.width - 200, Screen.height / 2));
+            GUILayout.Label($"Value  :  {debugString}", GUILayout.ExpandWidth(true));
+
+            var fields = this.GetType().GetFields();
+
+            foreach (var field in fields)
+            {
+                if (typeof(IBindingParseable).IsAssignableFrom(field.FieldType))
+                {
+                    var p = (IBindingParseable)field.GetValue(this);
+                    if (GUILayout.Button(field.Name))
+                    {
+                        p.ParseBinding(gameObject, true);
+                        debugString = p.DebugParseResult();
+                    }
+                }
+            }
+            
+            var properties = this.GetType().GetProperties();
+            
+            foreach (var property in properties)
+            {
+                if (typeof(IBindingParseable).IsAssignableFrom(property.PropertyType))
+                {
+                    var p = (IBindingParseable)property.GetValue(this);
+                    if (GUILayout.Button(property.Name))
+                    {
+                        p.ParseBinding(gameObject, true);
+                        debugString = p.DebugParseResult();
+                    }
+                }
+            }
+
+            GUILayout.EndArea();
+        }
     }
 }
 

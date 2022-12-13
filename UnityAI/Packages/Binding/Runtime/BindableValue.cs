@@ -82,9 +82,11 @@ namespace Megumin.Binding
             }
         }
 
-        public void DebugParseResult()
+        public string DebugParseResult()
         {
-            Debug.Log($"ParseResult:{ParseResult}    {Value}");
+            string message = $"ParseResult:{ParseResult}    {Value}";
+            Debug.Log(message);
+            return message;
         }
     }
 

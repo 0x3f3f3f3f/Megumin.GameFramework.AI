@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using UnityEditor;
-using UnityEditor.Search;
 using UnityEngine;
-using static PlasticGui.PlasticTableCell;
 
 namespace Megumin.Binding
 {
@@ -514,17 +509,22 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 生成一个获取实例的委托。
+        /// 生成一个获取memberName值的委托和memberName值类型。
         /// </summary>
         /// <param name="instanceType"></param>
         /// <param name="instance"></param>
         /// <param name="memberName"></param>
         /// <returns></returns>
+        /// <remarks>
+        /// 考虑一种用例，一个属性返回一个class1类型，返回值时null，但是class1含有静态成员。
+        /// 那么即使中间出现null实例，因为后续绑定是静态的，所以也能成立。
+        /// null无法取得类型信息，所以instanceType和instance要独立返回。
+        /// </remarks>
         public static (Delegate GetInstanceDelegate, Type InstanceType)
             GetGetInstanceDelegateAndReturnType(Type instanceType,
-            object instance,
-            string memberName,
-                              bool instanceIsGetDelegate = false)
+                                                object instance,
+                                                string memberName,
+                                                bool instanceIsGetDelegate = false)
         {
             //必须传instance 和Type,可能是静态类型。
             {
@@ -543,14 +543,30 @@ namespace Megumin.Binding
                         {
                             if (instance == null)
                             {
-                                Debug.LogError("instanceDelegate is null");
                                 return (null, getMethod.ReturnType);
                             }
                             else
                             {
                                 if (instanceIsGetDelegate)
                                 {
+                                    if (instance is Delegate getInstance)
+                                    {
+                                        Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, getMethod.ReturnType);
 
+                                        //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                                        //Debug.Log(message);
+
+                                        var getDeletgate = getMethod.CreateDelegate(getterDelegateType);
+
+                                        Func<object> getInstanceDelegate = () =>
+                                        {
+                                            var temp = getInstance.DynamicInvoke();
+                                            var r = getDeletgate.DynamicInvoke(temp);
+                                            return r;
+                                        };
+
+                                        return (getInstanceDelegate, getMethod.ReturnType);
+                                    }
                                 }
                                 else
                                 {
@@ -569,15 +585,37 @@ namespace Megumin.Binding
                 {
                     if (fieldInfo.IsStatic)
                     {
-                        Func<object> d = () => { return fieldInfo.GetValue(null); };
-                        Type memberType = fieldInfo.FieldType;
-                        return (d, memberType);
+                        Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(null); };
+                        return (getInstanceDelegate, fieldInfo.FieldType);
                     }
                     else
                     {
-                        Func<object> d = () => { return fieldInfo.GetValue(instance); };
-                        Type memberType = fieldInfo.FieldType;
-                        return (d, memberType);
+                        if (instance == null)
+                        {
+                            return (null, fieldInfo.FieldType);
+                        }
+                        else
+                        {
+                            if (instanceIsGetDelegate)
+                            {
+                                if (instance is Delegate getInstance)
+                                {
+                                    Func<object> getInstanceDelegate = () =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        return fieldInfo.GetValue(temp);
+                                    };
+
+                                    return (getInstanceDelegate, fieldInfo.FieldType);
+                                }
+                            }
+                            else
+                            {
+                                Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(instance); };
+                                return (getInstanceDelegate, fieldInfo.FieldType);
+                            }
+                        }
+
                     }
                 }
             }
@@ -588,13 +626,44 @@ namespace Megumin.Binding
                 {
                     if (methodInfo.IsStatic)
                     {
-                        var d = Delegate.CreateDelegate(typeof(Func<object>), null, methodInfo);
-                        return (d, methodInfo.ReturnType);
+                        var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), null, methodInfo);
+                        return (getInstanceDelegate, methodInfo.ReturnType);
                     }
                     else
                     {
-                        var d = Delegate.CreateDelegate(typeof(Func<object>), instance, methodInfo);
-                        return (d, methodInfo.ReturnType);
+                        if (instance == null)
+                        {
+                            return (null, methodInfo.ReturnType);
+                        }
+                        else
+                        {
+                            if (instanceIsGetDelegate)
+                            {
+                                if (instance is Delegate getInstance)
+                                {
+                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, methodInfo.ReturnType);
+
+                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                                    //Debug.Log(message);
+
+                                    var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
+
+                                    Func<object> getInstanceDelegate = () =>
+                                    {
+                                        var temp = getInstance.DynamicInvoke();
+                                        var r = getDeletgate.DynamicInvoke(temp);
+                                        return r;
+                                    };
+
+                                    return (getInstanceDelegate, methodInfo.ReturnType);
+                                }
+                            }
+                            else
+                            {
+                                var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), instance, methodInfo);
+                                return (getInstanceDelegate, methodInfo.ReturnType);
+                            }
+                        }
                     }
                 }
             }
