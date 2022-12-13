@@ -134,6 +134,26 @@ MonoBehaviour:
     yOffset: 0
     IsStatic: 0
     IsMatch: 0
+  MyTestInnerClass:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MystringField1
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
+  MyTestInnerClassDeep2:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+    IsMatch: 0
   ApplicationVersion:
     Key: 
     IsBinding: 0
@@ -213,12 +233,12 @@ MonoBehaviour:
     IsMatch: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949862991486779392
-  - rid: 7949862991486779393
+  - rid: 7949863000283021312
+  - rid: 7949863000283021313
   references:
     version: 2
     RefIds:
-    - rid: 7949862991486779392
+    - rid: 7949863000283021312
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -230,7 +250,7 @@ MonoBehaviour:
         yOffset: 0
         IsStatic: 0
         IsMatch: 0
-    - rid: 7949862991486779393
+    - rid: 7949863000283021313
       type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 

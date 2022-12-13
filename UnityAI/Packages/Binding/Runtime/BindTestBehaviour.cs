@@ -80,6 +80,12 @@ namespace Megumin.Binding
             = new BindableValue<string>() { BindingPath = "Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
+        /// 多级成员绑定 ✅
+        /// </summary>
+        public BindableValue<string> MyTestInnerClassDeep2
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
+
+        /// <summary>
         /// 静态类型绑定 ✅
         /// </summary>
         public BindableValue<string> ApplicationVersion
@@ -184,6 +190,14 @@ namespace Megumin.Binding
             f.ParseBinding(gameObject, true);
             f.Value = "Finish";
             Debug.Log($"{f.BindingPath}   {f.Value}");
+        }
+
+        public void AOT()
+        {
+            //注意 成员很可能被IL2CPP剪裁掉导致无法绑定。
+            Debug.Log(Application.version);
+            Debug.Log(Time.time);
+            Debug.Log(DateTimeOffset.Now);
         }
 
 #if UNITY_2023_1_OR_NEWER

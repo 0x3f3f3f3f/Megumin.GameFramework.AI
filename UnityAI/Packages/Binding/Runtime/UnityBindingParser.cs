@@ -27,6 +27,11 @@ namespace Megumin.Binding
             CacheAllTypesAsync();
         }
 
+        /// <summary>
+        /// 委托链模式还是实例链模式
+        /// </summary>
+        public bool DeepParseMode = true;
+
         public override (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
             InitializeBinding<T>(string BindingString, object agent, object extnalObj)
         {
@@ -74,14 +79,15 @@ namespace Megumin.Binding
                     }
                     else
                     {
-                        if (true)
+                        if (DeepParseMode)
                         {
                             //使用委托链的方式处理多级层级绑定
                             //https://zhuanlan.zhihu.com/p/105292546
 
                             Delegate getInstaneceDelegate = null;
                             Type innerInStanceType = instanceType;
-                            (getInstaneceDelegate, innerInStanceType) = GetGetInstanceDelegateAndReturnType(innerInStanceType, instance, path[1]);
+                            (getInstaneceDelegate, innerInStanceType)
+                                = GetGetInstanceDelegateAndReturnType(innerInStanceType, instance, path[1]);
 
                             for (int i = 2; i < path.Length - 1; i++)
                             {
@@ -504,7 +510,7 @@ namespace Megumin.Binding
                 Debug.LogWarning($"BindParse {e}");
             }
 
-            Debug.LogWarning($"{instanceType.FullName} 没有找到成员 {memberName}");
+            Debug.LogWarning($"{instanceType.FullName} 没有找到成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
             return (ParseResult, Getter, Setter);
         }
 

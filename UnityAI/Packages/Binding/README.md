@@ -30,6 +30,7 @@ public enum ParseBindingResult
 - [x] 多层级绑定
 - [ ] 模糊匹配
 - [ ] 纯C#运行时支持，使用表达式树优化解析。
++ [x] Mono打包验证
 + [x] IL2CPP打包验证
 + [x] 手动填写BindingPath
 + [ ] 快速绑定工具Unity编辑器
@@ -37,6 +38,9 @@ public enum ParseBindingResult
 
 ## 性能
 最好只绑定一个级别成员，深度越大，性能越低。
+
+## 注意
+- 成员很可能被IL2CPP剪裁掉导致无法绑定。
 
 ## 示例
 参考 BindTestBehaviour.cs

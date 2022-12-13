@@ -59,7 +59,7 @@ namespace Megumin.Binding
         public string MystringProperty1 { get; set; } = "MystringPropertyHelloWorld1";
         public string MystringProperty2 => MystringProperty2;
 
-        public Type TypeProperty1 { get; set; } = typeof(System.Tuple<int,string>);
+        public Type TypeProperty1 { get; set; } = typeof(System.Tuple<int, string>);
 
         public string MystringMethod1()
         {
@@ -99,6 +99,36 @@ namespace Megumin.Binding
 
         [field: SerializeField]
         public string MystringProperty1 { get; set; } = "MystringPropertyHelloWorld1";
+        public string MystringProperty2 => MystringProperty2;
+
+        public TestInnerClassDeep2 MyTestInnerClassDeep2 { get; set; } = new TestInnerClassDeep2();
+    }
+
+    public class TestInnerClassDeep2
+    {
+        public int MyIntField1 = 100;
+        public int MyIntField2 = 200;
+
+
+        public int MyIntProperty1 { get; set; } = 100;
+        public int MyIntProperty2 => MyIntProperty2;
+
+        public int MyIntMethod1()
+        {
+            return MyIntField1;
+        }
+
+        public int MyIntMethod2(GameObject game)
+        {
+            return MyIntField2;
+        }
+
+
+        public string MystringField1 = "TestInnerClassDeep2_HelloWorld1";
+        public string MystringField2 = "TestInnerClassDeep2_HelloWorld2";
+
+        [field: SerializeField]
+        public string MystringProperty1 { get; set; } = "MystringProperty TestInnerClassDeep2 HelloWorld1";
         public string MystringProperty2 => MystringProperty2;
     }
 }
