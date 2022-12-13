@@ -507,7 +507,8 @@ namespace Megumin.Binding
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"BindParse {e}");
+                Debug.LogWarning($"ParseError:  {e}");
+                return (ParseResult, Getter, Setter);
             }
 
             Debug.LogWarning($"{instanceType.FullName} 没有找到成员 {memberName}。请确认成员是否被IL2CPP剪裁。");

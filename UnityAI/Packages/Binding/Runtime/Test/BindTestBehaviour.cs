@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace Megumin.Binding
+namespace Megumin.Binding.Test
 {
     public class BindTestBehaviour : MonoBehaviour
     {
@@ -34,7 +34,7 @@ namespace Megumin.Binding
             = new BindableValue<string>()
             {
                 DefaultValue = "MathFailure",
-                BindingPath = "Megumin.Binding.CostomTest/MystringField1"
+                BindingPath = "Megumin.Binding.Test.CostomTest/MystringField1"
             };
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Megumin.Binding
             = new BindableValue<string>()
             {
                 DefaultValue = "MathFailure_CustomTestFieldByInterface",
-                BindingPath = "Megumin.Binding.ICostomTestInterface/MystringField1"
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringField1"
             };
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Megumin.Binding
             = new BindableValue<string>()
             {
                 DefaultValue = "MathFailure_CustomTestFieldByInterface2",
-                BindingPath = "Megumin.Binding.ICostomTestInterface2/MystringField1"
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface2/MystringField1"
             };
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Megumin.Binding
             = new BindableValue<string>()
             {
                 DefaultValue = "MathFailure_CostomTestClass",
-                BindingPath = "Megumin.Binding.CostomTestClass/MystringField1"
+                BindingPath = "Megumin.Binding.Test.CostomTestClass/MystringField1"
             };
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Megumin.Binding
         /// 多级成员绑定 ✅
         /// </summary>
         public BindableValue<string> MyTestInnerClass
-            = new BindableValue<string>() { BindingPath = "Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
         /// 多级成员绑定 ✅
         /// </summary>
         public BindableValue<string> MyTestInnerClassDeep2
-            = new BindableValue<string>() { BindingPath = "Megumin.Binding.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
 
         /// <summary>
         /// 静态类型绑定 ✅
@@ -124,7 +124,7 @@ namespace Megumin.Binding
             = new BindableValue<Type>()
             {
                 DefaultValue = typeof(System.Version),
-                BindingPath = "Megumin.Binding.ICostomTestInterface/TypeProperty1",
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/TypeProperty1",
             };
 
         /// <summary>
@@ -165,26 +165,8 @@ namespace Megumin.Binding
             IBindables.Add(new BindableValueInt() { Key = nameof(TestSO.NeedOverrideInt3) });
         }
 
-
         [Editor]
-        public void Parse()
-        {
-            //var b = TestSO.BindInt;
-            //b.ParseBinding(gameObject);
-            //Debug.Log(b.Value);
-
-            //GString222.ParseBinding(gameObject);
-            //Debug.Log(GString222.Value);
-
-            //Debug.Log(Time.fixedDeltaTime);
-
-            var f = MyTestInnerClass;
-            f.ParseBinding(gameObject, true);
-            Debug.Log($"{f.BindingPath}   {f.Value}");
-        }
-
-        [Editor]
-        public void SetValue()
+        public void SetValueTest()
         {
             var f = MyTestInnerClass;
             f.ParseBinding(gameObject, true);
@@ -239,7 +221,7 @@ namespace Megumin.Binding
 
 
             GUILayout.BeginArea(new Rect(100, Screen.height / 2, Screen.width - 200, Screen.height / 2));
-            GUILayout.Label($"Value  :  {debugString}", GUILayout.ExpandWidth(true));
+            GUILayout.Label($"DebugString  :  {debugString}", GUILayout.ExpandWidth(true));
 
             var fields = this.GetType().GetFields();
 
@@ -255,9 +237,9 @@ namespace Megumin.Binding
                     }
                 }
             }
-            
+
             var properties = this.GetType().GetProperties();
-            
+
             foreach (var property in properties)
             {
                 if (typeof(IBindingParseable).IsAssignableFrom(property.PropertyType))

@@ -84,7 +84,7 @@ namespace Megumin.Binding
 
         public string DebugParseResult()
         {
-            string message = $"ParseResult:{ParseResult}    {Value}";
+            string message = $"ParseResult:{ParseResult}  |  Value : {Value}  |  {BindingPath}";
             Debug.Log(message);
             return message;
         }

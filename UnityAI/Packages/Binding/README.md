@@ -40,7 +40,7 @@ public enum ParseBindingResult
 最好只绑定一个级别成员，深度越大，性能越低。
 
 ## 注意
-- 成员很可能被IL2CPP剪裁掉导致无法绑定。
+- 成员很可能被IL2CPP剪裁掉导致无法绑定，尤其是静态成员和泛型。
 
 ## 示例
 参考 BindTestBehaviour.cs
