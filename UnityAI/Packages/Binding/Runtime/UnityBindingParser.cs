@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Megumin.Binding.CacheType;
 
 namespace Megumin.Binding
 {
@@ -11,6 +13,7 @@ namespace Megumin.Binding
     /// 最后一个成员的类型需要满足绑定类型，或者可以通过类型适配器转换成绑定类型。
     /// 
     /// https://codeblog.jonskeet.uk/2008/08/09/making-reflection-fly-and-exploring-delegates/
+    /// https://www.cnblogs.com/xinaixia/p/5777886.html
     /// </summary>
     public class UnityBindingParser : BindingParser
     {
@@ -47,7 +50,7 @@ namespace Megumin.Binding
 
             if (string.IsNullOrEmpty(bindingString))
             {
-
+                
             }
             else
             {
@@ -196,6 +199,9 @@ namespace Megumin.Binding
 
                                     var getDeletgate = getMethod.CreateDelegate(getterDelegateType);
 
+                                    //TODO 使用强类型委托 避免 DynamicInvoke
+                                    //Func<object, T> getDeletgate2 = getDeletgate as Func<object, T>;
+
                                     Getter = () =>
                                     {
                                         var temp = getInstance.DynamicInvoke();
@@ -265,6 +271,31 @@ namespace Megumin.Binding
             }
         }
 
+        /// <summary>
+        /// TODO 强类型优化
+        /// </summary>
+        /// <typeparam name="I"></typeparam>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <param name="getInstance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="ParseResult"></param>
+        /// <param name="Getter"></param>
+        /// <param name="Setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        public static bool TryCreatePropertyDelegate<I, T>(I instance,
+                            Func<T> getInstance, string memberName,
+                            out ParseBindingResult ParseResult,
+                                                     out Func<T> Getter,
+                                                     out Action<T> Setter,
+                                                     bool instanceIsGetDelegate = false)
+        {
+            ParseResult = ParseBindingResult.None;
+            Getter = null;
+            Setter = null;
+            return false;
+        }
 
         /// <summary>
         /// 尝试绑定field
@@ -747,11 +778,11 @@ namespace Megumin.Binding
             }
 
             //TODO，绑定接口，通过接口取得组件
-            var type = GeComponentType(typeFullName);
+            var type = FindComponentType(typeFullName);
 
             if (type == null)
             {
-                type = GetCustomType(typeFullName);
+                type = FindType(typeFullName);
                 if (type != null && type.IsInterface)
                 {
                     var comp = gameObject.GetComponentInChildren(type);
@@ -760,7 +791,7 @@ namespace Megumin.Binding
                         return (comp, comp.GetType());
                     }
                 }
-
+                
                 return (gameObject, type);
             }
             else
@@ -770,128 +801,65 @@ namespace Megumin.Binding
             }
         }
 
-        static readonly Dictionary<string, Type> hotType = new Dictionary<string, Type>();
-        private static Type GetCustomType(string typeFullName)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <typeparam name="TTarget"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        class SetterWrapper<TTarget, TValue>
         {
-            if (hotType.TryGetValue(typeFullName, out var type))
-            {
-                return type;
-            }
-            else
-            {
-                CacheAllTypes();
-                if (allType.TryGetValue(typeFullName, out type))
-                {
-                    hotType[typeFullName] = type;
-                    return type;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            private Action<TTarget, TValue> _setter;
         }
 
-        static readonly Dictionary<string, Type> hotComponentType = new Dictionary<string, Type>();
-        public static Type GeComponentType(string typeFullName)
+        interface IGetValue
         {
-            if (hotComponentType.TryGetValue(typeFullName, out var type))
-            {
-                return type;
-            }
-            else
-            {
-                CacheAllTypes();
-                if (allComponentType.TryGetValue(typeFullName, out type))
-                {
-                    hotComponentType[typeFullName] = type;
-                    return type;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-
-        static readonly Dictionary<string, Type> allType = new Dictionary<string, Type>();
-        static readonly Dictionary<string, Type> allComponentType = new Dictionary<string, Type>();
-        static readonly Dictionary<string, Type> allUnityObjectType = new Dictionary<string, Type>();
-        static bool CacheTypeInit = false;
-        static bool LogCacheWorning = true;
-
-        public static void AddToDic(Dictionary<string, Type> dic, Type type, bool logworning = false)
-        {
-            //可能存在同名类型 internal,internal Component类型仍然可以挂在gameobject上，所以也要缓存。
-
-            if (dic.ContainsKey(type.FullName))
-            {
-                var old = dic[type.FullName];
-                if (old.IsPublic.CompareTo(type.IsPublic) <= 0)
-                {
-                    //Public 优先
-                    //Unity比System优先，程序集字母顺序unity靠后，自动满足条件。
-                    dic[type.FullName] = type;
-                }
-
-                if (LogCacheWorning || logworning)
-                {
-                    Debug.LogWarning($"Key already have  [{type.FullName}]" +
-                    $"\n    {type.Assembly.FullName}" +
-                    $"\n    {old.Assembly.FullName}");
-                }
-            }
-            else
-            {
-                dic[type.FullName] = type;
-            }
+            object Get(object target);
         }
 
         /// <summary>
-        /// 防止多个线程同时缓存浪费性能。
+        /// TODO 优化委托链调用
         /// </summary>
-        static readonly object cachelock = new object();
-
-        /// <summary>
-        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
-        /// </summary>
-        /// <param name="force"></param>
-        public static void CacheAllTypes(bool force = false)
+        /// <typeparam name="TTarget"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        class GetterWrapper<TTarget, TValue> : IGetValue
         {
-            lock (cachelock)
+            private Func<TTarget, TValue> _getter;
+
+            public GetterWrapper(PropertyInfo propertyInfo)
             {
-                if (CacheTypeInit == false || force)
-                {
-                    var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
-                    var debugabs = assemblies.ToArray();
-                    foreach (var assembly in assemblies)
-                    {
-                        var debug = assembly.GetTypes();
-                        foreach (var extype in assembly.GetTypes())
-                        {
-                            AddToDic(allType, extype);
+                if (propertyInfo == null)
+                    throw new ArgumentNullException("propertyInfo");
 
-                            if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
-                            {
-                                AddToDic(allUnityObjectType, extype);
+                if (propertyInfo.CanRead == false)
+                    throw new InvalidOperationException("属性不支持读操作。");
 
-                                if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
-                                {
-                                    AddToDic(allComponentType, extype);
-                                }
-                            }
-                        }
-                    }
-
-                    CacheTypeInit = true;
-                }
+                MethodInfo m = propertyInfo.GetGetMethod(true);
+                _getter = (Func<TTarget, TValue>)Delegate.CreateDelegate(typeof(Func<TTarget, TValue>), null, m);
             }
-        }
 
-        public static Task CacheAllTypesAsync(bool force = false)
-        {
-            return Task.Run(() => { CacheAllTypes(force); });
+            public TValue GetValue(TTarget target)
+            {
+                return _getter(target);
+            }
+            object IGetValue.Get(object target)
+            {
+                return _getter((TTarget)target);
+            }
         }
     }
 }
