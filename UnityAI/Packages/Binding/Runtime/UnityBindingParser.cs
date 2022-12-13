@@ -57,9 +57,29 @@ namespace Megumin.Binding
 
                 if (instanceType != null)
                 {
-                    //处理中间层级
-                    //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
-                    return CreateDelegate<T>(instanceType, instance, path[1]);
+                    if (path.Length == 1)
+                    {
+                        //当path中只有类型时，处理有限的绑定。
+                        if (typeof(T) == typeof(System.Type))
+                        {
+                            //处理Type绑定
+                            if (instanceType is T resulttype)
+                            {
+                                Getter = () =>
+                                {
+                                    return resulttype;
+                                };
+                                ParseResult |= BindResult.Get;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //处理中间层级
+                        //var (nextI, nextT) = GetInstanceAndType(path[1], instance, instanceType);
+                        return CreateDelegate<T>(instanceType, instance, path[1]);
+                    }
+
                 }
                 else
                 {

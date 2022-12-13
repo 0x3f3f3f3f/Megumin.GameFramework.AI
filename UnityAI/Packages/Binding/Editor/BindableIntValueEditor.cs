@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -56,6 +56,9 @@ namespace Megumin.Binding.Editor
 
                     if (GUILayout.Button($"{property.propertyPath}_TestParse"))
                     {
+                        //通过property取得实例对象
+                        //https://gist.github.com/douduck08/6d3e323b538a741466de00c30aa4b61f
+
                         var obj = property.serializedObject.targetObject;
                         object data = null;
                         if (property.propertyPath.EndsWith("]"))

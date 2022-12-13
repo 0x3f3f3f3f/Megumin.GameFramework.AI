@@ -92,11 +92,11 @@ namespace Megumin.Binding
             = new BindableValue<DateTimeOffset>()
             {
                 DefaultValue = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default),
-                BindingPath = "System.DateTimeOffset/LocalDateTime",
+                BindingPath = "System.DateTimeOffset/Now",
             };
 
         /// <summary>
-        /// 绑定非序列化类型
+        /// 绑定非序列化类型 ✅
         /// </summary>
         public BindableValue<Type> BindType
             = new BindableValue<Type>()
@@ -106,19 +106,29 @@ namespace Megumin.Binding
             };
 
         /// <summary>
+        /// 绑定非序列化类型 ✅
+        /// </summary>
+        public BindableValue<Type> BindTypeProperty
+            = new BindableValue<Type>()
+            {
+                DefaultValue = typeof(System.Version),
+                BindingPath = "Megumin.Binding.ICostomTestInterface/TypeProperty1",
+            };
+
+        /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> Test1
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/ToString()" };
 
         /// <summary>
-        /// 绑定泛型方法
+        /// 绑定泛型方法 TODO
         /// </summary>
         public BindableValue<string> Test2
             = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };
 
         /// <summary>
-        /// 绑定扩展方法
+        /// 绑定扩展方法 TODO
         /// </summary>
         public BindableValue<string> Test3
            = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };

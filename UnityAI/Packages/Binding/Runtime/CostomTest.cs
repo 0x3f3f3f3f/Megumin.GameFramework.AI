@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -53,6 +56,8 @@ namespace Megumin.Binding
         [field: SerializeField]
         public string MystringProperty1 { get; set; } = "MystringPropertyHelloWorld1";
         public string MystringProperty2 => MystringProperty2;
+
+        public Type TypeProperty1 { get; set; } = typeof(System.Tuple<int,string>);
 
         public string MystringMethod1()
         {
