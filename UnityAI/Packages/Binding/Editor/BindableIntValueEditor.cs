@@ -21,6 +21,7 @@ namespace Megumin.Binding.Editor
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
 
+        Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, property))
@@ -48,6 +49,13 @@ namespace Megumin.Binding.Editor
                     //{
                     //    NewMethod(property.propertyPath);
                     //}
+                    if (parseResult.TryGetValue(property.propertyPath, out var presult))
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("MatchResult");
+                        GUILayout.Label(presult.ToString());
+                        GUILayout.EndHorizontal();
+                    }
 
                     if (bindp.GetBindintString(GUILayout.Button($"{bindp.propertyPath}_Bind"), out var res))
                     {
@@ -82,7 +90,8 @@ namespace Megumin.Binding.Editor
                             {
                                 gameObject = component.gameObject;
                             }
-                            parseable.ParseBinding(gameObject, true);
+                            parseResult[property.propertyPath]
+                                = parseable.ParseBinding(gameObject, true);
                             parseable.DebugParseResult();
                         }
 
@@ -92,7 +101,7 @@ namespace Megumin.Binding.Editor
                         //var index = property.enumValueIndex;
 
                         ////Debug.Log(property.serializedObject.targetObject);
-                        
+
                         //Type type = obj.GetType();
                         //var fieldInfo = type.GetField(property.propertyPath);
                         //var fValue = fieldInfo.GetValue(obj);

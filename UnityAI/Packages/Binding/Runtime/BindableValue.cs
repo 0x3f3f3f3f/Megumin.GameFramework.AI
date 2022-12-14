@@ -17,7 +17,6 @@ namespace Megumin.Binding
         public GameObject extnalObj;
         public int xOffset = 0, yOffset = 0;
         public bool IsStatic = false;
-        public bool IsMatch = false;
         /// <summary>
         /// null表示还没有解析绑定
         /// </summary>
@@ -73,7 +72,7 @@ namespace Megumin.Binding
 
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
-        public void ParseBinding(object bindInstance, bool force = false)
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
         {
             if (ParseResult == null || force)
             {
@@ -87,6 +86,8 @@ namespace Megumin.Binding
                 (ParseResult, Getter, Setter) =
                     BindingParser.Instance.InitializeBinding<T>(BindingPath, instance);
             }
+
+            return ParseResult ?? ParseBindingResult.None;
         }
 
         public string DebugParseResult()

@@ -29,7 +29,7 @@ namespace Megumin.Binding
 
     public interface IBindingParseable
     {
-        void ParseBinding(object bindInstance, bool force = false);
+        ParseBindingResult ParseBinding(object bindInstance, bool force = false);
         string DebugParseResult();
     }
 
