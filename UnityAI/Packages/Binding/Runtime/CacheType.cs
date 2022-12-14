@@ -9,6 +9,9 @@ namespace Megumin.Binding
 {
     public static class CacheType
     {
+
+#if UNITY_5_3_OR_NEWER
+
         static readonly Dictionary<string, Type> hotComponentType = new Dictionary<string, Type>();
         public static Type FindComponentType(string typeFullName)
         {
@@ -30,6 +33,31 @@ namespace Megumin.Binding
                 }
             }
         }
+
+
+        static readonly Dictionary<string, Type> hotUnityObjectType = new Dictionary<string, Type>();
+        public static Type FindUnityObjectType(string typeFullName)
+        {
+            if (hotUnityObjectType.TryGetValue(typeFullName, out var type))
+            {
+                return type;
+            }
+            else
+            {
+                CacheAllTypes();
+                if (allUnityObjectType.TryGetValue(typeFullName, out type))
+                {
+                    hotUnityObjectType[typeFullName] = type;
+                    return type;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+#endif
 
         static readonly Dictionary<string, Type> hotType = new Dictionary<string, Type>();
         public static Type FindType(string typeFullName)
@@ -102,13 +130,15 @@ namespace Megumin.Binding
                 if (CacheTypeInit == false || force)
                 {
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
-                    var debugabs = assemblies.ToArray();
+                    //var debugabs = assemblies.ToArray();
                     foreach (var assembly in assemblies)
                     {
-                        var debug = assembly.GetTypes();
+                        //var debug = assembly.GetTypes();
                         foreach (var extype in assembly.GetTypes())
                         {
                             AddToDic(allType, extype);
+
+#if UNITY_5_3_OR_NEWER
 
                             if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
                             {
@@ -119,6 +149,9 @@ namespace Megumin.Binding
                                     AddToDic(allComponentType, extype);
                                 }
                             }
+
+#endif
+
                         }
                     }
 
@@ -127,6 +160,11 @@ namespace Megumin.Binding
             }
         }
 
+        /// <summary>
+        /// TODO,编辑模式初始化时加个进度条
+        /// </summary>
+        /// <param name="force"></param>
+        /// <returns></returns>
         public static Task CacheAllTypesAsync(bool force = false)
         {
             return Task.Run(() => { CacheAllTypes(force); });
