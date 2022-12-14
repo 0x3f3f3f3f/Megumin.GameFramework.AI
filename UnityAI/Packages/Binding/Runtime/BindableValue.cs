@@ -72,22 +72,26 @@ namespace Megumin.Binding
 
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
+        static readonly object parseLock = new object();
         public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
         {
-            if (ParseResult == null || force)
+            lock (parseLock)
             {
-                object instance = bindInstance;
-                if (extnalObj != null && extnalObj)
+                if (ParseResult == null || force)
                 {
-                    //有限使用自己保存的对象
-                    instance = extnalObj;
+                    object instance = bindInstance;
+                    if (extnalObj != null && extnalObj)
+                    {
+                        //有限使用自己保存的对象
+                        instance = extnalObj;
+                    }
+
+                    (ParseResult, Getter, Setter) =
+                        BindingParser.Instance.InitializeBinding<T>(BindingPath, instance);
                 }
 
-                (ParseResult, Getter, Setter) =
-                    BindingParser.Instance.InitializeBinding<T>(BindingPath, instance);
+                return ParseResult ?? ParseBindingResult.None;
             }
-
-            return ParseResult ?? ParseBindingResult.None;
         }
 
         public string DebugParseResult()

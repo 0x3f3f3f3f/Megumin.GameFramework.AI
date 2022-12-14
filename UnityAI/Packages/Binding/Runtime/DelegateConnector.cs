@@ -8,7 +8,7 @@ namespace Megumin.Binding
     /// </summary>
     public abstract class DelegateConnector
     {
-        public static DelegateConnector GetCreater(Type instanceType, Type valueType)
+        public static DelegateConnector Get(Type instanceType, Type valueType)
         {
             var type = typeof(DelegateConnectorGeneric<,>).MakeGenericType(instanceType, valueType);
             //TODO : 要不要缓存实例，查表和反射创建那个效率更高？
@@ -18,6 +18,7 @@ namespace Megumin.Binding
 
         //public abstract Delegate Connect(Delegate getinstane, Delegate getter);
         public abstract Delegate Connect(Delegate getinstane, MethodInfo methodInfo);
+        public abstract bool TryConnect(Delegate getinstane, MethodInfo methodInfo, out Delegate getter);
 
         class DelegateConnectorGeneric<I, T> : DelegateConnector
         {
@@ -25,12 +26,12 @@ namespace Megumin.Binding
             //{
             //    if (getinstane is Func<I> gf)
             //    {
-            //        if (getter is Func<I, T> gv)
+            //        if (getter is Func<I, T> getDelegateGeneric)
             //        {
-            //            Func<T> func = () =>
+            //            Func<T> getter = () =>
             //            {
             //                var instance = gf();
-            //                return gv(instance);
+            //                return getDelegateGeneric(instance);
             //            };
             //        }
             //    }
@@ -45,18 +46,46 @@ namespace Megumin.Binding
                 //Debug.Log(message);
 
                 var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
-                if (getinstane is Func<I> gg)
+                if (getinstane is Func<I> getinstaneGeneric)
                 {
-                    if (getDeletgate is Func<I, T> gv)
+                    if (getDeletgate is Func<I, T> getDelegateGeneric)
                     {
-                        Func<T> func = () =>
+                        Func<T> getter = () =>
                         {
-                            var instance = gg();
-                            return gv(instance);
+                            var instance = getinstaneGeneric();
+                            return getDelegateGeneric(instance);
                         };
+
+                        return getter;
                     }
                 }
                 return null;
+            }
+
+            public static bool TryCreate(Delegate getinstane, MethodInfo methodInfo, out Func<T> getter)
+            {
+                Type getterDelegateType = typeof(Func<,>).MakeGenericType(typeof(I), methodInfo.ReturnType);
+
+                //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                //Debug.Log(message);
+
+                var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
+                if (getinstane is Func<I> getinstaneGeneric)
+                {
+                    if (getDeletgate is Func<I, T> getDelegateGeneric)
+                    {
+                        getter = () =>
+                        {
+                            var instance = getinstaneGeneric();
+                            return getDelegateGeneric(instance);
+                        };
+
+                        return true;
+                    }
+                }
+
+                getter = null;
+                return false;
             }
 
             //public override Delegate Connect(Delegate getinstane, Delegate getter)
@@ -67,6 +96,18 @@ namespace Megumin.Binding
             public override Delegate Connect(Delegate getinstane, MethodInfo methodInfo)
             {
                 return Create(getinstane, methodInfo);
+            }
+
+            public override bool TryConnect(Delegate getinstane, MethodInfo methodInfo, out Delegate getter)
+            {
+                if (TryCreate(getinstane, methodInfo, out var mygetter))
+                {
+                    getter = mygetter;
+                    return true;
+                }
+
+                getter = null;
+                return false;
             }
         }
     }

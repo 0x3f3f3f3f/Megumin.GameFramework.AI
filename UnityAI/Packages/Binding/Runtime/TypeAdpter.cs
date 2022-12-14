@@ -9,11 +9,6 @@ namespace Megumin.Binding
         bool TryGetSetDelegate(Delegate get, out Action<T> setter);
     }
 
-    public interface IsetAD<T>
-    {
-
-    }
-
     public interface iconver<F, T> : ITypeAdpter<T>
     {
         T Convert(F value);
@@ -26,9 +21,13 @@ namespace Megumin.Binding
     {
 
         /// <summary>
-        /// 与DelegateConnector不同，类型适配器时运行其他用户扩展的，每个泛型都要手动实现，不能反射构造<see cref="DelegateConnector.GetCreater(Type, Type)"/>
+        /// 与DelegateConnector不同，类型适配器时运行其他用户扩展的，每个泛型都要手动实现，不能反射构造<see cref="DelegateConnector.Get(Type, Type)"/>
         /// </summary>
-        static Dictionary<(Type, Type), object> adps = new Dictionary<(Type, Type), object>();
+        static Dictionary<(Type, Type), object> adps = new Dictionary<(Type, Type), object>()
+        {
+            { (typeof(int),typeof(string)) , new TypeAdpterIntString() },
+            { (typeof(object),typeof(string)) , new TypeAdpterOS() },
+        };
 
         //TODO,基类型自动适配。
         public static ITypeAdpter<T> GetTypeAdpter<T>(Type type)
@@ -100,11 +99,19 @@ namespace Megumin.Binding
         }
     }
 
-    public class TypeAdpterOS : TypeAdpter<object, string> 
+    public class TypeAdpterOS : TypeAdpter<object, string>
     {
         public override string Convert(object value)
         {
             return value?.ToString();
+        }
+    }
+
+    public class TypeAdpterIntString : TypeAdpter<int, string>
+    {
+        public override string Convert(int value)
+        {
+            return value.ToString();
         }
     }
 }

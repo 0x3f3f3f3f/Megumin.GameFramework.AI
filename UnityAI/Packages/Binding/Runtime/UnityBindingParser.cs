@@ -171,8 +171,17 @@ namespace Megumin.Binding
             var propertyInfo = instanceType.GetProperty(memberName);
             if (propertyInfo != null)
             {
+                if (propertyInfo.TryGetGetDelegateUseTypeAdpter(instanceType,
+                    instance, out Getter, instanceIsGetDelegate))
+                {
+                    Debug.Log(Getter());
+                }
+
                 if (propertyInfo.CanRead)
                 {
+
+
+
                     var getMethod = propertyInfo.GetGetMethod();
 
                     if (getMethod.IsStatic)

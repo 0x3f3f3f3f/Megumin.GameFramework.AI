@@ -12,7 +12,7 @@ namespace Megumin.Binding
     internal static class ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0
     {
         /// <summary>
-        /// 
+        /// 使用类型适配器创建委托。
         /// </summary>
         /// <typeparam name="T">类型适配器类型</typeparam>
         /// <param name="propertyInfo"></param>
@@ -27,26 +27,24 @@ namespace Megumin.Binding
                                                 out Func<T> getter,
                                                 bool instanceIsGetDelegate = false)
         {
-            if (propertyInfo.PropertyType == typeof(T))
-            {
-                return TryGetGetDelegate(propertyInfo, instanceType, instance, out getter, instanceIsGetDelegate);
-            }
-            else
+            if (propertyInfo.PropertyType != typeof(T))
             {
                 //自动类型适配
                 var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
 
-                if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
+                if (adp != null)
                 {
-                    if (adp != null && adp.TryGetGetDeletgate(g, out getter))
+                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
                     {
-                        return true;
+                        if (adp.TryGetGetDeletgate(g, out getter))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
 
-            getter = null;
-            return false;
+            return TryGetGetDelegate(propertyInfo, instanceType, instance, out getter, instanceIsGetDelegate);
         }
 
 
@@ -79,10 +77,10 @@ namespace Megumin.Binding
         }
 
         public static bool TryGetGetDelegate(this PropertyInfo propertyInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Delegate getter,
-                                                bool instanceIsGetDelegate = false)
+                                             Type instanceType,
+                                             object instance,
+                                             out Delegate getter,
+                                             bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -141,9 +139,8 @@ namespace Megumin.Binding
                     {
                         if (instance is Delegate getInstance)
                         {
-                            var connector = DelegateConnector.GetCreater(instanceType, methodInfo.ReturnType);
-                            getter = connector.Connect(getInstance, methodInfo);
-                            if (getter != null)
+                            var connector = DelegateConnector.Get(instanceType, methodInfo.ReturnType);
+                            if (connector.TryConnect(getInstance, methodInfo, out getter))
                             {
                                 return true;
                             }
