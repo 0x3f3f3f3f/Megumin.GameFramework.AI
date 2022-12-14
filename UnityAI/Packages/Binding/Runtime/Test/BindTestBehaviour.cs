@@ -182,6 +182,33 @@ namespace Megumin.Binding.Test
             Debug.Log(DateTimeOffset.Now);
         }
 
+        [Editor]
+        public void Test()
+        {
+            {
+                var type = typeof(Application);
+                var prop = type.GetProperty("version");
+                if (prop.GetMethod.TryGetGetDelegate(type, null, out var @delegate, false))
+                {
+                    Debug.Log(@delegate.DynamicInvoke());
+                }
+
+                if (prop.TryGetGetDelegate<string>(type,null,out var getter))
+                {
+                    Debug.Log(getter());
+                }
+            }
+
+            {
+                var obj = GetComponent<CostomTest>();
+                var prop2 = obj.GetType().GetProperty("MyIntProperty1");
+                if (prop2.GetMethod.TryGetGetDelegate(obj.GetType(), obj, out var @delegate2, false))
+                {
+                    Debug.Log(@delegate2.DynamicInvoke());
+                }
+            }
+        }
+
 #if UNITY_2023_1_OR_NEWER
 
         [Header("UNITY_2023_1_OR_NEWER  SerializeReference 泛型特化支持")]

@@ -213,6 +213,20 @@ namespace Megumin.Binding
                             }
                             else
                             {
+                                if (propertyInfo.PropertyType != typeof(T))
+                                {
+                                    //自动类型适配
+                                    var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
+
+                                    var de = Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
+
+                                    if (adp != null && adp.TryGetGetDeletgate(de,out Getter))
+                                    {
+                                        ParseResult |= ParseBindingResult.Get;
+                                    }
+                                }
+
+
                                 Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
                                 ParseResult |= ParseBindingResult.Get;
                             }
@@ -256,6 +270,19 @@ namespace Megumin.Binding
                             }
                             else
                             {
+                                if (propertyInfo.PropertyType != typeof(T))
+                                {
+                                    //自动类型适配  TODO
+                                    var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
+
+                                    var de = Delegate.CreateDelegate(typeof(Func<T>), instance, setMethod);
+
+                                    if (adp != null && adp.TryGetSetDelegate(de, out Setter))
+                                    {
+                                        ParseResult |= ParseBindingResult.Get;
+                                    }
+                                }
+
                                 Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
                                 ParseResult |= ParseBindingResult.Set;
                             }
