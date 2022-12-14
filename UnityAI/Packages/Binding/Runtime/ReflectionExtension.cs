@@ -9,8 +9,57 @@ using UnityEngine;
 
 namespace Megumin.Binding
 {
-    internal static class ReflectionExtension
+    internal static class ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">类型适配器类型</typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        public static bool TryGetGetDelegateUseTypeAdpter<T>(this PropertyInfo propertyInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Func<T> getter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            if (propertyInfo.PropertyType == typeof(T))
+            {
+                return TryGetGetDelegate(propertyInfo, instanceType, instance, out getter, instanceIsGetDelegate);
+            }
+            else
+            {
+                //自动类型适配
+                var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
+
+                if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
+                {
+                    if (adp != null && adp.TryGetGetDeletgate(g, out getter))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            getter = null;
+            return false;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"><see cref="PropertyInfo.PropertyType"/></typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         public static bool TryGetGetDelegate<T>(this PropertyInfo propertyInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -28,6 +77,25 @@ namespace Megumin.Binding
             getter = null;
             return false;
         }
+
+        public static bool TryGetGetDelegate(this PropertyInfo propertyInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Delegate getter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            if (propertyInfo.CanRead)
+            {
+                if (TryGetGetDelegate(propertyInfo.GetMethod, instanceType, instance, out getter, instanceIsGetDelegate))
+                {
+                    return true;
+                }
+            }
+
+            getter = null;
+            return false;
+        }
+
 
         public static bool TryGetGetDelegate<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
@@ -93,10 +161,10 @@ namespace Megumin.Binding
         }
 
 
-        
+
 
 
     }
 
-    
+
 }

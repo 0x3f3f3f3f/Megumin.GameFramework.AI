@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Megumin.Binding
 {
-    public interface Iad<T>
+    public interface ITypeAdpter<T>
     {
         bool TryGetGetDeletgate(Delegate get, out Func<T> getter);
         bool TryGetSetDelegate(Delegate get, out Action<T> setter);
@@ -14,7 +14,7 @@ namespace Megumin.Binding
 
     }
 
-    public interface iconver<F, T> : Iad<T>
+    public interface iconver<F, T> : ITypeAdpter<T>
     {
         T Convert(F value);
     }
@@ -31,12 +31,12 @@ namespace Megumin.Binding
         static Dictionary<(Type, Type), object> adps = new Dictionary<(Type, Type), object>();
 
         //TODO,基类型自动适配。
-        public static Iad<T> GetTypeAdpter<T>(Type type)
+        public static ITypeAdpter<T> GetTypeAdpter<T>(Type type)
         {
             var key = (type, typeof(T));
             if (adps.TryGetValue(key, out var adp))
             {
-                if (adp is Iad<T> gadp)
+                if (adp is ITypeAdpter<T> gadp)
                 {
                     return gadp;
                 }

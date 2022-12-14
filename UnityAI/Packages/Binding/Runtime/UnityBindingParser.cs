@@ -50,7 +50,7 @@ namespace Megumin.Binding
 
             if (string.IsNullOrEmpty(bindingString))
             {
-                
+
             }
             else
             {
@@ -218,11 +218,12 @@ namespace Megumin.Binding
                                     //自动类型适配
                                     var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
 
-                                    var de = Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
-
-                                    if (adp != null && adp.TryGetGetDeletgate(de,out Getter))
+                                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
                                     {
-                                        ParseResult |= ParseBindingResult.Get;
+                                        if (adp != null && adp.TryGetGetDeletgate(g, out Getter))
+                                        {
+                                            ParseResult |= ParseBindingResult.Get;
+                                        }
                                     }
                                 }
 
@@ -232,6 +233,9 @@ namespace Megumin.Binding
                             }
                         }
                     }
+
+
+
                 }
 
                 if (propertyInfo.CanWrite)
@@ -818,7 +822,7 @@ namespace Megumin.Binding
                         return (comp, comp.GetType());
                     }
                 }
-                
+
                 return (gameObject, type);
             }
             else
