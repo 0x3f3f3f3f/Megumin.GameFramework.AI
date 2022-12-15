@@ -71,6 +71,17 @@ namespace Megumin.Binding.Test
             return MystringField2;
         }
 
+        public void MystringMethodSet(string str)
+        {
+            MystringField2 = str;
+        }
+
+        public string MystringMethodSetReturnString(string str)
+        {
+            MystringField2 = str;
+            return MystringField2;
+        }
+
         public TestInnerClass MyTestInnerClassField = new TestInnerClass();
     }
 

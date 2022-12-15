@@ -230,6 +230,24 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
+  BindMethodArgs1Set:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSet()
+    defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1Set
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  BindMethodArgs1SetReturnString:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSetReturnString()
+    defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1SetReturnString
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
   Test1:
     Key: 
     IsBinding: 0
@@ -259,12 +277,12 @@ MonoBehaviour:
     IsStatic: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949863043776905216
-  - rid: 7949863043776905217
+  - rid: 7949863045341118466
+  - rid: 7949863045341118467
   references:
     version: 2
     RefIds:
-    - rid: 7949863043776905216
+    - rid: 7949863045341118466
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -275,7 +293,7 @@ MonoBehaviour:
         xOffset: 0
         yOffset: 0
         IsStatic: 0
-    - rid: 7949863043776905217
+    - rid: 7949863045341118467
       type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 

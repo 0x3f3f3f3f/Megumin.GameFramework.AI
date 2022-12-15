@@ -366,7 +366,7 @@ namespace Megumin.Binding
 
                 if (adp == null)
                 {
-                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{firstArgsType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{typeof(T)},{methodInfo.ReturnType}>");
+                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{firstArgsType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{typeof(T)},{firstArgsType}>");
                 }
                 else
                 {
@@ -404,6 +404,16 @@ namespace Megumin.Binding
                     setter = mysetterGeneric;
                     return true;
                 }
+                else if (mysetter is Func<T, object> mysettGenericR)
+                {
+                    //尝试忽略返回值，
+                    //不知道会不会造成意外的返回值装箱？
+                    setter = (value) =>
+                    {
+                        _ = mysettGenericR(value);
+                    };
+                    return true;
+                }
                 else
                 {
                     Debug.LogWarning($"{mysetter.GetType()} <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
@@ -432,7 +442,16 @@ namespace Megumin.Binding
             setter = null;
             var paras = methodInfo.GetParameters();
             Type firstArgsType = paras[0].ParameterType;
-            Type delagateType = typeof(Action<>).MakeGenericType(firstArgsType);
+            Type delagateType = null;
+            if (methodInfo.ReturnType == typeof(void))
+            {
+                delagateType = typeof(Action<>).MakeGenericType(firstArgsType);
+            }
+            else
+            {
+                delagateType = typeof(Func<,>).MakeGenericType(firstArgsType, methodInfo.ReturnType);
+            }
+
             if (methodInfo.IsStatic)
             {
                 setter = methodInfo.CreateDelegate(delagateType, null);
@@ -443,7 +462,7 @@ namespace Megumin.Binding
             {
                 if (instance == null)
                 {
-                    Debug.LogError("instanceDelegate is null");
+                    Debug.LogWarning("instanceDelegate is null");
                 }
                 else
                 {

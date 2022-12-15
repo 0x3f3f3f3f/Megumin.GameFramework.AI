@@ -31,7 +31,7 @@ namespace Megumin.Binding
         {
             Type getterDelegateType = typeof(Func<,>).MakeGenericType(methodInfo.DeclaringType, methodInfo.ReturnType);
 
-            //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+            //string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
             //Debug.Log(message);
 
             var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
@@ -65,7 +65,7 @@ namespace Megumin.Binding
             var para = methodInfo.GetParameters();
             Type setterDelegateType = typeof(Action<,>).MakeGenericType(methodInfo.DeclaringType, para[0].ParameterType);
 
-            //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+            //string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
             //Debug.Log(message);
 
             var setDelegate = methodInfo.CreateDelegate(setterDelegateType);
@@ -99,12 +99,12 @@ namespace Megumin.Binding
 
             //public static Func<To> Create(Delegate getinstane, MethodInfo methodInfo)
             //{
-            //    Type getterDelegateType = typeof(Func<,>).MakeGenericType(typeof(I), methodInfo.ReturnType);
+            //    Type setterDelegateType = typeof(Func<,>).MakeGenericType(typeof(I), methodInfo.ReturnType);
 
-            //    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+            //    //string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
             //    //Debug.Log(message);
 
-            //    var setDeletgate = methodInfo.CreateDelegate(getterDelegateType);
+            //    var setDeletgate = methodInfo.CreateDelegate(setterDelegateType);
             //    if (getinstane is Func<I> getinstaneGeneric)
             //    {
             //        if (setDeletgate is Func<I, To> setDelegateGeneric)
@@ -132,7 +132,7 @@ namespace Megumin.Binding
             {
                 Type getterDelegateType = typeof(Func<,>).MakeGenericType(typeof(I), methodInfo.ReturnType);
 
-                //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                //string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
                 //Debug.Log(message);
 
                 var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
@@ -179,12 +179,20 @@ namespace Megumin.Binding
             /// <returns></returns>
             public static bool TryCreateSetter(Delegate getinstane, MethodInfo methodInfo, out Action<T> setter)
             {
-                Type getterDelegateType = typeof(Action<,>).MakeGenericType(typeof(I), typeof(T));
+                Type setterDelegateType = null;
+                if (methodInfo.ReturnType == typeof(void))
+                {
+                    setterDelegateType = typeof(Action<,>).MakeGenericType(typeof(I), typeof(T));
+                }
+                else
+                {
+                    setterDelegateType = typeof(Func<,,>).MakeGenericType(typeof(I), typeof(T), methodInfo.ReturnType);
+                }
 
-                //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                //string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
                 //Debug.Log(message);
 
-                var setDeletgate = methodInfo.CreateDelegate(getterDelegateType);
+                var setDeletgate = methodInfo.CreateDelegate(setterDelegateType);
 
                 //TODO 使用强类型委托 避免 DynamicInvoke , 不知道在IL2CPP中会不会有问题，泛型方法无法生成？
                 //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
@@ -213,14 +221,38 @@ namespace Megumin.Binding
                         return true;
                     }
                 }
+                else
+                {
+                    if (getinstane is Func<I> getinstaneGeneric)
+                    {
+                        setter = (value) =>
+                        {
+                            var instance = getinstaneGeneric();
+                            setDeletgate.DynamicInvoke(instance, value);
+                        };
 
-                setter = null;
-                return false;
+                        return true;
+                    }
+                    else
+                    {
+                        //无法转换为强类型，只能使用DynamicInvoke。
+                        setter = (value) =>
+                        {
+                            var instance = getinstane.DynamicInvoke();
+                            setDeletgate.DynamicInvoke((I)instance, value);
+                        };
+
+                        return true;
+                    }
+                }
+
+                //setter = null;
+                //return false;
 
 
                 //Type setterDelegateType = typeof(Action<,>).MakeGenericType(instanceType, typeof(To));
 
-                ////string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
+                ////string message = $"MakeG {setterDelegateType} , {typeof(Func<Transform, string>)}";
                 ////Debug.Log(message);
 
                 //var setDelegate = setMethod.CreateDelegate(setterDelegateType);

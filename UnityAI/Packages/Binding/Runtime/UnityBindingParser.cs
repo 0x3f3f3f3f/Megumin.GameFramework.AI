@@ -375,22 +375,47 @@ namespace Megumin.Binding
             }
 
             var methodInfo = instanceType.GetMethod(methodName);
+            //TODO，区分方法重载
+
             if (methodInfo != null)
             {
                 var paras = methodInfo.GetParameters();
-                if (paras.Length == 0)
+                if (paras.Length < 2)
                 {
-                    if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
-                                instance, out Getter, instanceIsGetDelegate))
+                    if (paras.Length == 0)
                     {
-                        ParseResult |= ParseBindingResult.Get;
-                        return true;
+                        //没有参数时认为是Get绑定
+                        if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
+                                    instance, out Getter, instanceIsGetDelegate))
+                        {
+                            ParseResult |= ParseBindingResult.Get;
+                        }
                     }
+                    else if (paras.Length == 1)
+                    {
+                        if (false && methodInfo.ReturnType != typeof(void))
+                        {
+                            //暂时不检查返回值
+                            //返回值必须是void。
+                            Debug.LogWarning($"SetMethod must return void.");
+                        }
+                        else
+                        {
+                            //一个参数时认为是Set绑定
+                            if (methodInfo.TryCreateSetterUseTypeAdpter(instanceType,
+                                        instance, out Setter, instanceIsGetDelegate))
+                            {
+                                ParseResult |= ParseBindingResult.Set;
+                            }
+                        }
+                    }
+
+                    return true;
                 }
                 else
                 {
                     //TODO 多个参数
-                    Debug.LogWarning($"暂不支持 含有参数的方法 绑定");
+                    Debug.LogWarning($"暂不支持 含有参数的方法 {methodInfo}绑定");
                     return false;
                 }
             }
@@ -398,8 +423,6 @@ namespace Megumin.Binding
             {
                 return false;
             }
-
-            return false;
         }
 
         /// <summary>

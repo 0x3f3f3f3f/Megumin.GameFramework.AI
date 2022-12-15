@@ -166,6 +166,26 @@ namespace Megumin.Binding.Test
             };
 
         /// <summary>
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// </summary>
+        public BindableValue<string> BindMethodArgs1Set
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1Set",
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethodSet()"
+            };
+
+        /// <summary>
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// </summary>
+        public BindableValue<string> BindMethodArgs1SetReturnString
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1SetReturnString",
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethodSetReturnString()"
+            };
+
+        /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> Test1
