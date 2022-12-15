@@ -337,7 +337,7 @@ namespace Megumin.Binding.Test
 
             foreach (var item in testBind)
             {
-                if (GUILayout.Button(item.Name, 
+                if (GUILayout.Button(item.Name,
                     GUILayout.Width(bottonWidth),
                     GUILayout.Height(40)))
                 {

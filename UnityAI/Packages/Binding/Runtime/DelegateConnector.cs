@@ -138,17 +138,28 @@ namespace Megumin.Binding
                 var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
 
                 //TODO 使用强类型委托 避免 DynamicInvoke ,
-                
+
                 //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
 
-                if (getinstane is Func<I> getinstaneGeneric)
+                if (getDeletgate is Func<I, T> getDelegateGeneric)
                 {
-                    if (getDeletgate is Func<I, T> getDelegateGeneric)
+                    if (getinstane is Func<I> getinstaneGeneric)
                     {
                         getter = () =>
                         {
                             var instance = getinstaneGeneric();
                             return getDelegateGeneric(instance);
+                        };
+
+                        return true;
+                    }
+                    else
+                    {
+                        //无法转换为强类型，只能使用DynamicInvoke。
+                        getter = () =>
+                        {
+                            var instance = getinstane.DynamicInvoke();
+                            return getDelegateGeneric((I)instance);
                         };
 
                         return true;
@@ -178,14 +189,25 @@ namespace Megumin.Binding
                 //TODO 使用强类型委托 避免 DynamicInvoke , 不知道在IL2CPP中会不会有问题，泛型方法无法生成？
                 //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
 
-                if (getinstane is Func<I> getinstaneGeneric)
+                if (setDeletgate is Action<I, T> setDelegateGeneric)
                 {
-                    if (setDeletgate is Action<I, T> setDelegateGeneric)
+                    if (getinstane is Func<I> getinstaneGeneric)
                     {
                         setter = (value) =>
                         {
                             var instance = getinstaneGeneric();
                             setDelegateGeneric(instance, value);
+                        };
+
+                        return true;
+                    }
+                    else
+                    {
+                        //无法转换为强类型，只能使用DynamicInvoke。
+                        setter = (value) =>
+                        {
+                            var instance = getinstane.DynamicInvoke();
+                            setDelegateGeneric((I)instance, value);
                         };
 
                         return true;

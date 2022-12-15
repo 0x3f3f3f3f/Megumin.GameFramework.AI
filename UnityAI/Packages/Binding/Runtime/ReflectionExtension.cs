@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -49,6 +50,7 @@ namespace Megumin.Binding
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanConvertDelegate(Type from, Type to)
         {
             var b1 = from.IsAssignableFrom(to);
@@ -81,6 +83,7 @@ namespace Megumin.Binding
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanConvertDelegate<T>(this Type from)
         {
             return CanConvertDelegate(from, typeof(T));
@@ -96,6 +99,7 @@ namespace Megumin.Binding
         /// <param name="getter"></param>
         /// <param name="instanceIsGetDelegate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetterUseTypeAdpter<T>(this PropertyInfo propertyInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -115,6 +119,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this PropertyInfo propertyInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -133,6 +138,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter(this PropertyInfo propertyInfo,
                                              Type instanceType,
                                              object instance,
@@ -151,7 +157,7 @@ namespace Megumin.Binding
             return false;
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetterUseTypeAdpter<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -165,7 +171,7 @@ namespace Megumin.Binding
 
                 if (adp == null)
                 {
-                    Debug.LogError($"成员类型{methodInfo.ReturnType}无法满足目标类型{typeof(T)},并且没有找到对应的TypeAdpter");
+                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{methodInfo.ReturnType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{methodInfo.ReturnType},{typeof(T)}>");
                 }
                 else
                 {
@@ -187,7 +193,7 @@ namespace Megumin.Binding
             return false;
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -221,6 +227,7 @@ namespace Megumin.Binding
         /// <param name="getter"></param>
         /// <param name="instanceIsGetDelegate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter(this MethodInfo methodInfo,
                                              Type instanceType,
                                              object instance,
@@ -284,7 +291,7 @@ namespace Megumin.Binding
 
 
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetterUseTypeAdpter<T>(this PropertyInfo propertyInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -304,6 +311,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this PropertyInfo propertyInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -322,6 +330,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this PropertyInfo propertyInfo,
                                              Type instanceType,
                                              object instance,
@@ -340,6 +349,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetterUseTypeAdpter<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -356,7 +366,7 @@ namespace Megumin.Binding
 
                 if (adp == null)
                 {
-                    Debug.LogError($"成员类型{firstArgsType}无法满足目标类型{typeof(T)},并且没有找到对应的TypeAdpter");
+                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{firstArgsType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{typeof(T)},{methodInfo.ReturnType}>");
                 }
                 else
                 {
@@ -378,6 +388,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -411,6 +422,7 @@ namespace Megumin.Binding
         /// <param name="getter"></param>
         /// <param name="instanceIsGetDelegate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this MethodInfo methodInfo,
                                              Type instanceType,
                                              object instance,

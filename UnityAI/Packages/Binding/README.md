@@ -1,6 +1,6 @@
 ﻿# Binding
 绑定功能。  
-通过BindingPath绑定到一个目标。  
+通过BindingPath绑定到一个目标成员。  
 BindingPath格式:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
 
 ```cs
