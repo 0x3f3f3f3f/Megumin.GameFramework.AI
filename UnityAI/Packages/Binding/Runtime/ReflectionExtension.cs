@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.Search;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -254,7 +249,7 @@ namespace Megumin.Binding
                         if (instance is Delegate getInstance)
                         {
                             var connector = DelegateConnector.Get(instanceType, methodInfo.ReturnType);
-                            if (connector.TryConnect(getInstance, methodInfo, out getter))
+                            if (connector.TryConnectGet(getInstance, methodInfo, out getter))
                             {
                                 return true;
                             }
