@@ -289,6 +289,8 @@ namespace Megumin.Binding.Test
             GUILayout.BeginArea(new Rect(100, Screen.height / 2, Screen.width - 200, Screen.height / 2));
             GUILayout.Label($"DebugString  :  {debugString}", GUILayout.ExpandWidth(true));
 
+            List<(IBindingParseable, string Name)> testBind = new List<(IBindingParseable, string Name)>();
+
             var fields = this.GetType().GetFields();
 
             foreach (var field in fields)
@@ -296,11 +298,13 @@ namespace Megumin.Binding.Test
                 if (typeof(IBindingParseable).IsAssignableFrom(field.FieldType))
                 {
                     var p = (IBindingParseable)field.GetValue(this);
-                    if (GUILayout.Button(field.Name))
-                    {
-                        p.ParseBinding(gameObject, true);
-                        debugString = p.DebugParseResult();
-                    }
+                    testBind.Add((p, field.Name));
+
+                    //if (GUILayout.Button(field.Name))
+                    //{
+                    //    p.ParseBinding(gameObject, true);
+                    //    debugString = p.DebugParseResult();
+                    //}
                 }
             }
 
@@ -311,14 +315,45 @@ namespace Megumin.Binding.Test
                 if (typeof(IBindingParseable).IsAssignableFrom(property.PropertyType))
                 {
                     var p = (IBindingParseable)property.GetValue(this);
-                    if (GUILayout.Button(property.Name))
-                    {
-                        p.ParseBinding(gameObject, true);
-                        debugString = p.DebugParseResult();
-                    }
+                    testBind.Add((p, property.Name));
+                    //if (GUILayout.Button(property.Name))
+                    //{
+                    //    p.ParseBinding(gameObject, true);
+                    //    debugString = p.DebugParseResult();
+                    //}
                 }
             }
 
+
+            GUILayout.BeginHorizontal();
+
+            int index = 0;
+            int bottonWidth = 300;
+            int parLine = (Screen.width - 200) / bottonWidth;
+            if (parLine == 0)
+            {
+                parLine = 1;
+            }
+
+            foreach (var item in testBind)
+            {
+                if (GUILayout.Button(item.Name, 
+                    GUILayout.Width(bottonWidth),
+                    GUILayout.Height(40)))
+                {
+                    var p = item.Item1;
+                    p.ParseBinding(gameObject, true);
+                    debugString = p.DebugParseResult();
+                }
+                index++;
+                if (index % parLine == 0)
+                {
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                }
+            }
+
+            GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
     }
