@@ -13,17 +13,17 @@ namespace Megumin.Binding
     {
         public static void TestConvert()
         {
-            var b1 = typeof(string).IsAssignableFrom(typeof(object));
-            var b2 = typeof(object).IsAssignableFrom(typeof(string));
+            var b1 = typeof(string).IsAssignableFrom(typeof(object));   //false
+            var b2 = typeof(object).IsAssignableFrom(typeof(string));   //true
 
-            var b3 = typeof(int).IsAssignableFrom(typeof(object));
-            var b4 = typeof(object).IsAssignableFrom(typeof(int));
+            var b3 = typeof(int).IsAssignableFrom(typeof(object));   //false
+            var b4 = typeof(object).IsAssignableFrom(typeof(int));   //true
 
-            var b5 = typeof(float).IsAssignableFrom(typeof(int));
-            var b6 = typeof(int).IsAssignableFrom(typeof(float));
+            var b5 = typeof(float).IsAssignableFrom(typeof(int));   //false
+            var b6 = typeof(int).IsAssignableFrom(typeof(float));   //false
 
-            var b7 = typeof(float).IsAssignableFrom(typeof(double));
-            var b8 = typeof(double).IsAssignableFrom(typeof(float));
+            var b7 = typeof(float).IsAssignableFrom(typeof(double));   //false
+            var b8 = typeof(double).IsAssignableFrom(typeof(float));   //false
 
             int a = 200;
             float b = 300f;
@@ -36,6 +36,9 @@ namespace Megumin.Binding
             Func<object> funcObj = funcstring;
             // Func<int> 不能协变成  Func<object> 也就认了，毕竟涉及到装箱。
             // Func<float> 协变成  Func<double>也不行? 无法理解
+            //https://stackoverflow.com/questions/2169062/faster-way-to-cast-a-funct-t2-to-funct-object
+            //https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/using-variance-for-func-and-action-generic-delegates
+
             //funcObj = funcint;
             //Func<float> funfloat2 = funcint;
             //Func<double> fundouble = funcfloat;
@@ -49,9 +52,19 @@ namespace Megumin.Binding
         /// <returns></returns>
         public static bool CanAutoConvertFuncT(Type from, Type to)
         {
+            var b1 = from.IsAssignableFrom(to);
+            var b2 = to.IsAssignableFrom(from);
+
             if (to.IsAssignableFrom(from))
             {
-                return true;
+                if (from.IsValueType)
+                {
+                    //值类型通常都不能处理Func<T>协变，需要使用适配器转换
+                }
+                else
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -84,29 +97,17 @@ namespace Megumin.Binding
                                                 out Func<T> getter,
                                                 bool instanceIsGetDelegate = false)
         {
-            var typeP = propertyInfo.PropertyType;
-            var typeV = typeof(T);
-            var b1 = typeV.IsAssignableFrom(typeP);
-            var b2 = typeP.IsAssignableFrom(typeV);
-
-            if (propertyInfo.PropertyType.CanAutoConvertFuncT<T>() == false)
+            if (propertyInfo.CanRead)
             {
-                //自动类型适配
-                var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
-
-                if (adp != null)
+                if (propertyInfo.GetMethod.TryGetGetDelegateUseTypeAdpter(
+                    instanceType, instance, out getter, instanceIsGetDelegate))
                 {
-                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
-                    {
-                        if (adp.TryGetGetDeletgate(g, out getter))
-                        {
-                            return true;
-                        }
-                    }
+                    return true;
                 }
             }
 
-            return TryGetGetDelegate(propertyInfo, instanceType, instance, out getter, instanceIsGetDelegate);
+            getter = null;
+            return false;
         }
 
 
@@ -157,6 +158,33 @@ namespace Megumin.Binding
         }
 
 
+        public static bool TryGetGetDelegateUseTypeAdpter<T>(this MethodInfo methodInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Func<T> getter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            if (methodInfo.ReturnType.CanAutoConvertFuncT<T>() == false)
+            {
+                //自动类型适配
+                var adp = TypeAdpter.GetTypeAdpter<T>(methodInfo.ReturnType);
+
+                if (adp != null)
+                {
+                    if (methodInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
+                    {
+                        if (adp.TryGetGetDeletgate(g, out getter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return methodInfo.TryGetGetDelegate(instanceType, instance, out getter, instanceIsGetDelegate);
+        }
+
+
         public static bool TryGetGetDelegate<T>(this MethodInfo methodInfo,
                                                 Type instanceType,
                                                 object instance,
@@ -181,6 +209,15 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 将无参方法创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// </summary>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         public static bool TryGetGetDelegate(this MethodInfo methodInfo,
                                              Type instanceType,
                                              object instance,

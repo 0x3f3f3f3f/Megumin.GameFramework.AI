@@ -148,6 +148,26 @@ namespace Megumin.Binding.Test
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
+        public BindableValue<string> BindMethodArgs0
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs0",
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethod1()"
+            };
+
+        /// <summary>
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// </summary>
+        public BindableValue<string> BindMethodArgs1
+            = new BindableValue<string>()
+            {
+                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1",
+                BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethod2()"
+            };
+
+        /// <summary>
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
+        /// </summary>
         public BindableValue<string> Test1
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/ToString()" };
 
@@ -203,6 +223,7 @@ namespace Megumin.Binding.Test
         [Editor]
         public void Test()
         {
+            ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0.TestConvert();
             {
                 var type = typeof(Application);
                 var prop = type.GetProperty("version");

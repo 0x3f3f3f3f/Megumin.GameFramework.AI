@@ -174,77 +174,7 @@ namespace Megumin.Binding
                 if (propertyInfo.TryGetGetDelegateUseTypeAdpter(instanceType,
                     instance, out Getter, instanceIsGetDelegate))
                 {
-                    Debug.Log(Getter());
-                }
-
-                if (propertyInfo.CanRead)
-                {
-
-
-
-                    var getMethod = propertyInfo.GetGetMethod();
-
-                    if (getMethod.IsStatic)
-                    {
-                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, getMethod);
-                        ParseResult |= ParseBindingResult.Get;
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            Debug.LogError("instanceDelegate is null");
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, typeof(T));
-
-                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
-                                    //Debug.Log(message);
-
-                                    var getDeletgate = getMethod.CreateDelegate(getterDelegateType);
-
-                                    //TODO 使用强类型委托 避免 DynamicInvoke
-                                    //Func<object, T> getDeletgate2 = getDeletgate as Func<object, T>;
-
-                                    Getter = () =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        var r = getDeletgate.DynamicInvoke(temp);
-                                        return (T)r;
-                                    };
-                                    ParseResult |= ParseBindingResult.Get;
-                                }
-                            }
-                            else
-                            {
-                                if (propertyInfo.PropertyType != typeof(T))
-                                {
-                                    //自动类型适配
-                                    var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
-
-                                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
-                                    {
-                                        if (adp != null && adp.TryGetGetDeletgate(g, out Getter))
-                                        {
-                                            ParseResult |= ParseBindingResult.Get;
-                                        }
-                                    }
-                                }
-
-
-                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, getMethod);
-                                ParseResult |= ParseBindingResult.Get;
-                            }
-                        }
-                    }
-
-
-
+                    ParseResult |= ParseBindingResult.Get;
                 }
 
                 if (propertyInfo.CanWrite)
@@ -500,58 +430,25 @@ namespace Megumin.Binding
                 var paras = methodInfo.GetParameters();
                 if (paras.Length == 0)
                 {
-                    if (methodInfo.IsStatic)
+                    if (methodInfo.TryGetGetDelegateUseTypeAdpter(instanceType,
+                                instance, out Getter, instanceIsGetDelegate))
                     {
-                        Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), null, methodInfo);
                         ParseResult |= ParseBindingResult.Get;
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            Debug.LogError("instanceDelegate is null");
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, typeof(T));
-
-                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
-                                    //Debug.Log(message);
-
-                                    var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
-
-                                    Getter = () =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        var r = getDeletgate.DynamicInvoke(temp);
-                                        return (T)r;
-                                    };
-                                    ParseResult |= ParseBindingResult.Get;
-                                }
-                            }
-                            else
-                            {
-                                Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), instance, methodInfo);
-                                ParseResult |= ParseBindingResult.Get;
-                            }
-                        }
+                        return true;
                     }
                 }
                 else
                 {
-                    //Todo
+                    //TODO 多个参数
+                    return false;
                 }
-
-                return true;
             }
             else
             {
                 return false;
             }
+
+            return false;
         }
 
         /// <summary>
@@ -625,50 +522,9 @@ namespace Megumin.Binding
                 var propertyInfo = instanceType.GetProperty(memberName);
                 if (propertyInfo != null)
                 {
-                    if (propertyInfo.CanRead)
+                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
-                        var getMethod = propertyInfo.GetGetMethod();
-                        if (getMethod.IsStatic)
-                        {
-                            var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), null, getMethod);
-                            return (getInstanceDelegate, getMethod.ReturnType);
-                        }
-                        else
-                        {
-                            if (instance == null)
-                            {
-                                return (null, getMethod.ReturnType);
-                            }
-                            else
-                            {
-                                if (instanceIsGetDelegate)
-                                {
-                                    if (instance is Delegate getInstance)
-                                    {
-                                        Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, getMethod.ReturnType);
-
-                                        //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
-                                        //Debug.Log(message);
-
-                                        var getDeletgate = getMethod.CreateDelegate(getterDelegateType);
-
-                                        Func<object> getInstanceDelegate = () =>
-                                        {
-                                            var temp = getInstance.DynamicInvoke();
-                                            var r = getDeletgate.DynamicInvoke(temp);
-                                            return r;
-                                        };
-
-                                        return (getInstanceDelegate, getMethod.ReturnType);
-                                    }
-                                }
-                                else
-                                {
-                                    var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), instance, getMethod);
-                                    return (getInstanceDelegate, getMethod.ReturnType);
-                                }
-                            }
-                        }
+                        return (pGetter, propertyInfo.PropertyType);
                     }
                 }
             }
@@ -718,46 +574,9 @@ namespace Megumin.Binding
                 var methodInfo = instanceType.GetMethod(memberName);
                 if (methodInfo != null)
                 {
-                    if (methodInfo.IsStatic)
+                    if (methodInfo.TryGetGetDelegate(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
-                        var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), null, methodInfo);
-                        return (getInstanceDelegate, methodInfo.ReturnType);
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            return (null, methodInfo.ReturnType);
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Type getterDelegateType = typeof(Func<,>).MakeGenericType(instanceType, methodInfo.ReturnType);
-
-                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
-                                    //Debug.Log(message);
-
-                                    var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
-
-                                    Func<object> getInstanceDelegate = () =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        var r = getDeletgate.DynamicInvoke(temp);
-                                        return r;
-                                    };
-
-                                    return (getInstanceDelegate, methodInfo.ReturnType);
-                                }
-                            }
-                            else
-                            {
-                                var getInstanceDelegate = Delegate.CreateDelegate(typeof(Func<object>), instance, methodInfo);
-                                return (getInstanceDelegate, methodInfo.ReturnType);
-                            }
-                        }
+                        return (pGetter, methodInfo.ReturnType);
                     }
                 }
             }
