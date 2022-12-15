@@ -54,10 +54,15 @@ namespace Megumin.Binding
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public static bool CanAutoConvertFuncT(Type from, Type to)
+        public static bool CanConvertDelegate(Type from, Type to)
         {
             var b1 = from.IsAssignableFrom(to);
             var b2 = to.IsAssignableFrom(from);
+
+            if (from == to)
+            {
+                return true;
+            }
 
             if (to.IsAssignableFrom(from))
             {
@@ -81,9 +86,9 @@ namespace Megumin.Binding
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public static bool CanAutoConvertFuncT<T>(this Type myValueType)
+        public static bool CanConvertDelegate<T>(this Type from)
         {
-            return CanAutoConvertFuncT(myValueType, typeof(T));
+            return CanConvertDelegate(from, typeof(T));
         }
 
         /// <summary>
@@ -169,7 +174,7 @@ namespace Megumin.Binding
                                                 out Func<T> getter,
                                                 bool instanceIsGetDelegate = false)
         {
-            if (methodInfo.ReturnType.CanAutoConvertFuncT<T>() == false)
+            if (methodInfo.ReturnType.CanConvertDelegate<T>() == false)
             {
                 //自动类型适配
                 var adp = TypeAdpter.GetTypeAdpter<T>(methodInfo.ReturnType);
@@ -281,6 +286,154 @@ namespace Megumin.Binding
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static bool TryGetSetDelegateUseTypeAdpter<T>(this PropertyInfo propertyInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Action<T> setter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            if (propertyInfo.CanWrite)
+            {
+                if (propertyInfo.SetMethod.TryGetSetDelegateUseTypeAdpter(
+                    instanceType, instance, out setter, instanceIsGetDelegate))
+                {
+                    return true;
+                }
+            }
+
+            setter = null;
+            return false;
+        }
+
+        public static bool TryGetSetDelegateUseTypeAdpter<T>(this MethodInfo methodInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Action<T> setter,
+
+                                                bool instanceIsGetDelegate = false)
+        {
+            var paras = methodInfo.GetParameters();
+            Type firstArgsType = paras[0].ParameterType;
+            if (CanConvertDelegate(typeof(T), firstArgsType) == false)
+            {
+                //自动类型适配
+                var adp = TypeAdpter.GetSetTypeAdpter<T>(firstArgsType);
+
+                if (adp == null)
+                {
+                    Debug.LogError($"成员类型{firstArgsType}无法满足目标类型{typeof(T)},并且没有找到对应的TypeAdpter");
+                }
+                else
+                {
+                    if (methodInfo.TryGetSetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
+                    {
+                        if (adp.TryGetSetDelegate(g, out setter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return methodInfo.TryGetSetDelegate(instanceType, instance, out setter, instanceIsGetDelegate);
+            }
+
+            setter = null;
+            return false;
+        }
+
+        public static bool TryGetSetDelegate<T>(this MethodInfo methodInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Action<T> setter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            if (TryGetSetDelegate(methodInfo, instanceType, instance, out var mysetter, instanceIsGetDelegate))
+            {
+                var typeP = methodInfo.ReturnType;
+                var typeV = typeof(T);
+                if (mysetter is Action<T> mysetterGeneric) //逆变
+                {
+                    setter = mysetterGeneric;
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning($"{mysetter.GetType()} <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
+                }
+            }
+            setter = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 将接收一个目标参数的方法创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// </summary>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        public static bool TryGetSetDelegate(this MethodInfo methodInfo,
+                                             Type instanceType,
+                                             object instance,
+                                             out Delegate setter,
+                                             bool instanceIsGetDelegate = false)
+        {
+            setter = null;
+            var paras = methodInfo.GetParameters();
+            Type firstArgsType = paras[0].ParameterType;
+            Type delagateType = typeof(Action<>).MakeGenericType(firstArgsType);
+            if (methodInfo.IsStatic)
+            {
+                setter = methodInfo.CreateDelegate(delagateType, null);
+                //getter = Delegate.CreateDelegate(delagateType, null, methodInfo);
+                return true;
+            }
+            else
+            {
+                if (instance == null)
+                {
+                    Debug.LogError("instanceDelegate is null");
+                }
+                else
+                {
+                    if (instanceIsGetDelegate)
+                    {
+                        if (instance is Delegate getInstance)
+                        {
+                            var connector = DelegateConnector.Get(instanceType, firstArgsType);
+                            if (connector.TryConnectSet(getInstance, methodInfo, out setter))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        setter = methodInfo.CreateDelegate(delagateType, instance);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 
 

@@ -177,60 +177,10 @@ namespace Megumin.Binding
                     ParseResult |= ParseBindingResult.Get;
                 }
 
-                if (propertyInfo.CanWrite)
+                if (propertyInfo.TryGetSetDelegateUseTypeAdpter(instanceType,
+                    instance, out Setter, instanceIsGetDelegate))
                 {
-                    var setMethod = propertyInfo.GetSetMethod();
-                    if (setMethod.IsStatic)
-                    {
-                        Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), null, setMethod);
-                        ParseResult |= ParseBindingResult.Set;
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            Debug.LogError("instanceDelegate is null");
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Type setterDelegateType = typeof(Action<,>).MakeGenericType(instanceType, typeof(T));
-
-                                    //string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
-                                    //Debug.Log(message);
-
-                                    var setDelegate = setMethod.CreateDelegate(setterDelegateType);
-                                    Setter = (value) =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        setDelegate.DynamicInvoke(temp, value);
-                                    };
-                                    ParseResult |= ParseBindingResult.Set;
-                                }
-                            }
-                            else
-                            {
-                                if (propertyInfo.PropertyType != typeof(T))
-                                {
-                                    //自动类型适配  TODO
-                                    var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
-
-                                    var de = Delegate.CreateDelegate(typeof(Func<T>), instance, setMethod);
-
-                                    if (adp != null && adp.TryGetSetDelegate(de, out Setter))
-                                    {
-                                        ParseResult |= ParseBindingResult.Get;
-                                    }
-                                }
-
-                                Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), instance, setMethod);
-                                ParseResult |= ParseBindingResult.Set;
-                            }
-                        }
-                    }
+                    ParseResult |= ParseBindingResult.Set;
                 }
 
                 return true;

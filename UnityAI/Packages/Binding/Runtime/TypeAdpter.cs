@@ -6,10 +6,14 @@ namespace Megumin.Binding
     public interface ITypeAdpter<T>
     {
         bool TryGetGetDeletgate(Delegate get, out Func<T> getter);
+    }
+
+    public interface ISetITypeAdpter<T>
+    {
         bool TryGetSetDelegate(Delegate get, out Action<T> setter);
     }
 
-    public interface iconver<F, T> : ITypeAdpter<T>
+    public interface iconver<F, T> : ITypeAdpter<T>, ISetITypeAdpter<F>
     {
         T Convert(F value);
     }
@@ -36,6 +40,19 @@ namespace Megumin.Binding
             if (adps.TryGetValue(key, out var adp))
             {
                 if (adp is ITypeAdpter<T> gadp)
+                {
+                    return gadp;
+                }
+            }
+            return null;
+        }
+
+        public static ISetITypeAdpter<T> GetSetTypeAdpter<T>(Type type)
+        {
+            var key = (typeof(T), type);
+            if (adps.TryGetValue(key, out var adp))
+            {
+                if (adp is ISetITypeAdpter<T> gadp)
                 {
                     return gadp;
                 }
@@ -80,19 +97,15 @@ namespace Megumin.Binding
             return false;
         }
 
-        public bool TryGetSetDelegate(Delegate get, out Action<T> setter)
+        public bool TryGetSetDelegate(Delegate get, out Action<F> setter)
         {
-            if (get is Action<F> gset)
+            if (get is Action<T> gset)
             {
-                var ad = TypeAdpter.GetTypeAdpter<T, F>();
-                if (ad != null)
+                setter = (F value) =>
                 {
-                    setter = (T value) =>
-                    {
-                        gset(ad.Convert(value));
-                    };
-                    return true;
-                }
+                    gset(Convert(value));
+                };
+                return true;
             }
             setter = null;
             return false;
