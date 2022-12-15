@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace Megumin.Binding
 {
+    /// <summary>
+    /// 重要： https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/variance-in-delegates#variance-in-generic-type-parameters-for-value-and-reference-types
+    /// </summary>
     internal static class ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0
     {
         public static void TestConvert()
@@ -39,6 +42,7 @@ namespace Megumin.Binding
             //https://stackoverflow.com/questions/2169062/faster-way-to-cast-a-funct-t2-to-funct-object
             //https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/using-variance-for-func-and-action-generic-delegates
 
+            //能不能协变 与 能不能隐式转换 无关。
             //funcObj = funcint;
             //Func<float> funfloat2 = funcint;
             //Func<double> fundouble = funcfloat;
@@ -60,6 +64,7 @@ namespace Megumin.Binding
                 if (from.IsValueType)
                 {
                     //值类型通常都不能处理Func<T>协变，需要使用适配器转换
+                    //https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/variance-in-delegates#variance-in-generic-type-parameters-for-value-and-reference-types
                 }
                 else
                 {
@@ -169,7 +174,11 @@ namespace Megumin.Binding
                 //自动类型适配
                 var adp = TypeAdpter.GetTypeAdpter<T>(methodInfo.ReturnType);
 
-                if (adp != null)
+                if (adp == null)
+                {
+                    Debug.LogError($"成员类型{methodInfo.ReturnType}无法满足目标类型{typeof(T)},并且没有找到对应的TypeAdpter");
+                }
+                else
                 {
                     if (methodInfo.TryGetGetDelegate(instanceType, instance, out var g, instanceIsGetDelegate))
                     {
@@ -180,8 +189,13 @@ namespace Megumin.Binding
                     }
                 }
             }
+            else
+            {
+                return methodInfo.TryGetGetDelegate(instanceType, instance, out getter, instanceIsGetDelegate);
+            }
 
-            return methodInfo.TryGetGetDelegate(instanceType, instance, out getter, instanceIsGetDelegate);
+            getter = null;
+            return false;
         }
 
 
@@ -225,6 +239,7 @@ namespace Megumin.Binding
                                              bool instanceIsGetDelegate = false)
         {
             getter = null;
+            //var paras = methodInfo.GetParameters();
             Type delagateType = typeof(Func<>).MakeGenericType(methodInfo.ReturnType);
             if (methodInfo.IsStatic)
             {

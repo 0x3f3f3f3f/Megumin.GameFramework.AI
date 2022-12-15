@@ -425,7 +425,7 @@ namespace Megumin.Binding
             }
 
             var methodInfo = instanceType.GetMethod(methodName);
-            if (methodInfo != null && typeof(T).IsAssignableFrom(methodInfo.ReturnType))
+            if (methodInfo != null)
             {
                 var paras = methodInfo.GetParameters();
                 if (paras.Length == 0)
@@ -440,6 +440,7 @@ namespace Megumin.Binding
                 else
                 {
                     //TODO 多个参数
+                    Debug.LogWarning($"暂不支持 含有参数的方法 绑定");
                     return false;
                 }
             }
@@ -495,7 +496,7 @@ namespace Megumin.Binding
                 return (ParseResult, Getter, Setter);
             }
 
-            Debug.LogWarning($"{instanceType.FullName} 没有找到成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
+            Debug.LogWarning($"{instanceType.FullName} 没有找到 符合标准的 成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
             return (ParseResult, Getter, Setter);
         }
 
