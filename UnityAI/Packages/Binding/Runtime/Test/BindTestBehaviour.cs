@@ -24,8 +24,26 @@ namespace Megumin.Binding.Test
         /// <summary>
         /// 类型自动适配，自动转型
         /// </summary>
-        public BindableValue<string> TypeAdpterTest
+        public BindableValue<object> TypeAdpterTestString2Object
+            = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/tag" };
+
+        /// <summary>
+        /// 类型自动适配，自动转型
+        /// </summary>
+        public BindableValue<object> TypeAdpterTestInt2Object
+            = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/layer" };
+
+        /// <summary>
+        /// 类型自动适配，自动转型
+        /// </summary>
+        public BindableValue<string> TypeAdpterTestInt2String
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/layer" };
+
+        /// <summary>
+        /// 类型自动适配，自动转型
+        /// </summary>
+        public BindableValue<float> TypeAdpterTestInt2Float
+            = new BindableValue<float>() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
         /// 字段绑定 ✅
@@ -193,7 +211,7 @@ namespace Megumin.Binding.Test
                     Debug.Log(@delegate.DynamicInvoke());
                 }
 
-                if (prop.TryGetGetDelegate<string>(type,null,out var getter))
+                if (prop.TryGetGetDelegate<string>(type, null, out var getter))
                 {
                     Debug.Log(getter());
                 }

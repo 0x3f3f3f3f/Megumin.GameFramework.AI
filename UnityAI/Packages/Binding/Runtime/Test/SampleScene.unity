@@ -248,6 +248,106 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: InterfaceTest.Array.data[0]
+      value: 7949863037564878848
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: InterfaceTest.Array.data[1]
+      value: 7949863037564878849
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848]
+      value: Megumin.Binding Megumin.Binding.BindableValueInt
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849]
+      value: Megumin.Binding Megumin.Binding.BindableValueString
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].BindingPath
+      value: UnityEngine.GameObject/layer
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].BindingPath
+      value: UnityEngine.GameObject/tag
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878848].defaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[7949863037564878849].defaultValue
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: m_Name

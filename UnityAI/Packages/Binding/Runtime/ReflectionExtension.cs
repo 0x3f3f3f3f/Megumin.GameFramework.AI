@@ -11,6 +11,63 @@ namespace Megumin.Binding
 {
     internal static class ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0
     {
+        public static void TestConvert()
+        {
+            var b1 = typeof(string).IsAssignableFrom(typeof(object));
+            var b2 = typeof(object).IsAssignableFrom(typeof(string));
+
+            var b3 = typeof(int).IsAssignableFrom(typeof(object));
+            var b4 = typeof(object).IsAssignableFrom(typeof(int));
+
+            var b5 = typeof(float).IsAssignableFrom(typeof(int));
+            var b6 = typeof(int).IsAssignableFrom(typeof(float));
+
+            var b7 = typeof(float).IsAssignableFrom(typeof(double));
+            var b8 = typeof(double).IsAssignableFrom(typeof(float));
+
+            int a = 200;
+            float b = 300f;
+            b = a;
+
+            Func<string> funcstring = () => "";
+            Func<int> funcint = () => 100;
+            Func<float> funcfloat = () => 100f;
+
+            Func<object> funcObj = funcstring;
+            // Func<int> 不能协变成  Func<object> 也就认了，毕竟涉及到装箱。
+            // Func<float> 协变成  Func<double>也不行? 无法理解
+            //funcObj = funcint;
+            //Func<float> funfloat2 = funcint;
+            //Func<double> fundouble = funcfloat;
+        }
+
+        /// <summary>
+        /// 测试是否需要类型适配器。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public static bool CanAutoConvertFuncT(Type from, Type to)
+        {
+            if (to.IsAssignableFrom(from))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 测试是否需要类型适配器。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public static bool CanAutoConvertFuncT<T>(this Type myValueType)
+        {
+            return CanAutoConvertFuncT(myValueType, typeof(T));
+        }
+
         /// <summary>
         /// 使用类型适配器创建委托。
         /// </summary>
@@ -27,7 +84,12 @@ namespace Megumin.Binding
                                                 out Func<T> getter,
                                                 bool instanceIsGetDelegate = false)
         {
-            if (propertyInfo.PropertyType != typeof(T))
+            var typeP = propertyInfo.PropertyType;
+            var typeV = typeof(T);
+            var b1 = typeV.IsAssignableFrom(typeP);
+            var b2 = typeP.IsAssignableFrom(typeV);
+
+            if (propertyInfo.PropertyType.CanAutoConvertFuncT<T>() == false)
             {
                 //自动类型适配
                 var adp = TypeAdpter.GetTypeAdpter<T>(propertyInfo.PropertyType);
@@ -103,10 +165,16 @@ namespace Megumin.Binding
         {
             if (TryGetGetDelegate(methodInfo, instanceType, instance, out var mygetter, instanceIsGetDelegate))
             {
+                var typeP = methodInfo.ReturnType;
+                var typeV = typeof(T);
                 if (mygetter is Func<T> mygetterGeneric)
                 {
                     getter = mygetterGeneric;
                     return true;
+                }
+                else
+                {
+                    Debug.LogWarning($"{mygetter.GetType()} <color=#ff0000>IS NOT</color> {typeof(Func<T>)}.");
                 }
             }
             getter = null;

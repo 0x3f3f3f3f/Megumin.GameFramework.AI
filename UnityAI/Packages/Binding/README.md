@@ -1,7 +1,7 @@
 ﻿# Binding
 绑定功能。  
 通过BindingPath绑定到一个目标。  
-BindingString格式:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
+BindingPath格式:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
 
 ```cs
 [Flags]
@@ -24,7 +24,7 @@ public enum ParseBindingResult
 - [ ] 绑定泛型方法(仅无参数方法)
 - [ ] 绑定扩展方法(仅无参数方法)
 - [ ] 类型自动适配
-- [ ] 类型自动适配时自动查找基类
+- [ ] 类型自动适配时自动查找基类，协变和逆变
 - [x] 静态类型和成员支持
 - [x] 接口支持
 - [x] 非可序列化类型支持(目前为有限的支持)
@@ -50,6 +50,12 @@ public enum ParseBindingResult
 
 ## 注意
 - 成员很可能被IL2CPP剪裁掉导致无法绑定，尤其是静态成员和泛型。
+
+## 类型自动适配
+NodeCanvas是[AutoConvert](https://nodecanvas.paradoxnotion.com/documentation/?section=bbparameters)    Graph的参数BBParameter可以关联到不同类型的Variable，通过TypeConverter生成新的委托。  
+Variable本身不支持绑定到不同类型成员。  
+
+与NodeCanvas不同，为了通用性，本库将类型适配防止绑定部分，BindingPath可以自动适配成员类型和目标类型。
 
 ## 示例
 参考 BindTestBehaviour.cs
