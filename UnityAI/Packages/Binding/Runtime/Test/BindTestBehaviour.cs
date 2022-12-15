@@ -227,12 +227,12 @@ namespace Megumin.Binding.Test
             {
                 var type = typeof(Application);
                 var prop = type.GetProperty("version");
-                if (prop.GetMethod.TryGetGetDelegate(type, null, out var @delegate, false))
+                if (prop.GetMethod.TryCreateGetter(type, null, out var @delegate, false))
                 {
                     Debug.Log(@delegate.DynamicInvoke());
                 }
 
-                if (prop.TryGetGetDelegate<string>(type, null, out var getter))
+                if (prop.TryCreateGetter<string>(type, null, out var getter))
                 {
                     Debug.Log(getter());
                 }
@@ -241,7 +241,7 @@ namespace Megumin.Binding.Test
             {
                 var obj = GetComponent<CostomTest>();
                 var prop2 = obj.GetType().GetProperty("MyIntProperty1");
-                if (prop2.GetMethod.TryGetGetDelegate(obj.GetType(), obj, out var @delegate2, false))
+                if (prop2.GetMethod.TryCreateGetter(obj.GetType(), obj, out var @delegate2, false))
                 {
                     Debug.Log(@delegate2.DynamicInvoke());
                 }

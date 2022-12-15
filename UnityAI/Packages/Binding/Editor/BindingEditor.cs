@@ -149,7 +149,7 @@ namespace Megumin.Binding.Editor
 
             var allPorp = from p in propertie
                           select new MyMember() { Name = p.Name, Member = p, ValueType = p.PropertyType };
-            //var methods = type.GetMethods().Where(MatchMethod<T>).Cast<MemberInfo>();
+            //var methods = type.GetMethods().Where(MatchMethod<To>).Cast<MemberInfo>();
             return allf.Concat(allPorp).OrderBy(m => m.Name)/*.Concat(methods)*/;
         }
 

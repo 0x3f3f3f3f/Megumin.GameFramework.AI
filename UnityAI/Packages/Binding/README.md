@@ -51,6 +51,7 @@ public enum ParseBindingResult
 
 ## 注意
 - 成员很可能被IL2CPP剪裁掉导致无法绑定，尤其是静态成员和泛型。
+- BindingPath的第一个string(类型：组件类|静态类|接口)，在unity中用于识别组件，不一定包含后面的成员。
 
 ## 类型自动适配
 NodeCanvas是[AutoConvert](https://nodecanvas.paradoxnotion.com/documentation/?section=bbparameters)    Graph的参数BBParameter可以关联到不同类型的Variable，通过TypeConverter生成新的委托。  

@@ -24,7 +24,7 @@ namespace Megumin.Binding
 
     public interface IBindable<T> : IBindable
     {
-        //T DefaultValue { get; set; }
+        //To DefaultValue { get; set; }
     }
 
     public interface IBindingParseable

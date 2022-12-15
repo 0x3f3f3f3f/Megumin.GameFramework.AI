@@ -73,8 +73,23 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
-  TypeAdpterTest:
+  TypeAdpterTestString2Object:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.GameObject/tag
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  TypeAdpterTestInt2Object:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.GameObject/layer
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  TypeAdpterTestInt2String:
     Key: 
     IsBinding: 0
     BindingPath: UnityEngine.GameObject/layer
@@ -83,7 +98,15 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
+  TypeAdpterTestInt2Float:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.GameObject/layer
+    defaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
   CustomTestField:
     Key: 
     IsBinding: 0
@@ -93,7 +116,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   CustomTestFieldByInterface:
     Key: 
     IsBinding: 0
@@ -103,7 +125,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   CustomTestFieldByInterface2:
     Key: 
     IsBinding: 0
@@ -113,7 +134,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   CustomTestFieldByCostomTestClass:
     Key: 
     IsBinding: 0
@@ -123,7 +143,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   GameObjectTransformTag:
     Key: 
     IsBinding: 0
@@ -133,7 +152,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   MyTestInnerClass:
     Key: 
     IsBinding: 0
@@ -143,7 +161,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   MyTestInnerClassDeep2:
     Key: 
     IsBinding: 0
@@ -153,7 +170,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   ApplicationVersion:
     Key: 
     IsBinding: 0
@@ -163,7 +179,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   TimeFixedDeltaTime:
     Key: 
     IsBinding: 0
@@ -173,7 +188,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   DateTimeOffsetOffset:
     Key: 
     IsBinding: 0
@@ -182,7 +196,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   BindType:
     Key: 
     IsBinding: 0
@@ -191,7 +204,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   BindTypeProperty:
     Key: 
     IsBinding: 0
@@ -200,7 +212,24 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
+  BindMethodArgs0:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod1()
+    defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  BindMethodArgs1:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod2()
+    defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
   Test1:
     Key: 
     IsBinding: 0
@@ -210,7 +239,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   Test2:
     Key: 
     IsBinding: 0
@@ -220,7 +248,6 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   Test3:
     Key: 
     IsBinding: 0
@@ -230,15 +257,14 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
-    IsMatch: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949863000981897216
-  - rid: 7949863000981897217
+  - rid: 7949863043776905216
+  - rid: 7949863043776905217
   references:
     version: 2
     RefIds:
-    - rid: 7949863000981897216
+    - rid: 7949863043776905216
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -249,8 +275,7 @@ MonoBehaviour:
         xOffset: 0
         yOffset: 0
         IsStatic: 0
-        IsMatch: 0
-    - rid: 7949863000981897217
+    - rid: 7949863043776905217
       type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -261,4 +286,3 @@ MonoBehaviour:
         xOffset: 0
         yOffset: 0
         IsStatic: 0
-        IsMatch: 0

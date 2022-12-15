@@ -171,13 +171,13 @@ namespace Megumin.Binding
             var propertyInfo = instanceType.GetProperty(memberName);
             if (propertyInfo != null)
             {
-                if (propertyInfo.TryGetGetDelegateUseTypeAdpter(instanceType,
+                if (propertyInfo.TryCreateGetterUseTypeAdpter(instanceType,
                     instance, out Getter, instanceIsGetDelegate))
                 {
                     ParseResult |= ParseBindingResult.Get;
                 }
 
-                if (propertyInfo.TryGetSetDelegateUseTypeAdpter(instanceType,
+                if (propertyInfo.TryCreateSetterUseTypeAdpter(instanceType,
                     instance, out Setter, instanceIsGetDelegate))
                 {
                     ParseResult |= ParseBindingResult.Set;
@@ -280,7 +280,7 @@ namespace Megumin.Binding
                                 //Func<object, object> func = fieldInfo.GetValue;
                                 //Getter = () =>
                                 //{
-                                //    return (T)func(instance);
+                                //    return (To)func(instance);
                                 //};
 
                                 Getter = () =>
@@ -380,7 +380,7 @@ namespace Megumin.Binding
                 var paras = methodInfo.GetParameters();
                 if (paras.Length == 0)
                 {
-                    if (methodInfo.TryGetGetDelegateUseTypeAdpter(instanceType,
+                    if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
                                 instance, out Getter, instanceIsGetDelegate))
                     {
                         ParseResult |= ParseBindingResult.Get;
@@ -473,7 +473,7 @@ namespace Megumin.Binding
                 var propertyInfo = instanceType.GetProperty(memberName);
                 if (propertyInfo != null)
                 {
-                    if (propertyInfo.TryGetGetDelegate(instanceType, instance, out var pGetter, instanceIsGetDelegate))
+                    if (propertyInfo.TryCreateGetter(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
                         return (pGetter, propertyInfo.PropertyType);
                     }
@@ -525,7 +525,7 @@ namespace Megumin.Binding
                 var methodInfo = instanceType.GetMethod(memberName);
                 if (methodInfo != null)
                 {
-                    if (methodInfo.TryGetGetDelegate(instanceType, instance, out var pGetter, instanceIsGetDelegate))
+                    if (methodInfo.TryCreateGetter(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
                         return (pGetter, methodInfo.ReturnType);
                     }

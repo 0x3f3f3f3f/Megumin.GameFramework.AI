@@ -36,7 +36,7 @@ namespace Megumin.Binding
             var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
 
             //TODO 使用强类型委托 避免 DynamicInvoke , 不知道在IL2CPP中会不会有问题，泛型方法无法生成？
-            //Func<object, T> getDeletgate2 = setDeletgate as Func<object, T>;
+            //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
 
             Func<object> mygetter = () =>
             {
@@ -80,13 +80,13 @@ namespace Megumin.Binding
 
         class DelegateConnectorGeneric<I, T> : DelegateConnector
         {
-            //public static Func<T> Create(Delegate getinstane, Delegate getter)
+            //public static Func<To> Create(Delegate getinstane, Delegate getter)
             //{
             //    if (getinstane is Func<I> gf)
             //    {
-            //        if (getter is Func<I, T> setDelegateGeneric)
+            //        if (getter is Func<I, To> setDelegateGeneric)
             //        {
-            //            Func<T> getter = () =>
+            //            Func<To> getter = () =>
             //            {
             //                var instance = gf();
             //                return setDelegateGeneric(instance);
@@ -96,7 +96,7 @@ namespace Megumin.Binding
             //    return null;
             //}
 
-            //public static Func<T> Create(Delegate getinstane, MethodInfo methodInfo)
+            //public static Func<To> Create(Delegate getinstane, MethodInfo methodInfo)
             //{
             //    Type getterDelegateType = typeof(Func<,>).MakeGenericType(typeof(I), methodInfo.ReturnType);
 
@@ -106,9 +106,9 @@ namespace Megumin.Binding
             //    var setDeletgate = methodInfo.CreateDelegate(getterDelegateType);
             //    if (getinstane is Func<I> getinstaneGeneric)
             //    {
-            //        if (setDeletgate is Func<I, T> setDelegateGeneric)
+            //        if (setDeletgate is Func<I, To> setDelegateGeneric)
             //        {
-            //            Func<T> getter = () =>
+            //            Func<To> getter = () =>
             //            {
             //                var instance = getinstaneGeneric();
             //                return setDelegateGeneric(instance);
@@ -130,7 +130,7 @@ namespace Megumin.Binding
                 var getDeletgate = methodInfo.CreateDelegate(getterDelegateType);
 
                 //TODO 使用强类型委托 避免 DynamicInvoke , 不知道在IL2CPP中会不会有问题，泛型方法无法生成？
-                //Func<object, T> getDeletgate2 = setDeletgate as Func<object, T>;
+                //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
 
                 if (getinstane is Func<I> getinstaneGeneric)
                 {
@@ -160,7 +160,7 @@ namespace Megumin.Binding
                 var setDeletgate = methodInfo.CreateDelegate(getterDelegateType);
 
                 //TODO 使用强类型委托 避免 DynamicInvoke , 不知道在IL2CPP中会不会有问题，泛型方法无法生成？
-                //Func<object, T> getDeletgate2 = setDeletgate as Func<object, T>;
+                //Func<object, To> getDeletgate2 = setDeletgate as Func<object, To>;
 
                 if (getinstane is Func<I> getinstaneGeneric)
                 {
@@ -180,7 +180,7 @@ namespace Megumin.Binding
                 return false;
 
 
-                //Type setterDelegateType = typeof(Action<,>).MakeGenericType(instanceType, typeof(T));
+                //Type setterDelegateType = typeof(Action<,>).MakeGenericType(instanceType, typeof(To));
 
                 ////string message = $"MakeG {getterDelegateType} , {typeof(Func<Transform, string>)}";
                 ////Debug.Log(message);

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace Megumin.Binding
 {
-    public interface ITypeAdpter<T>
+    public interface ITypeAdpterGet<T>
     {
-        bool TryGetGetDeletgate(Delegate get, out Func<T> getter);
+        bool TryCreateGetter(Delegate get, out Func<T> getter);
     }
 
-    public interface ISetITypeAdpter<T>
+    public interface ITypeAdpterSet<T>
     {
-        bool TryGetSetDelegate(Delegate get, out Action<T> setter);
+        bool TryCreateSetter(Delegate get, out Action<T> setter);
     }
 
-    public interface iconver<F, T> : ITypeAdpter<T>, ISetITypeAdpter<F>
+    public interface IConvertTypealbe<From, To> : ITypeAdpterGet<To>, ITypeAdpterSet<From>
     {
-        T Convert(F value);
+        To Convert(From value);
     }
 
     /// <summary>
@@ -23,23 +23,22 @@ namespace Megumin.Binding
     /// </summary>
     public static class TypeAdpter
     {
-
         /// <summary>
         /// 与DelegateConnector不同，类型适配器时运行其他用户扩展的，每个泛型都要手动实现，不能反射构造<see cref="DelegateConnector.Get(Type, Type)"/>
         /// </summary>
         static Dictionary<(Type, Type), object> adps = new Dictionary<(Type, Type), object>()
         {
-            { (typeof(int),typeof(string)) , new TypeAdpterIntString() },
-            { (typeof(object),typeof(string)) , new TypeAdpterOS() },
+            { (typeof(int),typeof(string)) , new TypeAdpter_Int2String() },
+            { (typeof(object),typeof(string)) , new TypeAdpter_Object2String() },
         };
 
         //TODO,基类型自动适配。
-        public static ITypeAdpter<T> GetTypeAdpter<T>(Type type)
+        public static ITypeAdpterGet<T> FindGetAdpter<T>(Type type)
         {
             var key = (type, typeof(T));
             if (adps.TryGetValue(key, out var adp))
             {
-                if (adp is ITypeAdpter<T> gadp)
+                if (adp is ITypeAdpterGet<T> gadp)
                 {
                     return gadp;
                 }
@@ -47,12 +46,12 @@ namespace Megumin.Binding
             return null;
         }
 
-        public static ISetITypeAdpter<T> GetSetTypeAdpter<T>(Type type)
+        public static ITypeAdpterSet<T> FindSetAdpter<T>(Type type)
         {
             var key = (typeof(T), type);
             if (adps.TryGetValue(key, out var adp))
             {
-                if (adp is ISetITypeAdpter<T> gadp)
+                if (adp is ITypeAdpterSet<T> gadp)
                 {
                     return gadp;
                 }
@@ -61,7 +60,7 @@ namespace Megumin.Binding
         }
 
         //TODO,基类型自动适配。
-        public static TypeAdpter<F, T> GetTypeAdpter<F, T>()
+        public static TypeAdpter<F, T> FindAdpter<F, T>()
         {
             var key = (typeof(F), typeof(T));
             if (adps.TryGetValue(key, out var adp))
@@ -78,17 +77,17 @@ namespace Megumin.Binding
     }
 
 
-    public abstract class TypeAdpter<F, T> : iconver<F, T>
+    public abstract class TypeAdpter<F, T> : IConvertTypealbe<F, T>
     {
         public abstract T Convert(F value);
 
-        public bool TryGetGetDeletgate(Delegate get, out Func<T> getter)
+        public bool TryCreateGetter(Delegate get, out Func<T> getter)
         {
-            if (get is Func<F> fget)
+            if (get is Func<F> getGeneric)
             {
                 getter = () =>
                 {
-                    return Convert(fget());
+                    return Convert(getGeneric());
                 };
                 return true;
             }
@@ -97,13 +96,13 @@ namespace Megumin.Binding
             return false;
         }
 
-        public bool TryGetSetDelegate(Delegate get, out Action<F> setter)
+        public bool TryCreateSetter(Delegate set, out Action<F> setter)
         {
-            if (get is Action<T> gset)
+            if (set is Action<T> setGeneric)
             {
                 setter = (F value) =>
                 {
-                    gset(Convert(value));
+                    setGeneric(Convert(value));
                 };
                 return true;
             }
@@ -112,7 +111,7 @@ namespace Megumin.Binding
         }
     }
 
-    public class TypeAdpterOS : TypeAdpter<object, string>
+    public class TypeAdpter_Object2String : TypeAdpter<object, string>
     {
         public override string Convert(object value)
         {
@@ -120,7 +119,7 @@ namespace Megumin.Binding
         }
     }
 
-    public class TypeAdpterIntString : TypeAdpter<int, string>
+    public class TypeAdpter_Int2String : TypeAdpter<int, string>
     {
         public override string Convert(int value)
         {
