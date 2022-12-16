@@ -277,12 +277,12 @@ MonoBehaviour:
     IsStatic: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949863045341118466
-  - rid: 7949863045341118467
+  - rid: 7949863067738439680
+  - rid: 7949863067738439681
   references:
     version: 2
     RefIds:
-    - rid: 7949863045341118466
+    - rid: 7949863067738439680
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -293,7 +293,7 @@ MonoBehaviour:
         xOffset: 0
         yOffset: 0
         IsStatic: 0
-    - rid: 7949863045341118467
+    - rid: 7949863067738439681
       type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 

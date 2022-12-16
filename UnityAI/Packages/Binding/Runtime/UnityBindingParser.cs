@@ -167,28 +167,33 @@ namespace Megumin.Binding
             ParseResult = ParseBindingResult.None;
             Getter = null;
             Setter = null;
+            bool hasMember = false;
 
-            var propertyInfo = instanceType.GetProperty(memberName);
-            if (propertyInfo != null)
+            try
             {
-                if (propertyInfo.TryCreateGetterUseTypeAdpter(instanceType,
-                    instance, out Getter, instanceIsGetDelegate))
+                var propertyInfo = instanceType.GetProperty(memberName);
+                if (propertyInfo != null)
                 {
-                    ParseResult |= ParseBindingResult.Get;
-                }
+                    hasMember = true;
+                    if (propertyInfo.TryCreateGetterUseTypeAdpter(instanceType,
+                        instance, out Getter, instanceIsGetDelegate))
+                    {
+                        ParseResult |= ParseBindingResult.Get;
+                    }
 
-                if (propertyInfo.TryCreateSetterUseTypeAdpter(instanceType,
-                    instance, out Setter, instanceIsGetDelegate))
-                {
-                    ParseResult |= ParseBindingResult.Set;
+                    if (propertyInfo.TryCreateSetterUseTypeAdpter(instanceType,
+                        instance, out Setter, instanceIsGetDelegate))
+                    {
+                        ParseResult |= ParseBindingResult.Set;
+                    }
                 }
-
-                return true;
             }
-            else
+            catch (Exception e)
             {
-                return false;
+                Debug.LogWarning($"ParseError:  {e}");
             }
+
+            return hasMember;
         }
 
         /// <summary>
@@ -214,25 +219,30 @@ namespace Megumin.Binding
             ParseResult = ParseBindingResult.None;
             Getter = null;
             Setter = null;
+            bool hasMember = false;
 
-            var fieldInfo = instanceType.GetField(memberName);
-            if (fieldInfo != null)
+            try
             {
-                if (fieldInfo.TryCreateGetterUseTypeAdpter(instanceType, instance, out Getter, instanceIsGetDelegate))
+                var fieldInfo = instanceType.GetField(memberName);
+                if (fieldInfo != null)
                 {
-                    ParseResult |= ParseBindingResult.Get;
-                }
+                    hasMember = true;
+                    if (fieldInfo.TryCreateGetterUseTypeAdpter(instanceType, instance, out Getter, instanceIsGetDelegate))
+                    {
+                        ParseResult |= ParseBindingResult.Get;
+                    }
 
-                if (fieldInfo.TryCreateSetterUseTypeAdpter(instanceType, instance, out Setter, instanceIsGetDelegate))
-                {
-                    ParseResult |= ParseBindingResult.Set;
+                    if (fieldInfo.TryCreateSetterUseTypeAdpter(instanceType, instance, out Setter, instanceIsGetDelegate))
+                    {
+                        ParseResult |= ParseBindingResult.Set;
+                    }
                 }
-                return true;
             }
-            else
+            catch (Exception e)
             {
-                return false;
+                Debug.LogWarning($"ParseError:  {e}");
             }
+            return hasMember;
         }
 
         /// <summary>
@@ -258,63 +268,67 @@ namespace Megumin.Binding
             ParseResult = ParseBindingResult.None;
             Getter = null;
             Setter = null;
+            bool hasMember = false;
 
-            var methodName = memberName;
-            if (memberName.EndsWith("()"))
+            try
             {
-                methodName = memberName.Replace("()", "");
-                //TODO 泛型函数
-            }
-
-            var methodInfo = instanceType.GetMethod(methodName);
-            //TODO，区分方法重载
-
-            if (methodInfo != null)
-            {
-                var paras = methodInfo.GetParameters();
-                if (paras.Length < 2)
+                var methodName = memberName;
+                if (memberName.EndsWith("()"))
                 {
-                    if (paras.Length == 0)
+                    methodName = memberName.Replace("()", "");
+                    //TODO 泛型函数
+                }
+
+                var methodInfo = instanceType.GetMethod(methodName);
+                //TODO，区分方法重载
+
+                if (methodInfo != null)
+                {
+                    hasMember = true;
+
+                    var paras = methodInfo.GetParameters();
+                    if (paras.Length < 2)
                     {
-                        //没有参数时认为是Get绑定
-                        if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
-                                    instance, out Getter, instanceIsGetDelegate))
+                        if (paras.Length == 0)
                         {
-                            ParseResult |= ParseBindingResult.Get;
-                        }
-                    }
-                    else if (paras.Length == 1)
-                    {
-                        if (false && methodInfo.ReturnType != typeof(void))
-                        {
-                            //暂时不检查返回值
-                            //返回值必须是void。
-                            Debug.LogWarning($"SetMethod must return void.");
-                        }
-                        else
-                        {
-                            //一个参数时认为是Set绑定
-                            if (methodInfo.TryCreateSetterUseTypeAdpter(instanceType,
-                                        instance, out Setter, instanceIsGetDelegate))
+                            //没有参数时认为是Get绑定
+                            if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
+                                        instance, out Getter, instanceIsGetDelegate))
                             {
-                                ParseResult |= ParseBindingResult.Set;
+                                ParseResult |= ParseBindingResult.Get;
+                            }
+                        }
+                        else if (paras.Length == 1)
+                        {
+                            if (false && methodInfo.ReturnType != typeof(void))
+                            {
+                                //暂时不检查返回值
+                                //返回值必须是void。
+                                Debug.LogWarning($"SetMethod must return void.");
+                            }
+                            else
+                            {
+                                //一个参数时认为是Set绑定
+                                if (methodInfo.TryCreateSetterUseTypeAdpter(instanceType,
+                                            instance, out Setter, instanceIsGetDelegate))
+                                {
+                                    ParseResult |= ParseBindingResult.Set;
+                                }
                             }
                         }
                     }
-
-                    return true;
-                }
-                else
-                {
-                    //TODO 多个参数
-                    Debug.LogWarning($"暂不支持 含有参数的方法 {methodInfo}绑定");
-                    return false;
+                    else
+                    {
+                        //TODO 多个参数
+                        Debug.LogWarning($"暂不支持 含有参数的方法 {methodInfo}绑定");
+                    }
                 }
             }
-            else
+            catch (Exception e)
             {
-                return false;
+                Debug.LogWarning($"ParseError:  {e}");
             }
+            return hasMember;
         }
 
         /// <summary>
@@ -336,32 +350,24 @@ namespace Megumin.Binding
             Func<T> Getter = null;
             Action<T> Setter = null;
 
-            try
+            //属性 字段 方法 逐一尝试绑定。
+
+            if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
             {
-                //属性 字段 方法 逐一尝试绑定。
-
-                if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-                {
-                    return (ParseResult, Getter, Setter);
-                }
-
-                if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-                {
-                    return (ParseResult, Getter, Setter);
-                }
-
-                if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-                {
-                    return (ParseResult, Getter, Setter);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"ParseError:  {e}");
                 return (ParseResult, Getter, Setter);
             }
 
-            Debug.LogWarning($"{instanceType.FullName} 没有找到 符合标准的 成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
+            if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+            {
+                return (ParseResult, Getter, Setter);
+            }
+
+            if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+            {
+                return (ParseResult, Getter, Setter);
+            }
+
+            Debug.LogWarning($"通过 {instanceType.FullName}类型 没有找到 符合标准的 成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
             return (ParseResult, Getter, Setter);
         }
 
@@ -514,6 +520,11 @@ namespace Megumin.Binding
                     if (comp)
                     {
                         return (comp, comp.GetType());
+                    }
+                    else
+                    {
+                        //没有找到组件实例返回空而不返回gameObject，防止设计之外的错误绑定。
+                        return (null, type);
                     }
                 }
 
