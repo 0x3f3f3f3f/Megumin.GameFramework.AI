@@ -102,10 +102,10 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetterUseTypeAdpter<T>(this PropertyInfo propertyInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Func<T> getter,
-                                                bool instanceIsGetDelegate = false)
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Func<T> getter,
+                                                           bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -122,10 +122,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this PropertyInfo propertyInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Func<T> getter,
-                                                bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Func<T> getter,
+                                              bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -141,10 +141,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter(this PropertyInfo propertyInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Delegate getter,
-                                             bool instanceIsGetDelegate = false)
+                                           Type instanceType,
+                                           object instance,
+                                           out Delegate getter,
+                                           bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -158,21 +158,32 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 使用类型适配器创建委托。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetterUseTypeAdpter<T>(this MethodInfo methodInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Func<T> getter,
-                                                bool instanceIsGetDelegate = false)
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Func<T> getter,
+                                                           bool instanceIsGetDelegate = false)
         {
-            if (methodInfo.ReturnType.CanConvertDelegate<T>() == false)
+            Type dataType = methodInfo.ReturnType;
+            if (dataType.CanConvertDelegate<T>() == false)
             {
                 //自动类型适配
-                var adp = TypeAdpter.FindGetAdpter<T>(methodInfo.ReturnType);
+                var adp = TypeAdpter.FindGetAdpter<T>(dataType);
 
                 if (adp == null)
                 {
-                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{methodInfo.ReturnType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{methodInfo.ReturnType},{typeof(T)}>");
+                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{dataType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{dataType},{typeof(T)}>");
                 }
                 else
                 {
@@ -196,10 +207,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this MethodInfo methodInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Func<T> getter,
-                                                bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Func<T> getter,
+                                              bool instanceIsGetDelegate = false)
         {
             if (TryCreateGetter(methodInfo, instanceType, instance, out var mygetter, instanceIsGetDelegate))
             {
@@ -230,14 +241,15 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter(this MethodInfo methodInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Delegate getter,
-                                             bool instanceIsGetDelegate = false)
+                                           Type instanceType,
+                                           object instance,
+                                           out Delegate getter,
+                                           bool instanceIsGetDelegate = false)
         {
             getter = null;
             //var paras = methodInfo.GetParameters();
-            Type delagateType = typeof(Func<>).MakeGenericType(methodInfo.ReturnType);
+            Type dataType = methodInfo.ReturnType;
+            Type delagateType = typeof(Func<>).MakeGenericType(dataType);
             if (methodInfo.IsStatic)
             {
                 getter = methodInfo.CreateDelegate(delagateType, null);
@@ -256,7 +268,7 @@ namespace Megumin.Binding
                     {
                         if (instance is Delegate getInstance)
                         {
-                            var connector = DelegateConnector.Get(instanceType, methodInfo.ReturnType);
+                            var connector = DelegateConnector.Get(instanceType, dataType);
                             if (connector.TryConnectGet(getInstance, methodInfo, out getter))
                             {
                                 return true;
@@ -291,14 +303,15 @@ namespace Megumin.Binding
                                                            out Func<T> getter,
                                                            bool instanceIsGetDelegate = false)
         {
-            if (fieldInfo.FieldType.CanConvertDelegate<T>() == false)
+            Type dataType = fieldInfo.FieldType;
+            if (dataType.CanConvertDelegate<T>() == false)
             {
                 //自动类型适配
-                var adp = TypeAdpter.FindGetAdpter<T>(fieldInfo.FieldType);
+                var adp = TypeAdpter.FindGetAdpter<T>(dataType);
 
                 if (adp == null)
                 {
-                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{fieldInfo.FieldType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{fieldInfo.FieldType},{typeof(T)}>");
+                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{dataType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{dataType},{typeof(T)}>");
                 }
                 else
                 {
@@ -331,10 +344,10 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this FieldInfo fieldInfo,
-                                           Type instanceType,
-                                           object instance,
-                                           out Func<T> getter,
-                                           bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Func<T> getter,
+                                              bool instanceIsGetDelegate = false)
         {
             getter = null;
             if (fieldInfo.IsStatic)
@@ -403,7 +416,7 @@ namespace Megumin.Binding
         public static bool TryCreateGetter(this FieldInfo fieldInfo,
                                            Type instanceType,
                                            object instance,
-                                            out Delegate getter,
+                                           out Delegate getter,
                                            bool instanceIsGetDelegate = false)
         {
             throw new NotImplementedException();
@@ -474,13 +487,22 @@ namespace Megumin.Binding
 
 
 
-
+        /// <summary>
+        /// 使用类型适配器创建委托。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetterUseTypeAdpter<T>(this PropertyInfo propertyInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Action<T> setter,
-                                                bool instanceIsGetDelegate = false)
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Action<T> setter,
+                                                           bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanWrite)
             {
@@ -497,10 +519,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this PropertyInfo propertyInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Action<T> setter,
-                                                bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Action<T> setter,
+                                              bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -516,10 +538,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this PropertyInfo propertyInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Delegate setter,
-                                             bool instanceIsGetDelegate = false)
+                                           Type instanceType,
+                                           object instance,
+                                           out Delegate setter,
+                                           bool instanceIsGetDelegate = false)
         {
             if (propertyInfo.CanRead)
             {
@@ -533,13 +555,22 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 使用类型适配器创建委托。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetterUseTypeAdpter<T>(this MethodInfo methodInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Action<T> setter,
-
-                                                bool instanceIsGetDelegate = false)
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Action<T> setter,
+                                                           bool instanceIsGetDelegate = false)
         {
             var paras = methodInfo.GetParameters();
             Type dataType = paras[0].ParameterType;
@@ -574,10 +605,10 @@ namespace Megumin.Binding
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this MethodInfo methodInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Action<T> setter,
-                                                bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Action<T> setter,
+                                              bool instanceIsGetDelegate = false)
         {
             if (TryCreateSetter(methodInfo, instanceType, instance, out var mysetter, instanceIsGetDelegate))
             {
@@ -618,10 +649,10 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this MethodInfo methodInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Delegate setter,
-                                             bool instanceIsGetDelegate = false)
+                                           Type instanceType,
+                                           object instance,
+                                           out Delegate setter,
+                                           bool instanceIsGetDelegate = false)
         {
             setter = null;
             var paras = methodInfo.GetParameters();
@@ -673,12 +704,22 @@ namespace Megumin.Binding
         }
 
 
+        /// <summary>
+        /// 使用类型适配器创建委托。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fieldInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetterUseTypeAdpter<T>(this FieldInfo fieldInfo,
-                                                Type instanceType,
-                                                object instance,
-                                                out Action<T> setter,
-                                                bool instanceIsGetDelegate = false)
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Action<T> setter,
+                                                           bool instanceIsGetDelegate = false)
         {
             Type dataType = fieldInfo.FieldType;
             if (CanConvertDelegate(typeof(T), dataType) == false)
@@ -721,10 +762,10 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this FieldInfo fieldInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Action<T> setter,
-                                             bool instanceIsGetDelegate = false)
+                                              Type instanceType,
+                                              object instance,
+                                              out Action<T> setter,
+                                              bool instanceIsGetDelegate = false)
         {
             setter = null;
             if (fieldInfo.IsInitOnly)
@@ -786,10 +827,10 @@ namespace Megumin.Binding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this FieldInfo fieldInfo,
-                                             Type instanceType,
-                                             object instance,
-                                             out Delegate setter,
-                                             bool instanceIsGetDelegate = false)
+                                           Type instanceType,
+                                           object instance,
+                                           out Delegate setter,
+                                           bool instanceIsGetDelegate = false)
         {
             throw new NotImplementedException();
             //setter = null;
