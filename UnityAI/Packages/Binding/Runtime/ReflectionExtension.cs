@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEditor.Search;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -171,7 +172,7 @@ namespace Megumin.Binding
 
                 if (adp == null)
                 {
-                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{methodInfo.ReturnType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{methodInfo.ReturnType},{typeof(T)}>");
+                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{methodInfo.ReturnType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{methodInfo.ReturnType},{typeof(T)}>");
                 }
                 else
                 {
@@ -273,9 +274,192 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 使用类型适配器创建委托。
+        /// </summary>
+        /// <typeparam name="T">类型适配器类型</typeparam>
+        /// <param name="fieldInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateGetterUseTypeAdpter<T>(this FieldInfo fieldInfo,
+                                                           Type instanceType,
+                                                           object instance,
+                                                           out Func<T> getter,
+                                                           bool instanceIsGetDelegate = false)
+        {
+            if (fieldInfo.FieldType.CanConvertDelegate<T>() == false)
+            {
+                //自动类型适配
+                var adp = TypeAdpter.FindGetAdpter<T>(fieldInfo.FieldType);
 
+                if (adp == null)
+                {
+                    Debug.LogWarning($"TryCreateGetterUseTypeAdpter : 成员类型{fieldInfo.FieldType}无法适配目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{fieldInfo.FieldType},{typeof(T)}>");
+                }
+                else
+                {
+                    if (fieldInfo.TryCreateGetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                    {
+                        if (adp.TryCreateGetter(g, out getter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return fieldInfo.TryCreateGetter(instanceType, instance, out getter, instanceIsGetDelegate);
+            }
 
+            getter = null;
+            return false;
+        }
 
+        /// <summary>
+        /// 将字段创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托。
+        /// </summary>
+        /// <param name="fieldInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateGetter<T>(this FieldInfo fieldInfo,
+                                           Type instanceType,
+                                           object instance,
+                                           out Func<T> getter,
+                                           bool instanceIsGetDelegate = false)
+        {
+            getter = null;
+            if (fieldInfo.IsStatic)
+            {
+                Func<T> myGetter = () =>
+                {
+                    return (T)fieldInfo.GetValue(null);
+                };
+                getter = myGetter;
+                return true;
+            }
+            else
+            {
+                if (instance == null)
+                {
+                    Debug.LogError("instanceDelegate is null");
+                }
+                else
+                {
+                    if (instanceIsGetDelegate)
+                    {
+                        if (instance is Delegate getInstance)
+                        {
+                            Func<T> myGetter = () =>
+                            {
+                                var temp = getInstance.DynamicInvoke();
+                                var r = fieldInfo.GetValue(temp);
+                                return (T)r;
+                            };
+                            getter = myGetter;
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        //TODO: fieldInfo.GetValue 是否有必要转换成委托？
+                        //Func<object, object> func = fieldInfo.GetValue;
+                        //Getter = () =>
+                        //{
+                        //    return (To)func(instance);
+                        //};
+
+                        Func<T> myGetter = () =>
+                        {
+                            return (T)fieldInfo.GetValue(instance);
+                        };
+                        getter = myGetter;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 将字段创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托。
+        /// </summary>
+        /// <param name="fieldInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateGetter(this FieldInfo fieldInfo,
+                                           Type instanceType,
+                                           object instance,
+                                            out Delegate getter,
+                                           bool instanceIsGetDelegate = false)
+        {
+            throw new NotImplementedException();
+            //getter = null;
+            //if (fieldInfo.IsStatic)
+            //{
+            //    Func<T> myGetter = () =>
+            //    {
+            //        return (T)fieldInfo.GetValue(null);
+            //    };
+            //    getter = myGetter;
+            //    return true;
+            //}
+            //else
+            //{
+            //    if (instance == null)
+            //    {
+            //        Debug.LogError("instanceDelegate is null");
+            //    }
+            //    else
+            //    {
+            //        if (instanceIsGetDelegate)
+            //        {
+            //            if (instance is Delegate getInstance)
+            //            {
+            //                Func<T> myGetter = () =>
+            //                {
+            //                    var temp = getInstance.DynamicInvoke();
+            //                    var r = fieldInfo.GetValue(temp);
+            //                    return (T)r;
+            //                };
+            //                getter = myGetter;
+            //                return true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //TODO: fieldInfo.GetValue 是否有必要转换成委托？
+            //            //Func<object, object> func = fieldInfo.GetValue;
+            //            //Getter = () =>
+            //            //{
+            //            //    return (To)func(instance);
+            //            //};
+
+            //            Func<T> myGetter = () =>
+            //            {
+            //                return (T)fieldInfo.GetValue(instance);
+            //            };
+            //            getter = myGetter;
+            //            return true;
+            //        }
+            //    }
+            //}
+
+            //return false;
+        }
 
 
 
@@ -358,15 +542,15 @@ namespace Megumin.Binding
                                                 bool instanceIsGetDelegate = false)
         {
             var paras = methodInfo.GetParameters();
-            Type firstArgsType = paras[0].ParameterType;
-            if (CanConvertDelegate(typeof(T), firstArgsType) == false)
+            Type dataType = paras[0].ParameterType;
+            if (CanConvertDelegate(typeof(T), dataType) == false)
             {
                 //自动类型适配
-                var adp = TypeAdpter.FindSetAdpter<T>(firstArgsType);
+                var adp = TypeAdpter.FindSetAdpter<T>(dataType);
 
                 if (adp == null)
                 {
-                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{firstArgsType}无法满足目标类型{typeof(T)}, 并且没有找到对应的TypeAdpter<{typeof(T)},{firstArgsType}>");
+                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{typeof(T)}无法适配目标类型{dataType}, 并且没有找到对应的TypeAdpter<{typeof(T)},{dataType}>");
                 }
                 else
                 {
@@ -441,15 +625,15 @@ namespace Megumin.Binding
         {
             setter = null;
             var paras = methodInfo.GetParameters();
-            Type firstArgsType = paras[0].ParameterType;
+            Type dataType = paras[0].ParameterType;
             Type delagateType = null;
             if (methodInfo.ReturnType == typeof(void))
             {
-                delagateType = typeof(Action<>).MakeGenericType(firstArgsType);
+                delagateType = typeof(Action<>).MakeGenericType(dataType);
             }
             else
             {
-                delagateType = typeof(Func<,>).MakeGenericType(firstArgsType, methodInfo.ReturnType);
+                delagateType = typeof(Func<,>).MakeGenericType(dataType, methodInfo.ReturnType);
             }
 
             if (methodInfo.IsStatic)
@@ -470,7 +654,7 @@ namespace Megumin.Binding
                     {
                         if (instance is Delegate getInstance)
                         {
-                            var connector = DelegateConnector.Get(instanceType, firstArgsType);
+                            var connector = DelegateConnector.Get(instanceType, dataType);
                             if (connector.TryConnectSet(getInstance, methodInfo, out setter))
                             {
                                 return true;
@@ -487,7 +671,182 @@ namespace Megumin.Binding
 
             return false;
         }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateSetterUseTypeAdpter<T>(this FieldInfo fieldInfo,
+                                                Type instanceType,
+                                                object instance,
+                                                out Action<T> setter,
+                                                bool instanceIsGetDelegate = false)
+        {
+            Type dataType = fieldInfo.FieldType;
+            if (CanConvertDelegate(typeof(T), dataType) == false)
+            {
+                //自动类型适配
+                var adp = TypeAdpter.FindSetAdpter<T>(dataType);
+
+                if (adp == null)
+                {
+                    Debug.LogWarning($"TryCreateSetterUseTypeAdpter : 成员类型{typeof(T)}无法适配目标类型{dataType}, 并且没有找到对应的TypeAdpter<{typeof(T)},{dataType}>");
+                }
+                else
+                {
+                    if (fieldInfo.TryCreateSetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                    {
+                        if (adp.TryCreateSetter(g, out setter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return fieldInfo.TryCreateSetter(instanceType, instance, out setter, instanceIsGetDelegate);
+            }
+
+            setter = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 将字段创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托。
+        /// </summary>
+        /// <param name="fieldInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateSetter<T>(this FieldInfo fieldInfo,
+                                             Type instanceType,
+                                             object instance,
+                                             out Action<T> setter,
+                                             bool instanceIsGetDelegate = false)
+        {
+            setter = null;
+            if (fieldInfo.IsInitOnly)
+            {
+                return false;
+            }
+
+            if (fieldInfo.IsStatic)
+            {
+                setter = (value) =>
+                {
+                    fieldInfo.SetValue(null, value);
+                };
+                return true;
+            }
+            else
+            {
+                if (instance == null)
+                {
+                    Debug.LogWarning("instanceDelegate is null");
+                }
+                else
+                {
+                    if (instanceIsGetDelegate)
+                    {
+                        if (instance is Delegate getInstance)
+                        {
+                            setter = (value) =>
+                            {
+                                var temp = getInstance.DynamicInvoke();
+                                fieldInfo.SetValue(temp, value);
+                            };
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        setter = (value) =>
+                        {
+                            fieldInfo.SetValue(instance, value);
+                        };
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// 将字段创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托。
+        /// </summary>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryCreateSetter(this FieldInfo fieldInfo,
+                                             Type instanceType,
+                                             object instance,
+                                             out Delegate setter,
+                                             bool instanceIsGetDelegate = false)
+        {
+            throw new NotImplementedException();
+            //setter = null;
+            //if (fieldInfo.IsInitOnly)
+            //{
+            //    return false;
+            //}
+
+            //if (fieldInfo.IsStatic)
+            //{
+            //    setter = (value) =>
+            //    {
+            //        fieldInfo.SetValue(null, value);
+            //    };
+            //    return true;
+            //}
+            //else
+            //{
+            //    if (instance == null)
+            //    {
+            //        Debug.LogWarning("instanceDelegate is null");
+            //    }
+            //    else
+            //    {
+            //        if (instanceIsGetDelegate)
+            //        {
+            //            if (instance is Delegate getInstance)
+            //            {
+            //                setter = (value) =>
+            //                {
+            //                    var temp = getInstance.DynamicInvoke();
+            //                    fieldInfo.SetValue(temp, value);
+            //                };
+            //                return true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            setter = (value) =>
+            //            {
+            //                fieldInfo.SetValue(instance, value);
+            //            };
+            //            return true;
+            //        }
+            //    }
+            //}
+
+            //return false;
+        }
+
+
+
+
+
+
+
+
+
     }
-
-
 }

@@ -192,32 +192,6 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// TODO 强类型优化
-        /// </summary>
-        /// <typeparam name="I"></typeparam>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instance"></param>
-        /// <param name="getInstance"></param>
-        /// <param name="memberName"></param>
-        /// <param name="ParseResult"></param>
-        /// <param name="Getter"></param>
-        /// <param name="Setter"></param>
-        /// <param name="instanceIsGetDelegate"></param>
-        /// <returns></returns>
-        public static bool TryCreatePropertyDelegate<I, T>(I instance,
-                            Func<T> getInstance, string memberName,
-                            out ParseBindingResult ParseResult,
-                                                     out Func<T> Getter,
-                                                     out Action<T> Setter,
-                                                     bool instanceIsGetDelegate = false)
-        {
-            ParseResult = ParseBindingResult.None;
-            Getter = null;
-            Setter = null;
-            return false;
-        }
-
-        /// <summary>
         /// 尝试绑定field
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -244,97 +218,15 @@ namespace Megumin.Binding
             var fieldInfo = instanceType.GetField(memberName);
             if (fieldInfo != null)
             {
+                if (fieldInfo.TryCreateGetterUseTypeAdpter(instanceType, instance, out Getter, instanceIsGetDelegate))
                 {
-                    if (fieldInfo.IsStatic)
-                    {
-                        Getter = () =>
-                        {
-                            return (T)fieldInfo.GetValue(null);
-                        };
-                        ParseResult |= ParseBindingResult.Get;
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            Debug.LogError("instanceDelegate is null");
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Getter = () =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        var r = fieldInfo.GetValue(temp);
-                                        return (T)r;
-                                    };
-                                    ParseResult |= ParseBindingResult.Get;
-                                }
-                            }
-                            else
-                            {
-                                //TODO: fieldInfo.GetValue 是否有必要转换成委托？
-                                //Func<object, object> func = fieldInfo.GetValue;
-                                //Getter = () =>
-                                //{
-                                //    return (To)func(instance);
-                                //};
-
-                                Getter = () =>
-                                {
-                                    return (T)fieldInfo.GetValue(instance);
-                                };
-                                ParseResult |= ParseBindingResult.Get;
-                            }
-                        }
-                    }
+                    ParseResult |= ParseBindingResult.Get;
                 }
 
-                if (!fieldInfo.IsInitOnly)
+                if (fieldInfo.TryCreateSetterUseTypeAdpter(instanceType, instance, out Setter, instanceIsGetDelegate))
                 {
-                    if (fieldInfo.IsStatic)
-                    {
-                        Setter = (value) =>
-                        {
-                            fieldInfo.SetValue(null, value);
-                        };
-                        ParseResult |= ParseBindingResult.Set;
-                    }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            Debug.LogError("instanceDelegate is null");
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Setter = (value) =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        fieldInfo.SetValue(temp, value);
-                                    };
-                                    ParseResult |= ParseBindingResult.Set;
-                                }
-                            }
-                            else
-                            {
-                                Setter = (value) =>
-                                {
-                                    fieldInfo.SetValue(instance, value);
-                                };
-                                ParseResult |= ParseBindingResult.Set;
-                            }
-                        }
-                    }
+                    ParseResult |= ParseBindingResult.Set;
                 }
-
                 return true;
             }
             else
