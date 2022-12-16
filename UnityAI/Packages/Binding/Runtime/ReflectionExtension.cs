@@ -12,17 +12,34 @@ namespace Megumin.Binding
     {
         public static void TestConvert()
         {
-            var b1 = typeof(string).IsAssignableFrom(typeof(object));   //false
-            var b2 = typeof(object).IsAssignableFrom(typeof(string));   //true
+            {
+                var b1 = typeof(string).IsAssignableFrom(typeof(object));   //false
+                var b2 = typeof(object).IsAssignableFrom(typeof(string));   //true
 
-            var b3 = typeof(int).IsAssignableFrom(typeof(object));   //false
-            var b4 = typeof(object).IsAssignableFrom(typeof(int));   //true
+                var b3 = typeof(int).IsAssignableFrom(typeof(object));   //false
+                var b4 = typeof(object).IsAssignableFrom(typeof(int));   //true
 
-            var b5 = typeof(float).IsAssignableFrom(typeof(int));   //false
-            var b6 = typeof(int).IsAssignableFrom(typeof(float));   //false
+                var b5 = typeof(float).IsAssignableFrom(typeof(int));   //false
+                var b6 = typeof(int).IsAssignableFrom(typeof(float));   //false
 
-            var b7 = typeof(float).IsAssignableFrom(typeof(double));   //false
-            var b8 = typeof(double).IsAssignableFrom(typeof(float));   //false
+                var b7 = typeof(float).IsAssignableFrom(typeof(double));   //false
+                var b8 = typeof(double).IsAssignableFrom(typeof(float));   //false
+            }
+
+            {
+                var b1 = typeof(string).IsSubclassOf(typeof(object));   //true
+                var b2 = typeof(object).IsSubclassOf(typeof(string));   //false
+
+                var b3 = typeof(int).IsSubclassOf(typeof(object));   //true
+                var b4 = typeof(object).IsSubclassOf(typeof(int));   //false
+
+                var b5 = typeof(float).IsSubclassOf(typeof(int));   //false
+                var b6 = typeof(int).IsSubclassOf(typeof(float));   //false
+
+                var b7 = typeof(float).IsSubclassOf(typeof(double));   //false
+                var b8 = typeof(double).IsSubclassOf(typeof(float));   //false
+            }
+
 
             int a = 200;
             float b = 300f;
@@ -55,6 +72,9 @@ namespace Megumin.Binding
         {
             var b1 = from.IsAssignableFrom(to);
             var b2 = to.IsAssignableFrom(from);
+            var b3 = from.IsSubclassOf(to);
+            var b4 = to.IsSubclassOf(from);
+
 
             if (from == to)
             {
@@ -418,7 +438,10 @@ namespace Megumin.Binding
                                            out Delegate getter,
                                            bool instanceIsGetDelegate = false)
         {
-            throw new NotImplementedException();
+            var creatorType = typeof(FieldWrapper<>).MakeGenericType(fieldInfo.FieldType);
+            var creator = (IFieldCreateGetterSetter)Activator.CreateInstance(creatorType);
+            return creator.TryCreateGetter(fieldInfo, instanceType, instance, out getter, instanceIsGetDelegate);
+
             //getter = null;
             //if (fieldInfo.IsStatic)
             //{
@@ -831,7 +854,10 @@ namespace Megumin.Binding
                                            out Delegate setter,
                                            bool instanceIsGetDelegate = false)
         {
-            throw new NotImplementedException();
+            var creatorType = typeof(FieldWrapper<>).MakeGenericType(fieldInfo.FieldType);
+            var creator = (IFieldCreateGetterSetter)Activator.CreateInstance(creatorType);
+            return creator.TryCreateSetter(fieldInfo, instanceType, instance, out setter, instanceIsGetDelegate);
+
             //setter = null;
             //if (fieldInfo.IsInitOnly)
             //{
@@ -884,8 +910,53 @@ namespace Megumin.Binding
 
 
 
+        internal interface IFieldCreateGetterSetter
+        {
+            bool TryCreateGetter(FieldInfo fieldInfo,
+                                 Type instanceType,
+                                 object instance,
+                                 out Delegate getter,
+                                 bool instanceIsGetDelegate = false);
 
+            bool TryCreateSetter(FieldInfo fieldInfo,
+                                 Type instanceType,
+                                 object instance,
+                                 out Delegate setter,
+                                 bool instanceIsGetDelegate = false);
+        }
 
+        internal class FieldWrapper<T> : IFieldCreateGetterSetter
+        {
+            public bool TryCreateGetter(FieldInfo fieldInfo,
+                                        Type instanceType,
+                                        object instance,
+                                        out Delegate getter,
+                                        bool instanceIsGetDelegate = false)
+            {
+                if (fieldInfo.TryCreateGetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                {
+                    getter = g;
+                    return true;
+                }
+                getter = null;
+                return false;
+            }
+
+            public bool TryCreateSetter(FieldInfo fieldInfo,
+                                        Type instanceType,
+                                        object instance,
+                                        out Delegate setter,
+                                        bool instanceIsGetDelegate = false)
+            {
+                if (fieldInfo.TryCreateSetter<T>(instanceType, instance, out var s, instanceIsGetDelegate))
+                {
+                    setter = s;
+                    return true;
+                }
+                setter = null;
+                return false;
+            }
+        }
 
 
     }

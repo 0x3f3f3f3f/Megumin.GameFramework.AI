@@ -405,40 +405,46 @@ namespace Megumin.Binding
                 var fieldInfo = instanceType.GetField(memberName);
                 if (fieldInfo != null)
                 {
-                    if (fieldInfo.IsStatic)
+                    //TODO,先用 泛型 + object ，如果使用非泛型的需要 反射创建Wrapper，性能较低。
+                    if (fieldInfo.TryCreateGetter<object>(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
-                        Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(null); };
-                        return (getInstanceDelegate, fieldInfo.FieldType);
+                        return (pGetter, fieldInfo.FieldType);
                     }
-                    else
-                    {
-                        if (instance == null)
-                        {
-                            return (null, fieldInfo.FieldType);
-                        }
-                        else
-                        {
-                            if (instanceIsGetDelegate)
-                            {
-                                if (instance is Delegate getInstance)
-                                {
-                                    Func<object> getInstanceDelegate = () =>
-                                    {
-                                        var temp = getInstance.DynamicInvoke();
-                                        return fieldInfo.GetValue(temp);
-                                    };
 
-                                    return (getInstanceDelegate, fieldInfo.FieldType);
-                                }
-                            }
-                            else
-                            {
-                                Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(instance); };
-                                return (getInstanceDelegate, fieldInfo.FieldType);
-                            }
-                        }
+                    //if (fieldInfo.IsStatic)
+                    //{
+                    //    Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(null); };
+                    //    return (getInstanceDelegate, fieldInfo.FieldType);
+                    //}
+                    //else
+                    //{
+                    //    if (instance == null)
+                    //    {
+                    //        return (null, fieldInfo.FieldType);
+                    //    }
+                    //    else
+                    //    {
+                    //        if (instanceIsGetDelegate)
+                    //        {
+                    //            if (instance is Delegate getInstance)
+                    //            {
+                    //                Func<object> getInstanceDelegate = () =>
+                    //                {
+                    //                    var temp = getInstance.DynamicInvoke();
+                    //                    return fieldInfo.GetValue(temp);
+                    //                };
 
-                    }
+                    //                return (getInstanceDelegate, fieldInfo.FieldType);
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            Func<object> getInstanceDelegate = () => { return fieldInfo.GetValue(instance); };
+                    //            return (getInstanceDelegate, fieldInfo.FieldType);
+                    //        }
+                    //    }
+
+                    //}
                 }
             }
 
@@ -540,62 +546,9 @@ namespace Megumin.Binding
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <typeparam name="TTarget"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        class SetterWrapper<TTarget, TValue>
-        {
-            private Action<TTarget, TValue> _setter;
-        }
-
-        interface IGetValue
-        {
-            object Get(object target);
-        }
-
-        /// <summary>
-        /// TODO 优化委托链调用
-        /// </summary>
-        /// <typeparam name="TTarget"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        class GetterWrapper<TTarget, TValue> : IGetValue
-        {
-            private Func<TTarget, TValue> _getter;
-
-            public GetterWrapper(PropertyInfo propertyInfo)
-            {
-                if (propertyInfo == null)
-                    throw new ArgumentNullException("propertyInfo");
-
-                if (propertyInfo.CanRead == false)
-                    throw new InvalidOperationException("属性不支持读操作。");
-
-                MethodInfo m = propertyInfo.GetGetMethod(true);
-                _getter = (Func<TTarget, TValue>)Delegate.CreateDelegate(typeof(Func<TTarget, TValue>), null, m);
-            }
-
-            public TValue GetValue(TTarget target)
-            {
-                return _getter(target);
-            }
-            object IGetValue.Get(object target)
-            {
-                return _getter((TTarget)target);
-            }
-        }
     }
 }
+
+
+
+
