@@ -19,6 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
-## [0.0.1] - 2022-11-09
+## [0.0.1] - 2022-12-18
 PackageWizard Fast Created.
 
