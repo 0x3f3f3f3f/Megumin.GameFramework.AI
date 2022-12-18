@@ -7,6 +7,7 @@ namespace Megumin.Binding
 {
     /// <summary>
     /// 重要： https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/variance-in-delegates#variance-in-generic-type-parameters-for-value-and-reference-types
+    /// https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/
     /// </summary>
     internal static class ReflectionExtension_9C4E15F3B30F4FCFBC57EDC2A99A69D0
     {
