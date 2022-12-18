@@ -397,63 +397,21 @@ namespace Megumin.Binding
                                               out Func<T> getter,
                                               bool instanceIsGetDelegate = false)
         {
-            getter = null;
-            if (fieldInfo.FieldType != typeof(T))
+            if (TryCreateGetter(fieldInfo, instanceType, instance, out var mygetter, instanceIsGetDelegate))
             {
-                Debug.LogWarning($"System.Func`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Func<T>)}.");
-                return false;
-            }
-
-            if (fieldInfo.IsStatic)
-            {
-                Func<T> myGetter = () =>
+                var typeP = fieldInfo.FieldType;
+                var typeV = typeof(T);
+                if (mygetter is Func<T> mygetterGeneric)
                 {
-                    return (T)fieldInfo.GetValue(null);
-                };
-                getter = myGetter;
-                return true;
-            }
-            else
-            {
-                if (instance == null)
-                {
-                    Debug.LogError("instanceDelegate is null");
+                    getter = mygetterGeneric;
+                    return true;
                 }
                 else
                 {
-                    if (instanceIsGetDelegate)
-                    {
-                        if (instance is Delegate getInstance)
-                        {
-                            Func<T> myGetter = () =>
-                            {
-                                var temp = getInstance.DynamicInvoke();
-                                var r = fieldInfo.GetValue(temp);
-                                return (T)r;
-                            };
-                            getter = myGetter;
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        //TODO: fieldInfo.GetValue 是否有必要转换成委托？
-                        //Func<object, object> func = fieldInfo.GetValue;
-                        //Getter = () =>
-                        //{
-                        //    return (To)func(instance);
-                        //};
-
-                        Func<T> myGetter = () =>
-                        {
-                            return (T)fieldInfo.GetValue(instance);
-                        };
-                        getter = myGetter;
-                        return true;
-                    }
+                    Debug.LogWarning($"{mygetter.GetType()} <color=#ff0000>IS NOT</color> {typeof(Func<T>)}.");
                 }
             }
-
+            getter = null;
             return false;
         }
 
@@ -476,59 +434,6 @@ namespace Megumin.Binding
             var creatorType = typeof(FieldWrapper<>).MakeGenericType(fieldInfo.FieldType);
             var creator = (IFieldCreateGetterSetter)Activator.CreateInstance(creatorType);
             return creator.TryCreateGetter(fieldInfo, instanceType, instance, out getter, instanceIsGetDelegate);
-
-            //getter = null;
-            //if (fieldInfo.IsStatic)
-            //{
-            //    Func<T> myGetter = () =>
-            //    {
-            //        return (T)fieldInfo.GetValue(null);
-            //    };
-            //    getter = myGetter;
-            //    return true;
-            //}
-            //else
-            //{
-            //    if (instance == null)
-            //    {
-            //        Debug.LogError("instanceDelegate is null");
-            //    }
-            //    else
-            //    {
-            //        if (instanceIsGetDelegate)
-            //        {
-            //            if (instance is Delegate getInstance)
-            //            {
-            //                Func<T> myGetter = () =>
-            //                {
-            //                    var temp = getInstance.DynamicInvoke();
-            //                    var r = fieldInfo.GetValue(temp);
-            //                    return (T)r;
-            //                };
-            //                getter = myGetter;
-            //                return true;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            //TODO: fieldInfo.GetValue 是否有必要转换成委托？
-            //            //Func<object, object> func = fieldInfo.GetValue;
-            //            //Getter = () =>
-            //            //{
-            //            //    return (To)func(instance);
-            //            //};
-
-            //            Func<T> myGetter = () =>
-            //            {
-            //                return (T)fieldInfo.GetValue(instance);
-            //            };
-            //            getter = myGetter;
-            //            return true;
-            //        }
-            //    }
-            //}
-
-            //return false;
         }
 
 
@@ -854,58 +759,21 @@ namespace Megumin.Binding
                                               out Action<T> setter,
                                               bool instanceIsGetDelegate = false)
         {
-            setter = null;
-
-            if (fieldInfo.FieldType != typeof(T))
+            if (TryCreateSetter(fieldInfo, instanceType, instance, out var mysetter, instanceIsGetDelegate))
             {
-                Debug.LogWarning($"System.Action`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
-                return false;
-            }
-
-            if (fieldInfo.IsInitOnly)
-            {
-                return false;
-            }
-
-            if (fieldInfo.IsStatic)
-            {
-                setter = (value) =>
+                var typeP = fieldInfo.FieldType;
+                var typeV = typeof(T);
+                if (mysetter is Action<T> mysetterGeneric) //逆变
                 {
-                    fieldInfo.SetValue(null, value);
-                };
-                return true;
-            }
-            else
-            {
-                if (instance == null)
-                {
-                    Debug.LogWarning("instanceDelegate is null");
+                    setter = mysetterGeneric;
+                    return true;
                 }
                 else
                 {
-                    if (instanceIsGetDelegate)
-                    {
-                        if (instance is Delegate getInstance)
-                        {
-                            setter = (value) =>
-                            {
-                                var temp = getInstance.DynamicInvoke();
-                                fieldInfo.SetValue(temp, value);
-                            };
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        setter = (value) =>
-                        {
-                            fieldInfo.SetValue(instance, value);
-                        };
-                        return true;
-                    }
+                    Debug.LogWarning($"{mysetter.GetType()} <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
                 }
             }
-
+            setter = null;
             return false;
         }
 
@@ -929,53 +797,6 @@ namespace Megumin.Binding
             var creatorType = typeof(FieldWrapper<>).MakeGenericType(fieldInfo.FieldType);
             var creator = (IFieldCreateGetterSetter)Activator.CreateInstance(creatorType);
             return creator.TryCreateSetter(fieldInfo, instanceType, instance, out setter, instanceIsGetDelegate);
-
-            //setter = null;
-            //if (fieldInfo.IsInitOnly)
-            //{
-            //    return false;
-            //}
-
-            //if (fieldInfo.IsStatic)
-            //{
-            //    setter = (value) =>
-            //    {
-            //        fieldInfo.SetValue(null, value);
-            //    };
-            //    return true;
-            //}
-            //else
-            //{
-            //    if (instance == null)
-            //    {
-            //        Debug.LogWarning("instanceDelegate is null");
-            //    }
-            //    else
-            //    {
-            //        if (instanceIsGetDelegate)
-            //        {
-            //            if (instance is Delegate getInstance)
-            //            {
-            //                setter = (value) =>
-            //                {
-            //                    var temp = getInstance.DynamicInvoke();
-            //                    fieldInfo.SetValue(temp, value);
-            //                };
-            //                return true;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            setter = (value) =>
-            //            {
-            //                fieldInfo.SetValue(instance, value);
-            //            };
-            //            return true;
-            //        }
-            //    }
-            //}
-
-            //return false;
         }
 
 
@@ -997,6 +818,16 @@ namespace Megumin.Binding
                                  bool instanceIsGetDelegate = false);
         }
 
+        /// <summary>
+        /// FieldInfo 没有GetMethod,SetMethod,  
+        /// <see cref="FieldInfo.GetValue(object)"/><see cref="FieldInfo.SetValue(object, object)"/>
+        /// 无法转换成强类型委托，所以只能创建一个强类型包装一下。
+        /// T 必须是字段类型。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <remarks>
+        /// TODO: <see cref="FieldInfo.SetValueDirect(TypedReference, object)"/>能不能转成强类型委托？
+        /// </remarks>
         internal class FieldWrapper<T> : IFieldCreateGetterSetter
         {
             public bool TryCreateGetter(FieldInfo fieldInfo,
@@ -1005,12 +836,63 @@ namespace Megumin.Binding
                                         out Delegate getter,
                                         bool instanceIsGetDelegate = false)
             {
-                if (fieldInfo.TryCreateGetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                getter = null;
+                if (fieldInfo.FieldType != typeof(T))
                 {
-                    getter = g;
+                    Debug.LogWarning($"System.Func`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Func<T>)}.");
+                    return false;
+                }
+
+                if (fieldInfo.IsStatic)
+                {
+                    Func<T> myGetter = () =>
+                    {
+                        return (T)fieldInfo.GetValue(null);
+                    };
+                    getter = myGetter;
                     return true;
                 }
-                getter = null;
+                else
+                {
+                    if (instance == null)
+                    {
+                        Debug.LogError("instanceDelegate is null");
+                    }
+                    else
+                    {
+                        if (instanceIsGetDelegate)
+                        {
+                            if (instance is Delegate getInstance)
+                            {
+                                Func<T> myGetter = () =>
+                                {
+                                    var temp = getInstance.DynamicInvoke();
+                                    var r = fieldInfo.GetValue(temp);
+                                    return (T)r;
+                                };
+                                getter = myGetter;
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            //TODO: fieldInfo.GetValue 是否有必要转换成委托？
+                            //Func<object, object> func = fieldInfo.GetValue;
+                            //Getter = () =>
+                            //{
+                            //    return (To)func(instance);
+                            //};
+
+                            Func<T> myGetter = () =>
+                            {
+                                return (T)fieldInfo.GetValue(instance);
+                            };
+                            getter = myGetter;
+                            return true;
+                        }
+                    }
+                }
+
                 return false;
             }
 
@@ -1020,12 +902,62 @@ namespace Megumin.Binding
                                         out Delegate setter,
                                         bool instanceIsGetDelegate = false)
             {
-                if (fieldInfo.TryCreateSetter<T>(instanceType, instance, out var s, instanceIsGetDelegate))
+                setter = null;
+
+                if (fieldInfo.FieldType != typeof(T))
                 {
-                    setter = s;
+                    Debug.LogWarning($"System.Action`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
+                    return false;
+                }
+
+                if (fieldInfo.IsInitOnly)
+                {
+                    return false;
+                }
+
+                if (fieldInfo.IsStatic)
+                {
+                    Action<T> mySetter = (value) =>
+                    {
+                        fieldInfo.SetValue(null, value);
+                    };
+
+                    setter = mySetter;
                     return true;
                 }
-                setter = null;
+                else
+                {
+                    if (instance == null)
+                    {
+                        Debug.LogWarning("instanceDelegate is null");
+                    }
+                    else
+                    {
+                        if (instanceIsGetDelegate)
+                        {
+                            if (instance is Delegate getInstance)
+                            {
+                                Action<T> mySetter = (value) =>
+                                {
+                                    var temp = getInstance.DynamicInvoke();
+                                    fieldInfo.SetValue(temp, value);
+                                };
+                                setter = mySetter;
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            Action<T> mySetter = (value) =>
+                            {
+                                fieldInfo.SetValue(instance, value);
+                            };
+                            setter = mySetter;
+                            return true;
+                        }
+                    }
+                }
+
                 return false;
             }
         }
