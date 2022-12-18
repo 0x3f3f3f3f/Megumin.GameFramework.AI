@@ -110,7 +110,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T">类型适配器类型</typeparam>
         /// <param name="propertyInfo"></param>
@@ -139,6 +139,16 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this PropertyInfo propertyInfo,
                                               Type instanceType,
@@ -158,6 +168,15 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter(this PropertyInfo propertyInfo,
                                            Type instanceType,
@@ -178,7 +197,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="methodInfo"></param>
@@ -224,6 +243,16 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="getter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateGetter<T>(this MethodInfo methodInfo,
                                               Type instanceType,
@@ -250,7 +279,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 将无参方法创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// 尝试将成员创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
         /// </summary>
         /// <param name="methodInfo"></param>
         /// <param name="instanceType"></param>
@@ -306,7 +335,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T">类型适配器类型</typeparam>
         /// <param name="fieldInfo"></param>
@@ -353,7 +382,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 将字段创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托。
+        /// 尝试将成员创建为 <![CDATA[Func<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <param name="fieldInfo"></param>
         /// <param name="instanceType"></param>
@@ -429,7 +458,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 将字段创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托。
+        /// 尝试将成员创建为 <![CDATA[Func<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
         /// </summary>
         /// <param name="fieldInfo"></param>
         /// <param name="instanceType"></param>
@@ -516,7 +545,7 @@ namespace Megumin.Binding
 
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="propertyInfo"></param>
@@ -545,6 +574,16 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this PropertyInfo propertyInfo,
                                               Type instanceType,
@@ -564,6 +603,15 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this PropertyInfo propertyInfo,
                                            Type instanceType,
@@ -584,7 +632,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="methodInfo"></param>
@@ -631,6 +679,16 @@ namespace Megumin.Binding
             return false;
         }
 
+        /// <summary>
+        /// 尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="methodInfo"></param>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="setter"></param>
+        /// <param name="instanceIsGetDelegate"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter<T>(this MethodInfo methodInfo,
                                               Type instanceType,
@@ -667,7 +725,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 将接收一个目标参数的方法创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
+        /// 尝试将成员创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
         /// </summary>
         /// <param name="methodInfo"></param>
         /// <param name="instanceType"></param>
@@ -675,6 +733,7 @@ namespace Megumin.Binding
         /// <param name="getter"></param>
         /// <param name="instanceIsGetDelegate"></param>
         /// <returns></returns>
+        /// <remarks>接收一个目标参数的方法</remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryCreateSetter(this MethodInfo methodInfo,
                                            Type instanceType,
@@ -733,7 +792,7 @@ namespace Megumin.Binding
 
 
         /// <summary>
-        /// 使用类型适配器创建委托。
+        /// 使用类型适配器，尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="fieldInfo"></param>
@@ -780,7 +839,7 @@ namespace Megumin.Binding
         }
 
         /// <summary>
-        /// 将字段创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托。
+        /// 尝试将成员创建为 <![CDATA[Action<T>]]> 的强类型委托。T 是目标类型，不是成员类型。
         /// </summary>
         /// <param name="fieldInfo"></param>
         /// <param name="instanceType"></param>
@@ -852,7 +911,7 @@ namespace Megumin.Binding
 
 
         /// <summary>
-        /// 将字段创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托。
+        /// 尝试将成员创建为 <![CDATA[Action<ReturnType>]]> 的强类型委托，并以Delegate类型返回。
         /// </summary>
         /// <param name="methodInfo"></param>
         /// <param name="instanceType"></param>

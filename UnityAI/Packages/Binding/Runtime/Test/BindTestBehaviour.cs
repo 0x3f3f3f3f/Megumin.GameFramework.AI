@@ -28,19 +28,19 @@ namespace Megumin.Binding.Test
             = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
-        /// 类型自动适配，自动转型
+        /// 类型自动适配，自动转型 ✅
         /// </summary>
         public BindableValue<object> TypeAdpterTestInt2Object
             = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
-        /// 类型自动适配，自动转型
+        /// 类型自动适配，自动转型 ✅
         /// </summary>
         public BindableValue<string> TypeAdpterTestInt2String
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
-        /// 类型自动适配，自动转型
+        /// 类型自动适配，自动转型 ✅
         /// </summary>
         public BindableValue<float> TypeAdpterTestInt2Float
             = new BindableValue<float>() { BindingPath = "UnityEngine.GameObject/layer" };
@@ -52,7 +52,7 @@ namespace Megumin.Binding.Test
             = new BindableValue<string>() { BindingPath = "UnityEngine.Transform/gameObject" };
 
         /// <summary>
-        /// 类型自动适配，自动转型
+        /// 类型自动适配，自动转型 ✅
         /// </summary>
         public BindableValue<string> TypeAdpterTestTestInnerClass2String
             = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField" };

@@ -405,8 +405,7 @@ namespace Megumin.Binding
                 var fieldInfo = instanceType.GetField(memberName);
                 if (fieldInfo != null)
                 {
-                    //TODO,先用 泛型 + object ，如果使用非泛型的需要 反射创建Wrapper，性能较低。
-                    if (fieldInfo.TryCreateGetter<object>(instanceType, instance, out var pGetter, instanceIsGetDelegate))
+                    if (fieldInfo.TryCreateGetter(instanceType, instance, out var pGetter, instanceIsGetDelegate))
                     {
                         return (pGetter, fieldInfo.FieldType);
                     }
