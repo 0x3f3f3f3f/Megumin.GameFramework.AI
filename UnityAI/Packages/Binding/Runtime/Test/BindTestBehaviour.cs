@@ -22,7 +22,7 @@ namespace Megumin.Binding.Test
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
-        /// 类型自动适配，自动转型
+        /// 类型自动适配，自动转型 ✅
         /// </summary>
         public BindableValue<object> TypeAdpterTestString2Object
             = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/tag" };
@@ -168,7 +168,7 @@ namespace Megumin.Binding.Test
             };
 
         /// <summary>
-        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> BindMethodArgs1
             = new BindableValue<string>()
@@ -178,7 +178,7 @@ namespace Megumin.Binding.Test
             };
 
         /// <summary>
-        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> BindMethodArgs1Set
             = new BindableValue<string>()
@@ -188,7 +188,7 @@ namespace Megumin.Binding.Test
             };
 
         /// <summary>
-        /// 绑定方法（0个参数，或者1个参数的某些特殊方法）
+        /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
         public BindableValue<string> BindMethodArgs1SetReturnString
             = new BindableValue<string>()

@@ -9,7 +9,7 @@ namespace Megumin.Binding
         public static BindingParser Instance { get; set; }
 
         public virtual (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
-            InitializeBinding<T>(string bindingString, object bindingInstance)
+            ParseBinding<T>(string bindingString, object bindingInstance)
         {
             return default;
         }

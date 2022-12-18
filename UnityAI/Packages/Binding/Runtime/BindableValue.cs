@@ -87,7 +87,7 @@ namespace Megumin.Binding
                     }
 
                     (ParseResult, Getter, Setter) =
-                        BindingParser.Instance.InitializeBinding<T>(BindingPath, instance);
+                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance);
                 }
 
                 return ParseResult ?? ParseBindingResult.None;

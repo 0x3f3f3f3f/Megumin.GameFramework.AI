@@ -830,6 +830,9 @@ namespace Megumin.Binding
         /// </remarks>
         internal class FieldWrapper<T> : IFieldCreateGetterSetter
         {
+            ///测试发现TryCreateGetter，TryCreateSetter 即使改为静态函数，再包装一次，也不能消除FieldWrapper<T>的实例。
+            ///实例的生命周期跟随生成的委托。
+
             public bool TryCreateGetter(FieldInfo fieldInfo,
                                         Type instanceType,
                                         object instance,

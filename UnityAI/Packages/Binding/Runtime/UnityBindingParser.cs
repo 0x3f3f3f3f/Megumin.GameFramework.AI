@@ -41,7 +41,7 @@ namespace Megumin.Binding
         public bool DeepParseMode = true;
 
         public override (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
-            InitializeBinding<T>(string bindingString, object bindingInstance)
+            ParseBinding<T>(string bindingString, object bindingInstance)
         {
             ParseBindingResult ParseResult = ParseBindingResult.None;
             Func<T> Getter = null;
