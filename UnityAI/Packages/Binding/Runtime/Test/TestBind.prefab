@@ -107,6 +107,24 @@ MonoBehaviour:
     xOffset: 0
     yOffset: 0
     IsStatic: 0
+  TypeAdpterTestGameObject2String:
+    Key: 
+    IsBinding: 0
+    BindingPath: UnityEngine.Transform/gameObject
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  TypeAdpterTestTestInnerClass2String:
+    Key: 
+    IsBinding: 0
+    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
   CustomTestField:
     Key: 
     IsBinding: 0
@@ -277,12 +295,12 @@ MonoBehaviour:
     IsStatic: 0
   IBindables: []
   InterfaceTest:
-  - rid: 7949863067738439680
-  - rid: 7949863067738439681
+  - rid: 7949863104898924548
+  - rid: 7949863104898924549
   references:
     version: 2
     RefIds:
-    - rid: 7949863067738439680
+    - rid: 7949863104898924548
       type: {class: BindableValueInt, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 
@@ -293,7 +311,7 @@ MonoBehaviour:
         xOffset: 0
         yOffset: 0
         IsStatic: 0
-    - rid: 7949863067738439681
+    - rid: 7949863104898924549
       type: {class: BindableValueString, ns: Megumin.Binding, asm: Megumin.Binding}
       data:
         Key: 

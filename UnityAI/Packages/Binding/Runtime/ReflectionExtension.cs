@@ -334,7 +334,7 @@ namespace Megumin.Binding
                 }
                 else
                 {
-                    if (fieldInfo.TryCreateGetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                    if (fieldInfo.TryCreateGetter(instanceType, instance, out var g, instanceIsGetDelegate))
                     {
                         if (adp.TryCreateGetter(g, out getter))
                         {
@@ -369,6 +369,12 @@ namespace Megumin.Binding
                                               bool instanceIsGetDelegate = false)
         {
             getter = null;
+            if (fieldInfo.FieldType != typeof(T))
+            {
+                Debug.LogWarning($"System.Func`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Func<T>)}.");
+                return false;
+            }
+
             if (fieldInfo.IsStatic)
             {
                 Func<T> myGetter = () =>
@@ -755,7 +761,7 @@ namespace Megumin.Binding
                 }
                 else
                 {
-                    if (fieldInfo.TryCreateSetter<T>(instanceType, instance, out var g, instanceIsGetDelegate))
+                    if (fieldInfo.TryCreateSetter(instanceType, instance, out var g, instanceIsGetDelegate))
                     {
                         if (adp.TryCreateSetter(g, out setter))
                         {
@@ -790,6 +796,13 @@ namespace Megumin.Binding
                                               bool instanceIsGetDelegate = false)
         {
             setter = null;
+
+            if (fieldInfo.FieldType != typeof(T))
+            {
+                Debug.LogWarning($"System.Action`1[{fieldInfo.FieldType}] <color=#ff0000>IS NOT</color> {typeof(Action<T>)}.");
+                return false;
+            }
+
             if (fieldInfo.IsInitOnly)
             {
                 return false;

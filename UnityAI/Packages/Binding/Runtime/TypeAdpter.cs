@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Megumin.Binding
 {
@@ -28,19 +29,113 @@ namespace Megumin.Binding
         /// </summary>
         static Dictionary<(Type, Type), object> adps = new Dictionary<(Type, Type), object>()
         {
-            { (typeof(int),typeof(string)) , new TypeAdpter_Int2String() },
-            { (typeof(object),typeof(string)) , new TypeAdpter_Object2String() },
+            { (typeof(object),typeof(string)) , new TypeAdpter_AnyType2String<object>() },
+
+            { (typeof(bool),typeof(string)) , new TypeAdpter_AnyType2String<bool>() },
+            { (typeof(char),typeof(string)) , new TypeAdpter_AnyType2String<char>() },
+            { (typeof(byte),typeof(string)) , new TypeAdpter_AnyType2String<byte>() },
+            { (typeof(short),typeof(string)) , new TypeAdpter_AnyType2String<short>() },
+            { (typeof(int),typeof(string)) , new TypeAdpter_AnyType2String<int>() },
+            { (typeof(long),typeof(string)) , new TypeAdpter_AnyType2String<long>() },
+            { (typeof(float),typeof(string)) , new TypeAdpter_AnyType2String<float>() },
+            { (typeof(double),typeof(string)) , new TypeAdpter_AnyType2String<double>() },
+            { (typeof(decimal),typeof(string)) , new TypeAdpter_AnyType2String<decimal>() },
+
+            { (typeof(sbyte),typeof(string)) , new TypeAdpter_AnyType2String<sbyte>() },
+            { (typeof(ushort),typeof(string)) , new TypeAdpter_AnyType2String<ushort>() },
+            { (typeof(uint),typeof(string)) , new TypeAdpter_AnyType2String<uint>() },
+            { (typeof(ulong),typeof(string)) , new TypeAdpter_AnyType2String<ulong>() },
+
+            { (typeof(DateTime),typeof(string)) , new TypeAdpter_AnyType2String<DateTime>() },
+            { (typeof(DateTimeOffset),typeof(string)) , new TypeAdpter_AnyType2String<DateTimeOffset>() },
         };
 
-        //TODO,基类型自动适配。
+        /// <summary>
+        /// 没有明确指定，通过协变记录的适配器
+        /// </summary>
+        static Dictionary<(Type, Type), object> adpsMapped = new Dictionary<(Type, Type), object>();
+
+        public static bool TryFindAdpter(Type from, Type to, out object adpter)
+        {
+            var key = (from, to);
+            if (adps.ContainsKey(key))
+            {
+                return adps.TryGetValue(key, out adpter);
+            }
+
+            if (adpsMapped.TryGetValue(key, out adpter))
+            {
+                return true;
+            }
+            else
+            {
+                //Test： Gameobjet -> string 使用 object -> string
+
+                //查找基类型
+                if (from.BaseType != null)
+                {
+                    TryFindAdpter(from.BaseType, to, out adpter);
+                }
+
+                if (adpter == null)
+                {
+                    //查找接口
+                    var interfaces = from.GetInterfaces();
+                    foreach (var @interface in interfaces)
+                    {
+                        if (TryFindAdpter(@interface, to, out adpter))
+                        {
+                            if (adpter != null)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                //要不要搜索To类型逆变？可能导致耗时过长
+
+                //搜索完父类后无论是否找到结果都为true，即使是null，这是为了null时记录搜索结果。
+                //不要判断是否是null，即使是null也要记录，防止后续二次搜索。
+                adpsMapped.Add((from, to), adpter);
+                return true;
+            }
+        }
+
+
+        public static IConvertTypealbe<F, T> FindAdpter<F, T>()
+        {
+            if (TryFindAdpter(typeof(F), typeof(T), out var adp))
+            {
+                if (adp is IConvertTypealbe<F, T> gadp)
+                {
+                    return gadp;
+                }
+                else
+                {
+                    if (adp != null)
+                    {
+                        Debug.LogError($"{adp}");
+                    }
+                }
+            }
+            return null;
+        }
+
         public static ITypeAdpterGet<T> FindGetAdpter<T>(Type type)
         {
-            var key = (type, typeof(T));
-            if (adps.TryGetValue(key, out var adp))
+            if (TryFindAdpter(type, typeof(T), out var adp))
             {
                 if (adp is ITypeAdpterGet<T> gadp)
                 {
                     return gadp;
+                }
+                else
+                {
+                    if (adp != null)
+                    {
+                        Debug.LogError($"{adp}");
+                    }
                 }
             }
             return null;
@@ -48,34 +143,23 @@ namespace Megumin.Binding
 
         public static ITypeAdpterSet<T> FindSetAdpter<T>(Type type)
         {
-            var key = (typeof(T), type);
-            if (adps.TryGetValue(key, out var adp))
+            if (TryFindAdpter(typeof(T), type, out var adp))
             {
                 if (adp is ITypeAdpterSet<T> gadp)
                 {
                     return gadp;
                 }
-            }
-            return null;
-        }
-
-        //TODO,基类型自动适配。
-        public static TypeAdpter<F, T> FindAdpter<F, T>()
-        {
-            var key = (typeof(F), typeof(T));
-            if (adps.TryGetValue(key, out var adp))
-            {
-                if (adp is TypeAdpter<F, T> gadp)
+                else
                 {
-                    return gadp;
+                    if (adp != null)
+                    {
+                        Debug.LogError($"{adp}");
+                    }
                 }
             }
             return null;
         }
-
-
     }
-
 
     public abstract class TypeAdpter<F, T> : IConvertTypealbe<F, T>
     {
@@ -83,6 +167,12 @@ namespace Megumin.Binding
 
         public bool TryCreateGetter(Delegate get, out Func<T> getter)
         {
+            if (get is Func<T> same)
+            {
+                getter = same;
+                return true;
+            }
+
             if (get is Func<F> getGeneric)
             {
                 getter = () =>
@@ -98,6 +188,12 @@ namespace Megumin.Binding
 
         public bool TryCreateSetter(Delegate set, out Action<F> setter)
         {
+            if (set is Action<F> same)
+            {
+                setter = same;
+                return true;
+            }
+
             if (set is Action<T> setGeneric)
             {
                 setter = (F value) =>
@@ -111,17 +207,23 @@ namespace Megumin.Binding
         }
     }
 
-    public class TypeAdpter_Object2String : TypeAdpter<object, string>
+
+    /// <summary>
+    /// 防止傻瓜
+    /// </summary>
+    /// <typeparam name="S"></typeparam>
+    public class TypeAdpterSameType<S> : TypeAdpter<S, S>
     {
-        public override string Convert(object value)
+        public static readonly TypeAdpterSameType<S> Instance = new TypeAdpterSameType<S>();
+        public override S Convert(S value)
         {
-            return value?.ToString();
+            return value;
         }
     }
 
-    public class TypeAdpter_Int2String : TypeAdpter<int, string>
+    public class TypeAdpter_AnyType2String<F> : TypeAdpter<F, string>
     {
-        public override string Convert(int value)
+        public override string Convert(F value)
         {
             return value.ToString();
         }
