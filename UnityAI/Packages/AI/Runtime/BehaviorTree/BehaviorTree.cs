@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlasticGui.LaunchDiffParameters;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -46,10 +47,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             else
             {
+                if (StartNode.State != Status.Running)
+                {
+                    //已经运行的节点不在检查
+                    var enterType = StartNode.CanEnter();
+                    if (enterType == EnterType.False)
+                    {
+                        return Status.Failed;
+                    }
+
+                    if (enterType == EnterType.Ignore)
+                    {
+                        Debug.Log($"StartNode is Ignore");
+                        return Status.Failed;
+                    }
+                }
+
                 treestate = StartNode.Tick();
                 if (treestate == Status.Succeeded || treestate == Status.Failed)
                 {
-                    Debug.Log($"tree complate.");
+                    Debug.Log($"tree complate. {treestate}");
                 }
             }
 
@@ -62,8 +79,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public override void Load()
         {
             base.Load();
+            LoadLast();
+        }
 
+        private void LoadLast()
+        {
+            var wait = new Wait();
+            var log = new Log();
+            var seq = new Sequence();
+            seq.children.Add(wait);
+            seq.children.Add(log);
 
+            var loop = new Loop();
+            loop.child = seq;
+
+            StartNode = loop;
+        }
+
+        private void Load1()
+        {
             var wait = new Wait();
             var log = new Log();
             var seq = new Sequence();
@@ -71,9 +105,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             StartNode = seq;
-
         }
-
-
     }
 }

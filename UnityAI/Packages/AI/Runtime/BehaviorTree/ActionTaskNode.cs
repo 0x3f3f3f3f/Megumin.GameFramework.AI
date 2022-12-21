@@ -21,6 +21,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             Debug.Log($"Enter Node {this.GetType().Name}");
             State = Status.Running;
             OnEnter();
+
+
         }
 
         protected virtual void OnEnter()
@@ -38,6 +40,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         protected virtual Status OnExit(Status result)
         {
             return result;
+        }
+
+        /// <summary>
+        /// 前置装饰器
+        /// </summary>
+        public object[] perDerator;
+        public EnterType CanEnter()
+        {
+            if (perDerator?.Length > 0)
+            {
+                foreach (var pre in perDerator)
+                {
+                    if (pre is IConditionable conditionable)
+                    {
+                        if (conditionable.Cal() == false)
+                        {
+                            return EnterType.False;
+                        }
+                    }
+                }
+            }
+            return EnterType.True;
         }
 
         public Status Tick()
@@ -75,6 +99,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
+    internal interface IConditionable
+    {
+        bool Cal();
+        bool Result { get; }
+    }
+
     public class BTTaskNode : TaskNode
     {
 
@@ -90,6 +120,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             base.OnEnter();
             current = 0;
         }
+    }
+
+    public class OneChildTaskNode : BTTaskNode
+    {
+        public TaskNode child;
     }
 
     public class ActionTaskNode : BTTaskNode
@@ -128,5 +163,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Self = 1 << 0,
         LowerPriority = 1 << 1,
         Both = Self | LowerPriority
+    }
+
+    public enum EnterType
+    {
+        True,
+        False,
+        /// <summary>
+        /// 有些节点可能调试时临时关闭，需要忽略这些节点。
+        /// </summary>
+        Ignore,
     }
 }
