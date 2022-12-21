@@ -1,11 +1,11 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviourTree
+    public class BehaviorTree
     {
         public virtual void Load() { }
 
@@ -42,24 +42,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (treestate == Status.Succeeded || treestate == Status.Failed)
             {
-                //Õû¸öÊ÷ÒÑ¾­Ö´ĞĞÍê£¬²»ÔÚÖ´ĞĞ
+                //æ•´ä¸ªæ ‘å·²ç»æ‰§è¡Œå®Œï¼Œä¸åœ¨æ‰§è¡Œ
             }
             else
             {
                 treestate = StartNode.Tick();
+                if (treestate == Status.Succeeded || treestate == Status.Failed)
+                {
+                    Debug.Log($"tree complate.");
+                }
             }
 
             return treestate;
         }
     }
 
-    public class MyTestBehaviourTree : BehaviourTree
+    public class MyTestBehaviourTree : BehaviorTree
     {
         public override void Load()
         {
             base.Load();
 
-            
+
             var wait = new Wait();
             var log = new Log();
             var seq = new Sequence();

@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviourTreeRunner : MonoBehaviour
+    public class BehaviorTreeRunner : MonoBehaviour
     {
-        BehaviourTree BehaviourTree = new MyTestBehaviourTree();
+        BehaviorTree BehaviourTree = new MyTestBehaviourTree();
         private void Awake()
         {
             BehaviourTree.Load();

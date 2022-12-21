@@ -85,7 +85,14 @@ namespace Megumin.Binding
         static readonly Dictionary<string, Type> allComponentType = new Dictionary<string, Type>();
         static readonly Dictionary<string, Type> allUnityObjectType = new Dictionary<string, Type>();
         static bool CacheTypeInit = false;
-        public static bool LogCacheWorning = true;
+
+        public static bool LogCacheWorning = 
+
+#if UNITY_EDITOR
+        false;
+#else
+        true;
+#endif
 
         static void AddToDic(Dictionary<string, Type> dic, Type type, bool logworning = false)
         {
