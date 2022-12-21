@@ -9,12 +9,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         private void Awake()
         {
             BehaviourTree.Load();
+            BehaviourTree.Init(gameObject);
         }
 
         // Use this for initialization
         void Start()
         {
-
         }
 
         // Update is called once per frame

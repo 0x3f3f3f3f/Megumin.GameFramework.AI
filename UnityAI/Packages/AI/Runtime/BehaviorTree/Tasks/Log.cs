@@ -7,16 +7,16 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Log: TaskNode
+    public class Log: ActionTaskNode
     {
         int count = 0;
 
-        public override void OnEnter()
+        protected override void OnEnter()
         {
             count++;
         }
 
-        public override TaskNodeTickResult OnTick()
+        protected override Status OnTick()
         {
             Debug.Log($"Hello world! {count}");
             return base.OnTick();

@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class Sequence
+    public class Sequence : CompositeTaskNode
     {
+        protected override Status OnTick()
+        {
+            for (int i = current; i < children.Count; i++)
+            {
+                current = i;
+                var child = children[current];
+
+                switch (child.Tick())
+                {
+                    case Status.Failed:
+                        return Status.Failed;
+                    case Status.Running:
+                        return Status.Running;
+                }
+            }
+
+            return Status.Succeeded;
+        }
     }
 }

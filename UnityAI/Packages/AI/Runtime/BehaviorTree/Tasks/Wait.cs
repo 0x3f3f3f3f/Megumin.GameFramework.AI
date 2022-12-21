@@ -7,21 +7,22 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Wait : TaskNode
+    public class Wait : ActionTaskNode
     {
         float entertime;
-        public override void OnEnter()
+        protected override void OnEnter()
         {
             entertime = Time.time;
         }
 
-        public override TaskNodeTickResult OnTick()
+        protected override Status OnTick()
         {
-            if (Time.time - entertime > 5)
+            Debug.Log($"Wait Time :{Time.time - entertime}");
+            if (Time.time - entertime > 2)
             {
-                return TaskNodeTickResult.Succeeded;
+                return Status.Succeeded;
             }
-            return TaskNodeTickResult.Running;
+            return Status.Running;
         }
     }
 }
