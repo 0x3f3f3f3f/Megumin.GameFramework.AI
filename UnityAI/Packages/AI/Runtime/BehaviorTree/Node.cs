@@ -94,7 +94,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     {
                         if (pre is IPreDecirator decirator)
                         {
-                            decirator.OnNodeEnter(this);
+                            decirator.BeforeNodeEnter(this);
                         }
                     }
                 }
@@ -118,7 +118,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         var pre = Derators[i];
                         if (pre is IPostDecirator decirator)
                         {
-                            res = decirator.OnNodeExit(res, this);
+                            res = decirator.AfterNodeExit(res, this);
                         }
                     }
                 }

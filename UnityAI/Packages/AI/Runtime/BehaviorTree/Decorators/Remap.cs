@@ -13,7 +13,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class Remap : IPostDecirator
     {
         bool invers = true;
-        public Status OnNodeExit(Status result, BTNode bTNode)
+        public Status AfterNodeExit(Status result, BTNode bTNode)
         {
             var newResult = result;
             if (invers)

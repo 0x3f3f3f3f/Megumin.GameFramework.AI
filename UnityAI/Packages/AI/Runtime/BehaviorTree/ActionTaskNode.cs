@@ -17,10 +17,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     internal interface IPreDecirator
     {
         /// <summary>
-        /// 在Node OnEnter 之前被调用。
+        /// 在Node Enter 之前被调用。
         /// </summary>
         /// <param name="bTNode"></param>
-        void OnNodeEnter(BTNode bTNode);
+        void BeforeNodeEnter(BTNode bTNode);
     }
 
     public interface IPreTickDecirator
@@ -31,12 +31,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     internal interface IPostDecirator
     {
         /// <summary>
-        /// 在 Node OnExit 之后被调用。
+        /// 在 Node Exit 之后被调用。只有这样才能实现Loop装饰器。
         /// </summary>
         /// <param name="result"></param>
         /// <param name="bTNode"></param>
         /// <returns></returns>
-        Status OnNodeExit(Status result, BTNode bTNode);
+        Status AfterNodeExit(Status result, BTNode bTNode);
     }
 
 
