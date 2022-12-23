@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 换个名字，与异步task重名
     /// 
-    /// 方法名带不带On,以On开头的方法不应该时public的，不应该由外部类调用。
+    /// 方法名带不带On,以On开头的方法不应该时public的，不应该由外部类调用。但也不一定。<see cref="StateMachineBehaviour"/>
     /// 
     /// 为了提高性能，成员尽量不要在声明时初始化。
     /// 成员不是在所有情况下都会用到，保持未初始化能有效节省内存。
@@ -33,10 +33,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         void Enter()
         {
             Debug.Log($"Enter Node {this.GetType().Name}");
+
+            if (Derators?.Length > 0)
+            {
+                foreach (var pre in Derators)
+                {
+                    if (pre is IPreDecirator decirator)
+                    {
+                        decirator.OnNodeEnter(this);
+                    }
+                }
+            }
+
             State = Status.Running;
             OnEnter();
-
-
         }
 
         protected virtual void OnEnter()
@@ -47,6 +57,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Status Exit(Status result)
         {
             State = OnExit(result);
+
+            if (Derators?.Length > 0)
+            {
+                foreach (var pre in Derators)
+                {
+                    if (pre is IPostDecirator decirator)
+                    {
+                        State = decirator.OnNodeExit(result, this);
+                    }
+                }
+            }
+
             Debug.Log($"Exit Node {this.GetType().Name}");
             return State;
         }
@@ -57,9 +79,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 前置装饰器
+        /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
-        public object[] perDerator;
+        public object[] Derators;
 
         /// <summary>
         /// <para/> Q:为什么CanEnter不放在Tick内部？
@@ -68,9 +90,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <returns></returns>
         public EnterType CanEnter()
         {
-            if (perDerator?.Length > 0)
+            if (Derators?.Length > 0)
             {
-                foreach (var pre in perDerator)
+                foreach (var pre in Derators)
                 {
                     if (pre is IConditionable conditionable)
                     {

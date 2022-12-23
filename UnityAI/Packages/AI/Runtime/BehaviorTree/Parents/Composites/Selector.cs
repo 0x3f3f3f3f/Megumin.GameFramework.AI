@@ -15,6 +15,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 current = i;
                 var child = children[current];
 
+                if (child.Enabled == false) 
+                {
+                    continue;
+                }
+
                 if (child.State != Status.Running)
                 {
                     //已经运行的节点不在检查

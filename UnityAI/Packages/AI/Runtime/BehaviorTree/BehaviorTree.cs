@@ -30,13 +30,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            foreach (var item in AllNodes)
-            {
-                if (item.Enabled && item.IsStarted)
-                {
-                    item.Start();
-                }
-            }
+            // Start在第一次Tick时调用一次
+            //foreach (var item in AllNodes)
+            //{
+            //    if (item.Enabled && item.IsStarted)
+            //    {
+            //        item.Start();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -51,6 +52,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             else
             {
+                if (StartNode.Enabled == false)
+                {
+                    Debug.Log($"StartNode is not Enabled!");
+                    return Status.Failed;
+                }
+
                 if (StartNode.State != Status.Running)
                 {
                     //已经运行的节点不在检查
@@ -87,6 +94,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         private void LoadLast()
+        {
+            var wait = new Wait();
+            var log = new Log();
+            var seq = new Sequence();
+            seq.children.Add(wait);
+            seq.children.Add(log);
+
+            var loop = new Loop();
+            loop.child = seq;
+
+            var check = new CheckBool();
+            log.Derators = new object[] { check };
+            StartNode = loop;
+        }
+
+        private void Load2()
         {
             var wait = new Wait();
             var log = new Log();

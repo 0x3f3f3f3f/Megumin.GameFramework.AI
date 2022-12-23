@@ -9,8 +9,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 改变行为的结果。强制成功，强制失败，结果取反Inverter
     /// </summary>
-    internal class Remap
+    public class Remap : IPostDecirator
     {
+        bool invers = false;
+        public Status OnNodeExit(Status result, BTNode bTNode)
+        {
+            if (invers)
+            {
+                switch (result)
+                {
+                    case Status.Succeeded:
+                        return Status.Failed;
+                    case Status.Failed:
+                        return Status.Succeeded;
+                }
+            }
+            return result;
+        }
     }
 
     /// <summary>

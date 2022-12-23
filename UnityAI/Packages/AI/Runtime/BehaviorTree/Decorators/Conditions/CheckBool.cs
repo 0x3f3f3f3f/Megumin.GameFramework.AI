@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public bool Cal()
         {
-            return false;
+            return true;
         }
 
         public bool Result { get; set; }

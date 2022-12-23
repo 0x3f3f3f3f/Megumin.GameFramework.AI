@@ -14,7 +14,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         bool Result { get; }
     }
 
-   
+    internal interface IPreDecirator
+    {
+        void OnNodeEnter(BTNode bTNode);
+    }
+
+    public interface IPreTickDecirator
+    {
+        void OnPreNodeTick(BTNode bTNode);
+    }
+
+    internal interface IPostDecirator
+    {
+        Status OnNodeExit(Status result, BTNode bTNode);
+    }
+
 
     public interface IStartable
     {
@@ -63,6 +77,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         False,
         /// <summary>
         /// 有些节点可能调试时临时关闭，需要忽略这些节点。
+        /// Enabled可以代替，但是感觉以后会用到，暂时保留。
         /// </summary>
         Ignore,
     }
