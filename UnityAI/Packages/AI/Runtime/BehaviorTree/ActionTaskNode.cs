@@ -7,16 +7,6 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BTTaskNode : BTNode
-    {
-
-    }
-
-    public class ActionTaskNode : BTTaskNode
-    {
-
-
-    }
 
     internal interface IConditionable
     {

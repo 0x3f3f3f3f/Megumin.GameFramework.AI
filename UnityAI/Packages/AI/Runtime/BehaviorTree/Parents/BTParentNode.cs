@@ -27,5 +27,4 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public BTNode child;
     }
-
 }

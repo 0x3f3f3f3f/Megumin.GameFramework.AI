@@ -56,7 +56,22 @@ Owner要驱动状态机，必须用Animator.SetValue。
 
 [Unity - 手动：动画图层 (unity3d.com)](https://docs.unity3d.com/2023.1/Documentation/Manual/AnimationLayers.html)
 
-# HFSM
+# 分层有限状态机（HFSM）
+- EntryNode
+- ExitNode
+- AnyStateNode
+- UpStateMachine
+  
+Animator 指定子层后，如果不指定子状态，会走默认状态。
+Enter 对每个状态设置过渡，每个状态对Exit设置过渡，完全可以模拟 Selector。
+通过EntryNode和ExitNode, 完全可以模拟 Selector，Sequence。
+HFSM 允许从一个子状态机的子状态，过渡到另一个子状态机的子状态。  
+行为树则不行，不能从一个分支直接过渡到不同层的分支节点。
+HFSM的表达能力比行为树更强。
+
+行为树可以并行2个节点，状态机则不行。状态机通过layer来解决这个问题。
+
+anystatenode提供了更强大的过渡能力。
 
 一个明显特征是状态机嵌套另一个状态机，其他的功能点并没有明确定义。
 
