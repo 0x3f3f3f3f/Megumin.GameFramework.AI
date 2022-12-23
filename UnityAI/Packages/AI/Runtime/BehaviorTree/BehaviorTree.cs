@@ -15,6 +15,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<BTNode> AllNodes = new List<BTNode>();
         private Status treestate = Status.Init;
 
+        public void Reset() 
+        {
+            treestate = Status.Init;
+        }
+
         internal void Init(object agent)
         {
             foreach (var item in AllNodes)
@@ -94,6 +99,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         private void LoadLast()
+        {
+            var wait = new Wait();
+            var log = new Log();
+            var seq = new Sequence();
+            seq.children.Add(wait);
+            seq.children.Add(log);
+
+            var loop = new Loop();
+            loop.child = seq;
+
+            var check = new CheckBool();
+            var remap = new Remap();
+            log.Derators = new object[] { check , remap };
+            StartNode = loop;
+        }
+
+        private void Load3()
         {
             var wait = new Wait();
             var log = new Log();

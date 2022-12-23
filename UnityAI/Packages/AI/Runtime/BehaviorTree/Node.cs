@@ -26,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         string GUID;
 
-        public bool Enabled { get; internal set; }
+        public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
 
@@ -69,7 +69,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            Debug.Log($"Exit Node {this.GetType().Name}");
+            Debug.Log($"Exit Node [{State}]  :  {this.GetType().Name}");
             return State;
         }
 

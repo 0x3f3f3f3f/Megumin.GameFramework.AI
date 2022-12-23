@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -11,20 +12,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public class Remap : IPostDecirator
     {
-        bool invers = false;
+        bool invers = true;
         public Status OnNodeExit(Status result, BTNode bTNode)
         {
+            var newResult = result;
             if (invers)
             {
                 switch (result)
                 {
                     case Status.Succeeded:
-                        return Status.Failed;
+                        newResult = Status.Failed;
+                        break;
                     case Status.Failed:
-                        return Status.Succeeded;
+                        newResult = Status.Succeeded;
+                        break;
                 }
             }
-            return result;
+
+            Debug.LogError($"{result}--{bTNode}--{newResult}");
+            return newResult;
         }
     }
 

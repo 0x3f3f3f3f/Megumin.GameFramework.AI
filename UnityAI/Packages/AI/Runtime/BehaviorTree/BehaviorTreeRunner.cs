@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -26,6 +27,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         void Update()
         {
             BehaviourTree.Tick();
+        }
+
+        [Editor]
+        public void ResetTree()
+        {
+            BehaviourTree.Reset();
         }
     }
 }

@@ -16,6 +16,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     internal interface IPreDecirator
     {
+        /// <summary>
+        /// 在Node OnEnter 之前被调用。
+        /// </summary>
+        /// <param name="bTNode"></param>
         void OnNodeEnter(BTNode bTNode);
     }
 
@@ -26,6 +30,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     internal interface IPostDecirator
     {
+        /// <summary>
+        /// 在 Node OnExit 之后被调用。
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="bTNode"></param>
+        /// <returns></returns>
         Status OnNodeExit(Status result, BTNode bTNode);
     }
 
