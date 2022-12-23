@@ -33,18 +33,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         void Enter()
         {
             Debug.Log($"Enter Node {this.GetType().Name}");
-
-            if (Derators?.Length > 0)
-            {
-                foreach (var pre in Derators)
-                {
-                    if (pre is IPreDecirator decirator)
-                    {
-                        decirator.OnNodeEnter(this);
-                    }
-                }
-            }
-
             State = Status.Running;
             OnEnter();
         }
@@ -57,17 +45,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Status Exit(Status result)
         {
             State = OnExit(result);
-
-            if (Derators?.Length > 0)
-            {
-                foreach (var pre in Derators)
-                {
-                    if (pre is IPostDecirator decirator)
-                    {
-                        State = decirator.OnNodeExit(result, this);
-                    }
-                }
-            }
 
             Debug.Log($"Exit Node [{State}]  :  {this.GetType().Name}");
             return State;
@@ -110,12 +87,41 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (State != Status.Running)
             {
+                //在Enter之前调用 前置装饰器
+                if (Derators?.Length > 0)
+                {
+                    foreach (var pre in Derators)
+                    {
+                        if (pre is IPreDecirator decirator)
+                        {
+                            decirator.OnNodeEnter(this);
+                        }
+                    }
+                }
+
                 Enter();
             }
             var res = OnTick();
             if (res != Status.Running)
             {
                 res = Exit(res);
+
+                //在Exit之后调用 后置装饰器
+                //即使remap更改结果，也只影响对上层的返回值，不能也不应该影响Node自身的实际结果值。
+                //在Editor上应该表现出node成功，但装饰器返回失败。
+
+                //倒序遍历
+                if (Derators?.Length > 0)
+                {
+                    for (int i = Derators.Length - 1; i >= 0; i--)
+                    {
+                        var pre = Derators[i];
+                        if (pre is IPostDecirator decirator)
+                        {
+                            res = decirator.OnNodeExit(res, this);
+                        }
+                    }
+                }
             }
             return res;
         }

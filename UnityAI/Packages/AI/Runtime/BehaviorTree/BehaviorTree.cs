@@ -106,7 +106,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(wait);
             seq.children.Add(log);
 
-            var loop = new Loop();
+            var loop = new Repeater();
             loop.child = seq;
 
             var check = new CheckBool();
@@ -123,7 +123,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(wait);
             seq.children.Add(log);
 
-            var loop = new Loop();
+            var loop = new Repeater();
             loop.child = seq;
 
             var check = new CheckBool();
@@ -139,7 +139,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(wait);
             seq.children.Add(log);
 
-            var loop = new Loop();
+            var loop = new Repeater();
             loop.child = seq;
 
             StartNode = loop;
