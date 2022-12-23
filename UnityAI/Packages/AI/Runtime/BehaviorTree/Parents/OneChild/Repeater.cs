@@ -21,7 +21,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             if (res == Status.Succeeded || res == Status.Failed)
             {
                 cur++;
-                Debug.Log($"loop: complete {cur}");
+                Debug.Log($"Repeater: complete {cur}");
                 if (cur >= loopCount)
                 {
                     return res;
