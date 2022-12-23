@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Loop : OneChildTaskNode
+    public class Loop : OneChildNode
     {
         int loopCount = 2;
 

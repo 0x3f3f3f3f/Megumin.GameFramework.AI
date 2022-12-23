@@ -11,8 +11,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public virtual void Load() { }
 
 
-        public TaskNode StartNode { get; set; }
-        public List<TaskNode> AllNodes = new List<TaskNode>();
+        public BTNode StartNode { get; set; }
+        public List<BTNode> AllNodes = new List<BTNode>();
         private Status treestate = Status.Init;
 
         internal void Init(object agent)
