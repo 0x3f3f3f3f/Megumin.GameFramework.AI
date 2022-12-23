@@ -12,4 +12,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     internal class Remap
     {
     }
+
+    /// <summary>
+    /// 条件节点可能在Action节点后面，所以需要一个后置附件节点来修改返回值。
+    /// 并且需要 设置执行条件，仅当某些条件时才执行。
+    /// https://robohub.org/wp-content/uploads/2021/08/bt_mobile_robot_03.png
+    /// 如果父节点是Selector，那么条件节点可能在Action节点后面，Action结果是Failed时才执行条件节点。
+    /// 如果父节点是Sequence，那么条件节点可能在Action节点后面，Action结果是Succeeded时才执行条件节点。 
+    /// 与之对应，后置附件节点需要设置执行条件，才能与标准行为树保持一致。
+    /// </summary>
+    class ConditionRemap
+    {
+
+    }
 }

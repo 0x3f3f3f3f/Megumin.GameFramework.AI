@@ -12,6 +12,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BehaviourTree.Init(gameObject);
         }
 
+        private void OnEnable()
+        {
+            
+        }
+
         // Use this for initialization
         void Start()
         {

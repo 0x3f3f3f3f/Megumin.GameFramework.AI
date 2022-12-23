@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    /// <summary>
+    /// 为什么是Sequence不是Sequencer，因为Sequence字符串长度和Selector一样。
+    /// </summary>
     public class Sequence : CompositeTaskNode
     {
         protected override Status OnTick()
