@@ -2,6 +2,8 @@
 | -------- | ---- | ---- | -------- | ---------- | ------------- |
 | 并行     | ❌    | ❌    | ✅        |            | ✅             |
 | 跨层过渡 | ⛔🚫❎  | ✅    | ✅        | ✅          | ❌             |
+| Selector | ❌    | ❌    | ✅        | ✅          | ✅             |
+|          |      |      |          |            |               |
 |          |      |      |          |            |               |
 
 Animator 没有丝毫折扣的实现了HFSM的所有功能。
@@ -49,6 +51,10 @@ Owner要驱动状态机，必须用Animator.SetValue。
 分层状态机增加删除一个节点，不知道有多少未知过渡指向这个节点。任何节点都可以个过渡到任何节点，对维护来说是很可怕的。
 
 
+
+# 并行
+
+[Unity - 手动：动画图层 (unity3d.com)](https://docs.unity3d.com/2023.1/Documentation/Manual/AnimationLayers.html)
 
 # HFSM
 
@@ -100,7 +106,17 @@ Animator 的EnterNode实现了Selector。
 
 ---
 
----
+
+
+# FSM HFSM ST BT 表达能力相同吗？
+
+答案: 不相同。
+
+
+
+更加具体的说，由于没有明确的功能标准定义，所以每个库实现的Feature多少也不同，表达能力是不可能相同的。
+
+由于Feature的不同，依赖于这些Feature的项目，是不能随意更换AI插件的。
 
 
 
@@ -112,26 +128,30 @@ StateTree 是一种HFSM的受限形式。
 
 
 
-
-
 从状态切换过渡性来说：
 
 行为树是一种StateTree的受限形式。
 
 
 
+# 我们真正需要的是什么？
 
-
-
+- 当我们知道要过渡到哪个状态时，直接过渡。当我们不知道要去哪个状态，由整体选出一个状态。
+- 执行当前状态时，从不关心上一个状态是什么。
 
 
 
 # 参考
 
-- [有限状态机 - 维基百科，自由的百科全书 (wikipedia.org)](https://zh.wikipedia.org/wiki/有限状态机)
+- [Introduction to behavior trees - Robohub](https://robohub.org/introduction-to-behavior-trees/)
+- [Finite-state machine - Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine)
+- [Behavior tree (artificial intelligence, robotics and control) - Wikipedia](https://en.wikipedia.org/wiki/Behavior_tree_(artificial_intelligence,_robotics_and_control))
 - [Inspiaaa/UnityHFSM: A simple yet powerful class based hierarchical finite state machine for Unity3D (github.com)](https://github.com/Inspiaaa/UnityHFSM)
 - [学习笔记2.5-----分层有限状态机 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/558422986)
 - [Unity - Manual: State Machine Basics (unity3d.com)](https://docs.unity3d.com/2023.1/Documentation/Manual/StateMachineBasics.html)
+- [行为树概念与结构 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/92298402)
+
+  
 
 
 
