@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.GameFramework.AI.Packages.AI.Runtime.BehaviorTree.Tasks
 {
-    public class Cooldown
+    internal class SubTree
     {
     }
 }

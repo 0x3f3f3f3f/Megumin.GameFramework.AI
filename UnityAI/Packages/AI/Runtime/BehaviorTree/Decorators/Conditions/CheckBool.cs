@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class CheckBool : IConditionable
+    public class CheckBool : IConditionable
     {
         public bool Cal()
         {
@@ -16,3 +16,5 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool Result { get; set; }
     }
 }
+
+

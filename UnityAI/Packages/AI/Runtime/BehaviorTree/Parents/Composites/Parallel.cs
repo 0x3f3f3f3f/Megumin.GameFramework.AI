@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree  
 {
-    internal class Parallel
+    public class Parallel: CompositeNode
     {
+        protected override Status OnTick()
+        {
+            return base.OnTick();
+        }
     }
 }
+
+
+
+
+

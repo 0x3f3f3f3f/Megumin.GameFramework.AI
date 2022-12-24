@@ -23,6 +23,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         void BeforeNodeEnter(BTNode bTNode);
     }
 
+    /// <summary>
+    /// 在装饰器中使用OnNodeTick,性能损失太高，没有必要，可以使用OneChild代替，功能上是一致的。
+    /// </summary>
+    [Obsolete("Use OneChild instead.", true)]
     public interface IPreTickDecirator
     {
         void OnPreNodeTick(BTNode bTNode);
@@ -50,7 +54,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public interface IEnableable
     {
         bool Enabled { get; set; }
-       
+
         //void Enable();
         //void Disable();
     }
@@ -58,19 +62,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 想要轮询必须支持开启和关闭。这样才能正确处理Start。
     /// </summary>
-    public interface ITickable: IEnableable
+    public interface ITickable : IEnableable
     {
 
     }
 
+    [Flags]
     public enum Status
     {
-        Init,
-        Succeeded,
-        Failed,
-        //Aborted,
-        Running,
-    };
+        Init = 0,
+        Succeeded = 1 << 0,
+        Failed = 1 << 1,
+        Aborted = 1 << 2,
+        Running = 1 << 3,
+    }
 
     [Flags]
     public enum AbortType

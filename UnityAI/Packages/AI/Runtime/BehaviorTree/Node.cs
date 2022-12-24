@@ -87,43 +87,62 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (State != Status.Running)
             {
-                //在Enter之前调用 前置装饰器
-                if (Derators?.Length > 0)
-                {
-                    foreach (var pre in Derators)
-                    {
-                        if (pre is IPreDecirator decirator)
-                        {
-                            decirator.BeforeNodeEnter(this);
-                        }
-                    }
-                }
-
+                FrontDerators();
                 Enter();
             }
             var res = OnTick();
             if (res != Status.Running)
             {
                 res = Exit(res);
+                res = BackDerators(res);
+            }
+            return res;
+        }
 
-                //在Exit之后调用 后置装饰器
-                //即使remap更改结果，也只影响对上层的返回值，不能也不应该影响Node自身的实际结果值。
-                //在Editor上应该表现出node成功，但装饰器返回失败。
-
-                //倒序遍历
-                if (Derators?.Length > 0)
+        private void FrontDerators()
+        {
+            //在Enter之前调用 前置装饰器
+            if (Derators?.Length > 0)
+            {
+                foreach (var pre in Derators)
                 {
-                    for (int i = Derators.Length - 1; i >= 0; i--)
+                    if (pre is IPreDecirator decirator)
                     {
-                        var pre = Derators[i];
-                        if (pre is IPostDecirator decirator)
-                        {
-                            res = decirator.AfterNodeExit(res, this);
-                        }
+                        decirator.BeforeNodeEnter(this);
                     }
                 }
             }
+        }
+
+        private Status BackDerators(Status res)
+        {
+            //在Exit之后调用 后置装饰器
+            //即使remap更改结果，也只影响对上层的返回值，不能也不应该影响Node自身的实际结果值。
+            //在Editor上应该表现出node成功，但装饰器返回失败。
+
+            //倒序遍历
+            if (Derators?.Length > 0)
+            {
+                for (int i = Derators.Length - 1; i >= 0; i--)
+                {
+                    var pre = Derators[i];
+                    if (pre is IPostDecirator decirator)
+                    {
+                        res = decirator.AfterNodeExit(res, this);
+                    }
+                }
+            }
+
             return res;
+        }
+
+        /// <summary>
+        /// Abort 理解为当前最后一次不调用Tick的Tick，视为最后通牒。
+        /// </summary>
+        public virtual void OnAbort()
+        {
+            Exit(Status.Aborted);
+            BackDerators(Status.Aborted);
         }
 
         protected virtual Status OnTick()
