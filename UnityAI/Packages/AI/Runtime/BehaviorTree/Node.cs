@@ -139,10 +139,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// Abort 理解为当前最后一次不调用Tick的Tick，视为最后通牒。
         /// </summary>
-        public virtual void OnAbort()
+        public void Abort()
         {
-            Exit(Status.Aborted);
-            BackDerators(Status.Aborted);
+            OnAbort();
+            Exit(Status.Failed);
+            BackDerators(Status.Failed);
+        }
+
+        protected virtual void OnAbort()
+        {
+            
         }
 
         protected virtual Status OnTick()

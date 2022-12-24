@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public virtual void Load() { }
 
-
+        public readonly Dictionary<string,object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
         public List<BTNode> AllNodes = new List<BTNode>();
         private Status treestate = Status.Init;

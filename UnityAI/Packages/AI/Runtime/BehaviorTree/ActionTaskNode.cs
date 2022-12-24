@@ -73,8 +73,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Init = 0,
         Succeeded = 1 << 0,
         Failed = 1 << 1,
-        Aborted = 1 << 2,
-        Running = 1 << 3,
+        Running = 1 << 2,
+        //Aborted = 1 << 3, 中断是失败的一种，不应该放入枚举。
     }
 
     [Flags]
