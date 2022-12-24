@@ -50,5 +50,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             return Status.Succeeded;
         }
+
+
+
+
+        async ValueTask<bool> Extest()
+        {
+            foreach (var item in children)
+            {
+                var res = await item.Extest();
+                if (res == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

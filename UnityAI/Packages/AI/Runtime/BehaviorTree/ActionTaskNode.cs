@@ -43,6 +43,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Status AfterNodeExit(Status result, BTNode bTNode);
     }
 
+    internal interface IAbortDecirator
+    {
+        void OnNodeAbort(BTNode bTNode);
+    }
+
 
     public interface IStartable
     {

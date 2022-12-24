@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Loop : IPostDecirator
+    public class Loop : IPostDecirator, IAbortDecirator
     {
         int loopCount = 2;
 
@@ -18,9 +18,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             Debug.Log($"loop: complete {cur}");
             if (cur >= loopCount)
             {
+                cur = 0;
                 return result;
             }
             return Status.Running;
+        }
+
+        public void OnNodeAbort(BTNode bTNode)
+        {
+            cur = 0;
         }
     }
 }

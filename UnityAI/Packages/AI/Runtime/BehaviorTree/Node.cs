@@ -144,6 +144,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             OnAbort();
             Exit(Status.Failed);
             BackDerators(Status.Failed);
+
+            //倒序遍历
+            if (Derators?.Length > 0)
+            {
+                for (int i = Derators.Length - 1; i >= 0; i--)
+                {
+                    var pre = Derators[i];
+                    if (pre is IAbortDecirator decirator)
+                    {
+                        decirator.OnNodeAbort(this);
+                    }
+                }
+            }
         }
 
         protected virtual void OnAbort()
@@ -169,6 +182,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         internal void Start()
         {
 
+        }
+
+        public async ValueTask<bool> Extest()
+        {
+            var state = Status.Running;
+            while (state != Status.Running)
+            {
+                FrontDerators();
+                Enter();
+                var res = await onticktest();
+                var res2 = Exit(default);
+                res2 = BackDerators(res2);
+            }
+
+            return true;
+        }
+
+        ValueTask<bool> onticktest()
+        {
+            return new ValueTask<bool>(true);
         }
     }
 }
