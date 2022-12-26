@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -17,22 +18,16 @@ public class BehaviorTreeEditor : EditorWindow
 
     public void CreateGUI()
     {
-        // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
-
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
 
         // Instantiate UXML
         VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
         root.Add(labelFromUXML);
 
-        var topbar = new ToolbarMenu();
-        root.Add(topbar);
+        var test = Resources.Load<VisualTreeAsset>("MyTest1");
+        var test1 = test.Instantiate();
+        root.Add(test1);
 
-        var button = new Button();
-        button.name= "Add";
-        topbar.Add(button);
+        
     }
 }
