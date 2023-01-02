@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,12 +23,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             // Instantiate UXML
             VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
+            labelFromUXML.name = "BehaviorTreeEditor";
+            labelFromUXML.StretchToParentSize();
             root.Add(labelFromUXML);
+
 
             //var content = new VisualElement();
             //root.Add(content);
             //var tree = new BehaviourTreeView();
             //content.Add(tree); 
+            //var content = root.Q<VisualElement>("Content");
+            //content.Add(new BehaviourTreeView());
+            //content.StretchToParentSize();
         }
     }
 }

@@ -11,10 +11,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public new class UxmlFactory : UxmlFactory<BehaviourTreeView, GraphView.UxmlTraits> { }
 
-        public BehaviourTreeView():base()
+        public BehaviourTreeView()
         {
-            Insert(0, new GridBackground());
-            this.StretchToParentSize();
+            GridBackground element = new GridBackground();
+            Insert(0, element);
+            MiniMap child = new MiniMap();
+            this.Add(child);
+            //child.SetPosition(Rect.zero);
+            Node child1 = new Node() { name = "testNode" };
+            this.Add(child1);
+            child1.capabilities |= Capabilities.Movable;
+            child1.SetPosition(new Rect(100,100,100,100));
         }
     }
 }

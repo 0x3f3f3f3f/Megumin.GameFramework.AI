@@ -10,10 +10,7 @@
         <uie:ToolbarSpacer style="flex-grow: 1;" />
         <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="Help" />
     </uie:Toolbar>
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-        <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviourTreeView focusable="true" />
+    <ui:VisualElement name="Content" class="Content debug" style="flex-grow: 1;">
+        <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviourTreeView />
     </ui:VisualElement>
-    <TabbedView>
-        <TabButton focusable="true" />
-    </TabbedView>
 </ui:UXML>

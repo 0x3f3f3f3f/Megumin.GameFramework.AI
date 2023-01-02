@@ -1,0 +1,12 @@
+BehaviourTreeView {
+    flex-grow: 1;
+}
+
+BehaviourTreeView > GridBackground {
+    background-color: rgba(142, 17, 17, 255);
+    --spacing:20;
+}
+
+.debug {
+    background-color: rgba(68, 255, 13, 255);
+}
