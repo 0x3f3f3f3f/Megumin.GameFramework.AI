@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="MyTest1" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
         <ui:Label tabindex="-1" text="Test11111111111" display-tooltip-when-elided="true" />
-        <ui:Toggle label="Toggle" />
+        <ui:Toggle label="Toggle" value="true" style="max-width: 100px;" />
+        <Megumin.GameFramework.AI.Editor.MyElement />
     </ui:VisualElement>
 </ui:UXML>

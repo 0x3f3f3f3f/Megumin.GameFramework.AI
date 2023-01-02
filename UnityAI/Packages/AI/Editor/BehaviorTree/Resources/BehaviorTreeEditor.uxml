@@ -1,11 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=132ed6f68d8f6db4d8135ba9b7ab7781&amp;type=3#BehaviorTreeEditor" />
+    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=132ed6f68d8f6db4d8135ba9b7ab7781&amp;type=3#BehaviorTreeEditor" />
+    <uie:Toolbar>
+        <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="File" name="File" />
+        <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Edit" name="Edit" />
+        <uie:ToolbarSpacer />
+        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" />
+        <uie:ToolbarSpacer />
+        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" />
+        <uie:ToolbarSpacer style="flex-grow: 1;" />
+        <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="Help" />
+    </uie:Toolbar>
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviourTreeView focusable="true" />
+    </ui:VisualElement>
     <TabbedView>
         <TabButton focusable="true" />
     </TabbedView>
-    <uie:Toolbar>
-        <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true">
-            <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" name="ToolbarButton" />
-        </uie:ToolbarMenu>
-    </uie:Toolbar>
 </ui:UXML>
