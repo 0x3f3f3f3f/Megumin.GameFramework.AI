@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [SerializeField]
         private VisualTreeAsset m_VisualTreeAsset = default;
 
-        [MenuItem("Tools/BehaviorTreeEditor")]
+        [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
         {
             BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();

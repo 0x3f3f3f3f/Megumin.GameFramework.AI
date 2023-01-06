@@ -21,7 +21,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.Add(child);
 
             //child.SetPosition(Rect.zero);
-            AddNode();
+            var node = CreateNode();
+            var v = new VisualElement() { name= "testLayer"};
+            v.Add(node);    
+            this.Add(v);
 
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
@@ -32,14 +35,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //this.SetupZoom(0.5f, 2f,0.8f,1f);
         }
 
-        public void AddNode()
+        public Node CreateNode()
         {
             Node child1 = new Node() { name = "testNode" };
             child1.title = "TestNode";
-            this.Add(child1);
             //child1.capabilities |= Capabilities.Movable;
             child1.SetPosition(new Rect(100, 100, 100, 100));
             child1.AddToClassList("debug");
+            return child1;
         }
     }
 }
