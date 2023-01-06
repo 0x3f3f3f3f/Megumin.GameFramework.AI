@@ -39,6 +39,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.Add(child1);
             //child1.capabilities |= Capabilities.Movable;
             child1.SetPosition(new Rect(100, 100, 100, 100));
+            child1.AddToClassList("debug");
         }
     }
 }
+
+
+
