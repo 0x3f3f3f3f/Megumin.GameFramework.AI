@@ -11,6 +11,6 @@
         <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="Help" />
     </uie:Toolbar>
     <ui:VisualElement name="Content" class="Content debug" style="flex-grow: 1;">
-        <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviourTreeView />
+        <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviourTreeView class="debug" />
     </ui:VisualElement>
 </ui:UXML>

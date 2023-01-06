@@ -1,12 +1,28 @@
+BehaviourTreeView > GridBackground {
+    --grid-background-color: rgb(40, 40, 40);
+    --line-color: rgba(193, 196, 192, 0.1);
+    --thick-line-color: rgba(193, 196, 192, 0.1);
+    --spacing: 15;
+    background-color: rgba(207, 44, 44, 255);
+    -unity-text-outline-color: rgba(219, 22, 22, 255);
+    -unity-background-image-tint-color: rgba(190, 17, 159, 255);
+    width: auto;
+    display: flex;
+    visibility: visible;
+    overflow: visible;
+    opacity: 0.97;
+}
+
 BehaviourTreeView {
     flex-grow: 1;
 }
 
-BehaviourTreeView > GridBackground {
-    background-color: rgba(142, 17, 17, 255);
-    --spacing:20;
-}
+/*BehaviourTreeView GridBackground {
+    background-color: rgba(27, 150, 150, 0.719);
+    --spacing:20; 
+    --grid-background-color: rgba(27, 150, 150, 0.719);
+}*/
 
 .debug {
-    background-color: rgba(68, 255, 13, 255);
+    background-color: rgba(10, 158, 158, 0.377);
 }
