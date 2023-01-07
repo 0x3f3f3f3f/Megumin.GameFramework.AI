@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,12 +20,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void CreateGUI()
         {
             VisualElement root = rootVisualElement;
+            root.AddToClassList("BehaviorTreeEditor");
 
             // Instantiate UXML
-            VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-            labelFromUXML.name = "BehaviorTreeEditor";
-            labelFromUXML.StretchToParentSize();
-            root.Add(labelFromUXML);
+            //VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
+            //labelFromUXML.name = "BehaviorTreeEditor";
+            //labelFromUXML.StretchToParentSize();
+            //root.Add(labelFromUXML);
+
+            ///CloneTree可以避免生成TemplateContainer
+            m_VisualTreeAsset.CloneTree(root);
 
 
             //var content = new VisualElement();
