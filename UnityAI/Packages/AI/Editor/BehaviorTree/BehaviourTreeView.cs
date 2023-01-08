@@ -16,15 +16,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             GridBackground element = new GridBackground();
             Insert(0, element);
 
-            MiniMap child = new MiniMap();
-            child.name = "minimap";
-            this.Add(child);
+            
 
             //child.SetPosition(Rect.zero);
             var node = CreateNode();
-            var v = new VisualElement() { name= "testLayer"};
-            v.Add(node);    
-            this.Add(v);
+            this.AddElement(node);
 
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
@@ -33,6 +29,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddManipulator(new RectangleSelector());
 
             //this.SetupZoom(0.5f, 2f,0.8f,1f);
+
+            MiniMap child = new MiniMap();
+            child.name = "minimap";
+            this.AddElement(child);
         }
 
         public Node CreateNode()
