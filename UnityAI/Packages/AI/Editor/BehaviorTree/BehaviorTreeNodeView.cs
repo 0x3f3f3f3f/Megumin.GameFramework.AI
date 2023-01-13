@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,10 +13,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeNodeView, UxmlTraits> { }
 
+        /// <summary>
+        /// 没办法，基类只接受路径。
+        /// </summary>
         public BehaviorTreeNodeView()
             : base(AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("BehaviorTreeNodeView")))
         {
-
+            UseDefaultStyling();
+            StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
+            styleSheets.Add(styleSheet);
         }
     }
 }
