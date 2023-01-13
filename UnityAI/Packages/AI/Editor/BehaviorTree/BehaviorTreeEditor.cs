@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void CreateGUI()
         {
             VisualElement root = rootVisualElement;
-            root.AddToClassList("BehaviorTreeEditor");
+            root.AddToClassList("behaviorTreeEditor");
 
             // Instantiate UXML
             //VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();

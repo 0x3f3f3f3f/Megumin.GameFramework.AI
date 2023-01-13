@@ -7,11 +7,11 @@ using UnityEditor.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviourTreeView : GraphView
+    public class BehaviorTreeView : GraphView
     {
-        public new class UxmlFactory : UxmlFactory<BehaviourTreeView, GraphView.UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
-        public BehaviourTreeView()
+        public BehaviorTreeView()
         {
             GridBackground element = new GridBackground();
             Insert(0, element);

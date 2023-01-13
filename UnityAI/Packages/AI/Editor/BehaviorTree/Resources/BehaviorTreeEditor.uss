@@ -1,15 +1,15 @@
-.Content {
+.content {
     flex-grow: 1;
 }
 
-.BehaviourTreeView {
+.behaviorTreeView {
 }
 
-BehaviourTreeView {
+BehaviorTreeView {
     flex-grow: 1;
 }
 
-BehaviourTreeView GridBackground {
+BehaviorTreeView GridBackground {
     --grid-background-color: rgb(40, 40, 40);
     --line-color: rgba(193, 196, 192, 0.1);
     --thick-line-color: rgba(193, 196, 192, 0.1);
@@ -24,7 +24,7 @@ BehaviourTreeView GridBackground {
     opacity: 0.97;
 }
 
-BehaviourTreeView .debug {
+BehaviorTreeView .debug {
     border-left-color: rgb(255, 0, 0);
     border-right-color: rgb(255, 0, 0);
     border-top-color: rgb(255, 0, 0);
