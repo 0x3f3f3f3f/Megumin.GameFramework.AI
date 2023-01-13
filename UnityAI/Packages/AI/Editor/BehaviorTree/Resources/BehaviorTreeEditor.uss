@@ -35,3 +35,8 @@ BehaviorTreeView .debug {
     border-top-width: 2px;
     border-bottom-width: 2px;
 }
+
+.node Port > Label {
+    visibility: visible;
+    display: none;
+}

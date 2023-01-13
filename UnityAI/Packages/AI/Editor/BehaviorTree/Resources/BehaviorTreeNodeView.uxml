@@ -1,5 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="node-border">
+        <ui:VisualElement name="input" style="flex-direction: column; align-items: center;" />
+        <ui:VisualElement name="decorator" style="border-left-color: rgb(109, 226, 39); border-right-color: rgb(109, 226, 39); border-top-color: rgb(109, 226, 39); border-bottom-color: rgb(109, 226, 39); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:ListView focusable="true" style="border-left-color: rgb(62, 164, 190); border-right-color: rgb(62, 164, 190); border-top-color: rgb(62, 164, 190); border-bottom-color: rgb(62, 164, 190); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; max-height: none; margin-left: 10px; margin-right: 10px; margin-bottom: 5px; margin-top: 5px;" />
+        </ui:VisualElement>
         <ui:VisualElement name="title">
             <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
             <ui:VisualElement name="title-button-container">
@@ -11,11 +15,10 @@
         <ui:VisualElement name="contents">
             <ui:VisualElement name="divider" class="horizontal" />
             <ui:VisualElement name="top">
-                <ui:VisualElement name="input" />
                 <ui:VisualElement name="divider" class="vertical" />
-                <ui:VisualElement name="output" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="output" style="align-items: center;" />
     </ui:VisualElement>
     <ui:VisualElement name="selection-border" picking-mode="Ignore" />
 </ui:UXML>
