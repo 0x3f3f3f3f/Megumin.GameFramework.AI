@@ -11,6 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeNodeView : Node
     {
+
         public new class UxmlFactory : UxmlFactory<BehaviorTreeNodeView, UxmlTraits> { }
 
         /// <summary>
@@ -28,6 +29,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
             outputContainer.Add(outport);
+
+
+            so = ScriptableObject.CreateInstance<TestSO>();
         }
+
+
+        private ScriptableObject so;
+        public override void Select(VisualElement selectionContainer, bool additive)
+        {
+            base.Select(selectionContainer, additive);
+            Debug.Log(title);
+            Selection.activeObject = so;
+        }
+    }
+
+    public class TestSO : ScriptableObject
+    {
+        public string TestName = Guid.NewGuid().ToString();
+    }
+
+    public class TestSO2<T>: ScriptableObject
+    {
+        public T Node;
     }
 }
