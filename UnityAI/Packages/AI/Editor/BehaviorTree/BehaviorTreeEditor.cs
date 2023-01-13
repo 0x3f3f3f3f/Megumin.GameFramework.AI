@@ -34,10 +34,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //var content = new VisualElement();
             //root.Add(content);
-            //var tree = new BehaviourTreeView();
+            //var tree = new BehaviorTreeView();
             //content.Add(tree); 
             //var content = root.Q<VisualElement>("Content");
-            //content.Add(new BehaviourTreeView());
+            //content.Add(new BehaviorTreeView());
             //content.StretchToParentSize();
         }
     }
