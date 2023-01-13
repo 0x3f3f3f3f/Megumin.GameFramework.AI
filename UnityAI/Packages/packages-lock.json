@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.megumin.ai": {
-      "version": "file:AI",
+      "version": "file:com.megumin.ai",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
     },
     "com.megumin.binding": {
-      "version": "file:Binding",
+      "version": "file:com.megumin.binding",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
