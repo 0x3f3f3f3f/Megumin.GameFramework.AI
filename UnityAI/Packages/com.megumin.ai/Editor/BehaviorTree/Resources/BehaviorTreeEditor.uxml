@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=132ed6f68d8f6db4d8135ba9b7ab7781&amp;type=3#BehaviorTreeEditor" />
+    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
     <uie:Toolbar>
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="File" name="file" />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Edit" name="edit" />

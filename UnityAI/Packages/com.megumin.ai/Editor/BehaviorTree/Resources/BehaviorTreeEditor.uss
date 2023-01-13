@@ -35,26 +35,3 @@ BehaviorTreeView .debug {
     border-top-width: 2px;
     border-bottom-width: 2px;
 }
-
-.node Port > Label {
-    visibility: visible;
-    display: none;
-}
-
-/*#connector.connectorBox {
-    background-color: rgb(49, 204, 190);
-    opacity: 1;
-    min-width: 60px;
-}*/
-
-.port:hover > #connector.connectorBox {
-    border-left-color: rgb(255, 0, 0);
-    border-right-color: rgb(255, 0, 0);
-    border-top-color: rgb(255, 0, 0);
-    border-bottom-color: rgb(255, 0, 0);
-    background-color: rgb(21, 233, 134);
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
