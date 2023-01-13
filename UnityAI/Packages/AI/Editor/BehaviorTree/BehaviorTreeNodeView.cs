@@ -22,6 +22,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UseDefaultStyling();
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
+
+            var inport = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(object));
+            inputContainer.Add(inport);
+
+            var outport = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(object));
+            outputContainer.Add(outport);
         }
     }
 }

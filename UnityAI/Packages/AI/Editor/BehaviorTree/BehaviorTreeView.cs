@@ -17,11 +17,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             GridBackground element = new GridBackground();
             Insert(0, element);
 
-            
+
 
             //child.SetPosition(Rect.zero);
-            var node = CreateNode();
-            this.AddElement(node);
+            AddNode();
 
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
@@ -36,13 +35,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddElement(child);
         }
 
+        private void AddNode()
+        {
+            var node = CreateNode();
+            this.AddElement(node);
+        }
+
         public Node CreateNode()
         {
-            Node child1 = new Node() { name = "testNode" };
+            var child1 = new BehaviorTreeNodeView() { name = "testNode" };
             child1.title = "TestNode";
             //node.capabilities |= Capabilities.Movable;
             child1.SetPosition(new Rect(100, 100, 100, 100));
-            child1.AddToClassList("debug");
+            //child1.AddToClassList("debug");
             return child1;
         }
 
@@ -55,13 +60,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void Test(DropdownMenuAction obj)
         {
-            BehaviorTreeNodeView node = new  BehaviorTreeNodeView() { name = "testBehaviorTreeNodeView" };
-            node.title = "TestNodeView";
-            //node.capabilities |= Capabilities.Movable;
-            node.SetPosition(new Rect(100, 100, 100, 100));
-            node.AddToClassList("debug");
-
-            this.AddElement(node);
+            AddNode();
         }
     }
 }
