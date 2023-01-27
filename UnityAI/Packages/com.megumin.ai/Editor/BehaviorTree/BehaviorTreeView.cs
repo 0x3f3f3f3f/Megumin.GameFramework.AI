@@ -17,8 +17,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             GridBackground element = new GridBackground();
             Insert(0, element);
 
-
-
             //child.SetPosition(Rect.zero);
             AddNode();
 
@@ -78,8 +76,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
+            Debug.Log(startPort);
             return ports.ToList();
-            return base.GetCompatiblePorts(startPort, nodeAdapter);
+            //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
     }
 }
