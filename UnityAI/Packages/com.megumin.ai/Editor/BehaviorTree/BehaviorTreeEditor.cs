@@ -33,9 +33,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             ///CloneTree可以避免生成TemplateContainer
             m_VisualTreeAsset.CloneTree(root);
 
+            CreateTopbar();
+            var treeView = root.Q<BehaviorTreeView>("behaviorTreeView");
 
+        }
 
+        private void CreateTopbar()
+        {
+            VisualElement root = rootVisualElement;
             var toolbar = root.Q<Toolbar>("toolbar");
+
+            var save = root.Q<ToolbarButton>("saveAsset");
+            save.clicked += SaveAsset;
+
+            var saveAs = root.Q<ToolbarMenu>("saveAs");
+            saveAs.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
+            saveAs.menu.AppendAction("Save as ScriptObject", SaveTreeAsScriptObject, a => DropdownMenuAction.Status.Normal);
+
             var file = root.Q<ToolbarMenu>("file");
             file.menu.AppendAction("Default is never shown", a => { }, a => DropdownMenuAction.Status.None);
             file.menu.AppendAction("Normal file", a => { }, a => DropdownMenuAction.Status.Normal);
@@ -45,11 +59,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
 
             file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
-            file.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
-            file.menu.AppendAction("Save as ScriptObject", SaveTreeAsScriptObject, a => DropdownMenuAction.Status.Normal);
+        }
 
-            var treeView = root.Q<BehaviorTreeView>("behaviorTreeView");
-            
+        private void SaveAsset()
+        {
+            Debug.Log(1);
         }
 
         private void SaveTreeAsScriptObject(DropdownMenuAction obj)
@@ -66,7 +80,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void SaveTreeAsJson(DropdownMenuAction obj)
         {
-            throw new NotImplementedException();
+            var path = EditorUtility.SaveFilePanelInProject("保存", "BTJson", "json", "test");
+            if (!string.IsNullOrEmpty(path))
+            {
+                Debug.Log(path);
+                TextAsset json = new TextAsset("{tree}");
+                AssetDatabase.CreateAsset(json, path);
+                AssetDatabase.Refresh();
+            }
         }
 
         private void SaveTree(DropdownMenuAction obj)

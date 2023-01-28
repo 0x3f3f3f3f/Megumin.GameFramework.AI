@@ -35,3 +35,7 @@ BehaviorTreeView .debug {
     border-top-width: 2px;
     border-bottom-width: 2px;
 }
+
+.topbar-button {
+    -unity-text-align: middle-left;
+}

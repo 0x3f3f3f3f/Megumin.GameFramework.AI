@@ -2,21 +2,21 @@
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=132ed6f68d8f6db4d8135ba9b7ab7781&amp;type=3#BehaviorTreeEditor" />
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
     <uie:Toolbar name="toolbar">
-        <uie:ToolbarButton text="Save Asset" display-tooltip-when-elided="true" name="saveAsset" />
+        <uie:ToolbarButton text="Save Asset" display-tooltip-when-elided="true" name="saveAsset" class="topbar-button" />
         <uie:ToolbarSpacer />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Save As..." name="saveAs" />
         <uie:ToolbarSpacer />
-        <uie:ToolbarButton text="Show In Project" display-tooltip-when-elided="true" name="showInProject" />
+        <uie:ToolbarButton text="Show In Project" display-tooltip-when-elided="true" name="showInProject" class="topbar-button" />
         <uie:ToolbarSpacer />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="File" name="file" />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Edit" name="edit" />
         <uie:ToolbarSpacer />
-        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" />
+        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" class="topbar-button" />
         <uie:ToolbarSpacer />
-        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" />
+        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" class="topbar-button" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />
-        <uie:ToolbarButton text="Test" display-tooltip-when-elided="true" name="test" />
-        <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="help" />
+        <uie:ToolbarButton text="Test" display-tooltip-when-elided="true" name="test" class="topbar-button" />
+        <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="help" class="topbar-button" />
     </uie:Toolbar>
     <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviorTreeView name="behaviorTreeView" class="behaviorTreeView" />
 </ui:UXML>
