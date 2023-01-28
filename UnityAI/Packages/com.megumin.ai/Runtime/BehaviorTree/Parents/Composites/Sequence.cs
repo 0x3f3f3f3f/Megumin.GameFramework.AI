@@ -54,18 +54,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
 
 
-        async ValueTask<bool> Extest()
-        {
-            foreach (var item in children)
-            {
-                var res = await item.Extest();
-                if (res == false)
-                {
-                    return false;
-                }
-            }
+        //async ValueTask<bool> Extest()
+        //{
+        //    foreach (var item in children)
+        //    {
+        //        var res = await item.Extest();
+        //        if (res == false)
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 }
