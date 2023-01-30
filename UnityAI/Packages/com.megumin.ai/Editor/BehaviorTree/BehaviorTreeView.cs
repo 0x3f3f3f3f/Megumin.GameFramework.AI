@@ -17,11 +17,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BehaviorTreeView()
         {
-            GridBackground element = new GridBackground();
-            Insert(0, element);
+            GridBackground background = new GridBackground();
+            Insert(0, background);
 
-            //child.SetPosition(Rect.zero);
-            AddNode();
 
             this.AddManipulator(new MouseMoveManipulator());
             this.AddManipulator(new ContentZoomer());
@@ -40,29 +38,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             createNodeMenu.Initialize(this);
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
-
-
-        }
-
-        private void AddNode()
-        {
-            var node = CreateNode();
-            this.AddElement(node);
-        }
-
-        internal void AddNode(Vector2 nodePosition = default)
-        {
-
-        }
-
-        public Node CreateNode()
-        {
-            var node = new BehaviorTreeNodeView() { name = "testNode" };
-            node.title = "TestNode";
-            //node.capabilities |= Capabilities.Movable;
-            node.SetPosition(new Rect(LastContextualMenuMousePosition.x, LastContextualMenuMousePosition.y, 100, 100));
-            //node.AddToClassList("debug");
-            return node;
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
@@ -72,26 +47,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Debug.Log(LastContextualMenuMousePosition);
 
             evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Test2", Test2, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
             base.BuildContextualMenu(evt);
         }
 
-        private void Test2(DropdownMenuAction obj)
-        {
-            Node node = new Node();
-            node.title = "TestPort";
-            node.SetPosition(new Rect(LastContextualMenuMousePosition.x, LastContextualMenuMousePosition.y, 100, 100));
-            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(object));
-            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
-            node.inputContainer.Add(inport);
-            node.outputContainer.Add(outport);
-            this.AddElement(node);
-        }
-
         private void Test(DropdownMenuAction obj)
         {
-            AddNode();
+            this.LogFuncName(obj);
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -101,7 +63,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
 
-        
+        public void CreateNode(Type type, Vector2 graphMousePosition)
+        {
+            var node = Activator.CreateInstance(type);
+            var nodeView = CreateNodeView(node, graphMousePosition);
+            this.AddElement(nodeView);
+        }
+
+        public BehaviorTreeNodeView CreateNodeView()
+        {
+            return CreateNodeView(null, LastContextualMenuMousePosition);
+        }
+
+        public BehaviorTreeNodeView CreateNodeView(object node, Vector2 nodePosition)
+        {
+            var nodeView = new BehaviorTreeNodeView() { name = "testNode" };
+            nodeView.title = "TestNode";
+            nodeView.SetNode(node);
+            //node.capabilities |= Capabilities.Movable;
+            nodeView.SetPosition(new Rect(nodePosition.x, nodePosition.y, 100, 100));
+            //node.AddToClassList("debug");
+            return nodeView;
+        }
     }
 }
 

@@ -41,6 +41,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Debug.Log(title);
             Selection.activeObject = so;
         }
+
+        internal void SetNode(object node)
+        {
+            if (node == null)
+            {
+                title = "TestNode";
+                name = "testNode";
+            }
+            else
+            {
+                var type = node.GetType();
+                title = type.Name;
+            }
+        }
     }
 
     public class TestSO : ScriptableObject

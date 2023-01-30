@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -66,12 +67,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
                 }
             }
+
+            //tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
+            //tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
         {
-            behaviorTreeView.AddNode(context.screenMousePosition);
-            Debug.Log(searchTreeEntry.userData);
+            var windowRoot = behaviorTreeView.EditorWindow.rootVisualElement;
+            var windowMousePosition = windowRoot.ChangeCoordinatesTo(
+                windowRoot.parent, context.screenMousePosition - behaviorTreeView.EditorWindow.position.position);
+            var graphMousePosition = behaviorTreeView.contentViewContainer.WorldToLocal(windowMousePosition);
+
+            behaviorTreeView.CreateNode(searchTreeEntry.userData as Type, graphMousePosition);
+
             return true;
         }
     }
