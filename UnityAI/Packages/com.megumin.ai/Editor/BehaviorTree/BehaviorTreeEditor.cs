@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -9,14 +10,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeEditor : EditorWindow
     {
+        [OnOpenAsset(0)]
+        public static bool OnBaseGraphOpened(int instanceID, int line)
+        {
+            var asset = EditorUtility.InstanceIDToObject(instanceID);
+
+            if (asset is BehaviorTreeAsset behaviorTreeAsset)
+            {
+                var wnd = GetWindow();
+                wnd.InitializeGraph(behaviorTreeAsset);
+                return true;
+            }
+
+            //TODO Json
+
+            return false;
+        }
+
         [SerializeField]
         private VisualTreeAsset m_VisualTreeAsset = default;
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
         {
+            GetWindow();
+        }
+
+        private static BehaviorTreeEditor GetWindow()
+        {
             BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();
             wnd.titleContent = new GUIContent("BehaviorTreeEditor");
+            return wnd;
         }
 
         public void CreateGUI()
@@ -99,6 +123,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             
         }
+
+        public void InitializeGraph(BehaviorTreeAsset behaviorTreeAsset)
+        {
+            this.LogFuncName();
+        }
+
+        
     }
 }
 

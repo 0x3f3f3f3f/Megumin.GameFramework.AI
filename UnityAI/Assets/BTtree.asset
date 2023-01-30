@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: BTtree
   m_EditorClassIdentifier: 
   test: aaa
+  Nodes: []
+  StartNode: {fileID: 0}
