@@ -129,6 +129,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogFuncName();
+            var tree = behaviorTreeAsset.CreateTree();
         }
 
 

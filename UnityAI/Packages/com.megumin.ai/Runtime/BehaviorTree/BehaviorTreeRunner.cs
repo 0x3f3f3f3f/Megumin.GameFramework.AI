@@ -6,10 +6,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeRunner : MonoBehaviour
     {
-        BehaviorTree BehaviourTree = new MyTestBehaviourTree();
+        BehaviorTree BehaviourTree;
+        public BehaviorTreeAsset BehaviorTreeAsset;
         private void Awake()
         {
-            BehaviourTree.Load();
+            BehaviourTree = BehaviorTreeAsset.CreateTree();
             BehaviourTree.Init(gameObject);
         }
 

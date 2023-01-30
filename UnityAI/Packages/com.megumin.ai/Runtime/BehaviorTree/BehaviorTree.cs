@@ -12,6 +12,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public readonly Dictionary<string,object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
+        public BehaviorTreeAsset Asset { get; internal set; }
+
         public List<BTNode> AllNodes = new List<BTNode>();
         private Status treestate = Status.Init;
 
@@ -87,92 +89,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return treestate;
-        }
-    }
-
-    public class MyTestBehaviourTree : BehaviorTree
-    {
-        public override void Load()
-        {
-            base.Load();
-            LoadLast();
-        }
-
-        private void LoadLast()
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Loop();
-            seq.Derators = new object[] { loop };
-            //var loop = new Repeater();
-            //loop.child = seq;
-
-            var check = new CheckBool();
-            var remap = new Remap();
-            log.Derators = new object[] { check, remap };
-            StartNode = seq;
-        }
-
-        private void Load4()
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.child = seq;
-
-            var check = new CheckBool();
-            var remap = new Remap();
-            log.Derators = new object[] { check, remap };
-            StartNode = loop;
-        }
-
-        private void Load3()
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.child = seq;
-
-            var check = new CheckBool();
-            log.Derators = new object[] { check };
-            StartNode = loop;
-        }
-
-        private void Load2()
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.child = seq;
-
-            StartNode = loop;
-        }
-
-        private void Load1()
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            StartNode = seq;
         }
     }
 }
