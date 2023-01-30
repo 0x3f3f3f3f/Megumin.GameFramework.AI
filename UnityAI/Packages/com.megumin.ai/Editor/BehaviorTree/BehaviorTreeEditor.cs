@@ -10,15 +10,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeEditor : EditorWindow
     {
-        [OnOpenAsset(0)]
-        public static bool OnBaseGraphOpened(int instanceID, int line)
+        [OnOpenAsset(10)]
+        public static bool OnOpenAsset(int instanceID, int line, int column)
         {
             var asset = EditorUtility.InstanceIDToObject(instanceID);
 
             if (asset is BehaviorTreeAsset behaviorTreeAsset)
             {
                 var wnd = GetWindow();
-                wnd.InitializeGraph(behaviorTreeAsset);
+                wnd.SelectTree(behaviorTreeAsset);
                 return true;
             }
 
@@ -124,12 +124,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             
         }
 
-        public void InitializeGraph(BehaviorTreeAsset behaviorTreeAsset)
+        public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogFuncName();
         }
 
-        
+
     }
 }
 

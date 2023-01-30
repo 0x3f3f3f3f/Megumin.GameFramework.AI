@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.jameslafritz.graphviewbehaviortree": "https://github.com/JamesLaFritz/GraphViewBehaviorTree.git",
     "com.megumin.explosion4unity": "file:W:/Git/Megumin.Explosion/Megumin.UnityPackage/Packages/megumin.explosion4unity",
     "com.megumin.referenceviewer": "file:W:/Git/ReferenceViewer",
     "com.unity.ai.navigation": "1.1.1",

@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.jameslafritz.graphviewbehaviortree": {
+      "version": "https://github.com/JamesLaFritz/GraphViewBehaviorTree.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "hash": "d101e1a088cd0178c398941610e976f8eed4b2e4"
+    },
     "com.megumin.ai": {
       "version": "file:com.megumin.ai",
       "depth": 0,

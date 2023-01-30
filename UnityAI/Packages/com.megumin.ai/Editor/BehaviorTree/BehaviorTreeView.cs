@@ -38,6 +38,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             createNodeMenu.Initialize(this);
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
+
+
         }
 
         private void AddNode()
@@ -51,13 +53,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var node = new BehaviorTreeNodeView() { name = "testNode" };
             node.title = "TestNode";
             //node.capabilities |= Capabilities.Movable;
-            node.SetPosition(new Rect(100, 100, 100, 100));
+            node.SetPosition(new Rect(LastContextualMenuMousePosition.x, LastContextualMenuMousePosition.y, 100, 100));
             //node.AddToClassList("debug");
             return node;
         }
 
+        public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
+            LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
+
             evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Test2", Test2, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
@@ -66,9 +71,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void Test2(DropdownMenuAction obj)
         {
-           Node node = new Node();
+            Node node = new Node();
             node.title = "TestPort";
-            node.SetPosition(new Rect(100, 100, 100, 100));
+            node.SetPosition(new Rect(LastContextualMenuMousePosition.x, LastContextualMenuMousePosition.y, 100, 100));
             var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(object));
             var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
             node.inputContainer.Add(inport);
@@ -86,6 +91,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Debug.Log(startPort);
             return ports.ToList();
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
+        }
+
+        internal void AddNode(Vector2 screenMousePosition)
+        {
+
         }
     }
 }

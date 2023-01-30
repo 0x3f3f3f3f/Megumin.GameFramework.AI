@@ -11,9 +11,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     internal class CreateNodeMenuWindow : ScriptableObject, ISearchWindowProvider
     {
         Edge edgeFilter;
+        BehaviorTreeView behaviorTreeView;
         internal void Initialize(BehaviorTreeView behaviorTreeView)
         {
-
+            this.behaviorTreeView = behaviorTreeView;
         }
 
         public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
@@ -47,6 +48,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
         {
+            behaviorTreeView.AddNode(context.screenMousePosition);
             Debug.Log(searchTreeEntry.userData);
             return true;
         }
