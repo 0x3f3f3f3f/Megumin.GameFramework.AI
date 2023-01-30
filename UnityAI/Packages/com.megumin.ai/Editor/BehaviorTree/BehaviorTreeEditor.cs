@@ -30,6 +30,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [SerializeField]
         private VisualTreeAsset m_VisualTreeAsset = default;
 
+        public BehaviorTreeView TreeView { get; private set; }
+
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
         {
@@ -58,8 +60,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             m_VisualTreeAsset.CloneTree(root);
 
             CreateTopbar();
-            var treeView = root.Q<BehaviorTreeView>("behaviorTreeView");
-
+            TreeView = root.Q<BehaviorTreeView>("behaviorTreeView");
+            TreeView.EditorWindow = this;
         }
 
         private void CreateTopbar()

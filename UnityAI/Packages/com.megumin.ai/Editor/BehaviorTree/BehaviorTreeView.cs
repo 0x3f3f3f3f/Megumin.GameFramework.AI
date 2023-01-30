@@ -10,6 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeView : GraphView
     {
+        public BehaviorTreeEditor EditorWindow { get; internal set; }
         private CreateNodeMenuWindow createNodeMenu;
 
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
@@ -22,6 +23,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //child.SetPosition(Rect.zero);
             AddNode();
 
+            this.AddManipulator(new MouseMoveManipulator());
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
             //this.AddManipulator(new DoubleClickSelection());
@@ -59,9 +61,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
+
+
+
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
+            Debug.Log(LastContextualMenuMousePosition);
 
             evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Test2", Test2, DropdownMenuAction.AlwaysEnabled);
@@ -97,6 +103,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
 
         }
+
+        
     }
 }
 
