@@ -10,6 +10,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeView : GraphView
     {
+        private CreateNodeMenuWindow createNodeMenu;
+
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
         public BehaviorTreeView()
@@ -31,6 +33,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             MiniMap child = new MiniMap();
             child.name = "minimap";
             this.AddElement(child);
+
+            createNodeMenu = ScriptableObject.CreateInstance<CreateNodeMenuWindow>();
+            createNodeMenu.Initialize(this);
+
+            nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
         }
 
         private void AddNode()
