@@ -11,7 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     public class BehaviorTreeView : GraphView
     {
         public BehaviorTreeEditor EditorWindow { get; internal set; }
-        private CreateNodeMenuWindow createNodeMenu;
+        private CreateNodeSearchWindowProvider createNodeMenu;
 
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
@@ -36,7 +36,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             child.name = "minimap";
             this.AddElement(child);
 
-            createNodeMenu = ScriptableObject.CreateInstance<CreateNodeMenuWindow>();
+            createNodeMenu = ScriptableObject.CreateInstance<CreateNodeSearchWindowProvider>();
             createNodeMenu.Initialize(this);
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
@@ -50,6 +50,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddElement(node);
         }
 
+        internal void AddNode(Vector2 nodePosition = default)
+        {
+
+        }
+
         public Node CreateNode()
         {
             var node = new BehaviorTreeNodeView() { name = "testNode" };
@@ -61,9 +66,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
-
-
-
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
@@ -97,11 +99,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Debug.Log(startPort);
             return ports.ToList();
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
-        }
-
-        internal void AddNode(Vector2 screenMousePosition)
-        {
-
         }
 
         

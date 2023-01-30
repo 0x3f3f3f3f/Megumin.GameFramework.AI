@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    internal class CreateNodeMenuWindow : ScriptableObject, ISearchWindowProvider
+    internal class CreateNodeSearchWindowProvider : ScriptableObject, ISearchWindowProvider
     {
         Edge edgeFilter;
         BehaviorTreeView behaviorTreeView;
@@ -39,11 +40,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void CreateStandardNodeMenu(List<SearchTreeEntry> tree)
         {
-            tree.Add(new SearchTreeEntry(new GUIContent("test111"))
             {
-                level = 1,
-                userData = "测试"
-            });
+                var types = TypeCache.GetTypesDerivedFrom<ActionTaskNode>();
+                tree.Add(new SearchTreeGroupEntry(new GUIContent("Action")) { level = 1 });
+                foreach (var type in types)
+                {
+                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                }
+            }
+
+            {
+                var types = TypeCache.GetTypesDerivedFrom<CompositeNode>();
+                tree.Add(new SearchTreeGroupEntry(new GUIContent("Composite")) { level = 1 });
+                foreach (var type in types)
+                {
+                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                }
+            }
+
+            {
+                var types = TypeCache.GetTypesDerivedFrom<OneChildNode>();
+                tree.Add(new SearchTreeGroupEntry(new GUIContent("OneChildNode")) { level = 1 });
+                foreach (var type in types)
+                {
+                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                }
+            }
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)

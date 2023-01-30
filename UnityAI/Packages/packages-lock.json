@@ -136,7 +136,7 @@
     },
     "com.unity.searcher": {
       "version": "4.9.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -160,9 +160,9 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "12.1.8",
-      "depth": 1,
-      "source": "builtin",
+      "version": "file:com.unity.shadergraph@12.1.8",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {
         "com.unity.render-pipelines.core": "12.1.8",
         "com.unity.searcher": "4.9.1"
