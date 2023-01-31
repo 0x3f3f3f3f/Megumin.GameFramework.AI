@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeAsset : ScriptableObject, ISerializationCallbackReceiver
+    public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string test = "aaa";
         public List<BehaviorTreeNodeAsset> Nodes = new List<BehaviorTreeNodeAsset>();

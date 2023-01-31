@@ -21,8 +21,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             GridBackground background = new GridBackground();
             Insert(0, background);
 
+            showTip = new Label() { name = "showTip" };
+            showTip.AddToClassList("showTip");
+            this.Add(showTip);
 
-            this.AddManipulator(new MouseMoveManipulator());
+            var m = new MouseMoveManipulator();
+            m.mouseMove += OnMouseMove;
+            this.AddManipulator(m);
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
             //this.AddManipulator(new DoubleClickSelection());
@@ -60,8 +65,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        public void OnMouseMove(MouseMoveEvent evt)
+        {
+            showTip.transform.position= evt.localMousePosition + Vector2.one * 20;
+            showTip.text = evt.localMousePosition.ToString();
+        }
+
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         private BehaviorTree Tree;
+        public Label showTip;
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {

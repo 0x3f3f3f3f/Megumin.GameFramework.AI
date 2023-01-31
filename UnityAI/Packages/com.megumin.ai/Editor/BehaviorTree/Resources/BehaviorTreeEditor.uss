@@ -39,3 +39,8 @@ BehaviorTreeView .debug {
 .topbar-button {
     -unity-text-align: middle-left;
 }
+
+.showTip {
+    background-color: rgba(61, 115, 137, 255);
+    max-width: 50%;
+}
