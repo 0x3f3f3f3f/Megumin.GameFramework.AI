@@ -2,7 +2,8 @@
     "name": "Megumin.GameFramework.AI.Editor",
     "rootNamespace": "Megumin.GameFramework.AI.Editor",
     "references": [
-        "Megumin.GameFramework.AI"
+        "Megumin.GameFramework.AI",
+        "Unity.Settings.Editor"
     ],
     "includePlatforms": [
         "Editor"

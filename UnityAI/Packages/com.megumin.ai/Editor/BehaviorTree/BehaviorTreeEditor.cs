@@ -1,4 +1,5 @@
 ﻿using System;
+using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
@@ -65,6 +66,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.EditorWindow = this;
         }
 
+        static MySetting<bool> showFloatingTip = new MySetting<bool>("behaviorTreeEditor.showFloatingTip", true, SettingsScope.User);
+        
         private void CreateTopbar()
         {
             VisualElement root = rootVisualElement;
