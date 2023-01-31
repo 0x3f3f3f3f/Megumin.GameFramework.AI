@@ -40,7 +40,28 @@ BehaviorTreeView .debug {
     -unity-text-align: middle-left;
 }
 
-.showTip {
-    background-color: rgba(61, 115, 137, 255);
-    max-width: 50%;
+.floatingTip {
+    white-space: normal;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(43, 123, 135);
+    border-right-color: rgb(43, 123, 135);
+    border-top-color: rgb(43, 123, 135);
+    border-bottom-color: rgb(43, 123, 135);
+    background-color: rgba(43, 123, 135, 0.25);
+    max-width: 280px;
+}
+
+.customTip {
+    min-height: 0;
+}
+
+.unDisplay {
+    display: none;
+}
+
+.unVisibility {
+    visibility: hidden;
 }

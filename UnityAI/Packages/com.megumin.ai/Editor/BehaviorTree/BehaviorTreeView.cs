@@ -9,24 +9,26 @@ using UnityEditor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeView : GraphView,IDisposable
+    public class BehaviorTreeView : GraphView, IDisposable
     {
+        public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
+
         public BehaviorTreeEditor EditorWindow { get; internal set; }
         private CreateNodeSearchWindowProvider createNodeMenu;
 
-        public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
+        public FloatingTip FloatingTip;
 
         public BehaviorTreeView()
         {
             GridBackground background = new GridBackground();
             Insert(0, background);
 
-            showTip = new Label() { name = "showTip" };
-            showTip.AddToClassList("showTip");
-            this.Add(showTip);
+            FloatingTip = new FloatingTip(this);
+            Add(FloatingTip);
+
 
             var m = new MouseMoveManipulator();
-            m.mouseMove += OnMouseMove;
+            m.mouseMove += FloatingTip.OnMouseMove;
             this.AddManipulator(m);
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
@@ -61,19 +63,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             foreach (var node in Tree.AllNodes)
             {
                 var nodeViwe = CreateNodeView(node);
-                this.AddElement(nodeViwe);  
+                this.AddElement(nodeViwe);
             }
-        }
-
-        public void OnMouseMove(MouseMoveEvent evt)
-        {
-            showTip.transform.position= evt.localMousePosition + Vector2.one * 20;
-            showTip.text = evt.localMousePosition.ToString();
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         private BehaviorTree Tree;
-        public Label showTip;
+
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
