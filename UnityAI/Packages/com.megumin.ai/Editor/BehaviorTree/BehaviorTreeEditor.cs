@@ -92,7 +92,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
 
             var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
-
             showFloatingTipToggle.value = showFloatingTip.value;
             TreeView.FloatingTip.Show(showFloatingTip.value);
 

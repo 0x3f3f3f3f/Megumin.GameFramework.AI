@@ -65,3 +65,9 @@ BehaviorTreeView .debug {
 .unVisibility {
     visibility: hidden;
 }
+
+#toolbar ToolbarToggle Label {
+    min-width: 40px;
+    color: rgb(0, 0, 0);
+    align-items: center;
+}
