@@ -18,7 +18,9 @@
       "version": "file:com.megumin.ai",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.settings-manager": "1.0.3"
+      }
     },
     "com.megumin.binding": {
       "version": "file:com.megumin.binding",

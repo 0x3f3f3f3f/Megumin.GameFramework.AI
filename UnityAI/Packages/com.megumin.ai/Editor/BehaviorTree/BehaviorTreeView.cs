@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using System;
 using UnityEditor;
+using Megumin.GameFramework.AI.Editor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {

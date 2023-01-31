@@ -1,30 +1,24 @@
 {
-    "name": "com.megumin.ai",
-    "displayName": "Megumin AI",
-    
-    "version": "0.0.1",
-    "unity": "2021.3",
-    "description": "Wizard Fast Created.",
-    "category": "PackageWizard",
-    
-    "documentationUrl": "https://example.com/",
-    "changelogUrl": "https://example.com/changelog.html",
-    "licensesUrl": "https://example.com/licensing.html",
-    
-    "hideInEditor" : false,
-    
-    "keywords": [
-        "PackageWizard",
-        "AI"
-    ],
-
-    "author": {
-        "name": "Unity",
-        "email": "unity@example.com",
-        "url": "https://www.unity3d.com"
-    }
+  "name": "com.megumin.ai",
+  "displayName": "Megumin AI",
+  "version": "0.0.1",
+  "unity": "2021.3",
+  "description": "Wizard Fast Created.",
+  "category": "PackageWizard",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "hideInEditor": false,
+  "keywords": [
+    "PackageWizard",
+    "AI"
+  ],
+  "author": {
+    "name": "云却",
+    "email": "479813005@qq.com",
+    "url": "https://github.com/KumoKyaku"
+  },
+  "dependencies": {
+    "com.unity.settings-manager": "1.0.3"
+  }
 }
-
-
-
-

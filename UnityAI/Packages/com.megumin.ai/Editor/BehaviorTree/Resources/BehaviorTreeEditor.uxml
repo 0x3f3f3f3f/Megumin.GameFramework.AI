@@ -15,6 +15,7 @@
         <uie:ToolbarSpacer />
         <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" class="topbar-button" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />
+        <uie:ToolbarToggle focusable="false" label="FlaotingTip" name="showFloatingTip" class="topbar-button" />
         <uie:ToolbarButton text="Test" display-tooltip-when-elided="true" name="test" class="topbar-button" />
         <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="help" class="topbar-button" />
     </uie:Toolbar>

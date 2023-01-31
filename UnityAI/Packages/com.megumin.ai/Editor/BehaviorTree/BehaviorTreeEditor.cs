@@ -61,13 +61,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             ///CloneTree可以避免生成TemplateContainer
             m_VisualTreeAsset.CloneTree(root);
 
-            CreateTopbar();
             TreeView = root.Q<BehaviorTreeView>("behaviorTreeView");
             TreeView.EditorWindow = this;
+
+            CreateTopbar();
         }
 
         static MySetting<bool> showFloatingTip = new MySetting<bool>("behaviorTreeEditor.showFloatingTip", true, SettingsScope.User);
-        
+
         private void CreateTopbar()
         {
             VisualElement root = rootVisualElement;
@@ -89,6 +90,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
 
             file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
+
+            var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
+
+            showFloatingTipToggle.value = showFloatingTip.value;
+            TreeView.FloatingTip.Show(showFloatingTip.value);
+
+            showFloatingTipToggle.RegisterValueChangedCallback(evt =>
+            {
+                showFloatingTip.SetValue(evt.newValue);
+                TreeView.FloatingTip.Show(evt.newValue);
+            });
         }
 
         private void SaveAsset()

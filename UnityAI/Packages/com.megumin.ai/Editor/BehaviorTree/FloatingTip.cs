@@ -65,5 +65,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var newTip = CustomTip.text + "\n" + tip;
             SetTip(newTip);
         }
+
+        public void Show(bool value)
+        {
+            if (!value)
+            {
+                AddToClassList("unDisplay");
+            }
+            else
+            {
+                RemoveFromClassList("unDisplay");
+            }
+        }
     }
 }
