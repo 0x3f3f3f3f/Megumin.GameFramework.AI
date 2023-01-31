@@ -5,10 +5,11 @@ using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using System;
+using UnityEditor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeView : GraphView
+    public class BehaviorTreeView : GraphView,IDisposable
     {
         public BehaviorTreeEditor EditorWindow { get; internal set; }
         private CreateNodeSearchWindowProvider createNodeMenu;
@@ -38,6 +39,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             createNodeMenu.Initialize(this);
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
+
+            Undo.undoRedoPerformed += ReloadView;
+        }
+
+        public void Dispose()
+        {
+            Undo.undoRedoPerformed -= ReloadView;
+        }
+
+        private void ReloadView()
+        {
+            this.LogFuncName();
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;

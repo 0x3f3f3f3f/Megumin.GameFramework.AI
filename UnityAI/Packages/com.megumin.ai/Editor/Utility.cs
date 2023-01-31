@@ -9,30 +9,8 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI
 {
-    internal static class Utility
+    public static class Utility
     {
-        public static void LogFuncName(this UnityEngine.Object @object, object state = null, [CallerMemberName] string funcName = null)
-        {
-            if (state == null)
-            {
-                Debug.Log(funcName);
-            }
-            else
-            {
-                Debug.Log($"{funcName}  {state}");
-            }
-        }
 
-        public static void LogFuncName(this IEventHandler @object, object state = null, [CallerMemberName] string funcName = null)
-        {
-            if (state == null)
-            {
-                Debug.Log(funcName);
-            }
-            else
-            {
-                Debug.Log($"{funcName}  {state}");
-            }
-        }
     }
 }

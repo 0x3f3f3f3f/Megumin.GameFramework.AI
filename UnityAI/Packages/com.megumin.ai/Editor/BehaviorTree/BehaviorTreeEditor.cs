@@ -31,6 +31,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private VisualTreeAsset m_VisualTreeAsset = default;
 
         public BehaviorTreeView TreeView { get; private set; }
+        public BehaviorTreeAsset CurrentAsset { get; private set; }
+        public BehaviorTree CurrentTree { get; private set; }
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
@@ -130,6 +132,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             this.LogFuncName();
             var tree = behaviorTreeAsset.CreateTree();
+            this.CurrentAsset = behaviorTreeAsset;
+            this.CurrentTree = tree;
         }
 
 

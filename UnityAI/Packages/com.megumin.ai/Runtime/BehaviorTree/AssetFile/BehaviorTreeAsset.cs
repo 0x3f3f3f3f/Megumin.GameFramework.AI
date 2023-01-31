@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeAsset : ScriptableObject
+    public class BehaviorTreeAsset : ScriptableObject, ISerializationCallbackReceiver
     {
         public string test = "aaa";
         public List<BehaviorTreeNodeAsset> Nodes = new List<BehaviorTreeNodeAsset>();
@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             var tree = new BehaviorTree();
             tree.Asset = this;
-            LoadLast(tree);
+            //LoadLast(tree);
             return tree;
         }
 
@@ -94,6 +94,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             tree.StartNode = seq;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            this.LogFuncName();
+        }
+
+        public void OnAfterDeserialize()
+        {
+            this.LogFuncName();
         }
     }
 }

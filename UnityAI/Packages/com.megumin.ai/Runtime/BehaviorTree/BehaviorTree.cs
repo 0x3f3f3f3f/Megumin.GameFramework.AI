@@ -59,6 +59,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             else
             {
+                if (StartNode == null)
+                {
+                    return Status.Failed;
+                }
+
                 if (StartNode.Enabled == false)
                 {
                     Debug.Log($"StartNode is not Enabled!");
