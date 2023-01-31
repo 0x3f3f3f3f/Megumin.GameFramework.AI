@@ -20,11 +20,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// tree中唯一ID。子树中可能会出现冲突，使用GUID.ToString 尽量保证唯一性。
         /// </summary>
-        string UID;
+        public string UID;
         /// <summary>
-        /// 运行时进程空间唯一ID。
+        /// 节点唯一ID
         /// </summary>
-        string GUID;
+        public string GUID;
+        /// <summary>
+        /// 节点实例唯一ID
+        /// </summary>
+        public string InstanceID;
 
         public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }

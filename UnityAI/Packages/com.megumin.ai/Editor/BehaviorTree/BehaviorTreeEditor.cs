@@ -32,7 +32,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BehaviorTreeView TreeView { get; private set; }
         public BehaviorTreeAsset CurrentAsset { get; private set; }
-        public BehaviorTree CurrentTree { get; private set; }
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
@@ -112,7 +111,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (!string.IsNullOrEmpty(path))
             {
                 Debug.Log(path);
-                TextAsset json = new TextAsset("{tree}");
+                TextAsset json = new TextAsset("{Tree}");
                 AssetDatabase.CreateAsset(json, path);
                 AssetDatabase.Refresh();
             }
@@ -131,9 +130,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogFuncName();
-            var tree = behaviorTreeAsset.CreateTree();
             this.CurrentAsset = behaviorTreeAsset;
-            this.CurrentTree = tree;
+            TreeView.ReloadView();
         }
 
 

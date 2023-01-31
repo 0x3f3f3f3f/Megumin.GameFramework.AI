@@ -68,8 +68,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            //tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
-            //tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
+            //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
+            //Tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)

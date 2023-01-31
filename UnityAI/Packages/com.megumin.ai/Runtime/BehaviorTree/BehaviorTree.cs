@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public virtual void Load() { }
 
-        public readonly Dictionary<string,object> locDic = new Dictionary<string, object>();
+        public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
         public BehaviorTreeAsset Asset { get; internal set; }
 
@@ -94,6 +94,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return treestate;
+        }
+
+        internal BTNode AddNode(BTNode node)
+        {
+            AllNodes.Add(node);
+            return node;
+        }
+
+        public T AddNode<T>() where T : BTNode, new()
+        {
+            var node = new T();
+            node.GUID = Guid.NewGuid().ToString();
+            node.InstanceID= Guid.NewGuid().ToString();
+            AllNodes.Add(node);
+            return node;
         }
     }
 }

@@ -15,15 +15,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             var tree = new BehaviorTree();
             tree.Asset = this;
-            //LoadLast(tree);
+            Load1(tree);
             return tree;
         }
 
         private void LoadLast(BehaviorTree tree)
         {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
+            var wait = tree.AddNode<Wait>();
+            var log = tree.AddNode<Log>();
+            var seq = tree.AddNode<Sequence>();
             seq.children.Add(wait);
             seq.children.Add(log);
 
@@ -87,9 +87,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         private void Load1(BehaviorTree tree)
         {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
+            var wait = tree.AddNode<Wait>();
+            var log = tree.AddNode<Log>();
+            var seq = tree.AddNode<Sequence>();
             seq.children.Add(wait);
             seq.children.Add(log);
 
@@ -103,7 +103,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void OnAfterDeserialize()
         {
-            this.LogFuncName();
+            //this.LogFuncName();
         }
     }
 }

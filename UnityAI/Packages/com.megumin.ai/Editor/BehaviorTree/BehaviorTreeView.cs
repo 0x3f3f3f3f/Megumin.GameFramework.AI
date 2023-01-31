@@ -48,12 +48,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Undo.undoRedoPerformed -= ReloadView;
         }
 
-        private void ReloadView()
+        public void ReloadView()
         {
             this.LogFuncName();
+            Tree = EditorWindow.CurrentAsset.CreateTree();
+
+            foreach (var node in Tree.AllNodes)
+            {
+                var nodeViwe = CreateNodeView(node);
+                this.AddElement(nodeViwe);  
+            }
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
+        private BehaviorTree Tree;
+
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
@@ -86,6 +95,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public BehaviorTreeNodeView CreateNodeView()
         {
             return CreateNodeView(null, LastContextualMenuMousePosition);
+        }
+
+        public BehaviorTreeNodeView CreateNodeView(object node)
+        {
+            return CreateNodeView(node, LastContextualMenuMousePosition);
         }
 
         public BehaviorTreeNodeView CreateNodeView(object node, Vector2 nodePosition)
