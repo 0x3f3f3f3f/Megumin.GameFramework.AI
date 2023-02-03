@@ -23,26 +23,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UseDefaultStyling();
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
-
-            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(object));
-            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
-            inputContainer.Add(inport);
-            outputContainer.Add(outport);
-
-
-            so = ScriptableObject.CreateInstance<TestSO>();
         }
 
 
-        private ScriptableObject so;
+        private NodeWapper so;
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
             Debug.Log(title);
-            Selection.activeObject = so;
+            if (so)
+            {
+                Selection.activeObject = so;
+            }
         }
 
-        internal void SetNode(object node)
+        internal void SetNode(BTNode node)
         {
             if (node == null)
             {
@@ -53,17 +48,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var type = node.GetType();
                 title = type.Name;
+                so = new NodeWapper();
+                so.Node = node;
             }
+
+            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(object));
+            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
+            inputContainer.Add(inport);
+            outputContainer.Add(outport);
         }
     }
 
-    public class TestSO : ScriptableObject
+    public class NodeWapper : ScriptableObject
     {
-        public string TestName = Guid.NewGuid().ToString();
-    }
-
-    public class TestSO2<T>: ScriptableObject
-    {
-        public T Node;
+        public BTNode Node;
     }
 }

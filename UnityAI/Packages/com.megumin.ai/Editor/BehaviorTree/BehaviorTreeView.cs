@@ -133,12 +133,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return CreateNodeView(null, LastContextualMenuMousePosition);
         }
 
-        public BehaviorTreeNodeView CreateNodeView(object node)
+        public BehaviorTreeNodeView CreateNodeView(BTNode node)
         {
             return CreateNodeView(node, LastContextualMenuMousePosition);
         }
 
-        public BehaviorTreeNodeView CreateNodeView(object node, Vector2 nodePosition)
+        public BehaviorTreeNodeView CreateNodeView(BTNode node, Vector2 nodePosition)
         {
             var nodeView = new BehaviorTreeNodeView() { name = "testNode" };
             nodeView.title = "TestNode";

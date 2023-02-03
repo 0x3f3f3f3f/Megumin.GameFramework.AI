@@ -119,6 +119,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var node = Activator.CreateInstance(type) as BTNode;
                 if (node != null)
                 {
+                    node.GUID = Guid.NewGuid().ToString();
                     AddNode(node);
                 }
                 return node;
