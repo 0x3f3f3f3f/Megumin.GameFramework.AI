@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 为了提高性能，成员尽量不要在声明时初始化。
     /// 成员不是在所有情况下都会用到，保持未初始化能有效节省内存。
     /// </summary>
+    [Serializable]
     public class BTNode
     {
         /// <summary>

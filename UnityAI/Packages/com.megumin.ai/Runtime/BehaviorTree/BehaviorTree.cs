@@ -6,6 +6,7 @@ using static PlasticGui.LaunchDiffParameters;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [Serializable]
     public class BehaviorTree
     {
         public virtual void Load() { }
@@ -109,6 +110,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             node.InstanceID= Guid.NewGuid().ToString();
             AllNodes.Add(node);
             return node;
+        }
+
+        internal BTNode AddNewNode(Type type)
+        {
+            if (type.IsSubclassOf(typeof(BTNode)))
+            {
+                var node = Activator.CreateInstance(type) as BTNode;
+                if (node != null)
+                {
+                    AddNode(node);
+                }
+                return node;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
