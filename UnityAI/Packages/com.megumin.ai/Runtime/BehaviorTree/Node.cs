@@ -31,6 +31,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         public string InstanceID;
 
+        public NodeMeta Meta;
+
         public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;

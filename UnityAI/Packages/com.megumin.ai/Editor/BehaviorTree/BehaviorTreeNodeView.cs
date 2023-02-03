@@ -27,6 +27,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
 
         private NodeWapper so;
+
+        public BehaviorTreeView TreeView { get; internal set; }
+
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
@@ -35,6 +38,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Selection.activeObject = so;
             }
+        }
+
+        public override void SetPosition(Rect newPos)
+        {
+            base.SetPosition(newPos);
         }
 
         internal void SetNode(BTNode node)

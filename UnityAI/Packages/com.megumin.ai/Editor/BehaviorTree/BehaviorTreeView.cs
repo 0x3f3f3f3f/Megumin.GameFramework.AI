@@ -124,27 +124,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             UndoRecord("AddNode");
             var node = Tree.AddNewNode(type);
-            var nodeView = CreateNodeView(node, graphMousePosition);
+            if (node.Meta == null)
+            {
+                node.Meta = new NodeMeta();
+                node.Meta.x = graphMousePosition.x;
+                node.Meta.y = graphMousePosition.y;
+            }
+            var nodeView = CreateNodeView(node);
             this.AddElement(nodeView);
         }
 
-        public BehaviorTreeNodeView CreateNodeView()
-        {
-            return CreateNodeView(null, LastContextualMenuMousePosition);
-        }
+        //public BehaviorTreeNodeView CreateNodeView()
+        //{
+        //    return CreateNodeView(null, LastContextualMenuMousePosition);
+        //}
 
         public BehaviorTreeNodeView CreateNodeView(BTNode node)
         {
-            return CreateNodeView(node, LastContextualMenuMousePosition);
-        }
-
-        public BehaviorTreeNodeView CreateNodeView(BTNode node, Vector2 nodePosition)
-        {
             var nodeView = new BehaviorTreeNodeView() { name = "testNode" };
+            nodeView.TreeView = this;
             nodeView.title = "TestNode";
             nodeView.SetNode(node);
             //node.capabilities |= Capabilities.Movable;
-            nodeView.SetPosition(new Rect(nodePosition.x, nodePosition.y, 100, 100));
+            if (node.Meta != null)
+            {
+                nodeView.SetPosition(new Rect(node.Meta.x, node.Meta.y, 100, 100));
+            }
+            else
+            {
+                nodeView.SetPosition(new Rect(LastContextualMenuMousePosition.x, LastContextualMenuMousePosition.y, 100, 100));
+            }
+
             //node.AddToClassList("debug");
             return nodeView;
         }
