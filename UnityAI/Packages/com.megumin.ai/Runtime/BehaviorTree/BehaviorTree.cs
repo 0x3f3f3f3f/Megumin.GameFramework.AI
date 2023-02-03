@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BTNode StartNode { get; set; }
         public BehaviorTreeAsset Asset { get; internal set; }
 
+        [SerializeReference]
         public List<BTNode> AllNodes = new List<BTNode>();
         private Status treestate = Status.Init;
 
