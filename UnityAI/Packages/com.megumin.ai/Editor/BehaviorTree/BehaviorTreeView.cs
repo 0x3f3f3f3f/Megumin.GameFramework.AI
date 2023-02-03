@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -57,12 +57,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Undo.undoRedoPerformed -= ReloadView;
         }
 
-        ///²»²ÉÓÃTheKiwiCoder ÖÐµÄ·½Ê½£¬Undo/Redo Ê±²»ÄÜÏÔÊ¾Ã¿Ò»²½²Ù×÷Ãû×Ö¡£
+        ///ä¸é‡‡ç”¨TheKiwiCoder ä¸­çš„æ–¹å¼ï¼ŒUndo/Redo æ—¶ä¸èƒ½æ˜¾ç¤ºæ¯ä¸€æ­¥æ“ä½œåå­—ã€‚
         //SerializedObject treeSO;
         private TreeWapper treeWapper;
+        public int wapperVersion;
         public void ReloadView()
         {
-            //É¾³ýËùÓÐnode
+            if (wapperVersion == treeWapper?.version)
+            {
+                Debug.Log("æ²¡æœ‰å®žè´¨æ€§æ”¹åŠ¨ï¼Œä¸è¦ReloadView");
+                return;
+            }
+            wapperVersion = treeWapper.version;
+
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
 
             this.LogFuncName();
@@ -115,7 +122,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 treeWapper = new TreeWapper();
                 treeWapper.Tree = Tree;
             }
-            Undo.RecordObject(treeWapper, "AddNode");
+            UndoRecord("AddNode");
             var node = Tree.AddNewNode(type);
             var nodeView = CreateNodeView(node, graphMousePosition);
             this.AddElement(nodeView);
@@ -141,11 +148,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //node.AddToClassList("debug");
             return nodeView;
         }
+
+
+        public void UndoRecord(string name)
+        {
+            Undo.RecordObject(treeWapper, name);
+            treeWapper.version++;
+            wapperVersion = treeWapper.version;
+        }
     }
 
     public class TreeWapper : ScriptableObject
     {
         public BehaviorTree Tree;
+        public int version;
     }
 }
 
