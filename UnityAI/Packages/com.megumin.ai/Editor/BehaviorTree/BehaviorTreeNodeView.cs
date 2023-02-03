@@ -61,6 +61,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
     public class NodeWapper : ScriptableObject
     {
+        [SerializeReference]
         public BTNode Node;
     }
 }

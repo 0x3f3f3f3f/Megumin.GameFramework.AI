@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class Wait : ActionTaskNode
     {
-        float waitTime = 1f;
+        public float waitTime = 1f;
 
         float entertime;
         protected override void OnEnter()

@@ -11,6 +11,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         int count = 0;
 
+        public string LogStr = "Hello world!";
+
         protected override void OnEnter()
         {
             count++;
