@@ -11,7 +11,7 @@
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="File" name="file" />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Edit" name="edit" />
         <uie:ToolbarSpacer />
-        <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" class="topbar-button" />
+        <uie:ToolbarButton text="ShowTree" display-tooltip-when-elided="true" name="showTreeWapper" class="topbar-button" />
         <uie:ToolbarSpacer />
         <uie:ToolbarButton text="Button" display-tooltip-when-elided="true" class="topbar-button" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />

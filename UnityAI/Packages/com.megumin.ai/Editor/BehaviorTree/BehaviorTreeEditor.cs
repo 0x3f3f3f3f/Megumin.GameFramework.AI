@@ -91,6 +91,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
 
+
+            var showTree = root.Q<ToolbarButton>("showTreeWapper");
+            showTree.clicked += () => { TreeView?.InspectorShowWapper(); };
+
             var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
             showFloatingTipToggle.value = showFloatingTip.value;
             TreeView.FloatingTip.Show(showFloatingTip.value);
@@ -138,7 +142,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void OnEnable()
         {
-            
+
         }
 
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)

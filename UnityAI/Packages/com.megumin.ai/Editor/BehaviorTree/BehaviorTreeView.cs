@@ -49,11 +49,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
 
+            Debug.Log("+=ReloadView");
             Undo.undoRedoPerformed += ReloadView;
+
         }
 
         public void Dispose()
         {
+            Debug.Log("-=ReloadView");
             Undo.undoRedoPerformed -= ReloadView;
         }
 
@@ -68,7 +71,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
             }
-            wapperVersion = treeWapper.version;
+            
 
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
 
@@ -76,10 +79,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (Tree == null && EditorWindow.CurrentAsset)
             {
                 Tree = EditorWindow.CurrentAsset.CreateTree();
+            }
+
+            if (!treeWapper)
+            {
                 treeWapper = new TreeWapper();
                 treeWapper.Tree = Tree;
-                //treeSO = new SerializedObject(treeWapper);
             }
+
+            wapperVersion = treeWapper.version;
 
             foreach (var node in Tree.AllNodes)
             {
@@ -165,6 +173,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Undo.RecordObject(treeWapper, name);
             treeWapper.version++;
             wapperVersion = treeWapper.version;
+        }
+
+        internal void InspectorShowWapper()
+        {
+            if (treeWapper)
+            {
+                Selection.activeObject = treeWapper;
+            }
+            else
+            {
+                Debug.Log("no tree");
+            }  
         }
     }
 
