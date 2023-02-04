@@ -42,7 +42,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private static BehaviorTreeEditor GetWindow()
         {
-            BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();
+            BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>(typeof(SceneView));
             wnd.titleContent = new GUIContent("BehaviorTreeEditor");
             return wnd;
         }
