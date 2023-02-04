@@ -91,6 +91,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
 
+            var test1 = root.Q<ToolbarButton>("test1");
+            test1.clicked += () =>
+            {
+                hasUnsavedChanges = true;
+                saveChangesMessage = "有未保存改动";
+            };
+
+            var test2 = root.Q<ToolbarButton>("test2");
+            test2.clicked += () =>
+            {
+                hasUnsavedChanges = false;
+            };
+
+            var test3 = root.Q<ToolbarButton>("test3");
+            test3.clicked += () =>
+            {
+
+            };
 
             var showTree = root.Q<ToolbarButton>("showTreeWapper");
             showTree.clicked += () => { TreeView?.InspectorShowWapper(); };
@@ -145,6 +163,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         }
 
+        private void OnDestroy()
+        {
+            TreeView?.Dispose();
+        }
+
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogFuncName();
@@ -152,7 +175,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.ReloadView();
         }
 
+        public override void DiscardChanges()
+        {
+            base.DiscardChanges();
+            this.LogFuncName();
+        }
 
+        public override void SaveChanges()
+        {
+            base.SaveChanges();
+            this.LogFuncName();
+        }
     }
 }
 
