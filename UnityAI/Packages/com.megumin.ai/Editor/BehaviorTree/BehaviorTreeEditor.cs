@@ -18,8 +18,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (asset is BehaviorTreeAsset behaviorTreeAsset)
             {
-                var wnd = GetWindow();
+                var wnd = GetWindow(behaviorTreeAsset);
                 wnd.SelectTree(behaviorTreeAsset);
+                wnd.UpdateTitle();
                 return true;
             }
 
@@ -37,14 +38,49 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
         {
-            GetWindow();
+            var wnd = GetWindow();
+            wnd.UpdateTitle();
         }
 
-        private static BehaviorTreeEditor GetWindow()
+        private static BehaviorTreeEditor GetWindow(UnityEngine.Object asset = null)
         {
-            BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>(typeof(SceneView));
-            wnd.titleContent = new GUIContent("BehaviorTreeEditor");
+            BehaviorTreeEditor[] array = Resources.FindObjectsOfTypeAll(typeof(BehaviorTreeEditor)) as BehaviorTreeEditor[];
+            if (array != null)
+            {
+                foreach (var item in array)
+                {
+                    if (item)
+                    {
+                        if (item.CurrentAsset == asset)
+                        {
+                            Debug.Log($"找到匹配的已打开EditorWindow {asset}");
+                            item.Focus();
+                            return item;
+                        }
+                    }
+                }
+            }
+
+            BehaviorTreeEditor wnd = CreateWindow<BehaviorTreeEditor>(typeof(BehaviorTreeEditor), typeof(SceneView));
+
             return wnd;
+        }
+
+        public void UpdateTitle()
+        {
+            if (CurrentAsset)
+            {
+                this.titleContent = new GUIContent(CurrentAsset.name);
+            }
+            else
+            {
+                this.titleContent = new GUIContent("BehaviorTreeEditor");
+            }
+        }
+
+        public void Update()
+        {
+            
         }
 
         public void CreateGUI()
