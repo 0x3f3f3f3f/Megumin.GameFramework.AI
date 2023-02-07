@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e71738a9993da41a37d76210d86152, type: 3}
   m_Name: BTtree 1
   m_EditorClassIdentifier: 
-  test: aaa
-  Nodes: []
-  StartNode: {fileID: 0}
+  test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
+  Nodes:
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895
+    IsStartNode: 1
+    Meta:
+      x: 173
+      y: 98
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []

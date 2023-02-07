@@ -164,7 +164,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             showTree.clicked += () => TreeView?.InspectorShowWapper();
 
             var reloadView = root.Q<ToolbarButton>("reloadView");
-            reloadView.clicked += () => TreeView?.ReloadView(true);
+            reloadView.clicked += () =>
+            {
+                TreeView?.ReloadView(true);
+                UpdateTitle();
+                UpdateHasUnsavedChanges();
+            };
 
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
