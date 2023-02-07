@@ -58,10 +58,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 title = type.Name;
                 NodeWapperSO = new NodeWapper();
                 NodeWapperSO.Node = node;
+                viewDataKey = node.GUID;
             }
 
-            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(object));
-            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
+            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(int));
+            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(int));
             inputContainer.Add(inport);
             outputContainer.Add(outport);
         }

@@ -15,6 +15,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
+
+        public const string StartNodeClass = "startNode";
         public BehaviorTreeEditor EditorWindow { get; internal set; }
         private CreateNodeSearchWindowProvider createNodeMenu;
 
@@ -95,6 +97,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             foreach (var node in Tree.AllNodes)
             {
                 var nodeViwe = CreateNodeView(node);
+                if (node == Tree.StartNode)
+                {
+                    nodeViwe.AddToClassList(StartNodeClass);
+                }
                 this.AddElement(nodeViwe);
             }
         }
@@ -168,7 +174,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             nodeView.title = "TestNode";
             nodeView.SetNode(node);
             //node.capabilities |= Capabilities.Movable;
-            if (node.Meta != null)
+            if (node?.Meta != null)
             {
                 nodeView.SetPosition(new Rect(node.Meta.x, node.Meta.y, 100, 100));
             }
@@ -211,9 +217,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
+            if (Tree.StartNode != null)
+            {
+                var oldStartNodeView = GetNodeByGuid(Tree.StartNode.GUID);
+                if (oldStartNodeView != null)
+                {
+                    oldStartNodeView.RemoveFromClassList(StartNodeClass);
+                }
+            }
+
             this.LogFuncName();
             UndoRecord("Change Start Node");
             Tree.StartNode = behaviorTreeNodeView.NodeWapperSO.Node;
+            behaviorTreeNodeView.AddToClassList(StartNodeClass);
         }
     }
 
