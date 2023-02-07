@@ -70,8 +70,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 viewDataKey = node.GUID;
             }
 
-            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(int));
-            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(int));
+            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
+            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(byte));
+
             inputContainer.Add(inport);
             outputContainer.Add(outport);
         }

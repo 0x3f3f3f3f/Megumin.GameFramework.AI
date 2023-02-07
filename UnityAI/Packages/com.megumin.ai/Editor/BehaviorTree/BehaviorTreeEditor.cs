@@ -55,6 +55,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         {
                             Debug.Log($"找到匹配的已打开EditorWindow {asset}");
                             item.Focus();
+                            item.UpdateTitle();
+                            item.UpdateHasUnsavedChanges();
                             return item;
                         }
                     }
@@ -82,7 +84,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (CurrentAsset)
             {
-                saveChangesMessage = $"{CurrentAsset} 有未保存改动";
+                saveChangesMessage = $"{CurrentAsset.name} 有未保存改动";
             }
             else
             {
@@ -205,6 +207,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 SaveVersion = TreeView.treeWapper.ChangeVersion;
                 UpdateHasUnsavedChanges();
+                EditorUtility.SetDirty(CurrentAsset);
+                AssetDatabase.SaveAssetIfDirty(CurrentAsset);
+                AssetDatabase.Refresh();
                 Debug.Log($"保存资源成功");
             }
             else

@@ -12,6 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e71738a9993da41a37d76210d86152, type: 3}
   m_Name: BTtree
   m_EditorClassIdentifier: 
-  test: aaa
-  Nodes: []
-  StartNode: {fileID: 0}
+  test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
+  Nodes:
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
+    GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
+    IsStartNode: 1
+    Meta:
+      x: 392.1557
+      y: 61.93023
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: 81d2d8d1-42a3-47f7-ba96-05d1ff42fa82
+    IsStartNode: 0
+    Meta:
+      x: 517.1557
+      y: 203.9302
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
+    GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
+    IsStartNode: 0
+    Meta:
+      x: 305.1557
+      y: 203.9302
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
