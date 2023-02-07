@@ -211,8 +211,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         internal void SetStartNode(BehaviorTreeNodeView behaviorTreeNodeView)
         {
-            if (behaviorTreeNodeView?.NodeWapperSO?.Node == null
-                || behaviorTreeNodeView.NodeWapperSO.Node == Tree.StartNode)
+            if (behaviorTreeNodeView?.SONode?.Node == null
+                || behaviorTreeNodeView.SONode.Node == Tree.StartNode)
             {
                 return;
             }
@@ -228,7 +228,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             this.LogFuncName();
             UndoRecord("Change Start Node");
-            Tree.StartNode = behaviorTreeNodeView.NodeWapperSO.Node;
+            Tree.StartNode = behaviorTreeNodeView.SONode.Node;
             behaviorTreeNodeView.AddToClassList(StartNodeClass);
         }
     }

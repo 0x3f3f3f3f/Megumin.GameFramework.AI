@@ -26,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
 
-        public NodeWapper NodeWapperSO;
+        public NodeWapper SONode;
 
         public BehaviorTreeView TreeView { get; internal set; }
 
@@ -34,15 +34,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             base.Select(selectionContainer, additive);
             Debug.Log(title);
-            if (NodeWapperSO)
+            if (SONode)
             {
-                Selection.activeObject = NodeWapperSO;
+                Selection.activeObject = SONode;
             }
         }
 
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
+            if (SONode.Node.Meta == null)
+            {
+                SONode.Node.Meta = new NodeMeta();
+            }
+
+            TreeView.UndoRecord($"SetPosition    [{SONode.Node.GetType().Name}]");
+            SONode.Node.Meta.x= newPos.x;
+            SONode.Node.Meta.y= newPos.y;
         }
 
         internal void SetNode(BTNode node)
@@ -56,8 +64,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var type = node.GetType();
                 title = type.Name;
-                NodeWapperSO = new NodeWapper();
-                NodeWapperSO.Node = node;
+                SONode = new NodeWapper();
+                SONode.Node = node;
                 viewDataKey = node.GUID;
             }
 
