@@ -13,6 +13,8 @@
         <uie:ToolbarSpacer />
         <uie:ToolbarButton text="ShowTree" display-tooltip-when-elided="true" name="showTreeWapper" class="topbar-button" />
         <uie:ToolbarSpacer />
+        <uie:ToolbarButton text="ReloadView" display-tooltip-when-elided="true" name="reloadView" class="topbar-button" />
+        <uie:ToolbarSpacer />
         <uie:ToolbarButton text="Test1" display-tooltip-when-elided="true" name="test1" class="topbar-button" />
         <uie:ToolbarButton text="Test2" display-tooltip-when-elided="true" name="test2" class="topbar-button" />
         <uie:ToolbarButton text="Test3" display-tooltip-when-elided="true" name="test3" class="topbar-button" />

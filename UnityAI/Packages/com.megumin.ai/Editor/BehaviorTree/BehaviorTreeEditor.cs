@@ -152,6 +152,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
+            var showTree = root.Q<ToolbarButton>("showTreeWapper");
+            showTree.clicked += () => TreeView?.InspectorShowWapper();
+
+            var reloadView = root.Q<ToolbarButton>("reloadView");
+            reloadView.clicked += () => TreeView?.ReloadView();
+
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
             {
@@ -171,8 +177,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             };
 
-            var showTree = root.Q<ToolbarButton>("showTreeWapper");
-            showTree.clicked += () => { TreeView?.InspectorShowWapper(); };
+
 
             var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
             showFloatingTipToggle.value = showFloatingTip.value;

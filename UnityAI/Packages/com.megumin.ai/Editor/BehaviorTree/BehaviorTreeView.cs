@@ -115,17 +115,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SOTree.Tree = Tree;
             }
 
-            LoadVersion = SOTree.ChangeVersion;
-
             foreach (var node in Tree.AllNodes)
             {
                 var nodeViwe = CreateNodeView(node);
-                if (node == Tree.StartNode)
+
+                //RedoUndo后node对象不是原来那个对象，暂时没找到原因。可能时ScriptObject重新反序列化导致的。
+                //这里用GUID判断
+                if (node.GUID == Tree.StartNode.GUID)
                 {
                     nodeViwe.AddToClassList(StartNodeClass);
                 }
+
                 this.AddElement(nodeViwe);
             }
+
+            EditorWindow.UpdateHasUnsavedChanges();
+            LoadVersion = SOTree.ChangeVersion;
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
