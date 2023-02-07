@@ -11,6 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public float x;
         public float y;
+        public int index;
         public string Name;
         public string FriendlyName;
         public string Description;

@@ -63,10 +63,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         ///不采用TheKiwiCoder 中的方式，Undo/Redo 时不能显示每一步操作名字。
         //SerializedObject treeSO;
         public TreeWapper treeWapper;
-        public int wapperVersion;
+        /// <summary>
+        /// 当前TreeView正在显示的tree版本,用于控制UndoRedo时，是否重新加载整个View。
+        /// </summary>
+        public int LoadVersion;
         public void ReloadView()
         {
-            if (wapperVersion == treeWapper?.ChangeVersion)
+            if (LoadVersion == treeWapper?.ChangeVersion)
             {
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
@@ -87,7 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 treeWapper.Tree = Tree;
             }
 
-            wapperVersion = treeWapper.ChangeVersion;
+            LoadVersion = treeWapper.ChangeVersion;
 
             foreach (var node in Tree.AllNodes)
             {
@@ -97,7 +100,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
-        private BehaviorTree Tree;
+        public BehaviorTree Tree;
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
@@ -172,7 +175,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             Undo.RecordObject(treeWapper, name);
             treeWapper.ChangeVersion++;
-            wapperVersion = treeWapper.ChangeVersion;
+            LoadVersion = treeWapper.ChangeVersion;
         }
 
         internal void InspectorShowWapper()

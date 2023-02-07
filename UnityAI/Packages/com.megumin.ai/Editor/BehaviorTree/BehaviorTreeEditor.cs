@@ -175,7 +175,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public int saveVersion = 0;
-        private void SaveAsset()
+        public void SaveAsset()
         {
             if (TreeView?.treeWapper?.ChangeVersion == saveVersion)
             {
@@ -190,10 +190,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (!CurrentAsset)
             {
-                Debug.LogError($"没有找到Asset文件");
+                Debug.LogError($"保存资源失败，没有找到Asset文件");
                 return;
             }
-            Debug.Log(1);
+
+            var success = CurrentAsset.SaveTree(TreeView.Tree);
+            if (success)
+            {
+                saveVersion = TreeView.treeWapper.ChangeVersion;
+                Debug.Log($"保存资源成功");
+            }
+            else
+            {
+                Debug.Log($"保存资源失败");
+            }
         }
 
         public BehaviorTreeAsset CreateScriptObjectTreeAssset()

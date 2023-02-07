@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Codice.CM.WorkspaceServer.Tree.GameUI.Checkin.Updater;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -8,8 +10,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string test = "aaa";
-        public List<BehaviorTreeNodeAsset> Nodes = new List<BehaviorTreeNodeAsset>();
-        public BehaviorTreeNodeAsset StartNode;
+        public List<NodeAsset> Nodes = new List<NodeAsset>();
+
+        [Serializable]
+        public class NodeAsset
+        {
+            public string TypeName;
+            public string GUID;
+            public bool IsStartNode;
+            public NodeMeta Meta;
+        }
+
+        public bool SaveTree(BehaviorTree tree)
+        {
+            if (tree == null)
+            {
+                return false;
+            }
+
+            Nodes.Clear();
+            foreach (var node in tree.AllNodes.OrderBy(elem=>elem.GUID))
+            {
+                var nodeAsset = new NodeAsset();
+                nodeAsset.TypeName = node.GetType().FullName;
+                nodeAsset.GUID= node.GUID;
+                nodeAsset.IsStartNode = node == tree.StartNode;
+                nodeAsset.Meta = node.Meta;
+                Nodes.Add(nodeAsset);
+            }
+
+            return true;
+        }
 
         public BehaviorTree CreateTree()
         {
