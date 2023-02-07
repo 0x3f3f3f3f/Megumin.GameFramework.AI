@@ -121,7 +121,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 //RedoUndo后node对象不是原来那个对象，暂时没找到原因。可能时ScriptObject重新反序列化导致的。
                 //这里用GUID判断
-                if (node.GUID == Tree.StartNode.GUID)
+                if (node.GUID == Tree.StartNode?.GUID)
                 {
                     nodeViwe.AddToClassList(StartNodeClass);
                 }
