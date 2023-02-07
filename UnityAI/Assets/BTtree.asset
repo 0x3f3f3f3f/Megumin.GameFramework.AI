@@ -44,8 +44,21 @@ MonoBehaviour:
     GUID: d44c2dc8-a84d-4c12-9b56-ca652495db18
     IsStartNode: 0
     Meta:
-      x: 661
-      y: 209
+      x: 672
+      y: 204
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: f29c697d-af9c-4f5e-9413-3d0620d41d38
+    IsStartNode: 0
+    Meta:
+      x: 608
+      y: 359
       index: 0
       Name: 
       FriendlyName: 

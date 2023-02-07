@@ -59,13 +59,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
         {
-            if (graphViewChange.elementsToRemove != null)
+            if (!GraphViewReloadingScope.IsEnter)
             {
-                foreach (var item in graphViewChange.elementsToRemove)
+                if (graphViewChange.elementsToRemove != null)
                 {
-                    if (item is BehaviorTreeNodeView nodeView)
+                    foreach (var item in graphViewChange.elementsToRemove)
                     {
-                        RemoveNodeAndView(nodeView);
+                        if (item is BehaviorTreeNodeView nodeView)
+                        {
+                            RemoveNodeAndView(nodeView);
+                        }
                     }
                 }
             }
@@ -93,9 +96,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal Scope GraphViewReloadingScope = new Scope();
         public void ReloadView()
         {
+            ReloadView(false);
+        }
+
+        public void ReloadView(bool force)
+        {
             using var s = GraphViewReloadingScope.Enter();
 
-            if (LoadVersion == SOTree?.ChangeVersion)
+            if (force == false && LoadVersion == SOTree?.ChangeVersion)
             {
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
@@ -178,7 +186,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SOTree = new TreeWapper();
                 SOTree.Tree = Tree;
             }
-            UndoRecord("AddNode");
+
+            UndoRecord($"AddNode  [{type.Name}]");
             var node = Tree.AddNewNode(type);
             if (node.Meta == null)
             {
@@ -202,7 +211,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            UndoRecord($"RemoveNode [{nodeView.SONode.Node.GetType().Name}]");
+            UndoRecord($"RemoveNode  [{nodeView.SONode.Node.GetType().Name}]");
             RemoveElement(nodeView);
             Tree.RemoveNode(nodeView.SONode.Node);
         }

@@ -156,19 +156,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             showTree.clicked += () => TreeView?.InspectorShowWapper();
 
             var reloadView = root.Q<ToolbarButton>("reloadView");
-            reloadView.clicked += () => TreeView?.ReloadView();
+            reloadView.clicked += () => TreeView?.ReloadView(true);
 
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
             {
-                hasUnsavedChanges = true;
-                saveChangesMessage = "有未保存改动";
+
             };
 
             var test2 = root.Q<ToolbarButton>("test2");
             test2.clicked += () =>
             {
-                hasUnsavedChanges = false;
+
             };
 
             var test3 = root.Q<ToolbarButton>("test3");
@@ -275,7 +274,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             this.LogFuncName();
             this.CurrentAsset = behaviorTreeAsset;
-            TreeView.ReloadView();
+            TreeView.ReloadView(true);
         }
 
         public override void DiscardChanges()

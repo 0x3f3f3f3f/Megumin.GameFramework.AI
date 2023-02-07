@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
-        public string test = "��Ϊ��SO�ʲ�";
+        public string test = "行为树SO资产";
         public List<NodeAsset> Nodes = new List<NodeAsset>();
 
         [Serializable]
@@ -30,14 +30,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             Nodes.Clear();
-            foreach (var node in tree.AllNodes.OrderBy(elem=>elem.GUID))
+            foreach (var node in tree.AllNodes.OrderBy(elem => elem.GUID))
             {
                 var nodeAsset = new NodeAsset();
                 nodeAsset.TypeName = node.GetType().FullName;
-                nodeAsset.GUID= node.GUID;
+                nodeAsset.GUID = node.GUID;
                 nodeAsset.IsStartNode = node == tree.StartNode;
                 nodeAsset.Meta = node.Meta;
                 Nodes.Add(nodeAsset);
+            }
+
+            if (Nodes.Count > 0 && !Nodes.Any(elem => elem.IsStartNode))
+            {
+                //没有设置开始节点时，将最上面的节点设置为开始节点。
+                var upnode = Nodes.OrderBy(elem => elem.Meta.y).FirstOrDefault();
+                upnode.IsStartNode = true;
             }
 
             return true;
@@ -55,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (node != null)
                     {
                         node.GUID = nodeAsset.GUID;
-                        node.Meta= nodeAsset.Meta;
+                        node.Meta = nodeAsset.Meta;
                         node.InstanceID = Guid.NewGuid().ToString();
                         tree.AddNode(node);
                         if (nodeAsset.IsStartNode)
@@ -65,13 +72,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                     else
                     {
-                        Debug.LogError($"�޷������Ľڵ�{nodeAsset.TypeName}");
+                        Debug.LogError($"无法创建的节点{nodeAsset.TypeName}");
                         continue;
                     }
                 }
                 else
                 {
-                    Debug.LogError($"�޷�ʶ��Ľڵ�{nodeAsset.TypeName}");
+                    Debug.LogError($"无法识别的节点{nodeAsset.TypeName}");
                     continue;
                 }
             }
