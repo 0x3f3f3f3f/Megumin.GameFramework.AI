@@ -92,7 +92,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void Update()
         {
-            
+
         }
 
         public void CreateGUI()
@@ -128,7 +128,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var saveAs = root.Q<ToolbarMenu>("saveAs");
             saveAs.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
             saveAs.menu.AppendAction("Save as ScriptObject",
-                                     (evt => { CreateScriptObjectTreeAssset(); }),
+                                     a => CreateScriptObjectTreeAssset(),
                                      a => DropdownMenuAction.Status.Normal);
 
             var file = root.Q<ToolbarMenu>("file");
@@ -139,7 +139,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Disabled file", a => { }, a => DropdownMenuAction.Status.Disabled);
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
 
-            file.menu.AppendAction("Save", SaveTree, a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
@@ -231,11 +231,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 AssetDatabase.CreateAsset(json, path);
                 AssetDatabase.Refresh();
             }
-        }
-
-        private void SaveTree(DropdownMenuAction obj)
-        {
-            throw new NotImplementedException();
         }
 
         public void OnEnable()

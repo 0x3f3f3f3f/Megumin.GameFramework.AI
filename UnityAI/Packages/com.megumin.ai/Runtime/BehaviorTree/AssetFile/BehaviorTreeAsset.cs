@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
-        public string test = "aaa";
+        public string test = "行为树SO资产";
         public List<NodeAsset> Nodes = new List<NodeAsset>();
 
         [Serializable]
@@ -19,6 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public string GUID;
             public bool IsStartNode;
             public NodeMeta Meta;
+            public List<string> ChildNodes = new List<string>();
         }
 
         public bool SaveTree(BehaviorTree tree)
@@ -45,8 +46,39 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTree CreateTree()
         {
             var tree = new BehaviorTree();
+            foreach (var nodeAsset in Nodes)
+            {
+                var nodeType = Type.GetType(nodeAsset.TypeName);
+                if (nodeType.IsSubclassOf(typeof(BTNode)))
+                {
+                    var node = Activator.CreateInstance(nodeType) as BTNode;
+                    if (node != null)
+                    {
+                        node.GUID = nodeAsset.GUID;
+                        node.Meta= nodeAsset.Meta;
+                        node.InstanceID = Guid.NewGuid().ToString();
+                        tree.AddNode(node);
+                        if (nodeAsset.IsStartNode)
+                        {
+                            tree.StartNode = node;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"无法创建的节点{nodeAsset.TypeName}");
+                        continue;
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"无法识别的节点{nodeAsset.TypeName}");
+                    continue;
+                }
+            }
+
+
             tree.Asset = this;
-            Load1(tree);
+            //Load1(tree);
             return tree;
         }
 
