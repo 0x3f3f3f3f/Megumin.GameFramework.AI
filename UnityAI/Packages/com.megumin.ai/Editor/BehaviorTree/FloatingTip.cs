@@ -39,14 +39,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public GraphView GraphView { get; set; }
 
-        public void OnMouseMove(MouseMoveEvent evt)
-        {
-            transform.position = evt.localMousePosition + Vector2.one * 20;
-            var graph = GraphView == null ? this : GraphView.contentContainer;
-            var graphMousePosition = this.ChangeCoordinatesTo(graph, evt.localMousePosition);
-            MousePosTip.text = $"localPos:{evt.localMousePosition}    \ngraphPos:{graphMousePosition}";
-        }
-
         public void SetTip(string tip)
         {
             CustomTip.text = tip;

@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
 
             var m = new MouseMoveManipulator();
-            m.mouseMove += FloatingTip.OnMouseMove;
+            m.mouseMove += OnMouseMove;
             this.AddManipulator(m);
             this.AddManipulator(new ContentZoomer());
             this.AddManipulator(new ContentDragger());
@@ -83,6 +83,33 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Debug.Log("-= ReloadView | OnGraphViewChanged");
             Undo.undoRedoPerformed -= ReloadView;
             graphViewChanged -= OnGraphViewChanged;
+        }
+
+
+        public void OnMouseMove(MouseMoveEvent evt)
+        {
+            var newPos = evt.localMousePosition;
+            if (evt.localMousePosition.x > this.worldBound.width - FloatingTip.worldBound.width - 20)
+            {
+                newPos.x -= FloatingTip.worldBound.width + 20;
+            }
+            else
+            {
+                newPos.x += 20;
+            }
+
+            if (evt.localMousePosition.y > this.worldBound.height - FloatingTip.worldBound.height - 20)
+            {
+                newPos.y -= FloatingTip.worldBound.height + 20;
+            }
+            else
+            {
+                newPos.y += 20;
+            }
+
+            FloatingTip.transform.position = newPos;
+            var graphMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
+            FloatingTip.MousePosTip.text = $"localPos:{evt.localMousePosition}    \ngraphPos:{graphMousePosition}";
         }
 
         ///不采用TheKiwiCoder 中的方式，Undo/Redo 时不能显示每一步操作名字。
@@ -201,7 +228,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void RemoveNodeAndView(BehaviorTreeNodeView nodeView)
         {
-            if (nodeView?.SONode?.Node == null )
+            if (nodeView?.SONode?.Node == null)
             {
                 return;
             }
