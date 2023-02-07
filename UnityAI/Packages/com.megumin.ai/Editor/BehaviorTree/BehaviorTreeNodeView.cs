@@ -65,7 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var type = node.GetType();
                 title = type.Name;
-                SONode = new NodeWapper();
+                SONode = ScriptableObject.CreateInstance<NodeWapper>();
                 SONode.Node = node;
                 viewDataKey = node.GUID;
             }

@@ -51,20 +51,40 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
 
-            Debug.Log("+=ReloadView");
+            Debug.Log("+= ReloadView | OnGraphViewChanged");
             Undo.undoRedoPerformed += ReloadView;
+            graphViewChanged += OnGraphViewChanged;
 
         }
 
+        private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
+        {
+            if (graphViewChange.elementsToRemove != null)
+            {
+                foreach (var item in graphViewChange.elementsToRemove)
+                {
+                    if (item is BehaviorTreeNodeView nodeView)
+                    {
+                        RemoveNodeAndView(nodeView);
+                    }
+                }
+            }
+
+            return graphViewChange;
+        }
+
+
+
         public void Dispose()
         {
-            Debug.Log("-=ReloadView");
+            Debug.Log("-= ReloadView | OnGraphViewChanged");
             Undo.undoRedoPerformed -= ReloadView;
+            graphViewChanged -= OnGraphViewChanged;
         }
 
         ///不采用TheKiwiCoder 中的方式，Undo/Redo 时不能显示每一步操作名字。
         //SerializedObject treeSO;
-        public TreeWapper treeWapper;
+        public TreeWapper SOTree;
         /// <summary>
         /// 当前TreeView正在显示的tree版本,用于控制UndoRedo时，是否重新加载整个View。
         /// </summary>
@@ -75,7 +95,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             using var s = GraphViewReloadingScope.Enter();
 
-            if (LoadVersion == treeWapper?.ChangeVersion)
+            if (LoadVersion == SOTree?.ChangeVersion)
             {
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
@@ -89,13 +109,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Tree = EditorWindow.CurrentAsset.CreateTree();
             }
 
-            if (!treeWapper)
+            if (!SOTree)
             {
-                treeWapper = new TreeWapper();
-                treeWapper.Tree = Tree;
+                SOTree = ScriptableObject.CreateInstance<TreeWapper>();
+                SOTree.Tree = Tree;
             }
 
-            LoadVersion = treeWapper.ChangeVersion;
+            LoadVersion = SOTree.ChangeVersion;
 
             foreach (var node in Tree.AllNodes)
             {
@@ -144,14 +164,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
 
-        public void CreateNode(Type type, Vector2 graphMousePosition)
+        public void AddNodeAndView(Type type, Vector2 graphMousePosition)
         {
             if (Tree == null)
             {
                 Debug.Log("new tree");
                 Tree = new BehaviorTree();
-                treeWapper = new TreeWapper();
-                treeWapper.Tree = Tree;
+                SOTree = new TreeWapper();
+                SOTree.Tree = Tree;
             }
             UndoRecord("AddNode");
             var node = Tree.AddNewNode(type);
@@ -163,6 +183,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             var nodeView = CreateNodeView(node);
             this.AddElement(nodeView);
+        }
+
+        private void RemoveNodeAndView(BehaviorTreeNodeView nodeView)
+        {
+            if (nodeView?.SONode?.Node == null )
+            {
+                return;
+            }
+
+            if (SOTree?.Tree == null)
+            {
+                return;
+            }
+
+            UndoRecord($"RemoveNode [{nodeView.SONode.Node.GetType().Name}]");
+            RemoveElement(nodeView);
+            Tree.RemoveNode(nodeView.SONode.Node);
         }
 
         //public BehaviorTreeNodeView CreateNodeView()
@@ -199,24 +236,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             else
             {
-                Undo.RecordObject(treeWapper, name);
-                treeWapper.ChangeVersion++;
-                LoadVersion = treeWapper.ChangeVersion;
+                Undo.RecordObject(SOTree, name);
+                SOTree.ChangeVersion++;
+                LoadVersion = SOTree.ChangeVersion;
 
                 EditorWindow.UpdateHasUnsavedChanges();
-            }  
+            }
         }
 
         internal void InspectorShowWapper()
         {
-            if (treeWapper)
+            if (SOTree)
             {
-                Selection.activeObject = treeWapper;
+                Selection.activeObject = SOTree;
             }
             else
             {
                 Debug.Log("no tree");
-            }  
+            }
         }
 
         internal void SetStartNode(BehaviorTreeNodeView behaviorTreeNodeView)

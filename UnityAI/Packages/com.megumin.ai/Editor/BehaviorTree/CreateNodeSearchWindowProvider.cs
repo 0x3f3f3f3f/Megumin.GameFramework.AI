@@ -79,7 +79,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 windowRoot.parent, context.screenMousePosition - behaviorTreeView.EditorWindow.position.position);
             var graphMousePosition = behaviorTreeView.contentViewContainer.WorldToLocal(windowMousePosition);
 
-            behaviorTreeView.CreateNode(searchTreeEntry.userData as Type, graphMousePosition);
+            behaviorTreeView.AddNodeAndView(searchTreeEntry.userData as Type, graphMousePosition);
 
             return true;
         }

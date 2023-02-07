@@ -94,7 +94,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void UpdateHasUnsavedChanges()
         {
-            hasUnsavedChanges = TreeView?.treeWapper?.ChangeVersion != SaveVersion;
+            hasUnsavedChanges = TreeView?.SOTree?.ChangeVersion != SaveVersion;
             UpdateSaveMessage();
         }
 
@@ -196,7 +196,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public int SaveVersion = 0;
         public void SaveAsset()
         {
-            if (TreeView?.treeWapper?.ChangeVersion == SaveVersion)
+            if (TreeView?.SOTree?.ChangeVersion == SaveVersion)
             {
                 Debug.Log($"没有需要保存的改动。");
                 return;
@@ -216,7 +216,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var success = CurrentAsset.SaveTree(TreeView.Tree);
             if (success)
             {
-                SaveVersion = TreeView.treeWapper.ChangeVersion;
+                SaveVersion = TreeView.SOTree.ChangeVersion;
                 UpdateHasUnsavedChanges();
                 EditorUtility.SetDirty(CurrentAsset);
                 AssetDatabase.SaveAssetIfDirty(CurrentAsset);

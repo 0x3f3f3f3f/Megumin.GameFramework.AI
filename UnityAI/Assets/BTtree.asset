@@ -16,7 +16,7 @@ MonoBehaviour:
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
-    IsStartNode: 1
+    IsStartNode: 0
     Meta:
       x: 392.1557
       y: 61.93023

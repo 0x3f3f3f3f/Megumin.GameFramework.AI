@@ -130,5 +130,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 throw new NotImplementedException();
             }
         }
+
+        public void RemoveNode(BTNode node)
+        {
+            AllNodes.Remove(node);
+        }
     }
 }
