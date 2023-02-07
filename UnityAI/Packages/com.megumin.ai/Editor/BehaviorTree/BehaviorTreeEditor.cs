@@ -94,7 +94,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void UpdateHasUnsavedChanges()
         {
-            hasUnsavedChanges = TreeView?.SOTree?.ChangeVersion != SaveVersion;
+            if (TreeView?.SOTree == null)
+            {
+                hasUnsavedChanges = false;
+            }
+            else
+            {
+                hasUnsavedChanges = TreeView.SOTree.ChangeVersion != SaveVersion;
+            }
+
             UpdateSaveMessage();
         }
 
@@ -213,7 +221,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (!CurrentAsset)
             {
-                Debug.LogError($"保存资源失败，没有找到Asset文件");
+                Debug.Log($"保存资源失败，没有找到Asset文件");
                 return;
             }
 

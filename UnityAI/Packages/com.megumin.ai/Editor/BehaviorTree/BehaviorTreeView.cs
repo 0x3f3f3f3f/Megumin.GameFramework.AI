@@ -136,13 +136,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
+            if (Tree == null)
+            {
+                if (EditorWindow.CurrentAsset)
+                {
+                    Tree = EditorWindow.CurrentAsset.CreateTree();
+                }
+                else
+                {
+                    return;
+                }
+            }
 
             this.LogFuncName();
-            if (Tree == null && EditorWindow.CurrentAsset)
-            {
-                Tree = EditorWindow.CurrentAsset.CreateTree();
-            }
+            DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
 
             if (!SOTree)
             {
