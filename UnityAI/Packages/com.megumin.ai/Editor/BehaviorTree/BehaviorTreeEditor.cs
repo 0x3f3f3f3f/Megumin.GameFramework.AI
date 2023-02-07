@@ -139,6 +139,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                      a => CreateScriptObjectTreeAssset(),
                                      a => DropdownMenuAction.Status.Normal);
 
+            var showInProject = root.Q<ToolbarButton>("showInProject");
+            showInProject.clicked += ShowInProject;
+
             var file = root.Q<ToolbarMenu>("file");
             file.menu.AppendAction("Default is never shown", a => { }, a => DropdownMenuAction.Status.None);
             file.menu.AppendAction("Normal file", a => { }, a => DropdownMenuAction.Status.Normal);
@@ -180,6 +183,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 showFloatingTip.SetValue(evt.newValue);
                 TreeView.FloatingTip.Show(evt.newValue);
             });
+        }
+
+        public void ShowInProject()
+        {
+            if (CurrentAsset)
+            {
+                Selection.activeObject = CurrentAsset;
+            }
         }
 
         public int SaveVersion = 0;
