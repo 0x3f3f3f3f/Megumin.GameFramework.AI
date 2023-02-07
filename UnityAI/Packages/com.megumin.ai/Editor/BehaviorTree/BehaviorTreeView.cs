@@ -109,7 +109,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
+
+            if (evt.target is BehaviorTreeNodeView nodeView)
+            {
+                nodeView.BuildContextualMenuBeforeBase(evt);
+            }
+
             base.BuildContextualMenu(evt);
+
+            if (evt.target is BehaviorTreeNodeView nodeViewAfter)
+            {
+                nodeViewAfter.BuildContextualMenuAfterBase(evt);
+            }
         }
 
         private void Test(DropdownMenuAction obj)
@@ -176,6 +187,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Undo.RecordObject(treeWapper, name);
             treeWapper.ChangeVersion++;
             LoadVersion = treeWapper.ChangeVersion;
+
+            EditorWindow.UpdateHasUnsavedChanges();
         }
 
         internal void InspectorShowWapper()
@@ -189,12 +202,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Debug.Log("no tree");
             }  
         }
+
+        internal void SetStartNode(BehaviorTreeNodeView behaviorTreeNodeView)
+        {
+            if (behaviorTreeNodeView?.NodeWapperSO?.Node == null
+                || behaviorTreeNodeView.NodeWapperSO.Node == Tree.StartNode)
+            {
+                return;
+            }
+
+            this.LogFuncName();
+            UndoRecord("Change Start Node");
+            Tree.StartNode = behaviorTreeNodeView.NodeWapperSO.Node;
+        }
     }
 
     public class TreeWapper : ScriptableObject
     {
         public BehaviorTree Tree;
         public int ChangeVersion;
+
     }
 }
 

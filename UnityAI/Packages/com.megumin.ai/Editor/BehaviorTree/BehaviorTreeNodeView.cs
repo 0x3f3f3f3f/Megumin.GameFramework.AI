@@ -26,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
 
-        private NodeWapper so;
+        public NodeWapper NodeWapperSO;
 
         public BehaviorTreeView TreeView { get; internal set; }
 
@@ -34,9 +34,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             base.Select(selectionContainer, additive);
             Debug.Log(title);
-            if (so)
+            if (NodeWapperSO)
             {
-                Selection.activeObject = so;
+                Selection.activeObject = NodeWapperSO;
             }
         }
 
@@ -56,14 +56,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var type = node.GetType();
                 title = type.Name;
-                so = new NodeWapper();
-                so.Node = node;
+                NodeWapperSO = new NodeWapper();
+                NodeWapperSO.Node = node;
             }
 
             var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(object));
             var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(object));
             inputContainer.Add(inport);
             outputContainer.Add(outport);
+        }
+
+        internal void BuildContextualMenuBeforeBase(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Set Start", a => SetStart(), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendSeparator();
+        }
+
+        internal void BuildContextualMenuAfterBase(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction("TestNode2", a => { }, DropdownMenuAction.AlwaysEnabled);
+        }
+
+        public void SetStart()
+        {
+            TreeView.SetStartNode(this);
         }
     }
 

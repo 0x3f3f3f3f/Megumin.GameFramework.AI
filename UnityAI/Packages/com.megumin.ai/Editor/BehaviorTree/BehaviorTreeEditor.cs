@@ -90,6 +90,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        public void UpdateHasUnsavedChanges()
+        {
+            hasUnsavedChanges = TreeView?.treeWapper?.ChangeVersion != SaveVersion;
+            UpdateSaveMessage();
+        }
+
         public void Update()
         {
 
@@ -174,10 +180,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             });
         }
 
-        public int saveVersion = 0;
+        public int SaveVersion = 0;
         public void SaveAsset()
         {
-            if (TreeView?.treeWapper?.ChangeVersion == saveVersion)
+            if (TreeView?.treeWapper?.ChangeVersion == SaveVersion)
             {
                 Debug.Log($"没有需要保存的改动。");
                 return;
@@ -197,7 +203,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var success = CurrentAsset.SaveTree(TreeView.Tree);
             if (success)
             {
-                saveVersion = TreeView.treeWapper.ChangeVersion;
+                SaveVersion = TreeView.treeWapper.ChangeVersion;
+                UpdateHasUnsavedChanges();
                 Debug.Log($"保存资源成功");
             }
             else
