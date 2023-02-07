@@ -62,11 +62,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         ///不采用TheKiwiCoder 中的方式，Undo/Redo 时不能显示每一步操作名字。
         //SerializedObject treeSO;
-        private TreeWapper treeWapper;
+        public TreeWapper treeWapper;
         public int wapperVersion;
         public void ReloadView()
         {
-            if (wapperVersion == treeWapper?.version)
+            if (wapperVersion == treeWapper?.ChangeVersion)
             {
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
@@ -87,7 +87,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 treeWapper.Tree = Tree;
             }
 
-            wapperVersion = treeWapper.version;
+            wapperVersion = treeWapper.ChangeVersion;
 
             foreach (var node in Tree.AllNodes)
             {
@@ -171,8 +171,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void UndoRecord(string name)
         {
             Undo.RecordObject(treeWapper, name);
-            treeWapper.version++;
-            wapperVersion = treeWapper.version;
+            treeWapper.ChangeVersion++;
+            wapperVersion = treeWapper.ChangeVersion;
         }
 
         internal void InspectorShowWapper()
@@ -191,7 +191,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     public class TreeWapper : ScriptableObject
     {
         public BehaviorTree Tree;
-        public int version;
+        public int ChangeVersion;
     }
 }
 

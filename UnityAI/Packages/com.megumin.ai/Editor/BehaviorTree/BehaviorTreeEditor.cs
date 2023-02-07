@@ -78,6 +78,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        public void UpdateSaveMessage()
+        {
+            if (CurrentAsset)
+            {
+                saveChangesMessage = $"{CurrentAsset} 有未保存改动";
+            }
+            else
+            {
+                saveChangesMessage = $"当前窗口有未保存改动";
+            }
+        }
+
         public void Update()
         {
             
@@ -115,7 +127,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var saveAs = root.Q<ToolbarMenu>("saveAs");
             saveAs.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
-            saveAs.menu.AppendAction("Save as ScriptObject", SaveTreeAsScriptObject, a => DropdownMenuAction.Status.Normal);
+            saveAs.menu.AppendAction("Save as ScriptObject",
+                                     (evt => { CreateScriptObjectTreeAssset(); }),
+                                     a => DropdownMenuAction.Status.Normal);
 
             var file = root.Q<ToolbarMenu>("file");
             file.menu.AppendAction("Default is never shown", a => { }, a => DropdownMenuAction.Status.None);
@@ -160,12 +174,29 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             });
         }
 
+        public int saveVersion = 0;
         private void SaveAsset()
         {
+            if (TreeView?.treeWapper?.ChangeVersion == saveVersion)
+            {
+                Debug.Log($"没有需要保存的改动。");
+                return;
+            }
+
+            if (!CurrentAsset)
+            {
+                CurrentAsset = CreateScriptObjectTreeAssset();
+            }
+
+            if (!CurrentAsset)
+            {
+                Debug.LogError($"没有找到Asset文件");
+                return;
+            }
             Debug.Log(1);
         }
 
-        private void SaveTreeAsScriptObject(DropdownMenuAction obj)
+        public BehaviorTreeAsset CreateScriptObjectTreeAssset()
         {
             var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
             if (!string.IsNullOrEmpty(path))
@@ -174,7 +205,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 var tree = ScriptableObject.CreateInstance<BehaviorTreeAsset>();
                 AssetDatabase.CreateAsset(tree, path);
                 AssetDatabase.Refresh();
+                return tree;
             }
+
+            return null;
         }
 
         private void SaveTreeAsJson(DropdownMenuAction obj)
