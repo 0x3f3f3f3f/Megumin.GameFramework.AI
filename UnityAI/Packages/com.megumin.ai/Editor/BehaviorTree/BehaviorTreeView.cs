@@ -69,14 +69,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 当前TreeView正在显示的tree版本,用于控制UndoRedo时，是否重新加载整个View。
         /// </summary>
         public int LoadVersion;
+
+        internal Scope GraphViewReloadingScope = new Scope();
         public void ReloadView()
         {
+            using var s = GraphViewReloadingScope.Enter();
+
             if (LoadVersion == treeWapper?.ChangeVersion)
             {
                 Debug.Log("没有实质性改动，不要ReloadView");
                 return;
             }
-            
 
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
 
@@ -190,11 +193,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void UndoRecord(string name)
         {
-            Undo.RecordObject(treeWapper, name);
-            treeWapper.ChangeVersion++;
-            LoadVersion = treeWapper.ChangeVersion;
+            if (GraphViewReloadingScope.IsEnter)
+            {
+                Debug.Log($"Reloading期间不注册Undo/Redo");
+            }
+            else
+            {
+                Undo.RecordObject(treeWapper, name);
+                treeWapper.ChangeVersion++;
+                LoadVersion = treeWapper.ChangeVersion;
 
-            EditorWindow.UpdateHasUnsavedChanges();
+                EditorWindow.UpdateHasUnsavedChanges();
+            }  
         }
 
         internal void InspectorShowWapper()
