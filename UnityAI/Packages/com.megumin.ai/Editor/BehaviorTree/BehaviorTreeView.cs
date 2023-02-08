@@ -260,14 +260,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Tree.RemoveNode(nodeView.SONode.Node);
         }
 
-        public void PasteNodeAndView(BehaviorTreeNodeView origbalNodeView)
+        public void PasteNodeAndView(BehaviorTreeNodeView origbalNodeView, Vector2 offset)
         {
             if (origbalNodeView?.SONode?.Node == null)
             {
                 return;
             }
 
-            AddNodeAndView(origbalNodeView?.SONode?.Node.GetType(), LastContextualMenuMousePosition);
+            AddNodeAndView(origbalNodeView?.SONode?.Node.GetType(), LastContextualMenuMousePosition + offset);
         }
 
         //public BehaviorTreeNodeView CreateNodeView()

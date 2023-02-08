@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 使用一个静态成员将要复制的元素保存起来。静态是因为可能再多个编辑器实例中复制粘贴。
         /// 缺点：无法在不同的项目之间实现复制粘贴。
         /// </summary>
-        static HashSet<GraphElement> copyedElement = new ();
+        static HashSet<GraphElement> copyedElement = new();
 
         private string OnSerializeGraphElements(IEnumerable<GraphElement> elements)
         {
@@ -36,7 +36,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private bool OnCanPasteSerializedData(string data)
         {
             this.LogFuncName();
-            return data== "trickCopy";
+            return data == "trickCopy";
         }
 
         private void OnUnserializeAndPaste(string operationName, string data)
@@ -48,11 +48,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogFuncName(operationName);
             if (data == "trickCopy")
             {
+                var upnode = (from elem in copyedElement
+                              where elem is Node
+                              orderby elem.worldBound.y
+                              select elem).FirstOrDefault();
+
+                var rootPos = Vector2.zero;
+                if (upnode != null)
+                {
+                    rootPos = upnode.worldBound.center;
+                }
+
                 foreach (var item in copyedElement)
                 {
                     if (item is BehaviorTreeNodeView nodeView)
                     {
-                        PasteNodeAndView(nodeView);
+                        PasteNodeAndView(nodeView, nodeView.worldBound.center - rootPos);
                     }
 
                 }
