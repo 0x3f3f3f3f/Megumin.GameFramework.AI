@@ -41,31 +41,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnUnserializeAndPaste(string operationName, string data)
         {
-            //可能一次性创建多个节点，这里只注册一次Undo
-            UndoRecord("Paste");
-            using var mute = UndoMute.Enter("Copy/Paste");
-
             this.LogFuncName(operationName);
             if (data == "trickCopy")
             {
                 var upnode = (from elem in copyedElement
                               where elem is Node
-                              orderby elem.worldBound.y
+                              orderby elem.layout.y
                               select elem).FirstOrDefault();
 
                 var rootPos = Vector2.zero;
                 if (upnode != null)
                 {
-                    rootPos = upnode.worldBound.center;
-                }
+                    rootPos = upnode.layout.position;
+                    //可能一次性创建多个节点，这里只注册一次Undo
+                    UndoRecord("Paste");
+                    using var mute = UndoMute.Enter("Copy/Paste");
 
-                foreach (var item in copyedElement)
-                {
-                    if (item is BehaviorTreeNodeView nodeView)
+                    foreach (var item in copyedElement)
                     {
-                        PasteNodeAndView(nodeView, nodeView.worldBound.center - rootPos);
-                    }
+                        if (item is BehaviorTreeNodeView nodeView)
+                        {
+                            PasteNodeAndView(nodeView, nodeView.layout.position - rootPos);
+                        }
 
+                    }
                 }
             }
         }

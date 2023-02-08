@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnMouseDown(MouseDownEvent evt)
         {
-            Debug.Log($"{evt.localMousePosition}   {evt.ToStringReflection()}" );
+            //Debug.Log($"{evt.localMousePosition}   {evt.ToStringReflection()}" );
         }
 
         private void OnMouseMove(MouseMoveEvent evt)

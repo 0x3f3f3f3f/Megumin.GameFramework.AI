@@ -48,7 +48,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SONode.Node.Meta = new NodeMeta();
             }
 
-            this.LogFuncName();
+            //this.LogFuncName();
             TreeView.UndoRecord($"SetPosition    [{SONode.Node.GetType().Name}]");
             SONode.Node.Meta.x = newPos.x;
             SONode.Node.Meta.y = newPos.y;
