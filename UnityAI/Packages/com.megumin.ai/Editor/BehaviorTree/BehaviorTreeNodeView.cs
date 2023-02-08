@@ -50,8 +50,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             this.LogFuncName();
             TreeView.UndoRecord($"SetPosition    [{SONode.Node.GetType().Name}]");
-            SONode.Node.Meta.x= newPos.x;
-            SONode.Node.Meta.y= newPos.y;
+            SONode.Node.Meta.x = newPos.x;
+            SONode.Node.Meta.y = newPos.y;
         }
 
         internal void SetNode(BTNode node)
@@ -67,6 +67,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 title = type.Name;
                 SONode = ScriptableObject.CreateInstance<NodeWapper>();
                 SONode.Node = node;
+                SONode.name = type.Name;
                 viewDataKey = node.GUID;
             }
 

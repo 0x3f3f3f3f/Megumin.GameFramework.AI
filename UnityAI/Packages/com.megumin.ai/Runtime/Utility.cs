@@ -1,6 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Debug = UnityEngine.Debug;
 
 [assembly: InternalsVisibleTo("Megumin.GameFramework.AI.Editor")]
 namespace Megumin.GameFramework.AI
@@ -9,8 +11,11 @@ namespace Megumin.GameFramework.AI
     {
 
     }
+
     internal static class Extension
     {
+        [DebuggerHidden]
+        [DebuggerStepThrough]
         public static void LogFuncName(this UnityEngine.Object @object, object state = null, [CallerMemberName] string funcName = null)
         {
             if (state == null)
@@ -23,6 +28,8 @@ namespace Megumin.GameFramework.AI
             }
         }
 
+        [DebuggerHidden]
+        [DebuggerStepThrough]
         public static void LogFuncName(this IEventHandler @object, object state = null, [CallerMemberName] string funcName = null)
         {
             if (state == null)

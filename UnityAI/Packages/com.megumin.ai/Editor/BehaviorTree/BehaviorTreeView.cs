@@ -214,16 +214,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
 
-        public void AddNodeAndView(Type type, Vector2 graphMousePosition)
+        public void CreateTreeSOTreeIfNull()
         {
             if (Tree == null)
             {
                 Debug.Log("new tree");
                 Tree = new BehaviorTree();
+            }
+
+            if (!SOTree)
+            {
                 SOTree = new TreeWapper();
                 SOTree.Tree = Tree;
             }
+        }
 
+        public void AddNodeAndView(Type type, Vector2 graphMousePosition)
+        {
             UndoRecord($"AddNode  [{type.Name}]");
             var node = Tree.AddNewNode(type);
             if (node.Meta == null)
@@ -251,6 +258,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UndoRecord($"RemoveNode  [{nodeView.SONode.Node.GetType().Name}]");
             RemoveElement(nodeView);
             Tree.RemoveNode(nodeView.SONode.Node);
+        }
+
+        public void PasteNodeAndView(BehaviorTreeNodeView origbalNodeView)
+        {
+            if (origbalNodeView?.SONode?.Node == null)
+            {
+                return;
+            }
+
+            AddNodeAndView(origbalNodeView?.SONode?.Node.GetType(), LastContextualMenuMousePosition);
         }
 
         //public BehaviorTreeNodeView CreateNodeView()
@@ -287,6 +304,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             else
             {
+                CreateTreeSOTreeIfNull();
                 Undo.RecordObject(SOTree, name);
                 SOTree.ChangeVersion++;
                 LoadVersion = SOTree.ChangeVersion;
