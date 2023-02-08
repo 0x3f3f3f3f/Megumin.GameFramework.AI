@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeView : GraphView, IDisposable
+    public partial class BehaviorTreeView : GraphView, IDisposable
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
@@ -129,6 +129,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void ReloadView(bool force)
         {
             using var s = GraphViewReloadingScope.Enter();
+            using var undom = UndoMute.Enter("ReloadView");
 
             if (force == false && LoadVersion == SOTree?.ChangeVersion)
             {
@@ -275,12 +276,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return nodeView;
         }
 
-
+        internal HashSetScope UndoMute = new();
         public void UndoRecord(string name)
         {
-            if (GraphViewReloadingScope.IsEnter)
+            if (UndoMute)
             {
-                Debug.Log($"Reloading期间不注册Undo/Redo");
+                Debug.Log($"UndoRecord 被禁用。User:  [{UndoMute.LogUsers}    ]");
             }
             else
             {
