@@ -51,10 +51,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
 
-            Debug.Log("+= ReloadView | OnGraphViewChanged");
+            Debug.Log("BehaviorTreeView += ReloadView | OnGraphViewChanged...");
             Undo.undoRedoPerformed += ReloadView;
             graphViewChanged += OnGraphViewChanged;
+            serializeGraphElements += OnSerializeGraphElements;
+            canPasteSerializedData += OnCanPasteSerializedData;
+            unserializeAndPaste += OnUnserializeAndPaste;
+        }
 
+        public void Dispose()
+        {
+            Debug.Log("BehaviorTreeView -= ReloadView | OnGraphViewChanged...");
+            Undo.undoRedoPerformed -= ReloadView;
+            graphViewChanged -= OnGraphViewChanged;
+            serializeGraphElements -= OnSerializeGraphElements;
+            canPasteSerializedData -= OnCanPasteSerializedData;
+            unserializeAndPaste -= OnUnserializeAndPaste;
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -75,16 +87,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             return graphViewChange;
         }
-
-
-
-        public void Dispose()
-        {
-            Debug.Log("-= ReloadView | OnGraphViewChanged");
-            Undo.undoRedoPerformed -= ReloadView;
-            graphViewChanged -= OnGraphViewChanged;
-        }
-
 
         public void OnMouseMove(MouseMoveEvent evt)
         {
