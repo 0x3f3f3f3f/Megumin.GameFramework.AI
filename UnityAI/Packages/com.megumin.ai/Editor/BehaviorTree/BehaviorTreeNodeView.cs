@@ -57,6 +57,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.UndoRecord($"SetPosition    [{SONode.Node.GetType().Name}]");
             SONode.Node.Meta.x = newPos.x;
             SONode.Node.Meta.y = newPos.y;
+
+            //父节点重新排序
+            foreach (var edge in InputPort.connections)
+            {
+                if (edge.output.node is BehaviorTreeNodeView nodeView
+                    && nodeView.SONode?.Node is BTParentNode parentNode)
+                {
+                    TreeView.SortChild(parentNode);
+                }
+            }
         }
 
         internal void SetNode(BTNode node)

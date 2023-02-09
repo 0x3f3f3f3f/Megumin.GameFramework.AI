@@ -18,8 +18,8 @@ MonoBehaviour:
     GUID: 072ca017-9ab5-41ae-852d-546821c7a70b
     IsStartNode: 0
     Meta:
-      x: 687.47516
-      y: 256.99997
+      x: 558.9999
+      y: 257
       index: 0
       Name: 
       FriendlyName: 
@@ -46,7 +46,7 @@ MonoBehaviour:
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
     Meta:
-      x: 398
+      x: 383.9999
       y: 257
       index: 0
       Name: 

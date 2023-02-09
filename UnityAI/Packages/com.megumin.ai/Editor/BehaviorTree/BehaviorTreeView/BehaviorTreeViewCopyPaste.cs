@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
-using System;
-using UnityEditor;
-using Megumin.GameFramework.AI.Editor;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
