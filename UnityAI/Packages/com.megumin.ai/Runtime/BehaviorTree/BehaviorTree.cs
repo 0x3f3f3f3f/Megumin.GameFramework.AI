@@ -169,5 +169,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             node = null;
             return false;
         }
+
+        public bool IsStartNodeByGuid(string guid)
+        {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return false;
+            }
+            return StartNode?.GUID == guid;
+        }
     }
 }

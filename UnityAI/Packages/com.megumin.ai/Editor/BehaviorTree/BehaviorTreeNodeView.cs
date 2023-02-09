@@ -97,8 +97,54 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void BuildContextualMenuBeforeBase(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Set Start", a => SetStart(), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
             evt.menu.AppendSeparator();
+
+            evt.menu.AppendAction("Open Node Script", a => OpenNodeScript(), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Open Node View Script", a => OpenNodeViewScript(), DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendSeparator();
+        }
+
+        public DropdownMenuAction.Status GetSetStartStatus(DropdownMenuAction arg)
+        {
+            if (SONode?.Node == null)
+            {
+                return DropdownMenuAction.Status.Disabled;
+            }
+
+            var isStart = TreeView?.SOTree?.Tree.IsStartNodeByGuid(SONode.Node.GUID) ?? false;
+            if (isStart)
+            {
+                return DropdownMenuAction.Status.Checked | DropdownMenuAction.Status.Disabled;
+            }
+            else
+            {
+                return DropdownMenuAction.Status.Normal;
+            }
+        }
+
+        private void OpenNodeScript()
+        {
+            //Todo Cache /unity background tasks
+            var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
+
+            foreach (var scriptGUID in scriptGUIDs)
+            {
+                var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
+                var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+                var type = SONode.Node.GetType();
+                var code = script.text;
+                if (code.Contains($"class {type.Name}")
+                    && code.Contains(type.Namespace))
+                {
+                    AssetDatabase.OpenAsset(script, 0, 0);
+                }
+            }
+        }
+
+        private void OpenNodeViewScript()
+        {
+
         }
 
         internal void BuildContextualMenuAfterBase(ContextualMenuPopulateEvent evt)
