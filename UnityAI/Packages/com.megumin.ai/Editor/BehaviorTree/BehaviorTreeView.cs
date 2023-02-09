@@ -82,6 +82,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         {
                             RemoveNodeAndView(nodeView);
                         }
+
+                        if (item is Edge edge)
+                        {
+                            Debug.Log($"Remove Edge {edge.input.node.name}");
+                        }
                     }
                 }
             }
@@ -278,9 +283,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BehaviorTreeNodeView CreateNodeView(BTNode node)
         {
-            var nodeView = new BehaviorTreeNodeView() { name = "testNode" };
+            var nodeView = new BehaviorTreeNodeView() { name = "behaviorTreeNode" };
             nodeView.TreeView = this;
-            nodeView.title = "TestNode";
             nodeView.SetNode(node);
             //node.capabilities |= Capabilities.Movable;
             if (node?.Meta != null)

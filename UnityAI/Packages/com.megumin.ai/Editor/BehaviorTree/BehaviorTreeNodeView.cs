@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using System;
 using UnityEditor;
+using System.ComponentModel;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -23,6 +24,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UseDefaultStyling();
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
+            this.AddToClassList("behaviorTreeNode");
         }
 
 
@@ -66,9 +68,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 var type = node.GetType();
                 title = type.Name;
                 SONode = ScriptableObject.CreateInstance<NodeWapper>();
+                SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;
                 viewDataKey = node.GUID;
+                this.AddToClassList(type.Name);
             }
 
             var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
@@ -109,5 +113,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         [SerializeReference]
         public BTNode Node;
+
+        public BehaviorTreeNodeView View { get; internal set; }
+
+        [Editor]
+        public void Test()
+        {
+            if (View.outputContainer.ClassListContains("unDisplay"))
+            {
+                View.outputContainer.RemoveFromClassList("unDisplay");
+            }
+            else
+            {
+                View.outputContainer.AddToClassList("unDisplay");
+            }
+        }
     }
 }
