@@ -16,7 +16,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTreeAsset Asset { get; internal set; }
 
         [SerializeReference]
-        public List<BTNode> AllNodes = new List<BTNode>();
+        public List<BTNode> AllNodes = new();
+
+        public Dictionary<string, BTNode> GuidDic { get; } = new();
+
         private Status treestate = Status.Init;
 
         public void Reset()
@@ -98,18 +101,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return treestate;
         }
 
-        internal BTNode AddNode(BTNode node)
+        public BTNode AddNode(BTNode node)
         {
             AllNodes.Add(node);
+            GuidDic[node.GUID] = node;
             return node;
         }
+        public bool RemoveNode(BTNode node)
+        {
+            GuidDic.Remove(node.GUID);
+            return AllNodes.Remove(node);
+        }
+
 
         public T AddNode<T>() where T : BTNode, new()
         {
             var node = new T();
             node.GUID = Guid.NewGuid().ToString();
-            node.InstanceID= Guid.NewGuid().ToString();
-            AllNodes.Add(node);
+            node.InstanceID = Guid.NewGuid().ToString();
+            AddNode(node);
             return node;
         }
 
@@ -131,9 +141,33 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void RemoveNode(BTNode node)
+        public BTNode GetNodeByGuid(string guid)
         {
-            AllNodes.Remove(node);
+            if (GuidDic.TryGetValue(guid, out var node))
+            {
+                return node;
+            }
+            return default;
+        }
+
+        public bool TryGetNodeByGuid(string guid, out BTNode node)
+        {
+            return GuidDic.TryGetValue(guid, out node);
+        }
+
+        public bool TryGetNodeByGuid<T>(string guid, out T node)
+            where T : BTNode
+        {
+            if (GuidDic.TryGetValue(guid, out var tempNode))
+            {
+                if (tempNode is T castNode)
+                {
+                    node = castNode;
+                    return true;
+                }
+            }
+            node = null;
+            return false;
         }
     }
 }

@@ -89,6 +89,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         }
                     }
                 }
+
+                if (graphViewChange.edgesToCreate != null)
+                {
+                    foreach (var edge in graphViewChange.edgesToCreate)
+                    {
+                        Debug.Log($"Create Edge {edge.input.node.name}");
+                    }
+                }
             }
 
             return graphViewChange;
@@ -158,7 +166,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             this.LogFuncName();
-            DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView));
+            DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 
             if (!SOTree)
             {
@@ -178,6 +186,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
 
                 this.AddElement(nodeViwe);
+            }
+
+            //连接View父子关系
+            foreach (var node in Tree.AllNodes)
+            {
+                if (node is BTParentNode parentNode)
+                {
+                    var view = GetNodeByGuid(node.GUID) as BehaviorTreeNodeView;
+                    foreach (var child in parentNode.children)
+                    {
+                        var childview = GetNodeByGuid(child.GUID) as BehaviorTreeNodeView;
+                        view.OutputPort.ConnectTo(childview.InputPort);
+                    }
+                }
             }
 
             EditorWindow.UpdateHasUnsavedChanges();
@@ -215,7 +237,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
-            Debug.Log(startPort);
+            //Debug.Log(startPort);
             return ports.ToList();
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
@@ -305,7 +327,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (UndoMute)
             {
-                Debug.Log($"UndoRecord 被禁用。User:  [{UndoMute.LogUsers}    ]");
+                Debug.Log($"UndoRecord 被禁用。User:  [{UndoMute.LogUsers}    ]   RecordName:  {name}");
             }
             else
             {

@@ -37,6 +37,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 nodeAsset.GUID = node.GUID;
                 nodeAsset.IsStartNode = node == tree.StartNode;
                 nodeAsset.Meta = node.Meta;
+
+                if (node is BTParentNode parentNode)
+                {
+                    foreach (var child in parentNode.children)
+                    {
+                        nodeAsset.ChildNodes.Add(child.GUID);
+                    }
+                }
+
                 Nodes.Add(nodeAsset);
             }
 
@@ -83,6 +92,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
+            //关联父子关系
+            foreach (var nodeAsset in Nodes)
+            {
+                if (tree.TryGetNodeByGuid<BTParentNode>(nodeAsset.GUID, out var parentNode))
+                {
+                    foreach (var childNodeAsset in nodeAsset.ChildNodes)
+                    {
+                        if (tree.TryGetNodeByGuid(childNodeAsset, out var childNode))
+                        {
+                            parentNode.children.Add(childNode);
+                        }
+                    }
+                }
+            }
 
             tree.Asset = this;
             //Load1(tree);
@@ -117,7 +140,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             var loop = new Repeater();
-            loop.child = seq;
+            loop.Child0 = seq;
 
             var check = new CheckBool();
             var remap = new Remap();
@@ -134,7 +157,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             var loop = new Repeater();
-            loop.child = seq;
+            loop.Child0 = seq;
 
             var check = new CheckBool();
             log.Derators = new object[] { check };
@@ -150,7 +173,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             var loop = new Repeater();
-            loop.child = seq;
+            loop.Child0 = seq;
 
             tree.StartNode = loop;
         }

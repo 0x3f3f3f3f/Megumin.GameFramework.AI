@@ -32,6 +32,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BehaviorTreeView TreeView { get; internal set; }
 
+        public Port InputPort { get; private set; }
+        public Port OutputPort { get; private set; }
+
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
@@ -75,11 +78,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 this.AddToClassList(type.Name);
             }
 
-            var inport = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
-            var outport = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(byte));
+            InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
+            OutputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(byte));
 
-            inputContainer.Add(inport);
-            outputContainer.Add(outport);
+            inputContainer.Add(InputPort);
+            outputContainer.Add(OutputPort);
 
             if (node is ActionTaskNode actionTaskNode)
             {
@@ -88,7 +91,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             else
             {
                 outputContainer.RemoveFromClassList("unDisplay");
-            }   
+            }
         }
 
         internal void BuildContextualMenuBeforeBase(ContextualMenuPopulateEvent evt)

@@ -8,13 +8,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BTParentNode : BTNode
     {
-
+        public List<BTNode> children = new List<BTNode>();
     }
 
     public class CompositeNode : BTParentNode
     {
         public int current { get; protected set; } = -1;
-        public List<BTNode> children = new List<BTNode>();
 
         protected override void OnEnter()
         {
@@ -36,11 +35,35 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public class OneChildNode : BTParentNode
     {
-        public BTNode child;
+        public BTNode Child0
+        {
+            get
+            {
+                if (children.Count > 0)
+                {
+                    return children[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (children.Count > 0)
+                {
+                    children[0] = value;
+                }
+                else
+                {
+                    children.Add(value);
+                }
+            }
+        }
 
         protected override void OnAbort()
         {
-            child.Abort();
+            Child0.Abort();
         }
     }
 }
