@@ -18,8 +18,8 @@ MonoBehaviour:
     GUID: 072ca017-9ab5-41ae-852d-546821c7a70b
     IsStartNode: 0
     Meta:
-      x: 514
-      y: 202.99998
+      x: 568
+      y: 257
       index: 0
       Name: 
       FriendlyName: 
@@ -31,8 +31,8 @@ MonoBehaviour:
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
     IsStartNode: 1
     Meta:
-      x: 411
-      y: 71
+      x: 456
+      y: 45
       index: 0
       Name: 
       FriendlyName: 
@@ -41,12 +41,13 @@ MonoBehaviour:
       Comment: 
     ChildNodes:
     - fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
+    - 072ca017-9ab5-41ae-852d-546821c7a70b
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
     Meta:
-      x: 339.00003
-      y: 202.55005
+      x: 398
+      y: 257
       index: 0
       Name: 
       FriendlyName: 

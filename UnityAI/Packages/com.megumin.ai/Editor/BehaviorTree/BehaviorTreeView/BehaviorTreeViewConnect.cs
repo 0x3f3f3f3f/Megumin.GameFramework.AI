@@ -13,6 +13,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeView
     {
+        public void SortChild(BTParentNode parentNode)
+        {
+            parentNode.children.Sort((lhs, rhs) =>
+            {
+                var lhsView = GetElementByGuid(lhs.GUID);
+                var rhsView = GetElementByGuid(rhs.GUID);
+                return lhsView.layout.position.x.CompareTo(rhsView.layout.position.x);
+            });
+        }
+
         public void ConnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
         {
             this.LogFuncName();
@@ -26,14 +36,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public void SortChild(BTParentNode parentNode)
+        public void DisconnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
         {
-            parentNode.children.Sort((lhs, rhs) =>
+            this.LogFuncName();
+            UndoRecord($"DisconnectChild [{parentNodeView.SONode.name}] -> [{childNodeView.SONode.name}]");
+            if (parentNodeView.SONode.Node is BTParentNode parentNode)
             {
-                var lhsView = GetElementByGuid(lhs.GUID);
-                var rhsView = GetElementByGuid(rhs.GUID);
-                return lhsView.layout.position.x.CompareTo(rhsView.layout.position.x);
-            });
+                parentNode.children.RemoveAll(elem => elem.GUID == childNodeView.SONode.Node.GUID);
+
+                //重新排序
+                SortChild(parentNode);
+            }
         }
     }
 }

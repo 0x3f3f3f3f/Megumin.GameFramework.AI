@@ -86,7 +86,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                         if (item is Edge edge)
                         {
-                            Debug.Log($"Remove Edge {edge.input.node.name}");
+                            if (edge.input.node is BehaviorTreeNodeView childNodeView &&
+                            edge.output.node is BehaviorTreeNodeView parentNodeView)
+                            {
+                                Debug.Log($"Remove Edge {edge.input.node.name}");
+                                DisconnectChild(parentNodeView, childNodeView);
+                            }
                         }
                     }
                 }
@@ -99,7 +104,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             edge.output.node is BehaviorTreeNodeView parentNodeView)
                         {
                             Debug.Log($"Create Edge {edge.input.node.name}");
-                            ConnectChild(parentNodeView,childNodeView);
+                            ConnectChild(parentNodeView, childNodeView);
                         }
                     }
                 }
