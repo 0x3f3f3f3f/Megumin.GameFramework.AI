@@ -197,7 +197,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     foreach (var child in parentNode.children)
                     {
                         var childview = GetNodeByGuid(child.GUID) as BehaviorTreeNodeView;
-                        view.OutputPort.ConnectTo(childview.InputPort);
+                        var edge = view.OutputPort.ConnectTo(childview.InputPort);
+                        AddElement(edge);
                     }
                 }
             }
