@@ -253,7 +253,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
 
-        public void CreateTreeSOTreeIfNull()
+        public TreeWapper CreateTreeSOTreeIfNull()
         {
             if (Tree == null)
             {
@@ -266,6 +266,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SOTree = new TreeWapper();
                 SOTree.Tree = Tree;
             }
+
+            return SOTree;
         }
 
         public BehaviorTreeNodeView AddNodeAndView(Type type, Vector2 graphMousePosition)

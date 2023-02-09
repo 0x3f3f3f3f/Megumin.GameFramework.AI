@@ -25,28 +25,39 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void ConnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
         {
-            this.LogFuncName();
-            UndoRecord($"ConnectChild [{parentNodeView.SONode.name}] -> [{childNodeView.SONode.name}]");
             if (parentNodeView.SONode.Node is BTParentNode parentNode)
             {
-                parentNode.children.Add(childNodeView.SONode.Node);
-
-                //重新排序
-                SortChild(parentNode);
+                ConnectChild(parentNode, childNodeView.SONode.Node);
             }
+        }
+
+        public void ConnectChild(BTParentNode parentNode, BTNode childNode)
+        {
+            this.LogFuncName();
+            UndoRecord($"ConnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
+
+            parentNode.children.Add(childNode);
+            //重新排序
+            SortChild(parentNode);
         }
 
         public void DisconnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
         {
-            this.LogFuncName();
-            UndoRecord($"DisconnectChild [{parentNodeView.SONode.name}] -> [{childNodeView.SONode.name}]");
             if (parentNodeView.SONode.Node is BTParentNode parentNode)
             {
-                parentNode.children.RemoveAll(elem => elem.GUID == childNodeView.SONode.Node.GUID);
-
-                //重新排序
-                SortChild(parentNode);
+                DisconnectChild(parentNode, childNodeView.SONode.Node);
             }
+        }
+
+        public void DisconnectChild(BTParentNode parentNode, BTNode childNode)
+        {
+            this.LogFuncName();
+            UndoRecord($"DisconnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
+
+            parentNode.children.RemoveAll(elem => elem.GUID == childNode.GUID);
+
+            //重新排序
+            SortChild(parentNode);
         }
     }
 }

@@ -81,15 +81,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 if (newMapping.TryGetValue(parentView, out var newParent))
                                 {
                                     //如果父节点也被复制，那么连接到被复制的节点
-                                    ConnectChild(newParent, newChildView);
-                                    newChildView.ConnectParentNodeView(newParent);
+                                    parentView = newParent;
                                 }
-                                else
-                                {
-                                    //否则连接到被复制的节点 的父节点
-                                    ConnectChild(parentView, newChildView);
-                                    newChildView.ConnectParentNodeView(parentView);
-                                }
+
+                                ConnectChild(parentView, newChildView);
+                                newChildView.ConnectParentNodeView(parentView);
                             }
                         }
                     }
