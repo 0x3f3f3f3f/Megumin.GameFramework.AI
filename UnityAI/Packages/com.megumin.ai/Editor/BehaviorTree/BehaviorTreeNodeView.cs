@@ -76,6 +76,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             inputContainer.Add(inport);
             outputContainer.Add(outport);
+
+            if (node is ActionTaskNode actionTaskNode)
+            {
+                outputContainer.AddToClassList("unDisplay");
+            }
+            else
+            {
+                outputContainer.RemoveFromClassList("unDisplay");
+            }   
         }
 
         internal void BuildContextualMenuBeforeBase(ContextualMenuPopulateEvent evt)

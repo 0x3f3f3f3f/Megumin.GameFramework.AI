@@ -39,7 +39,8 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
-    ChildNodes: []
+    ChildNodes:
+    - fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
