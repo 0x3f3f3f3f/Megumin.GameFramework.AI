@@ -329,24 +329,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return nodeView;
         }
 
-        internal HashSetScope UndoMute = new();
-        public void UndoRecord(string name)
-        {
-            if (UndoMute)
-            {
-                Debug.Log($"UndoRecord 被禁用。User:  [{UndoMute.LogUsers}    ]   RecordName:  {name}");
-            }
-            else
-            {
-                CreateTreeSOTreeIfNull();
-                Undo.RecordObject(SOTree, name);
-                SOTree.ChangeVersion++;
-                LoadVersion = SOTree.ChangeVersion;
-
-                EditorWindow.UpdateHasUnsavedChanges();
-            }
-        }
-
         internal void InspectorShowWapper()
         {
             if (SOTree)
@@ -380,29 +362,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UndoRecord("Change Start Node");
             Tree.StartNode = behaviorTreeNodeView.SONode.Node;
             behaviorTreeNodeView.AddToClassList(StartNodeClass);
-        }
-
-        private void ConnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
-        {
-            this.LogFuncName();
-            UndoRecord($"ConnectChild [{parentNodeView.SONode.name}] -> [{childNodeView.SONode.name}]");
-            if (parentNodeView.SONode.Node is BTParentNode parentNode)
-            {
-                parentNode.children.Add(childNodeView.SONode.Node);
-
-                //重新排序
-                SortChild(parentNode);
-            }
-        }
-
-        public void SortChild(BTParentNode parentNode)
-        {
-            parentNode.children.Sort((lhs, rhs) =>
-            {
-                var lhsView = GetElementByGuid(lhs.GUID);
-                var rhsView = GetElementByGuid(rhs.GUID);
-                return lhsView.layout.position.x.CompareTo(rhsView.layout.position.x);
-            });
         }
     }
 
