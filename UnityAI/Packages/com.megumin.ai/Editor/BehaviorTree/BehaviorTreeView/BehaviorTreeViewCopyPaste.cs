@@ -57,13 +57,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     var nodeCount = copyedElement.Count(elem => elem is BehaviorTreeNodeView);
                     using var mute = UndoBeginScope($"Paste {nodeCount} node");
 
-                    Dictionary<object, BehaviorTreeNodeView> newMapping = new();
+                    Dictionary<object, BehaviorTreeNodeView> newPaste = new();
                     foreach (var item in copyedElement)
                     {
                         if (item is BehaviorTreeNodeView nodeView)
                         {
                             var newView = PasteNodeAndView(nodeView, nodeView.layout.position - rootPos);
-                            newMapping[item] = newView;
+                            newPaste[item] = newView;
                         }
                     }
 
@@ -71,14 +71,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     foreach (var item in copyedElement)
                     {
                         if (item is BehaviorTreeNodeView nodeView
-                            && newMapping.TryGetValue(item, out var newChildView))
+                            && newPaste.TryGetValue(item, out var newChildView))
                         {
                             //通过被复制的节点，拿到通过粘贴生成的新阶段
                             foreach (var edge in nodeView.InputPort.connections)
                             {
                                 //遍历被复制的节点 的 父节点
                                 var parentView = edge.output.node as BehaviorTreeNodeView;
-                                if (newMapping.TryGetValue(parentView, out var newParent))
+                                if (newPaste.TryGetValue(parentView, out var newParent))
                                 {
                                     //如果父节点也被复制，那么连接到被复制的节点
                                     parentView = newParent;
@@ -88,6 +88,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 newChildView.ConnectParentNodeView(parentView);
                             }
                         }
+                    }
+
+                    //将选中对象切换到新复制对象
+                    ClearSelection();
+                    foreach (var item in newPaste)
+                    {
+                        this.AddToSelection(item.Value);
                     }
                 }
             }
