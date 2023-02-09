@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (UndoMute)
             {
-                Debug.Log($"UndoRecord 被禁用。User:  [{UndoMute.LogUsers}    ]   RecordName:  {name}");
+                Debug.Log($"UndoRecord 被禁用或合并。User:  [{UndoMute.LogUsers}    ]   RecordName:  {name}");
             }
             else
             {
@@ -29,6 +29,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 EditorWindow.UpdateHasUnsavedChanges();
             }
+        }
+
+        public IDisposable UndoBeginScope(string name)
+        {
+            UndoRecord(name);
+            return UndoMute.Enter(name);
         }
     }
 }

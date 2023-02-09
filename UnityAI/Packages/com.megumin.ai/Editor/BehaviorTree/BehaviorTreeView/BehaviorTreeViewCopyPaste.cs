@@ -55,8 +55,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     rootPos = upnode.layout.position;
                     //可能一次性创建多个节点，这里只注册一次Undo
                     var nodeCount = copyedElement.Count(elem => elem is BehaviorTreeNodeView);
-                    UndoRecord($"Paste {nodeCount} node");
-                    using var mute = UndoMute.Enter("Copy/Paste");
+                    using var mute = UndoBeginScope($"Paste {nodeCount} node");
 
                     Dictionary<object, BehaviorTreeNodeView> newMapping = new();
                     foreach (var item in copyedElement)
