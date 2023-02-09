@@ -208,8 +208,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     foreach (var child in parentNode.children)
                     {
                         var childview = GetNodeByGuid(child.GUID) as BehaviorTreeNodeView;
-                        var edge = view.OutputPort.ConnectTo(childview.InputPort);
-                        AddElement(edge);
+                        childview.ConnectParentNodeView(view);
                     }
                 }
             }
@@ -269,7 +268,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public void AddNodeAndView(Type type, Vector2 graphMousePosition)
+        public BehaviorTreeNodeView AddNodeAndView(Type type, Vector2 graphMousePosition)
         {
             UndoRecord($"AddNode  [{type.Name}]");
             var node = Tree.AddNewNode(type);
@@ -281,33 +280,34 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             var nodeView = CreateNodeView(node);
             this.AddElement(nodeView);
+            return nodeView;
         }
 
-        private void RemoveNodeAndView(BehaviorTreeNodeView nodeView)
+        public bool RemoveNodeAndView(BehaviorTreeNodeView nodeView)
         {
             if (nodeView?.SONode?.Node == null)
             {
-                return;
+                return false;
             }
 
             if (SOTree?.Tree == null)
             {
-                return;
+                return false;
             }
 
             UndoRecord($"RemoveNode  [{nodeView.SONode.Node.GetType().Name}]");
             RemoveElement(nodeView);
-            Tree.RemoveNode(nodeView.SONode.Node);
+            return Tree.RemoveNode(nodeView.SONode.Node);
         }
 
-        public void PasteNodeAndView(BehaviorTreeNodeView origbalNodeView, Vector2 offset)
+        public BehaviorTreeNodeView PasteNodeAndView(BehaviorTreeNodeView origbalNodeView, Vector2 offset)
         {
             if (origbalNodeView?.SONode?.Node == null)
             {
-                return;
+                return null;
             }
 
-            AddNodeAndView(origbalNodeView?.SONode?.Node.GetType(), LastContextualMenuMousePosition + offset);
+            return AddNodeAndView(origbalNodeView?.SONode?.Node.GetType(), LastContextualMenuMousePosition + offset);
         }
 
         //public BehaviorTreeNodeView CreateNodeView()

@@ -54,16 +54,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     rootPos = upnode.layout.position;
                     //可能一次性创建多个节点，这里只注册一次Undo
-                    UndoRecord("Paste");
+                    var nodeCount = copyedElement.Count(elem => elem is BehaviorTreeNodeView);
+                    UndoRecord($"Paste {nodeCount} node");
                     using var mute = UndoMute.Enter("Copy/Paste");
 
+                    Dictionary<object, BehaviorTreeNodeView> newMapping = new();
                     foreach (var item in copyedElement)
                     {
                         if (item is BehaviorTreeNodeView nodeView)
                         {
-                            PasteNodeAndView(nodeView, nodeView.layout.position - rootPos);
+                            var newView = PasteNodeAndView(nodeView, nodeView.layout.position - rootPos);
+                            newMapping[item] = newView;
                         }
+                    }
 
+                    //复制父子关系。
+                    foreach (var item in copyedElement)
+                    {
+                        if (item is BehaviorTreeNodeView nodeView
+                            && newMapping.TryGetValue(item, out var newChildView))
+                        {
+                            //通过被复制的节点，拿到通过粘贴生成的新阶段
+                            foreach (var edge in nodeView.InputPort.connections)
+                            {
+                                //遍历被复制的节点 的 父节点
+                                var parentView = edge.output.node as BehaviorTreeNodeView;
+                                if (newMapping.TryGetValue(parentView, out var newParent))
+                                {
+                                    //如果父节点也被复制，那么连接到被复制的节点
+                                    ConnectChild(newParent, newChildView);
+                                    newChildView.ConnectParentNodeView(newParent);
+                                }
+                                else
+                                {
+                                    //否则连接到被复制的节点 的父节点
+                                    ConnectChild(parentView, newChildView);
+                                    newChildView.ConnectParentNodeView(parentView);
+                                }
+                            }
+                        }
                     }
                 }
             }

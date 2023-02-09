@@ -110,6 +110,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             TreeView.SetStartNode(this);
         }
+
+        public Edge ConnectParentNodeView(BehaviorTreeNodeView parent)
+        {
+            return ConnectParentNodeView<Edge>(parent);
+        }
+
+        public T ConnectParentNodeView<T>(BehaviorTreeNodeView parent)
+            where T : Edge, new()
+        {
+            var edge = InputPort.ConnectTo<T>(parent.OutputPort);
+            TreeView.AddElement(edge);
+            return edge;
+        }
     }
 
     public class NodeWapper : ScriptableObject
