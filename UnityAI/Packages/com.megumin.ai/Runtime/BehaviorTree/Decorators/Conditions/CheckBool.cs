@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [Serializable]
     public class CheckBool : IConditionable
     {
         public bool Cal()

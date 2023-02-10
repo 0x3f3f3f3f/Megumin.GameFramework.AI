@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public const string StartNodeClass = "startNode";
         public BehaviorTreeEditor EditorWindow { get; internal set; }
-        private CreateNodeSearchWindowProvider createNodeMenu;
+        internal CreateNodeSearchWindowProvider createNodeMenu;
 
         public FloatingTip FloatingTip;
 

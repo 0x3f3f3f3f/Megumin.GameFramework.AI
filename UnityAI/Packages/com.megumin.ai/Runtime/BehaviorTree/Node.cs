@@ -65,16 +65,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
+        [SerializeReference]
         public object[] Derators;
 
-        internal void AddDecorator(CheckBool check)
+        internal void AddDecorator(object decorator)
         {
             if (Derators == null)
             {
                 Derators = new object[0];
             }
             //TODO, 优化 类型/插入。
-            Derators = Derators.Append(check).ToArray();
+            Derators = Derators.Append(decorator).ToArray();
         }
 
         /// <summary>
