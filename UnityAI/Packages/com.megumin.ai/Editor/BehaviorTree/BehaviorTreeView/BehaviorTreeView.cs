@@ -223,7 +223,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
-            Debug.Log(LastContextualMenuMousePosition);
+            //Debug.Log(LastContextualMenuMousePosition);
 
             evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();

@@ -115,6 +115,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             evt.menu.AppendAction("Open Node Script", a => OpenNodeScript(), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Open Node View Script", a => OpenNodeViewScript(), DropdownMenuAction.AlwaysDisabled);
             evt.menu.AppendSeparator();
+
+            BuildContextualMenuDecorator(evt);
         }
 
         public DropdownMenuAction.Status GetSetStartStatus(DropdownMenuAction arg)

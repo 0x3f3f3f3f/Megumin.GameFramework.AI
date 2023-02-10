@@ -67,6 +67,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         public object[] Derators;
 
+        internal void AddDecorator(CheckBool check)
+        {
+            if (Derators == null)
+            {
+                Derators = new object[0];
+            }
+            //TODO, 优化 类型/插入。
+            Derators = Derators.Append(check).ToArray();
+        }
+
         /// <summary>
         /// <para/> Q:为什么CanEnter不放在Tick内部？
         /// <para/> A:当条件中止时需要在不Tick的状态下获取EnterType，放在Tick里会执行2次CanEnter
