@@ -46,6 +46,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         static List<Type> nearDType = new List<Type>();
         internal object AddDecorator(Type type)
         {
+            TreeView.UndoRecord($"AddDecorator  [{type.Name}]");
             this.LogMethodName();
             var decorator = Activator.CreateInstance(type);
             SONode.Node.AddDecorator(decorator);
