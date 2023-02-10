@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeNodeView : Node
+    public partial class BehaviorTreeNodeView : Node
     {
 
         public new class UxmlFactory : UxmlFactory<BehaviorTreeNodeView, UxmlTraits> { }
