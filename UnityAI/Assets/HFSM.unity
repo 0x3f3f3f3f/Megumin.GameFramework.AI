@@ -167,3 +167,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f4fd617f3fbe1418e0935f1d5ab6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Decorator:
+  - rid: 2074316876855902475
+  - rid: 2074316876855902476
+  - rid: 2074316876855902477
+  - rid: -2
+  - rid: -2
+  test:
+    UID: 
+    GUID: 
+    InstanceID: 
+    Meta:
+      x: 0
+      y: 0
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    Decorators: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2074316876855902475
+      type: {class: Loop, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
+      data:
+        loopCount: 2
+    - rid: 2074316876855902476
+      type: {class: CheckBool, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
+      data:
+        A: 0
+        B: 0
+    - rid: 2074316876855902477
+      type: {class: Cooldown, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
+      data:
+        cooldownTime: 5
+        nextCanEnterTime: 0

@@ -20,7 +20,72 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public string GUID;
             public bool IsStartNode;
             public NodeMeta Meta;
-            public List<string> ChildNodes = new List<string>();
+            public List<string> ChildNodes = new();
+            public List<DecoratorAsset> Decorators = new();
+
+            public BTNode Instantiate(bool instanceMeta = true)
+            {
+                var nodeType = Type.GetType(this.TypeName);
+                if (nodeType.IsSubclassOf(typeof(BTNode)))
+                {
+                    var node = Activator.CreateInstance(nodeType) as BTNode;
+                    if (node != null)
+                    {
+                        node.GUID = this.GUID;
+                        if (instanceMeta)
+                        {
+                            node.Meta = this.Meta.Clone();
+                        }
+                        else
+                        {
+                            node.Meta = this.Meta;
+                        }
+
+                        node.InstanceID = Guid.NewGuid().ToString();
+
+                        //实例化装饰器
+                        foreach (var decoratorAsset in Decorators)
+                        {
+                            var d = decoratorAsset.Instantiate();
+                            if (d != null)
+                            {
+                                node.AddDecorator(d);
+                            }
+                        }
+
+                        return node;
+                    }
+                    else
+                    {
+                        Debug.LogError($"无法创建的节点{this.TypeName}");
+                        return null;
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"无法识别的节点{this.TypeName}");
+                    return null;
+                }
+            }
+        }
+
+        [Serializable]
+        public class DecoratorAsset
+        {
+            public string TypeName;
+
+            public object Instantiate(bool instanceMeta = true)
+            {
+                var nodeType = Type.GetType(this.TypeName);
+                var decorator = Activator.CreateInstance(nodeType);
+
+                if (decorator == null)
+                {
+                    Debug.LogError($"无法创建的装饰器{TypeName}");
+                }
+
+                return decorator;
+            }
         }
 
         public bool SaveTree(BehaviorTree tree)
@@ -47,6 +112,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                 }
 
+                //保存装饰器
+                foreach (var decorator in node.Decorators)
+                {
+                    var decoratorAsset = new DecoratorAsset();
+                    decoratorAsset.TypeName = decorator.GetType().FullName;
+                    nodeAsset.Decorators.Add(decoratorAsset);
+                }
+
                 Nodes.Add(nodeAsset);
             }
 
@@ -65,44 +138,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <param name="instanceMeta">非调试和编辑状态下，所有树允许共享meta数据，节省性能</param>
         /// <returns></returns>
-        public BehaviorTree CreateTree(bool instanceMeta = true)
+        public BehaviorTree Instantiate(bool instanceMeta = true)
         {
             var tree = new BehaviorTree();
             foreach (var nodeAsset in Nodes)
             {
-                var nodeType = Type.GetType(nodeAsset.TypeName);
-                if (nodeType.IsSubclassOf(typeof(BTNode)))
+                var node = nodeAsset.Instantiate(instanceMeta);
+                if (node != null)
                 {
-                    var node = Activator.CreateInstance(nodeType) as BTNode;
-                    if (node != null)
+                    tree.AddNode(node);
+                    if (nodeAsset.IsStartNode)
                     {
-                        node.GUID = nodeAsset.GUID;
-                        if (instanceMeta)
-                        {
-                            node.Meta = nodeAsset.Meta.Clone();
-                        }
-                        else
-                        {
-                            node.Meta = nodeAsset.Meta;
-                        }
-
-                        node.InstanceID = Guid.NewGuid().ToString();
-                        tree.AddNode(node);
-                        if (nodeAsset.IsStartNode)
-                        {
-                            tree.StartNode = node;
-                        }
+                        tree.StartNode = node;
                     }
-                    else
-                    {
-                        Debug.LogError($"无法创建的节点{nodeAsset.TypeName}");
-                        continue;
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"无法识别的节点{nodeAsset.TypeName}");
-                    continue;
                 }
             }
 

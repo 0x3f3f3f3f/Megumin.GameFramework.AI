@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTreeAsset BehaviorTreeAsset;
         private void Awake()
         {
-            BehaviourTree = BehaviorTreeAsset.CreateTree();
+            BehaviourTree = BehaviorTreeAsset.Instantiate();
             BehaviourTree.Init(gameObject);
         }
 
