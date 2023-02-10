@@ -180,7 +180,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void OnBeforeSerialize()
         {
-            this.LogFuncName();
+            this.LogMethodName();
         }
 
         public void OnAfterDeserialize()

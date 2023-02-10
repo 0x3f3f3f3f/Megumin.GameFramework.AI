@@ -33,7 +33,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void ConnectChild(BTParentNode parentNode, BTNode childNode)
         {
-            this.LogFuncName();
+            this.LogMethodName();
             UndoRecord($"ConnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
             parentNode.children.Add(childNode);
@@ -51,7 +51,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void DisconnectChild(BTParentNode parentNode, BTNode childNode)
         {
-            this.LogFuncName();
+            this.LogMethodName();
             UndoRecord($"DisconnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
             parentNode.children.RemoveAll(elem => elem.GUID == childNode.GUID);

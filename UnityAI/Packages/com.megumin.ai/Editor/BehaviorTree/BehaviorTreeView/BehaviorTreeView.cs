@@ -200,7 +200,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            this.LogFuncName();
+            this.LogMethodName();
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 
             foreach (var node in Tree.AllNodes)
@@ -261,7 +261,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void Test(DropdownMenuAction obj)
         {
-            this.LogFuncName(obj);
+            this.LogMethodName(obj);
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -366,7 +366,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            this.LogFuncName();
+            this.LogMethodName();
             UndoRecord("Change Start Node");
             Tree.StartNode = behaviorTreeNodeView.SONode.Node;
             behaviorTreeNodeView.AddToClassList(StartNodeClass);

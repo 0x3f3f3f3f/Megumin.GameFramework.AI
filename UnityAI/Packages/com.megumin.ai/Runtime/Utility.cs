@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI
         [DebuggerHidden]
         [DebuggerStepThrough]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogFuncName(this UnityEngine.Object @object, object state = null, [CallerMemberName] string funcName = null)
+        public static void LogMethodName(this UnityEngine.Object @object, object state = null, [CallerMemberName] string funcName = null)
         {
             if (state == null)
             {
@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI
         [DebuggerHidden]
         [DebuggerStepThrough]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogFuncName(this IEventHandler @object, object state = null, [CallerMemberName] string funcName = null)
+        public static void LogMethodName(this IEventHandler @object, object state = null, [CallerMemberName] string funcName = null)
         {
             if (state == null)
             {

@@ -285,7 +285,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
         {
-            this.LogFuncName();
+            this.LogMethodName();
             this.CurrentAsset = behaviorTreeAsset;
             TreeView.ReloadView(true);
         }
@@ -293,13 +293,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void DiscardChanges()
         {
             base.DiscardChanges();
-            this.LogFuncName();
+            this.LogMethodName();
         }
 
         public override void SaveChanges()
         {
             base.SaveChanges();
-            this.LogFuncName();
+            this.LogMethodName();
         }
     }
 }
