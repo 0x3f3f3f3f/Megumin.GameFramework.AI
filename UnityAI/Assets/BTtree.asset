@@ -19,8 +19,8 @@ MonoBehaviour:
     GUID: 072ca017-9ab5-41ae-852d-546821c7a70b
     IsStartNode: 0
     Meta:
-      x: 558.9999
-      y: 257
+      x: 358
+      y: 383
       index: 0
       Name: 
       FriendlyName: 
@@ -32,8 +32,8 @@ MonoBehaviour:
     GUID: 1243df12-87fc-449c-bfe4-4bb02d7477ba
     IsStartNode: 0
     Meta:
-      x: 670.41113
-      y: 68.999985
+      x: 470
+      y: 194
       index: 0
       Name: 
       FriendlyName: 
@@ -45,8 +45,8 @@ MonoBehaviour:
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
     IsStartNode: 0
     Meta:
-      x: 456
-      y: 45
+      x: 256
+      y: 171
       index: 0
       Name: 
       FriendlyName: 
@@ -60,8 +60,8 @@ MonoBehaviour:
     GUID: a80d8f36-84ad-4c0b-8809-84adbdcc7f8e
     IsStartNode: 1
     Meta:
-      x: 461.00006
-      y: -98.93818
+      x: 261
+      y: 28
       index: 0
       Name: 
       FriendlyName: 
@@ -74,8 +74,8 @@ MonoBehaviour:
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
     Meta:
-      x: 383.9999
-      y: 257
+      x: 183
+      y: 383
       index: 0
       Name: 
       FriendlyName: 
