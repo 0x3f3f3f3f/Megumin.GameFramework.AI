@@ -70,13 +70,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public NodeWrapper CreateSONodeIfNull()
+        public NodeWrapper CreateSOWrapperIfNull(bool forceRecreate = false)
         {
-            if (!SONode)
+            if (!SONode || forceRecreate)
             {
                 SONode = this.CreateSOWrapper<NodeWrapper>();
             }
-
             return SONode;
         }
 
@@ -94,7 +93,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 viewDataKey = node.GUID;
                 this.AddToClassList(type.Name);
 
-                SONode = CreateSONodeIfNull();
+                SONode = CreateSOWrapperIfNull();
                 SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;

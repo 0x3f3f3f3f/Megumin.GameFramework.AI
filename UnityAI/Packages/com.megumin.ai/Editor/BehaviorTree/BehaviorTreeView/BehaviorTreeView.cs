@@ -149,18 +149,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         internal Scope GraphViewReloadingScope = new Scope();
 
+        public TreeWrapper CreateSOWrapperIfNull(bool forceRecreate = false)
+        {
+            if (!SOTree || forceRecreate)
+            {
+                SOTree = this.CreateSOWrapper<TreeWrapper>();
+            }
+            return SOTree;
+        }
+
         public TreeWrapper CreateTreeSOTreeIfNull()
         {
+            SOTree = CreateSOWrapperIfNull();
+
             if (Tree == null)
             {
                 Debug.Log("new tree");
-                Tree = new BehaviorTree();
-            }
-
-            if (!SOTree)
-            {
-                SOTree = this.CreateSOWrapper<TreeWrapper>();
-                SOTree.Tree = Tree;
+                SOTree.Tree = new BehaviorTree();
             }
 
             return SOTree;
@@ -182,11 +187,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (Tree == null)
+            CreateSOWrapperIfNull();
+            if (force || Tree == null)
             {
                 if (EditorWindow.CurrentAsset)
                 {
-                    Tree = EditorWindow.CurrentAsset.CreateTree();
+                    SOTree.Tree = EditorWindow.CurrentAsset.CreateTree();
                 }
                 else
                 {
@@ -196,8 +202,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             this.LogFuncName();
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
-
-            CreateTreeSOTreeIfNull();
 
             foreach (var node in Tree.AllNodes)
             {
@@ -232,7 +236,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
-        public BehaviorTree Tree;
+        public BehaviorTree Tree => SOTree?.Tree;
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
