@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,6 +21,41 @@ namespace Megumin.GameFramework.AI.Editor
             wrapper.hideFlags = HideFlags.DontSave;
             return wrapper;
         }
+
+        public static void RepaintWindows(string title = "Inspector")
+        {
+            var resultWindows = FindWindows<EditorWindow>(title);
+
+            foreach (var item in resultWindows)
+            {
+                item.Repaint();
+            }
+        }
+
+        public static IEnumerable<EditorWindow> FindWindowsByTypeName(string windowTypeName)
+        {
+            EditorWindow[] array = Resources.FindObjectsOfTypeAll(typeof(EditorWindow)) as EditorWindow[];
+            var resultWindows = from wnd in array
+                                where wnd.GetType().Name == windowTypeName
+                                select wnd;
+            return resultWindows;
+        }
+
+        public static IEnumerable<T> FindWindows<T>(string title = null)
+            where T : EditorWindow
+        {
+            T[] array = Resources.FindObjectsOfTypeAll(typeof(T)) as T[];
+
+            if (string.IsNullOrEmpty(title))
+            {
+                return array;
+            }
+
+            var resultWindows = from wnd in array
+                                where wnd.titleContent.text == title
+                                select wnd;
+            return resultWindows;
+        }
     }
 
     internal static class Extension
@@ -29,6 +65,12 @@ namespace Megumin.GameFramework.AI.Editor
             where T : ScriptableObject
         {
             return Utility.CreateSOWrapper<T>();
+        }
+
+        public static void RepaintInspectorWindows(this IEventHandler @object)
+        {
+            @object.LogMethodName();
+            Utility.RepaintWindows("Inspector");
         }
     }
 }

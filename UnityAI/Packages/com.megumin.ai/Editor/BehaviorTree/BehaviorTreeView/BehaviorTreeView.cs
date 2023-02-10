@@ -231,6 +231,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            //重载后WrappSONode 会重新创建，Inspector显示的对象已经过时。
+            //if (Selection.activeObject is NodeWrapper oldActiveNode)
+            //{
+            //    var view = GetNodeByGuid(oldActiveNode.Node.GUID) as BehaviorTreeNodeView;
+            //    Selection.activeObject = view.SONode;
+            //}
+
+            //for (int i = 0; i < Selection.objects.Length; i++)
+            //{
+            //    var obj = Selection.objects[i];
+            //    if (obj is NodeWrapper oldNode)
+            //    {
+            //        var view = GetNodeByGuid(oldNode.Node.GUID) as BehaviorTreeNodeView;
+            //        Selection.objects[i] = view.SONode;
+            //    }
+            //}
+
+            //this.RepaintInspectorWindows();
+
             EditorWindow.UpdateHasUnsavedChanges();
             LoadVersion = SOTree.ChangeVersion;
         }
@@ -342,6 +361,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         //    return CreateNodeView(null, LastContextualMenuMousePosition);
         //}
 
+        /// <summary>
+        /// 尝试复用旧的SOWrapper,解决Inpector面板锁定时不刷新的问题。
+        /// </summary>
+        internal protected Dictionary<string, NodeWrapper> NodeWrapperCache = new();
         public BehaviorTreeNodeView CreateNodeView(BTNode node)
         {
             var nodeView = new BehaviorTreeNodeView() { name = "behaviorTreeNode" };

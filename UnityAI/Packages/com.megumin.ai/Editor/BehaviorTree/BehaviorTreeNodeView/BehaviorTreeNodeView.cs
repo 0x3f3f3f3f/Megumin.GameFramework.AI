@@ -8,6 +8,7 @@ using System;
 using UnityEditor;
 using System.ComponentModel;
 using Megumin.GameFramework.AI.Editor;
+using System.Linq;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -73,13 +74,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public NodeWrapper CreateSOWrapperIfNull(bool forceRecreate = false)
+
+        public NodeWrapper CreateSOWrapperIfNull(BTNode node, bool forceRecreate = false)
         {
-            if (!SONode || forceRecreate)
+            var soWrapper = SONode;
+            if (!soWrapper)
             {
-                SONode = this.CreateSOWrapper<NodeWrapper>();
+                if (TreeView.NodeWrapperCache.TryGetValue(node.GUID, out var cacheWrapper))
+                {
+                    //创建新的SO对象在 Inpector锁定显示某个节点时，会出现无法更新的问题。
+                    //尝试复用旧的SOWrapper
+
+                    //Debug.Log("尝试复用旧的SOWrapper");
+                    soWrapper = cacheWrapper;
+                }
             }
-            return SONode;
+
+            if (!soWrapper || forceRecreate)
+            {
+                soWrapper = this.CreateSOWrapper<NodeWrapper>();
+                TreeView.NodeWrapperCache[node.GUID] = soWrapper;
+            }
+            return soWrapper;
         }
 
         internal void SetNode(BTNode node)
@@ -96,7 +112,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 viewDataKey = node.GUID;
                 this.AddToClassList(type.Name);
 
-                SONode = CreateSOWrapperIfNull();
+                SONode = CreateSOWrapperIfNull(node);
                 SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;
