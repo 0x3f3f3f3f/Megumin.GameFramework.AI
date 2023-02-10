@@ -37,7 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 nodeAsset.TypeName = node.GetType().FullName;
                 nodeAsset.GUID = node.GUID;
                 nodeAsset.IsStartNode = node == tree.StartNode;
-                nodeAsset.Meta = node.Meta;
+                nodeAsset.Meta = node.Meta.Clone();
 
                 if (node is BTParentNode parentNode)
                 {
@@ -60,7 +60,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return true;
         }
 
-        public BehaviorTree CreateTree()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="instanceMeta">非调试和编辑状态下，所有树允许共享meta数据，节省性能</param>
+        /// <returns></returns>
+        public BehaviorTree CreateTree(bool instanceMeta = true)
         {
             var tree = new BehaviorTree();
             foreach (var nodeAsset in Nodes)
@@ -72,7 +77,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (node != null)
                     {
                         node.GUID = nodeAsset.GUID;
-                        node.Meta = nodeAsset.Meta;
+                        if (instanceMeta)
+                        {
+                            node.Meta = nodeAsset.Meta.Clone();
+                        }
+                        else
+                        {
+                            node.Meta = nodeAsset.Meta;
+                        }
+
                         node.InstanceID = Guid.NewGuid().ToString();
                         tree.AddNode(node);
                         if (nodeAsset.IsStartNode)

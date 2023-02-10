@@ -17,5 +17,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string Description;
         public string FriendlyDescription;
         public string Comment;
+
+        public NodeMeta Clone()
+        {
+            return this.MemberwiseClone() as NodeMeta;
+        }
     }
 }
