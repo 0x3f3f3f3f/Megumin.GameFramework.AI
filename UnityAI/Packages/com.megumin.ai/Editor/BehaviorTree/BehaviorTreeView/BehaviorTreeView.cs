@@ -141,13 +141,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         ///不采用TheKiwiCoder 中的方式，Undo/Redo 时不能显示每一步操作名字。
         //SerializedObject treeSO;
-        public TreeWapper SOTree;
+        public TreeWrapper SOTree;
         /// <summary>
         /// 当前TreeView正在显示的tree版本,用于控制UndoRedo时，是否重新加载整个View。
         /// </summary>
         public int LoadVersion;
 
         internal Scope GraphViewReloadingScope = new Scope();
+
+        public TreeWrapper CreateTreeSOTreeIfNull()
+        {
+            if (Tree == null)
+            {
+                Debug.Log("new tree");
+                Tree = new BehaviorTree();
+            }
+
+            if (!SOTree)
+            {
+                SOTree = this.CreateSOWrapper<TreeWrapper>();
+                SOTree.Tree = Tree;
+            }
+
+            return SOTree;
+        }
+
         public void ReloadView()
         {
             ReloadView(false);
@@ -179,11 +197,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogFuncName();
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 
-            if (!SOTree)
-            {
-                SOTree = ScriptableObject.CreateInstance<TreeWapper>();
-                SOTree.Tree = Tree;
-            }
+            CreateTreeSOTreeIfNull();
 
             foreach (var node in Tree.AllNodes)
             {
@@ -251,23 +265,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //Debug.Log(startPort);
             return ports.ToList();
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
-        }
-
-        public TreeWapper CreateTreeSOTreeIfNull()
-        {
-            if (Tree == null)
-            {
-                Debug.Log("new tree");
-                Tree = new BehaviorTree();
-            }
-
-            if (!SOTree)
-            {
-                SOTree = new TreeWapper();
-                SOTree.Tree = Tree;
-            }
-
-            return SOTree;
         }
 
         public BehaviorTreeNodeView AddNodeAndView(Type type, Vector2 graphMousePosition)
@@ -372,7 +369,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
     }
 
-    public class TreeWapper : ScriptableObject
+    public class TreeWrapper : ScriptableObject
     {
         public BehaviorTree Tree;
         public int ChangeVersion;

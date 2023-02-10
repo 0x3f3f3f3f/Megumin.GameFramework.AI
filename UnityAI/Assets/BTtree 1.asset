@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BTtree 1
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
+  Comment: load2
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895

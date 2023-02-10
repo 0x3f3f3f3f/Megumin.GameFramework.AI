@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using System;
 using UnityEditor;
 using System.ComponentModel;
+using Megumin.GameFramework.AI.Editor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -28,7 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
 
-        public NodeWapper SONode;
+        public NodeWrapper SONode;
 
         public BehaviorTreeView TreeView { get; internal set; }
 
@@ -69,6 +70,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        public NodeWrapper CreateSONodeIfNull()
+        {
+            if (!SONode)
+            {
+                SONode = this.CreateSOWrapper<NodeWrapper>();
+            }
+
+            return SONode;
+        }
+
         internal void SetNode(BTNode node)
         {
             if (node == null)
@@ -80,12 +91,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var type = node.GetType();
                 title = type.Name;
-                SONode = ScriptableObject.CreateInstance<NodeWapper>();
+                viewDataKey = node.GUID;
+                this.AddToClassList(type.Name);
+
+                SONode = CreateSONodeIfNull();
                 SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;
-                viewDataKey = node.GUID;
-                this.AddToClassList(type.Name);
             }
 
             InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
@@ -185,7 +197,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
     }
 
-    public class NodeWapper : ScriptableObject
+    public class NodeWrapper : ScriptableObject
     {
         [SerializeReference]
         public BTNode Node;
