@@ -15,7 +15,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             evt.menu.AppendAction("AddCheckBool", a => AddCheckBool(), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Add Decorator Fast", a => OpenDecoratorSearchWindow(), DropdownMenuAction.AlwaysEnabled);
+
+            for (int i = nearDType.Count - 1; i >= 0; i--)
+            {
+                var type = nearDType[i];
+                evt.menu.AppendAction($"Add Decorator/{type.Name}", a => AddDecorator(type), DropdownMenuAction.AlwaysEnabled);
+            }
+
             evt.menu.AppendSeparator();
         }
 
@@ -43,7 +49,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             var decorator = Activator.CreateInstance(type);
             SONode.Node.AddDecorator(decorator);
+
+            //去重添加
+            nearDType.Remove(type);
             nearDType.Add(type);
+
             return decorator;
         }
     }

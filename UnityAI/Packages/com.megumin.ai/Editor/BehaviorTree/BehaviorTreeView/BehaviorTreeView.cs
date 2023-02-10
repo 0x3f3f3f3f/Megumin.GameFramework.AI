@@ -243,8 +243,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
             //Debug.Log(LastContextualMenuMousePosition);
 
-            evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendSeparator();
+            //evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
+            //evt.menu.AppendSeparator();
 
             if (evt.target is BehaviorTreeNodeView nodeView)
             {
@@ -252,6 +252,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             base.BuildContextualMenu(evt);
+
+            //if (nearAddNodeType.Count > 0)
+            //{
+            //    for (int i = nearAddNodeType.Count - 1; i >= 0; i--)
+            //    {
+            //        var type = nearAddNodeType[i];
+            //        evt.menu.AppendAction($"Create Node/{type.Name}", a => AddNodeAndView(type), DropdownMenuAction.AlwaysEnabled);
+            //    }
+            //    evt.menu.AppendSeparator();
+            //}
 
             if (evt.target is BehaviorTreeNodeView nodeViewAfter)
             {
@@ -271,6 +281,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //return base.GetCompatiblePorts(startPort, nodeAdapter);
         }
 
+        /// <summary>
+        /// 最近添加的node
+        /// </summary>
+        static List<Type> nearAddNodeType = new();
+
+        public BehaviorTreeNodeView AddNodeAndView(Type type)
+        {
+            return AddNodeAndView(type, LastContextualMenuMousePosition);
+        }
+
         public BehaviorTreeNodeView AddNodeAndView(Type type, Vector2 graphMousePosition)
         {
             UndoRecord($"AddNode  [{type.Name}]");
@@ -283,6 +303,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             var nodeView = CreateNodeView(node);
             this.AddElement(nodeView);
+
+            nearAddNodeType.Remove(type);
+            nearAddNodeType.Add(type);
+
             return nodeView;
         }
 
