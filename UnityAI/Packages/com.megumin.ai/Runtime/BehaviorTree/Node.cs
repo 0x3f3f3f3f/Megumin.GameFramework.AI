@@ -39,7 +39,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         void Enter()
         {
-            Debug.Log($"Enter Node {this.GetType().Name}");
+            Debug.Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
             State = Status.Running;
             OnEnter();
         }
@@ -53,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             State = OnExit(result);
 
-            Debug.Log($"Exit Node [{State}]  :  {this.GetType().Name}");
+            Debug.Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this.GetType().Name}");
             return State;
         }
 
@@ -168,7 +168,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected virtual void OnAbort()
         {
-            
+
         }
 
         protected virtual Status OnTick()
