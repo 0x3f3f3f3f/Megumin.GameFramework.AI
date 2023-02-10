@@ -10,6 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string test = "行为树SO资产";
+        public string Comment = "load2";
         public List<NodeAsset> Nodes = new List<NodeAsset>();
 
         [Serializable]
@@ -162,31 +163,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             var check = new CheckBool();
             log.Derators = new object[] { check };
             tree.StartNode = loop;
-        }
-
-        private void Load2(BehaviorTree tree)
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.Child0 = seq;
-
-            tree.StartNode = loop;
-        }
-
-        private void Load1(BehaviorTree tree)
-        {
-            var wait = tree.AddNode<Wait>();
-            var log = tree.AddNode<Log>();
-            var seq = tree.AddNode<Sequence>();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            tree.StartNode = seq;
         }
 
         public void OnBeforeSerialize()

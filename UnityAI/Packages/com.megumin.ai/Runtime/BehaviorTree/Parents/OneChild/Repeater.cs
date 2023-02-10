@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public class Repeater : OneChildNode
     {
-        int loopCount = 2;
+        public int loopCount = 2;
 
         int cur = 0;
         protected override Status OnTick()
