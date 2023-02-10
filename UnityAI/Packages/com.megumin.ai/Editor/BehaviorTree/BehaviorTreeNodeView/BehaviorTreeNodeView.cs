@@ -48,10 +48,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public override void SetPosition(Rect newPos)
         {
-            //对位置取整，不然保存的时候会有小数。
-            var newIntPos = new Rect((int)newPos.x, (int)newPos.y, newPos.width,newPos.height);
+            //对位置取整，不然保存的时候会有小数。 会导致拖拽时抖动，放弃。
+            //newPos = new Rect((int)newPos.x, (int)newPos.y, newPos.width,newPos.height);
 
-            base.SetPosition(newIntPos);
+            base.SetPosition(newPos);
             if (SONode.Node.Meta == null)
             {
                 SONode.Node.Meta = new NodeMeta();
@@ -59,8 +59,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //this.LogFuncName();
             TreeView.UndoRecord($"SetPosition    [{SONode.Node.GetType().Name}]");
-            SONode.Node.Meta.x = newIntPos.x;
-            SONode.Node.Meta.y = newIntPos.y;
+            SONode.Node.Meta.x = newPos.x;
+            SONode.Node.Meta.y = newPos.y;
 
             //父节点重新排序
             foreach (var edge in InputPort.connections)
