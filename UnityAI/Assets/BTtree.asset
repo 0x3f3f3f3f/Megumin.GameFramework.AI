@@ -28,6 +28,19 @@ MonoBehaviour:
       FriendlyDescription: 
       Comment: 
     ChildNodes: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: 1243df12-87fc-449c-bfe4-4bb02d7477ba
+    IsStartNode: 0
+    Meta:
+      x: 670.41113
+      y: 68.999985
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
     IsStartNode: 0

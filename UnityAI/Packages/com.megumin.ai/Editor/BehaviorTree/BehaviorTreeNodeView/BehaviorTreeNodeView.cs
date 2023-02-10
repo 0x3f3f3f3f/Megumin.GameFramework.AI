@@ -89,7 +89,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
-            OutputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(byte));
+
+            Port.Capacity multiOutputPort = node is OneChildNode ? Port.Capacity.Single : Port.Capacity.Multi;
+            OutputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Output, multiOutputPort, typeof(byte));
 
             inputContainer.Add(InputPort);
             outputContainer.Add(OutputPort);
