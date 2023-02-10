@@ -9,6 +9,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Serializable]
     public class CheckBool : IConditionable
     {
+        public bool A = false;
+        public bool B = false;
         public bool Cal()
         {
             return true;

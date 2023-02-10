@@ -135,13 +135,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             seq.children.Add(log);
 
             var loop = new Loop();
-            seq.Derators = new object[] { loop };
+            seq.Decorators = new object[] { loop };
             //var loop = new Repeater();
             //loop.child = seq;
 
             var check = new CheckBool();
             var remap = new Remap();
-            log.Derators = new object[] { check, remap };
+            log.Decorators = new object[] { check, remap };
             tree.StartNode = seq;
         }
 
@@ -158,7 +158,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             var check = new CheckBool();
             var remap = new Remap();
-            log.Derators = new object[] { check, remap };
+            log.Decorators = new object[] { check, remap };
             tree.StartNode = loop;
         }
 
@@ -174,7 +174,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             loop.Child0 = seq;
 
             var check = new CheckBool();
-            log.Derators = new object[] { check };
+            log.Decorators = new object[] { check };
             tree.StartNode = loop;
         }
 
