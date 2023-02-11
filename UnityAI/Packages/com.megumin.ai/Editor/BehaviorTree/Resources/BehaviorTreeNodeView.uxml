@@ -4,7 +4,7 @@
         <ui:VisualElement name="top">
             <ui:VisualElement name="input" style="flex-direction: column; align-items: center;" />
             <ui:VisualElement name="divider" class="vertical" />
-            <ui:VisualElement name="decorator" style="border-left-color: rgb(109, 226, 39); border-right-color: rgb(109, 226, 39); border-top-color: rgb(109, 226, 39); border-bottom-color: rgb(109, 226, 39); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; display: none;">
+            <ui:VisualElement name="decorator" style="border-left-color: rgb(109, 226, 39); border-right-color: rgb(109, 226, 39); border-top-color: rgb(109, 226, 39); border-bottom-color: rgb(109, 226, 39); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
                 <ui:ListView focusable="true" style="border-left-color: rgb(62, 164, 190); border-right-color: rgb(62, 164, 190); border-top-color: rgb(62, 164, 190); border-bottom-color: rgb(62, 164, 190); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; max-height: none; margin-left: 10px; margin-right: 10px; margin-bottom: 5px; margin-top: 5px;" />
             </ui:VisualElement>
             <ui:VisualElement name="title">
