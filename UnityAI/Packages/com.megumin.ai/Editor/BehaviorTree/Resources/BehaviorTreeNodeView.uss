@@ -18,3 +18,30 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+.decoratorContainer {
+    border-left-color: rgb(39, 170, 226);
+    border-right-color: rgb(109, 226, 39);
+    border-top-color: rgb(109, 226, 39);
+    border-bottom-color: rgb(109, 226, 39);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.decoratorList {
+    border-left-color: rgb(190, 80, 62);
+    border-right-color: rgb(190, 62, 175);
+    border-top-color: rgb(119, 62, 190);
+    border-bottom-color: rgb(62, 164, 190);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    max-height: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
