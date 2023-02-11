@@ -69,6 +69,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             serializeGraphElements -= OnSerializeGraphElements;
             canPasteSerializedData -= OnCanPasteSerializedData;
             unserializeAndPaste -= OnUnserializeAndPaste;
+            DestoryCacheSOWrapper();
+        }
+
+        /// <summary>
+        /// 在项目重新编译时销毁缓存SO。解决Inspector锁定时，显示错误的SO信息。
+        /// </summary>
+        internal void DestoryCacheSOWrapper()
+        {
+            UnityEngine.Object.DestroyImmediate(SOTree);
+            foreach (var sonode in NodeWrapperCache)
+            {
+                UnityEngine.Object.DestroyImmediate(sonode.Value);
+            }
+            NodeWrapperCache.Clear();
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)

@@ -113,6 +113,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void CreateGUI()
         {
+            this.LogMethodName();
             VisualElement root = rootVisualElement;
             root.AddToClassList("behaviorTreeEditor");
 
@@ -275,12 +276,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void OnEnable()
         {
-
+            this.LogMethodName(TreeView);
         }
 
         private void OnDestroy()
         {
+            //this.LogMethodName(TreeView);
+        }
+
+        private void Reset()
+        {
+            //this.LogMethodName(TreeView);
+        }
+
+        private void OnDisable()
+        {
+            this.LogMethodName(TreeView);
             TreeView?.Dispose();
+        }
+
+        private void OnProjectChange()
+        {
+            //this.LogMethodName(TreeView);
         }
 
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
