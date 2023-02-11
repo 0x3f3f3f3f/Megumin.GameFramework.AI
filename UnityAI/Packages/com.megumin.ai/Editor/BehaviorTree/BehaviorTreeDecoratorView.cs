@@ -10,12 +10,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeDecoratorView : VisualElement
     {
+        public Label Title { get; }
+
         public new class UxmlFactory : UxmlFactory<BehaviorTreeDecoratorView, UxmlTraits> { }
 
         public BehaviorTreeDecoratorView()
         {
-            //var visualTree = Resources.Load<VisualTreeAsset>("BehaviorTreeDecoratorView");
-            //visualTree.CloneTree(this);
+            var visualTree = Resources.Load<VisualTreeAsset>("BehaviorTreeDecoratorView");
+            visualTree.CloneTree(this);
+
+            Title = this.Q<Label>("title-label");
         }
     }
 }

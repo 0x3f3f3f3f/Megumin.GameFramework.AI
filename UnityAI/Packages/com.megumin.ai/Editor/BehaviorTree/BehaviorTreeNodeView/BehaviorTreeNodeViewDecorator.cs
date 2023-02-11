@@ -60,5 +60,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             return decorator;
         }
+
+        public void CreateDecoratorView(BTNode node)
+        {
+            if (node.Decorators != null)
+            {
+                foreach (var decorator in node.Decorators)
+                {
+                    var elem = new BehaviorTreeDecoratorView();
+                    elem.Title.text = decorator.GetType().Name;
+                    DecoretorListView.parent.Add(elem);
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=132ed6f68d8f6db4d8135ba9b7ab7781&amp;type=3#BehaviorTreeEditor" />
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
-    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeEditorDebug.uss?fileID=7433441132597879392&amp;guid=d7c2147ca3c887d42ae706c1b3c12ed2&amp;type=3#BehaviorTreeEditorDebug" />
+    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeDebug.uss?fileID=7433441132597879392&amp;guid=d7c2147ca3c887d42ae706c1b3c12ed2&amp;type=3#BehaviorTreeEditorDebug" />
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BahaviorTreeDecoratorView" />
     <uie:Toolbar name="toolbar">
         <uie:ToolbarButton text="Save Asset" display-tooltip-when-elided="true" name="saveAsset" class="topbar-button" />

@@ -28,10 +28,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
 
-            decoretorListView = this.Q<ListView>();
-
-            var elem = new BehaviorTreeDecoratorView();
-            this.Add(elem);
+            DecoretorListView = this.Q<ListView>();
         }
 
 
@@ -41,7 +38,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
-        public ListView decoretorListView { get; }
+        public ListView DecoretorListView { get; }
 
         public override void Select(VisualElement selectionContainer, bool additive)
         {
@@ -135,6 +132,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;
+
+                CreateDecoratorView(node);
             }
 
             InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
