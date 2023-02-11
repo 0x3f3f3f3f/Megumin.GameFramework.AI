@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BahaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BahaviorTreeDecoratorView" />
+    <ui:VisualElement class="border">
+        <ui:Label text="Label" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,10 @@
+.border {
+    border-left-color: rgb(212, 79, 79);
+    border-right-color: rgb(212, 79, 79);
+    border-top-color: rgb(212, 79, 79);
+    border-bottom-color: rgb(212, 79, 79);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
