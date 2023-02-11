@@ -68,7 +68,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [SerializeReference]
         public object[] Decorators;
 
-        public void AddDecorator(object decorator)
+        public object AddDecorator(object decorator)
         {
             if (Decorators == null)
             {
@@ -76,6 +76,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             //TODO, 优化 类型/插入。
             Decorators = Decorators.Append(decorator).ToArray();
+            return decorator;
+        }
+
+        public object AddDecorator<T>()
+            where T : class,new()
+        {
+            return AddDecorator(new T());
         }
 
         /// <summary>

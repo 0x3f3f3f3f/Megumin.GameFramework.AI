@@ -23,11 +23,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             else
             {
                 CreateTreeSOTreeIfNull();
+
+                //this.LogMethodName(name);
+
                 Undo.RecordObject(SOTree, name);
                 SOTree.ChangeVersion++;
                 LoadVersion = SOTree.ChangeVersion;
 
-                EditorWindow.UpdateHasUnsavedChanges();
+                EditorWindow?.UpdateHasUnsavedChanges();
             }
         }
 

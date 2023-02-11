@@ -48,6 +48,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             child.name = "minimap";
             this.AddElement(child);
 
+            CreateUIBuilderDebugNode();
+
             createNodeMenu = ScriptableObject.CreateInstance<CreateNodeSearchWindowProvider>();
             createNodeMenu.Initialize(this);
 
@@ -83,6 +85,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 UnityEngine.Object.DestroyImmediate(sonode.Value);
             }
             NodeWrapperCache.Clear();
+        }
+
+        void CreateUIBuilderDebugNode()
+        {
+            using var undom = UndoMute.Enter("CreateUIBuilderDebugNode");
+            var node = new Sequence();
+            node.GUID = Guid.NewGuid().ToString();
+            node.AddDecorator<Loop>();
+            node.AddDecorator<Cooldown>();
+
+            var nodeView = CreateNodeView(node);
+            //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+            nodeView.AddToClassList("uiBuilderDebugNode");
+            this.AddElement(nodeView);
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)

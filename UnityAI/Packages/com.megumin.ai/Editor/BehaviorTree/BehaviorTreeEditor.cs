@@ -104,6 +104,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             UpdateSaveMessage();
+            //this.LogMethodName(hasUnsavedChanges);
         }
 
         public void Update()
@@ -234,12 +235,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var success = CurrentAsset.SaveTree(TreeView.Tree);
             if (success)
             {
-                SaveVersion = TreeView.SOTree.ChangeVersion;
-                UpdateHasUnsavedChanges();
                 EditorUtility.SetDirty(CurrentAsset);
                 AssetDatabase.SaveAssetIfDirty(CurrentAsset);
                 AssetDatabase.Refresh();
+
                 Debug.Log($"保存资源成功");
+                SaveVersion = TreeView.SOTree.ChangeVersion;
+                UpdateHasUnsavedChanges();
             }
             else
             {
