@@ -74,10 +74,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
         {
-            var windowRoot = behaviorTreeView.EditorWindow.rootVisualElement;
-            var windowMousePosition = windowRoot.ChangeCoordinatesTo(
-                windowRoot.parent, context.screenMousePosition - behaviorTreeView.EditorWindow.position.position);
-            var graphMousePosition = behaviorTreeView.contentViewContainer.WorldToLocal(windowMousePosition);
+            Vector2 editorwindowMousePosition = context.screenMousePosition
+                                                - behaviorTreeView.EditorWindow.position.position;
+            var graphMousePosition = behaviorTreeView.contentViewContainer.WorldToLocal(editorwindowMousePosition);
 
             behaviorTreeView.AddNodeAndView(searchTreeEntry.userData as Type, graphMousePosition);
 
