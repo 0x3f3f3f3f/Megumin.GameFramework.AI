@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreeEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private void BuildContextualMenuDecorator(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction("AddCheckBool", a => AddCheckBool(), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(a), DropdownMenuAction.AlwaysEnabled);
 
             for (int i = nearDType.Count - 1; i >= 0; i--)
             {
@@ -25,13 +26,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             evt.menu.AppendSeparator();
         }
 
-        private void OpenDecoratorSearchWindow()
+        private void OpenDecoratorSearchWindow(DropdownMenuAction a)
         {
             CreateDecoratorSearchWindowProvider decoratorSearchWindowProvider
             = ScriptableObject.CreateInstance<CreateDecoratorSearchWindowProvider>();
-            decoratorSearchWindowProvider.hideFlags= HideFlags.DontSave;
+            decoratorSearchWindowProvider.hideFlags = HideFlags.DontSave;
             decoratorSearchWindowProvider.NodeView = this;
-            SearchWindow.Open(new SearchWindowContext(TreeView.LastContextualMenuMousePosition), decoratorSearchWindowProvider);
+
+            var screenMousePosition = TreeView.EditorWindow.position.position + a.eventInfo.mousePosition;
+            SearchWindow.Open(new SearchWindowContext(screenMousePosition), decoratorSearchWindowProvider);
         }
 
         private void AddCheckBool()
