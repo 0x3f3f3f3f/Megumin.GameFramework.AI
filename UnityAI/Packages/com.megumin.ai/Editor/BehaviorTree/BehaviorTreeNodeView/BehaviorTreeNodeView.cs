@@ -27,6 +27,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
+
+            decoretorListView = this.Q<ListView>();
+
+            var elem = new BehaviorTreeDecoratorView();
+            this.Add(elem);
         }
 
 
@@ -36,6 +41,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
+        public ListView decoretorListView { get; }
 
         public override void Select(VisualElement selectionContainer, bool additive)
         {
