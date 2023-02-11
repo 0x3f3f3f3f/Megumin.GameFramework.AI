@@ -378,6 +378,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// <summary>
         /// 尝试复用旧的SOWrapper,解决Inpector面板锁定时不刷新的问题。
         /// </summary>
+        /// <remarks>
+        /// 这里不要用静态。同一个treeAsset可能同时打开不同的EditorWindow，并临时进行不同的更改。
+        /// 如果使用全局静态，会导致Guid Key冲突。
+        /// </remarks>
         internal protected Dictionary<string, NodeWrapper> NodeWrapperCache = new();
         public BehaviorTreeNodeView CreateNodeView(BTNode node)
         {

@@ -113,11 +113,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
 
                 //保存装饰器
-                foreach (var decorator in node.Decorators)
+                if (node.Decorators != null)
                 {
-                    var decoratorAsset = new DecoratorAsset();
-                    decoratorAsset.TypeName = decorator.GetType().FullName;
-                    nodeAsset.Decorators.Add(decoratorAsset);
+                    foreach (var decorator in node?.Decorators)
+                    {
+                        var decoratorAsset = new DecoratorAsset();
+                        decoratorAsset.TypeName = decorator.GetType().FullName;
+                        nodeAsset.Decorators.Add(decoratorAsset);
+                    }
                 }
 
                 Nodes.Add(nodeAsset);
