@@ -17,7 +17,12 @@ namespace Megumin.GameFramework.AI
         [DebuggerHidden]
         [DebuggerStepThrough]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogMethodName(this UnityEngine.Object @object, object state = null, [CallerMemberName] string funcName = null)
+        public static void LogMethodName(this UnityEngine.Object @object,
+                                         object state = null,
+                                         object state1 = null,
+                                         object state2 = null,
+                                         object state3 = null,
+                                         [CallerMemberName] string funcName = null)
         {
             if (state == null)
             {
@@ -25,14 +30,19 @@ namespace Megumin.GameFramework.AI
             }
             else
             {
-                Debug.Log($"{funcName}  {state}");
+                Debug.Log($"{funcName}    {state}    {state1}    {state2}    {state3}");
             }
         }
 
         [DebuggerHidden]
         [DebuggerStepThrough]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogMethodName(this IEventHandler @object, object state = null, [CallerMemberName] string funcName = null)
+        public static void LogMethodName(this IEventHandler @object,
+                                         object state = null,
+                                         object state1 = null,
+                                         object state2 = null,
+                                         object state3 = null,
+                                         [CallerMemberName] string funcName = null)
         {
             if (state == null)
             {
@@ -40,7 +50,7 @@ namespace Megumin.GameFramework.AI
             }
             else
             {
-                Debug.Log($"{funcName}  {state}");
+                Debug.Log($"{funcName}    {state}    {state1}    {state2}    {state3}");
             }
         }
     }

@@ -52,13 +52,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     var nodeCount = copyedElement.Count(elem => elem is BehaviorTreeNodeView);
                     using var mute = UndoBeginScope($"Paste {nodeCount} node");
 
-                    Dictionary<object, BehaviorTreeNodeView> newPaste = new();
+                    Dictionary<BehaviorTreeNodeView, BehaviorTreeNodeView> newPaste = new();
                     foreach (var item in copyedElement)
                     {
                         if (item is BehaviorTreeNodeView nodeView)
                         {
                             var newView = PasteNodeAndView(nodeView, nodeView.layout.position - rootPos);
-                            newPaste[item] = newView;
+                            newPaste[nodeView] = newView;
                         }
                     }
 
@@ -66,7 +66,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     foreach (var item in copyedElement)
                     {
                         if (item is BehaviorTreeNodeView nodeView
-                            && newPaste.TryGetValue(item, out var newChildView))
+                            && newPaste.TryGetValue(nodeView, out var newChildView))
                         {
                             //通过被复制的节点，拿到通过粘贴生成的新阶段
                             foreach (var edge in nodeView.InputPort.connections)
@@ -90,6 +90,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     foreach (var item in newPaste)
                     {
                         this.AddToSelection(item.Value);
+
+                        if (item.Key.SONode == Selection.activeObject)
+                        {
+                            Selection.activeObject = item.Value.SONode;
+                            break;
+                        }
                     }
                 }
             }

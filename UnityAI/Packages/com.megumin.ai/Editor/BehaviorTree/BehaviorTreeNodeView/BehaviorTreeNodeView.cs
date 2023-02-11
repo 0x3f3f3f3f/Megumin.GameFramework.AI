@@ -40,11 +40,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
-            Debug.Log(title);
+            //this.LogMethodName(title);
             if (SONode)
             {
                 Selection.activeObject = SONode;
             }
+        }
+
+        public override void OnUnselected()
+        {
+            base.OnUnselected();
+
+            //取消选中时保留显示
+
+            //this.LogMethodName(title);
+            //if (Selection.activeObject == SONode)
+            //{
+            //    Selection.activeObject = null;
+            //}
         }
 
         public override void SetPosition(Rect newPos)
