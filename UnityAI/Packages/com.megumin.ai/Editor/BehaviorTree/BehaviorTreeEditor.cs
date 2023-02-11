@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -47,10 +48,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             BehaviorTreeEditor[] array = Resources.FindObjectsOfTypeAll(typeof(BehaviorTreeEditor)) as BehaviorTreeEditor[];
             if (array != null)
             {
+                BehaviorTreeEditor emptyEditor = null;
                 foreach (var item in array)
                 {
                     if (item)
                     {
+                        if (!emptyEditor && !item.CurrentAsset && item.TreeView?.SOTree?.Tree == null)
+                        {
+                            //找到一个打开的空的Editor
+                            emptyEditor = item;
+                        }
+
                         if (item.CurrentAsset == asset)
                         {
                             Debug.Log($"找到匹配的已打开EditorWindow {asset}");
@@ -60,6 +68,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             return item;
                         }
                     }
+                }
+
+                if (emptyEditor)
+                {
+                    return emptyEditor;
                 }
             }
 
@@ -114,7 +127,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void CreateGUI()
         {
-            this.LogMethodName();
+            this.LogMethodName(CurrentAsset, TreeView?.SOTree);
             VisualElement root = rootVisualElement;
             root.AddToClassList("behaviorTreeEditor");
 
@@ -176,13 +189,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
             {
-
+                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset>()
+                                     .FirstOrDefault(elem => elem.name == "BTtree");
+                AssetDatabase.OpenAsset(asset);
             };
 
             var test2 = root.Q<ToolbarButton>("test2");
             test2.clicked += () =>
             {
-
+                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset>()
+                                     .FirstOrDefault(elem => elem.name == "BTtree 1");
+                AssetDatabase.OpenAsset(asset);
             };
 
             var test3 = root.Q<ToolbarButton>("test3");

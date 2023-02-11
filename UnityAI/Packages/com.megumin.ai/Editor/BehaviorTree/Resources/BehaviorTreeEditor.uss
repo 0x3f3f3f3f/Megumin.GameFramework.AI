@@ -72,6 +72,6 @@ BehaviorTreeView .debug {
     align-items: center;
 }
 
-.startNode {
-    background-color: rgba(24, 90, 106, 255);
+.startNode #title{
+    background-color:rgba(8, 92, 141, 0.753);
 }

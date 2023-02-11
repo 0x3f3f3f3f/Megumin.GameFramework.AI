@@ -17,10 +17,10 @@ MonoBehaviour:
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895
-    IsStartNode: 1
+    IsStartNode: 0
     Meta:
-      x: 217
-      y: 109
+      x: 300
+      y: 224
       index: 0
       Name: 
       FriendlyName: 
@@ -32,15 +32,16 @@ MonoBehaviour:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
-    IsStartNode: 0
+    IsStartNode: 1
     Meta:
-      x: 202
-      y: 214
+      x: 383
+      y: 74
       index: 0
       Name: 
       FriendlyName: 
       Description: 
       FriendlyDescription: 
       Comment: 
-    ChildNodes: []
+    ChildNodes:
+    - 41325448-eb0c-4c89-8de1-a6cf9c625895
     Decorators: []
