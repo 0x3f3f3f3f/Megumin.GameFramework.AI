@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             visualTree.CloneTree(this);
 
             Title = this.Q<Label>("title-label");
-            this.AddManipulator(new TestMouseManipulator());
+            //this.AddManipulator(new TestMouseManipulator());
             //pickingMode = PickingMode.Position;
             this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
         }
@@ -42,25 +42,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.Decorator = decorator;
         }
 
-        protected override void ExecuteDefaultActionAtTarget(EventBase evt)
-        {
-            base.ExecuteDefaultActionAtTarget(evt);
+        //protected override void ExecuteDefaultActionAtTarget(EventBase evt)
+        //{
+        //    base.ExecuteDefaultActionAtTarget(evt);
 
-            if (evt.eventTypeId == EventBase<MouseDownEvent>.TypeId())
-            {
-                this.LogMethodName(evt.ToStringReflection());
-            }
-        }
+        //    if (evt.eventTypeId == EventBase<MouseDownEvent>.TypeId())
+        //    {
+        //        this.LogMethodName(evt.ToStringReflection());
+        //    }
+        //}
 
-        protected override void ExecuteDefaultAction(EventBase evt)
-        {
+        //protected override void ExecuteDefaultAction(EventBase evt)
+        //{
             
-            base.ExecuteDefaultAction(evt);
+        //    base.ExecuteDefaultAction(evt);
 
-            if (evt.eventTypeId == EventBase<MouseEnterEvent>.TypeId())
-            {
-                this.LogMethodName(evt.ToStringReflection());
-            }
-        }
+        //    if (evt.eventTypeId == EventBase<MouseEnterEvent>.TypeId())
+        //    {
+        //        this.LogMethodName(evt.ToStringReflection());
+        //    }
+        //}
     }
 }

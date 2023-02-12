@@ -93,5 +93,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 decoratorView.SetDecorator(decorator);
             }
         }
+
+        private void DecoretorListView_onItemsChosen(IEnumerable<object> obj)
+        {
+            this.LogMethodName(obj.FirstOrDefault());
+        }
+
+        private void DecoretorListView_itemIndexChanged(int arg1, int arg2)
+        {
+            this.LogMethodName(arg1,arg2);  
+        }
     }
 }

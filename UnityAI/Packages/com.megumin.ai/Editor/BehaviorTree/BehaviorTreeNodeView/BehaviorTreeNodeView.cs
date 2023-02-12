@@ -32,6 +32,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //DecoretorListView.AddManipulator(new TestMouseManipulator());
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
+            DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;
+            DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
         }
 
         public NodeWrapper SONode;

@@ -5,7 +5,7 @@
             <ui:VisualElement name="input" style="flex-direction: column; align-items: center;" />
             <ui:VisualElement name="divider" class="vertical" />
             <ui:VisualElement name="decorator" class="decoratorContainer">
-                <ui:ListView reorderable="true" show-border="true" picking-mode="Ignore" class="decoratorList" />
+                <ui:ListView reorderable="true" show-border="true" selection-type="Single" reorder-mode="Animated" class="decoratorList" />
             </ui:VisualElement>
             <ui:VisualElement name="title">
                 <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
