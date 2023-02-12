@@ -28,7 +28,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.AlwaysEnabled);
-            //evt.StopPropagation();
+            evt.menu.AppendSeparator();
+
+            //拖拽Bug有点多，暂时用菜单实现。
+            evt.menu.AppendAction($"Move Up", a => NodeView?.MoveUpDecorator(this), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction($"Move Down", a => NodeView?.MoveDownDecorator(this), DropdownMenuAction.AlwaysEnabled);
         }
 
         public override VisualElement contentContainer => base.contentContainer;

@@ -101,7 +101,54 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void DecoretorListView_itemIndexChanged(int arg1, int arg2)
         {
-            this.LogMethodName(arg1,arg2);  
+            this.LogMethodName(arg1, arg2);
+        }
+
+        internal void MoveUpDecorator(BehaviorTreeDecoratorView decoratorView)
+        {
+
+
+            if (SONode.Node.Decorators != null)
+            {
+                for (int i = 0; i < SONode.Node.Decorators.Length; i++)
+                {
+                    var d = SONode.Node.Decorators[i];
+                    if (d == decoratorView.Decorator)
+                    {
+                        if (i != 0)
+                        {
+                            TreeView.UndoRecord($"MoveUpDecorator  [{decoratorView.Decorator.GetType().Name}]");
+                            var prev = SONode.Node.Decorators[i - 1];
+                            SONode.Node.Decorators[i - 1] = d;
+                            SONode.Node.Decorators[i] = prev;
+                            RefreshDecoratorListView();
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void MoveDownDecorator(BehaviorTreeDecoratorView decoratorView)
+        {
+            if (SONode.Node.Decorators != null)
+            {
+                for (int i = 0; i < SONode.Node.Decorators.Length; i++)
+                {
+                    var d = SONode.Node.Decorators[i];
+                    if (d == decoratorView.Decorator)
+                    {
+                        if (i != SONode.Node.Decorators.Length - 1)
+                        {
+                            TreeView.UndoRecord($"MoveDownDecorator  [{decoratorView.Decorator.GetType().Name}]");
+                            var next = SONode.Node.Decorators[i + 1];
+                            SONode.Node.Decorators[i + 1] = d;
+                            SONode.Node.Decorators[i] = next;
+
+                            RefreshDecoratorListView();
+                        }
+                    }
+                }
+            }
         }
     }
 }
