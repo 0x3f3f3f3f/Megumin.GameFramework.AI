@@ -27,15 +27,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction($"Remove Decorator", a => { }, DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.AlwaysEnabled);
             //evt.StopPropagation();
         }
 
         public override VisualElement contentContainer => base.contentContainer;
 
+        public BehaviorTreeNodeView NodeView { get; internal set; }
+        public object Decorator { get; private set; }
+
         internal void SetDecorator(object decorator)
         {
             Title.text = decorator?.GetType().Name;
+            this.Decorator = decorator;
         }
 
         protected override void ExecuteDefaultActionAtTarget(EventBase evt)

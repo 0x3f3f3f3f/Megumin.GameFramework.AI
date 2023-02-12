@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -83,6 +84,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             where T : class,new()
         {
             return AddDecorator(new T());
+        }
+
+        internal void RemoveDecorator(object decorator)
+        {
+            var list = Decorators.ToList();
+            list.Remove(decorator);
+            Decorators = list.ToArray();
         }
 
         /// <summary>

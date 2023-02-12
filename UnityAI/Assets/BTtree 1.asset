@@ -31,10 +31,6 @@ MonoBehaviour:
     Decorators:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.Lock
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Cooldown
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.DecoratorLog
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Remap
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
     IsStartNode: 1

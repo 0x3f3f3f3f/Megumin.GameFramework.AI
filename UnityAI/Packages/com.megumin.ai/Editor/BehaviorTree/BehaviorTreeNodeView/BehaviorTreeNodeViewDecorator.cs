@@ -7,6 +7,7 @@ using TreeEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -53,26 +54,34 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             nearDType.Add(type);
 
             //刷新UI
-            DecoretorListView.Rebuild();
+            RefreshDecoratorListView();
+
             return decorator;
         }
 
-        public void CreateDecoratorView(BTNode node)
+        public void RefreshDecoratorListView()
         {
-            if (node.Decorators != null)
-            {
-                DecoretorListView.itemsSource = node.Decorators;
-                DecoretorListView.Rebuild();
-            }
+            DecoretorListView.itemsSource = SONode.Node.Decorators;
+            DecoretorListView.Rebuild();
         }
-        private void RemoveDecorator(BehaviorTreeDecoratorView decoratorView)
+
+        internal void RemoveDecorator(BehaviorTreeDecoratorView decoratorView)
         {
             this.LogMethodName(decoratorView);
+            TreeView.UndoRecord($"decoratorView  [{decoratorView.Decorator.GetType().Name}]");
+            if (SONode.Node.Decorators != null)
+            {
+                SONode.Node.RemoveDecorator(decoratorView.Decorator);
+            }
+
+            //刷新UI
+            RefreshDecoratorListView();
         }
 
         internal protected VisualElement ListViewMakeDecoratorView()
         {
             var elem = new BehaviorTreeDecoratorView();
+            elem.NodeView = this;
             return elem;
         }
 

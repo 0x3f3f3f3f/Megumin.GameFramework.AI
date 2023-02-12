@@ -135,7 +135,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SONode.Node = node;
                 SONode.name = type.Name;
 
-                CreateDecoratorView(node);
+                RefreshDecoratorListView();
             }
 
             InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
