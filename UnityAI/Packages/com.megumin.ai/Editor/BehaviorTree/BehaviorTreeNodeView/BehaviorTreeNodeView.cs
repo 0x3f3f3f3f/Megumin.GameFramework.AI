@@ -156,14 +156,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        internal void BuildContextualMenuBeforeBase(ContextualMenuPopulateEvent evt)
+        public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
-            evt.menu.AppendSeparator();
+            //this.LogMethodName();
+            base.BuildContextualMenu(evt);
 
             evt.menu.AppendAction("Open Node Script", a => OpenNodeScript(), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Open Node View Script", a => OpenNodeViewScript(), DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendSeparator();
+
+            evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
             evt.menu.AppendSeparator();
 
             BuildContextualMenuDecorator(evt);
@@ -209,11 +212,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private void OpenNodeViewScript()
         {
 
-        }
-
-        internal void BuildContextualMenuAfterBase(ContextualMenuPopulateEvent evt)
-        {
-            evt.menu.AppendAction("TestNode2", a => { }, DropdownMenuAction.AlwaysEnabled);
         }
 
         public void SetStart()

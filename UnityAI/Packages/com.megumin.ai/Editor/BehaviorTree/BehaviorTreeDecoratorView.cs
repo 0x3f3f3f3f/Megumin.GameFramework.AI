@@ -22,6 +22,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Title = this.Q<Label>("title-label");
             this.AddManipulator(new TestMouseManipulator());
             //pickingMode = PickingMode.Position;
+            this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
+        }
+
+        public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction($"Remove Decorator", a => { }, DropdownMenuAction.AlwaysEnabled);
+            //evt.StopPropagation();
         }
 
         public override VisualElement contentContainer => base.contentContainer;

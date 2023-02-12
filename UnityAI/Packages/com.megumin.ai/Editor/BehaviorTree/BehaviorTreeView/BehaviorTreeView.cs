@@ -290,15 +290,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
-            //Debug.Log(LastContextualMenuMousePosition);
 
-            //evt.menu.AppendAction("Test", Test, DropdownMenuAction.AlwaysEnabled);
-            //evt.menu.AppendSeparator();
-
-            if (evt.target is BehaviorTreeNodeView nodeView)
-            {
-                nodeView.BuildContextualMenuBeforeBase(evt);
-            }
+            this.LogMethodName(LastContextualMenuMousePosition);
 
             base.BuildContextualMenu(evt);
 
@@ -311,11 +304,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //    }
             //    evt.menu.AppendSeparator();
             //}
-
-            if (evt.target is BehaviorTreeNodeView nodeViewAfter)
-            {
-                nodeViewAfter.BuildContextualMenuAfterBase(evt);
-            }
         }
 
         private void Test(DropdownMenuAction obj)

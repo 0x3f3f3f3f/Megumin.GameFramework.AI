@@ -22,13 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 evt.menu.AppendAction($"Add Decorator/{type.Name}", a => AddDecorator(type), DropdownMenuAction.AlwaysEnabled);
             }
 
-            this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
-
-            if (evt.currentTarget is BehaviorTreeDecoratorView decoratorView)
-            {
-                evt.menu.AppendAction($"Remove Decorator", a => RemoveDecorator(decoratorView), DropdownMenuAction.AlwaysEnabled);
-            }
-
+            //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
             evt.menu.AppendSeparator();
         }
 
