@@ -53,5 +53,25 @@ namespace Megumin.GameFramework.AI
                 Debug.Log($"{funcName}    {state}    {state1}    {state2}    {state3}");
             }
         }
+
+        [DebuggerHidden]
+        [DebuggerStepThrough]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void LogMethodName(this IManipulator @object,
+                                         object state = null,
+                                         object state1 = null,
+                                         object state2 = null,
+                                         object state3 = null,
+                                         [CallerMemberName] string funcName = null)
+        {
+            if (state == null)
+            {
+                Debug.Log(funcName);
+            }
+            else
+            {
+                Debug.Log($"{funcName}    {state}    {state1}    {state2}    {state3}");
+            }
+        }
     }
 }

@@ -14,13 +14,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         private void BuildContextualMenuDecorator(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction("AddCheckBool", a => AddCheckBool(), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(a), DropdownMenuAction.AlwaysEnabled);
 
             for (int i = nearDType.Count - 1; i >= 0; i--)
             {
                 var type = nearDType[i];
                 evt.menu.AppendAction($"Add Decorator/{type.Name}", a => AddDecorator(type), DropdownMenuAction.AlwaysEnabled);
+            }
+
+            this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
+
+            if (evt.currentTarget is BehaviorTreeDecoratorView decoratorView)
+            {
+                evt.menu.AppendAction($"Remove Decorator", a => RemoveDecorator(decoratorView), DropdownMenuAction.AlwaysEnabled);
             }
 
             evt.menu.AppendSeparator();
@@ -35,12 +41,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var screenMousePosition = TreeView.EditorWindow.position.position + a.eventInfo.mousePosition;
             SearchWindow.Open(new SearchWindowContext(screenMousePosition), decoratorSearchWindowProvider);
-        }
-
-        private void AddCheckBool()
-        {
-            var check = new CheckBool();
-            SONode.Node.AddDecorator(check);
         }
 
         /// <summary>
@@ -58,6 +58,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             nearDType.Remove(type);
             nearDType.Add(type);
 
+            //刷新UI
+            DecoretorListView.Rebuild();
             return decorator;
         }
 
@@ -65,9 +67,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (node.Decorators != null)
             {
-                DecoretorListView.itemsSource= node.Decorators;
+                DecoretorListView.itemsSource = node.Decorators;
                 DecoretorListView.Rebuild();
             }
+        }
+        private void RemoveDecorator(BehaviorTreeDecoratorView decoratorView)
+        {
+            this.LogMethodName(decoratorView);
         }
 
         internal protected VisualElement ListViewMakeDecoratorView()

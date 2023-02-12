@@ -15,6 +15,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         protected override void RegisterCallbacksOnTarget()
         {
             target.RegisterCallback<MouseMoveEvent>(OnMouseMove);
+
+            //target.RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
             target.RegisterCallback<MouseDownEvent>(OnMouseDown);
         }
 
@@ -31,6 +33,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         protected override void UnregisterCallbacksFromTarget()
         {
             target.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
+
+            //target.UnregisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
+            target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
+        }
+    }
+
+    internal class TestMouseManipulator : MouseManipulator
+    {
+        protected override void RegisterCallbacksOnTarget()
+        {
+            target.RegisterCallback<MouseUpEvent>(OnMouseUp);
+
+            target.RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
+            target.RegisterCallback<MouseDownEvent>(OnMouseDown);
+        }
+
+        private void OnMouseDown(MouseDownEvent evt)
+        {
+            this.LogMethodName(evt.ToStringReflection());
+        }
+
+        private void OnMouseUp(MouseUpEvent evt)
+        {
+            this.LogMethodName(evt.ToStringReflection());
+        }
+
+        protected override void UnregisterCallbacksFromTarget()
+        {
+            target.UnregisterCallback<MouseUpEvent>(OnMouseUp);
+
+            target.UnregisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
             target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
         }
     }

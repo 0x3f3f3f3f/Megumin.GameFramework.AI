@@ -20,11 +20,36 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             visualTree.CloneTree(this);
 
             Title = this.Q<Label>("title-label");
+            this.AddManipulator(new TestMouseManipulator());
+            //pickingMode = PickingMode.Position;
         }
+
+        public override VisualElement contentContainer => base.contentContainer;
 
         internal void SetDecorator(object decorator)
         {
             Title.text = decorator?.GetType().Name;
+        }
+
+        protected override void ExecuteDefaultActionAtTarget(EventBase evt)
+        {
+            base.ExecuteDefaultActionAtTarget(evt);
+
+            if (evt.eventTypeId == EventBase<MouseDownEvent>.TypeId())
+            {
+                this.LogMethodName(evt.ToStringReflection());
+            }
+        }
+
+        protected override void ExecuteDefaultAction(EventBase evt)
+        {
+            
+            base.ExecuteDefaultAction(evt);
+
+            if (evt.eventTypeId == EventBase<MouseEnterEvent>.TypeId())
+            {
+                this.LogMethodName(evt.ToStringReflection());
+            }
         }
     }
 }

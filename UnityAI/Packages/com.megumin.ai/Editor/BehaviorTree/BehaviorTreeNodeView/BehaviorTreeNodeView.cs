@@ -29,6 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddToClassList("behaviorTreeNode");
 
             DecoretorListView = this.Q<ListView>();
+            //DecoretorListView.AddManipulator(new TestMouseManipulator());
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
         }
