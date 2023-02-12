@@ -29,8 +29,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddToClassList("behaviorTreeNode");
 
             DecoretorListView = this.Q<ListView>();
+            DecoretorListView.makeItem += ListViewMakeDecoratorView;
+            DecoretorListView.bindItem += ListViewBindDecorator;
         }
-
 
         public NodeWrapper SONode;
 

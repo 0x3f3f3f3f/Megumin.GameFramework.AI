@@ -21,5 +21,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             Title = this.Q<Label>("title-label");
         }
+
+        internal void SetDecorator(object decorator)
+        {
+            Title.text = decorator?.GetType().Name;
+        }
     }
 }

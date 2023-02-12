@@ -65,12 +65,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (node.Decorators != null)
             {
-                foreach (var decorator in node.Decorators)
-                {
-                    var elem = new BehaviorTreeDecoratorView();
-                    elem.Title.text = decorator.GetType().Name;
-                    DecoretorListView.parent.Add(elem);
-                }
+                DecoretorListView.itemsSource= node.Decorators;
+                DecoretorListView.Rebuild();
+            }
+        }
+
+        internal protected VisualElement ListViewMakeDecoratorView()
+        {
+            var elem = new BehaviorTreeDecoratorView();
+            return elem;
+        }
+
+        internal protected void ListViewBindDecorator(VisualElement view, int index)
+        {
+            if (view is BehaviorTreeDecoratorView decoratorView)
+            {
+                var decorator = SONode.Node.Decorators[index];
+                decoratorView.SetDecorator(decorator);
             }
         }
     }
