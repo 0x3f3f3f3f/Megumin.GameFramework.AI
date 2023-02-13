@@ -117,7 +117,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     {
                         if (i != 0)
                         {
-                            TreeView.UndoRecord($"MoveUpDecorator  [{decoratorView.Decorator.GetType().Name}]");
+                            TreeView.UndoRecord($"MoveUpDecorator  [{decoratorView.Decorator.GetType().Name}]  {i} -> {i - 1}");
                             var prev = SONode.Node.Decorators[i - 1];
                             SONode.Node.Decorators[i - 1] = d;
                             SONode.Node.Decorators[i] = prev;
@@ -139,7 +139,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     {
                         if (i != SONode.Node.Decorators.Length - 1)
                         {
-                            TreeView.UndoRecord($"MoveDownDecorator  [{decoratorView.Decorator.GetType().Name}]");
+                            TreeView.UndoRecord($"MoveDownDecorator  [{decoratorView.Decorator.GetType().Name}]  {i} -> {i - 1}");
                             var next = SONode.Node.Decorators[i + 1];
                             SONode.Node.Decorators[i + 1] = d;
                             SONode.Node.Decorators[i] = next;

@@ -116,7 +116,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (CanStartManipulation(evt))
             {
-                Debug.Log($"StopPropagation {evt.ToStringReflection()}");
+                //Debug.Log($"StopPropagation {evt.ToStringReflection()}");
                 evt.StopPropagation();
             }
         }
