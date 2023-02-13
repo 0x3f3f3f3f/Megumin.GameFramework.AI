@@ -28,12 +28,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
 
-            DecoretorListView = this.Q<ListView>();
-            //DecoretorListView.AddManipulator(new TestMouseManipulator());
+            decoratorContainer = this.Q<VisualElement>("decorator");
+            //decoratorContainer.AddManipulator(new TestMouseManipulator());
+            //为了屏蔽 装饰器内 框选误选中node。 组织事件向父级传播。
+            //TODO，不知道为啥要同时停止MouseDownEvent  MouseUpEvent 才有效。
+            decoratorContainer.AddManipulator(new StopPropagationMouseManipulator<MouseDownEvent, MouseUpEvent>());
+            //decoratorContainer.RegisterCallback<MouseUpEvent>(evt =>
+            //{
+            //    this.LogMethodName("MouseUpEvent WillStop");
+            //    evt.StopImmediatePropagation();
+            //}, TrickleDown.NoTrickleDown);
+
+            //decoratorContainer.RegisterCallback<MouseDownEvent>(evt =>
+            //{
+            //    this.LogMethodName("MouseDownEvent WillStop");
+            //    //evt.StopPropagation();
+            //    evt.StopImmediatePropagation();
+            //}, TrickleDown.NoTrickleDown);
+
+            DecoretorListView = decoratorContainer.Q<ListView>();
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
             DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;
             DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
+
+
+
         }
 
         public NodeWrapper SONode;
@@ -42,12 +62,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
+        public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
 
-        public override void Select(VisualElement selectionContainer, bool additive)
+        public override void OnSelected()
         {
-            base.Select(selectionContainer, additive);
             //this.LogMethodName(title);
+            base.OnSelected();
             if (SONode)
             {
                 Selection.activeObject = SONode;
@@ -56,6 +77,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public override void OnUnselected()
         {
+            //this.LogMethodName(title);
             base.OnUnselected();
 
             //取消选中时保留显示
