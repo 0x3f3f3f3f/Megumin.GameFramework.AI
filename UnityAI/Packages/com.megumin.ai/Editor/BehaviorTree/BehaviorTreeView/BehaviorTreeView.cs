@@ -291,7 +291,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             LastContextualMenuMousePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
 
-            this.LogMethodName(LastContextualMenuMousePosition);
+            //this.LogMethodName(LastContextualMenuMousePosition,panel,this.panel.contextualMenuManager);
+            //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
 
             base.BuildContextualMenu(evt);
 

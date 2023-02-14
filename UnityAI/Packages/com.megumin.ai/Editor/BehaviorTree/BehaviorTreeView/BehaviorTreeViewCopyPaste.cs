@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private string OnSerializeGraphElements(IEnumerable<GraphElement> elements)
         {
-            this.LogMethodName();
+            //this.LogMethodName();
             var hashset = elements.ToHashSet();
             if (hashset.Count > 0)
             {
@@ -30,13 +30,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private bool OnCanPasteSerializedData(string data)
         {
-            this.LogMethodName();
+            //this.LogMethodName();
             return data == "trickCopy";
         }
 
         private void OnUnserializeAndPaste(string operationName, string data)
         {
-            this.LogMethodName(operationName);
+            //this.LogMethodName(operationName);
             if (data == "trickCopy")
             {
                 var upnode = (from elem in copyedElement

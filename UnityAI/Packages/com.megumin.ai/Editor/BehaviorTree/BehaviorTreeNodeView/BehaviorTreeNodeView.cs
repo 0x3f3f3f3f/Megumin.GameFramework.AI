@@ -182,6 +182,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
+            //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
+
             evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.AlwaysEnabled);
             //this.LogMethodName();
             base.BuildContextualMenu(evt);

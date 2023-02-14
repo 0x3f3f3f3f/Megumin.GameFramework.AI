@@ -34,6 +34,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
+            //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
+
             evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
 
