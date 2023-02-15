@@ -67,16 +67,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
         [SerializeReference]
-        public object[] Decorators;
+        public List<object> Decorators = new();
 
         public object AddDecorator(object decorator)
         {
-            if (Decorators == null)
+            if (!Decorators.Contains(decorator))
             {
-                Decorators = new object[0];
+                Decorators.Add(decorator);
             }
-            //TODO, 优化 类型/插入。
-            Decorators = Decorators.Append(decorator).ToArray();
+
             return decorator;
         }
 
@@ -88,9 +87,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         internal void RemoveDecorator(object decorator)
         {
-            var list = Decorators.ToList();
-            list.Remove(decorator);
-            Decorators = list.ToArray();
+            Decorators.Remove(decorator);
         }
 
         /// <summary>
@@ -100,16 +97,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <returns></returns>
         public EnterType CanEnter()
         {
-            if (Decorators?.Length > 0)
+            foreach (var pre in Decorators)
             {
-                foreach (var pre in Decorators)
+                if (pre is IConditionable conditionable)
                 {
-                    if (pre is IConditionable conditionable)
+                    if (conditionable.Cal() == false)
                     {
-                        if (conditionable.Cal() == false)
-                        {
-                            return EnterType.False;
-                        }
+                        return EnterType.False;
                     }
                 }
             }
@@ -135,14 +129,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         private void FrontDerators()
         {
             //在Enter之前调用 前置装饰器
-            if (Decorators?.Length > 0)
+            foreach (var pre in Decorators)
             {
-                foreach (var pre in Decorators)
+                if (pre is IPreDecirator decirator)
                 {
-                    if (pre is IPreDecirator decirator)
-                    {
-                        decirator.BeforeNodeEnter(this);
-                    }
+                    decirator.BeforeNodeEnter(this);
                 }
             }
         }
@@ -154,15 +145,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //在Editor上应该表现出node成功，但装饰器返回失败。
 
             //倒序遍历
-            if (Decorators?.Length > 0)
+            for (int i = Decorators.Count - 1; i >= 0; i--)
             {
-                for (int i = Decorators.Length - 1; i >= 0; i--)
+                var pre = Decorators[i];
+                if (pre is IPostDecirator decirator)
                 {
-                    var pre = Decorators[i];
-                    if (pre is IPostDecirator decirator)
-                    {
-                        res = decirator.AfterNodeExit(res, this);
-                    }
+                    res = decirator.AfterNodeExit(res, this);
                 }
             }
 
@@ -179,15 +167,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BackDerators(Status.Failed);
 
             //倒序遍历
-            if (Decorators?.Length > 0)
+            for (int i = Decorators.Count - 1; i >= 0; i--)
             {
-                for (int i = Decorators.Length - 1; i >= 0; i--)
+                var pre = Decorators[i];
+                if (pre is IAbortDecirator decirator)
                 {
-                    var pre = Decorators[i];
-                    if (pre is IAbortDecirator decirator)
-                    {
-                        decirator.OnNodeAbort(this);
-                    }
+                    decirator.OnNodeAbort(this);
                 }
             }
         }

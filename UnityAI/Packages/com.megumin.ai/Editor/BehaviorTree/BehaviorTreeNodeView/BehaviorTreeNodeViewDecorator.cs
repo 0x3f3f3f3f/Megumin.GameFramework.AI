@@ -98,55 +98,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName(obj.FirstOrDefault());
         }
 
-        private void DecoretorListView_itemIndexChanged(int arg1, int arg2)
+        internal void DecoretorListView_itemIndexChanged(int currrent, int des)
         {
-            this.LogMethodName(arg1, arg2);
+            this.LogMethodName(currrent, des);
+            var list = SONode.Node.Decorators;
+            if (list != null && currrent >= 0 && currrent < list.Count && des >= 0 && des < list.Count)
+            {
+                var target = list[currrent];
+                TreeView.UndoRecord($"Move Decorator  [{target.GetType().Name}]  {currrent} -> {des}");
+                list.Remove(target);
+                list.Insert(des, target);
+                RefreshDecoratorListView();
+            }
         }
 
         internal void MoveUpDecorator(BehaviorTreeDecoratorView decoratorView)
         {
-
-
-            if (SONode.Node.Decorators != null)
+            var list = SONode.Node.Decorators;
+            if (list != null)
             {
-                for (int i = 0; i < SONode.Node.Decorators.Length; i++)
-                {
-                    var d = SONode.Node.Decorators[i];
-                    if (d == decoratorView.Decorator)
-                    {
-                        if (i != 0)
-                        {
-                            TreeView.UndoRecord($"MoveUpDecorator  [{decoratorView.Decorator.GetType().Name}]  {i} -> {i - 1}");
-                            var prev = SONode.Node.Decorators[i - 1];
-                            SONode.Node.Decorators[i - 1] = d;
-                            SONode.Node.Decorators[i] = prev;
-                            RefreshDecoratorListView();
-                        }
-                    }
-                }
+                var index = list.IndexOf(decoratorView.Decorator);
+                DecoretorListView_itemIndexChanged(index, index - 1);
             }
         }
 
         internal void MoveDownDecorator(BehaviorTreeDecoratorView decoratorView)
         {
-            if (SONode.Node.Decorators != null)
+            var list = SONode.Node.Decorators;
+            if (list != null)
             {
-                for (int i = 0; i < SONode.Node.Decorators.Length; i++)
-                {
-                    var d = SONode.Node.Decorators[i];
-                    if (d == decoratorView.Decorator)
-                    {
-                        if (i != SONode.Node.Decorators.Length - 1)
-                        {
-                            TreeView.UndoRecord($"MoveDownDecorator  [{decoratorView.Decorator.GetType().Name}]  {i} -> {i - 1}");
-                            var next = SONode.Node.Decorators[i + 1];
-                            SONode.Node.Decorators[i + 1] = d;
-                            SONode.Node.Decorators[i] = next;
-
-                            RefreshDecoratorListView();
-                        }
-                    }
-                }
+                var index = list.IndexOf(decoratorView.Decorator);
+                DecoretorListView_itemIndexChanged(index, index + 1);
             }
         }
     }
