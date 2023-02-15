@@ -179,42 +179,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             tree.Asset = this;
-            //Load1(tree);
             return tree;
-        }
-
-        private void LoadLast(BehaviorTree tree)
-        {
-            var wait = tree.AddNode<Wait>();
-            var log = tree.AddNode<Log>();
-            var seq = tree.AddNode<Sequence>();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-
-            seq.AddDecorator<Loop>();
-
-            log.AddDecorator<CheckBool>();
-            log.AddDecorator<Remap>();
-
-            tree.StartNode = seq;
-        }
-
-        private void Load4(BehaviorTree tree)
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.Child0 = seq;
-
-            log.AddDecorator<CheckBool>();
-            log.AddDecorator<Remap>();
-
-            tree.StartNode = loop;
         }
 
         public void OnBeforeSerialize()

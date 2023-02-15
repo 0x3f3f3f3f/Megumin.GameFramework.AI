@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BTtree
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
-  Comment: load4
+  Comment: loadlast
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 072ca017-9ab5-41ae-852d-546821c7a70b
@@ -35,7 +35,7 @@ MonoBehaviour:
       GUID: 6796d5d5-8e21-4303-bd80-ffd405e37163
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
-    IsStartNode: 0
+    IsStartNode: 1
     Meta:
       x: 256
       y: 171
@@ -48,22 +48,9 @@ MonoBehaviour:
     ChildNodes:
     - fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     - 072ca017-9ab5-41ae-852d-546821c7a70b
-    Decorators: []
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
-    GUID: a80d8f36-84ad-4c0b-8809-84adbdcc7f8e
-    IsStartNode: 1
-    Meta:
-      x: 261
-      y: 28
-      index: 0
-      Name: 
-      FriendlyName: 
-      Description: 
-      FriendlyDescription: 
-      Comment: 
-    ChildNodes:
-    - 3a25ae6d-ba1b-4379-8520-13eeeec23219
-    Decorators: []
+    Decorators:
+    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
+      GUID: 862ecc04-3741-4674-8666-77234c16618e
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
