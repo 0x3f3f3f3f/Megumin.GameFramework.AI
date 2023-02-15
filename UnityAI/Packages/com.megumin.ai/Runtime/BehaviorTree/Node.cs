@@ -74,7 +74,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public object AddDecorator<T>()
             where T : class, new()
         {
-            return AddDecorator(new T());
+            var decorator = new T();
+            if (decorator is BTDecorator bTDecorator)
+            {
+                bTDecorator.GUID = Guid.NewGuid().ToString();
+            }
+            return AddDecorator(decorator);
+        }
+
+        public object AddDecorator(Type type)
+        {
+            var decorator = Activator.CreateInstance(type);
+            if (decorator is BTDecorator bTDecorator)
+            {
+                bTDecorator.GUID = Guid.NewGuid().ToString();
+            }
+            return AddDecorator(decorator);
         }
 
         internal void RemoveDecorator(object decorator)

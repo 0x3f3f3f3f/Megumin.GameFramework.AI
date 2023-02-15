@@ -19,8 +19,8 @@ MonoBehaviour:
     GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895
     IsStartNode: 0
     Meta:
-      x: 272
-      y: 219.8
+      x: 280
+      y: 235
       index: 0
       Name: 
       FriendlyName: 
@@ -29,9 +29,12 @@ MonoBehaviour:
       Comment: 
     ChildNodes: []
     Decorators:
+    - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
+      GUID: 66e1c4d7-a81e-4286-91c1-f548c89a379d
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.DecoratorLog
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Lock
+      GUID: 76e0c735-1431-4254-8a6c-35582f72dcfb
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
+      GUID: 71c0905b-f90e-482f-8e79-6228b98c1c3e
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
     IsStartNode: 1

@@ -7,8 +7,10 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class DecoratorLog: BTDecorator, IPreDecirator
+    internal class DecoratorLog : BTDecorator, IPreDecirator
     {
+        public string LogStr = "Hello world!";
+
         public void BeforeNodeEnter(BTNode bTNode)
         {
             Debug.Log(bTNode.GetType().Name);

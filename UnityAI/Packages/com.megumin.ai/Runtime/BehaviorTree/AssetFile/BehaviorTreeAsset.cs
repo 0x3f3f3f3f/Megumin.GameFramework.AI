@@ -73,11 +73,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public class DecoratorAsset
         {
             public string TypeName;
+            public string GUID;
 
             public object Instantiate(bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
-                var decorator = Activator.CreateInstance(nodeType);
+                var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
+                decorator.GUID = this.GUID;
 
                 if (decorator == null)
                 {
@@ -119,6 +121,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     {
                         var decoratorAsset = new DecoratorAsset();
                         decoratorAsset.TypeName = decorator.GetType().FullName;
+                        if (decorator is ITreeElement treeElement)
+                        {
+                            decoratorAsset.GUID = treeElement.GUID;
+                        }
                         nodeAsset.Decorators.Add(decoratorAsset);
                     }
                 }

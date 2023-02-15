@@ -45,9 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             TreeView.UndoRecord($"AddDecorator  [{type.Name}]");
             this.LogMethodName();
-            var decorator = Activator.CreateInstance(type);
-            SONode.Node.AddDecorator(decorator);
-
+            var decorator = SONode.Node.AddDecorator(type);
             //去重添加
             nearDType.Remove(type);
             nearDType.Add(type);
