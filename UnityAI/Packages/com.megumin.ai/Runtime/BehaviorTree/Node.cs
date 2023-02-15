@@ -17,16 +17,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 成员不是在所有情况下都会用到，保持未初始化能有效节省内存。
     /// </summary>
     [Serializable]
-    public class BTNode
+    public class BTNode : TreeElement
     {
-        /// <summary>
-        /// tree中唯一ID。子树中可能会出现冲突，使用GUID.ToString 尽量保证唯一性。
-        /// </summary>
-        public string UID;
-        /// <summary>
-        /// 节点唯一ID
-        /// </summary>
-        public string GUID;
         /// <summary>
         /// 节点实例唯一ID
         /// </summary>
@@ -80,7 +72,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public object AddDecorator<T>()
-            where T : class,new()
+            where T : class, new()
         {
             return AddDecorator(new T());
         }

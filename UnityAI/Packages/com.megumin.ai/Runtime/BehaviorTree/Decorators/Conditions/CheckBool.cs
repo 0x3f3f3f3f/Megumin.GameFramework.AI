@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Serializable]
-    public class CheckBool : IConditionable
+    public class CheckBool : BTDecorator, IConditionable
     {
         public bool A = false;
         public bool B = false;

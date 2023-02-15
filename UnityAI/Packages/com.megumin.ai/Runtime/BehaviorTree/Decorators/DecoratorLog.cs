@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class DecoratorLog:IPreDecirator
+    internal class DecoratorLog: BTDecorator, IPreDecirator
     {
         public void BeforeNodeEnter(BTNode bTNode)
         {
