@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BTParentNode : BTNode
     {
-        public List<BTNode> children = new List<BTNode>();
+        [HideInInspector]
+        public List<BTNode> children = new();
     }
 
     public class CompositeNode : BTParentNode

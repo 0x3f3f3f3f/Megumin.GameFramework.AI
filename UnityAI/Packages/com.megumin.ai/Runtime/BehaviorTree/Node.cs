@@ -19,17 +19,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Serializable]
     public class BTNode : TreeElement
     {
-        /// <summary>
-        /// 节点实例唯一ID
-        /// </summary>
-        public string InstanceID;
-
         public NodeMeta Meta;
+        /// <summary>
+        /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
+        /// </summary>
+        [SerializeReference]
+        public List<object> Decorators = new();
 
         public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
 
+        /// <summary>
+        /// 节点实例唯一ID
+        /// </summary>
+        [Space(20)]
+        public string InstanceID;
         void Enter()
         {
             Debug.Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
@@ -55,11 +60,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        /// <summary>
-        /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
-        /// </summary>
-        [SerializeReference]
-        public List<object> Decorators = new();
+        
 
         public object AddDecorator(object decorator)
         {
