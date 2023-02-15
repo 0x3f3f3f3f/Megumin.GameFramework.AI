@@ -217,22 +217,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             tree.StartNode = loop;
         }
 
-        private void Load3(BehaviorTree tree)
-        {
-            var wait = new Wait();
-            var log = new Log();
-            var seq = new Sequence();
-            seq.children.Add(wait);
-            seq.children.Add(log);
-
-            var loop = new Repeater();
-            loop.Child0 = seq;
-
-            var check = new CheckBool();
-            log.AddDecorator(check);
-            tree.StartNode = loop;
-        }
-
         public void OnBeforeSerialize()
         {
             this.LogMethodName();
