@@ -115,6 +115,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     item.TickTree();
                 }
             }
+
+            TreeDebugger?.PostTick();
         }
+    }
+
+    public partial class BehaviorTreeManager
+    {
+        public static ITreeDebugger TreeDebugger { get; set; }
+    }
+
+    public interface ITreeDebugger
+    {
+        void PostTick();
     }
 }

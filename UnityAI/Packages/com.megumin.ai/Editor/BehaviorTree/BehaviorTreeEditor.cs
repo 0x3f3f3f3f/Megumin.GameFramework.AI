@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeEditor : EditorWindow
+    public partial class BehaviorTreeEditor : EditorWindow
     {
         [OnOpenAsset(10)]
         public static bool OnOpenAsset(int instanceID, int line, int column)
