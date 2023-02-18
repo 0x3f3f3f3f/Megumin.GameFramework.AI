@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>
     {
-        BehaviorTree BehaviourTree;
+        public BehaviorTree BehaviourTree { get; protected set; }
         public BehaviorTreeAsset BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
         public int Order = 0;
@@ -35,6 +35,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
         }
 
+        [Editor]
+        public void EditorTree()
+        {
+            UnityEditor.AssetDatabase.OpenAsset(BehaviorTreeAsset);
+        }
 
         [Editor]
         public void ResetTree()

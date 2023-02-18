@@ -150,6 +150,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTree Instantiate(bool instanceMeta = true)
         {
             var tree = new BehaviorTree();
+            tree.InstanceGUID = Guid.NewGuid().ToString();
             foreach (var nodeAsset in Nodes)
             {
                 var node = nodeAsset.Instantiate(instanceMeta);

@@ -104,6 +104,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 LateUpdateTree.Add(behaviorTreeRunner);
                 LateUpdateTree.Sort();
             }
+
+            TreeDebugger?.AddTreeRunner(behaviorTreeRunner);
         }
 
         void Update()
@@ -127,6 +129,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public interface ITreeDebugger
     {
+        void AddTreeRunner(BehaviorTreeRunner behaviorTreeRunner);
         void PostTick();
     }
 }

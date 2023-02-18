@@ -85,7 +85,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (CurrentAsset)
             {
-                this.titleContent = new GUIContent(CurrentAsset.name);
+                string title = CurrentAsset.name;
+                if (IsDebugMode)
+                {
+                    title = "Debug|" + title;
+                }
+                this.titleContent = new GUIContent(title);
             }
             else
             {
@@ -144,6 +149,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.EditorWindow = this;
 
             CreateTopbar();
+
+
+            AllActiveEditor.Add(this);
+
+            if (CurrentAsset)
+            {
+                //通常重载时被触发。
+                AssetDatabase.OpenAsset(CurrentAsset);
+            }
         }
 
         static MySetting<bool> showFloatingTip = new MySetting<bool>("behaviorTreeEditor.showFloatingTip", true, SettingsScope.User);
@@ -296,11 +310,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void OnEnable()
         {
             this.LogMethodName(TreeView);
+
+            if (BehaviorTreeManager.TreeDebugger == null)
+            {
+                BehaviorTreeManager.TreeDebugger = new BehaviorTreeEditorDebugger();
+            }
         }
 
         private void OnDestroy()
         {
             //this.LogMethodName(TreeView);
+            AllActiveEditor.Remove(this);
         }
 
         private void Reset()

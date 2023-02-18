@@ -9,12 +9,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Serializable]
     public class BehaviorTree
     {
-        public virtual void Load() { }
+        public string InstanceGUID;
 
         public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
         public BehaviorTreeAsset Asset { get; internal set; }
 
+        [Space]
         [SerializeReference]
         public List<BTNode> AllNodes = new();
 
