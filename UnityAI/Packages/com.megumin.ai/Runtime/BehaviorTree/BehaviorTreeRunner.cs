@@ -1,13 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeRunner : MonoBehaviour
+   
+
+    public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>
     {
         BehaviorTree BehaviourTree;
         public BehaviorTreeAsset BehaviorTreeAsset;
+        public TickMode TickMode = TickMode.Update;
+        public int Order = 0;
+        public bool AutoEnable = true;
+
         private void Awake()
         {
             BehaviourTree = BehaviorTreeAsset.Instantiate();
@@ -16,7 +24,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         private void OnEnable()
         {
-            
+            if (AutoEnable)
+            {
+                EnableTree();
+            }
         }
 
         // Use this for initialization
@@ -24,16 +35,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            BehaviourTree.Tick();
-        }
 
         [Editor]
         public void ResetTree()
         {
             BehaviourTree.Reset();
+        }
+
+        public void EnableTree()
+        {
+            BehaviorTreeManager.Instance.AddTree(this);
+        }
+
+        public int Compare(BehaviorTreeRunner x, BehaviorTreeRunner y)
+        {
+            return x.Order.CompareTo(y.Order);
+        }
+
+        public void TickTree()
+        {
+            BehaviourTree.Tick();
         }
     }
 }

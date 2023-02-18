@@ -33,9 +33,23 @@ MonoBehaviour:
       GUID: 2dbe9bc7-f15a-4a60-ae46-fdc9f0c78221
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.Remap
       GUID: 6796d5d5-8e21-4303-bd80-ffd405e37163
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
+    IsStartNode: 0
+    Meta:
+      x: 775.0001
+      y: 267.00006
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
+    Decorators: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
-    IsStartNode: 1
+    IsStartNode: 0
     Meta:
       x: 256
       y: 171
@@ -51,6 +65,36 @@ MonoBehaviour:
     Decorators:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
       GUID: 862ecc04-3741-4674-8666-77234c16618e
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
+    GUID: 62f41474-7568-45c7-946e-cdf5ad45fff4
+    IsStartNode: 0
+    Meta:
+      x: 587.57526
+      y: 266.73755
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes: []
+    Decorators: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
+    GUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
+    IsStartNode: 1
+    Meta:
+      x: 667.6002
+      y: 82.000015
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+    ChildNodes:
+    - 62f41474-7568-45c7-946e-cdf5ad45fff4
+    - 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
+    Decorators: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     IsStartNode: 0
