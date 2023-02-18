@@ -88,7 +88,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 string title = CurrentAsset.name;
                 if (IsDebugMode)
                 {
-                    title = "Debug|" + title;
+                    title = "[Debug]  " + title;
                 }
                 this.titleContent = new GUIContent(title);
             }
@@ -156,6 +156,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (CurrentAsset)
             {
                 //通常重载时被触发。
+                EditorReloading();
+            }
+        }
+
+        private void EditorReloading()
+        {
+            if (Application.isPlaying)
+            {
+                Debug.Log("编辑器运行 导致窗口重载");
+                DebugSearchInstance();
+            }
+            else
+            {
+                Debug.Log("脚本重新编译 导致窗口重载");
                 AssetDatabase.OpenAsset(CurrentAsset);
             }
         }

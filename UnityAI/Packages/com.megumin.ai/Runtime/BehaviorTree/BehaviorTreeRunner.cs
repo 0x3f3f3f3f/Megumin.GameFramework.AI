@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-   
-
     public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>
     {
+        [field:SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
         public BehaviorTreeAsset BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;

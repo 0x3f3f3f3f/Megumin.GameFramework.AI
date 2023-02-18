@@ -220,14 +220,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             CreateSOWrapperIfNull();
             if (force || Tree == null)
             {
-                if (EditorWindow.CurrentAsset)
+                if (EditorWindow.IsDebugMode)
                 {
-                    SOTree.Tree = EditorWindow.CurrentAsset.Instantiate();
+                    SOTree.Tree = EditorWindow.DebugInstance.BehaviourTree;
                 }
                 else
                 {
-                    return;
-                }
+                    if (EditorWindow.CurrentAsset)
+                    {
+                        SOTree.Tree = EditorWindow.CurrentAsset.Instantiate();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                } 
             }
 
             this.LogMethodName();

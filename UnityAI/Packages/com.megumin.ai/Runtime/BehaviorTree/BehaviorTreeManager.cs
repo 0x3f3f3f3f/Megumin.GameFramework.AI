@@ -64,6 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         private void OnApplicationQuit()
         {
             IsApplicationQuiting = true;
+            TreeDebugger?.StopDebug();
         }
 
 
@@ -131,5 +132,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         void AddTreeRunner(BehaviorTreeRunner behaviorTreeRunner);
         void PostTick();
+        void StopDebug();
     }
 }

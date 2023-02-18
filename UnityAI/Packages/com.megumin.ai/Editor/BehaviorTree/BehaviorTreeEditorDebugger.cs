@@ -27,8 +27,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                     else
                     {
-                        item.IsDebug(behaviorTreeRunner);
+                        item.BeginDebug(behaviorTreeRunner);
                     }
+                }
+            }
+        }
+
+        public void StopDebug()
+        {
+            foreach (var item in BehaviorTreeEditor.AllActiveEditor)
+            {
+                if (item.IsDebugMode)
+                {
+                    item.EndDebug();
                 }
             }
         }
@@ -42,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public bool IsIdel => CurrentAsset == null;
 
         public BehaviorTreeRunner DebugInstance { get; set; }
-        internal void IsDebug(BehaviorTreeRunner behaviorTreeRunner)
+        internal void BeginDebug(BehaviorTreeRunner behaviorTreeRunner)
         {
             IsDebugMode = true;
             DebugInstance = behaviorTreeRunner;
@@ -50,6 +61,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             so.Tree = behaviorTreeRunner.BehaviourTree;
             UpdateTitle();
             TreeView.ReloadView(true);
+        }
+
+        internal void EndDebug()
+        {
+            IsDebugMode = false;
+            TreeView.SOTree.Tree = null;
+            UpdateTitle();
+            TreeView.ReloadView(true);
+        }
+
+        private void DebugSearchInstance()
+        {
+            if (BehaviorTreeManager.Instance)
+            {
+                var list = BehaviorTreeManager.Instance.AllTree;
+                foreach (var item in list) 
+                {
+                    if (item.BehaviorTreeAsset && item.BehaviourTree != null &&
+                        item.BehaviorTreeAsset == CurrentAsset)
+                    {
+                        BeginDebug(item);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
