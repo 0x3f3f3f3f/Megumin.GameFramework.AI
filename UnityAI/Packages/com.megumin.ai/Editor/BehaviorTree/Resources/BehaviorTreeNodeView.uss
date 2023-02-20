@@ -12,6 +12,14 @@
     border-bottom-width: 0;
 }
 
+.node.ActionTaskNode #title {
+    background-color: rgb(96, 45, 160);
+}
+
+.node.BTParentNode #title {
+    background-color: rgb(64, 64, 64);
+}
+
 #connector.connectorBox {
     min-width: 0;
 }

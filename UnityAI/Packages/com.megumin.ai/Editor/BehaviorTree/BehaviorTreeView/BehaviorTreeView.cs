@@ -101,7 +101,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             nodeView.AddToClassList("uiBuilderDebugNode");
             this.AddElement(nodeView);
 
-            var node2 = new Sequence();
+            var node2 = new Log();
             node2.Meta = new NodeMeta() { x = 100, y = 300 };
             node2.GUID = Guid.NewGuid().ToString();
             var nodeView2 = CreateNodeView(node2);

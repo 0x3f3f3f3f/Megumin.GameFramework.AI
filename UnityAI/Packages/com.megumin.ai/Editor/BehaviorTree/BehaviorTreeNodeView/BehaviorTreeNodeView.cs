@@ -152,7 +152,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 var type = node.GetType();
                 title = type.Name;
                 viewDataKey = node.GUID;
-                this.AddToClassList(type.Name);
+
+                AddToClassList(type.Name);
 
                 SONode = CreateSOWrapperIfNull(node);
                 SONode.View = this;
@@ -177,6 +178,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             else
             {
                 outputContainer.RemoveFromClassList("unDisplay");
+            }
+
+            UpdateNodeType();
+        }
+
+        void UpdateNodeType()
+        {
+            RemoveFromClassList(nameof(ActionTaskNode));
+            RemoveFromClassList(nameof(BTParentNode));
+
+            switch (SONode.Node)
+            {
+                case ActionTaskNode _:
+                    AddToClassList(nameof(ActionTaskNode));
+                    break;
+                case BTParentNode _:
+                    AddToClassList(nameof(BTParentNode));
+                    break;
+                default:
+                    break;
             }
         }
 
