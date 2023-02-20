@@ -30,6 +30,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Ascendable | Capabilities.Copiable | Capabilities.Snappable | Capabilities.Groupable;
             usageHints = UsageHints.DynamicTransform;
+            AddToClassList("decorator");
         }
 
         public void BuildContextualMenu(ContextualMenuPopulateEvent evt)

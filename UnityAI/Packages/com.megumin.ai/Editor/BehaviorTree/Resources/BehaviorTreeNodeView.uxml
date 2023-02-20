@@ -5,7 +5,7 @@
             <ui:VisualElement name="input" class="portContainer" style="flex-direction: column; align-items: center;" />
             <ui:VisualElement name="divider" class="vertical" />
             <ui:VisualElement name="decorator" class="decoratorContainer">
-                <ui:ListView reorderable="true" class="decoratorList" />
+                <ui:ListView class="decoratorList" />
             </ui:VisualElement>
             <ui:VisualElement name="body">
                 <ui:VisualElement name="title">
@@ -17,7 +17,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="contents">
-                    <ui:Label text="" display-tooltip-when-elided="true" name="description" />
+                    <ui:Label display-tooltip-when-elided="true" name="description" />
                     <ui:VisualElement name="divider" class="horizontal" />
                 </ui:VisualElement>
             </ui:VisualElement>
