@@ -1,5 +1,9 @@
 .node #node-border {
-    background-color: rgb(64, 64, 64);
+    background-color: rgba(64, 64, 64, 0.75);
+}
+
+.node.notConnected #node-border {
+    background-color: rgba(0, 0, 0, 0.55);
 }
 
 .node #title {
@@ -7,10 +11,10 @@
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-    border-left-color: rgba(24, 24, 24, 255);
-    border-right-color: rgba(24, 24, 24, 255);
-    border-top-color: rgba(24, 24, 24, 255);
-    border-bottom-color: rgba(24, 24, 24, 255);
+    border-left-color: rgb(24, 24, 24);
+    border-right-color: rgb(24, 24, 24);
+    border-top-color: rgb(24, 24, 24);
+    border-bottom-color: rgb(24, 24, 24);
     margin-left: 6px;
     margin-right: 6px;
 }
@@ -60,7 +64,7 @@
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    background-color: rgb(33, 33, 33);
+    background-color: rgba(33, 33, 33, 0.75);
     border-top-left-radius: 4;
     border-bottom-left-radius: 4;
     border-top-right-radius: 4;
@@ -70,7 +74,7 @@
 }
 
 .port > #connector.connectorBox:hover {
-    background-color: rgb(210, 180, 1);
+    background-color: rgba(210, 180, 1, 0.75);
 }
 
 .port > #type {
@@ -103,7 +107,3 @@
 #output > .port {
     flex-direction: column-reverse;
 }
-
-/*.portContainer {
-    background-color: rgb(7, 7, 7);
-}*/

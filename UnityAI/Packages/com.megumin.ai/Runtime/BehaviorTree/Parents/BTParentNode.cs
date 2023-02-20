@@ -11,6 +11,38 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         [HideInInspector]
         public List<BTNode> children = new();
+
+        /// <summary>
+        /// 测试一个节点是不是自己的子代
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        internal bool IsDescendant(BTNode node)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+            
+            foreach (BTNode child in children)
+            {
+                if (child.GUID == node.GUID)
+                {
+                    return true;
+                }
+
+                if (child is BTParentNode parentNode)
+                {
+                    var result = parentNode.IsDescendant(node);
+                    if (result)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;   
+        }
     }
 
     public class CompositeNode : BTParentNode

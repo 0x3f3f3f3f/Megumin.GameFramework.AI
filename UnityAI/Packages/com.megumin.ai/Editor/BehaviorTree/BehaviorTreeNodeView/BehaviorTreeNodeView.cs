@@ -161,6 +161,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 SONode.name = type.Name;
 
                 RefreshDecoratorListView();
+
+                var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
+                var isStartNode = TreeView.SOTree?.Tree?.IsStartNodeByGuid(node.GUID) ?? false;
+
+                if (houdai || isStartNode)
+                {
+                    RemoveFromClassList("notConnected");
+                }
+                else
+                {
+                    //未连接的节点，保存但是运行时没有作用。
+                    AddToClassList("notConnected");
+                }
             }
 
             InputPort = new BehaviorTreePortView(Direction.Input, Port.Capacity.Single);

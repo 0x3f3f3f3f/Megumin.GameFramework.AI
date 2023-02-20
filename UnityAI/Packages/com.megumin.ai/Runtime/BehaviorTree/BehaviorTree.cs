@@ -179,5 +179,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             return StartNode?.GUID == guid;
         }
+
+        /// <summary>
+        /// 是不是开始节点的子代
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        internal bool IsStartNodeDescendant(BTNode node)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+
+            if (StartNode is BTParentNode parentNode)
+            {
+                return parentNode.IsDescendant(node);
+            }
+
+            return false;
+        }
     }
 }
