@@ -9,7 +9,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BTParentNode : BTNode
     {
+        /// <summary>
+        /// 这里必须使用泛型序列化，否则Undo/Redo 时元素会丢失自己的真实类型。notconnect 多层级颜色bug
+        /// </summary>
         [HideInInspector]
+        [SerializeReference]
         public List<BTNode> children = new();
 
         /// <summary>
