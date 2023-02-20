@@ -28,6 +28,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (parentNodeView.SONode.Node is BTParentNode parentNode)
             {
                 ConnectChild(parentNode, childNodeView.SONode.Node);
+                parentNodeView.ReloadView();
+                childNodeView.ReloadView();
             }
         }
 
@@ -46,6 +48,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (parentNodeView.SONode.Node is BTParentNode parentNode)
             {
                 DisconnectChild(parentNode, childNodeView.SONode.Node);
+                parentNodeView.ReloadView();
+                childNodeView.ReloadView();
             }
         }
 
