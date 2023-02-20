@@ -65,6 +65,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
         public BTNode Node { get; private set; }
+        /// <summary>
+        /// 是不是仅用于测试的假节点
+        /// </summary>
+        public bool IsFakeNode { get; private set; }
 
         public override void OnSelected()
         {
@@ -146,11 +150,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void SetNode(BTNode node, bool fakeNode = false)
         {
             viewDataKey = node?.GUID;
-            if (fakeNode)
-            {
-                Node = node;
-            }
-            ReloadView(false, fakeNode);
+            IsFakeNode = fakeNode;
+            Node = node;
+            ReloadView();
         }
 
         public void CreatePort(BTNode node)
@@ -175,13 +177,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 因为UndoRedo时内存实例对象会改变，所以每次通过guid取得新的实例。
         /// </summary>
         /// <param name="forceReCreateSoWrapper"></param>
-        public virtual void ReloadView(bool forceReCreateSoWrapper = false, bool fakeNode = false)
+        public virtual void ReloadView(bool forceReCreateSoWrapper = false)
         {
             //清除旧的class typeName
             RemoveFromClassList(Node?.GetType().Name ?? "NullNode");
 
             var node = Node;
-            if (fakeNode)
+            if (IsFakeNode)
             {
                 //测试用NodeView 不要从Tree实例中获取节点。因为不存在。
             }

@@ -11,6 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public string test = "行为树SO资产";
         public string Comment = "load2";
+        public string StartNodeGUID = "";
         public List<NodeAsset> Nodes = new List<NodeAsset>();
 
         [Serializable]
@@ -18,7 +19,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             public string TypeName;
             public string GUID;
-            public bool IsStartNode;
             public NodeMeta Meta;
             public List<string> ChildNodes = new();
             public List<DecoratorAsset> Decorators = new();
@@ -97,14 +97,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return false;
             }
 
+            StartNodeGUID = tree.StartNode?.GUID;
+
             Nodes.Clear();
             foreach (var node in tree.AllNodes.OrderBy(elem => elem.GUID))
             {
                 var nodeAsset = new NodeAsset();
                 nodeAsset.TypeName = node.GetType().FullName;
                 nodeAsset.GUID = node.GUID;
-                nodeAsset.IsStartNode = node == tree.StartNode;
                 nodeAsset.Meta = node.Meta.Clone();
+                nodeAsset.Meta.IsStartNode = node == tree.StartNode;
 
                 if (node is BTParentNode parentNode)
                 {
@@ -132,11 +134,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 Nodes.Add(nodeAsset);
             }
 
-            if (Nodes.Count > 0 && !Nodes.Any(elem => elem.IsStartNode))
+            if (Nodes.Count > 0 && !Nodes.Any(elem => elem.Meta.IsStartNode))
             {
                 //没有设置开始节点时，将最上面的节点设置为开始节点。
                 var upnode = Nodes.OrderBy(elem => elem.Meta.y).FirstOrDefault();
-                upnode.IsStartNode = true;
+                upnode.Meta.IsStartNode = true;
             }
 
             return true;
@@ -157,9 +159,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 if (node != null)
                 {
                     tree.AddNode(node);
-                    if (nodeAsset.IsStartNode)
+                    if (string.IsNullOrEmpty(StartNodeGUID))
                     {
-                        tree.StartNode = node;
+                        if (nodeAsset.Meta.IsStartNode)
+                        {
+                            tree.StartNode = node;
+                        }
+                    }
+                    else
+                    {
+                        if (nodeAsset.GUID == StartNodeGUID)
+                        {
+                            tree.StartNode = node;
+                        }
                     }
                 }
             }

@@ -17,6 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string Description;
         public string FriendlyDescription;
         public string Comment;
+        public bool IsStartNode;
 
         public NodeMeta Clone()
         {

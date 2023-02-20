@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: loadlast
+  StartNodeGUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 072ca017-9ab5-41ae-852d-546821c7a70b
-    IsStartNode: 0
     Meta:
       x: 358
       y: 383
@@ -27,6 +27,7 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes: []
     Decorators:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
@@ -35,7 +36,6 @@ MonoBehaviour:
       GUID: 6796d5d5-8e21-4303-bd80-ffd405e37163
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
-    IsStartNode: 0
     Meta:
       x: 775.0001
       y: 267.00006
@@ -45,11 +45,11 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes: []
     Decorators: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 3a25ae6d-ba1b-4379-8520-13eeeec23219
-    IsStartNode: 0
     Meta:
       x: 256
       y: 171
@@ -59,6 +59,7 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes:
     - fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
     - 072ca017-9ab5-41ae-852d-546821c7a70b
@@ -67,7 +68,6 @@ MonoBehaviour:
       GUID: 862ecc04-3741-4674-8666-77234c16618e
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: 62f41474-7568-45c7-946e-cdf5ad45fff4
-    IsStartNode: 0
     Meta:
       x: 587.57526
       y: 266.73755
@@ -77,11 +77,11 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes: []
     Decorators: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
-    IsStartNode: 1
     Meta:
       x: 667.6002
       y: 82.000015
@@ -91,13 +91,13 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 1
     ChildNodes:
     - 62f41474-7568-45c7-946e-cdf5ad45fff4
     - 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
     Decorators: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
     GUID: fc6ba5c4-a1d5-4d8d-bad2-1c02fa6f495e
-    IsStartNode: 0
     Meta:
       x: 183
       y: 383
@@ -107,5 +107,6 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes: []
     Decorators: []

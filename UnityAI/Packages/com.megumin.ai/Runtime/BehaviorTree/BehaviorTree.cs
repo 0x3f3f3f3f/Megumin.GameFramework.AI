@@ -7,7 +7,7 @@ using static PlasticGui.LaunchDiffParameters;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Serializable]
-    public class BehaviorTree
+    public partial class BehaviorTree
     {
         public string InstanceGUID;
 
@@ -199,6 +199,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return false;
+        }
+    }
+
+    public partial class BehaviorTree
+    {
+        /// <summary>
+        /// 用于编辑中UndoRedo时实例对象改变。
+        /// </summary>
+        public void ReCacheDic()
+        {
+            GuidDic.Clear();
+            foreach (var node in AllNodes) 
+            {
+                GuidDic.Add(node.GUID, node);
+                if (node.GUID == Asset?.StartNodeGUID)
+                {
+                    StartNode = node;
+                }
+            }
         }
     }
 }
