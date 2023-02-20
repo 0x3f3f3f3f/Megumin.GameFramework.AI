@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
+  StartNodeGUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
     GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895
-    IsStartNode: 0
     Meta:
       x: 280
       y: 235
@@ -27,6 +27,7 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     ChildNodes: []
     Decorators:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
@@ -37,7 +38,6 @@ MonoBehaviour:
       GUID: 71c0905b-f90e-482f-8e79-6228b98c1c3e
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
     GUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
-    IsStartNode: 1
     Meta:
       x: 383
       y: 74
@@ -47,6 +47,7 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 1
     ChildNodes:
     - 41325448-eb0c-4c89-8de1-a6cf9c625895
     Decorators: []

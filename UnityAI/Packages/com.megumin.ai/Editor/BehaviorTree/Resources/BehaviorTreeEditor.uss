@@ -10,9 +10,9 @@ BehaviorTreeView {
 }
 
 BehaviorTreeView GridBackground {
-    --grid-background-color: rgb(40, 40, 40);
-    --line-color: rgba(193, 196, 192, 0.1);
-    --thick-line-color: rgba(193, 196, 192, 0.1);
+    --grid-background-color: rgb(38, 38, 38);
+    --line-color: rgb(53, 53, 53);
+    --thick-line-color: rgb(22, 22, 22);
     --spacing: 15;
     background-color: rgb(207, 44, 44);
     -unity-text-outline-color: rgb(219, 22, 22);
