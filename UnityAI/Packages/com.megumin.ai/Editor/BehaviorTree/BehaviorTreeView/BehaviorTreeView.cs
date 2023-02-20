@@ -90,6 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         void CreateUIBuilderDebugNode()
         {
             using var undom = UndoMute.Enter("CreateUIBuilderDebugNode");
+
             var node = new Sequence();
             node.GUID = Guid.NewGuid().ToString();
             node.AddDecorator<Loop>();
@@ -99,6 +100,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
             nodeView.AddToClassList("uiBuilderDebugNode");
             this.AddElement(nodeView);
+
+            var node2 = new Sequence();
+            node2.Meta = new NodeMeta() { x = 100, y = 300 };
+            node2.GUID = Guid.NewGuid().ToString();
+            var nodeView2 = CreateNodeView(node2);
+            //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+            nodeView2.AddToClassList("uiBuilderDebugNode");
+            this.AddElement(nodeView2);
+
+            nodeView2.ConnectParentNodeView(nodeView);
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
