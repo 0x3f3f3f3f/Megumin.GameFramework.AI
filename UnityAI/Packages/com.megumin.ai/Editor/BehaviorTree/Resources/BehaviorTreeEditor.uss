@@ -72,6 +72,21 @@ BehaviorTreeView .debug {
     align-items: center;
 }
 
-.startNode #title{
-    background-color:rgba(8, 92, 141, 0.753);
+BehaviorTreeView .node.startNode {
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 20px;
+    border-left-color: rgba(245, 144, 20, 0.76);
+    border-right-color: rgba(245, 144, 20, 0.76);
+    border-top-color: rgba(245, 144, 20, 0.76);
+    border-bottom-color: rgba(245, 144, 20, 0.76);
+}
+
+BehaviorTreeView .node.startNode #title {
+    background-color: rgba(245, 144, 20, 0.76);
 }

@@ -107,6 +107,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var nodeView2 = CreateNodeView(node2);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
             nodeView2.AddToClassList("uiBuilderDebugNode");
+            nodeView2.AddToClassList("startNode");
             this.AddElement(nodeView2);
 
             nodeView2.ConnectParentNodeView(nodeView);
