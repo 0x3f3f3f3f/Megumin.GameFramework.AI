@@ -6,7 +6,7 @@
     background-color: rgba(0, 0, 0, 0.55);
 }
 
-.node #title {
+.node #body {
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
@@ -17,6 +17,13 @@
     border-bottom-color: rgb(24, 24, 24);
     margin-left: 6px;
     margin-right: 6px;
+}
+
+.node #description {
+    color: rgb(137, 137, 137);
+    font-size: 12px;
+    background-color: rgb(43, 43, 43);
+    padding-left: 20px;
 }
 
 .node .port {

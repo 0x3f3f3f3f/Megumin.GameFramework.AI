@@ -7,16 +7,19 @@
             <ui:VisualElement name="decorator" class="decoratorContainer">
                 <ui:ListView reorderable="true" class="decoratorList" />
             </ui:VisualElement>
-            <ui:VisualElement name="title">
-                <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
-                <ui:VisualElement name="title-button-container">
-                    <ui:VisualElement name="collapse-button">
-                        <ui:VisualElement name="icon" />
+            <ui:VisualElement name="body">
+                <ui:VisualElement name="title">
+                    <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
+                    <ui:VisualElement name="title-button-container">
+                        <ui:VisualElement name="collapse-button">
+                            <ui:VisualElement name="icon" />
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="contents">
-                <ui:VisualElement name="divider" class="horizontal" />
+                <ui:VisualElement name="contents">
+                    <ui:Label text="" display-tooltip-when-elided="true" name="description" />
+                    <ui:VisualElement name="divider" class="horizontal" />
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="output" class="portContainer" style="align-items: center;" />
         </ui:VisualElement>

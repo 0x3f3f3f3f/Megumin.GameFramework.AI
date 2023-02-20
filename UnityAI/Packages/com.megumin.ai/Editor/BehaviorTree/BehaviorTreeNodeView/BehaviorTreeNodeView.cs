@@ -27,6 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
+            Description = this.Q<Label>("description");
 
             decoratorContainer = this.Q<VisualElement>("decorator");
             //decoratorContainer.AddManipulator(new TestMouseManipulator());
@@ -62,6 +63,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
+        public Label Description { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
         public BTNode Node { get; private set; }
@@ -197,6 +199,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var typeName = type?.Name ?? "NullNode";
             title = typeName;
             name = typeName;
+            Description.text = node?.GUID.Substring(0, 13) ?? string.Empty;
             SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
 
             SONode.View = this;
