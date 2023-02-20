@@ -94,7 +94,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             node.AddDecorator<Loop>();
             node.AddDecorator<Cooldown>();
 
-            var nodeView = CreateNodeView(node);
+            var nodeView = CreateNodeView(node, true);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
             nodeView.AddToClassList("uiBuilderDebugNode");
             this.AddElement(nodeView);
@@ -102,7 +102,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var node2 = new Log();
             node2.Meta = new NodeMeta() { x = 100, y = 300 };
             node2.GUID = Guid.NewGuid().ToString();
-            var nodeView2 = CreateNodeView(node2);
+            var nodeView2 = CreateNodeView(node2, true);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
             nodeView2.AddToClassList("uiBuilderDebugNode");
             nodeView2.AddToClassList("startNode");
@@ -244,7 +244,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     {
                         return;
                     }
-                } 
+                }
             }
 
             this.LogMethodName();
@@ -397,11 +397,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 如果使用全局静态，会导致Guid Key冲突。
         /// </remarks>
         internal protected Dictionary<string, NodeWrapper> NodeWrapperCache = new();
-        public BehaviorTreeNodeView CreateNodeView(BTNode node)
+        public BehaviorTreeNodeView CreateNodeView(BTNode node, bool fakeNode = false)
         {
             var nodeView = new BehaviorTreeNodeView() { name = "behaviorTreeNode" };
             nodeView.TreeView = this;
-            nodeView.SetNode(node);
+            nodeView.SetNode(node, fakeNode);
             //node.capabilities |= Capabilities.Movable;
             if (node?.Meta != null)
             {

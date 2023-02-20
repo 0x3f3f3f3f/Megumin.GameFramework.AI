@@ -54,7 +54,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void RefreshDecoratorListView()
         {
-            DecoretorListView.itemsSource = SONode.Node.Decorators;
+            DecoretorListView.itemsSource = Node?.Decorators;
             DecoretorListView.Rebuild();
             if (DecoretorListView.itemsSource == null || DecoretorListView.itemsSource.Count == 0)
             {

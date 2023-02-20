@@ -143,10 +143,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public const string StartNodeClass = "startNode";
 
-        internal void SetNode(BTNode node)
+        internal void SetNode(BTNode node, bool fakeNode = false)
         {
             viewDataKey = node?.GUID;
-            ReloadView();
+            if (fakeNode)
+            {
+                Node = node;
+            }
+            ReloadView(false, fakeNode);
         }
 
         public void CreatePort(BTNode node)
@@ -171,40 +175,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 因为UndoRedo时内存实例对象会改变，所以每次通过guid取得新的实例。
         /// </summary>
         /// <param name="forceReCreateSoWrapper"></param>
-        public virtual void ReloadView(bool forceReCreateSoWrapper = false)
+        public virtual void ReloadView(bool forceReCreateSoWrapper = false, bool fakeNode = false)
         {
-            var node = TreeView?.Tree?.GetNodeByGuid(viewDataKey);
-            this.Node = node;
+            //清除旧的class typeName
+            RemoveFromClassList(Node?.GetType().Name ?? "NullNode");
 
-            if (node == null)
+            var node = Node;
+            if (fakeNode)
             {
-                title = "Empty Node";
-                name = "emptyNode";
+                //测试用NodeView 不要从Tree实例中获取节点。因为不存在。
             }
             else
             {
-                var type = node.GetType();
-                title = type.Name;
-
-                AddToClassList(type.Name);
-
-                SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
-                SONode.View = this;
-                SONode.Node = node;
-                SONode.name = type.Name;
-
-                RefreshDecoratorListView();
-
-                //是不是开始节点
-                var isStartNode = TreeView.SOTree?.Tree?.IsStartNodeByGuid(node.GUID) ?? false;
-                this.SetToClassList(StartNodeClass, isStartNode);
-
-                var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
-                //未连接的节点，保存但是运行时没有作用。
-                this.SetToClassList("notConnected", houdai || isStartNode);
+                node = TreeView?.Tree?.GetNodeByGuid(viewDataKey);
+                this.Node = node;
             }
 
+            var type = node?.GetType();
+            var typeName = type?.Name ?? "NullNode";
+            title = typeName;
+            name = typeName;
+            SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
+
+            SONode.View = this;
+            SONode.Node = node;
+            SONode.name = typeName;
+
+            RefreshDecoratorListView();
+
+            //是不是开始节点
+            var isStartNode = TreeView.SOTree?.Tree?.IsStartNodeByGuid(node.GUID) ?? false;
+            this.SetToClassList(StartNodeClass, isStartNode);
+
+            var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
+            //未连接的节点，保存但是运行时没有作用。
+            this.SetToClassList("notConnected", !houdai && !isStartNode);
+
             CreatePort(node);
+            AddToClassList(typeName);
+
             UpdateNodeType();
         }
 
@@ -213,7 +222,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             RemoveFromClassList(nameof(ActionTaskNode));
             RemoveFromClassList(nameof(BTParentNode));
 
-            switch (SONode.Node)
+            switch (SONode?.Node)
             {
                 case ActionTaskNode _:
                     AddToClassList(nameof(ActionTaskNode));
