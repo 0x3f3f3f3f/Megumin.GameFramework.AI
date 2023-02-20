@@ -13,7 +13,7 @@
 }
 
 #connector.connectorBox {
-    min-width: 20px;
+    min-width: 0;
 }
 
 .node Port > Label {
@@ -22,8 +22,8 @@
 }
 
 .port #cap {
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 0;
     display: none;
 }
 
@@ -52,21 +52,14 @@
 }
 
 .decoratorContainer {
-    border-left-color: rgb(39, 170, 226);
-    border-right-color: rgb(109, 226, 39);
-    border-top-color: rgb(109, 226, 39);
-    border-bottom-color: rgb(109, 226, 39);
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+
 }
 
 .decoratorList {
-    border-left-color: rgb(190, 80, 62);
-    border-right-color: rgb(190, 62, 175);
-    border-top-color: rgb(119, 62, 190);
-    border-bottom-color: rgb(62, 164, 190);
+    border-left-color: rgb(83, 37, 94);
+    border-right-color: rgb(83, 37, 94);
+    border-top-color: rgb(83, 37, 94);
+    border-bottom-color: rgb(83, 37, 94);
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
