@@ -52,23 +52,26 @@
 }
 
 .decoratorContainer {
-
 }
 
 .decoratorList {
-    border-left-color: rgb(83, 37, 94);
-    border-right-color: rgb(83, 37, 94);
-    border-top-color: rgb(83, 37, 94);
-    border-bottom-color: rgb(83, 37, 94);
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    border-left-color: rgb(0, 58, 134);
+    border-right-color: rgb(0, 58, 134);
+    border-top-color: rgb(0, 58, 134);
+    border-bottom-color: rgb(0, 58, 134);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
     max-height: none;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 0;
     margin-top: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 #input > .port {
