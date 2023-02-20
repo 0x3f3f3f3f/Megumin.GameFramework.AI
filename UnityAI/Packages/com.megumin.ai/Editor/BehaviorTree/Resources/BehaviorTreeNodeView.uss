@@ -1,10 +1,14 @@
+.node .port {
+    flex-grow: 1;
+}
+
 #connector.connectorBox {
     min-width: 20px;
 }
 
 .node Port > Label {
     visibility: visible;
-    display: flex;
+    display: none;
 }
 
 .port:hover > #connector.connectorBox {
@@ -17,6 +21,15 @@
     border-bottom-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.port #cap {
+    width: 100%;
+    height: 100%;
+}
+
+.port .connectorBox {
+    min-height: 24px;
 }
 
 .decoratorContainer {
@@ -44,4 +57,11 @@
     margin-right: 10px;
     margin-bottom: 0;
     margin-top: 0;
+}
+
+#input > .port {
+}
+
+#output > .port {
+    flex-direction: column;
 }
