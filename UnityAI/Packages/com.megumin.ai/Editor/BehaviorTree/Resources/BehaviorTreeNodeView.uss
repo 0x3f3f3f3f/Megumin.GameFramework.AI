@@ -32,6 +32,10 @@
     min-height: 24px;
 }
 
+.port > #type {
+    display: none;
+}
+
 .decoratorContainer {
     border-left-color: rgb(39, 170, 226);
     border-right-color: rgb(109, 226, 39);
@@ -60,8 +64,9 @@
 }
 
 #input > .port {
+    flex-direction: column;
 }
 
 #output > .port {
-    flex-direction: column;
+    flex-direction: column-reverse;
 }

@@ -12,19 +12,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreePortView : Port
     {
-        protected BehaviorTreePortView(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type)
-            : base(portOrientation, portDirection, portCapacity, type)
-        {
-        }
-
         public BehaviorTreePortView(Direction portDirection, Capacity portCapacity = Capacity.Multi)
-            : this(portOrientation: Orientation.Vertical, portDirection, portCapacity, typeof(byte))
+           : this(portOrientation: Orientation.Vertical, portDirection, portCapacity, typeof(byte))
         {
             var connectorListener = new DefaultEdgeConnectorListener();
             m_EdgeConnector = new EdgeConnector<Edge>(connectorListener);
             this.AddManipulator(m_EdgeConnector);
 
-            m_ConnectorText.style.display = DisplayStyle.None;
+            //m_ConnectorText.style.display = DisplayStyle.None;
+            //Remove(m_ConnectorText);
+
+            m_ConnectorBox.pickingMode = PickingMode.Position;
+        }
+
+        protected BehaviorTreePortView(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type)
+            : base(portOrientation, portDirection, portCapacity, type)
+        {
         }
     }
 

@@ -162,10 +162,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 RefreshDecoratorListView();
             }
 
-            InputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(byte));
+            InputPort = new BehaviorTreePortView(Direction.Input, Port.Capacity.Single);
 
             Port.Capacity multiOutputPort = node is OneChildNode ? Port.Capacity.Single : Port.Capacity.Multi;
-            OutputPort = Port.Create<Edge>(Orientation.Vertical, Direction.Output, multiOutputPort, typeof(byte));
+            OutputPort = new BehaviorTreePortView(Direction.Output, multiOutputPort);
 
             inputContainer.Add(InputPort);
             outputContainer.Add(OutputPort);
