@@ -72,5 +72,17 @@ namespace Megumin.GameFramework.AI.Editor
             @object.LogMethodName();
             Utility.RepaintWindows("Inspector");
         }
+
+        public static void SetToClassList(this VisualElement visualElement, string className, bool enable = true)
+        {
+            if (enable)
+            {
+                visualElement.AddToClassList(className);
+            }
+            else
+            {
+                visualElement.RemoveFromClassList(className);
+            }
+        }
     }
 }

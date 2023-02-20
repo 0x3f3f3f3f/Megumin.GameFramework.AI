@@ -64,6 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Port OutputPort { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
+        public BTNode Node { get; private set; }
 
         public override void OnSelected()
         {
@@ -140,59 +141,70 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return soWrapper;
         }
 
+        public const string StartNodeClass = "startNode";
+
         internal void SetNode(BTNode node)
         {
+            viewDataKey = node?.GUID;
+            ReloadView();
+        }
+
+        public void CreatePort(BTNode node)
+        {
+            if (InputPort == null)
+            {
+                InputPort = new BehaviorTreePortView(Direction.Input, Port.Capacity.Single);
+                inputContainer.Add(InputPort);
+            }
+
+            if (OutputPort == null)
+            {
+                Port.Capacity multiOutputPort = node is OneChildNode ? Port.Capacity.Single : Port.Capacity.Multi;
+                OutputPort = new BehaviorTreePortView(Direction.Output, multiOutputPort);
+                outputContainer.Add(OutputPort);
+            }
+
+            outputContainer.SetToClassList("unDisplay", node is ActionTaskNode);
+        }
+
+        /// <summary>
+        /// 因为UndoRedo时内存实例对象会改变，所以每次通过guid取得新的实例。
+        /// </summary>
+        /// <param name="forceReCreateSoWrapper"></param>
+        public virtual void ReloadView(bool forceReCreateSoWrapper = false)
+        {
+            var node = TreeView?.Tree?.GetNodeByGuid(viewDataKey);
+            this.Node = node;
+
             if (node == null)
             {
-                title = "TestNode";
-                name = "testNode";
+                title = "Empty Node";
+                name = "emptyNode";
             }
             else
             {
                 var type = node.GetType();
                 title = type.Name;
-                viewDataKey = node.GUID;
 
                 AddToClassList(type.Name);
 
-                SONode = CreateSOWrapperIfNull(node);
+                SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
                 SONode.View = this;
                 SONode.Node = node;
                 SONode.name = type.Name;
 
                 RefreshDecoratorListView();
 
-                var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
+                //是不是开始节点
                 var isStartNode = TreeView.SOTree?.Tree?.IsStartNodeByGuid(node.GUID) ?? false;
+                this.SetToClassList(StartNodeClass, isStartNode);
 
-                if (houdai || isStartNode)
-                {
-                    RemoveFromClassList("notConnected");
-                }
-                else
-                {
-                    //未连接的节点，保存但是运行时没有作用。
-                    AddToClassList("notConnected");
-                }
+                var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
+                //未连接的节点，保存但是运行时没有作用。
+                this.SetToClassList("notConnected", houdai || isStartNode);
             }
 
-            InputPort = new BehaviorTreePortView(Direction.Input, Port.Capacity.Single);
-
-            Port.Capacity multiOutputPort = node is OneChildNode ? Port.Capacity.Single : Port.Capacity.Multi;
-            OutputPort = new BehaviorTreePortView(Direction.Output, multiOutputPort);
-
-            inputContainer.Add(InputPort);
-            outputContainer.Add(OutputPort);
-
-            if (node is ActionTaskNode actionTaskNode)
-            {
-                outputContainer.AddToClassList("unDisplay");
-            }
-            else
-            {
-                outputContainer.RemoveFromClassList("unDisplay");
-            }
-
+            CreatePort(node);
             UpdateNodeType();
         }
 

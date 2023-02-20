@@ -16,8 +16,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
-
-        public const string StartNodeClass = "startNode";
         public BehaviorTreeEditor EditorWindow { get; internal set; }
         internal CreateNodeSearchWindowProvider createNodeMenu;
 
@@ -255,14 +253,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             foreach (var node in Tree.AllNodes)
             {
                 var nodeViwe = CreateNodeView(node);
-
-                //RedoUndo后node对象不是原来那个对象，暂时没找到原因。可能时ScriptObject重新反序列化导致的。
-                //这里用GUID判断
-                if (node.GUID == Tree.StartNode?.GUID)
-                {
-                    nodeViwe.AddToClassList(StartNodeClass);
-                }
-
                 this.AddElement(nodeViwe);
             }
 
@@ -446,19 +436,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (Tree.StartNode != null)
-            {
-                var oldStartNodeView = GetNodeByGuid(Tree.StartNode.GUID);
-                if (oldStartNodeView != null)
-                {
-                    oldStartNodeView.RemoveFromClassList(StartNodeClass);
-                }
-            }
+            //if (Tree.StartNode != null)
+            //{
+            //    var oldStartNodeView = GetNodeByGuid(Tree.StartNode.GUID);
+            //    if (oldStartNodeView != null)
+            //    {
+            //        oldStartNodeView.RemoveFromClassList(StartNodeClass);
+            //    }
+            //}
 
             this.LogMethodName();
             UndoRecord("Change Start Node");
             Tree.StartNode = behaviorTreeNodeView.SONode.Node;
-            behaviorTreeNodeView.AddToClassList(StartNodeClass);
+            //需要重载整个View. 节点的unotConnected 属性会大面积改变。
+            //ReloadView();
+            //behaviorTreeNodeView.AddToClassList(StartNodeClass);
         }
     }
 
