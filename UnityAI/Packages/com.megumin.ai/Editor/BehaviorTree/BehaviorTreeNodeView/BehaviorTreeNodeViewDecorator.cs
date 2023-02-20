@@ -56,6 +56,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             DecoretorListView.itemsSource = SONode.Node.Decorators;
             DecoretorListView.Rebuild();
+            if (DecoretorListView.itemsSource == null || DecoretorListView.itemsSource.Count == 0)
+            {
+                decoratorContainer.AddToClassList("unDisplay");
+            }
+            else
+            {
+                decoratorContainer.RemoveFromClassList("unDisplay");
+            }
         }
 
         internal void RemoveDecorator(BehaviorTreeDecoratorView decoratorView)
