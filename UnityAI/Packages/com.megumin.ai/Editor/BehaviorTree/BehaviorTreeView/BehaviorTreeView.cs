@@ -293,6 +293,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             LoadVersion = SOTree.ChangeVersion;
         }
 
+        public void ReloadAllNodeView()
+        {
+            foreach (var item in graphElements)
+            {
+                if (item is BehaviorTreeNodeView nodeView)
+                {
+                    nodeView.ReloadView();
+                }
+            }
+        }
+
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         public BehaviorTree Tree => SOTree?.Tree;
 
