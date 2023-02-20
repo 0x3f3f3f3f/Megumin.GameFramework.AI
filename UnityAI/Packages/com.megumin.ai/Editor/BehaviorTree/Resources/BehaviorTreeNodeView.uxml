@@ -2,7 +2,7 @@
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
     <ui:VisualElement name="node-border">
         <ui:VisualElement name="top">
-            <ui:VisualElement name="input" style="flex-direction: column; align-items: center;" />
+            <ui:VisualElement name="input" class="portContainer" style="flex-direction: column; align-items: center;" />
             <ui:VisualElement name="divider" class="vertical" />
             <ui:VisualElement name="decorator" class="decoratorContainer">
                 <ui:ListView reorderable="true" class="decoratorList" />
@@ -18,7 +18,7 @@
             <ui:VisualElement name="contents">
                 <ui:VisualElement name="divider" class="horizontal" />
             </ui:VisualElement>
-            <ui:VisualElement name="output" style="align-items: center;" />
+            <ui:VisualElement name="output" class="portContainer" style="align-items: center;" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="selection-border" picking-mode="Ignore" />

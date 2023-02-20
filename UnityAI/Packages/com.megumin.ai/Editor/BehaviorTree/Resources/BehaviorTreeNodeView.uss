@@ -70,3 +70,7 @@
 #output > .port {
     flex-direction: column-reverse;
 }
+
+.portContainer {
+    background-color: rgba(99, 99, 99, 255);
+}
