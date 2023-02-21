@@ -27,10 +27,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //this.AddManipulator(new TestMouseManipulator());
             //pickingMode = PickingMode.Position;
             this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
-
+            this.AddManipulator(new DoubleClickSelector(OnDoubleClick));
             capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Ascendable | Capabilities.Copiable | Capabilities.Snappable | Capabilities.Groupable;
             usageHints = UsageHints.DynamicTransform;
             AddToClassList("decorator");
+        }
+
+        private void OnDoubleClick(MouseDownEvent evt)
+        {
+            this.LogMethodName();
         }
 
         public void BuildContextualMenu(ContextualMenuPopulateEvent evt)

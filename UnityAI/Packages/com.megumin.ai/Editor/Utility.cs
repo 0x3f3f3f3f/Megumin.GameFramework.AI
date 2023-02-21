@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -83,6 +84,37 @@ namespace Megumin.GameFramework.AI.Editor
             {
                 visualElement.RemoveFromClassList(className);
             }
+        }
+
+        public static bool WasHitByMouse<T>(this VisualElement target, MouseEventBase<T> evt)
+            where T : MouseEventBase<T>, new()
+        {
+            if (target != null
+                && target.enabledInHierarchy
+                && target.pickingMode != PickingMode.Ignore)
+            {
+                if (target is ISelectable selectable)
+                {
+                    if (selectable.IsSelectable())
+                    {
+                        Vector2 localMousePosition = target.WorldToLocal(evt.mousePosition);
+                        if (selectable.HitTest(localMousePosition))
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
