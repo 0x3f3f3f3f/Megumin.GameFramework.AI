@@ -4,12 +4,25 @@ using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.SettingsManagement;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
+    // Usually you will only have a single Settings instance, so it is convenient to define a UserSetting<T> implementation
+    // that points to your instance. In this way you avoid having to pass the Settings parameter in setting field definitions.
+    internal class MySetting<T> : UserSetting<T>
+    {
+        public string FriendKey { get; set; }
+        public MySetting(string key, T value, SettingsScope scope = SettingsScope.Project)
+            : base(MySettingsManager.instance, $"behaviorTreeEditor_{key}", value, scope)
+        {
+            FriendKey = key;
+        }
+    }
+
     public partial class BehaviorTreeEditor : EditorWindow
     {
         [OnOpenAsset(10)]
@@ -150,6 +163,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             CreateTopbar();
 
+            SetSettingValueClass(showFloatingTip);
+            SetSettingValueClass(decoratorMarker);
 
             AllActiveEditor.Add(this);
 
@@ -174,7 +189,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        static MySetting<bool> showFloatingTip = new MySetting<bool>("behaviorTreeEditor.showFloatingTip", true, SettingsScope.User);
+        static MySetting<bool> showFloatingTip = new MySetting<bool>("floatingTip", true, SettingsScope.User);
+        static MySetting<bool> decoratorMarker = new MySetting<bool>("decoratorMarker", true, SettingsScope.User);
 
         private void CreateTopbar()
         {
@@ -202,6 +218,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
 
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
+
+            var prefs = root.Q<ToolbarMenu>("prefs");
+            prefs.menu.AppendAction(showFloatingTip, "FloatingTip", SetSettingValueClass);
+            prefs.menu.AppendAction(decoratorMarker, "DecoratorMarker", SetSettingValueClass);
 
             var showTree = root.Q<ToolbarButton>("showTreeWapper");
             showTree.clicked += () => TreeView?.InspectorShowWapper();
@@ -236,8 +256,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             };
 
-
-
             var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
             showFloatingTipToggle.value = showFloatingTip.value;
             TreeView.FloatingTip.Show(showFloatingTip.value);
@@ -247,6 +265,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 showFloatingTip.SetValue(evt.newValue);
                 TreeView.FloatingTip.Show(evt.newValue);
             });
+        }
+
+        internal void SetSettingValueClass(UserSetting<bool> setting)
+        {
+            if (setting is MySetting<bool> mysetting)
+            {
+                this.rootVisualElement.SetToClassList($"disable_{mysetting.FriendKey}", !setting);
+            }
+            else
+            {
+                this.rootVisualElement.SetToClassList($"disable_{setting.key}", !setting);
+            }
         }
 
         public void ShowInProject()

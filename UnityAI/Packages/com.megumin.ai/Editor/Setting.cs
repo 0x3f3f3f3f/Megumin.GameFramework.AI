@@ -8,7 +8,7 @@ using UnityEditor.SettingsManagement;
 
 namespace Megumin.GameFramework.AI.Editor
 {
-    static class MySettingsManager
+    internal static class MySettingsManager
     {
         // Replace this with your own package name. Project settings will be stored in a JSON file in a directory matching
         // this name.
@@ -27,16 +27,7 @@ namespace Megumin.GameFramework.AI.Editor
             }
         }
     }
-
-    // Usually you will only have a single Settings instance, so it is convenient to define a UserSetting<T> implementation
-    // that points to your instance. In this way you avoid having to pass the Settings parameter in setting field definitions.
-    class MySetting<T> : UserSetting<T>
-    {
-        public MySetting(string key, T value, SettingsScope scope = SettingsScope.Project)
-            : base(MySettingsManager.instance, key, value, scope)
-        { }
-
-        MySetting(Settings settings, string key, T value, SettingsScope scope = SettingsScope.Project)
-            : base(settings, key, value, scope) { }
-    }
 }
+
+
+

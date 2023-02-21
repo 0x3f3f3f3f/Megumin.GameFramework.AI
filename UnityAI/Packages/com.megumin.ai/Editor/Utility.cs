@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.SettingsManagement;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -115,6 +117,32 @@ namespace Megumin.GameFramework.AI.Editor
             }
 
             return false;
+        }
+
+        public static void AppendAction(this DropdownMenu menu,
+                                        UserSetting<bool> setting,
+                                        string actionName = null,
+                                        Action<UserSetting<bool>> action = null)
+        {
+            if (string.IsNullOrEmpty(actionName))
+            {
+                actionName = setting?.key;
+            }
+
+            menu.AppendAction(actionName,
+                a =>
+                {
+                    setting.SetValue(!setting);
+                    action?.Invoke(setting);
+                },
+                a =>
+                {
+                    if (setting == null)
+                    {
+                        return DropdownMenuAction.Status.Disabled;
+                    }
+                    return setting ? DropdownMenuAction.Status.Checked : DropdownMenuAction.Status.Normal;
+                });
         }
     }
 }

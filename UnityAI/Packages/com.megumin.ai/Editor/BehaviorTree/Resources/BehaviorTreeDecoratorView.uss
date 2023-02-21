@@ -35,6 +35,10 @@ BehaviorTreeDecoratorView {
     flex-grow: 1;
 }
 
+.disable_decoratorMarker .decorator .markerContainer {
+    display: none;
+}
+
 .markerContainer {
     flex-direction: row;
     flex-shrink: 0;
