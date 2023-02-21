@@ -8,10 +8,15 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
 
-    internal interface IConditionable
+    public interface IConditionable
     {
         bool Cal();
         bool Result { get; }
+    }
+
+    public interface IConditionDecirator: IConditionable
+    {
+
     }
 
     internal interface IPreDecirator

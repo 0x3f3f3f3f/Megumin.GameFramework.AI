@@ -15,6 +15,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     public class BehaviorTreeDecoratorView : GraphElement
     {
         public Label Title { get; }
+        public VisualElement CMarker { get; private set; }
+        public VisualElement FMarker { get; private set; }
+        public VisualElement BMarker { get; private set; }
+        public VisualElement AMarker { get; private set; }
 
         public new class UxmlFactory : UxmlFactory<BehaviorTreeDecoratorView, UxmlTraits> { }
 
@@ -24,6 +28,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             visualTree.CloneTree(this);
 
             Title = this.Q<Label>("title-label");
+            CMarker = this.Q("cMarker");
+            FMarker = this.Q("fMarker");
+            BMarker = this.Q("bMarker");
+            AMarker = this.Q("aMarker");
+
             //this.AddManipulator(new TestMouseManipulator());
             //pickingMode = PickingMode.Position;
             this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
@@ -87,14 +96,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         internal void SetDecorator(object decorator)
         {
-            Title.text = decorator?.GetType().Name;
             this.Decorator = decorator;
-
             if (!SODecorator)
             {
                 SODecorator = this.CreateSOWrapper<DecoratorWrapper>();
                 SODecorator.Decorator = decorator;
             }
+
+            ReloadView();
+        }
+
+        public const string EnableMarkClass = "enableMarker";
+        public void ReloadView()
+        {
+            Title.text = Decorator?.GetType().Name;
+            CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecirator);
+            FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecirator);
+            BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecirator);
+            AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecirator);
         }
 
         public override void OnSelected()

@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             };
 
             {
-                var types = TypeCache.GetTypesDerivedFrom<IConditionable>();
+                var types = TypeCache.GetTypesDerivedFrom<IConditionDecirator>();
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("Condition Decorator")) { level = 1 });
                 foreach (var type in types)
                 {

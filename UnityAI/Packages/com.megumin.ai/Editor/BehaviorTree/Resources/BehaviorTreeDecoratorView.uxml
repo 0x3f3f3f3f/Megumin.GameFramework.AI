@@ -1,12 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BehaviorTreeDecoratorView" />
     <ui:VisualElement name="contentContainer" class="border" style="flex-direction: row;">
-        <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" style="flex-grow: 1;" />
-        <ui:VisualElement name="markContainer" class="markContainer">
-            <ui:Label text="C↓" display-tooltip-when-elided="true" name="C" class="markLabel" />
-            <ui:Label text="F↓" display-tooltip-when-elided="true" name="F" class="markLabel" />
-            <ui:Label text="B↑" display-tooltip-when-elided="true" name="B" class="markLabel" />
-            <ui:Label text="A↑" display-tooltip-when-elided="true" name="A" class="markLabel" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" class="title" />
+        <ui:VisualElement name="markerContainer" class="markerContainer">
+            <ui:Label text="C↓" display-tooltip-when-elided="true" name="cMarker" class="marker markerLabel cMarker" />
+            <ui:Label text="F↓" display-tooltip-when-elided="true" name="fMarker" class="marker markerLabel fMarker" />
+            <ui:Label text="B↑" display-tooltip-when-elided="true" name="bMarker" class="marker markerLabel bMarker" />
+            <ui:Label text="A↑" display-tooltip-when-elided="true" name="aMarker" class="marker markerLabel aMarker" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
