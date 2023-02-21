@@ -139,7 +139,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //在Enter之前调用 前置装饰器
             foreach (var pre in Decorators)
             {
-                if (pre is IPreDecirator decirator)
+                if (pre is IPreDecorator decirator)
                 {
                     decirator.BeforeNodeEnter(this);
                 }
@@ -156,7 +156,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             for (int i = Decorators.Count - 1; i >= 0; i--)
             {
                 var pre = Decorators[i];
-                if (pre is IPostDecirator decirator)
+                if (pre is IPostDecorator decirator)
                 {
                     res = decirator.AfterNodeExit(res, this);
                 }
@@ -178,7 +178,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             for (int i = Decorators.Count - 1; i >= 0; i--)
             {
                 var pre = Decorators[i];
-                if (pre is IAbortDecirator decirator)
+                if (pre is IAbortDecorator decirator)
                 {
                     decirator.OnNodeAbort(this);
                 }

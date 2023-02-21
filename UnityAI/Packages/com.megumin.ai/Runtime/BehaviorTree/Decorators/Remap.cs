@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 改变行为的结果。强制成功，强制失败，结果取反Inverter
     /// </summary>
-    public class Remap : BTDecorator, IPostDecirator
+    public class Remap : BTDecorator, IPostDecorator
     {
         bool invers = true;
         public Status AfterNodeExit(Status result, BTNode bTNode)

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class DecoratorLog : BTDecorator, IPreDecirator
+    internal class DecoratorLog : BTDecorator, IPreDecorator
     {
         public string LogStr = "Hello world!";
 

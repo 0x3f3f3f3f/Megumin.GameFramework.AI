@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             };
 
             {
-                var types = TypeCache.GetTypesDerivedFrom<IConditionDecirator>();
+                var types = TypeCache.GetTypesDerivedFrom<IConditionDecorator>();
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("Condition Decorator")) { level = 1 });
                 foreach (var type in types)
                 {
@@ -31,7 +31,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             {
-                var types = TypeCache.GetTypesDerivedFrom<IPreDecirator>();
+                var types = TypeCache.GetTypesDerivedFrom<IPreDecorator>();
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("IPreDecirator")) { level = 1 });
                 foreach (var type in types)
                 {
@@ -40,7 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             {
-                var types = TypeCache.GetTypesDerivedFrom<IPostDecirator>();
+                var types = TypeCache.GetTypesDerivedFrom<IPostDecorator>();
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("IPostDecirator")) { level = 1 });
                 foreach (var type in types)
                 {
@@ -49,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             {
-                var types = TypeCache.GetTypesDerivedFrom<IAbortDecirator>();
+                var types = TypeCache.GetTypesDerivedFrom<IAbortDecorator>();
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("IAbortDecirator")) { level = 1 });
                 foreach (var type in types)
                 {

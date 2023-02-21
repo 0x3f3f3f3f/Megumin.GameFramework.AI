@@ -110,10 +110,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void ReloadView()
         {
             Title.text = Decorator?.GetType().Name;
-            CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecirator);
-            FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecirator);
-            BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecirator);
-            AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecirator);
+            CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecorator);
+            FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecorator);
+            BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecorator);
+            AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecorator);
         }
 
         public override void OnSelected()

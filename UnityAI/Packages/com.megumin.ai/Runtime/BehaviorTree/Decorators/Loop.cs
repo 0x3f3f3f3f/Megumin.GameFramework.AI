@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Loop : BTDecorator, IPostDecirator, IAbortDecirator
+    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator
     {
         public int loopCount = 2;
 

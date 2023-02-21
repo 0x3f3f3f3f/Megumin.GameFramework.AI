@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 成功执行后进入CD.
     /// </summary>
-    public class Cooldown : BTDecorator, IPostDecirator,IConditionable
+    public class Cooldown : BTDecorator, IPostDecorator,IConditionable
     {
         public double cooldownTime = 5;
         public double nextCanEnterTime;

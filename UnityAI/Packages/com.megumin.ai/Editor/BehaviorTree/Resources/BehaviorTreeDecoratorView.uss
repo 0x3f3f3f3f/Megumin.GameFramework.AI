@@ -33,7 +33,6 @@ BehaviorTreeDecoratorView {
 
 .decorator .title#title-label {
     flex-grow: 1;
-    margin-right: 10px;
 }
 
 .markerContainer {
@@ -54,6 +53,7 @@ BehaviorTreeDecoratorView {
     border-top-right-radius: 1px;
     border-bottom-right-radius: 1px;
     align-items: flex-end;
+    margin-left: 14px;
 }
 
 .marker {
