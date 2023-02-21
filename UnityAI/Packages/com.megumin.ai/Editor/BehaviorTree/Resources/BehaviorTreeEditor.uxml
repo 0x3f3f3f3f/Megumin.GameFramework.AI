@@ -22,7 +22,7 @@
         <uie:ToolbarButton text="Test2" display-tooltip-when-elided="true" name="test2" class="topbar-button" />
         <uie:ToolbarButton text="Test3" display-tooltip-when-elided="true" name="test3" class="topbar-button" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />
-        <uie:ToolbarToggle focusable="false" label="FloatingTip" name="showFloatingTip" class="topbar-button" />
+        <uie:ToolbarToggle focusable="false" label="FloatingTip" name="showFloatingTip" class="topbar-button" style="display: none; visibility: hidden;" />
         <uie:ToolbarSpacer />
         <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="help" class="topbar-button" />
     </uie:Toolbar>
