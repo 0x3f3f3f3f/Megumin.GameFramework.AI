@@ -21,43 +21,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 new SearchTreeGroupEntry(new GUIContent("Create Decorator"), 0),
             };
 
-            {
-                var types = TypeCache.GetTypesDerivedFrom<IConditionDecorator>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("Condition Decorator")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<IPreDecorator>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("IPreDecirator")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<IPostDecorator>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("IPostDecirator")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<IAbortDecorator>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("IAbortDecirator")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
-                }
-            }
+            CreateDecoratorEntry<IConditionDecorator>(tree);
+            CreateDecoratorEntry<IPreDecorator>(tree);
+            CreateDecoratorEntry<IPostDecorator>(tree);
+            CreateDecoratorEntry<IAbortDecorator>(tree);
 
             return tree;
+        }
+
+        public static void CreateDecoratorEntry<T>(List<SearchTreeEntry> tree)
+            where T : IDecorator
+        {
+            var types = TypeCache.GetTypesDerivedFrom<T>();
+            tree.Add(new SearchTreeGroupEntry(new GUIContent(typeof(T).Name)) { level = 1 });
+            foreach (var type in types)
+            {
+                tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+            }
         }
 
         public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
