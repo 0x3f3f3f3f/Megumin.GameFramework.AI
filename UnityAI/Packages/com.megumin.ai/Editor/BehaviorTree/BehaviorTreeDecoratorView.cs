@@ -97,17 +97,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void SetDecorator(ITreeElement decorator)
         {
             this.Decorator = decorator;
-            if (!SODecorator)
-            {
-                SODecorator = this.CreateSOWrapper<DecoratorWrapper>();
-                SODecorator.Decorator = decorator;
-            }
-
             ReloadView();
         }
 
         public DecoratorWrapper CreateSOWrapperIfNull(ITreeElement decorator, bool forceRecreate = false)
         {
+            if (decorator == null)
+            {
+                return SODecorator;    
+            }
+
             var soWrapper = SODecorator;
             if (!soWrapper)
             {
@@ -132,6 +131,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public const string EnableMarkClass = "enableMarker";
         public void ReloadView()
         {
+            SODecorator = CreateSOWrapperIfNull(Decorator);
+            SODecorator.Decorator = Decorator;
             Title.text = Decorator?.GetType().Name;
             CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecorator);
             FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecorator);
