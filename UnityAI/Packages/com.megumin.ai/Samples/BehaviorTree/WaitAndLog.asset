@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e71738a9993da41a37d76210d86152, type: 3}
+  m_Name: WaitAndLog
+  m_EditorClassIdentifier: 
+  test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
+  Comment: loadlast
+  StartNodeGUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
+  Nodes:
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
+    GUID: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
+    Meta:
+      x: 332.31183
+      y: 271.59546
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+      IsStartNode: 0
+    ChildNodes: []
+    Decorators: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
+    GUID: 62f41474-7568-45c7-946e-cdf5ad45fff4
+    Meta:
+      x: 145.31189
+      y: 271.59546
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+      IsStartNode: 0
+    ChildNodes: []
+    Decorators: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
+    GUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
+    Meta:
+      x: 225.31189
+      y: 86.59545
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+      IsStartNode: 1
+    ChildNodes:
+    - 62f41474-7568-45c7-946e-cdf5ad45fff4
+    - 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707
+    Decorators:
+    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
+      GUID: f215473e-1bd7-451b-9d38-79a052d9b203

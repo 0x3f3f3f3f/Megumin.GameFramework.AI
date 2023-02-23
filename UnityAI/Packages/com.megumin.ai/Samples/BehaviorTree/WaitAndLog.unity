@@ -167,10 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BehaviorTreeAsset: {fileID: 11400000, guid: 51bacacd9a645b04da8e0cadd4727e9d, type: 2}
+  <BehaviourTree>k__BackingField:
+    InstanceGUID: 
+    AllNodes: []
+  BehaviorTreeAsset: {fileID: 11400000, guid: f4bc91675148295479165d17c026a6d9, type: 2}
   TickMode: 1
   Order: 0
   AutoEnable: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2118817459
 GameObject:
   m_ObjectHideFlags: 0
