@@ -365,6 +365,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             //this.LogMethodName(TreeView);
             AllActiveEditor.Remove(this);
+            TreeView?.Dispose();
         }
 
         private void Reset()

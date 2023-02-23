@@ -24,7 +24,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
         [SerializeReference]
-        public List<object> Decorators = new();
+        public List<ITreeElement> Decorators = new();
 
         public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         
 
-        public object AddDecorator(object decorator)
+        public ITreeElement AddDecorator(ITreeElement decorator)
         {
             if (!Decorators.Contains(decorator))
             {
@@ -72,8 +72,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return decorator;
         }
 
-        public object AddDecorator<T>()
-            where T : class, new()
+        public ITreeElement AddDecorator<T>()
+            where T : ITreeElement, new()
         {
             var decorator = new T();
             if (decorator is BTDecorator bTDecorator)
@@ -83,9 +83,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return AddDecorator(decorator);
         }
 
-        public object AddDecorator(Type type)
+        public ITreeElement AddDecorator(Type type)
         {
-            var decorator = Activator.CreateInstance(type);
+            var decorator = Activator.CreateInstance(type) as ITreeElement;
             if (decorator is BTDecorator bTDecorator)
             {
                 bTDecorator.GUID = Guid.NewGuid().ToString();
@@ -93,7 +93,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return AddDecorator(decorator);
         }
 
-        internal void RemoveDecorator(object decorator)
+        internal void RemoveDecorator(ITreeElement decorator)
         {
             Decorators.Remove(decorator);
         }

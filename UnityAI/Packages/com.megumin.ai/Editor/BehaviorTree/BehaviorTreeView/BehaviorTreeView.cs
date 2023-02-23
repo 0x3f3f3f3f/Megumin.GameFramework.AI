@@ -83,6 +83,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 UnityEngine.Object.DestroyImmediate(sonode.Value);
             }
             NodeWrapperCache.Clear();
+
+            foreach (var sodecorator in DecoratorWrapperCache)
+            {
+                UnityEngine.Object.DestroyImmediate(sodecorator.Value);
+            }
+            DecoratorWrapperCache.Clear();
         }
 
         void CreateUIBuilderDebugNode()
@@ -408,6 +414,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// 如果使用全局静态，会导致Guid Key冲突。
         /// </remarks>
         internal protected Dictionary<string, NodeWrapper> NodeWrapperCache = new();
+        internal protected Dictionary<string, DecoratorWrapper> DecoratorWrapperCache = new();
+
         public BehaviorTreeNodeView CreateNodeView(BTNode node, bool fakeNode = false)
         {
             var nodeView = new BehaviorTreeNodeView() { name = "behaviorTreeNode" };

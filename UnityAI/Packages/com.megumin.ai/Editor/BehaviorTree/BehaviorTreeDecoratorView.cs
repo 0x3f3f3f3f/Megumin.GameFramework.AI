@@ -91,10 +91,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override VisualElement contentContainer => base.contentContainer;
 
         public BehaviorTreeNodeView NodeView { get; internal set; }
-        public object Decorator { get; private set; }
+        public ITreeElement Decorator { get; private set; }
         public DecoratorWrapper SODecorator;
 
-        internal void SetDecorator(object decorator)
+        internal void SetDecorator(ITreeElement decorator)
         {
             this.Decorator = decorator;
             if (!SODecorator)
@@ -104,6 +104,29 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             ReloadView();
+        }
+
+        public DecoratorWrapper CreateSOWrapperIfNull(ITreeElement decorator, bool forceRecreate = false)
+        {
+            var soWrapper = SODecorator;
+            if (!soWrapper)
+            {
+                if (NodeView.TreeView.DecoratorWrapperCache.TryGetValue(decorator.GUID, out var cacheWrapper))
+                {
+                    //创建新的SO对象在 Inpector锁定显示某个节点时，会出现无法更新的问题。
+                    //尝试复用旧的SOWrapper
+
+                    //Debug.Log("尝试复用旧的SOWrapper");
+                    soWrapper = cacheWrapper;
+                }
+            }
+
+            if (!soWrapper || forceRecreate)
+            {
+                soWrapper = this.CreateSOWrapper<DecoratorWrapper>();
+                NodeView.TreeView.DecoratorWrapperCache[decorator.GUID] = soWrapper;
+            }
+            return soWrapper;
         }
 
         public const string EnableMarkClass = "enableMarker";
@@ -152,7 +175,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     public class DecoratorWrapper : ScriptableObject
     {
         [SerializeReference]
-        public object Decorator;
+        public ITreeElement Decorator;
 
 
 

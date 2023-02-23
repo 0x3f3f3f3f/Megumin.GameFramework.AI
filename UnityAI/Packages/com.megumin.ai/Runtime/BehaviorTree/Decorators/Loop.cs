@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class Loop : BTDecorator, IPostDecorator, IAbortDecorator
     {
-        public int loopCount = 2;
+        public int loopCount = -1;
 
         int cur = 0;
         public Status AfterNodeExit(Status result, BTNode bTNode)

@@ -75,7 +75,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public string TypeName;
             public string GUID;
 
-            public object Instantiate(bool instanceMeta = true)
+            public ITreeElement Instantiate(bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
