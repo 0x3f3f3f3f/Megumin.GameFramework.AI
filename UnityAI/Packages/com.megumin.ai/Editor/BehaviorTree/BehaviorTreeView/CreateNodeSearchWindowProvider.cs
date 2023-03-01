@@ -9,6 +9,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.ComponentModel;
+using Megumin.GameFramework.AI.Editor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -48,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("Action")) { level = 1 });
                 foreach (var type in types)
                 {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
                 }
             }
 
@@ -57,7 +58,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("Composite")) { level = 1 });
                 foreach (var type in types)
                 {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
                 }
             }
 
@@ -66,49 +67,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 tree.Add(new SearchTreeGroupEntry(new GUIContent("OneChildNode")) { level = 1 });
                 foreach (var type in types)
                 {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
+                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
                 }
             }
 
             {
-                AddCateGoryNode(tree);
+                this.AddCateGory2<BTNode>(tree);
             }
 
             //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
             //Tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
-        }
-
-        public static void AddCateGoryNode(List<SearchTreeEntry> tree)
-        {
-            //Category 特性
-            var types = TypeCache.GetTypesDerivedFrom<BTNode>();
-            var pairs = from type in types
-                        let attri = type.GetCustomAttribute<CategoryAttribute>()
-                        where attri != null
-                        orderby attri.Category
-                        orderby type.Name
-                        select (attri, type);
-
-            HashSet<string> alreadyAddPathName = new();
-
-            foreach (var item in pairs)
-            {
-                var type = item.type;
-                var levelString = item.attri.Category.Split('/');
-                var pathName = "";
-                for (int i = 0; i < levelString.Length; i++)
-                {
-                    var levelName = levelString[i];
-                    pathName += levelName;
-                    if (!alreadyAddPathName.Contains(pathName))
-                    {
-                        alreadyAddPathName.Add(pathName);
-                        tree.Add(new SearchTreeGroupEntry(new GUIContent(levelName)) { level = 1 + i });
-                    }
-                }
-
-                tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 1 + levelString.Length, userData = type });
-            }
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)

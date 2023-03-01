@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BTParentNode : BTNode
+    public abstract class BTParentNode : BTNode
     {
         /// <summary>
         /// 这里必须使用泛型序列化，否则Undo/Redo 时元素会丢失自己的真实类型。notconnect 多层级颜色bug
@@ -49,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
-    public class CompositeNode : BTParentNode
+    public abstract class CompositeNode : BTParentNode
     {
         public int current { get; protected set; } = -1;
 
@@ -71,7 +71,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
-    public class OneChildNode : BTParentNode
+    public abstract class OneChildNode : BTParentNode
     {
         public BTNode Child0
         {
