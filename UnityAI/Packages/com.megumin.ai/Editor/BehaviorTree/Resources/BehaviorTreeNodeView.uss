@@ -145,11 +145,11 @@
     position: absolute;
 }
 
-.ActionTaskNode #header {
+.ActionTaskNode #body #header {
     background-color: rgb(96, 45, 160);
 }
 
-.BTParentNode #header {
+.BTParentNode #body #header {
     background-color: rgb(64, 64, 64);
 }
 

@@ -91,6 +91,6 @@ BehaviorTreeView .node.startNode {
     border-bottom-color: rgba(245, 144, 20, 0.76);
 }
 
-BehaviorTreeView .node.startNode #header {
+BehaviorTreeView .node.startNode #body #header {
     background-color: rgba(245, 144, 20, 0.76);
 }
