@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
@@ -25,6 +26,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
     public partial class BehaviorTreeEditor : EditorWindow
     {
+
+        static List<MySetting<bool>> MySettingPrefs = new()
+        {
+            new MySetting<bool>("FloatingTip", true, SettingsScope.User),
+            new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
+            new MySetting<bool>("NodeIcon", true, SettingsScope.User),
+            new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
+        };
+
         [OnOpenAsset(10)]
         public static bool OnOpenAsset(int instanceID, int line, int column)
         {
@@ -163,8 +173,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             CreateTopbar();
 
-            SetSettingValueClass(showFloatingTip);
-            SetSettingValueClass(decoratorMarker);
+            //应用默认用户首选项
+            foreach (var item in MySettingPrefs)
+            {
+                SetSettingValueClass(item);
+            }
 
             AllActiveEditor.Add(this);
 
@@ -188,9 +201,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 AssetDatabase.OpenAsset(CurrentAsset);
             }
         }
-
-        static MySetting<bool> showFloatingTip = new MySetting<bool>("floatingTip", true, SettingsScope.User);
-        static MySetting<bool> decoratorMarker = new MySetting<bool>("decoratorMarker", true, SettingsScope.User);
 
         private void CreateTopbar()
         {
@@ -220,8 +230,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var prefs = root.Q<ToolbarMenu>("prefs");
-            prefs.menu.AppendAction(showFloatingTip, "FloatingTip", SetSettingValueClass);
-            prefs.menu.AppendAction(decoratorMarker, "DecoratorMarker", SetSettingValueClass);
+            foreach (var item in MySettingPrefs)
+            {
+                prefs.menu.AppendAction(item, item.FriendKey, SetSettingValueClass);
+            }
 
             var showTree = root.Q<ToolbarButton>("showTreeWapper");
             showTree.clicked += () => TreeView?.InspectorShowWapper();
@@ -256,15 +268,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             };
 
-            var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
-            showFloatingTipToggle.value = showFloatingTip.value;
-            TreeView.FloatingTip.Show(showFloatingTip.value);
+            //var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
+            //showFloatingTipToggle.value = showFloatingTip.value;
+            //TreeView.FloatingTip.Show(showFloatingTip.value);
 
-            showFloatingTipToggle.RegisterValueChangedCallback(evt =>
-            {
-                showFloatingTip.SetValue(evt.newValue);
-                TreeView.FloatingTip.Show(evt.newValue);
-            });
+            //showFloatingTipToggle.RegisterValueChangedCallback(evt =>
+            //{
+            //    showFloatingTip.SetValue(evt.newValue);
+            //    TreeView.FloatingTip.Show(evt.newValue);
+            //});
         }
 
         internal void SetSettingValueClass(UserSetting<bool> setting)

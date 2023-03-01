@@ -54,7 +54,7 @@ BehaviorTreeView .debug {
     max-width: 280px;
 }
 
-.disable_floatingTip .floatingTip{
+.disable_FloatingTip .floatingTip{
     display: none;
 }
 

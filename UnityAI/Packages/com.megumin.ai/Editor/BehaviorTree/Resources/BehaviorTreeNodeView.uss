@@ -202,3 +202,7 @@
 
 #body #contents #guid {
 }
+
+.disable_NodeIcon #body #header > #icon{
+    display: none;
+}
