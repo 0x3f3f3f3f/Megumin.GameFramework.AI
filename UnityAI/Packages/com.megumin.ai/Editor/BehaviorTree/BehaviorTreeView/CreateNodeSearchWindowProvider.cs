@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.ComponentModel;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -68,8 +70,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            {
+                AddCateGoryNode(tree);
+            }
+
             //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
             //Tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
+        }
+
+        public static void AddCateGoryNode(List<SearchTreeEntry> tree)
+        {
+            //Category 特性
+            var types = TypeCache.GetTypesDerivedFrom<BTNode>();
+            var pairs = from type in types
+                        let attri = type.GetCustomAttribute<CategoryAttribute>()
+                        where attri != null
+                        orderby attri.Category
+                        orderby type.Name
+                        select (attri, type);
+
+            HashSet<string> alreadyAddPathName = new();
+
+            foreach (var item in pairs)
+            {
+                var type = item.type;
+                var levelString = item.attri.Category.Split('/');
+                var pathName = "";
+                for (int i = 0; i < levelString.Length; i++)
+                {
+                    var levelName = levelString[i];
+                    pathName += levelName;
+                    if (!alreadyAddPathName.Contains(pathName))
+                    {
+                        alreadyAddPathName.Add(pathName);
+                        tree.Add(new SearchTreeGroupEntry(new GUIContent(levelName)) { level = 1 + i });
+                    }
+                }
+
+                tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 1 + levelString.Length, userData = type });
+            }
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
