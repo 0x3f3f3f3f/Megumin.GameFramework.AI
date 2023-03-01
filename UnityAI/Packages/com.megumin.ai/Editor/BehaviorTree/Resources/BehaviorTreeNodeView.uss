@@ -19,14 +19,6 @@
     margin-right: 6px;
 }
 
-.node.ActionTaskNode #title {
-    background-color: rgb(96, 45, 160);
-}
-
-.node.BTParentNode #title {
-    background-color: rgb(64, 64, 64);
-}
-
 .portContainer {
     align-items: center;
     flex-direction: row;
@@ -153,17 +145,27 @@
     position: absolute;
 }
 
+.ActionTaskNode #header {
+    background-color: rgb(96, 45, 160);
+}
+
+.BTParentNode #header {
+    background-color: rgb(64, 64, 64);
+}
+
 #body #header {
+    flex-direction: row;
+    align-items: center;
 }
 
 #body #header > #icon {
-    display: none;
-    width: auto;
-    height: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
@@ -172,7 +174,16 @@
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    background-image: url('project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/iconplastic.png?fileID=2800000&guid=3042b019b052942a1baf7aa49d7ca6bb&type=3#iconplastic');
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(200, 48, 181, 255);
+    border-right-color: rgba(200, 48, 181, 255);
+    border-top-color: rgba(200, 48, 181, 255);
+    border-bottom-color: rgba(200, 48, 181, 255);
+    background-image: url('project://database/Packages/com.unity.settings-manager/Content/Options.png?fileID=2800000&guid=9eff477e4332346818c96745043dae9e&type=3#Options');
+}
+
+#body #header > #title {
+    flex-grow: 1;
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -183,12 +194,11 @@
     padding-left: 20px;
     min-height: 0;
     min-width: 0;
-} 
+}
 
 #body #contents #description {
     display: none;
 }
 
 #body #contents #guid {
-    
 }
