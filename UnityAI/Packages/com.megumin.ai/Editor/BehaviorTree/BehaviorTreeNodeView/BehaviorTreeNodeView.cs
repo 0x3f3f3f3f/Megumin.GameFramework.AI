@@ -260,6 +260,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (evt.target is BehaviorTreeNodeView)
             {
+                evt.menu.AppendAction("Open Documentation _F1", a => AI.Editor.Utility.OpenDocumentation(Node?.GetType()),
+                    Node?.GetType().TryGetAttribute<HelpURLAttribute>(out var _) ?? false ?
+                    DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
+
+                evt.menu.AppendSeparator();
+
                 evt.menu.AppendAction("Breakpoint", a => { }, DropdownMenuAction.AlwaysDisabled);
                 evt.menu.AppendSeparator();
             }

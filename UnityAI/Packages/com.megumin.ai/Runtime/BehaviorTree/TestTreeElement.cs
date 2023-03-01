@@ -8,26 +8,22 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug")]
+    [Category("Debug/ActionTaskNode")]
     [Icon("Icons/Overlays/ToolsToggle.png")]
     [HelpURL("www.baidu.com")]
     [Description]
     [Tooltip("在控制台打印日志")]
-    public class Log: ActionTaskNode
+    public class TestActionNode : ActionTaskNode
     {
-        int count = 0;
+    }
 
-        public string LogStr = "Hello world!";
+    [Category("Debug/BTDecorator")]
+    [Icon("Icons/Overlays/ToolsToggle.png")]
+    [HelpURL("www.baidu.com")]
+    [Description]
+    [Tooltip("在控制台打印日志")]
+    public class TestBTDecorator: BTDecorator
+    {
 
-        protected override void OnEnter()
-        {
-            count++;
-        }
-
-        protected override Status OnTick()
-        {
-            Debug.Log($"Hello world! {count}");
-            return  Status.Succeeded;
-        }
     }
 }

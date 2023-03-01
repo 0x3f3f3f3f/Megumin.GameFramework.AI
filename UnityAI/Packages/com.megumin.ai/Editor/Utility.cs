@@ -97,6 +97,14 @@ namespace Megumin.GameFramework.AI.Editor
                 Selection.activeObject = obj;
             }
         }
+
+        public static void OpenDocumentation(Type type)
+        {
+            if (type.TryGetAttribute<HelpURLAttribute>(out var attribute))
+            {
+                System.Diagnostics.Process.Start(attribute.URL);
+            }
+        }
     }
 
     internal static class Extension
@@ -239,6 +247,19 @@ namespace Megumin.GameFramework.AI.Editor
                 }
             }
             return null;
+        }
+
+        public static bool TryGetAttribute<T>(this Type type, out T attribute)
+             where T : Attribute
+        {
+            var attri = type?.GetCustomAttribute<T>();
+            if (attri != null)
+            {
+                attribute = attri;
+                return true;
+            }
+            attribute = null;
+            return false;
         }
     }
 }

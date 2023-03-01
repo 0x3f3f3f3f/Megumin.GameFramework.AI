@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BTDecorator : TreeElement
+    public class BTDecorator : TreeElement, IDecorator
     {
     }
 }
