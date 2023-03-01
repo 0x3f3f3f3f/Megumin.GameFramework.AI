@@ -114,3 +114,7 @@ BehaviorTreeDecoratorView {
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
 }
+
+.disable_DecoratorIcon #header > #icon{
+    display: none;
+}

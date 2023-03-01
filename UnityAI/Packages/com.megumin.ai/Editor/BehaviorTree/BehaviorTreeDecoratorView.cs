@@ -17,6 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public override VisualElement contentContainer => ContentContainer;
         public VisualElement ContentContainer { get; private set; }
+        public Button Icon { get; private set; }
         public Label Title { get; }
         public VisualElement CMarker { get; private set; }
         public VisualElement FMarker { get; private set; }
@@ -31,6 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             visualTree.CloneTree(this);
 
             ContentContainer = this.Q("contentContainer");
+            Icon = this.Q<Button>("icon", "treeElementIcon");
             Title = this.Q<Label>("title-label");
             CMarker = this.Q("cMarker");
             FMarker = this.Q("fMarker");
@@ -125,14 +127,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             SODecorator = CreateSOWrapperIfNull(Decorator);
             SODecorator.Decorator = Decorator;
-            Title.text = Decorator?.GetType().Name;
+            var type = Decorator?.GetType();
+            Title.text = type?.Name;
+
+            //使用自定义图标
+            Icon.TrySetIconFromAttribute(type);
+
             CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecorator);
             FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecorator);
             BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecorator);
             AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecorator);
 
 
-            var attri = Decorator?.GetType()?.GetCustomAttribute<ColorAttribute>();
+            var attri = type?.GetCustomAttribute<ColorAttribute>();
             if (attri != null)
             {
                 contentContainer.style.backgroundColor = attri.Color;
