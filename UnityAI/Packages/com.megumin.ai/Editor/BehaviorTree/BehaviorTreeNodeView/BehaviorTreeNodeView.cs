@@ -9,6 +9,7 @@ using UnityEditor;
 using System.ComponentModel;
 using Megumin.GameFramework.AI.Editor;
 using System.Linq;
+using System.Reflection;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -27,6 +28,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             StyleSheet styleSheet = Resources.Load<StyleSheet>("BehaviorTreeNodeView");
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
+
+            Header = this.Q("header");
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
             Icon = this.Q<Button>("icon", "treeElementIcon");
@@ -67,6 +70,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
+        public VisualElement Header { get; private set; }
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
         public Button Icon { get; private set; }
@@ -225,6 +229,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var houdai = TreeView.SOTree?.Tree?.IsStartNodeDescendant(node) ?? false;
             //未连接的节点，保存但是运行时没有作用。
             this.SetToClassList("notConnected", !houdai && !isStartNode);
+
+            if (!isStartNode)
+            {
+                //非开始节点使用自定义颜色
+                var attri = type?.GetCustomAttribute<ColorAttribute>();
+                if (attri != null)
+                {
+                    Header.style.backgroundColor = attri.Color;
+                }
+            }
 
             CreatePort(node);
             AddToClassList(typeName);

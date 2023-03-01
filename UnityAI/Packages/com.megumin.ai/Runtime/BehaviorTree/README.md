@@ -95,12 +95,13 @@ Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后
 - [ ] 远程调试
 - [ ] 游戏内实时编辑器/行为树查看器。（目前GraphView只支持编辑器，等unity realtime支持时迁移）
 
-## Attribute
+## 支持的Attribute
 - [x] Category
 - [x] Icon
 - [x] HelpURL
-- [ ] Description
-- [ ] Tooltip
+- [x] Description
+- [x] Tooltip
+- [x] Color
 
 ---
 ---

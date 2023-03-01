@@ -310,9 +310,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public int SaveVersion = 0;
+
+        double lastSaveClick;
         public void SaveAsset()
         {
-            if (TreeView?.SOTree?.ChangeVersion == SaveVersion)
+            double delta = EditorApplication.timeSinceStartup - lastSaveClick;
+            if (delta > 0.5 || delta < 0)
+            {
+                if (delta > 0)
+                {
+                    lastSaveClick = EditorApplication.timeSinceStartup;
+                }
+                SaveAsset(false);
+            }
+            else
+            {
+                //短时间内多次点击，强制保存
+                lastSaveClick = EditorApplication.timeSinceStartup + 3;
+                SaveAsset(true);
+            }
+        }
+
+        public void SaveAsset(bool force = false)
+        {
+            if (TreeView?.SOTree?.ChangeVersion == SaveVersion && !force)
             {
                 Debug.Log($"没有需要保存的改动。");
                 return;
