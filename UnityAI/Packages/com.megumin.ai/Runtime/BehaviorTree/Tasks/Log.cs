@@ -10,6 +10,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Debug")]
     [Icon("Icons/Overlays/ToolsToggle.png")]
+    [HelpURL("")]
+    [Description]
+    [Tooltip("在控制台打印日志")]
     public class Log: ActionTaskNode
     {
         int count = 0;

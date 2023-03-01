@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.SettingsManagement;
@@ -57,6 +58,44 @@ namespace Megumin.GameFramework.AI.Editor
                                 where wnd.titleContent.text == title
                                 select wnd;
             return resultWindows;
+        }
+
+        public static ValueTask<MonoScript> GetMonoScript(Type type)
+        {
+            //Todo Cache /unity background tasks
+            var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
+
+            foreach (var scriptGUID in scriptGUIDs)
+            {
+                var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
+                var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+                var code = script.text;
+                if (code.Contains($"class {type.Name}")
+                    && code.Contains(type.Namespace))
+                {
+                    return new ValueTask<MonoScript>(script);
+                }
+            }
+
+            return new ValueTask<MonoScript>(result: null);
+        }
+
+        public static async void OpenScript(Type type)
+        {
+            var obj = await GetMonoScript(type);
+            if (obj)
+            {
+                AssetDatabase.OpenAsset(obj, 0, 0);
+            }
+        }
+
+        public static async void SelectScript(Type type)
+        {
+            var obj = await Utility.GetMonoScript(type);
+            if (obj)
+            {
+                Selection.activeObject = obj;
+            }
         }
     }
 
@@ -167,7 +206,7 @@ namespace Megumin.GameFramework.AI.Editor
                 //Resources.Load 需要路径不包含扩展名
                 var withoutExtensionPath = path.Replace(Path.GetExtension(path), "");
                 var iconTexture = Resources.Load<Texture2D>(withoutExtensionPath);
-               
+
                 if (!iconTexture)
                 {
                     iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
@@ -192,8 +231,12 @@ namespace Megumin.GameFramework.AI.Editor
             {
                 var attributes = type.GetCustomAttributes(typeof(IconAttribute), true);
                 for (int i = 0, c = attributes.Length; i < c; i++)
+                {
                     if (attributes[i] is IconAttribute)
+                    {
                         return ((IconAttribute)attributes[i]).path;
+                    }
+                }
             }
             return null;
         }

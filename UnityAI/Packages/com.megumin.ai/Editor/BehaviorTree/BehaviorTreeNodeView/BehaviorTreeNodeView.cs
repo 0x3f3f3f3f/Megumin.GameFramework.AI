@@ -50,7 +50,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //}, TrickleDown.NoTrickleDown);
 
             DecoretorListView = decoratorContainer.Q<ListView>();
-            DecoretorListView.reorderable= true;
+            DecoretorListView.reorderable = true;
             DecoretorListView.reorderMode = ListViewReorderMode.Animated;
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
@@ -258,8 +258,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //this.LogMethodName();
             base.BuildContextualMenu(evt);
 
-            evt.menu.AppendAction("Open Node Script", a => OpenNodeScript(), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Open Node View Script", a => OpenNodeViewScript(), DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendAction("Open Node Script", a => AI.Editor.Utility.OpenScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Open Node View Script", a => { }, DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
 
             evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
@@ -284,30 +285,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 return DropdownMenuAction.Status.Normal;
             }
-        }
-
-        private void OpenNodeScript()
-        {
-            //Todo Cache /unity background tasks
-            var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
-
-            foreach (var scriptGUID in scriptGUIDs)
-            {
-                var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
-                var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
-                var type = SONode.Node.GetType();
-                var code = script.text;
-                if (code.Contains($"class {type.Name}")
-                    && code.Contains(type.Namespace))
-                {
-                    AssetDatabase.OpenAsset(script, 0, 0);
-                }
-            }
-        }
-
-        private void OpenNodeViewScript()
-        {
-
         }
 
         public void SetStart()

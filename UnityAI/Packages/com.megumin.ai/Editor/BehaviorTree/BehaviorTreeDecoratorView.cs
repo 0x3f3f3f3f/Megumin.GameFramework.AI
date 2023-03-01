@@ -59,33 +59,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             evt.menu.AppendAction($"Move Down", a => NodeView?.MoveDownDecorator(this), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
 
-            evt.menu.AppendAction("Open Decorator Script", a => OpenDecoratorScript(), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Open Decorator View Script", a => OpenDecoratorViewScript(), DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendAction("Open Decorator Script", a => AI.Editor.Utility.OpenScript(Decorator?.GetType()), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Open Decorator View Script", a => { }, DropdownMenuAction.AlwaysDisabled);
+            evt.menu.AppendAction("Select Decorator Script", a => AI.Editor.Utility.SelectScript(Decorator?.GetType()), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendSeparator();
-        }
-
-        private void OpenDecoratorViewScript()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OpenDecoratorScript()
-        {
-            //Todo Cache /unity background tasks
-            var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
-
-            foreach (var scriptGUID in scriptGUIDs)
-            {
-                var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
-                var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
-                var type = Decorator.GetType();
-                var code = script.text;
-                if (code.Contains($"class {type?.Name}")
-                    && code.Contains(type?.Namespace))
-                {
-                    AssetDatabase.OpenAsset(script, 0, 0);
-                }
-            }
         }
 
         public override VisualElement contentContainer => base.contentContainer;
@@ -104,7 +81,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (decorator == null)
             {
-                return SODecorator;    
+                return SODecorator;
             }
 
             var soWrapper = SODecorator;
