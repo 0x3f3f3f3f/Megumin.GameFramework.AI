@@ -258,6 +258,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //this.LogMethodName();
             base.BuildContextualMenu(evt);
 
+            if (evt.target is BehaviorTreeNodeView)
+            {
+                evt.menu.AppendAction("Breakpoint", a => { }, DropdownMenuAction.AlwaysDisabled);
+                evt.menu.AppendSeparator();
+            }
+
             evt.menu.AppendAction("Open Node Script", a => AI.Editor.Utility.OpenScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
             evt.menu.AppendAction("Open Node View Script", a => { }, DropdownMenuAction.AlwaysDisabled);
             evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
