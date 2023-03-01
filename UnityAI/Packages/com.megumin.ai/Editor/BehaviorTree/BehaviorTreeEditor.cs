@@ -33,6 +33,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
             new MySetting<bool>("NodeIcon", true, SettingsScope.User),
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
+            new MySetting<bool>("ToolTip", true, SettingsScope.User),
         };
 
         [OnOpenAsset(10)]
@@ -158,6 +159,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName(CurrentAsset, TreeView?.SOTree);
             VisualElement root = rootVisualElement;
             root.AddToClassList("behaviorTreeEditor");
+
+            root.RegisterCallback<TooltipEvent>(evt =>
+            {
+                if (!MySettingPrefs[4])
+                {
+                    //关闭TooltipEvent
+                    evt.StopImmediatePropagation();
+                }
+            }, TrickleDown.TrickleDown);
 
             // Instantiate UXML
             //VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
