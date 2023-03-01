@@ -11,14 +11,14 @@ namespace Megumin.GameFramework.AI
     public class ColorAttribute : Attribute
     {
         public Color Color { get; set; }
-        public float r { get; set; }
-        public float g { get; set; }
-        public float b { get; set; }
-        public float a { get; set; } = 1f;
+        public double r { get; set; }
+        public double g { get; set; }
+        public double b { get; set; }
+        public double a { get; set; } = 1f;
 
-        public ColorAttribute(float r, float g, float b, float a = 1f)
+        public ColorAttribute(double r, double g, double b, double a = 1f)
         {
-            Color = new Color(r, g, b, a);
+            Color = new Color((float)r, (float)g, (float)b, (float)a);
             this.r = r;
             this.g = g;
             this.b = b;

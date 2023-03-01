@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.GameFramework.AI.Editor;
@@ -14,6 +15,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class BehaviorTreeDecoratorView : GraphElement
     {
+        public override VisualElement contentContainer => ContentContainer;
+        public VisualElement ContentContainer { get; private set; }
         public Label Title { get; }
         public VisualElement CMarker { get; private set; }
         public VisualElement FMarker { get; private set; }
@@ -27,6 +30,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var visualTree = Resources.Load<VisualTreeAsset>("BehaviorTreeDecoratorView");
             visualTree.CloneTree(this);
 
+            ContentContainer = this.Q("contentContainer");
             Title = this.Q<Label>("title-label");
             CMarker = this.Q("cMarker");
             FMarker = this.Q("fMarker");
@@ -78,8 +82,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             evt.menu.AppendSeparator();
         }
 
-        public override VisualElement contentContainer => base.contentContainer;
-
         public BehaviorTreeNodeView NodeView { get; internal set; }
         public ITreeElement Decorator { get; private set; }
         public DecoratorWrapper SODecorator;
@@ -128,6 +130,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecorator);
             BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecorator);
             AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecorator);
+
+
+            var attri = Decorator?.GetType()?.GetCustomAttribute<ColorAttribute>();
+            if (attri != null)
+            {
+                contentContainer.style.backgroundColor = attri.Color;
+            }
         }
 
         public override void OnSelected()

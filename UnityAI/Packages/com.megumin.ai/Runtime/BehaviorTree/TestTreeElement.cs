@@ -23,6 +23,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [HelpURL("www.baidu.com")]
     [Description("TestDescription")]
     [Tooltip("在控制台打印日志")]
+    [Color(0.72f, 0.25f, 0.27f)]
     public class TestBTDecorator : BTDecorator
     {
 
