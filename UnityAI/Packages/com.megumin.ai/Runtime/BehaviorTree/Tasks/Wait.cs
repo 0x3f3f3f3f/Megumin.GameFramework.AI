@@ -9,6 +9,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("CategoryTest")]
+    [Icon("ICONS/sg_graph_icon.png")]
     public class Wait : ActionTaskNode
     {
         public float waitTime = 1f;

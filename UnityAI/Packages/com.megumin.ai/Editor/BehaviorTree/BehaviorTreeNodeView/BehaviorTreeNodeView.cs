@@ -29,6 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddToClassList("behaviorTreeNode");
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
+            Icon = this.Q<Button>("icon", "treeElementIcon");
 
             decoratorContainer = this.Q<VisualElement>("decorator");
             //decoratorContainer.AddManipulator(new TestMouseManipulator());
@@ -68,6 +69,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Port OutputPort { get; private set; }
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
+        public Button Icon { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
         public BTNode Node { get; private set; }
@@ -203,6 +205,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var typeName = type?.Name ?? "NullNode";
             title = typeName;
             name = typeName;
+
+            //使用自定义图标
+            Icon.TrySetIconFromAttribute(type);
+
             ShortGUID.text = node?.GUID.Substring(0, 13) ?? string.Empty;
             SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
 

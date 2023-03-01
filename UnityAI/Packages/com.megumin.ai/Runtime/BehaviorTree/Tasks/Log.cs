@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Debug")]
-    [Icon("Icons/TestIcon")]
+    [Icon("Icons/Overlays/ToolsToggle.png")]
     public class Log: ActionTaskNode
     {
         int count = 0;

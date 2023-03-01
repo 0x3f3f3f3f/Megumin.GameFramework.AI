@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.SettingsManagement;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -143,6 +142,60 @@ namespace Megumin.GameFramework.AI.Editor
                     }
                     return setting ? DropdownMenuAction.Status.Checked : DropdownMenuAction.Status.Normal;
                 });
+        }
+
+        public static void TrySetIconFromAttribute(this VisualElement iconElement, Type type)
+        {
+            string path = GetIconPathFromAttribute(type);
+            if (TryLoadIcon(path, out var icon))
+            {
+                iconElement.style.backgroundImage = icon;
+            }
+        }
+
+        static Dictionary<string, Texture2D> iconCache = new();
+        public static bool TryLoadIcon(string path, out Texture2D texture2D)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                texture2D = default;
+                return false;
+            }
+
+            if (!iconCache.TryGetValue(path, out texture2D))
+            {
+                //Resources.Load 需要路径不包含扩展名
+                var withoutExtensionPath = path.Replace(Path.GetExtension(path), "");
+                var iconTexture = Resources.Load<Texture2D>(withoutExtensionPath);
+               
+                if (!iconTexture)
+                {
+                    iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+                }
+
+                if (!iconTexture)
+                {
+                    var loadIcon = typeof(EditorGUIUtility).GetMethod("LoadIcon", BindingFlags.Static | BindingFlags.NonPublic);
+                    iconTexture = loadIcon.Invoke(null, new object[] { path }) as Texture2D;
+                }
+
+                iconCache[path] = iconTexture;
+                texture2D = iconTexture;
+            }
+
+            return texture2D;
+        }
+
+        public static string GetIconPathFromAttribute(Type type)
+        {
+            if (Attribute.IsDefined(type, typeof(IconAttribute)))
+            {
+                var attributes = type.GetCustomAttributes(typeof(IconAttribute), true);
+                for (int i = 0, c = attributes.Length; i < c; i++)
+                    if (attributes[i] is IconAttribute)
+                        return ((IconAttribute)attributes[i]).path;
+            }
+            return null;
         }
     }
 }
