@@ -42,9 +42,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //SetupZoom 会自动添加ContentZoomer，手动添加会导致maxScale无效。
             //this.AddManipulator(new ContentZoomer());
 
-            MiniMap child = new MiniMap();
-            child.name = "minimap";
-            this.AddElement(child);
+            MiniMap miniMap = new MiniMap();
+            this.Add(miniMap);
+            miniMap.SetPosition(new Rect(0, 0, 96, 72));
 
             CreateUIBuilderDebugNode();
 

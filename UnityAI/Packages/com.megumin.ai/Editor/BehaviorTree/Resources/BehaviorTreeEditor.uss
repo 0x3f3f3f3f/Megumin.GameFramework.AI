@@ -58,6 +58,10 @@ BehaviorTreeView .debug {
     display: none;
 }
 
+.disable_MiniMap MiniMap{
+    display: none;
+}
+
 .customTip {
     min-height: 0;
 }

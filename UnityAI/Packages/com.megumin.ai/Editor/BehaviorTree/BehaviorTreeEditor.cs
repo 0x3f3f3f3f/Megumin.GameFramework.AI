@@ -34,6 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("NodeIcon", true, SettingsScope.User),
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
             new MySetting<bool>("ToolTip", true, SettingsScope.User),
+            new MySetting<bool>("MiniMap", false, SettingsScope.User),
         };
 
         [OnOpenAsset(10)]
