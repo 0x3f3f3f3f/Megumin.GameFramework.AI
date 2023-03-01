@@ -40,6 +40,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Ascendable | Capabilities.Copiable | Capabilities.Snappable | Capabilities.Groupable;
             usageHints = UsageHints.DynamicTransform;
             AddToClassList("decorator");
+
+            this.RegisterCallback<TooltipEvent>(OnToolTip);
         }
 
         private void OnDoubleClick(MouseDownEvent evt)
@@ -137,6 +139,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Selection.activeObject = SODecorator;
             }
+        }
+
+        protected void OnToolTip(TooltipEvent evt)
+        {
+            evt.rect = this.worldBound;
+
+            if (Decorator.TryGetToolTipString(out var tooltip))
+            {
+                evt.tooltip = tooltip;
+            }
+
+            evt.StopPropagation();
         }
 
         //protected override void ExecuteDefaultActionAtTarget(EventBase evt)

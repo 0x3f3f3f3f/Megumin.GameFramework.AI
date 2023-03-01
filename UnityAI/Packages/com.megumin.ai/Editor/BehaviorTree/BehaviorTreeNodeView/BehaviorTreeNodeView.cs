@@ -58,7 +58,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
 
 
-
+            this.RegisterCallback<TooltipEvent>(OnToolTip);
         }
 
         public NodeWrapper SONode;
@@ -315,6 +315,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var edge = InputPort.ConnectTo<T>(parent.OutputPort);
             TreeView.AddElement(edge);
             return edge;
+        }
+
+        protected void OnToolTip(TooltipEvent evt)
+        {
+            evt.rect = this.worldBound;
+
+            if (Node.TryGetToolTipString(out var tooltip))
+            {
+                evt.tooltip = tooltip;
+            }
+
+            evt.StopPropagation();
         }
     }
 

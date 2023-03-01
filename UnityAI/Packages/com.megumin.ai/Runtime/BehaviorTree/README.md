@@ -98,8 +98,9 @@ Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后
 ## Attribute
 - [x] Category
 - [x] Icon
-- [ ] HelpURL
+- [x] HelpURL
 - [ ] Description
+- [ ] Tooltip
 
 ---
 ---

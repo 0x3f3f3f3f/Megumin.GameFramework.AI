@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -73,5 +75,20 @@ namespace Megumin.GameFramework.AI
                 Debug.Log($"{funcName}    {state}    {state1}    {state2}    {state3}");
             }
         }
+
+        public static bool TryGetAttribute<T>(this Type type, out T attribute)
+             where T : Attribute
+        {
+            var attri = type?.GetCustomAttribute<T>();
+            if (attri != null)
+            {
+                attribute = attri;
+                return true;
+            }
+            attribute = null;
+            return false;
+        }
+
+
     }
 }
