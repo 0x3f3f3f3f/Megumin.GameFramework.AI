@@ -22,5 +22,12 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         [field: SerializeField]
         public string GUID { get; set; }
+
+        public AITree Tree { get; set; }
+
+        public virtual void Log(object message)
+        {
+            Tree?.Log(message);
+        }
     }
 }

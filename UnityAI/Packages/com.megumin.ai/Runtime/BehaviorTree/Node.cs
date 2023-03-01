@@ -37,7 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string InstanceID;
         void Enter()
         {
-            Debug.Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
+            Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
             State = Status.Running;
             OnEnter();
         }
@@ -51,7 +51,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             State = OnExit(result);
 
-            Debug.Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this.GetType().Name}");
+            Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this.GetType().Name}");
             return State;
         }
 
