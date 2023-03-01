@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Test/TestCategory/CompositeNode")]
     public class Parallel : CompositeNode
     {
         List<BTNode> comp = new List<BTNode>();

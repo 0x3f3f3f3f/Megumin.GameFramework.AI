@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -21,23 +22,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 new SearchTreeGroupEntry(new GUIContent("Create Decorator"), 0),
             };
 
-            CreateDecoratorEntry<IConditionDecorator>(tree);
-            CreateDecoratorEntry<IPreDecorator>(tree);
-            CreateDecoratorEntry<IPostDecorator>(tree);
-            CreateDecoratorEntry<IAbortDecorator>(tree);
+            tree.AddTypesDerivedFrom<IConditionDecorator>();
+            tree.AddTypesDerivedFrom<IPreDecorator>();
+            tree.AddTypesDerivedFrom<IPostDecorator>();
+            tree.AddTypesDerivedFrom<IAbortDecorator>();
+            tree.AddCateGory2<IDecorator>();
 
             return tree;
-        }
-
-        public static void CreateDecoratorEntry<T>(List<SearchTreeEntry> tree)
-            where T : IDecorator
-        {
-            var types = TypeCache.GetTypesDerivedFrom<T>();
-            tree.Add(new SearchTreeGroupEntry(new GUIContent(typeof(T).Name)) { level = 1 });
-            foreach (var type in types)
-            {
-                tree.Add(new SearchTreeEntry(new GUIContent($"{type.Name}")) { level = 2, userData = type });
-            }
         }
 
         public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)

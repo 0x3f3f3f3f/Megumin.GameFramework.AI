@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Test")]
+    [Category("Debug")]
     public class Log: ActionTaskNode
     {
         int count = 0;

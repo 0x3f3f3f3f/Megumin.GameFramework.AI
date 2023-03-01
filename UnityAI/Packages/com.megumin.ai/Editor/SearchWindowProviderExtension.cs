@@ -14,29 +14,45 @@ namespace Megumin.GameFramework.AI.Editor
 {
     public static class SearchWindowProviderExtension
     {
-        /// <summary>
-        /// 添加 Category 特性
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="provider"></param>
-        /// <param name="tree"></param>
-        /// <param name="levelOffset"></param>
-        public static void AddCateGory<T>(this ISearchWindowProvider provider,
-                                              List<SearchTreeEntry> tree,
-                                              int levelOffset = 1)
+        public static GUIContent CreateEntryGUIContent(Type type)
         {
-            var types = TypeCache.GetTypesDerivedFrom<T>();
-            var pairs = from type in types
-                        let attri = type.GetCustomAttribute<CategoryAttribute>()
-                        where attri != null
-                        select (attri, type);
-
-            HashSet<string> alreadyAddPathName = new();
-
-            AddGroupToTree(tree, levelOffset, pairs, alreadyAddPathName);
+            return new($"      {type.Name}", image: null);
         }
 
-        public static void AddGroupToTree(List<SearchTreeEntry> tree, int levelOffset, IEnumerable<(CategoryAttribute attri, Type type)> group, HashSet<string> alreadyAddPathName)
+        public static void AddTypesDerivedFrom<T>(this List<SearchTreeEntry> tree,
+                                                  int levelOffset = 1)
+        {
+            AddTypesDerivedFrom<T>(tree, typeof(T).Name, levelOffset);
+        }
+
+        public static void AddTypesDerivedFrom<T>(this List<SearchTreeEntry> tree,
+                                                  string groupEntryName,
+                                                  int levelOffset = 1)
+        {
+            var types = TypeCache.GetTypesDerivedFrom<T>();
+            tree.Add(new SearchTreeGroupEntry(new GUIContent(groupEntryName)) { level = levelOffset });
+            foreach (var type in types)
+            {
+                if (type.IsAbstract)
+                {
+                    continue;
+                }
+
+                GUIContent content = CreateEntryGUIContent(type);
+                SearchTreeEntry entry = new(content)
+                {
+                    level = levelOffset + 1,
+                    userData = type
+                };
+                tree.Add(entry);
+            }
+        }
+
+
+        public static void AddGroupToTree(this List<SearchTreeEntry> tree,
+                                          int levelOffset,
+                                          IEnumerable<(CategoryAttribute attri, Type type)> group,
+                                          HashSet<string> alreadyAddPathName)
         {
             foreach (var item in group.OrderBy(elem => elem.attri.Category)) //额外排序一次
             {
@@ -54,7 +70,7 @@ namespace Megumin.GameFramework.AI.Editor
                     }
                 }
 
-                GUIContent content = new($"      {type.Name}", image: null);
+                GUIContent content = CreateEntryGUIContent(type);
                 SearchTreeEntry entry = new(content)
                 {
                     level = levelOffset + levelString.Length,
@@ -66,15 +82,35 @@ namespace Megumin.GameFramework.AI.Editor
 
         /// <summary>
         /// 添加 Category 特性
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="provider"></param>
+        /// <param name="tree"></param>
+        /// <param name="levelOffset"></param>
+        public static void AddCateGory<T>(this List<SearchTreeEntry> tree,
+                                          int levelOffset = 1)
+        {
+            var types = TypeCache.GetTypesDerivedFrom<T>();
+            var pairs = from type in types
+                        let attri = type.GetCustomAttribute<CategoryAttribute>()
+                        where attri != null
+                        select (attri, type);
+
+            HashSet<string> alreadyAddPathName = new();
+
+            AddGroupToTree(tree, levelOffset, pairs, alreadyAddPathName);
+        }
+
+        /// <summary>
+        /// 添加 Category 特性
         /// 子Group排在子项上面
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="provider"></param>
         /// <param name="tree"></param>
         /// <param name="levelOffset"></param>
-        public static void AddCateGory2<T>(this ISearchWindowProvider provider,
-                                              List<SearchTreeEntry> tree,
-                                              int levelOffset = 1)
+        public static void AddCateGory2<T>(this List<SearchTreeEntry> tree,
+                                           int levelOffset = 1)
         {
             var types = TypeCache.GetTypesDerivedFrom<T>();
             var pairs = from type in types
@@ -119,6 +155,7 @@ namespace Megumin.GameFramework.AI.Editor
                 AddGroup(i);
             }
         }
+
     }
 }
 

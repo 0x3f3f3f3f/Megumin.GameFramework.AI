@@ -44,36 +44,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void CreateStandardNodeMenu(List<SearchTreeEntry> tree)
         {
-            {
-                var types = TypeCache.GetTypesDerivedFrom<ActionTaskNode>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("Action")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<CompositeNode>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("Composite")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<OneChildNode>();
-                tree.Add(new SearchTreeGroupEntry(new GUIContent("OneChildNode")) { level = 1 });
-                foreach (var type in types)
-                {
-                    tree.Add(new SearchTreeEntry(new GUIContent($"      {type.Name}")) { level = 2, userData = type });
-                }
-            }
-
-            {
-                this.AddCateGory2<BTNode>(tree);
-            }
+            tree.AddTypesDerivedFrom<ActionTaskNode>("Action");
+            tree.AddTypesDerivedFrom<CompositeNode>("Composite");
+            tree.AddTypesDerivedFrom<OneChildNode>("OneChildNode");
+            tree.AddCateGory2<BTNode>();
 
             //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
             //Tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
