@@ -11,10 +11,14 @@ namespace Megumin.GameFramework.AI
     public class AITree
     {
         public TraceListener TraceListener { get; set; } = new UnityTraceListener(); 
+        public ILogSetting LogSetting { get; set; }
 
         public virtual void Log(object message)
         {
-            TraceListener?.WriteLine(message);
+            if (LogSetting?.Enabled == true)
+            {  
+                TraceListener?.WriteLine(message);
+            }
         }
     }
 

@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
             cur++;
-            Debug.Log($"loop: complete {cur}.    loopCount:{loopCount}");
+            Log($"loop: complete {cur}.    loopCount:{loopCount}");
             if (cur >= loopCount && loopCount > 0)
             {
                 cur = 0;

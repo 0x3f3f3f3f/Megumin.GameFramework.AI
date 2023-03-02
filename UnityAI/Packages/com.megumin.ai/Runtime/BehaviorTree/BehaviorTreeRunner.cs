@@ -6,18 +6,22 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>
+    public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>, ILogSetting
     {
-        [field:SerializeField]
+        [field: SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
         public BehaviorTreeAsset BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
         public int Order = 0;
         public bool AutoEnable = true;
 
+        public bool EnableLog = true;
+        bool ILogSetting.Enabled => EnableLog;
+
         private void Awake()
         {
             BehaviourTree = BehaviorTreeAsset.Instantiate();
+            BehaviourTree.LogSetting = this;
             BehaviourTree.Init(gameObject);
         }
 

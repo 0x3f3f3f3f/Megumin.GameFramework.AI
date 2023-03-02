@@ -26,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override Status OnTick()
         {
-            Debug.Log($"Hello world! {count}");
+            Log($"Hello world! {count}");
             return  Status.Succeeded;
         }
     }
