@@ -27,7 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 return false;
             }
-            
+
             foreach (BTNode child in children)
             {
                 if (child.GUID == node.GUID)
@@ -45,7 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            return false;   
+            return false;
         }
     }
 
@@ -95,6 +95,66 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 else
                 {
                     children.Add(value);
+                }
+            }
+        }
+
+        protected override void OnAbort()
+        {
+            Child0.Abort();
+        }
+    }
+
+    public abstract class TwoChildNode : BTParentNode
+    {
+        public BTNode Child0
+        {
+            get
+            {
+                if (children.Count > 0)
+                {
+                    return children[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (children.Count > 0)
+                {
+                    children[0] = value;
+                }
+                else
+                {
+                    children.Add(value);
+                }
+            }
+        }
+
+        public BTNode Child1
+        {
+            get
+            {
+                if (children.Count > 1)
+                {
+                    return children[1];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (children.Count > 1)
+                {
+                    children[1] = value;
+                }
+                else
+                {
+                    children.Insert(1, value);
                 }
             }
         }
