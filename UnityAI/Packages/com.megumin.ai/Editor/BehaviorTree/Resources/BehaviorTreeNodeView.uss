@@ -43,6 +43,10 @@
     padding-bottom: 0;
 }
 
+.node .port #注释{
+    --port-color: rgb(73, 218, 16);
+}
+
 .port > #type {
     visibility: visible;
     display: none;

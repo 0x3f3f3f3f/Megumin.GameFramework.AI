@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
            : this(portOrientation: Orientation.Vertical, portDirection, portCapacity, typeof(byte))
         {
             var connectorListener = new DefaultEdgeConnectorListener();
-            m_EdgeConnector = new EdgeConnector<Edge>(connectorListener);
+            m_EdgeConnector = new EdgeConnector<BehaviorTreeEdge>(connectorListener);
             this.AddManipulator(m_EdgeConnector);
 
             //m_ConnectorText.style.display = DisplayStyle.None;

@@ -320,7 +320,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Edge ConnectParentNodeView(BehaviorTreeNodeView parent)
         {
-            return ConnectParentNodeView<Edge>(parent);
+            return ConnectParentNodeView<BehaviorTreeEdge>(parent);
         }
 
         public T ConnectParentNodeView<T>(BehaviorTreeNodeView parent)

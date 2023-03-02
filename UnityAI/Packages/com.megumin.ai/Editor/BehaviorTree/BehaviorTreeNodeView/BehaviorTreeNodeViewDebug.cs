@@ -13,10 +13,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void OnPostTick()
         {
             //this.LogMethodName();
-            this.SetToClassList(UssClassConst.Running, Node?.State == Status.Running);
+            var isRunning = Node?.State == Status.Running;
+            this.SetToClassList(UssClassConst.Running, isRunning);
+            InputPort.SetToClassList(UssClassConst.Running, isRunning);
+            OutputPort.SetToClassList(UssClassConst.Running, isRunning);
+            //Edge 通过Port --port-color 计算颜色，但是更新上有问题
+            //不知道没更新还是 更新时port颜色还没更新Todo
             foreach (var edge in InputPort.connections)
             {
-                edge.SetToClassList(UssClassConst.Running, Node?.State == Status.Running);
+                edge.SetToClassList(UssClassConst.Running, isRunning);
+                edge.schedule.Execute(() => { edge.MarkDirtyRepaint(); }).ExecuteLater(1000);
             }
         }
     }
