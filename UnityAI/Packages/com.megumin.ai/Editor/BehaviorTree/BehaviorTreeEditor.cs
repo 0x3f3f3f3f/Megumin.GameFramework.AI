@@ -432,6 +432,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             this.LogMethodName();
             this.CurrentAsset = behaviorTreeAsset;
+
+            if (EditorApplication.isPlaying)
+            {
+                //debug 模式关联
+                //if (BehaviorTreeManager.Instance)
+                //{
+
+                //}
+
+                if (Selection.activeGameObject)
+                {
+                    var runner = Selection.activeGameObject.GetComponent<BehaviorTreeRunner>();
+                    BeginDebug(runner);
+                    return;
+                }
+            }
+
             TreeView.ReloadView(true);
         }
 
