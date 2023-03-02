@@ -18,11 +18,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             InputPort.SetToClassList(UssClassConst.Running, isRunning);
             OutputPort.SetToClassList(UssClassConst.Running, isRunning);
             //Edge 通过Port --port-color 计算颜色，但是更新上有问题
-            //不知道没更新还是 更新时port颜色还没更新Todo
+            //Edge 在树中更靠前，OnCustomStyleResolved 比 Port先执行，
+            //这时Port的Running颜色还没有更新，会导致计算错误
+            //解决方法：
+            //Edge设置一个colorMode参数，允许Edge不通过根据Port计算颜色，独立设置一个颜色
+
             foreach (var edge in InputPort.connections)
             {
                 edge.SetToClassList(UssClassConst.Running, isRunning);
-                edge.schedule.Execute(() => { edge.MarkDirtyRepaint(); }).ExecuteLater(1000);
+                //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.Running, isRunning); }).ExecuteLater(10);
             }
         }
     }

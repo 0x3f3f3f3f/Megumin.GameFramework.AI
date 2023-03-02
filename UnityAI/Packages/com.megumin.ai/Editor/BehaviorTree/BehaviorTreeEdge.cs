@@ -8,8 +8,12 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    internal class BehaviorTreeEdge : Edge
+    public class BehaviorTreeEdge : Edge
     {
+        /// <summary>
+        /// 设置一个--edge-colorMode参数，允许Edge不通过根据Port计算颜色，独立设置一个颜色
+        /// <para/>支持：inputColor,outputColor,defaultColor
+        /// </summary>
         static CustomStyleProperty<string> colorMode = new CustomStyleProperty<string>("--edge-colorMode");
         public string ColorMode { get; set; }
         protected override void OnCustomStyleResolved(ICustomStyle styles)
@@ -62,6 +66,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     break;
                 case "outputColor":
                     edgeControl.inputColor = edgeControl.outputColor;
+                    break;
+                case "defaultColor":
+                    edgeControl.inputColor = defaultColor;
+                    edgeControl.outputColor = defaultColor;
                     break;
                 default:
                     break;

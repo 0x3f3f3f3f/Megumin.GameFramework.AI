@@ -3,11 +3,12 @@
 }
 
 .Running.edge {
-    --edge-width: 4;
-    --edge-colorMode: inputColor;
+    --edge-color: rgb(215, 215, 6);
+    --edge-width: 3;
+    --edge-colorMode: defaultColor;
 }
 
-.Running.node #input .port {
+.Running.node.behaviorTreeNode #input .port {
     --port-color: rgb(215, 215, 6);
 }
 
