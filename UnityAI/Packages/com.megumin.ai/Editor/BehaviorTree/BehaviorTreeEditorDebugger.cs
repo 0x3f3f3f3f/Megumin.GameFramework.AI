@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -10,7 +12,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public void PostTick()
         {
-
+            //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
+            foreach (var item in BehaviorTreeEditor.AllActiveEditor)
+            {
+                if (item.IsDebugMode && item.hasFocus)
+                {
+                    item.OnPostTick();
+                }
+            }
         }
 
         public void AddTreeRunner(BehaviorTreeRunner behaviorTreeRunner)
@@ -86,6 +95,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
             }
+        }
+
+
+
+        [MenuItem("Megumin AI/TestButton")]
+        public static void TestButton()
+        {
+            foreach (var item in BehaviorTreeEditor.AllActiveEditor)
+            {
+                Debug.Log(item.ToStringReflection());
+            }
+        }
+
+        /// <summary>
+        /// BehaviorTreeManager Tick后被调用
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        internal void OnPostTick()
+        {
+            TreeView?.OnPostTick();
         }
     }
 }

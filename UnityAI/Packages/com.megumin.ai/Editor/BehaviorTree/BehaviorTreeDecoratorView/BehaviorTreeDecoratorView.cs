@@ -13,7 +13,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BehaviorTreeDecoratorView : GraphElement
+    public partial class BehaviorTreeDecoratorView : GraphElement
     {
         public override VisualElement contentContainer => ContentContainer;
         public VisualElement ContentContainer { get; private set; }

@@ -407,14 +407,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnDestroy()
         {
-            //this.LogMethodName(TreeView);
+            this.LogMethodName(TreeView);
             AllActiveEditor.Remove(this);
             TreeView?.Dispose();
         }
 
         private void Reset()
         {
-            //this.LogMethodName(TreeView);
+            this.LogMethodName(TreeView);
         }
 
         private void OnDisable()
@@ -425,7 +425,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnProjectChange()
         {
-            //this.LogMethodName(TreeView);
+            this.LogMethodName(TreeView);
         }
 
         public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
