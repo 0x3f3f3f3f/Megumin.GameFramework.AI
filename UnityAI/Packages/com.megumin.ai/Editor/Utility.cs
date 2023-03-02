@@ -200,6 +200,13 @@ namespace Megumin.GameFramework.AI.Editor
             }
         }
 
+        public static Task Delay(this VisualElement visualElement, long delayMs)
+        {
+            TaskCompletionSource<bool> taskCompletionSource = new();
+            visualElement.schedule.Execute(() => { taskCompletionSource.TrySetResult(true); }).ExecuteLater(delayMs);
+            return taskCompletionSource.Task;
+        }
+
         static Dictionary<string, Texture2D> iconCache = new();
         public static bool TryLoadIcon(string path, out Texture2D texture2D)
         {
