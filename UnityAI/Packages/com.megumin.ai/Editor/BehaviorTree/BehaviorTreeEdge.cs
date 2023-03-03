@@ -44,7 +44,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             OnCustomStyleResolvedFlow(styles);
 
             MyUpdateEdgeControlColorsAndWidth();
-            UpdateFlowPointCount();
         }
 
         public override void OnSelected()
@@ -138,6 +137,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 FlowSpeed = DefaultFlowSpeed;
             }
+
+            UpdateFlowPointCount();
+            UpdateFlow();
         }
 
         public virtual void UpdateFlowPointCount()
