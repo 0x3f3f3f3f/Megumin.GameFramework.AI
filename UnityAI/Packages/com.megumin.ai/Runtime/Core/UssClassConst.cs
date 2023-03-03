@@ -8,6 +8,8 @@ namespace Megumin.GameFramework.AI
 {
     internal class UssClassConst
     {
-        public const string Running = nameof(Running);
+        public const string running = nameof(running);
+
+        public const string flowPoint = nameof(flowPoint);
     }
 }

@@ -14,9 +14,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             //this.LogMethodName();
             var isRunning = Node?.State == Status.Running;
-            this.SetToClassList(UssClassConst.Running, isRunning);
-            InputPort.SetToClassList(UssClassConst.Running, isRunning);
-            OutputPort.SetToClassList(UssClassConst.Running, isRunning);
+            this.SetToClassList(UssClassConst.running, isRunning);
+            InputPort.SetToClassList(UssClassConst.running, isRunning);
+            OutputPort.SetToClassList(UssClassConst.running, isRunning);
             //Edge 通过Port --port-color 计算颜色，但是更新上有问题
             //Edge 在树中更靠前，OnCustomStyleResolved 比 Port先执行，
             //这时Port的Running颜色还没有更新，会导致计算错误
@@ -25,8 +25,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             foreach (var edge in InputPort.connections)
             {
-                edge.SetToClassList(UssClassConst.Running, isRunning);
-                //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.Running, isRunning); }).ExecuteLater(10);
+                edge.SetToClassList(UssClassConst.running, isRunning);
+                //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.running, isRunning); }).ExecuteLater(10);
             }
         }
     }

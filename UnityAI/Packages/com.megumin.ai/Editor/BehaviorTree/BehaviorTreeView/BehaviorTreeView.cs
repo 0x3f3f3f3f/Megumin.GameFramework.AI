@@ -122,10 +122,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var runningTestView = CreateNodeView(runningTest, true);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
             runningTestView.AddToClassList("uiBuilderDebugNode");
-            runningTestView.AddToClassList(UssClassConst.Running);
+            runningTestView.AddToClassList(UssClassConst.running);
             this.AddElement(runningTestView);
             var edge = runningTestView.ConnectParentNodeView(nodeView);
-            edge.AddToClassList(UssClassConst.Running);
+            edge.AddToClassList(UssClassConst.running);
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)

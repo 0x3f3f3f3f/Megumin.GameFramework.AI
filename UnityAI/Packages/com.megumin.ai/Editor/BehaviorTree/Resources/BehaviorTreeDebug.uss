@@ -2,22 +2,23 @@
     display: none;
 }
 
-.Running.edge {
+.running.edge {
     --edge-color: rgb(215, 215, 6);
     --edge-width: 3;
     --edge-colorMode: defaultColor;
+    --edge-flowDistance: 80;
 }
 
-.Running.node.behaviorTreeNode #input .port {
+.running.node.behaviorTreeNode #input .port {
     --port-color: rgb(215, 215, 6);
 }
 
-.Running.node.behaviorTreeNode > #node-border {
+.running.node.behaviorTreeNode > #node-border {
     background-color: rgb(215, 215, 6);
 }
 
-.Running.node.behaviorTreeNode #header {
+.running.node.behaviorTreeNode #header {
 }
 
-.Running.node.behaviorTreeNode #header #title {
+.running.node.behaviorTreeNode #header #title {
 }
