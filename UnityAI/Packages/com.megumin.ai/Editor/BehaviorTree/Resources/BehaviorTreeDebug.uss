@@ -7,7 +7,7 @@
     --edge-width: 3;
     --edge-colorMode: defaultColor;
     --edge-flowDistance: 32;
-    --edge-flowSpeed: 8;
+    --edge-flowSpeed: 5;
 }
 
 .running.node.behaviorTreeNode #input .port {

@@ -6,25 +6,38 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeEdge : Edge
     {
+
+        public BehaviorTreeEdge()
+        {
+            flowTask = schedule.Execute(() => UpdateFlow());
+        }
+
         /// <summary>
         /// 设置一个--edge-colorMode参数，允许Edge不通过根据Port计算颜色，独立设置一个颜色
         /// <para/>支持：inputColor,outputColor,defaultColor
         /// </summary>
         static CustomStyleProperty<string> colorMode = new CustomStyleProperty<string>("--edge-colorMode");
+        protected IVisualElementScheduledItem flowTask;
+
         public string ColorMode { get; set; }
         protected override void OnCustomStyleResolved(ICustomStyle styles)
         {
             base.OnCustomStyleResolved(styles);
-            string value = null;
-            if (styles.TryGetValue(colorMode, out value))
+
+            if (styles.TryGetValue(colorMode, out var value))
             {
                 ColorMode = value;
+            }
+            else
+            {
+                ColorMode = null;
             }
 
             OnCustomStyleResolvedFlow(styles);
@@ -99,21 +112,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         static CustomStyleProperty<float> flowDistanceProperty = new CustomStyleProperty<float>("--edge-flowDistance");
         static CustomStyleProperty<float> flowSpeedProperty = new CustomStyleProperty<float>("--edge-flowSpeed");
         public float FlowDistance { get; set; } = 40;
-        public float FlowSpeed { get; set; } = 10;
+        public float FlowSpeed { get; set; } = 1;
 
         protected void OnCustomStyleResolvedFlow(ICustomStyle styles)
         {
-
-            float value2 = -1;
-            if (styles.TryGetValue(flowDistanceProperty, out value2))
+            if (styles.TryGetValue(flowDistanceProperty, out var value2))
             {
                 FlowDistance = value2;
             }
+            else
+            {
+                FlowDistance = 40;
+            }
 
-            float value3 = 0;
-            if (styles.TryGetValue(flowSpeedProperty, out value3))
+            if (styles.TryGetValue(flowSpeedProperty, out var value3))
             {
                 FlowSpeed = value3;
+            }
+            else
+            {
+                FlowSpeed = 1;
             }
         }
 
@@ -121,8 +139,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (FlowDistance <= 0)
             {
+                flowTask.Pause();
                 return;
             }
+
+            flowTask.Every(1000 / 60);
 
             var totleLenght = 0f;
             for (int i = 1; i < edgeControl.controlPoints?.Length; i++)
@@ -150,9 +171,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public virtual void UpdateFlow()
         {
-            if (edgeControl?.controlPoints.Length > 1)
+            Profiler.BeginSample("BehaviorTreeEdge.UpdateFlow");
+
+            if (edgeControl?.controlPoints.Length > 1 || FlowDistance <= 0)
             {
-                float offset = ((float)EditorApplication.timeSinceStartup * FlowSpeed) % FlowDistance;
+                float offset = ((float)EditorApplication.timeSinceStartup * FlowSpeed * FlowDistance) % FlowDistance;
 
                 int controlPointsCursor = 0;
                 float passedEdgeLength = 0f;
@@ -230,6 +253,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     point.style.display = DisplayStyle.None;
                 }
             }
+
+            Profiler.EndSample();
         }
     }
 }
