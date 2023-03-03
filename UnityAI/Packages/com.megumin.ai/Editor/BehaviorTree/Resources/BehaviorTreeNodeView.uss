@@ -43,7 +43,7 @@
     padding-bottom: 0;
 }
 
-.node .port #注释{
+.node .port #注释 {
     --port-color: rgb(73, 218, 16);
 }
 
@@ -179,10 +179,10 @@
     border-top-width: 0;
     border-bottom-width: 0;
     background-color: rgba(0, 0, 0, 0);
-    border-left-color: rgba(200, 48, 181, 255);
-    border-right-color: rgba(200, 48, 181, 255);
-    border-top-color: rgba(200, 48, 181, 255);
-    border-bottom-color: rgba(200, 48, 181, 255);
+    border-left-color: rgb(200, 48, 181);
+    border-right-color: rgb(200, 48, 181);
+    border-top-color: rgb(200, 48, 181);
+    border-bottom-color: rgb(200, 48, 181);
     background-image: url('project://database/Packages/com.unity.settings-manager/Content/Options.png?fileID=2800000&guid=9eff477e4332346818c96745043dae9e&type=3#Options');
 }
 
@@ -207,12 +207,16 @@
 #body #contents #guid {
 }
 
-.disable_NodeIcon #body #header > #icon{
+.disable_NodeIcon #body #header > #icon {
     display: none;
 }
 
 .edge .flowPoint {
-    width: 10px;
-    height: 10px;
-    background-color: rgb(255, 0, 0);
+    width: 5px;
+    height: 5px;
+    background-color: rgb(200, 200, 200);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }

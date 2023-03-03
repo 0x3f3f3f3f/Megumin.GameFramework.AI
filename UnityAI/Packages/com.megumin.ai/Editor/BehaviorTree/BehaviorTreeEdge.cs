@@ -111,8 +111,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         static CustomStyleProperty<float> flowDistanceProperty = new CustomStyleProperty<float>("--edge-flowDistance");
         static CustomStyleProperty<float> flowSpeedProperty = new CustomStyleProperty<float>("--edge-flowSpeed");
-        public float FlowDistance { get; set; } = 40;
-        public float FlowSpeed { get; set; } = 1;
+        public float FlowDistance { get; set; } = -1;
+        public float FlowSpeed { get; set; } = 0;
 
         protected void OnCustomStyleResolvedFlow(ICustomStyle styles)
         {
@@ -122,7 +122,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             else
             {
-                FlowDistance = 40;
+                FlowDistance = -1;
             }
 
             if (styles.TryGetValue(flowSpeedProperty, out var value3))
@@ -131,7 +131,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             else
             {
-                FlowSpeed = 1;
+                FlowSpeed = 0;
             }
         }
 
@@ -143,8 +143,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            flowTask.Every(1000 / 60);
+            if (FlowSpeed != 0)
+            {
+                flowTask.Every(1000 / 60);
+            }
+            else
+            {
+                flowTask.ExecuteLater(1000 / 60);
+            }
 
+            //TODO: 不知道为什么有时候edgeControl 会变的很大，导致totleLenght，多创建很多点，
+            //      只是会影响性能，不会有表现错误，先不用管
             var totleLenght = 0f;
             for (int i = 1; i < edgeControl.controlPoints?.Length; i++)
             {

@@ -7,11 +7,17 @@
     --edge-width: 3;
     --edge-colorMode: defaultColor;
     --edge-flowDistance: 32;
-    --edge-flowSpeed: 5;
+    --edge-flowSpeed: 2;
 }
 
-.running.node.behaviorTreeNode #input .port {
-    --port-color: rgb(215, 215, 6);
+.running.edge .flowPoint {
+    width: 6px;
+    height: 6px;
+    background-color: rgb(193, 226, 7);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .running.node.behaviorTreeNode > #node-border {

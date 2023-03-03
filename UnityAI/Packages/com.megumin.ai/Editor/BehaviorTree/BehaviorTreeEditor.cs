@@ -449,7 +449,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            TreeView.ReloadView(true);
+            TreeView?.ReloadView(true);
         }
 
         public override void DiscardChanges()
