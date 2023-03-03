@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -26,11 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 ColorMode = value;
             }
 
-            float value2 = -1;
-            if (styles.TryGetValue(flowDistanceProperty, out value2))
-            {
-                FlowDistance = value2;
-            }
+            OnCustomStyleResolvedFlow(styles);
 
             MyUpdateEdgeControlColorsAndWidth();
             UpdateFlowPointCount();
@@ -52,7 +49,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             var result = base.UpdateEdgeControl();
             MyUpdateEdgeControlColorsAndWidth();
-            UpdateFlowPointCount();
+
+            if (result)
+            {
+                UpdateFlowPointCount();
+                UpdateFlow();
+            }
             return result;
         }
 
@@ -95,7 +97,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         //不考虑flow point 的颜色，改为uss控制。
 
         static CustomStyleProperty<float> flowDistanceProperty = new CustomStyleProperty<float>("--edge-flowDistance");
-        public float FlowDistance { get; set; } = -1;
+        static CustomStyleProperty<float> flowSpeedProperty = new CustomStyleProperty<float>("--edge-flowSpeed");
+        public float FlowDistance { get; set; } = 40;
+        public float FlowSpeed { get; set; } = 10;
+
+        protected void OnCustomStyleResolvedFlow(ICustomStyle styles)
+        {
+
+            float value2 = -1;
+            if (styles.TryGetValue(flowDistanceProperty, out value2))
+            {
+                FlowDistance = value2;
+            }
+
+            float value3 = 0;
+            if (styles.TryGetValue(flowSpeedProperty, out value3))
+            {
+                FlowSpeed = value3;
+            }
+        }
 
         public virtual void UpdateFlowPointCount()
         {
@@ -117,11 +137,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 //自动扩容增加点。
                 VisualElement flowPoint = new VisualElement();
+                flowPoint.style.position = Position.Absolute;
+                flowPoint.pickingMode = PickingMode.Ignore;
                 flowPoint.name = "flowPoint";
                 flowPoint.AddToClassList(UssClassConst.flowPoint);
                 this.Add(flowPoint);
                 FlowPoint.Add(flowPoint);
-                flowPoint.transform.position = Vector2.one * 20;
             }
         }
 
@@ -129,7 +150,86 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public virtual void UpdateFlow()
         {
+            if (edgeControl?.controlPoints.Length > 1)
+            {
+                float offset = ((float)EditorApplication.timeSinceStartup * FlowSpeed) % FlowDistance;
 
+                int controlPointsCursor = 0;
+                float passedEdgeLength = 0f;
+                ///当前阶段线段长度
+                float currentPhaseLength = 0f;
+
+                ///计算第一阶段线段长度
+                currentPhaseLength = Vector2.Distance(edgeControl.controlPoints[0], edgeControl.controlPoints[1]);
+
+                for (int i = 0; i < FlowPoint.Count; i++)
+                {
+                    //计算当前点位置
+                    var point = FlowPoint[i];
+
+                    //到起始点的长度
+                    var distance2Start = offset + i * FlowDistance;
+
+                    //到上一个控制点的长度
+                    var distance2ControlPointsCursor = distance2Start - passedEdgeLength;
+
+                    if (distance2ControlPointsCursor >= currentPhaseLength && currentPhaseLength > 0)
+                    {
+                        //超过当前线段，移动到下一个线段
+                        controlPointsCursor += 1;
+                        passedEdgeLength += currentPhaseLength;
+                        distance2ControlPointsCursor = distance2Start - passedEdgeLength;
+
+                        if (edgeControl.controlPoints.Length - 1 > controlPointsCursor)
+                        {
+                            currentPhaseLength =
+                                Vector2.Distance(edgeControl.controlPoints[controlPointsCursor],
+                                                 edgeControl.controlPoints[controlPointsCursor + 1]);
+                        }
+                        else
+                        {
+                            //已经到达Edge末尾
+                            currentPhaseLength = -1;
+                        }
+                    }
+
+                    if (currentPhaseLength <= 0 || distance2ControlPointsCursor <= 0)
+                    {
+                        //无效长度隐藏控制点
+                        point.style.display = DisplayStyle.None;
+                    }
+                    else
+                    {
+                        point.style.display = DisplayStyle.Flex;
+                        var from = edgeControl.controlPoints[controlPointsCursor];
+                        var to = edgeControl.controlPoints[controlPointsCursor + 1];
+
+                        var position = Vector2.MoveTowards(from, to, distance2ControlPointsCursor);
+
+                        //计算半径偏移
+                        var center = point.layout.center;
+                        if (center.sqrMagnitude > 0.01f)
+                        {
+                            position -= center;
+                        }
+                        else
+                        {
+                            //NaN 会导致整个graphView 不正常
+                            //Debug.Log(point.layout);
+                        }
+
+                        point.transform.position = position;
+                    }
+                }
+            }
+            else
+            {
+                //没有足够控制点
+                foreach (var point in FlowPoint)
+                {
+                    point.style.display = DisplayStyle.None;
+                }
+            }
         }
     }
 }

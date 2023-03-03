@@ -210,3 +210,9 @@
 .disable_NodeIcon #body #header > #icon{
     display: none;
 }
+
+.edge .flowPoint {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 0, 0);
+}
