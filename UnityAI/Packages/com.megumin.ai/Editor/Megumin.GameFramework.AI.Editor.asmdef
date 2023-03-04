@@ -3,7 +3,8 @@
     "rootNamespace": "Megumin.GameFramework.AI.Editor",
     "references": [
         "Megumin.GameFramework.AI",
-        "Unity.Settings.Editor"
+        "Unity.Settings.Editor",
+        "Megumin.Explosion4Unity"
     ],
     "includePlatforms": [
         "Editor"

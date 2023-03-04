@@ -235,6 +235,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void ReloadView(bool force)
         {
+            EditorWindow.UpdateHasUnsavedChanges();
+
             using var s = GraphViewReloadingScope.Enter();
             using var undom = UndoMute.Enter("ReloadView");
 
@@ -306,7 +308,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //this.RepaintInspectorWindows();
 
-            EditorWindow.UpdateHasUnsavedChanges();
             LoadVersion = SOTree.ChangeVersion;
         }
 

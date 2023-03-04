@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
-  StartNodeGUID: 
+  StartNodeGUID: bb21a9d2-c991-468f-af47-8bebaa83b24d
   Nodes:
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
-    GUID: 26756578-524f-4c8c-a3f5-2b312c5ccce5
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
+    GUID: bb21a9d2-c991-468f-af47-8bebaa83b24d
     Meta:
-      x: 497
-      y: 153
+      x: 485
+      y: 112
       index: 0
       Name: 
       FriendlyName: 
@@ -29,6 +29,5 @@ MonoBehaviour:
       Comment: 
       IsStartNode: 1
     ChildNodes: []
-    Decorators:
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.DecoratorLog
-      GUID: b075a1a2-cd71-498a-8bfb-969be0e5521c
+    Decorators: []
+  Version: 1.0.0

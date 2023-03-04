@@ -8,6 +8,7 @@ using System;
 using UnityEditor;
 using Megumin.GameFramework.AI.Editor;
 using System.Linq;
+using System.Threading;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -32,6 +33,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 EditorWindow?.UpdateHasUnsavedChanges();
             }
+        }
+
+        /// <summary>
+        /// 增加ChangeVersion，用于Inspector和外部修改
+        /// </summary>
+        public void IncrementChangeVersion(string name)
+        {
+            CreateTreeSOTreeIfNull();
+
+            //this.LogMethodName(name);
+
+            //Undo.RecordObject(SOTree, name);
+            SOTree.ChangeVersion++;
+            LoadVersion = SOTree.ChangeVersion;
+
+            EditorWindow?.UpdateHasUnsavedChanges();
         }
 
         public IDisposable UndoBeginScope(string name)

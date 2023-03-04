@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Codice.Client.BaseCommands.Fileinfo;
 using Codice.CM.WorkspaceServer.Tree.GameUI.Checkin.Updater;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string Comment = "load2";
         public string StartNodeGUID = "";
         public List<NodeAsset> Nodes = new List<NodeAsset>();
+        public string Version = AssetVersion.v1_0_0.ToString();
 
         [Serializable]
         public class NodeAsset
@@ -22,6 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public NodeMeta Meta;
             public List<string> ChildNodes = new();
             public List<DecoratorAsset> Decorators = new();
+            public List<ParamAsset> ParamAssets = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -67,40 +71,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     return null;
                 }
             }
-        }
 
-        [Serializable]
-        public class DecoratorAsset
-        {
-            public string TypeName;
-            public string GUID;
-
-            public ITreeElement Instantiate(bool instanceMeta = true)
-            {
-                var nodeType = Type.GetType(this.TypeName);
-                var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
-                decorator.GUID = this.GUID;
-
-                if (decorator == null)
-                {
-                    Debug.LogError($"无法创建的装饰器{TypeName}");
-                }
-
-                return decorator;
-            }
-        }
-
-        public bool SaveTree(BehaviorTree tree)
-        {
-            if (tree == null)
-            {
-                return false;
-            }
-
-            StartNodeGUID = tree.StartNode?.GUID;
-
-            Nodes.Clear();
-            foreach (var node in tree.AllNodes.OrderBy(elem => elem.GUID))
+            public static NodeAsset Serialize(BTNode node, BehaviorTree tree)
             {
                 var nodeAsset = new NodeAsset();
                 nodeAsset.TypeName = node.GetType().FullName;
@@ -121,16 +93,126 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     foreach (var decorator in node?.Decorators)
                     {
-                        var decoratorAsset = new DecoratorAsset();
-                        decoratorAsset.TypeName = decorator.GetType().FullName;
-                        if (decorator is ITreeElement treeElement)
-                        {
-                            decoratorAsset.GUID = treeElement.GUID;
-                        }
+                        var decoratorAsset = DecoratorAsset.Serialize(decorator, node, tree);
                         nodeAsset.Decorators.Add(decoratorAsset);
                     }
                 }
 
+                //保存参数
+                //https://github.com/dotnet/runtime/issues/46272
+                var nodeType = node.GetType();
+                var p = from m in nodeType.GetMembers()
+                        where m is FieldInfo || m is PropertyInfo
+                        orderby m.MetadataToken
+                        select m;
+                var members = p.ToList();
+
+                var defualtValueNode = Activator.CreateInstance(nodeType);
+                foreach (var member in members)
+                {
+                    Debug.Log(member);
+
+                    if (member is FieldInfo field)
+                    {
+                        if (field.FieldType.IsClass)
+                        {
+                            var value = field.GetValue(node);
+                            if (value == field.GetValue(defualtValueNode))
+                            {
+                                Debug.Log($"值为初始值或者默认值没必要保存");
+                            }
+                            else
+                            {
+                                ParamAsset paramAsset = new ParamAsset();
+                                paramAsset.TypeName = field.FieldType.FullName;
+                                if (value != null)
+                                {
+                                    Iformater iformater = fs[value.GetType()];
+                                    paramAsset.TypeName = value.GetType().FullName;
+                                    paramAsset.Value = iformater.Serialize(value);
+                                }
+                                else
+                                {
+                                    paramAsset.IsNull = true;
+                                    //引用类型并且值为null
+                                }
+
+                                nodeAsset.ParamAssets.Add(paramAsset);
+                            }
+                            
+                            
+                        }
+
+                    }
+                    
+
+                }
+
+                return nodeAsset;
+            }
+        }
+
+        [Serializable]
+        public class ParamAsset
+        {
+            public string TypeName;
+            public string Value;
+            public UnityEngine.Object refrenceObject;
+            internal bool IsNull;
+        }
+
+        public interface Iformater
+        {
+            string Serialize(object value);
+        }
+        static Dictionary<Type, Iformater> fs = new();
+        
+        [Serializable]
+        public class DecoratorAsset
+        {
+            public string TypeName;
+            public string GUID;
+
+            public ITreeElement Instantiate(bool instanceMeta = true)
+            {
+                var nodeType = Type.GetType(this.TypeName);
+                var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
+                decorator.GUID = this.GUID;
+
+                if (decorator == null)
+                {
+                    Debug.LogError($"无法创建的装饰器{TypeName}");
+                }
+
+                return decorator;
+            }
+
+            public static DecoratorAsset Serialize(object decorator, BTNode node, BehaviorTree tree)
+            {
+                var decoratorAsset = new DecoratorAsset();
+                decoratorAsset.TypeName = decorator.GetType().FullName;
+                if (decorator is ITreeElement treeElement)
+                {
+                    decoratorAsset.GUID = treeElement.GUID;
+                }
+
+                return decoratorAsset;
+            }
+        }
+
+        public bool SaveTree(BehaviorTree tree)
+        {
+            if (tree == null)
+            {
+                return false;
+            }
+
+            StartNodeGUID = tree.StartNode?.GUID;
+
+            Nodes.Clear();
+            foreach (var node in tree.AllNodes.OrderBy(elem => elem.GUID))
+            {
+                var nodeAsset = NodeAsset.Serialize(node, tree);
                 Nodes.Add(nodeAsset);
             }
 
