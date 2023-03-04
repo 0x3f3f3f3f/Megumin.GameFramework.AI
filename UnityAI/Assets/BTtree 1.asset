@@ -14,33 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
-  StartNodeGUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
+  StartNodeGUID: 
   Nodes:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Log
-    GUID: 41325448-eb0c-4c89-8de1-a6cf9c625895
+    GUID: 26756578-524f-4c8c-a3f5-2b312c5ccce5
     Meta:
-      x: 280
-      y: 235
-      index: 0
-      Name: 
-      FriendlyName: 
-      Description: 
-      FriendlyDescription: 
-      Comment: 
-      IsStartNode: 0
-    ChildNodes: []
-    Decorators:
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.CheckBool
-      GUID: 66e1c4d7-a81e-4286-91c1-f548c89a379d
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.DecoratorLog
-      GUID: 76e0c735-1431-4254-8a6c-35582f72dcfb
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.Loop
-      GUID: 71c0905b-f90e-482f-8e79-6228b98c1c3e
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Sequence
-    GUID: 4b8d34ff-747b-4b20-a791-eb8ef27d6b24
-    Meta:
-      x: 383
-      y: 74
+      x: 497
+      y: 153
       index: 0
       Name: 
       FriendlyName: 
@@ -48,6 +28,7 @@ MonoBehaviour:
       FriendlyDescription: 
       Comment: 
       IsStartNode: 1
-    ChildNodes:
-    - 41325448-eb0c-4c89-8de1-a6cf9c625895
-    Decorators: []
+    ChildNodes: []
+    Decorators:
+    - TypeName: Megumin.GameFramework.AI.BehaviorTree.DecoratorLog
+      GUID: b075a1a2-cd71-498a-8bfb-969be0e5521c
