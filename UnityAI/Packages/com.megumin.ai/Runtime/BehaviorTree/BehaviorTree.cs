@@ -10,6 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTree : AITree
     {
         public string InstanceGUID;
+        public TreeMeta TreeMeta;
 
         public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }

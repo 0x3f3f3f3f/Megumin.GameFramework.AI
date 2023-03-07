@@ -30,4 +30,8 @@ MonoBehaviour:
       IsStartNode: 1
     ChildNodes: []
     Decorators: []
+    ParamAssets: []
   Version: 1.0.0
+  references:
+    version: 2
+    RefIds: []

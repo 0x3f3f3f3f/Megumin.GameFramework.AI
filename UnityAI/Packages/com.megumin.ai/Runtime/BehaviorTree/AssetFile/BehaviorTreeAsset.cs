@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Codice.Client.BaseCommands.Fileinfo;
 using Codice.CM.WorkspaceServer.Tree.GameUI.Checkin.Updater;
+using Megumin.GameFramework.AI.Serialization;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -25,7 +26,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public NodeMeta Meta;
             public List<string> ChildNodes = new();
             public List<DecoratorAsset> Decorators = new();
-            public List<ParamAsset> ParamAssets = new();
+            [SerializeReference]
+            public List<ParameterData> ParamAssets = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -110,62 +112,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var defualtValueNode = Activator.CreateInstance(nodeType);
                 foreach (var member in members)
                 {
-                    Debug.Log(member);
-
-                    if (member is FieldInfo field)
+                    if (IgnoreParam.Contains(member.Name))
                     {
-                        if (field.FieldType.IsClass)
-                        {
-                            var value = field.GetValue(node);
-                            if (value == field.GetValue(defualtValueNode))
-                            {
-                                Debug.Log($"值为初始值或者默认值没必要保存");
-                            }
-                            else
-                            {
-                                ParamAsset paramAsset = new ParamAsset();
-                                paramAsset.TypeName = field.FieldType.FullName;
-                                if (value != null)
-                                {
-                                    Iformater iformater = fs[value.GetType()];
-                                    paramAsset.TypeName = value.GetType().FullName;
-                                    paramAsset.Value = iformater.Serialize(value);
-                                }
-                                else
-                                {
-                                    paramAsset.IsNull = true;
-                                    //引用类型并且值为null
-                                }
-
-                                nodeAsset.ParamAssets.Add(paramAsset);
-                            }
-                            
-                            
-                        }
-
+                        Debug.LogError($"忽略的参数 {member.Name}");
+                        continue;
                     }
-                    
 
+                    var paramData = ParameterData.Serialize(member, node, defualtValueNode);
+                    if (paramData != null)
+                    {
+                        nodeAsset.ParamAssets.Add(paramData);
+                    }
                 }
 
                 return nodeAsset;
             }
         }
 
-        [Serializable]
-        public class ParamAsset
+        public static List<string> IgnoreParam = new()
         {
-            public string TypeName;
-            public string Value;
-            public UnityEngine.Object refrenceObject;
-            internal bool IsNull;
-        }
-
-        public interface Iformater
-        {
-            string Serialize(object value);
-        }
-        static Dictionary<Type, Iformater> fs = new();
+            nameof(BTNode.Decorators),
+            nameof(BTNode.Meta), 
+            nameof(BTNode.InstanceID),
+            nameof(BTNode.GUID),
+        };
         
         [Serializable]
         public class DecoratorAsset
