@@ -109,7 +109,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         select m;
                 var members = p.ToList();
 
+                ///用于忽略默认值参数
                 var defualtValueNode = Activator.CreateInstance(nodeType);
+
                 foreach (var member in members)
                 {
                     if (IgnoreParam.Contains(member.Name))

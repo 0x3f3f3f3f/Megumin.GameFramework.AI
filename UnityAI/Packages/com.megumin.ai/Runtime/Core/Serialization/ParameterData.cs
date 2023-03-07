@@ -30,39 +30,35 @@ namespace Megumin.GameFramework.AI.Serialization
 
             if (member is FieldInfo field)
             {
-                if (field.FieldType.IsClass)
+                var value = field.GetValue(node);
+                if (value.Equals(field.GetValue(defualtValueNode)))
                 {
-                    var value = field.GetValue(node);
-                    if (value == field.GetValue(defualtValueNode))
+                    Debug.Log($"值为初始值或者默认值没必要保存");
+                }
+                else
+                {
+                    ParameterData data = new();
+                    data.ParamName = member.Name;
+                    data.TypeName = field.FieldType.FullName;
+                    if (value != null)
                     {
-                        Debug.Log($"值为初始值或者默认值没必要保存");
-                    }
-                    else
-                    {
-                        ParameterData paramAsset = new();
-                        paramAsset.ParamName = member.Name;
-                        paramAsset.TypeName = field.FieldType.FullName;
-                        if (value != null)
+                        //这里一定要取值得真实类型，解决多态序列化
+                        if (Formater.TryGet(value.GetType(), out Iformater iformater))
                         {
-                            if (Formater.TryGet(value.GetType(), out Iformater iformater))
-                            {
-                                paramAsset.TypeName = value.GetType().FullName;
-                                paramAsset.Value = iformater.Serialize(value);
-                            }
-                            else
-                            {
-                                Debug.LogError($"{member.Name} 没找到Iformater");
-                            }
+                            data.TypeName = value.GetType().FullName;
+                            data.Value = iformater.Serialize(value);
                         }
                         else
                         {
-                            paramAsset.IsNull = true;
-                            //引用类型并且值为null
+                            Debug.LogError($"{member.Name} 没找到Iformater");
                         }
-                        return paramAsset;
                     }
-
-
+                    else
+                    {
+                        data.IsNull = true;
+                        //引用类型并且值为null
+                    }
+                    return data;
                 }
 
             }
