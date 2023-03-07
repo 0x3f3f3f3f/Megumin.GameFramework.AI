@@ -7,19 +7,19 @@ using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.Serialization
 {
-    public interface Iformater
+    public interface IFormater2String
     {
         string Serialize(object value);
-        bool TreDes(string source, out object value);
+        bool TryDeserialize(string source, out object value);
     }
 
     internal class Formater
     {
-        protected static readonly Lazy<Dictionary<string, Iformater>> fsdic = new(InitFormaters);
+        protected static readonly Lazy<Dictionary<string, IFormater2String>> fsdic = new(InitFormaters);
 
-        public static Dictionary<string, Iformater> Formaters => fsdic.Value;
+        public static Dictionary<string, IFormater2String> Formaters => fsdic.Value;
 
-        public static bool TryGet(Type type, out Iformater iformater)
+        public static bool TryGet(Type type, out IFormater2String iformater)
         {
             iformater = default;
             if (type == null)
@@ -30,7 +30,7 @@ namespace Megumin.GameFramework.AI.Serialization
             return Formaters.TryGetValue(type.FullName, out iformater);
         }
 
-        public static bool TryGet(string type, out Iformater iformater)
+        public static bool TryGet(string type, out IFormater2String iformater)
         {
             iformater = default;
             if (type == null)
@@ -41,25 +41,25 @@ namespace Megumin.GameFramework.AI.Serialization
             return Formaters.TryGetValue(type, out iformater);
         }
 
-        static Dictionary<string, Iformater> InitFormaters()
+        static Dictionary<string, IFormater2String> InitFormaters()
         {
-            var fs = new Dictionary<string, Iformater>()
+            var fs = new Dictionary<string, IFormater2String>()
             {
-                { typeof(int).FullName,new IntF() },
-                { typeof(float).FullName,new FntF() },
+                { typeof(int).FullName,new IntFormater() },
+                { typeof(float).FullName,new FloatFormater() },
             };
             return fs;
         }
     }
 
-    public class IntF : Iformater
+    public class IntFormater : IFormater2String
     {
         public string Serialize(object value)
         {
             return value.ToString();
         }
 
-        public bool TreDes(string source, out object value)
+        public bool TryDeserialize(string source, out object value)
         {
             if (int.TryParse(source, out var result))
             {
@@ -71,14 +71,14 @@ namespace Megumin.GameFramework.AI.Serialization
         }
     }
 
-    public class FntF : Iformater
+    public class FloatFormater : IFormater2String
     {
         public string Serialize(object value)
         {
             return value.ToString();
         }
 
-        public bool TreDes(string source, out object value)
+        public bool TryDeserialize(string source, out object value)
         {
             if (float.TryParse(source, out var result))
             {

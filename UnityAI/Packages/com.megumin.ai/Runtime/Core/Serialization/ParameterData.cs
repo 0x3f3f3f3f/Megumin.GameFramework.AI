@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     if (value != null)
                     {
                         //这里一定要取值得真实类型，解决多态序列化
-                        if (Formater.TryGet(value.GetType(), out Iformater iformater))
+                        if (Formater.TryGet(value.GetType(), out IFormater2String iformater))
                         {
                             data.TypeName = value.GetType().FullName;
                             data.Value = iformater.Serialize(value);
@@ -67,11 +67,11 @@ namespace Megumin.GameFramework.AI.Serialization
             return null;
         }
 
-        public bool TreDes(out object value)
+        public bool TryDeserialize(out object value)
         {
-            if (Formater.TryGet(TypeName,out var iformater))
+            if (Formater.TryGet(TypeName, out var iformater))
             {
-                return iformater.TreDes(Value,out value);
+                return iformater.TryDeserialize(Value, out value);
             }
             value = default;
             return false;
@@ -86,7 +86,7 @@ namespace Megumin.GameFramework.AI.Serialization
 
             //Todo: 要不要使用TokenID查找
             var member = instance.GetType().GetMember(ParamName).FirstOrDefault();
-            if (member != null && TreDes(out var value))
+            if (member != null && TryDeserialize(out var value))
             {
                 if (member is FieldInfo fieldInfo)
                 {
@@ -103,4 +103,48 @@ namespace Megumin.GameFramework.AI.Serialization
             return false;
         }
     }
+
+    [Serializable]
+    public abstract class GenericParameterData<T>
+    {
+        public string ParamName;
+        public T Value;
+        public virtual bool TryDeserialize(out T value)
+        {
+            value = Value;
+            return true;
+        }
+
+        public bool Instantiate(object instance)
+        {
+            if (instance == null)
+            {
+                return false;
+            }
+
+            //Todo: 要不要使用TokenID查找
+            var member = instance.GetType().GetMember(ParamName).FirstOrDefault();
+            if (member != null && TryDeserialize(out var value))
+            {
+                if (member is FieldInfo fieldInfo)
+                {
+                    fieldInfo.SetValue(instance, value);
+                    return true;
+                }
+                else if (member is PropertyInfo propertyInfo)
+                {
+                    propertyInfo.SetValue(instance, value);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    public class IntPara : GenericParameterData<int>
+    {
+    }
+
+    public class UnityObjectParameterData : GenericParameterData<UnityEngine.Object> { }
 }
