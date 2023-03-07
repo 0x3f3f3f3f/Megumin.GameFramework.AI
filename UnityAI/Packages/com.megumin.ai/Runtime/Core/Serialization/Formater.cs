@@ -10,6 +10,7 @@ namespace Megumin.GameFramework.AI.Serialization
     public interface Iformater
     {
         string Serialize(object value);
+        bool TreDes(string source, out object value);
     }
 
     internal class Formater
@@ -29,12 +30,23 @@ namespace Megumin.GameFramework.AI.Serialization
             return Formaters.TryGetValue(type.FullName, out iformater);
         }
 
+        public static bool TryGet(string type, out Iformater iformater)
+        {
+            iformater = default;
+            if (type == null)
+            {
+                return false;
+            }
+
+            return Formaters.TryGetValue(type, out iformater);
+        }
+
         static Dictionary<string, Iformater> InitFormaters()
         {
             var fs = new Dictionary<string, Iformater>()
             {
                 { typeof(int).FullName,new IntF() },
-                { typeof(float).FullName,new IntF() },
+                { typeof(float).FullName,new FntF() },
             };
             return fs;
         }
@@ -45,6 +57,36 @@ namespace Megumin.GameFramework.AI.Serialization
         public string Serialize(object value)
         {
             return value.ToString();
+        }
+
+        public bool TreDes(string source, out object value)
+        {
+            if (int.TryParse(source, out var result))
+            {
+                value = result;
+                return true;
+            }
+            value = default; 
+            return false;
+        }
+    }
+
+    public class FntF : Iformater
+    {
+        public string Serialize(object value)
+        {
+            return value.ToString();
+        }
+
+        public bool TreDes(string source, out object value)
+        {
+            if (float.TryParse(source, out var result))
+            {
+                value = result;
+                return true;
+            }
+            value = default;
+            return false;
         }
     }
 }

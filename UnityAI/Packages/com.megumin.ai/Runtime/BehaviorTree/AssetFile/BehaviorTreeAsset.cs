@@ -59,6 +59,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             }
                         }
 
+                        //反序列化参数
+                        foreach (var param in ParamAssets)
+                        {
+                            param.Instantiate(node);
+                        }
+
                         return node;
                     }
                     else
