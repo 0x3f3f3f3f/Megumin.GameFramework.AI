@@ -30,17 +30,8 @@ MonoBehaviour:
       IsStartNode: 1
     ChildNodes: []
     Decorators: []
-    ParamAssets:
-    - rid: 7759799075430989841
+    ParamAssets: []
   Version: 1.0.0
   references:
     version: 2
-    RefIds:
-    - rid: 7759799075430989841
-      type: {class: ParameterData, ns: Megumin.GameFramework.AI.Serialization, asm: Megumin.GameFramework.AI}
-      data:
-        ParamName: waitTime
-        TypeName: System.Single
-        Value: 7.18
-        refrenceObject: {fileID: 0}
-        IsNull: 0
+    RefIds: []

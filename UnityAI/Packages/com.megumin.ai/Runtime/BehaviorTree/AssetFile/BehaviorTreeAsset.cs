@@ -27,7 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<string> ChildNodes = new();
             public List<DecoratorAsset> Decorators = new();
             [SerializeReference]
-            public List<ParameterData> ParamAssets = new();
+            public List<IParameterData> ParamAssets = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         //反序列化参数
                         foreach (var param in ParamAssets)
                         {
-                            param.Instantiate(node);
+                            param?.Instantiate(node);
                         }
 
                         return node;
