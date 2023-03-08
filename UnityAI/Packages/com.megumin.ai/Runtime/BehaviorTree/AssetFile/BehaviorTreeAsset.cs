@@ -26,6 +26,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public NodeMeta Meta;
             public List<string> ChildNodes = new();
             public List<DecoratorAsset> Decorators = new();
+
+            //参数使用泛型序列化导致每次保存Rid都会改变
             [SerializeReference]
             public List<IParameterData> ParamAssets = new();
 

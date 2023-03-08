@@ -40,7 +40,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     }
                     else if (valueActualType == typeof(UnityEngine.Object))
                     {
-                        UnityObjectParameterData data = new();
+                        UnityEngineObjectParameterData data = new();
                         data.MemberName = member.Name;
                         data.Value = (UnityEngine.Object)value;
                         return data;
@@ -117,10 +117,6 @@ namespace Megumin.GameFramework.AI.Serialization
             return false;
         }
     }
-
-    public class IntParameterData : GenericParameterData<int> { }
-
-    public class UnityObjectParameterData : GenericParameterData<UnityEngine.Object> { }
 
     [Serializable]
     public class CustomParameterData : ParameterData
