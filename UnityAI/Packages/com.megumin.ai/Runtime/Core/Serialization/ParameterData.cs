@@ -33,7 +33,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     var valueActualType = value.GetType();
                     if (valueActualType == typeof(int))
                     {
-                        IntPara data = new();
+                        IntParameterData data = new();
                         data.MemberName = member.Name;
                         data.Value = (int)value;
                         return data;
@@ -117,7 +117,8 @@ namespace Megumin.GameFramework.AI.Serialization
             return false;
         }
     }
-    public class IntPara : GenericParameterData<int> { }
+
+    public class IntParameterData : GenericParameterData<int> { }
 
     public class UnityObjectParameterData : GenericParameterData<UnityEngine.Object> { }
 
