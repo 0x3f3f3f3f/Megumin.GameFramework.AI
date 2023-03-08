@@ -38,13 +38,13 @@ MonoBehaviour:
       Value: 
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 0
+      DataType: 0
     - MemberName: Child0
       TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
       Value: 
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 0
+      DataType: 0
     CallbackMemberData: []
   - StringCallbackMemberData: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
@@ -67,107 +67,82 @@ MonoBehaviour:
       Value: 9.71
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 1
+      DataType: 1
     - MemberName: TestDateTimeOffset
       TypeName: System.DateTimeOffset
       Value: 
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 1
-    - MemberName: TestRef
-      TypeName: UnityEngine.GameObject
-      Value: 
-      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
-        type: 3}
-      Collection: []
-      Tag: 4
+      DataType: 1
     - MemberName: TestList
       TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       Value: 
       RefObject: {fileID: 0}
-      Collection:
-      - MemberName: Element0
-        TypeName: UnityEngine.GameObject
-        Value: 
-        RefObject: {fileID: 3939188381555538775, guid: 14dd42bb726074f41ada6638453ab640,
-          type: 3}
-        Collection: []
-        Tag: 4
-      - MemberName: Element1
-        TypeName: UnityEngine.GameObject
-        Value: 
-        RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
-          type: 3}
-        Collection: []
-        Tag: 4
-      - MemberName: Element2
-        TypeName: UnityEngine.GameObject
-        Value: 
-        RefObject: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
-        Collection: []
-        Tag: 4
-      Tag: 16
+      Collection: []
+      DataType: 262144
     - MemberName: TestList2
       TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       Value: 
       RefObject: {fileID: 0}
-      Collection:
-      - MemberName: Element0
-        TypeName: System.Int32
-        Value: 58
-        RefObject: {fileID: 0}
-        Collection: []
-        Tag: 1
-      - MemberName: Element1
-        TypeName: System.Int32
-        Value: 123
-        RefObject: {fileID: 0}
-        Collection: []
-        Tag: 1
-      - MemberName: Element2
-        TypeName: System.Int32
-        Value: -167
-        RefObject: {fileID: 0}
-        Collection: []
-        Tag: 1
-      - MemberName: Element3
-        TypeName: System.Int32
-        Value: -4
-        RefObject: {fileID: 0}
-        Collection: []
-        Tag: 1
-      Tag: 16
+      Collection: []
+      DataType: 262144
     - MemberName: TestArray
       TypeName: System.String[]
       Value: 
       RefObject: {fileID: 0}
-      Collection: []
-      Tag: 8
+      Collection:
+      - MemberName: Element0
+        TypeName: System.String
+        Value: "\u554A\u6C99\u53D1\u4E0A"
+        RefObject: {fileID: 0}
+        Collection: []
+        DataType: 64
+      - MemberName: Element1
+        TypeName: System.String
+        Value: "\u6492\u6253\u53D1"
+        RefObject: {fileID: 0}
+        Collection: []
+        DataType: 64
+      DataType: 131072
     - MemberName: TestRefArray
       TypeName: UnityEngine.GameObject[]
       Value: 
       RefObject: {fileID: 0}
-      Collection: []
-      Tag: 8
+      Collection:
+      - MemberName: Element0
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
+          type: 3}
+        Collection: []
+        DataType: 256
+      - MemberName: Element1
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 3785003931588244214, guid: 2919d53f582a54c4e8931814cc37373f,
+          type: 3}
+        Collection: []
+        DataType: 256
+      DataType: 131072
     - MemberName: Tree
       TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTree
       Value: 
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 0
+      DataType: 0
     CallbackMemberData:
     - MemberName: TestCallbackReceiver
       TypeName: 
       Value: SSSS
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 0
+      DataType: 0
     - MemberName: TestCallbackReceiverMyClass
       TypeName: 
       Value: 67|-95
       RefObject: {fileID: 0}
       Collection: []
-      Tag: 0
+      DataType: 0
   Version: 1.0.0

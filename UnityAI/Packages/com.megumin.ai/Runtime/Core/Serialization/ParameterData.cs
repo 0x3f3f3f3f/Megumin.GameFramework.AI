@@ -60,26 +60,45 @@ namespace Megumin.GameFramework.AI.Serialization
         }
     }
 
+    [Flags]
+    public enum ParameterDataType
+    {
+        // 0-3
+        None = 0,
+        IsClass = 1 << 0,
+        IsNull = 1 << 1,
+
+        //4-15
+        IsPrimitive = 1 << 4,
+        IsEnum = 1 << 5,
+        IsString = 1 << 6,
+        IsBasicType = 1 << 7,
+        IsUnityObject = 1 << 8,
+        /// <summary>
+        /// Vector2,Vector3
+        /// </summary>
+        IsUnityBasicType = 1 << 9,
+
+        //16-23
+        IsCollection = 1 << 16,
+        IsArray = 1 << 17,
+        IsList = 1 << 18,
+        IsDictionary = 1 << 19,
+
+        //24-31
+        IsBinary = 1 << 24,
+        IsJson = 1 << 25,
+        IsXML = 1 << 26,
+    }
+
     [Serializable]
     public class CustomParameterData : ParameterData
     {
-        [Flags]
-        public enum Mark
-        {
-            None = 0,
-            IsClass = 1 << 0,
-            IsNull = 1 << 1,
-            UnityObject = 1 << 2,
-            IsArray = 1 << 3,
-            IsList = 1 << 4,
-            IsDictionary = 1 << 5,
-        }
-
         public string TypeName;
         public string Value;
         public UnityEngine.Object RefObject;
         public List<CustomParameterData> Collection;
-        public Mark Tag = CustomParameterData.Mark.None;
+        public ParameterDataType DataType = ParameterDataType.None;
 
         public bool TrySerialize(MemberInfo member, object instance, object defualtValueInstance)
         {
@@ -134,12 +153,17 @@ namespace Megumin.GameFramework.AI.Serialization
             //else
             {
                 MemberName = memberName;
-                if (value != null)
+                if (value == null)
+                {
+                    //引用类型并且值为null
+                    DataType |= ParameterDataType.IsNull;
+                }
+                else
                 {
                     TypeName = valueActualType?.FullName;
                     if (!valueActualType.IsClass)
                     {
-                        Tag |= Mark.IsClass;
+                        DataType |= ParameterDataType.IsClass;
                     }
 
                     if (valueActualType.IsGenericType)
@@ -150,7 +174,7 @@ namespace Megumin.GameFramework.AI.Serialization
                             var specializationType = valueActualType.GetGenericArguments()[0];
                             Debug.LogError($"List: {specializationType.Name}");
 
-                            Tag |= Mark.IsList;
+                            DataType |= ParameterDataType.IsList;
                             SerializeIList(value);
                         }
                         else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
@@ -158,8 +182,8 @@ namespace Megumin.GameFramework.AI.Serialization
                             var specializationKeyType = valueActualType.GetGenericArguments()[0];
                             var specializationValueType = valueActualType.GetGenericArguments()[1];
                             Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
-                            
-                            Tag |= Mark.IsDictionary;
+
+                            DataType |= ParameterDataType.IsDictionary;
                             return false;
                         }
                         else
@@ -173,18 +197,23 @@ namespace Megumin.GameFramework.AI.Serialization
                         //数组
                         var specializationType = valueActualType.GetElementType();
                         Debug.LogError($"Array: {specializationType.Name}");
-                        Tag |= Mark.IsArray;
+                        DataType |= ParameterDataType.IsArray;
                         SerializeIList(value);
                     }
                     else if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
                     {
-                        Tag |= CustomParameterData.Mark.UnityObject;
+                        DataType |= ParameterDataType.IsUnityObject;
                         RefObject = (UnityEngine.Object)value;
+                    }
+                    else if (valueActualType == typeof(string))
+                    {
+                        Value = (string)value;
+                        DataType |= ParameterDataType.IsString;
                     }
                     else
                     {
                         //这里一定要取值得真实类型，解决多态序列化
-                        if (Formater.TryGet(value.GetType(), out IFormater2String iformater))
+                        if (Formater.TryGet(valueActualType, out IFormater2String iformater))
                         {
                             Value = iformater.Serialize(value);
                         }
@@ -193,11 +222,6 @@ namespace Megumin.GameFramework.AI.Serialization
                             Debug.LogError($"{valueActualType.Name}    {memberName} 没找到Iformater");
                         }
                     }
-                }
-                else
-                {
-                    Tag |= CustomParameterData.Mark.IsNull;
-                    //引用类型并且值为null
                 }
                 return true;
             }
@@ -222,7 +246,6 @@ namespace Megumin.GameFramework.AI.Serialization
 
                 if (dataList.Count > 0)
                 {
-                    Tag |= CustomParameterData.Mark.IsList;
                     Collection = dataList;
                 }
             }
@@ -232,13 +255,13 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public bool TryDeserialize(out object value)
         {
-            if (Tag.HasFlag(Mark.IsClass) && Tag.HasFlag(Mark.IsNull))
+            if (DataType.HasFlag(ParameterDataType.IsClass) && DataType.HasFlag(ParameterDataType.IsNull))
             {
                 value = null;
                 return true;
             }
 
-            if (Tag.HasFlag(Mark.IsList))
+            if (DataType.HasFlag(ParameterDataType.IsList))
             {
                 if (Collection == null)
                 {
@@ -247,48 +270,70 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
                 else
                 {
-                    Type cType = Type.GetType(TypeName);
-                    var list = Activator.CreateInstance(cType) as IList;
+                    Type listType = Type.GetType(TypeName);
+                    var list = TryCreateInstance(listType) as IList;
 
-                    foreach (var item in Collection)
+                    if (list != null)
                     {
+                        foreach (var item in Collection)
+                        {
+                            if (item.TryDeserialize(out var elementValue))
+                            {
+                                list.Add(elementValue);
+                            }
+                        }
+                        value = list;
+                        return true;
+                    }
+                    else
+                    {
+                        value = null;
+                        return false;
+                    }
+                }
+            }
+
+            if (DataType.HasFlag(ParameterDataType.IsArray))
+            {
+                if (Collection == null)
+                {
+                    value = null;
+                    return true;
+                }
+                else
+                {
+                    Type arrayType = Type.GetType(TypeName);
+                    var specializationType = arrayType?.GetElementType();
+                    if (specializationType == null)
+                    {
+                        value = null;
+                        return false;
+                    }
+
+                    var array = Array.CreateInstance(specializationType, Collection.Count) as Array;
+                    for (int i = 0; i < Collection.Count; i++)
+                    {
+                        var item = Collection[i];
                         if (item.TryDeserialize(out var elementValue))
                         {
-                            list.Add(elementValue);
+                            array.SetValue(elementValue, i);
                         }
                     }
-                    value = list;
+
+                    value = array;
                     return true;
                 }
             }
 
-            if (Tag.HasFlag(Mark.IsArray))
-            {
-                if (Collection == null)
-                {
-                    value = null;
-                    return true;
-                }
-                else
-                {
-                    //Type cType = Type.GetType(TypeName);
-                    //var list = Activator.CreateInstance(cType) as IList;
-
-                    //foreach (var item in Collection)
-                    //{
-                    //    if (item.TryDeserialize(out var elementValue))
-                    //    {
-                    //        list.Add(elementValue);
-                    //    }
-                    //}
-                    value = null;
-                    return false;
-                }
-            }
-
-            if (RefObject)
+            if (DataType.HasFlag(ParameterDataType.IsUnityObject))
             {
                 value = RefObject;
+                return true;
+            }
+
+            if (DataType.HasFlag(ParameterDataType.IsString))
+            {
+                value = Value;
                 return true;
             }
 
@@ -298,6 +343,19 @@ namespace Megumin.GameFramework.AI.Serialization
             }
             value = default;
             return false;
+        }
+
+        public static object TryCreateInstance(Type cType)
+        {
+            try
+            {
+                return Activator.CreateInstance(cType);
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
         }
 
         public override bool Instantiate(object instance)
