@@ -49,18 +49,62 @@ MonoBehaviour:
     Decorators:
     - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestDecorator
       GUID: 77b32a9e-d60d-408a-8422-a48b156bd7fd
-      MemberData: []
+      MemberData:
+      - MemberName: TestFloat
+        TypeName: System.Single
+        Value: -15.31
+        RefObject: {fileID: 0}
+        IsNull: 0
+      - MemberName: TestRef
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
+          type: 3}
+        IsNull: 0
+      - MemberName: TestList
+        TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+        Value: 
+        RefObject: {fileID: 0}
+        IsNull: 0
+      - MemberName: TestList2
+        TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
+          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+        Value: 
+        RefObject: {fileID: 0}
+        IsNull: 0
       CallbackMemberData:
       - MemberName: TestCallbackReceiver
         TypeName: 
         Value: 
         RefObject: {fileID: 0}
         IsNull: 0
-    MemberData: []
+      - MemberName: TestCallbackReceiverMyClass
+        TypeName: 
+        Value: 153|-140
+        RefObject: {fileID: 0}
+        IsNull: 0
+    MemberData:
+    - MemberName: TestFloat
+      TypeName: System.Single
+      Value: 9.71
+      RefObject: {fileID: 0}
+      IsNull: 0
+    - MemberName: TestRef
+      TypeName: UnityEngine.GameObject
+      Value: 
+      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      IsNull: 0
     CallbackMemberData:
     - MemberName: TestCallbackReceiver
       TypeName: 
       Value: 
+      RefObject: {fileID: 0}
+      IsNull: 0
+    - MemberName: TestCallbackReceiverMyClass
+      TypeName: 
+      Value: 67|-95
       RefObject: {fileID: 0}
       IsNull: 0
   Version: 1.0.0

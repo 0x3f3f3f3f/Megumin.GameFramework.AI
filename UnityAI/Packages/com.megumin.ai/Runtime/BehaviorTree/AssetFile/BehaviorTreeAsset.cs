@@ -156,7 +156,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     asset.GUID = treeElement.GUID;
                 }
 
-                SerializeMember(node, IgnoreSerializeMember, asset.MemberData, asset.CallbackMemberData);
+                SerializeMember(decorator, IgnoreSerializeMember, asset.MemberData, asset.CallbackMemberData);
                 return asset;
             }
         }

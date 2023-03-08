@@ -126,6 +126,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void ReloadView()
         {
             SODecorator = CreateSOWrapperIfNull(Decorator);
+            SODecorator.View = this;
             SODecorator.Decorator = Decorator;
             var type = Decorator?.GetType();
             Title.text = type?.Name;
