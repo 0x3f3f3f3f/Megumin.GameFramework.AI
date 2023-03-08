@@ -30,6 +30,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
             public List<CustomParameterData> ParamAssets = new();
+            public List<CustomParameterData> CallbackParamAssets = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -65,6 +66,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         foreach (var param in ParamAssets)
                         {
                             param?.Instantiate(node);
+                        }
+
+                        if (node is IParameterDataSerializationCallbackReceiver self)
+                        {
+                            self.OnAfterDeserialize(CallbackParamAssets);
                         }
 
                         return node;
@@ -110,6 +116,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 //保存参数
                 //https://github.com/dotnet/runtime/issues/46272
+
+                List<string> callbackIgnoreMember = new();
+                if (node is IParameterDataSerializationCallbackReceiver self)
+                {
+                    self.OnBeforeSerialize(nodeAsset.CallbackParamAssets, callbackIgnoreMember);
+                }
+
                 var nodeType = node.GetType();
                 var p = from m in nodeType.GetMembers()
                         where m is FieldInfo || m is PropertyInfo
@@ -122,7 +135,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 foreach (var member in members)
                 {
-                    if (IgnoreParam.Contains(member.Name))
+                    if (IgnoreParam.Contains(member.Name) || callbackIgnoreMember.Contains(member.Name))
                     {
                         Debug.LogError($"忽略的参数 {member.Name}");
                         continue;
@@ -142,11 +155,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public static List<string> IgnoreParam = new()
         {
             nameof(BTNode.Decorators),
-            nameof(BTNode.Meta), 
+            nameof(BTNode.Meta),
             nameof(BTNode.InstanceID),
             nameof(BTNode.GUID),
         };
-        
+
         [Serializable]
         public class DecoratorAsset
         {

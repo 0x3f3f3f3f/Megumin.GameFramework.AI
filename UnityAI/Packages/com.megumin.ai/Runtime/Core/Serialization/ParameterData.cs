@@ -14,6 +14,20 @@ namespace Megumin.GameFramework.AI.Serialization
         bool Instantiate(object instance);
     }
 
+    /// <summary>
+    /// 用于用户自定义序列化
+    /// </summary>
+    public interface IParameterDataSerializationCallbackReceiver
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="ignoreMemberOnSerialize">后续的序列化过程将忽略这个成员</param>
+        void OnBeforeSerialize(List<CustomParameterData> destination, List<string> ignoreMemberOnSerialize);
+        void OnAfterDeserialize(List<CustomParameterData> source);
+    }
+
     public abstract class ParameterData : IParameterData
     {
         public string MemberName;
