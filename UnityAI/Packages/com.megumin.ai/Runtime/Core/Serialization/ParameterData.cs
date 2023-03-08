@@ -66,17 +66,20 @@ namespace Megumin.GameFramework.AI.Serialization
         [Flags]
         public enum Mark
         {
-            Nono = 0,
-            IsNull = 1 << 0,
-            UnityObject = 1 << 1,
-            Collection = 1 << 2,
+            None = 0,
+            IsClass = 1 << 0,
+            IsNull = 1 << 1,
+            UnityObject = 1 << 2,
+            IsArray = 1 << 3,
+            IsList = 1 << 4,
+            IsDictionary = 1 << 5,
         }
 
         public string TypeName;
         public string Value;
         public UnityEngine.Object RefObject;
         public List<CustomParameterData> Collection;
-        public Mark Tag = CustomParameterData.Mark.Nono;
+        public Mark Tag = CustomParameterData.Mark.None;
 
         public bool TrySerialize(MemberInfo member, object instance, object defualtValueInstance)
         {
@@ -89,7 +92,6 @@ namespace Megumin.GameFramework.AI.Serialization
             {
                 memberValue = field.GetValue(instance);
                 defaultMemberValue = field.GetValue(defualtValueInstance);
-
             }
             else if (member is PropertyInfo property)
             {
@@ -135,6 +137,11 @@ namespace Megumin.GameFramework.AI.Serialization
                 if (value != null)
                 {
                     TypeName = valueActualType?.FullName;
+                    if (!valueActualType.IsClass)
+                    {
+                        Tag |= Mark.IsClass;
+                    }
+
                     if (valueActualType.IsGenericType)
                     {
                         //泛型集合
@@ -142,6 +149,8 @@ namespace Megumin.GameFramework.AI.Serialization
                         {
                             var specializationType = valueActualType.GetGenericArguments()[0];
                             Debug.LogError($"List: {specializationType.Name}");
+
+                            Tag |= Mark.IsList;
                             SerializeIList(value);
                         }
                         else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
@@ -149,6 +158,8 @@ namespace Megumin.GameFramework.AI.Serialization
                             var specializationKeyType = valueActualType.GetGenericArguments()[0];
                             var specializationValueType = valueActualType.GetGenericArguments()[1];
                             Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
+                            
+                            Tag |= Mark.IsDictionary;
                             return false;
                         }
                         else
@@ -162,6 +173,7 @@ namespace Megumin.GameFramework.AI.Serialization
                         //数组
                         var specializationType = valueActualType.GetElementType();
                         Debug.LogError($"Array: {specializationType.Name}");
+                        Tag |= Mark.IsArray;
                         SerializeIList(value);
                     }
                     else if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
@@ -210,7 +222,7 @@ namespace Megumin.GameFramework.AI.Serialization
 
                 if (dataList.Count > 0)
                 {
-                    Tag |= CustomParameterData.Mark.Collection;
+                    Tag |= CustomParameterData.Mark.IsList;
                     Collection = dataList;
                 }
             }
@@ -220,6 +232,60 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public bool TryDeserialize(out object value)
         {
+            if (Tag.HasFlag(Mark.IsClass) && Tag.HasFlag(Mark.IsNull))
+            {
+                value = null;
+                return true;
+            }
+
+            if (Tag.HasFlag(Mark.IsList))
+            {
+                if (Collection == null)
+                {
+                    value = null;
+                    return true;
+                }
+                else
+                {
+                    Type cType = Type.GetType(TypeName);
+                    var list = Activator.CreateInstance(cType) as IList;
+
+                    foreach (var item in Collection)
+                    {
+                        if (item.TryDeserialize(out var elementValue))
+                        {
+                            list.Add(elementValue);
+                        }
+                    }
+                    value = list;
+                    return true;
+                }
+            }
+
+            if (Tag.HasFlag(Mark.IsArray))
+            {
+                if (Collection == null)
+                {
+                    value = null;
+                    return true;
+                }
+                else
+                {
+                    //Type cType = Type.GetType(TypeName);
+                    //var list = Activator.CreateInstance(cType) as IList;
+
+                    //foreach (var item in Collection)
+                    //{
+                    //    if (item.TryDeserialize(out var elementValue))
+                    //    {
+                    //        list.Add(elementValue);
+                    //    }
+                    //}
+                    value = null;
+                    return false;
+                }
+            }
+
             if (RefObject)
             {
                 value = RefObject;
