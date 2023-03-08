@@ -86,11 +86,49 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       Value: 
       RefObject: {fileID: 0}
-      Collection: []
-      Tag: 0
+      Collection:
+      - MemberName: Element0
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 3939188381555538775, guid: 14dd42bb726074f41ada6638453ab640,
+          type: 3}
+        Collection: []
+        Tag: 2
+      - MemberName: Element1
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
+          type: 3}
+        Collection: []
+        Tag: 2
+      Tag: 4
     - MemberName: TestList2
       TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
+    - MemberName: TestArray
+      TypeName: System.String[]
+      Value: 
+      RefObject: {fileID: 0}
+      Collection:
+      - MemberName: Element0
+        TypeName: System.String
+        Value: 
+        RefObject: {fileID: 0}
+        Collection: []
+        Tag: 0
+      - MemberName: Element1
+        TypeName: System.String
+        Value: 
+        RefObject: {fileID: 0}
+        Collection: []
+        Tag: 0
+      Tag: 4
+    - MemberName: TestRefArray
+      TypeName: UnityEngine.GameObject[]
       Value: 
       RefObject: {fileID: 0}
       Collection: []
