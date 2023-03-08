@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.Serialization
     public abstract class ParameterData : IParameterData
     {
         public string MemberName;
-        public static IParameterData Serialize(MemberInfo member, object instance, object defualtValueInstance)
+        public static CustomParameterData Serialize(MemberInfo member, object instance, object defualtValueInstance)
         {
             Debug.Log(member);
 
@@ -30,37 +30,43 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
                 else
                 {
-                    var valueActualType = value.GetType();
-                    if (valueActualType == typeof(int))
-                    {
-                        IntParameterData data = new();
-                        data.MemberName = member.Name;
-                        data.Value = (int)value;
-                        return data;
-                    }
-                    else if (valueActualType == typeof(UnityEngine.Object))
-                    {
-                        UnityEngineObjectParameterData data = new();
-                        data.MemberName = member.Name;
-                        data.Value = (UnityEngine.Object)value;
-                        return data;
-                    }
-                    else
+                    var valueActualType = value?.GetType();
+                    //if (valueActualType == typeof(int))
+                    //{
+                    //    IntParameterData data = new();
+                    //    data.MemberName = member.Name;
+                    //    data.Value = (int)value;
+                    //    return data;
+                    //}
+                    //else if (valueActualType == typeof(UnityEngine.Object))
+                    //{
+                    //    UnityEngineObjectParameterData data = new();
+                    //    data.MemberName = member.Name;
+                    //    data.Value = (UnityEngine.Object)value;
+                    //    return data;
+                    //}
+                    //else
                     {
                         CustomParameterData data = new();
                         data.MemberName = member.Name;
-                        data.TypeName = field.FieldType.FullName;
                         if (value != null)
                         {
-                            //这里一定要取值得真实类型，解决多态序列化
-                            if (Formater.TryGet(value.GetType(), out IFormater2String iformater))
+                            data.TypeName = valueActualType?.FullName;
+                            if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
                             {
-                                data.TypeName = value.GetType().FullName;
-                                data.Value = iformater.Serialize(value);
+                                data.RefObject = (UnityEngine.Object)value;
                             }
                             else
                             {
-                                Debug.LogError($"{member.Name} 没找到Iformater");
+                                //这里一定要取值得真实类型，解决多态序列化
+                                if (Formater.TryGet(value.GetType(), out IFormater2String iformater))
+                                {
+                                    data.Value = iformater.Serialize(value);
+                                }
+                                else
+                                {
+                                    Debug.LogError($"{member.Name} 没找到Iformater");
+                                }
                             }
                         }
                         else
@@ -131,11 +137,17 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public string TypeName;
         public string Value;
-        public UnityEngine.Object refrenceObject;
+        public UnityEngine.Object RefObject;
         public bool IsNull;
 
         public bool TryDeserialize(out object value)
         {
+            if (RefObject)
+            {
+                value = RefObject;
+                return true;
+            }
+
             if (Formater.TryGet(TypeName, out var iformater))
             {
                 return iformater.TryDeserialize(Value, out value);
@@ -152,7 +164,7 @@ namespace Megumin.GameFramework.AI.Serialization
             }
 
             //Todo: 要不要使用TokenID查找
-            var member = instance.GetType().GetMember(MemberName).FirstOrDefault();
+            var member = instance.GetType().GetMember(MemberName)?.FirstOrDefault();
             if (member != null && TryDeserialize(out var value))
             {
                 if (member is FieldInfo fieldInfo)

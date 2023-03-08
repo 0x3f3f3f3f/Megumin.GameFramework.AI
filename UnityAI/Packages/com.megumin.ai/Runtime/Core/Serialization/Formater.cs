@@ -66,7 +66,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 value = result;
                 return true;
             }
-            value = default; 
+            value = default;
             return false;
         }
     }

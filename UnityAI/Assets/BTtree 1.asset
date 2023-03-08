@@ -31,17 +31,15 @@ MonoBehaviour:
     ChildNodes: []
     Decorators: []
     ParamAssets:
-    - rid: 7759799102064033794
+    - MemberName: waitTime
+      TypeName: System.Single
+      Value: 4.83
+      RefObject: {fileID: 0}
+      IsNull: 0
+    - MemberName: TestRef
+      TypeName: UnityEngine.GameObject
+      Value: 
+      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      IsNull: 0
   Version: 1.0.0
-  references:
-    version: 2
-    RefIds:
-    - rid: 7759799102064033794
-      type: {class: CustomParameterData, ns: Megumin.GameFramework.AI.Serialization,
-        asm: Megumin.GameFramework.AI}
-      data:
-        MemberName: waitTime
-        TypeName: System.Single
-        Value: 4.05
-        refrenceObject: {fileID: 0}
-        IsNull: 0

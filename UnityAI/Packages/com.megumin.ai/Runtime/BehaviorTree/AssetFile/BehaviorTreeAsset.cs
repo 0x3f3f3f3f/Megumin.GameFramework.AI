@@ -28,8 +28,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<DecoratorAsset> Decorators = new();
 
             //参数使用泛型序列化导致每次保存Rid都会改变
-            [SerializeReference]
-            public List<IParameterData> ParamAssets = new();
+            //[SerializeReference]
+            public List<CustomParameterData> ParamAssets = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
