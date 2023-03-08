@@ -10,7 +10,9 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Debug")]
-    public class SerializationTestNode : ActionTaskNode, IParameterDataSerializationCallbackReceiver
+    public class SerializationTestNode : ActionTaskNode,
+        ISerializationCallbackReceiver<CustomParameterData>,
+        ISerializationCallbackReceiver<string>
     {
         public float TestFloat = 3f;
         public GameObject TestRef;
@@ -63,6 +65,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     Value = $"{TestCallbackReceiverMyClass.a}|{TestCallbackReceiverMyClass.b}",
                 });
             }
+        }
+
+        public void OnBeforeSerialize(List<string> destination, List<string> ignoreMemberOnSerialize)
+        {
+
+        }
+
+        public void OnAfterDeserialize(List<string> source)
+        {
+
         }
     }
 }

@@ -11,10 +11,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class TreeElementAsset
     {
-        public static void SerializeMember(object instance,
-                                          List<string> ignoreMember,
-                                          List<CustomParameterData> memberData,
-                                          List<CustomParameterData> callbackMemberData)
+        public List<string> StringCallbackMemberData = new();
+
+        public static void BeforeSerializeMember<T>(object instance,
+                                          List<string> callbackIgnoreMember,
+                                          List<T> callbackMemberData)
+        {
+            if (instance is ISerializationCallbackReceiver<T> callbackReceiver)
+            {
+                callbackReceiver.OnBeforeSerialize(callbackMemberData, callbackIgnoreMember);
+            }
+        }
+
+        public static void AfterDeserializeMember<T>(object instance, List<T> callbackMemberData)
+        {
+            if (instance is ISerializationCallbackReceiver<T> callbackReceiver)
+            {
+                callbackReceiver.OnAfterDeserialize(callbackMemberData);
+            }
+        }
+
+        public void SerializeMember(object instance,
+                                      List<string> ignoreMember,
+                                      List<CustomParameterData> memberData,
+                                      List<CustomParameterData> callbackMemberData)
         {
             //保存参数
             //https://github.com/dotnet/runtime/issues/46272
@@ -26,10 +46,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 serializationCallbackReceiver.OnBeforeSerialize();
             }
 
-            if (instance is IParameterDataSerializationCallbackReceiver callbackReceiver)
-            {
-                callbackReceiver.OnBeforeSerialize(callbackMemberData, callbackIgnoreMember);
-            }
+            BeforeSerializeMember(instance, callbackIgnoreMember, callbackMemberData);
+            BeforeSerializeMember(instance, callbackIgnoreMember, StringCallbackMemberData);
 
             var nodeType = instance.GetType();
             var p = from m in nodeType.GetMembers()
@@ -63,9 +81,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-
-
-        public static void DeserializeMember(object instance,
+        public void DeserializeMember(object instance,
                                           List<CustomParameterData> memberData,
                                           List<CustomParameterData> callbackMemberData)
         {
@@ -75,9 +91,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 param?.Instantiate(instance);
             }
 
-            if (instance is IParameterDataSerializationCallbackReceiver callbackReceiver)
+            AfterDeserializeMember(instance, StringCallbackMemberData);
+            AfterDeserializeMember(instance, callbackMemberData);
+
+            if (instance is ISerializationCallbackReceiver serializationCallbackReceiver)
             {
-                callbackReceiver.OnAfterDeserialize(callbackMemberData);
+                serializationCallbackReceiver.OnAfterDeserialize();
             }
         }
     }

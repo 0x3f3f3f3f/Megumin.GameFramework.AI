@@ -16,7 +16,8 @@ MonoBehaviour:
   Comment: load2
   StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
   Nodes:
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
+  - StringCallbackMemberData: []
+    TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
     GUID: 06fc2185-9850-45e4-b76e-a200613a9391
     Meta:
       x: 247.1501
@@ -33,7 +34,8 @@ MonoBehaviour:
     Decorators: []
     MemberData: []
     CallbackMemberData: []
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
+  - StringCallbackMemberData: []
+    TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Meta:
       x: 177.72507
@@ -47,7 +49,8 @@ MonoBehaviour:
       IsStartNode: 0
     ChildNodes: []
     Decorators:
-    - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestDecorator
+    - StringCallbackMemberData: []
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestDecorator
       GUID: 77b32a9e-d60d-408a-8422-a48b156bd7fd
       MemberData:
       - MemberName: TestFloat
@@ -60,18 +63,6 @@ MonoBehaviour:
         Value: 
         RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
           type: 3}
-        IsNull: 0
-      - MemberName: TestList
-        TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-        Value: 
-        RefObject: {fileID: 0}
-        IsNull: 0
-      - MemberName: TestList2
-        TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
-          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-        Value: 
-        RefObject: {fileID: 0}
         IsNull: 0
       CallbackMemberData:
       - MemberName: TestCallbackReceiver
@@ -99,7 +90,7 @@ MonoBehaviour:
     CallbackMemberData:
     - MemberName: TestCallbackReceiver
       TypeName: 
-      Value: 
+      Value: SSSS
       RefObject: {fileID: 0}
       IsNull: 0
     - MemberName: TestCallbackReceiverMyClass
