@@ -19,8 +19,8 @@ MonoBehaviour:
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
     GUID: 06fc2185-9850-45e4-b76e-a200613a9391
     Meta:
-      x: 381.6702
-      y: -281.17578
+      x: 247.1501
+      y: 101.06252
       index: 0
       Name: 
       FriendlyName: 
@@ -31,19 +31,13 @@ MonoBehaviour:
     ChildNodes:
     - 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Decorators: []
-    ParamAssets:
-    - MemberName: children
-      TypeName: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
-        Megumin.GameFramework.AI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      Value: 
-      RefObject: {fileID: 0}
-      IsNull: 0
-    CallbackParamAssets: []
+    MemberData: []
+    CallbackMemberData: []
   - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Meta:
-      x: 346.66296
-      y: -59.029293
+      x: 177.72507
+      y: 251.33759
       index: 0
       Name: 
       FriendlyName: 
@@ -52,17 +46,21 @@ MonoBehaviour:
       Comment: 
       IsStartNode: 0
     ChildNodes: []
-    Decorators: []
-    ParamAssets: []
-    CallbackParamAssets:
+    Decorators:
+    - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestDecorator
+      GUID: 77b32a9e-d60d-408a-8422-a48b156bd7fd
+      MemberData: []
+      CallbackMemberData:
+      - MemberName: TestCallbackReceiver
+        TypeName: 
+        Value: 
+        RefObject: {fileID: 0}
+        IsNull: 0
+    MemberData: []
+    CallbackMemberData:
     - MemberName: TestCallbackReceiver
       TypeName: 
       Value: 
-      RefObject: {fileID: 0}
-      IsNull: 0
-    - MemberName: TestCallbackReceiverMyClass
-      TypeName: 
-      Value: 0|0
       RefObject: {fileID: 0}
       IsNull: 0
   Version: 1.0.0

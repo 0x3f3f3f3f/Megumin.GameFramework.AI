@@ -18,8 +18,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<NodeAsset> Nodes = new List<NodeAsset>();
         public string Version = AssetVersion.v1_0_0.ToString();
 
+        public static List<string> IgnoreSerializeMember = new()
+        {
+            nameof(BTNode.Decorators),
+            nameof(BTNode.Meta),
+            nameof(BTNode.InstanceID),
+            nameof(BTNode.GUID),
+            nameof(BTParentNode.children),
+        };
+
         [Serializable]
-        public class NodeAsset
+        public class NodeAsset : TreeElementAsset
         {
             public string TypeName;
             public string GUID;
@@ -29,8 +38,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
-            public List<CustomParameterData> ParamAssets = new();
-            public List<CustomParameterData> CallbackParamAssets = new();
+            public List<CustomParameterData> MemberData = new();
+            public List<CustomParameterData> CallbackMemberData = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -62,16 +71,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             }
                         }
 
-                        //反序列化参数
-                        foreach (var param in ParamAssets)
-                        {
-                            param?.Instantiate(node);
-                        }
-
-                        if (node is IParameterDataSerializationCallbackReceiver callbackReceiver)
-                        {
-                            callbackReceiver.OnAfterDeserialize(CallbackParamAssets);
-                        }
+                        DeserializeMember(node, MemberData, CallbackMemberData);
 
                         return node;
                     }
@@ -90,17 +90,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             public static NodeAsset Serialize(BTNode node, BehaviorTree tree)
             {
-                var nodeAsset = new NodeAsset();
-                nodeAsset.TypeName = node.GetType().FullName;
-                nodeAsset.GUID = node.GUID;
-                nodeAsset.Meta = node.Meta.Clone();
-                nodeAsset.Meta.IsStartNode = node == tree.StartNode;
+                var asset = new NodeAsset();
+                asset.TypeName = node.GetType().FullName;
+                asset.GUID = node.GUID;
+                asset.Meta = node.Meta.Clone();
+                asset.Meta.IsStartNode = node == tree.StartNode;
 
                 if (node is BTParentNode parentNode)
                 {
                     foreach (var child in parentNode.children)
                     {
-                        nodeAsset.ChildNodes.Add(child.GUID);
+                        asset.ChildNodes.Add(child.GUID);
                     }
                 }
 
@@ -110,92 +110,54 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     foreach (var decorator in node?.Decorators)
                     {
                         var decoratorAsset = DecoratorAsset.Serialize(decorator, node, tree);
-                        nodeAsset.Decorators.Add(decoratorAsset);
+                        asset.Decorators.Add(decoratorAsset);
                     }
                 }
 
-                //保存参数
-                //https://github.com/dotnet/runtime/issues/46272
-
-                List<string> callbackIgnoreMember = new();
-                if (node is IParameterDataSerializationCallbackReceiver callbackReceiver)
-                {
-                    callbackReceiver.OnBeforeSerialize(nodeAsset.CallbackParamAssets, callbackIgnoreMember);
-                }
-
-                var nodeType = node.GetType();
-                var p = from m in nodeType.GetMembers()
-                        where m is FieldInfo || m is PropertyInfo
-                        orderby m.MetadataToken
-                        select m;
-                var members = p.ToList();
-
-                ///用于忽略默认值参数
-                var defualtValueNode = Activator.CreateInstance(nodeType);
-
-                foreach (var member in members)
-                {
-                    if (IgnoreParam.Contains(member.Name))
-                    {
-                        Debug.LogError($"忽略的参数 {member.Name}");
-                        continue;
-                    }
-
-                    if (callbackIgnoreMember.Contains(member.Name))
-                    {
-                        Debug.LogError($"忽略的参数 {member.Name}");
-                        continue;
-                    }
-
-                    var paramData = ParameterData.Serialize(member, node, defualtValueNode);
-                    if (paramData != null)
-                    {
-                        nodeAsset.ParamAssets.Add(paramData);
-                    }
-                }
-
-                return nodeAsset;
+                SerializeMember(node, IgnoreSerializeMember, asset.MemberData, asset.CallbackMemberData);
+                return asset;
             }
         }
 
-        public static List<string> IgnoreParam = new()
-        {
-            nameof(BTNode.Decorators),
-            nameof(BTNode.Meta),
-            nameof(BTNode.InstanceID),
-            nameof(BTNode.GUID),
-        };
-
         [Serializable]
-        public class DecoratorAsset
+        public class DecoratorAsset : TreeElementAsset
         {
             public string TypeName;
             public string GUID;
+
+            //参数使用泛型序列化导致每次保存Rid都会改变
+            //[SerializeReference]
+            public List<CustomParameterData> MemberData = new();
+            public List<CustomParameterData> CallbackMemberData = new();
 
             public ITreeElement Instantiate(bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
-                decorator.GUID = this.GUID;
 
                 if (decorator == null)
                 {
                     Debug.LogError($"无法创建的装饰器{TypeName}");
+                    return decorator;
                 }
+
+                decorator.GUID = this.GUID;
+                DeserializeMember(decorator, MemberData, CallbackMemberData);
 
                 return decorator;
             }
 
             public static DecoratorAsset Serialize(object decorator, BTNode node, BehaviorTree tree)
             {
-                var decoratorAsset = new DecoratorAsset();
-                decoratorAsset.TypeName = decorator.GetType().FullName;
+                var asset = new DecoratorAsset();
+                asset.TypeName = decorator.GetType().FullName;
                 if (decorator is ITreeElement treeElement)
                 {
-                    decoratorAsset.GUID = treeElement.GUID;
+                    asset.GUID = treeElement.GUID;
                 }
 
-                return decoratorAsset;
+                SerializeMember(node, IgnoreSerializeMember, asset.MemberData, asset.CallbackMemberData);
+                return asset;
             }
         }
 
