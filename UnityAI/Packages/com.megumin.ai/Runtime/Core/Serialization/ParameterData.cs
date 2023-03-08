@@ -38,7 +38,10 @@ namespace Megumin.GameFramework.AI.Serialization
             if (member is FieldInfo field)
             {
                 var value = field.GetValue(instance);
-                if (value.Equals(field.GetValue(defualtValueInstance)))
+                var defaultValue = field.GetValue(defualtValueInstance);
+                //都是null认为不需要保存
+                var nullEqual = value == null && defaultValue == null;
+                if (nullEqual || value.Equals(field.GetValue(defualtValueInstance)))
                 {
                     Debug.Log($"值为初始值或者默认值没必要保存");
                 }

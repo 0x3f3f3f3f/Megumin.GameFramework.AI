@@ -68,9 +68,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             param?.Instantiate(node);
                         }
 
-                        if (node is IParameterDataSerializationCallbackReceiver self)
+                        if (node is IParameterDataSerializationCallbackReceiver callbackReceiver)
                         {
-                            self.OnAfterDeserialize(CallbackParamAssets);
+                            callbackReceiver.OnAfterDeserialize(CallbackParamAssets);
                         }
 
                         return node;
@@ -118,9 +118,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 //https://github.com/dotnet/runtime/issues/46272
 
                 List<string> callbackIgnoreMember = new();
-                if (node is IParameterDataSerializationCallbackReceiver self)
+                if (node is IParameterDataSerializationCallbackReceiver callbackReceiver)
                 {
-                    self.OnBeforeSerialize(nodeAsset.CallbackParamAssets, callbackIgnoreMember);
+                    callbackReceiver.OnBeforeSerialize(nodeAsset.CallbackParamAssets, callbackIgnoreMember);
                 }
 
                 var nodeType = node.GetType();
@@ -135,7 +135,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 foreach (var member in members)
                 {
-                    if (IgnoreParam.Contains(member.Name) || callbackIgnoreMember.Contains(member.Name))
+                    if (IgnoreParam.Contains(member.Name))
+                    {
+                        Debug.LogError($"忽略的参数 {member.Name}");
+                        continue;
+                    }
+
+                    if (callbackIgnoreMember.Contains(member.Name))
                     {
                         Debug.LogError($"忽略的参数 {member.Name}");
                         continue;

@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
-  StartNodeGUID: bb21a9d2-c991-468f-af47-8bebaa83b24d
+  StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
   Nodes:
-  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Wait
-    GUID: bb21a9d2-c991-468f-af47-8bebaa83b24d
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
+    GUID: 06fc2185-9850-45e4-b76e-a200613a9391
     Meta:
-      x: 485
-      y: 112
+      x: 381.6702
+      y: -281.17578
       index: 0
       Name: 
       FriendlyName: 
@@ -28,36 +28,41 @@ MonoBehaviour:
       FriendlyDescription: 
       Comment: 
       IsStartNode: 1
-    ChildNodes: []
+    ChildNodes:
+    - 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Decorators: []
     ParamAssets:
-    - MemberName: waitTime
-      TypeName: System.Single
-      Value: 4.83
-      RefObject: {fileID: 0}
-      IsNull: 0
-    - MemberName: TestRef
-      TypeName: UnityEngine.GameObject
-      Value: 
-      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
-        type: 3}
-      IsNull: 0
-    - MemberName: TestList
-      TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    - MemberName: children
+      TypeName: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+        Megumin.GameFramework.AI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       Value: 
       RefObject: {fileID: 0}
       IsNull: 0
-    - MemberName: TestList2
-      TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      Value: 
-      RefObject: {fileID: 0}
-      IsNull: 0
+    CallbackParamAssets: []
+  - TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
+    GUID: 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
+    Meta:
+      x: 346.66296
+      y: -59.029293
+      index: 0
+      Name: 
+      FriendlyName: 
+      Description: 
+      FriendlyDescription: 
+      Comment: 
+      IsStartNode: 0
+    ChildNodes: []
+    Decorators: []
+    ParamAssets: []
     CallbackParamAssets:
-    - MemberName: TestUser
+    - MemberName: TestCallbackReceiver
       TypeName: 
-      Value: SSSS
+      Value: 
+      RefObject: {fileID: 0}
+      IsNull: 0
+    - MemberName: TestCallbackReceiverMyClass
+      TypeName: 
+      Value: 0|0
       RefObject: {fileID: 0}
       IsNull: 0
   Version: 1.0.0
