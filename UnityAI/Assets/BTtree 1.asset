@@ -32,14 +32,26 @@ MonoBehaviour:
     ChildNodes:
     - 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Decorators: []
-    MemberData: []
+    MemberData:
+    - MemberName: Tree
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTree
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
+    - MemberName: Child0
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
     CallbackMemberData: []
   - StringCallbackMemberData: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: 452255f6-3d6e-4989-9bf3-0ab49f1e94d5
     Meta:
-      x: 177.72507
-      y: 251.33759
+      x: 221
+      y: 286
       index: 0
       Name: 
       FriendlyName: 
@@ -48,54 +60,58 @@ MonoBehaviour:
       Comment: 
       IsStartNode: 0
     ChildNodes: []
-    Decorators:
-    - StringCallbackMemberData: []
-      TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestDecorator
-      GUID: 77b32a9e-d60d-408a-8422-a48b156bd7fd
-      MemberData:
-      - MemberName: TestFloat
-        TypeName: System.Single
-        Value: -15.31
-        RefObject: {fileID: 0}
-        IsNull: 0
-      - MemberName: TestRef
-        TypeName: UnityEngine.GameObject
-        Value: 
-        RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
-          type: 3}
-        IsNull: 0
-      CallbackMemberData:
-      - MemberName: TestCallbackReceiver
-        TypeName: 
-        Value: 
-        RefObject: {fileID: 0}
-        IsNull: 0
-      - MemberName: TestCallbackReceiverMyClass
-        TypeName: 
-        Value: 153|-140
-        RefObject: {fileID: 0}
-        IsNull: 0
+    Decorators: []
     MemberData:
     - MemberName: TestFloat
       TypeName: System.Single
       Value: 9.71
       RefObject: {fileID: 0}
-      IsNull: 0
+      Collection: []
+      Tag: 0
+    - MemberName: TestDateTimeOffset
+      TypeName: System.DateTimeOffset
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
     - MemberName: TestRef
       TypeName: UnityEngine.GameObject
       Value: 
       RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
-      IsNull: 0
+      Collection: []
+      Tag: 2
+    - MemberName: TestList
+      TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
+    - MemberName: TestList2
+      TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
+    - MemberName: Tree
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTree
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      Tag: 0
     CallbackMemberData:
     - MemberName: TestCallbackReceiver
       TypeName: 
       Value: SSSS
       RefObject: {fileID: 0}
-      IsNull: 0
+      Collection: []
+      Tag: 0
     - MemberName: TestCallbackReceiverMyClass
       TypeName: 
       Value: 67|-95
       RefObject: {fileID: 0}
-      IsNull: 0
+      Collection: []
+      Tag: 0
   Version: 1.0.0

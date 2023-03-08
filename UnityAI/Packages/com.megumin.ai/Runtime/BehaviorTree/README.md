@@ -76,6 +76,8 @@ Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后
 - [x] 移动子节点时重新排序子节点
 
 + [ ] 公开参数绑定
++ [ ] List Array Dictionary
++ [ ] TreeElement循环引用。Task引用其他Task。
 
 * [x] 有为保持改动时关闭编辑器进行提示
 * [x] Undo/Redo 

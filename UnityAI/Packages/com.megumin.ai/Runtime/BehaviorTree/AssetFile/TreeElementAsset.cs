@@ -57,7 +57,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             var members = p.ToList();
 
             ///用于忽略默认值参数
-            var defualtValueNode = Activator.CreateInstance(nodeType);
+            var defualtValueInstance = Activator.CreateInstance(nodeType);
 
             foreach (var member in members)
             {
@@ -73,10 +73,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                var paramData = ParameterData.Serialize(member, instance, defualtValueNode);
-                if (paramData != null)
+                CustomParameterData data = new();
+                if (data.TrySerialize(member,instance, defualtValueInstance))
                 {
-                    memberData.Add(paramData);
+                    memberData.Add(data);
                 }
             }
         }

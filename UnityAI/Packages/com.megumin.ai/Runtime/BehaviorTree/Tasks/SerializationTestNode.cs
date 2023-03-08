@@ -15,9 +15,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<string>
     {
         public float TestFloat = 3f;
+        public string TestString = "Hello!";
+        public DateTimeOffset TestDateTimeOffset = DateTimeOffset.Now;
+        public Vector2 TestVector2 = Vector2.one;
         public GameObject TestRef;
-        public List<GameObject> TestList;
-        public List<int> TestList2;
+        public ScriptableObject TestRefScriptableObject;
+        public List<GameObject> TestList = new ();
+        public List<int> TestList2 = new();
+        public Dictionary<string, int> TestDictionary = new();
+        public string[] TestArray;
+        public GameObject[] TestRefArray;
         public string TestCallbackReceiver;
         public MyClass TestCallbackReceiverMyClass;
 
