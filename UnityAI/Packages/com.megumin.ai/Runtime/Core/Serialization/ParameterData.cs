@@ -161,7 +161,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 else
                 {
                     TypeName = valueActualType?.FullName;
-                    if (!valueActualType.IsClass)
+                    if (valueActualType.IsClass)
                     {
                         DataType |= ParameterDataType.IsClass;
                     }
@@ -302,15 +302,25 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
                 else
                 {
+                    //GameObject[] 类型取不到
                     Type arrayType = Type.GetType(TypeName);
-                    var specializationType = arrayType?.GetElementType();
-                    if (specializationType == null)
+                    Type elementType = null;
+                    if (arrayType == null && TypeName.Length > 2)
+                    {
+                        elementType = Type.GetType(TypeName.Substring(0, TypeName.Length - 2));
+                    }
+                    else
+                    {
+                        elementType = arrayType?.GetElementType();
+                    }
+
+                    if (elementType == null)
                     {
                         value = null;
                         return false;
                     }
 
-                    var array = Array.CreateInstance(specializationType, Collection.Count) as Array;
+                    var array = Array.CreateInstance(elementType, Collection.Count) as Array;
                     for (int i = 0; i < Collection.Count; i++)
                     {
                         var item = Collection[i];
