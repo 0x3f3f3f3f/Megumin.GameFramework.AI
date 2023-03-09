@@ -91,6 +91,9 @@ namespace Megumin.GameFramework.AI.Serialization
         IsXML = 1 << 26,
     }
 
+    /// <summary>
+    /// TODO： 拆分可包含循环和不可包含循环的data，解决Serialization depth limit 10 exceeded 问题
+    /// </summary>
     [Serializable]
     public class CustomParameterData : ParameterData
     {
@@ -106,6 +109,13 @@ namespace Megumin.GameFramework.AI.Serialization
         public List<CustomParameterData> Collection;
         public ParameterDataType DataType = ParameterDataType.None;
 
+        /// <summary>
+        /// https://blog.unity.com/technology/serialization-in-unity
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="instance"></param>
+        /// <param name="defualtValueInstance"></param>
+        /// <returns></returns>
         public bool TrySerialize(MemberInfo member, object instance, object defualtValueInstance)
         {
             Debug.Log(member);

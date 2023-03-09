@@ -74,6 +74,24 @@ MonoBehaviour:
       RefObject: {fileID: 0}
       Collection: []
       DataType: 0
+    - MemberName: TestVector2
+      TypeName: UnityEngine.Vector2
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      DataType: 0
+    - MemberName: TestRef
+      TypeName: UnityEngine.GameObject
+      Value: 
+      RefObject: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
+      Collection: []
+      DataType: 257
+    - MemberName: TestRefScriptableObject
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTreeAsset
+      Value: 
+      RefObject: {fileID: 11400000, guid: 51bacacd9a645b04da8e0cadd4727e9d, type: 2}
+      Collection: []
+      DataType: 257
     - MemberName: TestList
       TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
@@ -93,7 +111,19 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       Value: 
       RefObject: {fileID: 0}
-      Collection: []
+      Collection:
+      - MemberName: Element0
+        TypeName: System.Int32
+        Value: 28
+        RefObject: {fileID: 0}
+        Collection: []
+        DataType: 0
+      - MemberName: Element1
+        TypeName: System.Int32
+        Value: -112
+        RefObject: {fileID: 0}
+        Collection: []
+        DataType: 0
       DataType: 262145
     - MemberName: TestArray
       TypeName: System.String[]
