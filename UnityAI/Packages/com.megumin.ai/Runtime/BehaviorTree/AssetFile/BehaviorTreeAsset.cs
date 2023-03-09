@@ -20,11 +20,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public static List<string> IgnoreSerializeMember = new()
         {
+            nameof(BTNode.Tree),
             nameof(BTNode.Decorators),
             nameof(BTNode.Meta),
             nameof(BTNode.InstanceID),
             nameof(BTNode.GUID),
             nameof(BTParentNode.children),
+            nameof(OneChildNode.Child0),
+            nameof(TwoChildNode.Child0),
+            nameof(TwoChildNode.Child1),
         };
 
         [Serializable]

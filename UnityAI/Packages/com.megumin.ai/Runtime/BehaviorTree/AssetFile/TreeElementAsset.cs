@@ -64,13 +64,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (ignoreMember?.Contains(member.Name) ?? false)
                 {
-                    Debug.LogError($"忽略的参数 {member.Name}");
+                    //Debug.LogError($"忽略的参数 {member.Name}");
                     continue;
                 }
 
                 if (callbackIgnoreMember.Contains(member.Name))
                 {
-                    Debug.LogError($"忽略的参数 {member.Name}");
+                    //Debug.LogError($"忽略的参数 {member.Name}");
                     continue;
                 }
 

@@ -185,36 +185,37 @@ namespace Megumin.GameFramework.AI.Serialization
                         //泛型集合
                         if (valueActualType.GetGenericTypeDefinition() == typeof(List<>))
                         {
-                            var specializationType = valueActualType.GetGenericArguments()[0];
-                            Debug.LogError($"List: {specializationType.Name}");
+                            //var specializationType = valueActualType.GetGenericArguments()[0];
+                            //Debug.LogError($"List: {specializationType.Name}");
 
                             DataType |= ParameterDataType.IsList;
                             SerializeIList(value);
                         }
                         else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                         {
-                            var specializationKeyType = valueActualType.GetGenericArguments()[0];
-                            var specializationValueType = valueActualType.GetGenericArguments()[1];
-                            Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
+                            //var specializationKeyType = valueActualType.GetGenericArguments()[0];
+                            //var specializationValueType = valueActualType.GetGenericArguments()[1];
+                            //Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
 
                             DataType |= ParameterDataType.IsDictionary;
                             return false;
                         }
                         else
                         {
-                            Debug.LogError($"GenericType: {valueActualType.Name}");
+                            //Debug.LogError($"GenericType: {valueActualType.Name}");
                             return false;
                         }
                     }
                     else if (valueActualType.IsArray)
                     {
                         //数组
-                        var specializationType = valueActualType.GetElementType();
+                        //var specializationType = valueActualType.GetElementType();
 
-                        AssemblyName assemblyName = valueActualType.Assembly.GetName();
-                        var testName = $"{valueActualType?.FullName},{assemblyName.Name}";
-                        var resultType = Type.GetType(testName);
-                        Debug.LogError($"Array: {specializationType.Name}----{testName}");
+                        //AssemblyName assemblyName = valueActualType.Assembly.GetName();
+                        //var testName = $"{valueActualType?.FullName},{assemblyName.Name}";
+                        //var resultType = Type.GetType(testName);
+                        //Debug.LogError($"Array: {specializationType.Name}----{testName}");
+
                         DataType |= ParameterDataType.IsArray;
                         SerializeIList(value);
                     }
