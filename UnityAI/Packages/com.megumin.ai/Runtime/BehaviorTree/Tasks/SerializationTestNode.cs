@@ -28,6 +28,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public GameObject[] TestRefArray;
         public string TestCallbackReceiver;
         public MyClass TestCallbackReceiverMyClass;
+        public sbyte TestSbyte;
 
         [Serializable]
         public class MyClass

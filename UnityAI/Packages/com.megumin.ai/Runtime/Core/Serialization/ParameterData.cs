@@ -231,7 +231,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     else
                     {
                         //这里一定要取值得真实类型，解决多态序列化
-                        if (Formater.TryGet(valueActualType, out var iformater))
+                        if (StringFormatter.TryGet(valueActualType, out var iformater))
                         {
                             Value = iformater.Serialize(value);
                         }
@@ -370,10 +370,11 @@ namespace Megumin.GameFramework.AI.Serialization
                 return true;
             }
 
-            if (Formater.TryGet(TypeName, out var iformater))
+            if (StringFormatter.TryDeserialize(TypeName, Value, out value))
             {
-                return iformater.TryDeserialize(Value, out value);
+                return true;
             }
+
             value = default;
             return false;
         }

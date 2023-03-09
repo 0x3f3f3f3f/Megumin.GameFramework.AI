@@ -74,12 +74,6 @@ MonoBehaviour:
       RefObject: {fileID: 0}
       Collection: []
       DataType: 0
-    - MemberName: TestVector2
-      TypeName: UnityEngine.Vector2
-      Value: 
-      RefObject: {fileID: 0}
-      Collection: []
-      DataType: 0
     - MemberName: TestRef
       TypeName: UnityEngine.GameObject
       Value: 
@@ -162,6 +156,12 @@ MonoBehaviour:
         Collection: []
         DataType: 257
       DataType: 131073
+    - MemberName: TestSbyte
+      TypeName: System.SByte
+      Value: 
+      RefObject: {fileID: 0}
+      Collection: []
+      DataType: 0
     - MemberName: Tree
       TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTree
       Value: 
