@@ -2,7 +2,9 @@
     "name": "Megumin.Binding.Editor",
     "rootNamespace": "Megumin.Binding.Editor",
     "references": [
-        "Megumin.Binding"
+        "Megumin.Binding",
+        "Megumin.Serialization",
+        "Megumin.Serialization.Editor"
     ],
     "includePlatforms": [
         "Editor"

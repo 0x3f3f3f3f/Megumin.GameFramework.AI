@@ -6,7 +6,9 @@
         "Unity.Settings.Editor",
         "Megumin.Explosion4Unity",
         "Megumin.Binding",
-        "Megumin.Binding.Editor"
+        "Megumin.Binding.Editor",
+        "Megumin.Serialization",
+        "Megumin.Serialization.Editor"
     ],
     "includePlatforms": [
         "Editor"

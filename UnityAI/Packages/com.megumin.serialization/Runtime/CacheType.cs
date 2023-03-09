@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.Binding
+namespace Megumin.Serialization
 {
     public static class CacheType
     {
@@ -86,7 +86,7 @@ namespace Megumin.Binding
         static readonly Dictionary<string, Type> allUnityObjectType = new Dictionary<string, Type>();
         static bool CacheTypeInit = false;
 
-        public static bool LogCacheWorning = 
+        public static bool LogCacheWorning =
 
 #if UNITY_EDITOR
         false;

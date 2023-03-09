@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using static Megumin.Binding.CacheType;
+using static Megumin.Serialization.CacheType;
 
 namespace Megumin.Binding
 {
