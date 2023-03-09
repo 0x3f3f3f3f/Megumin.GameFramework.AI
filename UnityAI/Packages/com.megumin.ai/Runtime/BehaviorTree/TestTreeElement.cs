@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug/ActionTaskNode")]
+    [Category("Samples/Attribute")]
     [Icon("Icons/Overlays/ToolsToggle.png")]
     [HelpURL("www.github.com")]
     [Tooltip("在控制台打印日志")]
@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
     }
 
-    [Category("Debug/BTDecorator")]
+    [Category("Samples/Attribute")]
     [Icon("Icons/Overlays/ToolsToggle.png")]
     [HelpURL("www.baidu.com")]
     [Description("TestDescription")]

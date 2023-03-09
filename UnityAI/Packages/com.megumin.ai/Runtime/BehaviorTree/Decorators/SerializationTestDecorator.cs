@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug/BTDecorator")]
+    [Category("Samples/Serialization")]
     internal class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CustomParameterData>
     {
         public float TestFloat = 3f;
@@ -33,13 +33,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (item.MemberName == nameof(TestCallbackReceiver))
                 {
-                    TestCallbackReceiver = item.Value;
+                    TestCallbackReceiver = item.Data;
                 }
 
                 if (item.MemberName == nameof(TestCallbackReceiverMyClass))
                 {
                     TestCallbackReceiverMyClass = new MyClass();
-                    var sp = item.Value.Split("|");
+                    var sp = item.Data.Split("|");
                     TestCallbackReceiverMyClass.a = int.Parse(sp[0]);
                     TestCallbackReceiverMyClass.b = int.Parse(sp[1]);
                 }
@@ -52,7 +52,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             desitination.Add(new CustomParameterData()
             {
                 MemberName = nameof(TestCallbackReceiver),
-                Value = TestCallbackReceiver,
+                Data = TestCallbackReceiver,
             });
 
             ignoreMemberOnSerialize.Add(nameof(TestCallbackReceiverMyClass));
@@ -61,7 +61,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 desitination.Add(new CustomParameterData()
                 {
                     MemberName = nameof(TestCallbackReceiverMyClass),
-                    Value = $"{TestCallbackReceiverMyClass.a}|{TestCallbackReceiverMyClass.b}",
+                    Data = $"{TestCallbackReceiverMyClass.a}|{TestCallbackReceiverMyClass.b}",
                 });
             }
         }

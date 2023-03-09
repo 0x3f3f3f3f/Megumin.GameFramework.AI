@@ -10,25 +10,37 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug")]
+    [Category("Samples/Serialization")]
     public class SerializationTestNode : ActionTaskNode,
         ISerializationCallbackReceiver<CustomParameterData>,
         ISerializationCallbackReceiver<string>
     {
-        public float TestFloat = 3f;
-        public string TestString = "Hello!";
-        public DateTimeOffset TestDateTimeOffset = DateTimeOffset.Now;
+        [Space]
+        public sbyte Sbyte;
+        public float Float = 3f;
+        public string String = "Hello!";
+        public DateTimeOffset DateTimeOffset = DateTimeOffset.Now;
         public Vector2 TestVector2 = Vector2.one;
-        public GameObject TestRef;
-        public ScriptableObject TestRefScriptableObject;
-        public List<GameObject> TestList = new ();
-        public List<int> TestList2 = new();
+        public GameObject GameObject;
+        public ScriptableObject ScriptableObject;
+
+        [Space]
+        public List<int> ListInt = new();
+        public List<string> ListString = new();
+        public List<GameObject> ListGameObject = new ();
+
+        [Space]
+        public float[] ArrayFloat;
+        public string[] ArrayString;
+        public ScriptableObject[] ArrayScriptableObject;
+
+        [Space]
         public Dictionary<string, int> TestDictionary = new();
-        public string[] TestArray;
-        public GameObject[] TestRefArray;
-        public string TestCallbackReceiver;
-        public MyClass TestCallbackReceiverMyClass;
-        public sbyte TestSbyte;
+
+        [Space]
+        public string CallbackReceiverString;
+        public MyClass CallbackReceiverMyClass;
+
 
         [Serializable]
         public class MyClass
@@ -41,37 +53,43 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in source)
             {
-                if (item.MemberName == nameof(TestCallbackReceiver))
+                if (item.MemberName == nameof(CallbackReceiverString))
                 {
-                    TestCallbackReceiver = item.Value;
+                    CallbackReceiverString = item.Data;
                 }
 
-                if (item.MemberName == nameof(TestCallbackReceiverMyClass))
+                if (item.MemberName == nameof(CallbackReceiverMyClass))
                 {
-                    TestCallbackReceiverMyClass = new MyClass();
-                    var sp = item.Value.Split("|");
-                    TestCallbackReceiverMyClass.a = int.Parse(sp[0]);
-                    TestCallbackReceiverMyClass.b = int.Parse(sp[1]);
+                    if (item.Data != null)
+                    {
+                        CallbackReceiverMyClass = new MyClass();
+                        var sp = item.Data.Split("|");
+                        if (sp.Length >= 2)
+                        {
+                            CallbackReceiverMyClass.a = int.Parse(sp[0]);
+                            CallbackReceiverMyClass.b = int.Parse(sp[1]);
+                        }
+                    }
                 }
             }
         }
 
         public void OnBeforeSerialize(List<CustomParameterData> desitination, List<string> ignoreMemberOnSerialize)
         {
-            ignoreMemberOnSerialize.Add(nameof(TestCallbackReceiver));
+            ignoreMemberOnSerialize.Add(nameof(CallbackReceiverString));
             desitination.Add(new CustomParameterData()
             {
-                MemberName = nameof(TestCallbackReceiver),
-                Value = TestCallbackReceiver,
+                MemberName = nameof(CallbackReceiverString),
+                Data = CallbackReceiverString,
             });
 
-            ignoreMemberOnSerialize.Add(nameof(TestCallbackReceiverMyClass));
-            if (TestCallbackReceiverMyClass != null)
+            ignoreMemberOnSerialize.Add(nameof(CallbackReceiverMyClass));
+            if (CallbackReceiverMyClass != null)
             {
                 desitination.Add(new CustomParameterData()
                 {
-                    MemberName = nameof(TestCallbackReceiverMyClass),
-                    Value = $"{TestCallbackReceiverMyClass.a}|{TestCallbackReceiverMyClass.b}",
+                    MemberName = nameof(CallbackReceiverMyClass),
+                    Data = $"{CallbackReceiverMyClass.a}|{CallbackReceiverMyClass.b}",
                 });
             }
         }

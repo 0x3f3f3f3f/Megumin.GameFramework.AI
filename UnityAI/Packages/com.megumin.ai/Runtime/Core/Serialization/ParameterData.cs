@@ -102,7 +102,7 @@ namespace Megumin.GameFramework.AI.Serialization
         /// <para/>自行反射获取类型？目前采用的方案
         /// </summary>
         public string TypeName;
-        public string Value;
+        public string Data;
         public UnityEngine.Object RefObject;
         public List<CustomParameterData> Collection;
         public ParameterDataType DataType = ParameterDataType.None;
@@ -154,14 +154,14 @@ namespace Megumin.GameFramework.AI.Serialization
             //{
             //    IntParameterData this = new();
             //    this.MemberName = member.Name;
-            //    this.Value = (int)ilist;
+            //    this.Data = (int)ilist;
             //    return this;
             //}
             //else if (valueActualType == typeof(UnityEngine.Object))
             //{
             //    UnityEngineObjectParameterData this = new();
             //    this.MemberName = member.Name;
-            //    this.Value = (UnityEngine.Object)ilist;
+            //    this.Data = (UnityEngine.Object)ilist;
             //    return this;
             //}
             //else
@@ -226,15 +226,15 @@ namespace Megumin.GameFramework.AI.Serialization
                     }
                     else if (valueActualType == typeof(string))
                     {
-                        Value = (string)value;
+                        Data = (string)value;
                         DataType |= ParameterDataType.IsString;
                     }
                     else
                     {
                         //这里一定要取值得真实类型，解决多态序列化
-                        if (StringFormatter.TryGet(valueActualType, out var iformater))
+                        if (StringFormatter.TryGet(valueActualType, out var formatter))
                         {
-                            Value = iformater.Serialize(value);
+                            Data = formatter.Serialize(value);
                         }
                         else
                         {
@@ -367,11 +367,11 @@ namespace Megumin.GameFramework.AI.Serialization
 
             if (DataType.HasFlag(ParameterDataType.IsString))
             {
-                value = Value;
+                value = Data;
                 return true;
             }
 
-            if (StringFormatter.TryDeserialize(TypeName, Value, out value))
+            if (StringFormatter.TryDeserialize(TypeName, Data, out value))
             {
                 return true;
             }
