@@ -514,11 +514,11 @@ namespace Megumin.Binding
             }
 
             //TODO，绑定接口，通过接口取得组件
-            var type = FindComponentType(typeFullName);
+            var type = GetComponentType(typeFullName);
 
             if (type == null)
             {
-                type = FindType(typeFullName);
+                type = Serialization.TypeCache.GetType(typeFullName);
                 if (type != null && type.IsInterface)
                 {
                     var comp = gameObject.GetComponentInChildren(type);

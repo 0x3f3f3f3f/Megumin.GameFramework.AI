@@ -13,28 +13,13 @@ namespace Megumin.Serialization
 #if UNITY_5_3_OR_NEWER
 
         static readonly Dictionary<string, Type> hotComponentType = new Dictionary<string, Type>();
-        public static Type FindComponentType(string typeFullName)
+        public static Type GetComponentType(string typeFullName, bool forceRecache = false)
         {
-            if (hotComponentType.TryGetValue(typeFullName, out var type))
-            {
-                return type;
-            }
-            else
-            {
-                CacheAllTypes();
-                if (allComponentType.TryGetValue(typeFullName, out type))
-                {
-                    hotComponentType[typeFullName] = type;
-                    return type;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            TryGetComponentType(typeFullName, out var type, forceRecache);
+            return type;
         }
 
-        public static bool TryGetUnityObjectType(string typeFullName, out Type type, bool forceRecache = false)
+        public static bool TryGetComponentType(string typeFullName, out Type type, bool forceRecache = false)
         {
             if (hotComponentType.TryGetValue(typeFullName, out type))
             {
@@ -56,28 +41,13 @@ namespace Megumin.Serialization
         }
 
         static readonly Dictionary<string, Type> hotUnityObjectType = new Dictionary<string, Type>();
-        public static Type FindUnityObjectType(string typeFullName)
+        public static Type GetUnityObjectType(string typeFullName, bool forceRecache = false)
         {
-            if (hotUnityObjectType.TryGetValue(typeFullName, out var type))
-            {
-                return type;
-            }
-            else
-            {
-                CacheAllTypes();
-                if (allUnityObjectType.TryGetValue(typeFullName, out type))
-                {
-                    hotUnityObjectType[typeFullName] = type;
-                    return type;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            TryGetUnityObjectType(typeFullName, out var type, forceRecache);
+            return type;
         }
 
-        public static bool TryGetComponentType(string typeFullName, out Type type, bool forceRecache = false)
+        public static bool TryGetUnityObjectType(string typeFullName, out Type type, bool forceRecache = false)
         {
             if (hotUnityObjectType.TryGetValue(typeFullName, out type))
             {
@@ -101,25 +71,10 @@ namespace Megumin.Serialization
 #endif
 
         static readonly Dictionary<string, Type> hotType = new Dictionary<string, Type>();
-        public static Type FindType(string typeFullName)
+        public static Type GetType(string typeFullName, bool forceRecache = false)
         {
-            if (hotType.TryGetValue(typeFullName, out var type))
-            {
-                return type;
-            }
-            else
-            {
-                CacheAllTypes();
-                if (allType.TryGetValue(typeFullName, out type))
-                {
-                    hotType[typeFullName] = type;
-                    return type;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            TryGetType(typeFullName, out var type, forceRecache);
+            return type;
         }
 
         public static bool TryGetType(string typeFullName, out Type type, bool forceRecache = false)

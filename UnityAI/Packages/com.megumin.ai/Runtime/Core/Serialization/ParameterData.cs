@@ -331,7 +331,7 @@ namespace Megumin.GameFramework.AI.Serialization
                         elementType = Type.GetType(elementTypeFullName);
                         if (elementType == null)
                         {
-                            elementType = Megumin.Serialization.TypeCache.FindType(elementTypeFullName);
+                            elementType = Megumin.Serialization.TypeCache.GetType(elementTypeFullName);
                         }
                     }
                     else
