@@ -62,24 +62,24 @@ namespace Megumin.Serialization
             //https://learn.microsoft.com/zh-cn/dotnet/api/system.type.isprimitive?view=net-8.0
             var fs = new Dictionary<string, IFormatter<string>>()
             {
-                { typeof(bool).FullName,new UnityJsonFormatter<bool>() },
-                { typeof(byte).FullName,new UnityJsonFormatter<byte>() },
-                { typeof(sbyte).FullName,new UnityJsonFormatter<sbyte>() },
-                { typeof(char).FullName,new UnityJsonFormatter<char>() },
+                { typeof(bool).FullName,new BoolFormatter() },
+                { typeof(byte).FullName,new ByteFormatter() },
+                { typeof(sbyte).FullName,new SByteFormatter() },
+                { typeof(char).FullName,new CharFormatter() },
 
-                { typeof(short).FullName,new UnityJsonFormatter<short>() },
-                { typeof(ushort).FullName,new UnityJsonFormatter<ushort>() },
+                { typeof(short).FullName,new ShortFormatter() },
+                { typeof(ushort).FullName,new UShortFormatter() },
 
-                { typeof(int).FullName,new UnityJsonFormatter<int>() },
-                { typeof(uint).FullName,new UnityJsonFormatter<uint>() },
+                { typeof(int).FullName,new IntFormatter() },
+                { typeof(uint).FullName,new UIntFormatter() },
 
-                { typeof(long).FullName,new UnityJsonFormatter<long>() },
-                { typeof(ulong).FullName,new UnityJsonFormatter<ulong>() },
+                { typeof(long).FullName,new LongFormatter() },
+                { typeof(ulong).FullName,new ULongFormatter() },
 
-                { typeof(float).FullName,new UnityJsonFormatter<float>() },
-                { typeof(double).FullName,new UnityJsonFormatter<double>() },
+                { typeof(float).FullName,new FloatFormatter() },
+                { typeof(double).FullName,new DoubleFormatter() },
 
-                { typeof(string).FullName,new UnityJsonFormatter<string>() },
+                { typeof(string).FullName,new StringFormatter2() },
 
                 { typeof(Vector2).FullName,new UnityJsonFormatter<Vector2>() },
                 { typeof(Vector2Int).FullName,new UnityJsonFormatter<Vector2Int>() },
@@ -90,9 +90,9 @@ namespace Megumin.Serialization
 
                 { typeof(Quaternion).FullName,new UnityJsonFormatter<Quaternion>() },
 
-                { typeof(DateTime).FullName,new UnityJsonFormatter<DateTime>() },
-                { typeof(DateTimeOffset).FullName,new UnityJsonFormatter<DateTimeOffset>() },
-                { typeof(TimeSpan).FullName,new UnityJsonFormatter<TimeSpan>() },
+                { typeof(DateTime).FullName,new DataTimeFormatter() },
+                { typeof(DateTimeOffset).FullName,new DateTimeOffsetFormatter() },
+                { typeof(TimeSpan).FullName,new TimeSpanFormatter() },
 
 
 
@@ -100,6 +100,11 @@ namespace Megumin.Serialization
             return fs;
         }
 
+        /// <summary>
+        /// https://docs.unity3d.com/ScriptReference/JsonUtility.ToJson.html
+        /// 基元类型不能使用
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public class UnityJsonFormatter<T> : IFormatter<string>
         {
             public string Serialize(object value)
@@ -112,7 +117,7 @@ namespace Megumin.Serialization
                 try
                 {
                     value = UnityEngine.JsonUtility.FromJson<T>(source);
-                    return true ;
+                    return true;
                 }
                 catch (Exception)
                 {
@@ -123,7 +128,7 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class IntFormater : IFormatter<string>
+        public sealed class BoolFormatter : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -132,7 +137,7 @@ namespace Megumin.Serialization
 
             public bool TryDeserialize(string source, out object value)
             {
-                if (int.TryParse(source, out var result))
+                if (bool.TryParse(source, out var result))
                 {
                     value = result;
                     return true;
@@ -142,7 +147,64 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class ShortFormater : IFormatter<string>
+        public sealed class ByteFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (byte.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class SByteFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (sbyte.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class CharFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (char.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class ShortFormatter : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -161,7 +223,64 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class LongFormater : IFormatter<string>
+        public sealed class UShortFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (ushort.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class IntFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (int.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class UIntFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (uint.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class LongFormatter : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -180,7 +299,26 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class FloatFormater : IFormatter<string>
+        public sealed class ULongFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (ulong.TryParse(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class FloatFormatter : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -199,7 +337,7 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class DoubleFormater : IFormatter<string>
+        public sealed class DoubleFormatter : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -218,7 +356,7 @@ namespace Megumin.Serialization
             }
         }
 
-        internal protected sealed class StringFormatter2 : IFormatter<string>
+        public sealed class StringFormatter2 : IFormatter<string>
         {
             public string Serialize(object value)
             {
@@ -229,6 +367,75 @@ namespace Megumin.Serialization
             {
                 value = source;
                 return true;
+            }
+        }
+
+        public sealed class DataTimeFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                if (value is DateTime stamp)
+                {
+                    return stamp.ToFileTimeUtc().ToString();
+                }
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (long.TryParse(source, out var result))
+                {
+                    value = DateTime.FromFileTimeUtc(result);
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class DateTimeOffsetFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                if (value is DateTimeOffset stamp)
+                {
+                    return stamp.ToFileTime().ToString();
+                }
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (long.TryParse(source, out var result))
+                {
+                    value = DateTimeOffset.FromFileTime(result);
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class TimeSpanFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                if (value is TimeSpan span)
+                {
+                    return span.Ticks.ToString();
+                }
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (long.TryParse(source, out var result))
+                {
+                    value = TimeSpan.FromTicks(result);
+                    return true;
+                }
+                value = default;
+                return false;
             }
         }
     }

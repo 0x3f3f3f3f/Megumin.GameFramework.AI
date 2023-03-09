@@ -116,7 +116,7 @@ namespace Megumin.GameFramework.AI.Serialization
         /// <returns></returns>
         public bool TrySerialize(MemberInfo member, object instance, object defualtValueInstance)
         {
-            Debug.Log(member);
+            //Debug.Log(member);
 
             object memberValue = null;
             object defaultMemberValue = null;
@@ -137,7 +137,7 @@ namespace Megumin.GameFramework.AI.Serialization
 
             if (nullEqual || memberValue.Equals(defaultMemberValue))
             {
-                Debug.Log($"值为初始值或者默认值没必要保存");
+                //Debug.Log($"值为初始值或者默认值没必要保存");
             }
             else
             {
