@@ -41,6 +41,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string CallbackReceiverString;
         public MyClass CallbackReceiverMyClass;
 
+        [Space]
+        public IVariable<string> ExposeString;
 
         [Serializable]
         public class MyClass

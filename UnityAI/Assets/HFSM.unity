@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222291458}
   - component: {fileID: 222291459}
+  - component: {fileID: 222291460}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -174,9 +175,7 @@ MonoBehaviour:
   - rid: -2
   - rid: -2
   test:
-    UID: 
-    GUID: 
-    InstanceID: 
+    <GUID>k__BackingField: 
     Meta:
       x: 0
       y: 0
@@ -186,7 +185,9 @@ MonoBehaviour:
       Description: 
       FriendlyDescription: 
       Comment: 
+      IsStartNode: 0
     Decorators: []
+    InstanceID: 
   references:
     version: 2
     RefIds:
@@ -195,14 +196,35 @@ MonoBehaviour:
     - rid: 2074316876855902475
       type: {class: Loop, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
       data:
+        <GUID>k__BackingField: 
         loopCount: 2
     - rid: 2074316876855902476
       type: {class: CheckBool, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
       data:
+        <GUID>k__BackingField: 
         A: 0
         B: 0
     - rid: 2074316876855902477
       type: {class: Cooldown, ns: Megumin.GameFramework.AI.BehaviorTree, asm: Megumin.GameFramework.AI}
       data:
+        <GUID>k__BackingField: 
         cooldownTime: 5
         nextCanEnterTime: 0
+--- !u!114 &222291460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222291456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955ba293f90a1ad4aa2e0e647154a368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyIntField1: 100
+  MyIntField2: 200
+  <MyIntProperty1>k__BackingField: 100
+  MystringField1: HelloWorld1
+  MystringField2: HelloWorld2
+  <MystringProperty1>k__BackingField: MystringPropertyHelloWorld1

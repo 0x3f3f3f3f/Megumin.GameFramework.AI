@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using static PlasticGui.LaunchDiffParameters;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -11,6 +12,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public string InstanceGUID;
         public TreeMeta TreeMeta;
+
+        [Space]
+        [SerializeReference]
+        public List<object> Paramters = new();
 
         public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
@@ -232,5 +237,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
         }
+    }
+
+    public partial class BehaviorTree
+    {
+        //Paramter 部分
+        //API参考 ainmator timeline
+        //void Test()
+        //{
+        //    Animator animator = new Animator();
+        //    PlayableDirector playable = new PlayableDirector();
+        //}
+
+        Dictionary<string, IVariable> paramLut = new();
+        public bool TryGetParam(string name,out IVariable variable)
+        {
+            variable = null;
+            return false;
+        }
+
+        public bool TryGetParam<T>(string name, out IVariable<T> variable)
+        {
+            variable = null;
+            return false;
+        }
+
+        public bool TrySetValue<T>(string name,T value)
+        {
+            if (TryGetParam<T>(name,out var variable))
+            {
+                variable.Value = value;
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public interface IParamLut
+    {
+
     }
 }
