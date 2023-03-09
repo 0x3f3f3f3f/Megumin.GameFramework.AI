@@ -6,6 +6,7 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.settings-manager": "1.0.3",
+        "com.megumin.serialization": "0.0.1",
         "com.megumin.binding": "0.0.1"
       }
     },
@@ -13,7 +14,9 @@
       "version": "file:com.megumin.binding",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.megumin.serialization": "0.0.1"
+      }
     },
     "com.megumin.explosion4unity": {
       "version": "file:W:/Git/Megumin.Explosion/Megumin.UnityPackage/Packages/megumin.explosion4unity",
@@ -27,6 +30,12 @@
       "version": "file:W:/Git/ReferenceViewer",
       "depth": 0,
       "source": "local",
+      "dependencies": {}
+    },
+    "com.megumin.serialization": {
+      "version": "file:com.megumin.serialization",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {}
     },
     "com.unity.ai.navigation": {
