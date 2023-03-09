@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.Serialization
 {
-    public static class CacheType
+    public static class TypeCache
     {
 
 #if UNITY_5_3_OR_NEWER
@@ -34,6 +34,26 @@ namespace Megumin.Serialization
             }
         }
 
+        public static bool TryGetUnityObjectType(string typeFullName, out Type type, bool forceRecache = false)
+        {
+            if (hotComponentType.TryGetValue(typeFullName, out type))
+            {
+                return true;
+            }
+            else
+            {
+                CacheAllTypes(forceRecache);
+                if (allComponentType.TryGetValue(typeFullName, out type))
+                {
+                    hotComponentType[typeFullName] = type;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         static readonly Dictionary<string, Type> hotUnityObjectType = new Dictionary<string, Type>();
         public static Type FindUnityObjectType(string typeFullName)
@@ -53,6 +73,27 @@ namespace Megumin.Serialization
                 else
                 {
                     return null;
+                }
+            }
+        }
+
+        public static bool TryGetComponentType(string typeFullName, out Type type, bool forceRecache = false)
+        {
+            if (hotUnityObjectType.TryGetValue(typeFullName, out type))
+            {
+                return true;
+            }
+            else
+            {
+                CacheAllTypes(forceRecache);
+                if (allUnityObjectType.TryGetValue(typeFullName, out type))
+                {
+                    hotUnityObjectType[typeFullName] = type;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -77,6 +118,27 @@ namespace Megumin.Serialization
                 else
                 {
                     return null;
+                }
+            }
+        }
+
+        public static bool TryGetType(string typeFullName, out Type type, bool forceRecache = false)
+        {
+            if (hotType.TryGetValue(typeFullName, out type))
+            {
+                return true;
+            }
+            else
+            {
+                CacheAllTypes(forceRecache);
+                if (allType.TryGetValue(typeFullName, out type))
+                {
+                    hotType[typeFullName] = type;
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -129,12 +191,12 @@ namespace Megumin.Serialization
         /// <summary>
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
         /// </summary>
-        /// <param name="force"></param>
-        public static void CacheAllTypes(bool force = false)
+        /// <param name="forceRecache">强制搜索所有程序集</param>
+        public static void CacheAllTypes(bool forceRecache = false)
         {
             lock (cachelock)
             {
-                if (CacheTypeInit == false || force)
+                if (CacheTypeInit == false || forceRecache)
                 {
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
                     //var debugabs = assemblies.ToArray();
