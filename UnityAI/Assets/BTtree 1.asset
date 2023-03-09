@@ -124,6 +124,13 @@ MonoBehaviour:
         RefObject: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
         Collection: []
         DataType: 257
+      - MemberName: Element1
+        TypeName: UnityEngine.GameObject
+        Value: 
+        RefObject: {fileID: 3785003931588244214, guid: 2919d53f582a54c4e8931814cc37373f,
+          type: 3}
+        Collection: []
+        DataType: 257
       DataType: 131073
     - MemberName: Tree
       TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTree

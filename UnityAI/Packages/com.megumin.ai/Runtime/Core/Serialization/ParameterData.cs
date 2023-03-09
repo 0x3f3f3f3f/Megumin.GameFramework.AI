@@ -317,7 +317,12 @@ namespace Megumin.GameFramework.AI.Serialization
                     Type elementType = null;
                     if (arrayType == null && TypeName.Length > 2)
                     {
-                        elementType = Type.GetType(TypeName.Substring(0, TypeName.Length - 2));
+                        string elementTypeFullName = TypeName.Substring(0, TypeName.Length - 2);
+                        elementType = Type.GetType(elementTypeFullName);
+                        if (elementType == null)
+                        {
+                            elementType = Megumin.Binding.CacheType.FindType(elementTypeFullName);
+                        }
                     }
                     else
                     {
