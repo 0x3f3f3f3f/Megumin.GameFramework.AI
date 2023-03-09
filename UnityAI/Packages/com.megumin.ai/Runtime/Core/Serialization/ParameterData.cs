@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.Serialization;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.Serialization
@@ -233,7 +231,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     else
                     {
                         //这里一定要取值得真实类型，解决多态序列化
-                        if (Formater.TryGet(valueActualType, out IFormater2String iformater))
+                        if (Formater.TryGet(valueActualType, out var iformater))
                         {
                             Value = iformater.Serialize(value);
                         }
@@ -331,7 +329,7 @@ namespace Megumin.GameFramework.AI.Serialization
                         elementType = Type.GetType(elementTypeFullName);
                         if (elementType == null)
                         {
-                            elementType = Megumin.Serialization.TypeCache.GetType(elementTypeFullName);
+                            elementType = TypeCache.GetType(elementTypeFullName);
                         }
                     }
                     else

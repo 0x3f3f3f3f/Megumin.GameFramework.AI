@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.Serialization
+namespace Megumin.Serialization
 {
     public interface IFormater2String
     {
@@ -35,7 +35,7 @@ namespace Megumin.GameFramework.AI.Serialization
         void OnAfterDeserialize(List<T> source);
     }
 
-    internal class Formater
+    public class Formater
     {
         protected static readonly Lazy<Dictionary<string, IFormater2String>> fsdic = new(InitFormaters);
 
