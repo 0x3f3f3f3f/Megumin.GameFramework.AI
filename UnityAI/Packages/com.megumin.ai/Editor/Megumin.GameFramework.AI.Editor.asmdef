@@ -4,7 +4,9 @@
     "references": [
         "Megumin.GameFramework.AI",
         "Unity.Settings.Editor",
-        "Megumin.Explosion4Unity"
+        "Megumin.Explosion4Unity",
+        "Megumin.Binding",
+        "Megumin.Binding.Editor"
     ],
     "includePlatforms": [
         "Editor"

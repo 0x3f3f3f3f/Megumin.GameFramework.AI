@@ -94,6 +94,12 @@ namespace Megumin.GameFramework.AI.Serialization
     [Serializable]
     public class CustomParameterData : ParameterData
     {
+        /// <summary>
+        /// <para/>https://learn.microsoft.com/zh-cn/dotnet/api/system.type.gettype?view=netframework-4.7.1#system-type-gettype(system-string)
+        /// <para/>https://stackoverflow.com/questions/61698509/returns-null-when-executing-type-gettypesystem-collections-generic-sorteddicti
+        /// <para/>应不应该使用 Type.AssemblyQualifiedName？1.太长，浪费空间 2，打包后运行时程序集有没有可能不一致
+        /// <para/>自行反射获取类型？目前采用的方案
+        /// </summary>
         public string TypeName;
         public string Value;
         public UnityEngine.Object RefObject;
@@ -196,7 +202,11 @@ namespace Megumin.GameFramework.AI.Serialization
                     {
                         //数组
                         var specializationType = valueActualType.GetElementType();
-                        Debug.LogError($"Array: {specializationType.Name}");
+
+                        AssemblyName assemblyName = valueActualType.Assembly.GetName();
+                        var testName = $"{valueActualType?.FullName},{assemblyName.Name}";
+                        var resultType = Type.GetType(testName);
+                        Debug.LogError($"Array: {specializationType.Name}----{testName}");
                         DataType |= ParameterDataType.IsArray;
                         SerializeIList(value);
                     }
