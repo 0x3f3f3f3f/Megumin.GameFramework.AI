@@ -37,6 +37,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("MiniMap", false, SettingsScope.User),
         };
 
+        internal readonly static MySetting<Rect> BlackboardLayout
+            = new MySetting<Rect>("BlackboardLayout", new Rect(0, 0, 200, 400), SettingsScope.User);
+
+
         [OnOpenAsset(10)]
         public static bool OnOpenAsset(int instanceID, int line, int column)
         {
@@ -241,6 +245,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var prefs = root.Q<ToolbarMenu>("prefs");
+
+            prefs.menu.AppendAction("Reset All Prefs",
+                                    a =>
+                                    {
+                                        foreach (var item in MySettingPrefs)
+                                        {
+                                            item.Reset();
+                                        }
+                                        BlackboardLayout.Reset();
+                                        Debug.Log("Reset All Prefs");
+                                    },
+                                    DropdownMenuAction.Status.Normal);
+
             foreach (var item in MySettingPrefs)
             {
                 prefs.menu.AppendAction(item, item.FriendKey, SetSettingValueClass);
@@ -461,6 +478,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void SaveChanges()
         {
             base.SaveChanges();
+            this.LogMethodName();
+        }
+
+        protected override void OnBackingScaleFactorChanged()
+        {
+            base.OnBackingScaleFactorChanged();
             this.LogMethodName();
         }
     }

@@ -130,7 +130,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             MiniMap miniMap = new();
             this.Add(miniMap);
-            miniMap.SetPosition(new Rect(0, 0, 96, 72));
+            var size = new Vector2(96, 72);
+            miniMap.SetPosition(new Rect(Vector2.zero, size));
         }
 
         public void CreateBlackboard()

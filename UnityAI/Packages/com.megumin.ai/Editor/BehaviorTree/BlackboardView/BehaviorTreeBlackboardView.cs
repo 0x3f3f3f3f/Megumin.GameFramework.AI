@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,7 +15,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public BehaviorTreeBlackboardView(GraphView associatedGraphView = null)
             : base(associatedGraphView)
         {
-
             title = "参数表";
             subTitle = "测试subTitle";
 
@@ -30,11 +30,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var row = new BlackboardRow(labelView2, labelView);
             Add(row);
 
-
+            //SetPosition(new Rect(10, 30, 200, 300));
             addItemRequested += b =>
             {
                 Debug.Log(b);
             };
+
+            SetPosition(BehaviorTreeEditor.BlackboardLayout);
+        }
+
+        public override void UpdatePresenterPosition()
+        {
+            base.UpdatePresenterPosition();
+            BehaviorTreeEditor.BlackboardLayout.value = layout;
         }
     }
 }
+
+
+
+
