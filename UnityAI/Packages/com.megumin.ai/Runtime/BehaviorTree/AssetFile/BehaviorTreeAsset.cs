@@ -42,8 +42,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
-            public List<CustomParameterData> MemberData = new();
-            public List<CustomParameterData> CallbackMemberData = new();
+            public List<CollectionSerilizeData> MemberData = new();
+            public List<CollectionSerilizeData> CallbackMemberData = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -131,8 +131,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
-            public List<CustomParameterData> MemberData = new();
-            public List<CustomParameterData> CallbackMemberData = new();
+            public List<CollectionSerilizeData> MemberData = new();
+            public List<CollectionSerilizeData> CallbackMemberData = new();
 
             public ITreeElement Instantiate(bool instanceMeta = true)
             {

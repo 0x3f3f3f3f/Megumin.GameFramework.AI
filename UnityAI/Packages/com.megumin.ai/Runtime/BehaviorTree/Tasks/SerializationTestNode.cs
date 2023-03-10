@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
     public class SerializationTestNode : ActionTaskNode,
-        ISerializationCallbackReceiver<CustomParameterData>,
+        ISerializationCallbackReceiver<CollectionSerilizeData>,
         ISerializationCallbackReceiver<string>
     {
         [Space]
@@ -51,7 +51,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public int b;
         }
 
-        public void OnAfterDeserialize(List<CustomParameterData> source)
+        public void OnAfterDeserialize(List<CollectionSerilizeData> source)
         {
             foreach (var item in source)
             {
@@ -76,10 +76,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void OnBeforeSerialize(List<CustomParameterData> desitination, List<string> ignoreMemberOnSerialize)
+        public void OnBeforeSerialize(List<CollectionSerilizeData> desitination, List<string> ignoreMemberOnSerialize)
         {
             ignoreMemberOnSerialize.Add(nameof(CallbackReceiverString));
-            desitination.Add(new CustomParameterData()
+            desitination.Add(new CollectionSerilizeData()
             {
                 MemberName = nameof(CallbackReceiverString),
                 Data = CallbackReceiverString,
@@ -88,7 +88,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             ignoreMemberOnSerialize.Add(nameof(CallbackReceiverMyClass));
             if (CallbackReceiverMyClass != null)
             {
-                desitination.Add(new CustomParameterData()
+                desitination.Add(new CollectionSerilizeData()
                 {
                     MemberName = nameof(CallbackReceiverMyClass),
                     Data = $"{CallbackReceiverMyClass.a}|{CallbackReceiverMyClass.b}",

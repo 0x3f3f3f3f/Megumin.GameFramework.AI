@@ -90,10 +90,10 @@ namespace Megumin.GameFramework.AI.Serialization
     }
 
     /// <summary>
-    /// TODO： 拆分可包含循环和不可包含循环的data，解决Serialization depth limit 10 exceeded 问题
+    /// 拆分可包含循环和不可包含循环的data，解决Serialization depth limit 10 exceeded 问题
     /// </summary>
     [Serializable]
-    public class CustomParameterDataold : ParameterData
+    public class BasicTypeSerilizeData : ParameterData
     {
         /// <summary>
         /// <para/>https://learn.microsoft.com/zh-cn/dotnet/api/system.type.gettype?view=netframework-4.7.1#system-type-gettype(system-string)
@@ -301,20 +301,20 @@ namespace Megumin.GameFramework.AI.Serialization
     }
 
     [Serializable]
-    public class CustomParameterData : CustomParameterDataold
+    public class CollectionSerilizeData : BasicTypeSerilizeData
     {
-        public List<CustomParameterDataold> Collection;
+        public List<BasicTypeSerilizeData> Collection;
 
         public bool SerializeIList(object ilist)
         {
             if (ilist is IList list && list.Count > 0)
             {
-                List<CustomParameterDataold> dataList = new();
+                List<BasicTypeSerilizeData> dataList = new();
 
                 var index = 0;
                 foreach (var item in list)
                 {
-                    CustomParameterDataold elementData = new();
+                    BasicTypeSerilizeData elementData = new();
                     if (elementData.TrySerialize($"Element{index}", item))
                     {
                         dataList.Add(elementData);
