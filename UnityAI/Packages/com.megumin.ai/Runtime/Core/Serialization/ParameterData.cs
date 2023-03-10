@@ -93,7 +93,7 @@ namespace Megumin.GameFramework.AI.Serialization
     /// TODO： 拆分可包含循环和不可包含循环的data，解决Serialization depth limit 10 exceeded 问题
     /// </summary>
     [Serializable]
-    public class CustomParameterData : ParameterData
+    public class CustomParameterDataold : ParameterData
     {
         /// <summary>
         /// <para/>https://learn.microsoft.com/zh-cn/dotnet/api/system.type.gettype?view=netframework-4.7.1#system-type-gettype(system-string)
@@ -104,7 +104,6 @@ namespace Megumin.GameFramework.AI.Serialization
         public string TypeName;
         public string Data;
         public UnityEngine.Object RefObject;
-        public List<CustomParameterData> Collection;
         public ParameterDataType DataType = ParameterDataType.None;
 
         /// <summary>
@@ -145,125 +144,59 @@ namespace Megumin.GameFramework.AI.Serialization
             return false;
         }
 
-        internal bool TrySerialize(string memberName, object value)
+        public bool TrySerialize(string memberName, object value)
         {
-            var valueActualType = value?.GetType();
-            //if (valueActualType == typeof(int))
-            //{
-            //    IntParameterData this = new();
-            //    this.MemberName = member.Name;
-            //    this.Data = (int)ilist;
-            //    return this;
-            //}
-            //else if (valueActualType == typeof(UnityEngine.Object))
-            //{
-            //    UnityEngineObjectParameterData this = new();
-            //    this.MemberName = member.Name;
-            //    this.Data = (UnityEngine.Object)ilist;
-            //    return this;
-            //}
-            //else
+            MemberName = memberName;
+            if (value == null)
             {
-                MemberName = memberName;
-                if (value == null)
-                {
-                    //引用类型并且值为null
-                    DataType |= ParameterDataType.IsNull;
-                }
-                else
-                {
-                    TypeName = valueActualType?.FullName;
-                    if (valueActualType.IsClass)
-                    {
-                        DataType |= ParameterDataType.IsClass;
-                    }
-
-                    if (valueActualType.IsGenericType)
-                    {
-                        //泛型集合
-                        if (valueActualType.GetGenericTypeDefinition() == typeof(List<>))
-                        {
-                            //var specializationType = valueActualType.GetGenericArguments()[0];
-                            //Debug.LogError($"List: {specializationType.Name}");
-
-                            DataType |= ParameterDataType.IsList;
-                            SerializeIList(value);
-                        }
-                        else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
-                        {
-                            //var specializationKeyType = valueActualType.GetGenericArguments()[0];
-                            //var specializationValueType = valueActualType.GetGenericArguments()[1];
-                            //Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
-
-                            DataType |= ParameterDataType.IsDictionary;
-                            return false;
-                        }
-                        else
-                        {
-                            //Debug.LogError($"GenericType: {valueActualType.Name}");
-                            return false;
-                        }
-                    }
-                    else if (valueActualType.IsArray)
-                    {
-                        //数组
-                        //var specializationType = valueActualType.GetElementType();
-
-                        //AssemblyName assemblyName = valueActualType.Assembly.GetName();
-                        //var testName = $"{valueActualType?.FullName},{assemblyName.Name}";
-                        //var resultType = Type.GetType(testName);
-                        //Debug.LogError($"Array: {specializationType.Name}----{testName}");
-
-                        DataType |= ParameterDataType.IsArray;
-                        SerializeIList(value);
-                    }
-                    else if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
-                    {
-                        DataType |= ParameterDataType.IsUnityObject;
-                        RefObject = (UnityEngine.Object)value;
-                    }
-                    else if (valueActualType == typeof(string))
-                    {
-                        Data = (string)value;
-                        DataType |= ParameterDataType.IsString;
-                    }
-                    else
-                    {
-                        //这里一定要取值得真实类型，解决多态序列化
-                        if (StringFormatter.TryGet(valueActualType, out var formatter))
-                        {
-                            Data = formatter.Serialize(value);
-                        }
-                        else
-                        {
-                            Debug.LogError($"{valueActualType.Name}    {memberName} 没找到Iformater");
-                        }
-                    }
-                }
+                //引用类型并且值为null
+                DataType |= ParameterDataType.IsNull;
+                Data = null;
                 return true;
+            }
+            else
+            {
+                return TrySerializeNotNull(memberName, value);
             }
         }
 
-        public bool SerializeIList(object ilist)
+        public virtual bool TrySerializeNotNull(string memberName, object value)
         {
-            if (ilist is IList list && list.Count > 0)
+            MemberName = memberName;
+
+            var valueActualType = value.GetType();
+            TypeName = valueActualType.FullName;
+            if (valueActualType.IsClass)
             {
-                List<CustomParameterData> dataList = new();
+                DataType |= ParameterDataType.IsClass;
+            }
 
-                var index = 0;
-                foreach (var item in list)
+            return TrySerializeByType(valueActualType, memberName, value);
+        }
+
+        public virtual bool TrySerializeByType(Type valueActualType, string memberName, object value)
+        {
+            if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
+            {
+                DataType |= ParameterDataType.IsUnityObject;
+                RefObject = (UnityEngine.Object)value;
+            }
+            else if (valueActualType == typeof(string))
+            {
+                Data = (string)value;
+                DataType |= ParameterDataType.IsString;
+            }
+            else
+            {
+                //这里一定要取值得真实类型，解决多态序列化
+                if (StringFormatter.TryGet(valueActualType, out var formatter))
                 {
-                    CustomParameterData elementData = new();
-                    if (elementData.TrySerialize($"Element{index}", item))
-                    {
-                        dataList.Add(elementData);
-                        index++;
-                    }
+                    Data = formatter.Serialize(value);
                 }
-
-                if (dataList.Count > 0)
+                else
                 {
-                    Collection = dataList;
+                    Debug.LogError($"{valueActualType.Name}    {memberName} 没找到Iformater");
+                    return false;
                 }
             }
 
@@ -279,85 +212,11 @@ namespace Megumin.GameFramework.AI.Serialization
                 return true;
             }
 
-            if (DataType.HasFlag(ParameterDataType.IsList))
-            {
-                if (Collection == null)
-                {
-                    value = null;
-                    return true;
-                }
-                else
-                {
-                    Type listType = Type.GetType(TypeName);
-                    var list = TryCreateInstance(listType) as IList;
+            return TryDeserializeNotNull(out value);
+        }
 
-                    if (list != null)
-                    {
-                        foreach (var item in Collection)
-                        {
-                            if (item.TryDeserialize(out var elementValue))
-                            {
-                                list.Add(elementValue);
-                            }
-                        }
-                        value = list;
-                        return true;
-                    }
-                    else
-                    {
-                        value = null;
-                        return false;
-                    }
-                }
-            }
-
-            if (DataType.HasFlag(ParameterDataType.IsArray))
-            {
-                if (Collection == null)
-                {
-                    value = null;
-                    return true;
-                }
-                else
-                {
-                    //GameObject[] 类型取不到
-                    Type arrayType = Type.GetType(TypeName);
-                    Type elementType = null;
-                    if (arrayType == null && TypeName.Length > 2)
-                    {
-                        string elementTypeFullName = TypeName.Substring(0, TypeName.Length - 2);
-                        elementType = Type.GetType(elementTypeFullName);
-                        if (elementType == null)
-                        {
-                            elementType = TypeCache.GetType(elementTypeFullName);
-                        }
-                    }
-                    else
-                    {
-                        elementType = arrayType?.GetElementType();
-                    }
-
-                    if (elementType == null)
-                    {
-                        value = null;
-                        return false;
-                    }
-
-                    var array = Array.CreateInstance(elementType, Collection.Count) as Array;
-                    for (int i = 0; i < Collection.Count; i++)
-                    {
-                        var item = Collection[i];
-                        if (item.TryDeserialize(out var elementValue))
-                        {
-                            array.SetValue(elementValue, i);
-                        }
-                    }
-
-                    value = array;
-                    return true;
-                }
-            }
-
+        public virtual bool TryDeserializeNotNull(out object value)
+        {
             if (DataType.HasFlag(ParameterDataType.IsUnityObject))
             {
                 if (RefObject)
@@ -441,5 +300,160 @@ namespace Megumin.GameFramework.AI.Serialization
         }
     }
 
+    [Serializable]
+    public class CustomParameterData : CustomParameterDataold
+    {
+        public List<CustomParameterDataold> Collection;
 
+        public bool SerializeIList(object ilist)
+        {
+            if (ilist is IList list && list.Count > 0)
+            {
+                List<CustomParameterDataold> dataList = new();
+
+                var index = 0;
+                foreach (var item in list)
+                {
+                    CustomParameterDataold elementData = new();
+                    if (elementData.TrySerialize($"Element{index}", item))
+                    {
+                        dataList.Add(elementData);
+                        index++;
+                    }
+                }
+
+                if (dataList.Count > 0)
+                {
+                    Collection = dataList;
+                }
+            }
+
+            return true;
+        }
+
+        public override bool TrySerializeByType(Type valueActualType, string memberName, object value)
+        {
+            if (valueActualType.IsGenericType)
+            {
+                //泛型集合
+                if (valueActualType.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    //var specializationType = valueActualType.GetGenericArguments()[0];
+                    //Debug.LogError($"List: {specializationType.Name}");
+
+                    DataType |= ParameterDataType.IsList;
+                    return SerializeIList(value);
+                }
+                else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                {
+                    //var specializationKeyType = valueActualType.GetGenericArguments()[0];
+                    //var specializationValueType = valueActualType.GetGenericArguments()[1];
+                    //Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
+
+                    DataType |= ParameterDataType.IsDictionary;
+                    return false;
+                }
+            }
+            else if (valueActualType.IsArray)
+            {
+                //数组
+                //var specializationType = valueActualType.GetElementType();
+
+                //AssemblyName assemblyName = valueActualType.Assembly.GetName();
+                //var testName = $"{valueActualType?.FullName},{assemblyName.Name}";
+                //var resultType = Type.GetType(testName);
+                //Debug.LogError($"Array: {specializationType.Name}----{testName}");
+
+                DataType |= ParameterDataType.IsArray;
+                return SerializeIList(value);
+            }
+
+            //非集合类型
+            return base.TrySerializeByType(valueActualType, memberName, value);
+        }
+
+        public override bool TryDeserializeNotNull(out object value)
+        {
+            if (DataType.HasFlag(ParameterDataType.IsList))
+            {
+                if (Collection == null)
+                {
+                    value = null;
+                    return true;
+                }
+                else
+                {
+                    Type listType = Type.GetType(TypeName);
+                    var list = TryCreateInstance(listType) as IList;
+
+                    if (list != null)
+                    {
+                        foreach (var item in Collection)
+                        {
+                            if (item.TryDeserialize(out var elementValue))
+                            {
+                                list.Add(elementValue);
+                            }
+                        }
+                        value = list;
+                        return true;
+                    }
+                    else
+                    {
+                        value = null;
+                        return false;
+                    }
+                }
+            }
+
+            if (DataType.HasFlag(ParameterDataType.IsArray))
+            {
+                if (Collection == null)
+                {
+                    value = null;
+                    return true;
+                }
+                else
+                {
+                    //GameObject[] 类型取不到
+                    Type arrayType = Type.GetType(TypeName);
+                    Type elementType = null;
+                    if (arrayType == null && TypeName.Length > 2)
+                    {
+                        string elementTypeFullName = TypeName.Substring(0, TypeName.Length - 2);
+                        elementType = Type.GetType(elementTypeFullName);
+                        if (elementType == null)
+                        {
+                            elementType = TypeCache.GetType(elementTypeFullName);
+                        }
+                    }
+                    else
+                    {
+                        elementType = arrayType?.GetElementType();
+                    }
+
+                    if (elementType == null)
+                    {
+                        value = null;
+                        return false;
+                    }
+
+                    var array = Array.CreateInstance(elementType, Collection.Count) as Array;
+                    for (int i = 0; i < Collection.Count; i++)
+                    {
+                        var item = Collection[i];
+                        if (item.TryDeserialize(out var elementValue))
+                        {
+                            array.SetValue(elementValue, i);
+                        }
+                    }
+
+                    value = array;
+                    return true;
+                }
+            }
+
+            return base.TryDeserializeNotNull(out value);
+        }
+    }
 }
