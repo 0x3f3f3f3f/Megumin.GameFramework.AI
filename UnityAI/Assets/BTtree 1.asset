@@ -50,6 +50,18 @@ MonoBehaviour:
     ChildNodes: []
     Decorators: []
     MemberData:
+    - MemberName: Sbyte
+      TypeName: System.SByte
+      Data: -128
+      RefObject: {fileID: 0}
+      Collection: []
+      DataType: 0
+    - MemberName: Float
+      TypeName: System.Single
+      Data: 6.45
+      RefObject: {fileID: 0}
+      Collection: []
+      DataType: 0
     - MemberName: DateTimeOffset
       TypeName: System.DateTimeOffset
       Data: 133228359203156070
@@ -62,6 +74,19 @@ MonoBehaviour:
       RefObject: {fileID: 0}
       Collection: []
       DataType: 0
+    - MemberName: GameObject
+      TypeName: UnityEngine.GameObject
+      Data: 
+      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      Collection: []
+      DataType: 257
+    - MemberName: ScriptableObject
+      TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTreeAsset
+      Data: 
+      RefObject: {fileID: 11400000}
+      Collection: []
+      DataType: 257
     - MemberName: ListInt
       TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]

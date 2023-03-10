@@ -38,15 +38,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //SetupZoom 会自动添加ContentZoomer，手动添加会导致maxScale无效。
             //this.AddManipulator(new ContentZoomer());
 
-            MiniMap miniMap = new MiniMap();
-            this.Add(miniMap);
-            miniMap.SetPosition(new Rect(0, 0, 96, 72));
+            CreateMinimap();
 
-            Blackboard blackboard = new (this);
-            this.Add(blackboard);
+            CreateBlackboard();
 
-            FloatingTip = new FloatingTip(this);
-            Add(FloatingTip);
+            CreateFloatingTip();
 
             CreateUIBuilderDebugNode();
 
@@ -128,6 +124,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddElement(runningTestView);
             var edge = runningTestView.ConnectParentNodeView(nodeView);
             edge.AddToClassList(UssClassConst.running);
+        }
+
+        public void CreateMinimap()
+        {
+            MiniMap miniMap = new();
+            this.Add(miniMap);
+            miniMap.SetPosition(new Rect(0, 0, 96, 72));
+        }
+
+        public void CreateBlackboard()
+        {
+            BehaviorTreeBlackboardView blackboard = new(this);
+            this.Add(blackboard);
+        }
+
+        public void CreateFloatingTip()
+        {
+            FloatingTip = new(this);
+            Add(FloatingTip);
         }
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
