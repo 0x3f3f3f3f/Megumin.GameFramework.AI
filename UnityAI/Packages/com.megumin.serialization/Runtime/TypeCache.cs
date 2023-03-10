@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -182,6 +183,31 @@ namespace Megumin.Serialization
                     CacheTypeInit = true;
                 }
             }
+        }
+
+        static Regex generic = new(@"^(?<generic>.*`\d+)\[(?<specialized>.*)\]$");
+        static Regex specialized = new(@"(?<=\[)[^,\[]+(?=[,\]])");
+        public static bool TryGetGenericAndSpecializedType(string fullName, out string genericType, out List<string> specializedNames)
+        {
+            Match match = generic.Match(fullName);
+
+            if (match.Success)
+            {
+                genericType = match.Groups["generic"].Value;
+
+                var specializedString = match.Groups["specialized"].Value;
+                var match2 = specialized.Matches(specializedString);
+                specializedNames = new List<string>();
+                foreach (Match item in match2)
+                {
+                    specializedNames.Add(item.Value);
+                }
+                return specializedNames.Count > 0;
+            }
+
+            genericType = null;
+            specializedNames = null;
+            return false;
         }
 
         /// <summary>

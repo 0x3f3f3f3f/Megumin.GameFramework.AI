@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     if (item.IsDebugMode)
                     {
-                        
+
                     }
                     else
                     {
@@ -85,7 +86,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (BehaviorTreeManager.Instance)
             {
                 var list = BehaviorTreeManager.Instance.AllTree;
-                foreach (var item in list) 
+                foreach (var item in list)
                 {
                     if (item.BehaviorTreeAsset && item.BehaviourTree != null &&
                         item.BehaviorTreeAsset == CurrentAsset)
@@ -106,6 +107,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Debug.Log(item.ToStringReflection());
             }
+
+            var type = typeof(Dictionary<int, string>);
+            Debug.Log(type.FullName);
+            var type2 = Type.GetType("Dictionary<,>");
+            Debug.Log(type2?.FullName);
+            var name = typeof(Dictionary<,>).FullName;
+            var test = Type.GetType(name);
+
+            Megumin.Serialization.TypeCache.TryGetGenericAndSpecializedType(type.FullName, out var _, out var _);
+
+            var name2 = typeof(ParamVariable<>).FullName;
+            var p = Type.GetType(name2);
         }
 
         /// <summary>
