@@ -78,8 +78,11 @@ namespace Megumin.Serialization
             return type;
         }
 
+        static readonly Unity.Profiling.ProfilerMarker tryGetTypeMarker = new(nameof(TryGetType));
         public static bool TryGetType(string typeFullName, out Type type, bool forceRecache = false)
         {
+            using var profiler = tryGetTypeMarker.Auto();
+
             if (hotType.TryGetValue(typeFullName, out type))
             {
                 return true;
