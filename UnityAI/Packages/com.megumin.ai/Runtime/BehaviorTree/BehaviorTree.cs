@@ -261,8 +261,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public List<IVariable> TestVariableList = new()
         {
-            new TestVariable() { Name = "Test1"},
-            new TestVariable() { Name = "Test2"},
+            new ParamVariable<int>() { Name = "Test1",Value = 100},
+            new ParamVariable<string>() { Name = "Test2",Value = "hello"},
         };
 
         public bool TryGetParam(string name, out IVariable variable)

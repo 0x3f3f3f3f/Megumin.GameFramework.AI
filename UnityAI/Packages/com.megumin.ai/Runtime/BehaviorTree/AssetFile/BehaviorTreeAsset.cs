@@ -188,6 +188,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 upnode.Meta.IsStartNode = true;
             }
 
+            //保存参数表
+
+
             return true;
         }
 

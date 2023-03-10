@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         T Value { get; set; }
     }
 
-    public class TestVariable: IVariable
+    public class TestVariable : IVariable
     {
         public string Name { get; set; }
 
@@ -27,14 +27,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
-    internal class ParamVariable<T>: IVariable<T>
+    [Flags]
+    public enum ParamVariableMode
     {
-        public T Value { get; set; }
+        Mapping = 1 << 0,
+        Direct = 1 << 1,
+        MappingAndFallback = Mapping | Direct,
     }
 
-    public class MappedVariable<T> : IVariable<T>
+    internal class ParamVariable<T> : TestVariable, IVariable<T>
     {
-        public string Path;
         public T Value { get; set; }
+        public string Path;
+        public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
     }
 }
