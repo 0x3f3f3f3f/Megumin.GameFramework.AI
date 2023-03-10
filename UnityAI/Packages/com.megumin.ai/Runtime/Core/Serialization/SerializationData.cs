@@ -466,7 +466,7 @@ namespace Megumin.GameFramework.AI.Serialization
         public string Path;
         public CollectionSerializationData fallbackData;
 
-        internal bool TrySerialize(IVariable item)
+        public bool TrySerialize(IVariable item)
         {
             if (item is TestVariable variable)
             {
