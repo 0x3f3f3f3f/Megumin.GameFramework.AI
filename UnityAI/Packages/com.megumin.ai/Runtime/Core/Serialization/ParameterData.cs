@@ -132,10 +132,8 @@ namespace Megumin.GameFramework.AI.Serialization
                 defaultMemberValue = property.GetValue(defualtValueInstance);
             }
 
-            //都是null认为不需要保存
-            var nullEqual = memberValue == null && defaultMemberValue == null;
-
-            if (nullEqual || memberValue.Equals(defaultMemberValue))
+            if (memberValue == defaultMemberValue
+                || (memberValue?.Equals(defaultMemberValue) ?? false))
             {
                 //Debug.Log($"值为初始值或者默认值没必要保存");
             }
