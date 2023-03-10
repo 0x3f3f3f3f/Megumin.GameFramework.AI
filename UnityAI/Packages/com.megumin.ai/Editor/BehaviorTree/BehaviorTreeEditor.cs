@@ -46,7 +46,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var wnd = GetWindow(behaviorTreeAsset);
                 wnd.SelectTree(behaviorTreeAsset);
-                wnd.UpdateTitle();
                 return true;
             }
 
@@ -65,7 +64,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public static void ShowExample()
         {
             var wnd = GetWindow();
-            wnd.UpdateTitle();
         }
 
         private static BehaviorTreeEditor GetWindow(UnityEngine.Object asset = null)
@@ -197,6 +195,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //通常重载时被触发。
                 EditorReloading();
             }
+
+            UpdateTitle();
         }
 
         private void EditorReloading()

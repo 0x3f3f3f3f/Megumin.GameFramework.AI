@@ -26,10 +26,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             GridBackground background = new GridBackground();
             Insert(0, background);
 
-            FloatingTip = new FloatingTip(this);
-            Add(FloatingTip);
-
-
             var m = new MouseMoveManipulator();
             m.mouseMove += OnMouseMove;
             this.AddManipulator(m);
@@ -45,6 +41,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             MiniMap miniMap = new MiniMap();
             this.Add(miniMap);
             miniMap.SetPosition(new Rect(0, 0, 96, 72));
+
+            Blackboard blackboard = new (this);
+            this.Add(blackboard);
+
+            FloatingTip = new FloatingTip(this);
+            Add(FloatingTip);
 
             CreateUIBuilderDebugNode();
 
@@ -235,6 +237,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void ReloadView(bool force)
         {
+            EditorWindow.UpdateTitle();
             EditorWindow.UpdateHasUnsavedChanges();
 
             using var s = GraphViewReloadingScope.Enter();
