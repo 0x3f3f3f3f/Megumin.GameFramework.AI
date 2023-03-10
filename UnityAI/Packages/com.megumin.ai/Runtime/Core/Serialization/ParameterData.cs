@@ -272,7 +272,8 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public bool TryDeserialize(out object value)
         {
-            if (DataType.HasFlag(ParameterDataType.IsClass) && DataType.HasFlag(ParameterDataType.IsNull))
+            if (DataType.HasFlag(ParameterDataType.IsNull)
+                && DataType.HasFlag(ParameterDataType.IsClass))
             {
                 value = null;
                 return true;
@@ -359,8 +360,30 @@ namespace Megumin.GameFramework.AI.Serialization
 
             if (DataType.HasFlag(ParameterDataType.IsUnityObject))
             {
-                value = RefObject;
-                return true;
+                if (RefObject)
+                {
+                    value = RefObject;
+                    return true;
+                }
+                else
+                {
+                    //unity null
+                    var dateType = TypeCache.GetType(TypeName);
+                    var refObjetType = RefObject?.GetType();
+                    if (dateType.IsAssignableFrom(refObjetType))
+                    {
+                        //没有重新打开编辑器时，销毁的对象仍然有真实类型，missRrefrence等情况
+                        value = RefObject;
+                        return true;
+                    }
+                    else
+                    {
+                        //重新打开编辑器时，无法准确获取真实类型，RefObject变为UnityEngine.Object 类型，
+                        //需要返回null，否则SetValue时会导致类型不匹配异常
+                        value = null;
+                        return true;
+                    }
+                }
             }
 
             if (DataType.HasFlag(ParameterDataType.IsString))
