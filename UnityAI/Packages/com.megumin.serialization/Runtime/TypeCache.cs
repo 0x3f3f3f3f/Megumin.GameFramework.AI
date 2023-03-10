@@ -94,9 +94,52 @@ namespace Megumin.Serialization
                 }
                 else
                 {
+                    //制作泛型类
+                    if (TryGetGenericAndSpecializedType(typeFullName, out var genericTypeName, out var specializedTypeNames))
+                    {
+                        if (TryGetType(genericTypeName, out var gType)
+                            && gType.IsGenericType
+                            && TryGetType(specializedTypeNames, out var specializedTypes))
+                        {
+                            try
+                            {
+                                var temp = gType.MakeGenericType(specializedTypes);
+                                if (temp != null)
+                                {
+                                    type = temp;
+                                    allType[typeFullName] = temp;
+                                    hotType[typeFullName] = temp;
+                                    return true;
+                                }
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+
                     return false;
                 }
             }
+        }
+
+        public static bool TryGetType(List<string> typeFullName, out Type[] types)
+        {
+            types = new Type[typeFullName.Count];
+            for (int i = 0; i < typeFullName.Count; i++)
+            {
+                if (TryGetType(typeFullName[i], out var type))
+                {
+                    types[i] = type;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         static readonly Dictionary<string, Type> allType = new Dictionary<string, Type>();
@@ -185,28 +228,45 @@ namespace Megumin.Serialization
             }
         }
 
-        static Regex generic = new(@"^(?<generic>.*`\d+)\[(?<specialized>.*)\]$");
-        static Regex specialized = new(@"(?<=\[)[^,\[]+(?=[,\]])");
-        public static bool TryGetGenericAndSpecializedType(string fullName, out string genericType, out List<string> specializedNames)
-        {
-            Match match = generic.Match(fullName);
+        // 定义一个静态的正则表达式对象，用于匹配泛型类型全名和方括号内的内容
+        public static readonly Regex GenericRegex = new(@"^(?<generic>.*`\d+)\[(?<specialized>.*)\]$");
+        // 定义一个静态的正则表达式对象，用于匹配方括号内的每个子串
+        public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[]+(?=[,\]])");
 
+        /// <summary>
+        /// 输入一个泛型类型全名，输出一个泛型类型全名和一个特化类型全名的列表
+        /// </summary>
+        /// <param name="fullName"></param>
+        /// <param name="genericTypeName"></param>
+        /// <param name="specializedTypeNames"></param>
+        /// <returns></returns>
+        public static bool TryGetGenericAndSpecializedType(string fullName, out string genericTypeName, out List<string> specializedTypeNames)
+        {
+            // 使用 GenericRegex 对象匹配输入字符串
+            Match match = GenericRegex.Match(fullName);
+
+            // 如果匹配成功
             if (match.Success)
             {
-                genericType = match.Groups["generic"].Value;
+                // 获取泛型类型全名，并赋值给输出参数 genericTypeName
+                genericTypeName = match.Groups["generic"].Value;
 
+                // 获取方括号内的内容，并赋值给输出参数 specializedString
                 var specializedString = match.Groups["specialized"].Value;
-                var match2 = specialized.Matches(specializedString);
-                specializedNames = new List<string>();
+                // 使用 SpecializedRegex 对象匹配 specializedString 中的每个子串，并将其添加到输出参数 specializedTypeNames 中
+                var match2 = SpecializedRegex.Matches(specializedString);
+                specializedTypeNames = new List<string>();
                 foreach (Match item in match2)
                 {
-                    specializedNames.Add(item.Value);
+                    specializedTypeNames.Add(item.Value);
                 }
-                return specializedNames.Count > 0;
+                // 返回 true，表示成功获取了特化类型全名
+                return specializedTypeNames.Count > 0;
             }
 
-            genericType = null;
-            specializedNames = null;
+            // 如果匹配失败，将输出参数设为 null，并返回 false
+            genericTypeName = null;
+            specializedTypeNames = null;
             return false;
         }
 
