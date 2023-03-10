@@ -51,11 +51,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnEditTextFinished()
         {
-            
+            var table = Blackboard?.LookupTable;
+            if (table != null)
+            {
+                string name = table.ValidName(m_TextField.text);
+                if (name != m_TextField.text)
+                {
+                    m_TextField.SetValueWithoutNotify(name);
+                }
+            }
+
+            var newName = m_TextField.text;
+            if(Variable is TestVariable test)
+            {
+                test.Name = newName;
+                BlackboardField.text = newName;
+            }
         }
 
+        public IVariable Variable { get; private set; }
         public void SetVariable(IVariable instance)
         {
+            Variable = instance;
             BlackboardField.text = instance.Name;
             Body.Clear();
             var labelView = new Label() { text = "TestValue" };

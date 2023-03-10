@@ -249,12 +249,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         //    PlayableDirector playable = new PlayableDirector();
         //}
 
-        public Dictionary<string, IVariable> paramLut = new()
-        {
-            { "Test1", new TestVariable() { Name = "Test1"} },
-            { "Test2", new TestVariable() { Name = "Test2"} },
-        };
+        public VariableLookupTable variableLookupTable = new VariableLookupTable();
+    }
 
+    public interface IParamLut
+    {
+
+    }
+
+    public class VariableLookupTable
+    {
         public List<IVariable> TestVariableList = new()
         {
             new TestVariable() { Name = "Test1"},
@@ -283,10 +287,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             return false;
         }
-    }
 
-    public interface IParamLut
-    {
-
+        internal string ValidName(string text)
+        {
+            return text;
+        }
     }
 }
