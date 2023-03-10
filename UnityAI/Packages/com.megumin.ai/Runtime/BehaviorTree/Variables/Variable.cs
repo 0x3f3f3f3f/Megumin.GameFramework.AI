@@ -17,6 +17,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         T Value { get; set; }
     }
 
+    public class TestVariable: IVariable
+    {
+        public string Name { get; set; }
+
+        public object GetValue()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     internal class ParamVariable<T>: IVariable<T>
     {

@@ -136,8 +136,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void CreateBlackboard()
         {
-            BehaviorTreeBlackboardView blackboard = new(this);
-            this.Add(blackboard);
+            Blackboard = new(this);
+            this.Add(Blackboard);
         }
 
         public void CreateFloatingTip()
@@ -325,6 +325,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //    }
             //}
 
+            Blackboard?.ReloadView(force);
+
             //this.RepaintInspectorWindows();
 
             LoadVersion = SOTree.ChangeVersion;
@@ -343,6 +345,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         public BehaviorTree Tree => SOTree?.Tree;
+
+        public BehaviorTreeBlackboardView Blackboard { get; private set; }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {

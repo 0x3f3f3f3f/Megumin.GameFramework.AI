@@ -18,31 +18,44 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             title = "参数表";
             subTitle = "测试subTitle";
 
-            //BlackboardSection child = new BlackboardSection() { title = "测试2222" };
-            //Add(child);
-            //BlackboardSection child1 = new BlackboardSection() { title = "测试33333" };
-            //Add(child1);
-
-            var field = new BlackboardField() { text = "参数1", typeText = "string" };
-
-            var labelView = new Label() { text = "TestValue" };
-            var labelView2 = new Label() { text = "TestValue2" };
-            var row = new BlackboardRow(labelView2, labelView);
-            Add(row);
-
-            //SetPosition(new Rect(10, 30, 200, 300));
             addItemRequested += b =>
             {
                 Debug.Log(b);
             };
-
+            scrollable = true;
             SetPosition(BehaviorTreeEditor.BlackboardLayout);
+
+            // 不能使用ListView,子元素能折叠打开，动态大小，bug很多。
+            editTextRequested += OnEditTextRequested;
         }
 
         public override void UpdatePresenterPosition()
         {
             base.UpdatePresenterPosition();
             BehaviorTreeEditor.BlackboardLayout.value = layout;
+        }
+
+        public void ReloadView(bool force = false)
+        {
+            this.Clear();
+            var tree = (graphView as BehaviorTreeView)?.Tree;
+            if (tree == null)
+            {
+            }
+            else
+            {
+                foreach (var variable in tree.TestVariableList)
+                {
+                    var view = new BlackboardVariableView();
+                    view.SetVariable(variable);
+                    Add(view);
+                }
+            }
+        }
+
+        private void OnEditTextRequested(Blackboard arg1, VisualElement arg2, string arg3)
+        {
+            
         }
     }
 }

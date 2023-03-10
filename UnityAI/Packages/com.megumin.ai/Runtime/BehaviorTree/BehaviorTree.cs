@@ -118,7 +118,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public bool RemoveNode(BTNode node)
         {
-            if(node == null)
+            if (node == null)
             {
                 return false;
             }
@@ -249,8 +249,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         //    PlayableDirector playable = new PlayableDirector();
         //}
 
-        Dictionary<string, IVariable> paramLut = new();
-        public bool TryGetParam(string name,out IVariable variable)
+        public Dictionary<string, IVariable> paramLut = new()
+        {
+            { "Test1", new TestVariable() { Name = "Test1"} },
+            { "Test2", new TestVariable() { Name = "Test2"} },
+        };
+
+        public List<IVariable> TestVariableList = new()
+        {
+            new TestVariable() { Name = "Test1"},
+            new TestVariable() { Name = "Test2"},
+        };
+
+        public bool TryGetParam(string name, out IVariable variable)
         {
             variable = null;
             return false;
@@ -262,9 +273,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
 
-        public bool TrySetValue<T>(string name,T value)
+        public bool TrySetValue<T>(string name, T value)
         {
-            if (TryGetParam<T>(name,out var variable))
+            if (TryGetParam<T>(name, out var variable))
             {
                 variable.Value = value;
                 return true;
