@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
     public class SerializationTestNode : ActionTaskNode,
-        ISerializationCallbackReceiver<CollectionSerilizeData>,
+        ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
         [Space]
@@ -51,16 +51,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public int b;
         }
 
-        public void OnAfterDeserialize(List<CollectionSerilizeData> source)
+        public void OnAfterDeserialize(List<CollectionSerializationData> source)
         {
             foreach (var item in source)
             {
-                if (item.MemberName == nameof(CallbackReceiverString))
+                if (item.Name == nameof(CallbackReceiverString))
                 {
                     CallbackReceiverString = item.Data;
                 }
 
-                if (item.MemberName == nameof(CallbackReceiverMyClass))
+                if (item.Name == nameof(CallbackReceiverMyClass))
                 {
                     if (item.Data != null)
                     {
@@ -76,21 +76,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void OnBeforeSerialize(List<CollectionSerilizeData> desitination, List<string> ignoreMemberOnSerialize)
+        public void OnBeforeSerialize(List<CollectionSerializationData> desitination, List<string> ignoreMemberOnSerialize)
         {
             ignoreMemberOnSerialize.Add(nameof(CallbackReceiverString));
-            desitination.Add(new CollectionSerilizeData()
+            desitination.Add(new CollectionSerializationData()
             {
-                MemberName = nameof(CallbackReceiverString),
+                Name = nameof(CallbackReceiverString),
                 Data = CallbackReceiverString,
             });
 
             ignoreMemberOnSerialize.Add(nameof(CallbackReceiverMyClass));
             if (CallbackReceiverMyClass != null)
             {
-                desitination.Add(new CollectionSerilizeData()
+                desitination.Add(new CollectionSerializationData()
                 {
-                    MemberName = nameof(CallbackReceiverMyClass),
+                    Name = nameof(CallbackReceiverMyClass),
                     Data = $"{CallbackReceiverMyClass.a}|{CallbackReceiverMyClass.b}",
                 });
             }

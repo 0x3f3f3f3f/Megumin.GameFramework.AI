@@ -9,21 +9,21 @@ using System;
 namespace Megumin.GameFramework.AI.Serialization
 {
     [Serializable]
-    public class IntParameterData : GenericParameterData<int> { }
+    public class IntParameterData : GenericSerializationData<int> { }
 
     [Serializable]
-    public class FloatParameterData : GenericParameterData<float> { }
+    public class FloatParameterData : GenericSerializationData<float> { }
 
     [Serializable]
-    public class DoubleParameterData : GenericParameterData<double> { }
+    public class DoubleParameterData : GenericSerializationData<double> { }
 
     [Serializable]
-    public class LongParameterData : GenericParameterData<long> { }
+    public class LongParameterData : GenericSerializationData<long> { }
 
     [Serializable]
-    public class StringParameterData : GenericParameterData<string> { }
+    public class StringParameterData : GenericSerializationData<string> { }
 
     [Serializable]
-    public class UnityEngineObjectParameterData : GenericParameterData<UnityEngine.Object> { }
+    public class UnityEngineObjectParameterData : GenericSerializationData<UnityEngine.Object> { }
 
 }

@@ -35,18 +35,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             BehaviorTreeEditor.BlackboardLayout.value = layout;
         }
 
-        public VariableLookupTable LookupTable {  get; set; }   
+        public VariableTable LookupTable {  get; set; }   
         public void ReloadView(bool force = false)
         {
             this.Clear();
             var tree = (graphView as BehaviorTreeView)?.Tree;
-            LookupTable = tree?.variableLookupTable;
+            LookupTable = tree?.Variable;
             if (LookupTable == null)
             {
             }
             else
             {
-                foreach (var variable in LookupTable.TestVariableList)
+                foreach (var variable in LookupTable.Table)
                 {
                     var view = new BlackboardVariableView();
                     view.Blackboard = this;

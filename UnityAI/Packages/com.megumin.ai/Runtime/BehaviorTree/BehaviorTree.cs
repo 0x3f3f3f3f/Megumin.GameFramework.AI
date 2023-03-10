@@ -249,17 +249,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         //    PlayableDirector playable = new PlayableDirector();
         //}
 
-        public VariableLookupTable variableLookupTable = new VariableLookupTable();
+        public VariableTable Variable = new();
     }
 
-    public interface IParamLut
+    public class VariableTable
     {
-
-    }
-
-    public class VariableLookupTable
-    {
-        public List<IVariable> TestVariableList = new()
+        public List<IVariable> Table = new()
         {
             new ParamVariable<int>() { Name = "Test1",Value = 100},
             new ParamVariable<string>() { Name = "Test2",Value = "hello"},

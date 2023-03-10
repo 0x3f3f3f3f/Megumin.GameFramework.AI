@@ -34,8 +34,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void SerializeMember(object instance,
                                       List<string> ignoreMember,
-                                      List<CollectionSerilizeData> memberData,
-                                      List<CollectionSerilizeData> callbackMemberData)
+                                      List<CollectionSerializationData> memberData,
+                                      List<CollectionSerializationData> callbackMemberData)
         {
             //保存参数
             //https://github.com/dotnet/runtime/issues/46272
@@ -74,7 +74,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                CollectionSerilizeData data = new();
+                CollectionSerializationData data = new();
                 if (data.TrySerialize(member,instance, defualtValueInstance))
                 {
                     memberData.Add(data);
@@ -83,8 +83,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public void DeserializeMember(object instance,
-                                          List<CollectionSerilizeData> memberData,
-                                          List<CollectionSerilizeData> callbackMemberData)
+                                          List<CollectionSerializationData> memberData,
+                                          List<CollectionSerializationData> callbackMemberData)
         {
             //反序列化参数
             foreach (var param in memberData)

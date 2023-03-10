@@ -12,11 +12,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
+        public string Version = AssetVersion.v1_0_0.ToString();
         public string test = "行为树SO资产";
         public string Comment = "load2";
         public string StartNodeGUID = "";
-        public List<NodeAsset> Nodes = new List<NodeAsset>();
-        public string Version = AssetVersion.v1_0_0.ToString();
+        public List<VariableSerializationData> VariableTable = new();
+        public List<NodeAsset> Nodes = new();
 
         public static List<string> IgnoreSerializeMember = new()
         {
@@ -42,8 +43,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
-            public List<CollectionSerilizeData> MemberData = new();
-            public List<CollectionSerilizeData> CallbackMemberData = new();
+            public List<CollectionSerializationData> MemberData = new();
+            public List<CollectionSerializationData> CallbackMemberData = new();
 
             public BTNode Instantiate(bool instanceMeta = true)
             {
@@ -131,8 +132,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             //参数使用泛型序列化导致每次保存Rid都会改变
             //[SerializeReference]
-            public List<CollectionSerilizeData> MemberData = new();
-            public List<CollectionSerilizeData> CallbackMemberData = new();
+            public List<CollectionSerializationData> MemberData = new();
+            public List<CollectionSerializationData> CallbackMemberData = new();
 
             public ITreeElement Instantiate(bool instanceMeta = true)
             {
@@ -189,7 +190,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //保存参数表
-
+            foreach (var item in tree.Variable.Table)
+            {
+                VariableSerializationData data = new();
+                if (data.TrySerialize(item))
+                {
+                    VariableTable.Add(data);
+                }
+            }
 
             return true;
         }
@@ -203,6 +211,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             var tree = new BehaviorTree();
             tree.InstanceGUID = Guid.NewGuid().ToString();
+
+            //反序列化参数表
+            foreach (var item in VariableTable)
+            {
+                if (item.TryDeserialize(out var va))
+                {
+                    if (va is IVariable variable)
+                    {
+                        tree.Variable.Table.Add(variable);
+                    }
+                }
+            }
+
+
             foreach (var nodeAsset in Nodes)
             {
                 var node = nodeAsset.Instantiate(instanceMeta);

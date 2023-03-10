@@ -17,14 +17,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         T Value { get; set; }
     }
 
-    public class TestVariable : IVariable
+    [Serializable]
+    public abstract class TestVariable : IVariable
     {
         public string Name { get; set; }
 
-        public object GetValue()
-        {
-            throw new NotImplementedException();
-        }
+        public string Path;
+
+        public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
+        public abstract object GetValue();
+        public abstract void SetValue(object value);
     }
 
     [Flags]
@@ -35,10 +37,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         MappingAndFallback = Mapping | Direct,
     }
 
-    internal class ParamVariable<T> : TestVariable, IVariable<T>
+    [Serializable]
+    public class ParamVariable<T> : TestVariable, IVariable<T>
     {
         public T Value { get; set; }
-        public string Path;
-        public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
+
+        public override object GetValue()
+        {
+            return Value;
+        }
+
+        public override void SetValue(object value)
+        {
+            Value = (T)value;
+        }
     }
 }

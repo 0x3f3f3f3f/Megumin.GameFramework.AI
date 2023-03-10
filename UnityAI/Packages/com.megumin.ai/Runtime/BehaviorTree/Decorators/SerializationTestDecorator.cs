@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
-    internal class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerilizeData>
+    internal class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>
     {
         public float TestFloat = 3f;
         public GameObject TestRef;
@@ -27,16 +27,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public int b;
         }
 
-        public void OnAfterDeserialize(List<CollectionSerilizeData> source)
+        public void OnAfterDeserialize(List<CollectionSerializationData> source)
         {
             foreach (var item in source)
             {
-                if (item.MemberName == nameof(TestCallbackReceiver))
+                if (item.Name == nameof(TestCallbackReceiver))
                 {
                     TestCallbackReceiver = item.Data;
                 }
 
-                if (item.MemberName == nameof(TestCallbackReceiverMyClass))
+                if (item.Name == nameof(TestCallbackReceiverMyClass))
                 {
                     TestCallbackReceiverMyClass = new MyClass();
                     var sp = item.Data.Split("|");
@@ -46,21 +46,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void OnBeforeSerialize(List<CollectionSerilizeData> desitination, List<string> ignoreMemberOnSerialize)
+        public void OnBeforeSerialize(List<CollectionSerializationData> desitination, List<string> ignoreMemberOnSerialize)
         {
             ignoreMemberOnSerialize.Add(nameof(TestCallbackReceiver));
-            desitination.Add(new CollectionSerilizeData()
+            desitination.Add(new CollectionSerializationData()
             {
-                MemberName = nameof(TestCallbackReceiver),
+                Name = nameof(TestCallbackReceiver),
                 Data = TestCallbackReceiver,
             });
 
             ignoreMemberOnSerialize.Add(nameof(TestCallbackReceiverMyClass));
             if (TestCallbackReceiverMyClass != null)
             {
-                desitination.Add(new CollectionSerilizeData()
+                desitination.Add(new CollectionSerializationData()
                 {
-                    MemberName = nameof(TestCallbackReceiverMyClass),
+                    Name = nameof(TestCallbackReceiverMyClass),
                     Data = $"{TestCallbackReceiverMyClass.a}|{TestCallbackReceiverMyClass.b}",
                 });
             }

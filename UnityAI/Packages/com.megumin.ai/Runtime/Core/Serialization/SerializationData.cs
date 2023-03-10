@@ -3,25 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Megumin.GameFramework.AI.BehaviorTree;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.Serialization
 {
-    public interface IParameterData
+    public interface ISerializationData
     {
         bool Instantiate(object instance);
     }
 
-    public abstract class ParameterData : IParameterData
+    public abstract class SerializationData : ISerializationData
     {
-        public string MemberName;
-
+        [FormerlySerializedAs("MemberName")]
+        public string Name;
         public abstract bool Instantiate(object instance);
     }
 
     [Serializable]
-    public abstract class GenericParameterData<T> : ParameterData, IParameterData
+    public abstract class GenericSerializationData<T> : SerializationData, ISerializationData
     {
 
         public T Value;
@@ -39,7 +42,7 @@ namespace Megumin.GameFramework.AI.Serialization
             }
 
             //Todo: 要不要使用TokenID查找
-            var member = instance.GetType().GetMember(MemberName).FirstOrDefault();
+            var member = instance.GetType().GetMember(Name).FirstOrDefault();
             if (member != null && TryDeserialize(out var value))
             {
                 if (member is FieldInfo fieldInfo)
@@ -59,7 +62,7 @@ namespace Megumin.GameFramework.AI.Serialization
     }
 
     [Flags]
-    public enum ParameterDataType
+    public enum SerializationDataType
     {
         // 0-3
         None = 0,
@@ -93,7 +96,7 @@ namespace Megumin.GameFramework.AI.Serialization
     /// 拆分可包含循环和不可包含循环的data，解决Serialization depth limit 10 exceeded 问题
     /// </summary>
     [Serializable]
-    public class BasicTypeSerilizeData : ParameterData
+    public class BasicTypeSerializationData : SerializationData
     {
         /// <summary>
         /// <para/>https://learn.microsoft.com/zh-cn/dotnet/api/system.type.gettype?view=netframework-4.7.1#system-type-gettype(system-string)
@@ -104,7 +107,7 @@ namespace Megumin.GameFramework.AI.Serialization
         public string TypeName;
         public string Data;
         public UnityEngine.Object RefObject;
-        public ParameterDataType DataType = ParameterDataType.None;
+        public SerializationDataType DataType = SerializationDataType.None;
 
         /// <summary>
         /// https://blog.unity.com/technology/serialization-in-unity
@@ -146,11 +149,11 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public bool TrySerialize(string memberName, object value)
         {
-            MemberName = memberName;
+            Name = memberName;
             if (value == null)
             {
                 //引用类型并且值为null
-                DataType |= ParameterDataType.IsNull;
+                DataType |= SerializationDataType.IsNull;
                 Data = null;
                 return true;
             }
@@ -162,13 +165,13 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public virtual bool TrySerializeNotNull(string memberName, object value)
         {
-            MemberName = memberName;
+            Name = memberName;
 
             var valueActualType = value.GetType();
             TypeName = valueActualType.FullName;
             if (valueActualType.IsClass)
             {
-                DataType |= ParameterDataType.IsClass;
+                DataType |= SerializationDataType.IsClass;
             }
 
             return TrySerializeByType(valueActualType, memberName, value);
@@ -178,13 +181,13 @@ namespace Megumin.GameFramework.AI.Serialization
         {
             if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
             {
-                DataType |= ParameterDataType.IsUnityObject;
+                DataType |= SerializationDataType.IsUnityObject;
                 RefObject = (UnityEngine.Object)value;
             }
             else if (valueActualType == typeof(string))
             {
                 Data = (string)value;
-                DataType |= ParameterDataType.IsString;
+                DataType |= SerializationDataType.IsString;
             }
             else
             {
@@ -205,8 +208,8 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public bool TryDeserialize(out object value)
         {
-            if (DataType.HasFlag(ParameterDataType.IsNull)
-                && DataType.HasFlag(ParameterDataType.IsClass))
+            if (DataType.HasFlag(SerializationDataType.IsNull)
+                && DataType.HasFlag(SerializationDataType.IsClass))
             {
                 value = null;
                 return true;
@@ -217,7 +220,7 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public virtual bool TryDeserializeNotNull(out object value)
         {
-            if (DataType.HasFlag(ParameterDataType.IsUnityObject))
+            if (DataType.HasFlag(SerializationDataType.IsUnityObject))
             {
                 if (RefObject)
                 {
@@ -245,7 +248,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
             }
 
-            if (DataType.HasFlag(ParameterDataType.IsString))
+            if (DataType.HasFlag(SerializationDataType.IsString))
             {
                 value = Data;
                 return true;
@@ -281,7 +284,7 @@ namespace Megumin.GameFramework.AI.Serialization
             }
 
             //Todo: 要不要使用TokenID查找
-            var member = instance.GetType().GetMember(MemberName)?.FirstOrDefault();
+            var member = instance.GetType().GetMember(Name)?.FirstOrDefault();
             if (member != null && TryDeserialize(out var value))
             {
                 if (member is FieldInfo fieldInfo)
@@ -301,20 +304,20 @@ namespace Megumin.GameFramework.AI.Serialization
     }
 
     [Serializable]
-    public class CollectionSerilizeData : BasicTypeSerilizeData
+    public class CollectionSerializationData : BasicTypeSerializationData
     {
-        public List<BasicTypeSerilizeData> Collection;
+        public List<BasicTypeSerializationData> Collection;
 
         public bool SerializeIList(object ilist)
         {
             if (ilist is IList list && list.Count > 0)
             {
-                List<BasicTypeSerilizeData> dataList = new();
+                List<BasicTypeSerializationData> dataList = new();
 
                 var index = 0;
                 foreach (var item in list)
                 {
-                    BasicTypeSerilizeData elementData = new();
+                    BasicTypeSerializationData elementData = new();
                     if (elementData.TrySerialize($"Element{index}", item))
                     {
                         dataList.Add(elementData);
@@ -341,7 +344,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     //var specializationType = valueActualType.GetGenericArguments()[0];
                     //Debug.LogError($"List: {specializationType.Name}");
 
-                    DataType |= ParameterDataType.IsList;
+                    DataType |= SerializationDataType.IsList;
                     return SerializeIList(value);
                 }
                 else if (valueActualType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
@@ -350,7 +353,7 @@ namespace Megumin.GameFramework.AI.Serialization
                     //var specializationValueType = valueActualType.GetGenericArguments()[1];
                     //Debug.LogError($"Dictionary: {specializationKeyType.Name}----{specializationValueType.Name}");
 
-                    DataType |= ParameterDataType.IsDictionary;
+                    DataType |= SerializationDataType.IsDictionary;
                     return false;
                 }
             }
@@ -364,7 +367,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 //var resultType = Type.GetType(testName);
                 //Debug.LogError($"Array: {specializationType.Name}----{testName}");
 
-                DataType |= ParameterDataType.IsArray;
+                DataType |= SerializationDataType.IsArray;
                 return SerializeIList(value);
             }
 
@@ -374,7 +377,7 @@ namespace Megumin.GameFramework.AI.Serialization
 
         public override bool TryDeserializeNotNull(out object value)
         {
-            if (DataType.HasFlag(ParameterDataType.IsList))
+            if (DataType.HasFlag(SerializationDataType.IsList))
             {
                 if (Collection == null)
                 {
@@ -406,7 +409,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
             }
 
-            if (DataType.HasFlag(ParameterDataType.IsArray))
+            if (DataType.HasFlag(SerializationDataType.IsArray))
             {
                 if (Collection == null)
                 {
@@ -454,6 +457,47 @@ namespace Megumin.GameFramework.AI.Serialization
             }
 
             return base.TryDeserializeNotNull(out value);
+        }
+    }
+
+    [Serializable]
+    public class VariableSerializationData : BasicTypeSerializationData
+    {
+        public string Path;
+        public CollectionSerializationData fallbackData;
+
+        internal bool TrySerialize(IVariable item)
+        {
+            if (item is TestVariable variable)
+            {
+                TypeName = variable.GetType().FullName;
+                Name = variable.Name;
+                Path = variable.Path;
+                fallbackData = new CollectionSerializationData();
+                return fallbackData.TrySerialize("fallbackData", variable.GetValue());
+            }
+
+            return false;
+        }
+
+        public bool TryDeserialize(out IVariable value)
+        {
+            value = default;
+
+            var type = TypeCache.GetType(TypeName);
+            if (type == null)
+            {
+                return false;
+            }
+            var variable = Activator.CreateInstance(type) as TestVariable;
+            variable.Name = Name;
+            variable.Path = Path;
+            if (fallbackData.TryDeserialize(out var data))
+            {
+                variable.SetValue(data);
+            }
+            value = variable;
+            return true;
         }
     }
 }
