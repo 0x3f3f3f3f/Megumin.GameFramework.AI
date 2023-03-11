@@ -21,7 +21,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BlackboardVariableView()
         {
-            BlackboardField = new BlackboardField() { text = "Variable", typeText = "string" };
+            BlackboardField = new BlackboardField() { text = "Variable", typeText = "" };
 
             {
                 //Copy form Unity C# reference source
@@ -34,7 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //TrickleDown.NoTrickleDown 保证我们的回调先执行。
                 textinput.RegisterCallback<FocusOutEvent>(e => { OnEditTextFinished(); }, TrickleDown.NoTrickleDown);
             }
-            
+
 
 
 
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             var newName = m_TextField.text;
-            if(Variable is TestVariable test)
+            if (Variable is TestVariable test)
             {
                 test.Name = newName;
                 BlackboardField.text = newName;
@@ -73,8 +73,41 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void SetVariable(IVariable instance)
         {
             Variable = instance;
-            BlackboardField.text = instance.Name;
             Body.Clear();
+
+            if (Variable == null)
+            {
+                BlackboardField.text = "MissVariable";
+                BlackboardField.typeText = "";
+                return;
+            }
+
+            if (Guid.TryParse(instance.Name,out var guid))
+            {
+                //使用短名字
+                BlackboardField.text = instance.Name;
+            }
+            else
+            {
+                BlackboardField.text = instance.Name;
+            }
+
+            BlackboardField.tooltip = instance.Name;
+
+            var type = instance?.GetValue()?.GetType();
+            if (type != null)
+            {
+                BlackboardField.typeText = type.Name;
+            }
+            else
+            {
+                var instanceType = instance.GetType();
+                if (instanceType.IsGenericType)
+                {
+                    BlackboardField.typeText = instanceType.GetGenericArguments()?[0]?.Name;
+                }
+            }
+
             var labelView = new Label() { text = "TestValue" };
             Body.Add(labelView);
         }

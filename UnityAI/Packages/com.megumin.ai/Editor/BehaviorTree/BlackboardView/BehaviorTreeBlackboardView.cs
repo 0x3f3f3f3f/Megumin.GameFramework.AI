@@ -18,15 +18,59 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             title = "参数表";
             subTitle = "测试subTitle";
 
-            addItemRequested += b =>
-            {
-                Debug.Log(b);
-            };
+            addItemRequested += OnAddClicked;
+
             scrollable = true;
             SetPosition(BehaviorTreeEditor.BlackboardLayout);
 
             // 不能使用ListView,子元素能折叠打开，动态大小，bug很多。
             editTextRequested += OnEditTextRequested;
+        }
+
+        private void OnAddClicked(Blackboard blackboard)
+        {
+            var parameterType = new GenericMenu();
+
+            parameterType.AddItem(new GUIContent("Category"), false, () => { Debug.Log("Todo!"); });
+            parameterType.AddSeparator($"/");
+
+            var list = VariableCreator.AllCreator;
+            foreach (var item in list)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (item.IsSeparator)
+                {
+                    parameterType.AddSeparator(item.Name);
+                }
+                else
+                {
+                    parameterType.AddItem(new GUIContent(item.Name), false, () =>
+                    {
+                        AddNewVariable(item);
+                    });
+                }
+            }
+
+            parameterType.ShowAsContext();
+        }
+
+        public void AddNewVariable(VariableCreator creator)
+        {
+            if (LookupTable == null)
+            {
+                Debug.LogError("LookupTable == null");
+            }
+            else
+            {
+                var vara = creator.Create();
+                vara.Name = LookupTable.ValidName(vara.Name);
+                LookupTable.Table.Add(vara);
+                ReloadView();
+            }
         }
 
         public override void UpdatePresenterPosition()
@@ -35,7 +79,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             BehaviorTreeEditor.BlackboardLayout.value = layout;
         }
 
-        public VariableTable LookupTable {  get; set; }   
+        public VariableTable LookupTable { get; set; }
         public void ReloadView(bool force = false)
         {
             this.Clear();
@@ -58,7 +102,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnEditTextRequested(Blackboard arg1, VisualElement arg2, string arg3)
         {
-            
+
         }
     }
 }

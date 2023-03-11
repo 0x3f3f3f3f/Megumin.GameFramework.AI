@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using static PlasticGui.LaunchDiffParameters;
@@ -283,9 +284,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
 
-        internal string ValidName(string text)
+        /// <summary>
+        /// 同名验证时不区分大小写，但是获取值和设定值时区分大小写。
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public string ValidName(string name)
         {
-            return text;
+            while (Table.Any(elem => string.Equals(elem.Name, name, StringComparison.OrdinalIgnoreCase)))
+            {
+                name += " (1)";
+            }
+            return name;
         }
     }
 }
