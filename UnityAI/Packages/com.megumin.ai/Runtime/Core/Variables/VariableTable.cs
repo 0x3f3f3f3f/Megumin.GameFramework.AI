@@ -11,8 +11,9 @@ namespace Megumin.GameFramework.AI
     {
 
 #if UNITY_2023_1_OR_NEWER
-        [UnityEngine.SerializeReference]
+        
 #endif
+        [UnityEngine.SerializeReference]
         public List<IVariable> Table = new();
 
         public bool TryGetParam(string name, out IVariable variable)
