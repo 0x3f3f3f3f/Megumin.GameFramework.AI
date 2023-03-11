@@ -37,6 +37,10 @@ namespace Megumin.GameFramework.AI
         MappingAndFallback = Mapping | Direct,
     }
 
+    /// <summary>
+    /// 需要特化类型，不然不支持泛型序列化的版本没办法UndoRecode。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Serializable]
     public class ParamVariable<T> : TestVariable, IVariable<T>
     {

@@ -1,49 +1,41 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+using Megumin;
 using System.ComponentModel;
 using System.IO;
 using UnityEditor;
-using UnityEngine;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.GameFramework.AI
 {
-    public class ParamDataGenerator : ScriptableObject
+    internal class SpecializedVariableCodeGenerator : ScriptableObject
     {
         public UnityEngine.Object Folder;
 
-        List<string> Types = new()
-        {
-            "int",
-            "float",
-            "double",
-            "long",
-            "string",
-            "UnityEngine.Object",
-        };
+#if MEGUMIN_EXPLOSION4UNITY
 
         [Editor]
         public void Generate()
         {
             CSCodeGenerator generator = new();
-
             generator.Push($"using System;");
             generator.PushBlankLines();
 
-            generator.Push($"namespace Megumin.GameFramework.AI.Serialization");
+            generator.Push($"namespace Megumin.GameFramework.AI");
             using (generator.NewScope)
             {
-                foreach (string type in Types)
+                foreach (var type in VariableCreator.AllCreator)
                 {
-                    var typeP = type.Substring(0, 1).ToUpper() + type.Substring(1);
-                    typeP = typeP.Replace(".", "");
-
-                    generator.Push($"[Serializable]");
-                    generator.Push($"public class {typeP}ParameterData : GenericParameterData<{type}> {{ }}");
-                    generator.PushBlankLines();
+                    
                 }
             }
 
-            var fileName = "GenericSpecializationParameterData.cs";
+
+
+            var fileName = "SpecializedVariable.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);
             var path = Path.GetFullPath(Path.Combine(dir, fileName));
             Debug.Log(path);
@@ -55,5 +47,7 @@ namespace Megumin.GameFramework.AI.Editor
             var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
             AssetDatabase.OpenAsset(script);
         }
+
+#endif
     }
 }
