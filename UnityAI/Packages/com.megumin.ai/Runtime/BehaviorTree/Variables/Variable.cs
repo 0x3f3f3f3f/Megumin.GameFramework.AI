@@ -52,4 +52,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             Value = (T)value;
         }
     }
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public struct Trigger
+    {
+        public bool Value;
+    }
 }

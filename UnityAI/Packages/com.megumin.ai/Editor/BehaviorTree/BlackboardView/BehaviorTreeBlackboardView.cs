@@ -15,6 +15,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public BehaviorTreeBlackboardView(GraphView associatedGraphView = null)
             : base(associatedGraphView)
         {
+            TreeView = associatedGraphView as BehaviorTreeView;
+            LookupTable = TreeView?.Tree?.Variable;
+
             title = "参数表";
             subTitle = "测试subTitle";
 
@@ -27,12 +30,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             editTextRequested += OnEditTextRequested;
         }
 
+        public BehaviorTreeView TreeView { get; set; }
+
         private void OnAddClicked(Blackboard blackboard)
         {
             var parameterType = new GenericMenu();
 
             parameterType.AddItem(new GUIContent("Category"), false, () => { Debug.Log("Todo!"); });
-            parameterType.AddSeparator($"/");
+            parameterType.AddSeparator($"");
 
             var list = VariableCreator.AllCreator;
             foreach (var item in list)
@@ -62,15 +67,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (LookupTable == null)
             {
-                Debug.LogError("LookupTable == null");
+                TreeView?.CreateTreeSOTreeIfNull();
+                LookupTable = TreeView?.Tree?.Variable;
+                if (LookupTable == null)
+                {
+                    Debug.LogError("LookupTable == null");
+                    return;
+                }
             }
-            else
-            {
-                var vara = creator.Create();
-                vara.Name = LookupTable.ValidName(vara.Name);
-                LookupTable.Table.Add(vara);
-                ReloadView();
-            }
+
+            TreeView.UndoRecord("AddNewVariable");
+            var vara = creator.Create();
+            vara.Name = LookupTable.ValidName(vara.Name);
+            LookupTable.Table.Add(vara);
+            ReloadView();
         }
 
         public override void UpdatePresenterPosition()
@@ -80,11 +90,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public VariableTable LookupTable { get; set; }
+
         public void ReloadView(bool force = false)
         {
             this.Clear();
-            var tree = (graphView as BehaviorTreeView)?.Tree;
-            LookupTable = tree?.Variable;
+
+            LookupTable = TreeView?.Tree?.Variable;
             if (LookupTable == null)
             {
             }
