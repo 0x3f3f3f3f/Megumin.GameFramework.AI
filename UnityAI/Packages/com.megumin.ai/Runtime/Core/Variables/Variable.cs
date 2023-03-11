@@ -20,6 +20,7 @@ namespace Megumin.GameFramework.AI
     [Serializable]
     public abstract class TestVariable : IVariable
     {
+        [field: UnityEngine.SerializeField]
         public string Name { get; set; }
 
         public string Path;
@@ -32,9 +33,9 @@ namespace Megumin.GameFramework.AI
     [Flags]
     public enum ParamVariableMode
     {
+        MappingAndFallback = Mapping | Direct,
         Mapping = 1 << 0,
         Direct = 1 << 1,
-        MappingAndFallback = Mapping | Direct,
     }
 
     /// <summary>
@@ -44,6 +45,7 @@ namespace Megumin.GameFramework.AI
     [Serializable]
     public class ParamVariable<T> : TestVariable, IVariable<T>
     {
+        [field: UnityEngine.SerializeField]
         public T Value { get; set; }
 
         public override object GetValue()

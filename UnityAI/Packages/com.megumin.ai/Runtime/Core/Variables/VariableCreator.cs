@@ -47,6 +47,10 @@ namespace Megumin.GameFramework.AI
         public virtual bool IsSeparator { get; set; }
         public virtual string Name { get; set; } = "VariableCreator";
 
+        /// <summary>
+        /// Unity 2023之前的版本不支持 多态 + 泛型序列化，所以用户自定义时不要返回泛型类型，一定要声明一个非泛型类型参数。
+        /// </summary>
+        /// <returns></returns>
         public virtual TestVariable Create()
         {
             return new ParamVariable<int>() { Name = "VariableCreator" };
