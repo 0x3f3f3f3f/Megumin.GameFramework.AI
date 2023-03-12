@@ -48,11 +48,11 @@ namespace Megumin.GameFramework.AI
 
 #if MEGUMIN_EXPLOSION4UNITY
 
-        string template =
+        const string template =
 @"
 public class ParamVariable_$(type) : ParamVariable<$(type)> { }
 
-public class VariableCreator_$(type): VariableCreator
+public class VariableCreator_$(type) : VariableCreator
 {
     public override string Name { get; set; } = ""$(type)"";
 
@@ -60,8 +60,7 @@ public class VariableCreator_$(type): VariableCreator
     {
         return new ParamVariable_$(type)() { Name = ""$(Type)"" };
     }
-}
-";
+}";
         [Editor]
         public void Generate()
         {

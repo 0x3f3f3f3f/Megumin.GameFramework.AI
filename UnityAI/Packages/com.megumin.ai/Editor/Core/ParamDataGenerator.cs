@@ -38,7 +38,7 @@ namespace Megumin.GameFramework.AI.Editor
                     typeP = typeP.Replace(".", "");
 
                     generator.Push($"[Serializable]");
-                    generator.Push($"public class {typeP}ParameterData : GenericParameterData<{type}> {{ }}");
+                    generator.Push($"public class {typeP}ParameterData : GenericSerializationData<{type}> {{ }}");
                     generator.PushBlankLines();
                 }
             }

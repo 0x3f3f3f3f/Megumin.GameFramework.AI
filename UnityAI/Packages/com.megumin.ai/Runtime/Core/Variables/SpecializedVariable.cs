@@ -12,7 +12,6 @@ namespace Megumin.GameFramework.AI
 {
     public partial class VariableCreator
     {
-
         /// <summary>
         /// 用户可以在这里添加参数类型到菜单。
         /// </summary>
@@ -48,81 +47,82 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_Material(),
         };
     }
+
     public class ParamVariable_bool : ParamVariable<bool> { }
 
-    public class VariableCreator_bool: VariableCreator
+    public class VariableCreator_bool : VariableCreator
     {
         public override string Name { get; set; } = "bool";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_bool() { Name = "bool" };
+            return new ParamVariable_bool() { Name = "Bool" };
         }
     }
 
     public class ParamVariable_int : ParamVariable<int> { }
 
-    public class VariableCreator_int: VariableCreator
+    public class VariableCreator_int : VariableCreator
     {
         public override string Name { get; set; } = "int";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_int() { Name = "int" };
+            return new ParamVariable_int() { Name = "Int" };
         }
     }
 
     public class ParamVariable_long : ParamVariable<long> { }
 
-    public class VariableCreator_long: VariableCreator
+    public class VariableCreator_long : VariableCreator
     {
         public override string Name { get; set; } = "long";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_long() { Name = "long" };
+            return new ParamVariable_long() { Name = "Long" };
         }
     }
 
     public class ParamVariable_string : ParamVariable<string> { }
 
-    public class VariableCreator_string: VariableCreator
+    public class VariableCreator_string : VariableCreator
     {
         public override string Name { get; set; } = "string";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_string() { Name = "string" };
+            return new ParamVariable_string() { Name = "String" };
         }
     }
 
     public class ParamVariable_float : ParamVariable<float> { }
 
-    public class VariableCreator_float: VariableCreator
+    public class VariableCreator_float : VariableCreator
     {
         public override string Name { get; set; } = "float";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_float() { Name = "float" };
+            return new ParamVariable_float() { Name = "Float" };
         }
     }
 
     public class ParamVariable_double : ParamVariable<double> { }
 
-    public class VariableCreator_double: VariableCreator
+    public class VariableCreator_double : VariableCreator
     {
         public override string Name { get; set; } = "double";
 
         public override TestVariable Create()
         {
-            return new ParamVariable_double() { Name = "double" };
+            return new ParamVariable_double() { Name = "Double" };
         }
     }
 
     public class ParamVariable_Vector2 : ParamVariable<Vector2> { }
 
-    public class VariableCreator_Vector2: VariableCreator
+    public class VariableCreator_Vector2 : VariableCreator
     {
         public override string Name { get; set; } = "Vector2";
 
@@ -134,7 +134,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Vector2Int : ParamVariable<Vector2Int> { }
 
-    public class VariableCreator_Vector2Int: VariableCreator
+    public class VariableCreator_Vector2Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector2Int";
 
@@ -146,7 +146,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Vector3 : ParamVariable<Vector3> { }
 
-    public class VariableCreator_Vector3: VariableCreator
+    public class VariableCreator_Vector3 : VariableCreator
     {
         public override string Name { get; set; } = "Vector3";
 
@@ -158,7 +158,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Vector3Int : ParamVariable<Vector3Int> { }
 
-    public class VariableCreator_Vector3Int: VariableCreator
+    public class VariableCreator_Vector3Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector3Int";
 
@@ -170,7 +170,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Vector4 : ParamVariable<Vector4> { }
 
-    public class VariableCreator_Vector4: VariableCreator
+    public class VariableCreator_Vector4 : VariableCreator
     {
         public override string Name { get; set; } = "Vector4";
 
@@ -182,7 +182,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Rect : ParamVariable<Rect> { }
 
-    public class VariableCreator_Rect: VariableCreator
+    public class VariableCreator_Rect : VariableCreator
     {
         public override string Name { get; set; } = "Rect";
 
@@ -194,7 +194,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_RectInt : ParamVariable<RectInt> { }
 
-    public class VariableCreator_RectInt: VariableCreator
+    public class VariableCreator_RectInt : VariableCreator
     {
         public override string Name { get; set; } = "RectInt";
 
@@ -206,7 +206,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Bounds : ParamVariable<Bounds> { }
 
-    public class VariableCreator_Bounds: VariableCreator
+    public class VariableCreator_Bounds : VariableCreator
     {
         public override string Name { get; set; } = "Bounds";
 
@@ -218,7 +218,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_BoundsInt : ParamVariable<BoundsInt> { }
 
-    public class VariableCreator_BoundsInt: VariableCreator
+    public class VariableCreator_BoundsInt : VariableCreator
     {
         public override string Name { get; set; } = "BoundsInt";
 
@@ -230,7 +230,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_GameObject : ParamVariable<GameObject> { }
 
-    public class VariableCreator_GameObject: VariableCreator
+    public class VariableCreator_GameObject : VariableCreator
     {
         public override string Name { get; set; } = "GameObject";
 
@@ -242,7 +242,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_ScriptableObject : ParamVariable<ScriptableObject> { }
 
-    public class VariableCreator_ScriptableObject: VariableCreator
+    public class VariableCreator_ScriptableObject : VariableCreator
     {
         public override string Name { get; set; } = "ScriptableObject";
 
@@ -254,7 +254,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Trigger : ParamVariable<Trigger> { }
 
-    public class VariableCreator_Trigger: VariableCreator
+    public class VariableCreator_Trigger : VariableCreator
     {
         public override string Name { get; set; } = "Trigger";
 
@@ -266,7 +266,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Color : ParamVariable<Color> { }
 
-    public class VariableCreator_Color: VariableCreator
+    public class VariableCreator_Color : VariableCreator
     {
         public override string Name { get; set; } = "Color";
 
@@ -278,7 +278,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Gradient : ParamVariable<Gradient> { }
 
-    public class VariableCreator_Gradient: VariableCreator
+    public class VariableCreator_Gradient : VariableCreator
     {
         public override string Name { get; set; } = "Gradient";
 
@@ -290,7 +290,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Texture2D : ParamVariable<Texture2D> { }
 
-    public class VariableCreator_Texture2D: VariableCreator
+    public class VariableCreator_Texture2D : VariableCreator
     {
         public override string Name { get; set; } = "Texture2D";
 
@@ -302,7 +302,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_RenderTexture : ParamVariable<RenderTexture> { }
 
-    public class VariableCreator_RenderTexture: VariableCreator
+    public class VariableCreator_RenderTexture : VariableCreator
     {
         public override string Name { get; set; } = "RenderTexture";
 
@@ -314,7 +314,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_AnimationCurve : ParamVariable<AnimationCurve> { }
 
-    public class VariableCreator_AnimationCurve: VariableCreator
+    public class VariableCreator_AnimationCurve : VariableCreator
     {
         public override string Name { get; set; } = "AnimationCurve";
 
@@ -326,7 +326,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Mesh : ParamVariable<Mesh> { }
 
-    public class VariableCreator_Mesh: VariableCreator
+    public class VariableCreator_Mesh : VariableCreator
     {
         public override string Name { get; set; } = "Mesh";
 
@@ -338,7 +338,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_SkinnedMeshRenderer : ParamVariable<SkinnedMeshRenderer> { }
 
-    public class VariableCreator_SkinnedMeshRenderer: VariableCreator
+    public class VariableCreator_SkinnedMeshRenderer : VariableCreator
     {
         public override string Name { get; set; } = "SkinnedMeshRenderer";
 
@@ -350,7 +350,7 @@ namespace Megumin.GameFramework.AI
 
     public class ParamVariable_Material : ParamVariable<Material> { }
 
-    public class VariableCreator_Material: VariableCreator
+    public class VariableCreator_Material : VariableCreator
     {
         public override string Name { get; set; } = "Material";
 
@@ -359,5 +359,4 @@ namespace Megumin.GameFramework.AI
             return new ParamVariable_Material() { Name = "Material" };
         }
     }
-
 }
