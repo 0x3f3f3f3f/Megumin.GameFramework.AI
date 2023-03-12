@@ -35,11 +35,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
             new MySetting<bool>("ToolTip", true, SettingsScope.User),
             new MySetting<bool>("MiniMap", false, SettingsScope.User),
+            new MySetting<bool>("TODO", false, SettingsScope.User),
         };
 
         internal readonly static MySetting<Rect> BlackboardLayout
             = new MySetting<Rect>("BlackboardLayout", new Rect(0, 0, 200, 400), SettingsScope.User);
 
+        /// <summary>
+        /// 是否显示还还没有实现的Feature。默认是隐藏，否则会给用户造成困惑为什么变灰点不了。
+        /// </summary>
+        /// <returns></returns>
+        public static DropdownMenuAction.Status TODO
+        {
+            get
+            {
+                return MySettingPrefs[6].value ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Hidden;
+            }
+        }
 
         [OnOpenAsset(10)]
         public static bool OnOpenAsset(int instanceID, int line, int column)

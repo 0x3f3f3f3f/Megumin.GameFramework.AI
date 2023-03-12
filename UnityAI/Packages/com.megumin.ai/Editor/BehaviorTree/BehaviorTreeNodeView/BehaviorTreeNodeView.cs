@@ -268,7 +268,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
 
-            evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.Status.Normal);
             //this.LogMethodName();
             base.BuildContextualMenu(evt);
 
@@ -276,17 +276,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 evt.menu.AppendAction("Open Documentation _F1", a => AI.Editor.Utility.OpenDocumentation(Node?.GetType()),
                     Node?.GetType().TryGetAttribute<HelpURLAttribute>(out var _) ?? false ?
-                    DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
+                    DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
 
                 evt.menu.AppendSeparator();
 
-                evt.menu.AppendAction("Breakpoint", a => { }, DropdownMenuAction.AlwaysDisabled);
+                evt.menu.AppendActionTODO("Breakpoint", a => { }, DropdownMenuAction.Status.Normal);
                 evt.menu.AppendSeparator();
             }
 
-            evt.menu.AppendAction("Open Node Script", a => AI.Editor.Utility.OpenScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Open Node View Script", a => { }, DropdownMenuAction.AlwaysDisabled);
-            evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Open Node Script", a => AI.Editor.Utility.OpenScript(Node?.GetType()), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendActionTODO("Open Node View Script", a => { }, DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
             evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);

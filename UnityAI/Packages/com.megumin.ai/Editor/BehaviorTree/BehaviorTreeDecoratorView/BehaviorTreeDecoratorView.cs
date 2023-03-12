@@ -62,25 +62,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 evt.menu.AppendAction("Open Documentation _F1", a => AI.Editor.Utility.OpenDocumentation(Decorator?.GetType()),
                      Decorator?.GetType().TryGetAttribute<HelpURLAttribute>(out var _) ?? false ?
-                     DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
+                     DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
 
                 evt.menu.AppendSeparator();
 
-                evt.menu.AppendAction("Breakpoint", a => { }, DropdownMenuAction.AlwaysDisabled);
+                evt.menu.AppendActionTODO("Breakpoint", a => { }, DropdownMenuAction.Status.Normal);
                 evt.menu.AppendSeparator();
             }
 
-            evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
             //拖拽Bug有点多，暂时用菜单实现。
-            evt.menu.AppendAction($"Move Up", a => NodeView?.MoveUpDecorator(this), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction($"Move Down", a => NodeView?.MoveDownDecorator(this), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction($"Move Up", a => NodeView?.MoveUpDecorator(this), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction($"Move Down", a => NodeView?.MoveDownDecorator(this), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
-            evt.menu.AppendAction("Open Decorator Script", a => AI.Editor.Utility.OpenScript(Decorator?.GetType()), DropdownMenuAction.AlwaysEnabled);
-            evt.menu.AppendAction("Open Decorator View Script", a => { }, DropdownMenuAction.AlwaysDisabled);
-            evt.menu.AppendAction("Select Decorator Script", a => AI.Editor.Utility.SelectScript(Decorator?.GetType()), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Open Decorator Script", a => AI.Editor.Utility.OpenScript(Decorator?.GetType()), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendActionTODO("Open Decorator View Script", a => { }, DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Select Decorator Script", a => AI.Editor.Utility.SelectScript(Decorator?.GetType()), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
         }
 

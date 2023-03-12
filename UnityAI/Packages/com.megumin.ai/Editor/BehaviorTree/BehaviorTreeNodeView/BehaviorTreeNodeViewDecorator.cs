@@ -11,12 +11,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         private void BuildContextualMenuDecorator(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(a), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Add Decorator", a => OpenDecoratorSearchWindow(a), DropdownMenuAction.Status.Normal);
 
             for (int i = nearDType.Count - 1; i >= 0; i--)
             {
                 var type = nearDType[i];
-                evt.menu.AppendAction($"Add Decorator/{type.Name}", a => AddDecorator(type), DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction($"Add Decorator/{type.Name}", a => AddDecorator(type), DropdownMenuAction.Status.Normal);
             }
 
             evt.menu.AppendSeparator();
