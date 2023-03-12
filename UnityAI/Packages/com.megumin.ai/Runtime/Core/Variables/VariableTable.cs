@@ -9,6 +9,14 @@ namespace Megumin.GameFramework.AI
     [Serializable]
     public class VariableTable
     {
+        //Paramter 部分
+        //API参考 ainmator timeline
+        //void Test()
+        //{
+        //    Animator animator = new Animator();
+        //    PlayableDirector playable = new PlayableDirector();
+        //}
+
 
 #if UNITY_2023_1_OR_NEWER
         

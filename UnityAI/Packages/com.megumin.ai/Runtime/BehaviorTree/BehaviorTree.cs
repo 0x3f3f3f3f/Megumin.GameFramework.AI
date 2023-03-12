@@ -15,8 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public TreeMeta TreeMeta;
 
         [Space]
-        [SerializeReference]
-        public List<object> Paramters = new();
+        public VariableTable Variable = new();
 
         public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
@@ -238,18 +237,5 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
         }
-    }
-
-    public partial class BehaviorTree
-    {
-        //Paramter 部分
-        //API参考 ainmator timeline
-        //void Test()
-        //{
-        //    Animator animator = new Animator();
-        //    PlayableDirector playable = new PlayableDirector();
-        //}
-
-        public VariableTable Variable = new();
     }
 }

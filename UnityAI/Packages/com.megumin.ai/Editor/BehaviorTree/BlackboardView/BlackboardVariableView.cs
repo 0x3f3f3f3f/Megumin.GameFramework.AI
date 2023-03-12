@@ -64,6 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var newName = m_TextField.text;
             if (Variable is TestVariable test)
             {
+                Blackboard?.TreeView?.UndoRecord("Change Variable Name");
                 test.Name = newName;
                 BlackboardField.text = newName;
             }

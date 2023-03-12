@@ -190,6 +190,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //保存参数表
+            VariableTable.Clear();
             foreach (var item in tree.Variable.Table)
             {
                 VariableSerializationData data = new();
