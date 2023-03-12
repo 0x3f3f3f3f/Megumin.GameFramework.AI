@@ -20,9 +20,6 @@ MonoBehaviour:
   VariableTable:
   - Name: String
     TypeName: Megumin.GameFramework.AI.ParamVariable_string
-    Data: 
-    RefObject: {fileID: 0}
-    DataType: 0
     Path: 
     fallbackData:
       Name: fallbackData
@@ -33,9 +30,6 @@ MonoBehaviour:
       Collection: []
   - Name: Int
     TypeName: Megumin.GameFramework.AI.ParamVariable_int
-    Data: 
-    RefObject: {fileID: 0}
-    DataType: 0
     Path: 
     fallbackData:
       Name: fallbackData
@@ -46,16 +40,14 @@ MonoBehaviour:
       Collection: []
   - Name: GameObject
     TypeName: Megumin.GameFramework.AI.ParamVariable_GameObject
-    Data: 
-    RefObject: {fileID: 0}
-    DataType: 0
     Path: 
     fallbackData:
       Name: fallbackData
-      TypeName: 
+      TypeName: UnityEngine.GameObject
       Data: 
-      RefObject: {fileID: 0}
-      DataType: 2
+      RefObject: {fileID: 3939188381555538775, guid: 14dd42bb726074f41ada6638453ab640,
+        type: 3}
+      DataType: 257
       Collection: []
   Nodes:
   - StringCallbackMemberData: []
@@ -232,11 +224,10 @@ MonoBehaviour:
           type: 3}
         DataType: 257
     - Name: ExposeString
-      TypeName: Megumin.GameFramework.AI.ParamVariable`1[[System.String, mscorlib,
-        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      Data: test1
+      TypeName: 
+      Data: 
       RefObject: {fileID: 0}
-      DataType: 1025
+      DataType: 2
       Collection: []
     CallbackMemberData:
     - Name: CallbackReceiverString

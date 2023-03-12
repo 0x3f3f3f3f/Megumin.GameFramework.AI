@@ -13,51 +13,23 @@ namespace Megumin.GameFramework.AI.Serialization
 {
     public interface ISerializationData
     {
-        bool Instantiate(object instance);
+       
     }
 
     public abstract class SerializationData : ISerializationData
     {
         [FormerlySerializedAs("MemberName")]
         public string Name;
-        public abstract bool Instantiate(object instance);
     }
 
     [Serializable]
     public abstract class GenericSerializationData<T> : SerializationData, ISerializationData
     {
-
         public T Value;
         public virtual bool TryDeserialize(out T value)
         {
             value = Value;
             return true;
-        }
-
-        public override bool Instantiate(object instance)
-        {
-            if (instance == null)
-            {
-                return false;
-            }
-
-            //Todo: 要不要使用TokenID查找
-            var member = instance.GetType().GetMember(Name).FirstOrDefault();
-            if (member != null && TryDeserialize(out var value))
-            {
-                if (member is FieldInfo fieldInfo)
-                {
-                    fieldInfo.SetValue(instance, value);
-                    return true;
-                }
-                else if (member is PropertyInfo propertyInfo)
-                {
-                    propertyInfo.SetValue(instance, value);
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 
@@ -288,32 +260,6 @@ namespace Megumin.GameFramework.AI.Serialization
             }
             return null;
         }
-
-        public override bool Instantiate(object instance)
-        {
-            if (instance == null)
-            {
-                return false;
-            }
-
-            //Todo: 要不要使用TokenID查找
-            var member = instance.GetType().GetMember(Name)?.FirstOrDefault();
-            if (member != null && TryDeserialize(out var value))
-            {
-                if (member is FieldInfo fieldInfo)
-                {
-                    fieldInfo.SetValue(instance, value);
-                    return true;
-                }
-                else if (member is PropertyInfo propertyInfo)
-                {
-                    propertyInfo.SetValue(instance, value);
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 
     [Serializable]
@@ -472,45 +418,8 @@ namespace Megumin.GameFramework.AI.Serialization
             return base.TryDeserializeNotNull(out value);
         }
     }
-
-    [Serializable]
-    public class VariableSerializationData : BasicTypeSerializationData
-    {
-        public string Path;
-        public CollectionSerializationData fallbackData;
-
-        public bool TrySerialize(IVariable item)
-        {
-            if (item is TestVariable variable)
-            {
-                TypeName = variable.GetType().FullName;
-                Name = variable.Name;
-                Path = variable.Path;
-                fallbackData = new CollectionSerializationData();
-                return fallbackData.TrySerialize("fallbackData", variable.GetValue());
-            }
-
-            return false;
-        }
-
-        public bool TryDeserialize(out IVariable value)
-        {
-            value = default;
-
-            var type = TypeCache.GetType(TypeName);
-            if (type == null)
-            {
-                return false;
-            }
-            var variable = Activator.CreateInstance(type) as TestVariable;
-            variable.Name = Name;
-            variable.Path = Path;
-            if (fallbackData.TryDeserialize(out var data))
-            {
-                variable.SetValue(data);
-            }
-            value = variable;
-            return true;
-        }
-    }
 }
+
+
+
+

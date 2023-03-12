@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Megumin.GameFramework.AI.Editor;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
@@ -126,8 +126,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             }
 
+            // var editor = UnityEditor.Editor.CreateEditor()
             var labelView = new Label() { text = "TestValue" };
-            Body.Add(labelView);
+
+            var wrapper = this.CreateSOWrapper<Wapper>();
+            wrapper.Value = instance;
+
+            SerializedObject serializedObject = new SerializedObject(wrapper);
+            var prop = serializedObject.FindProperty("Value");
+            var propertyField = new PropertyField(prop, "Value");
+            propertyField.BindProperty(prop);
+            Body.Add(propertyField);
+            
+            //var editor = UnityEditor.Editor.CreateEditor(wrapper);
+            //var imgui = new IMGUIContainer(() => { editor.OnInspectorGUI(); });
+            //主题颜色冲突，不知到怎么控制主题。
+            //Body.Add(imgui);
+        }
+
+        public class Wapper : ScriptableObject
+        {
+            [SerializeReference]
+            public IVariable Value;
         }
     }
+
+
 }

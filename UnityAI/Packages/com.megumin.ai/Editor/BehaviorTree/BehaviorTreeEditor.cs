@@ -39,7 +39,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         };
 
         internal readonly static MySetting<Rect> BlackboardLayout
-            = new MySetting<Rect>("BlackboardLayout", new Rect(0, 0, 200, 400), SettingsScope.User);
+            = new MySetting<Rect>("BlackboardLayout", new Rect(0, 0, 340, 400), SettingsScope.User);
 
         /// <summary>
         /// 是否显示还还没有实现的Feature。默认是隐藏，否则会给用户造成困惑为什么变灰点不了。

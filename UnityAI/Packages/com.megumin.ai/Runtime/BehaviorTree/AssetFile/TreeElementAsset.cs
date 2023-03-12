@@ -33,9 +33,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public void SerializeMember(object instance,
-                                      List<string> ignoreMember,
-                                      List<CollectionSerializationData> memberData,
-                                      List<CollectionSerializationData> callbackMemberData)
+                                    List<string> ignoreMember,
+                                    List<CollectionSerializationData> memberData,
+                                    List<CollectionSerializationData> callbackMemberData)
         {
             //保存参数
             //https://github.com/dotnet/runtime/issues/46272
@@ -75,7 +75,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
 
                 CollectionSerializationData data = new();
-                if (data.TrySerialize(member,instance, defualtValueInstance))
+                if (data.TrySerialize(member, instance, defualtValueInstance))
                 {
                     memberData.Add(data);
                 }
@@ -83,13 +83,34 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public void DeserializeMember(object instance,
-                                          List<CollectionSerializationData> memberData,
-                                          List<CollectionSerializationData> callbackMemberData)
+                                      List<CollectionSerializationData> memberData,
+                                      List<CollectionSerializationData> callbackMemberData)
         {
+            if (instance == null)
+            {
+                return;
+            }
             //反序列化参数
             foreach (var param in memberData)
             {
-                param?.Instantiate(instance);
+                if (param == null)
+                {
+                    continue;
+                }
+
+                //Todo: 要不要使用TokenID查找
+                var member = instance.GetType().GetMember(param.Name)?.FirstOrDefault();
+                if (member != null && param.TryDeserialize(out var value))
+                {
+                    if (member is FieldInfo fieldInfo)
+                    {
+                        fieldInfo.SetValue(instance, value);
+                    }
+                    else if (member is PropertyInfo propertyInfo)
+                    {
+                        propertyInfo.SetValue(instance, value);
+                    }
+                }
             }
 
             AfterDeserializeMember(instance, StringCallbackMemberData);

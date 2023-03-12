@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Megumin.GameFramework.AI.Serialization;
+using Megumin.Serialization;
 
 namespace Megumin.GameFramework.AI
 {
@@ -66,4 +64,50 @@ namespace Megumin.GameFramework.AI
     {
         public bool Value;
     }
+
+
+
+    [Serializable]
+    public class VariableSerializationData : SerializationData
+    {
+        public string TypeName;
+        public string Path;
+        public CollectionSerializationData fallbackData;
+
+        public bool TrySerialize(IVariable item)
+        {
+            if (item is TestVariable variable)
+            {
+                TypeName = variable.GetType().FullName;
+                Name = variable.Name;
+                Path = variable.Path;
+                fallbackData = new CollectionSerializationData();
+                return fallbackData.TrySerialize("fallbackData", variable.GetValue());
+            }
+
+            return false;
+        }
+
+        public bool TryDeserialize(out IVariable value)
+        {
+            value = default;
+
+            var type = TypeCache.GetType(TypeName);
+            if (type == null)
+            {
+                return false;
+            }
+            var variable = Activator.CreateInstance(type) as TestVariable;
+            variable.Name = Name;
+            variable.Path = Path;
+            if (fallbackData.TryDeserialize(out var data))
+            {
+                variable.SetValue(data);
+            }
+            value = variable;
+            return true;
+        }
+    }
 }
+
+
