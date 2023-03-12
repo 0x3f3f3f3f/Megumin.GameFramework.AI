@@ -98,3 +98,18 @@ BehaviorTreeView .node.startNode {
 BehaviorTreeView .node.startNode #body #header {
     background-color: rgba(245, 144, 20, 0.76);
 }
+
+BehaviorTreeView BlackboardVariableView.graphElement {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}

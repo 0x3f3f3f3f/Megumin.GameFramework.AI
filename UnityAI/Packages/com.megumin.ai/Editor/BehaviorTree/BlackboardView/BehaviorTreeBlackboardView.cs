@@ -106,6 +106,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     var view = new BlackboardVariableView();
                     view.Blackboard = this;
                     view.SetVariable(variable);
+
+                    //var f = new BlackboardField() { text = variable.Name };
+
                     Add(view);
                 }
             }

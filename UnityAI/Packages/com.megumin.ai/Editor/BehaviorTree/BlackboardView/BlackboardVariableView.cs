@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class BlackboardVariableView : VisualElement
+    public class BlackboardVariableView : GraphElement
     {
         public new class UxmlFactory : UxmlFactory<BlackboardVariableView, UxmlTraits> { }
 
@@ -22,6 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public BlackboardVariableView()
         {
             BlackboardField = new BlackboardField() { text = "Variable", typeText = "" };
+            BlackboardField.capabilities = Capabilities.Selectable | Capabilities.Droppable | Capabilities.Renamable;
 
             {
                 //Copy form Unity C# reference source
@@ -35,24 +36,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 textinput.RegisterCallback<FocusOutEvent>(e => { OnEditTextFinished(); }, TrickleDown.NoTrickleDown);
             }
 
-
-
-
-
-
             Body = new VisualElement() { name = "body" };
             BlackboardRow = new BlackboardRow(BlackboardField, Body);
 
-
-
             //this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
             this.RegisterCallback<ContextualMenuPopulateEvent>(BuildContextualMenu);
+
+            capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Ascendable | Capabilities.Copiable | Capabilities.Snappable | Capabilities.Groupable;
             this.Add(BlackboardRow);
         }
 
         private void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction($"Delete", a => { Blackboard?.RemoveVariable(this); }, DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction($"Delete", a => { OnDelete(); }, DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction($"Test", a => { DebugTest(); }, DropdownMenuAction.Status.Normal);
+        }
+
+        private void DebugTest()
+        {
+            var a = BlackboardField.IsSelectable();
+            var b = BlackboardRow.IsSelectable();
+            var c = this.IsSelectable();
+        }
+
+        private void OnDelete()
+        {
+            Blackboard?.RemoveVariable(this);
         }
 
         private void OnEditTextFinished()
@@ -60,6 +69,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var table = Blackboard?.LookupTable;
             if (table != null)
             {
+                if (m_TextField.text == Variable.Name)
+                {
+                    //值没有变，不要验证名字。否则会在原名字上 + （1）
+                    return;
+                }
+
                 string name = table.ValidName(m_TextField.text);
                 if (name != m_TextField.text)
                 {
@@ -99,7 +114,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 BlackboardField.text = instance.Name;
             }
 
-            BlackboardField.tooltip = instance.Name;
+            //BlackboardField.tooltip = instance.Name;
 
             var type = instance?.GetValue()?.GetType();
             if (type != null)
@@ -137,7 +152,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var propertyField = new PropertyField(prop, "Value");
             propertyField.BindProperty(prop);
             Body.Add(propertyField);
-            
+
             //var editor = UnityEditor.Editor.CreateEditor(wrapper);
             //var imgui = new IMGUIContainer(() => { editor.OnInspectorGUI(); });
             //主题颜色冲突，不知到怎么控制主题。
@@ -148,6 +163,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             [SerializeReference]
             public IVariable Value;
+        }
+
+        public override void Select(VisualElement selectionContainer, bool additive)
+        {
+            base.Select(selectionContainer, additive);
+            this.LogMethodName();
+        }
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+            this.LogMethodName();
+        }
+
+        public override void OnUnselected()
+        {
+            base.OnUnselected();
+            this.LogMethodName();
         }
     }
 

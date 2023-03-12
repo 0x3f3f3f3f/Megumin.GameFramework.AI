@@ -28,7 +28,7 @@ MonoBehaviour:
       RefObject: {fileID: 0}
       DataType: 2
       Collection: []
-  - Name: Int
+  - Name: fsadfasf
     TypeName: Megumin.GameFramework.AI.ParamVariable_int
     Path: 
     fallbackData:
