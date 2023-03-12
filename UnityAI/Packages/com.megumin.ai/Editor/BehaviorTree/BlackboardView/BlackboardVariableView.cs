@@ -113,6 +113,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     BlackboardField.typeText = instanceType.GetGenericArguments()?[0]?.Name;
                 }
+                else
+                {
+                    foreach (var item in instanceType.GetInterfaces())
+                    {
+                        if (item.IsGenericType && item.GetGenericTypeDefinition() == typeof(IVariable<>))
+                        {
+                            BlackboardField.typeText = item.GetGenericArguments()?[0]?.Name;
+                        }
+                    }
+                }
+
             }
 
             var labelView = new Label() { text = "TestValue" };

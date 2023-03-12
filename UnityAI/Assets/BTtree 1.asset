@@ -12,9 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e71738a9993da41a37d76210d86152, type: 3}
   m_Name: BTtree 1
   m_EditorClassIdentifier: 
+  Version: 1.0.0
+  UseSerializeReferenceGeneric: 0
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
   StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
+  VariableTable:
+  - Name: String
+    TypeName: Megumin.GameFramework.AI.ParamVariable_string
+    Data: 
+    RefObject: {fileID: 0}
+    DataType: 0
+    Path: 
+    fallbackData:
+      Name: fallbackData
+      TypeName: 
+      Data: 
+      RefObject: {fileID: 0}
+      DataType: 2
+      Collection: []
+  - Name: Int
+    TypeName: Megumin.GameFramework.AI.ParamVariable_int
+    Data: 
+    RefObject: {fileID: 0}
+    DataType: 0
+    Path: 
+    fallbackData:
+      Name: fallbackData
+      TypeName: System.Int32
+      Data: 0
+      RefObject: {fileID: 0}
+      DataType: 0
+      Collection: []
+  - Name: GameObject
+    TypeName: Megumin.GameFramework.AI.ParamVariable_GameObject
+    Data: 
+    RefObject: {fileID: 0}
+    DataType: 0
+    Path: 
+    fallbackData:
+      Name: fallbackData
+      TypeName: 
+      Data: 
+      RefObject: {fileID: 0}
+      DataType: 2
+      Collection: []
   Nodes:
   - StringCallbackMemberData: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
@@ -50,168 +92,162 @@ MonoBehaviour:
     ChildNodes: []
     Decorators: []
     MemberData:
-    - MemberName: Sbyte
+    - Name: Sbyte
       TypeName: System.SByte
       Data: -128
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-    - MemberName: Float
+      Collection: []
+    - Name: Float
       TypeName: System.Single
       Data: 6.45
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-    - MemberName: DateTimeOffset
+      Collection: []
+    - Name: DateTimeOffset
       TypeName: System.DateTimeOffset
       Data: 133228359203156070
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-    - MemberName: TestVector2
+      Collection: []
+    - Name: TestVector2
       TypeName: UnityEngine.Vector2
       Data: '{"x":2.4600000381469728,"y":3.9100000858306886}'
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-    - MemberName: GameObject
+      Collection: []
+    - Name: GameObject
       TypeName: UnityEngine.GameObject
       Data: 
       RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
-      Collection: []
       DataType: 257
-    - MemberName: ScriptableObject
+      Collection: []
+    - Name: ScriptableObject
       TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTreeAsset
       Data: 
       RefObject: {fileID: 11400000}
-      Collection: []
       DataType: 257
-    - MemberName: ListInt
+      Collection: []
+    - Name: ListInt
       TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 262145
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: System.Int32
         Data: 66
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 0
-      - MemberName: Element1
+      - Name: Element1
         TypeName: System.Int32
         Data: -48
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 0
-      DataType: 262145
-    - MemberName: ListString
+    - Name: ListString
       TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 262145
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: System.String
         Data: AAA
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 65
-      - MemberName: Element1
+      - Name: Element1
         TypeName: System.String
         Data: bbb
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 65
-      DataType: 262145
-    - MemberName: ListGameObject
+    - Name: ListGameObject
       TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 262145
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: UnityEngine.GameObject
         Data: 
         RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
           type: 3}
-        Collection: []
         DataType: 257
-      - MemberName: Element1
+      - Name: Element1
         TypeName: UnityEngine.GameObject
         Data: 
         RefObject: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
-        Collection: []
         DataType: 257
-      DataType: 262145
-    - MemberName: ArrayFloat
+    - Name: ArrayFloat
       TypeName: System.Single[]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 131073
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: System.Single
         Data: 1.05
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 0
-      - MemberName: Element1
+      - Name: Element1
         TypeName: System.Single
         Data: -4.86
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 0
-      DataType: 131073
-    - MemberName: ArrayString
+    - Name: ArrayString
       TypeName: System.String[]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 131073
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: System.String
         Data: CCC
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 65
-      - MemberName: Element1
+      - Name: Element1
         TypeName: System.String
         Data: ddd
         RefObject: {fileID: 0}
-        Collection: []
         DataType: 65
-      DataType: 131073
-    - MemberName: ArrayScriptableObject
+    - Name: ArrayScriptableObject
       TypeName: UnityEngine.ScriptableObject[]
       Data: 
       RefObject: {fileID: 0}
+      DataType: 131073
       Collection:
-      - MemberName: Element0
+      - Name: Element0
         TypeName: UnityEngine.UIElements.StyleSheet
         Data: 
         RefObject: {fileID: 1068529831357515114, guid: fdeda3b2ca86b6542a303cbe4f00c3c4,
           type: 3}
-        Collection: []
         DataType: 257
-      - MemberName: Element1
+      - Name: Element1
         TypeName: UnityEngine.UIElements.ThemeStyleSheet
         Data: 
         RefObject: {fileID: 4413694071827464959, guid: b38883e90def0f047b5072ccf0930af0,
           type: 3}
-        Collection: []
         DataType: 257
-      DataType: 131073
+    - Name: ExposeString
+      TypeName: Megumin.GameFramework.AI.ParamVariable`1[[System.String, mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      Data: test1
+      RefObject: {fileID: 0}
+      DataType: 1025
+      Collection: []
     CallbackMemberData:
-    - MemberName: CallbackReceiverString
+    - Name: CallbackReceiverString
       TypeName: 
       Data: "\u6492\u65E6\u53D1\u5C04\u70B9"
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-    - MemberName: CallbackReceiverMyClass
+      Collection: []
+    - Name: CallbackReceiverMyClass
       TypeName: 
       Data: -40|103
       RefObject: {fileID: 0}
-      Collection: []
       DataType: 0
-  Version: 1.0.0
+      Collection: []
