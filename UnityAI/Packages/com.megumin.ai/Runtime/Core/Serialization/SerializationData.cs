@@ -79,6 +79,7 @@ namespace Megumin.GameFramework.AI.Serialization
         /// Vector2,Vector3
         /// </summary>
         IsUnityBasicType = 1 << 9,
+        IsVariable = 1 << 10,
 
         //16-23
         IsCollection = 1 << 16,
@@ -189,6 +190,11 @@ namespace Megumin.GameFramework.AI.Serialization
                 Data = (string)value;
                 DataType |= SerializationDataType.IsString;
             }
+            else if (value is IVariable variable)
+            {
+                Data = variable.Name;
+                DataType |= SerializationDataType.IsVariable;
+            }
             else
             {
                 //这里一定要取值得真实类型，解决多态序列化
@@ -251,6 +257,13 @@ namespace Megumin.GameFramework.AI.Serialization
             if (DataType.HasFlag(SerializationDataType.IsString))
             {
                 value = Data;
+                return true;
+            }
+
+            if (DataType.HasFlag(SerializationDataType.IsVariable))
+            {
+                //Todo Ref find
+                value = null;
                 return true;
             }
 
