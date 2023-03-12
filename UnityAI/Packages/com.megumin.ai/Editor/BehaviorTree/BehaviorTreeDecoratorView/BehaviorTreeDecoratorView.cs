@@ -70,7 +70,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 evt.menu.AppendSeparator();
             }
 
-            evt.menu.AppendAction($"Remove Decorator", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction($"Delete", a => NodeView?.RemoveDecorator(this), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
             //拖拽Bug有点多，暂时用菜单实现。

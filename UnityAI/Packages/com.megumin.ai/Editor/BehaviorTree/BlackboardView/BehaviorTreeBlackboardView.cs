@@ -115,6 +115,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
 
         }
+
+        public void RemoveVariable(BlackboardVariableView blackboardVariableView)
+        {
+            RemoveVariable(blackboardVariableView.Variable);
+        }
+
+        public void RemoveVariable(IVariable variable)
+        {
+            if (LookupTable?.Table.Contains(variable) ?? false)
+            {
+                TreeView.UndoRecord("Remove Variable");
+                LookupTable.Table.Remove(variable);
+                ReloadView();
+            }
+        }
     }
 }
 

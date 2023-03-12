@@ -45,8 +45,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
 
 
-
+            //this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
+            this.RegisterCallback<ContextualMenuPopulateEvent>(BuildContextualMenu);
             this.Add(BlackboardRow);
+        }
+
+        private void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction($"Delete", a => { Blackboard?.RemoveVariable(this); }, DropdownMenuAction.Status.Normal);
         }
 
         private void OnEditTextFinished()
@@ -83,7 +89,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (Guid.TryParse(instance.Name,out var guid))
+            if (Guid.TryParse(instance.Name, out var guid))
             {
                 //使用短名字
                 BlackboardField.text = instance.Name;

@@ -13,9 +13,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string Version = AssetVersion.v1_0_0.ToString();
+        public bool UseSerializeReferenceGeneric = false;
         public string test = "行为树SO资产";
         public string Comment = "load2";
         public string StartNodeGUID = "";
+
         public List<VariableSerializationData> VariableTable = new();
         public List<NodeAsset> Nodes = new();
 
@@ -212,6 +214,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             var tree = new BehaviorTree();
             tree.InstanceGUID = Guid.NewGuid().ToString();
+
+            if (UseSerializeReferenceGeneric)
+            {
+                //多态序列化 + 泛型
+                //
+                Debug.Log("至少需要unity2023");
+                return tree;
+            }
+
 
             //反序列化参数表
             foreach (var item in VariableTable)
