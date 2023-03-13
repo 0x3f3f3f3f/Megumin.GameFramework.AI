@@ -12,7 +12,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<string>
     {
         public MMData<string> MMDatastring;
-        public MMData<GameObject> MMDataGameObject;
+        //public MMData<GameObject> MMDataGameObject;
+        public MMData2<string> MMData2string;
+        public MMData3<string> MMData3string_Ref;
+
+        //public Log Log; //隐藏在面板上的显示？还是下拉菜单 还是MMData3<Log>
         //[SerializeReference]
         //public TestVariable ExposeString;// = new ParamVariable_string() { Name = "test1",Value ="hello",Path = "GameObject/tag" };
         //public ParamVariable<GameObject> ExposeGameObject;

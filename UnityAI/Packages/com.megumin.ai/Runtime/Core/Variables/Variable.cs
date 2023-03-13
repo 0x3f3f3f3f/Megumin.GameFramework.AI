@@ -159,8 +159,28 @@ namespace Megumin.GameFramework.AI
     public class MMDataSerializationData
     {
         public string MemberName;
-        public string TypeName;
+        /// <summary>
+        /// 类型名和引用名公用的保存字段
+        /// </summary>
+        public string typeNameOrRefName;
+        public string Path;
         public CollectionSerializationData Data;
+
+        public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = value; }
+        public bool IsRef => typeNameOrRefName.StartsWith(RefPrefix);
+
+        public const string RefPrefix = @"""$rid"":";
+        public string RefName
+        {
+            get
+            {
+                return typeNameOrRefName.Substring(RefPrefix.Length);
+            }
+            set
+            {
+                typeNameOrRefName = $"{RefPrefix}{value}";
+            }
+        }
     }
 
     [Serializable]

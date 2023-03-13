@@ -113,6 +113,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         mmdata.Data = valueData;
                         mmdata.MemberName = member.Name;
                         mmdata.TypeName = variable.GetType().FullName;
+                        if (memberValue is IBindable bindable)
+                        {
+                            mmdata.Path = bindable.Path;
+                        }
+
+                        if (memberValue is IRefSharedable sharedable)
+                        {
+                            mmdata.RefName = sharedable.Name;
+                        }
                         MMdata.Add(mmdata);
                     }
                 }
@@ -168,16 +177,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     var type = TypeCache.GetType(variableData.TypeName);
                     if (type != null)
                     {
-                        var variable = Activator.CreateInstance(type) as IMMDataable;
-                        variable.SetValue(value);
 
-                        if (member is FieldInfo fieldInfo)
+                        if (variableData.IsRef)
                         {
-                            fieldInfo.SetValue(instance, variable);
+                            //typeof(IRefSharedable).IsAssignableFrom(type)
+                            //引用不要构造实例，通过外部去获取
                         }
-                        else if (member is PropertyInfo propertyInfo)
+                        else
                         {
-                            propertyInfo.SetValue(instance, variable);
+                            var variable = Activator.CreateInstance(type) as IMMDataable;
+                            variable.SetValue(value);
+
+                            if (variable is IBindable bindable)
+                            {
+                                bindable.Path = variableData.Path;
+                            }
+
+                            if (member is FieldInfo fieldInfo)
+                            {
+                                fieldInfo.SetValue(instance, variable);
+                            }
+                            else if (member is PropertyInfo propertyInfo)
+                            {
+                                propertyInfo.SetValue(instance, variable);
+                            }
                         }
                     }
                     else
