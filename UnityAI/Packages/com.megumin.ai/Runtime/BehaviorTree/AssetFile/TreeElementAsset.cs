@@ -74,12 +74,95 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                CollectionSerializationData data = new();
-                if (data.TrySerialize(member, instance, defualtValueInstance))
+                ////如果是Data<>
+                //object memberValue = null;
+                //object defaultMemberValue = null;
+                //Type memberType = null;
+
+                //if (member is FieldInfo field)
+                //{
+                //    memberType = field.FieldType;
+                //    memberValue = field.GetValue(instance);
+                //    defaultMemberValue = field.GetValue(defualtValueInstance);
+                //}
+                //else if (member is PropertyInfo property)
+                //{
+                //    memberType = property.PropertyType;
+                //    memberValue = property.GetValue(instance);
+                //    defaultMemberValue = property.GetValue(defualtValueInstance);
+                //}
+
+                //if (memberValue == defaultMemberValue
+                //    || (memberValue?.Equals(defaultMemberValue) ?? false))
+                //{
+                //    //Debug.Log($"值为初始值或者默认值没必要保存");
+                //}
+
+                //if (typeof(MMData<>).IsAssignableFrom(memberType)
+                //    || typeof(MMData<>).IsAssignableFrom(memberValue?.GetType()))
+                //{
+                //    //如果是Data<>
+                //    //特殊序列化
+                //    CollectionSerializationData valueData = new();
+                //    if (valueData.TrySerializeMemberValue(memberValue))
+                //    {
+
+                //    }
+
+                //    MMDataSerializationData mmdata = new();
+                //    if (mmdata.TrySerializeMemberValue(memberValue))
+                //    {
+                //        VariableTable.Add(data);
+                //    }
+                //}
+
+                if (TrySerializeMemberValue(member, instance, defualtValueInstance, out var data))
                 {
                     memberData.Add(data);
                 }
             }
+        }
+
+        /// <summary>
+        /// https://blog.unity.com/technology/serialization-in-unity
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="instance"></param>
+        /// <param name="defualtValueInstance"></param>
+        /// <returns></returns>
+        bool TrySerializeMemberValue(MemberInfo member,
+            object instance,
+            object defualtValueInstance,
+            out CollectionSerializationData data)
+        {
+            //Debug.Log(member);
+
+            data = new();
+            object memberValue = null;
+            object defaultMemberValue = null;
+
+            if (member is FieldInfo field)
+            {
+                memberValue = field.GetValue(instance);
+                defaultMemberValue = field.GetValue(defualtValueInstance);
+            }
+            else if (member is PropertyInfo property)
+            {
+                memberValue = property.GetValue(instance);
+                defaultMemberValue = property.GetValue(defualtValueInstance);
+            }
+
+            if (memberValue == defaultMemberValue
+                || (memberValue?.Equals(defaultMemberValue) ?? false))
+            {
+                //Debug.Log($"值为初始值或者默认值没必要保存");
+            }
+            else
+            {
+                return data.TrySerialize(member.Name, memberValue);
+            }
+
+            return false;
         }
 
         public void DeserializeMember(object instance,

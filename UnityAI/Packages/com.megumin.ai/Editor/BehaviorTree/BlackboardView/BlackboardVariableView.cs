@@ -40,6 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             BlackboardRow = new BlackboardRow(BlackboardField, Body);
 
             //this.AddManipulator(new ContextualMenuManipulator(BuildContextualMenu));
+            //https://forum.unity.com/threads/is-there-an-easy-way-to-customize-the-context-menu-of-a-graphviews-blackboardfield.1006442/
             this.RegisterCallback<ContextualMenuPopulateEvent>(BuildContextualMenu);
 
             capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Ascendable | Capabilities.Copiable | Capabilities.Snappable | Capabilities.Groupable;

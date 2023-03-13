@@ -18,7 +18,6 @@ namespace Megumin.GameFramework.AI.Serialization
 
     public abstract class SerializationData : ISerializationData
     {
-        [FormerlySerializedAs("MemberName")]
         public string Name;
     }
 
@@ -82,47 +81,9 @@ namespace Megumin.GameFramework.AI.Serialization
         public UnityEngine.Object RefObject;
         public SerializationDataType DataType = SerializationDataType.None;
 
-        /// <summary>
-        /// https://blog.unity.com/technology/serialization-in-unity
-        /// </summary>
-        /// <param name="member"></param>
-        /// <param name="instance"></param>
-        /// <param name="defualtValueInstance"></param>
-        /// <returns></returns>
-        public bool TrySerialize(MemberInfo member, object instance, object defualtValueInstance)
+        public bool TrySerialize(string name, object value)
         {
-            //Debug.Log(member);
-
-            object memberValue = null;
-            object defaultMemberValue = null;
-
-            if (member is FieldInfo field)
-            {
-                memberValue = field.GetValue(instance);
-                defaultMemberValue = field.GetValue(defualtValueInstance);
-            }
-            else if (member is PropertyInfo property)
-            {
-                memberValue = property.GetValue(instance);
-                defaultMemberValue = property.GetValue(defualtValueInstance);
-            }
-
-            if (memberValue == defaultMemberValue
-                || (memberValue?.Equals(defaultMemberValue) ?? false))
-            {
-                //Debug.Log($"值为初始值或者默认值没必要保存");
-            }
-            else
-            {
-                return TrySerialize(member.Name, memberValue);
-            }
-
-            return false;
-        }
-
-        public bool TrySerialize(string memberName, object value)
-        {
-            Name = memberName;
+            Name = name;
             if (value == null)
             {
                 //引用类型并且值为null
@@ -132,13 +93,13 @@ namespace Megumin.GameFramework.AI.Serialization
             }
             else
             {
-                return TrySerializeNotNull(memberName, value);
+                return TrySerializeNotNull(name, value);
             }
         }
 
-        public virtual bool TrySerializeNotNull(string memberName, object value)
+        public virtual bool TrySerializeNotNull(string name, object value)
         {
-            Name = memberName;
+            Name = name;
 
             var valueActualType = value.GetType();
             TypeName = valueActualType.FullName;
@@ -147,10 +108,10 @@ namespace Megumin.GameFramework.AI.Serialization
                 DataType |= SerializationDataType.IsClass;
             }
 
-            return TrySerializeByType(valueActualType, memberName, value);
+            return TrySerializeByType(valueActualType, name, value);
         }
 
-        public virtual bool TrySerializeByType(Type valueActualType, string memberName, object value)
+        protected virtual bool TrySerializeByType(Type valueActualType, string name, object value)
         {
             if (typeof(UnityEngine.Object).IsAssignableFrom(valueActualType))
             {
@@ -176,7 +137,7 @@ namespace Megumin.GameFramework.AI.Serialization
                 }
                 else
                 {
-                    Debug.LogError($"{valueActualType.Name}    {memberName} 没找到Iformater");
+                    Debug.LogError($"{valueActualType.Name}    {name} 没找到Iformater");
                     return false;
                 }
             }
@@ -267,7 +228,7 @@ namespace Megumin.GameFramework.AI.Serialization
     {
         public List<BasicTypeSerializationData> Collection;
 
-        public bool SerializeIList(object ilist)
+        protected bool SerializeIList(object ilist)
         {
             if (ilist is IList list && list.Count > 0)
             {
@@ -293,7 +254,7 @@ namespace Megumin.GameFramework.AI.Serialization
             return true;
         }
 
-        public override bool TrySerializeByType(Type valueActualType, string memberName, object value)
+        protected override bool TrySerializeByType(Type valueActualType, string memberName, object value)
         {
             if (valueActualType.IsGenericType)
             {

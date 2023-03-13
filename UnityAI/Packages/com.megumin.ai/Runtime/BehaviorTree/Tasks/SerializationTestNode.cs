@@ -42,8 +42,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public MyClass CallbackReceiverMyClass;
 
         [Space]
-        [SerializeField]
-        public TestVariable ExposeString = new ParamVariable<string>() { Name = "test1",Value ="hello",Path = "GameObject/tag" };
+        //[SerializeReference]
+        public TestVariable ExposeString;// = new ParamVariable_string() { Name = "test1",Value ="hello",Path = "GameObject/tag" };
+        public ParamVariable<GameObject> ExposeGameObject;
+        public MMData<string> MMDataInt;
+        public MMData<GameObject> MMDataGameObject;
 
         [Serializable]
         public class MyClass

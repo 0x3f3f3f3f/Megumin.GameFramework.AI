@@ -2,6 +2,11 @@
 using Megumin.GameFramework.AI.Serialization;
 using Megumin.Serialization;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
+#endif
+
 namespace Megumin.GameFramework.AI
 {
     public interface IVariable
@@ -16,7 +21,7 @@ namespace Megumin.GameFramework.AI
     }
 
     [Serializable]
-    public abstract class TestVariable : IVariable
+    public class TestVariable : IVariable
     {
         [field: UnityEngine.SerializeField]
         public string Name { get; set; }
@@ -24,8 +29,8 @@ namespace Megumin.GameFramework.AI
         public string Path;
 
         public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
-        public abstract object GetValue();
-        public abstract void SetValue(object value);
+        public virtual object GetValue() { return null; }
+        public virtual void SetValue(object value) { }
     }
 
     [Flags]
@@ -58,6 +63,17 @@ namespace Megumin.GameFramework.AI
     }
 
     /// <summary>
+    /// 有Value 不一定有Path ，有Path 不一定有 Name
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [Serializable]
+    public class MMData<T>
+    {
+        [field: SerializeField]
+        public T Value { get; set; }
+    }
+
+    /// <summary>
     /// TODO
     /// </summary>
     public struct Trigger
@@ -65,7 +81,11 @@ namespace Megumin.GameFramework.AI
         public bool Value;
     }
 
+    [Serializable]
+    public class MMDataSerializationData
+    {
 
+    }
 
     [Serializable]
     public class VariableSerializationData : SerializationData
@@ -92,7 +112,7 @@ namespace Megumin.GameFramework.AI
         {
             value = default;
 
-            var type = TypeCache.GetType(TypeName);
+            var type = Megumin.Serialization.TypeCache.GetType(TypeName);
             if (type == null)
             {
                 return false;
@@ -108,6 +128,30 @@ namespace Megumin.GameFramework.AI
             return true;
         }
     }
+
+
+#if UNITY_EDITOR
+
+    //[UnityEditor.CustomPropertyDrawer(typeof(TestVariable))]
+    public class Pro : PropertyDrawer
+    {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            if (property.isExpanded)
+            {
+                return EditorGUI.GetPropertyHeight(property, label, true);
+            }
+            return EditorGUI.GetPropertyHeight(property, label, true);
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            using (new EditorGUI.PropertyScope(position, label, property))
+            {
+                var ex = EditorGUI.PropertyField(position, property, label, true);
+            }
+        }
+    }
+#endif
 }
 
 
