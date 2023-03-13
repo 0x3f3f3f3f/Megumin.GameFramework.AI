@@ -75,7 +75,7 @@ namespace Megumin.GameFramework.AI
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class MMData<T>: IMMDataable
+    public class MMData<T> : IMMDataable
     {
         [field: SerializeField]
         public T Value { get; set; }
@@ -89,6 +89,62 @@ namespace Megumin.GameFramework.AI
         {
             Value = (T)value;
         }
+    }
+
+    /// <summary>
+    /// 可绑定的，绑定到一个组件
+    /// </summary>
+    public interface IBindable
+    {
+        string Path { get; set; }
+    }
+
+    /// <summary>
+    /// 绑定到一个组件。但是不能存到参数表中，也不能共享
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [Serializable]
+    public class MMData2<T> : MMData<T>, IBindable
+    {
+        [field: SerializeField]
+        public string Path { get; set; }
+        public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
+    }
+
+    /// <summary>
+    /// 可以存放在参数表的，可以在多个节点共享的
+    /// </summary>
+    public interface IRefSharedable
+    {
+        string Name { get; set; }
+    }
+
+    [Serializable]
+    public class MMData3<T> : MMData2<T>, IRefSharedable
+    {
+        [field: SerializeField]
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// 可以自动类型转换的
+    /// </summary>
+    public interface IConvtable
+    {
+
+    }
+
+    /// <summary>
+    /// Wapper类可以类型转换的
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [Serializable]
+    public class MMAutoConvertData<T>
+    {
+        /// <summary>
+        /// 必然不是T类型，否则就不用转型了。
+        /// </summary>
+        public IRefSharedable RefVar { get; set; }
     }
 
     /// <summary>
