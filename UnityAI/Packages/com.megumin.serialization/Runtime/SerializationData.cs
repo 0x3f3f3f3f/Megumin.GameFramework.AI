@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Megumin.GameFramework.AI.BehaviorTree;
-using Megumin.Serialization;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.Serialization
+namespace Megumin.Serialization
 {
     public interface ISerializationData
     {
@@ -123,11 +117,6 @@ namespace Megumin.GameFramework.AI.Serialization
                 Data = (string)value;
                 DataType |= SerializationDataType.IsString;
             }
-            else if (value is IVariable variable)
-            {
-                Data = variable.Name;
-                DataType |= SerializationDataType.IsVariable;
-            }
             else
             {
                 //这里一定要取值得真实类型，解决多态序列化
@@ -190,13 +179,6 @@ namespace Megumin.GameFramework.AI.Serialization
             if (DataType.HasFlag(SerializationDataType.IsString))
             {
                 value = Data;
-                return true;
-            }
-
-            if (DataType.HasFlag(SerializationDataType.IsVariable))
-            {
-                //Todo Ref find
-                value = null;
                 return true;
             }
 

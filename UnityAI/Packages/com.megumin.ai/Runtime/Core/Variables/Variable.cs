@@ -1,5 +1,4 @@
 ﻿using System;
-using Megumin.GameFramework.AI.Serialization;
 using Megumin.Serialization;
 
 #if UNITY_EDITOR

@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Megumin.GameFramework.AI.Serialization
+namespace Megumin.Serialization
 {
     [Serializable]
     public class IntParameterData : GenericSerializationData<int> { }
