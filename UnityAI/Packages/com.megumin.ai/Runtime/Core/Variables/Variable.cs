@@ -62,14 +62,33 @@ namespace Megumin.GameFramework.AI
     }
 
     /// <summary>
+    /// 用于识别公开参数 todo 重命名
+    /// </summary>
+    public interface IMMDataable
+    {
+        object GetValue();
+        void SetValue(object value);
+    }
+
+    /// <summary>
     /// 有Value 不一定有Path ，有Path 不一定有 Name
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class MMData<T>
+    public class MMData<T>: IMMDataable
     {
         [field: SerializeField]
         public T Value { get; set; }
+
+        public virtual object GetValue()
+        {
+            return Value;
+        }
+
+        public virtual void SetValue(object value)
+        {
+            Value = (T)value;
+        }
     }
 
     /// <summary>
@@ -83,7 +102,9 @@ namespace Megumin.GameFramework.AI
     [Serializable]
     public class MMDataSerializationData
     {
-
+        public string MemberName;
+        public string TypeName;
+        public CollectionSerializationData Data;
     }
 
     [Serializable]

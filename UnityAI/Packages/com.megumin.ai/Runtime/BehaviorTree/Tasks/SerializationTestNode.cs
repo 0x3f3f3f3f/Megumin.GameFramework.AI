@@ -11,6 +11,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
+        public MMData<string> MMDatastring;
+        public MMData<GameObject> MMDataGameObject;
+        //[SerializeReference]
+        //public TestVariable ExposeString;// = new ParamVariable_string() { Name = "test1",Value ="hello",Path = "GameObject/tag" };
+        //public ParamVariable<GameObject> ExposeGameObject;
+
+
         [Space]
         public sbyte Sbyte;
         public float Float = 3f;
@@ -36,14 +43,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Space]
         public string CallbackReceiverString;
         public MyClass CallbackReceiverMyClass;
-
-        [Space]
-        //[SerializeReference]
-        public TestVariable ExposeString;// = new ParamVariable_string() { Name = "test1",Value ="hello",Path = "GameObject/tag" };
-        public ParamVariable<GameObject> ExposeGameObject;
-        public MMData<string> MMDataInt;
-        public MMData<GameObject> MMDataGameObject;
-
+        
         [Serializable]
         public class MyClass
         {

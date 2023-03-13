@@ -22,6 +22,12 @@ namespace Megumin.Serialization
 
         public static bool TryGetComponentType(string typeFullName, out Type type, bool forceRecache = false)
         {
+            if (string.IsNullOrEmpty(typeFullName))
+            {
+                type = null;
+                return false;
+            }
+
             if (hotComponentType.TryGetValue(typeFullName, out type))
             {
                 return true;
@@ -50,6 +56,13 @@ namespace Megumin.Serialization
 
         public static bool TryGetUnityObjectType(string typeFullName, out Type type, bool forceRecache = false)
         {
+
+            if (string.IsNullOrEmpty(typeFullName))
+            {
+                type = null;
+                return false;
+            }
+
             if (hotUnityObjectType.TryGetValue(typeFullName, out type))
             {
                 return true;
@@ -82,6 +95,12 @@ namespace Megumin.Serialization
         public static bool TryGetType(string typeFullName, out Type type, bool forceRecache = false)
         {
             using var profiler = tryGetTypeMarker.Auto();
+
+            if (string.IsNullOrEmpty(typeFullName))
+            {
+                type = null;
+                return false;
+            }
 
             if (hotType.TryGetValue(typeFullName, out type))
             {

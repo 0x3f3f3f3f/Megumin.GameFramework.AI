@@ -75,6 +75,12 @@ namespace Megumin.Serialization
         public UnityEngine.Object RefObject;
         public SerializationDataType DataType = SerializationDataType.None;
 
+        /// <summary>
+        /// https://blog.unity.com/technology/serialization-in-unity
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool TrySerialize(string name, object value)
         {
             Name = name;

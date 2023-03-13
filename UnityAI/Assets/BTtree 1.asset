@@ -17,40 +17,10 @@ MonoBehaviour:
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: load2
   StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
-  VariableTable:
-  - Name: String
-    TypeName: Megumin.GameFramework.AI.ParamVariable_string
-    Path: 
-    fallbackData:
-      Name: fallbackData
-      TypeName: 
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 2
-      Collection: []
-  - Name: fsadfasf
-    TypeName: Megumin.GameFramework.AI.ParamVariable_int
-    Path: 
-    fallbackData:
-      Name: fallbackData
-      TypeName: System.Int32
-      Data: 0
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
-  - Name: GameObject
-    TypeName: Megumin.GameFramework.AI.ParamVariable_GameObject
-    Path: 
-    fallbackData:
-      Name: fallbackData
-      TypeName: UnityEngine.GameObject
-      Data: 
-      RefObject: {fileID: 3939188381555538775, guid: 14dd42bb726074f41ada6638453ab640,
-        type: 3}
-      DataType: 257
-      Collection: []
+  VariableTable: []
   Nodes:
   - StringCallbackMemberData: []
+    MMdata: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
     GUID: 06fc2185-9850-45e4-b76e-a200613a9391
     Meta:
@@ -69,6 +39,28 @@ MonoBehaviour:
     MemberData: []
     CallbackMemberData: []
   - StringCallbackMemberData: []
+    MMdata:
+    - MemberName: MMDatastring
+      Data:
+        Name: Value
+        TypeName: System.String
+        Data: fsadf
+        RefObject: {fileID: 0}
+        DataType: 65
+        Collection: []
+      TypeName: Megumin.GameFramework.AI.MMData`1[[System.String, mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+    - MemberName: MMDataGameObject
+      Data:
+        Name: Value
+        TypeName: UnityEngine.GameObject
+        Data: 
+        RefObject: {fileID: 3939188381555538775, guid: 14dd42bb726074f41ada6638453ab640,
+          type: 3}
+        DataType: 257
+        Collection: []
+      TypeName: Megumin.GameFramework.AI.MMData`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: ada6836d-8b37-432e-993e-a739afa3a29c
     Meta:
@@ -223,12 +215,6 @@ MonoBehaviour:
         RefObject: {fileID: 4413694071827464959, guid: b38883e90def0f047b5072ccf0930af0,
           type: 3}
         DataType: 257
-    - Name: ExposeString
-      TypeName: 
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 2
-      Collection: []
     CallbackMemberData:
     - Name: CallbackReceiverString
       TypeName: 
