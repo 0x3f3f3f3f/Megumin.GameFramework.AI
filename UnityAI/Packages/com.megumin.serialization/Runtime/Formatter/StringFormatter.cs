@@ -93,6 +93,7 @@ namespace Megumin.Serialization
                 { typeof(DateTime).FullName,new DataTimeFormatter() },
                 { typeof(DateTimeOffset).FullName,new DateTimeOffsetFormatter() },
                 { typeof(TimeSpan).FullName,new TimeSpanFormatter() },
+                { typeof(Type).FullName,new TypeFormatter() },
 
 
 
@@ -432,6 +433,29 @@ namespace Megumin.Serialization
                 if (long.TryParse(source, out var result))
                 {
                     value = TimeSpan.FromTicks(result);
+                    return true;
+                }
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class TypeFormatter : IFormatter<string>
+        {
+            public string Serialize(object value)
+            {
+                if (value is Type type)
+                {
+                    return type.FullName;
+                }
+                return value.ToString();
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (TypeCache.TryGetType(source, out var type))
+                {
+                    value = type;
                     return true;
                 }
                 value = default;
