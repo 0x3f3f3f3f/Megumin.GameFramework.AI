@@ -1,4 +1,5 @@
 ﻿using System;
+using Megumin.Binding;
 using Megumin.Serialization;
 
 #if UNITY_EDITOR
@@ -42,16 +43,19 @@ namespace Megumin.GameFramework.AI
     public class Variable<T> : Variable, IVariable<T>
     {
         [field: SerializeField]
-        public T Value { get; set; }
+        protected T date;
+
+
+        public virtual T Value { get => date; set => this.date = value; }
 
         public override object GetValue()
         {
-            return Value;
+            return date;
         }
 
         public override void SetValue(object value)
         {
-            Value = (T)value;
+            date = (T)value;
         }
     }
 
@@ -83,12 +87,96 @@ namespace Megumin.GameFramework.AI
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class BindingVariable<T> : Variable<T>, IBindable
+    public class BindingVariable<T> : Variable<T>, IBindable, IBindingParseable
     {
         [field: SerializeField]
         public string BindingPath { get; set; }
         public ParseMode GetMode = ParseMode.FallbackValue;
         public ParseMode SetMode = ParseMode.FallbackValue;
+
+
+        public override T Value
+        {
+            get
+            {
+                if (ParseResult.HasValue)
+                {
+                    if (ParseResult.Value.HasFlag(ParseBindingResult.Get))
+                    {
+                        //解析成功
+                        return Getter();
+                    }
+                    else
+                    {
+                        //解析失败
+                        if (GetMode.HasFlag(ParseMode.Log))
+                        {
+                            string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
+                            Debug.Log(message);
+                        }
+
+                        if (GetMode.HasFlag(ParseMode.FallbackValue))
+                        {
+                            return base.date;
+                        }
+
+                        if (GetMode.HasFlag(ParseMode.FallbackTypeDefault))
+                        {
+                            return default;
+                        }
+
+                        throw new Exception();
+                    }
+
+                }
+                else
+                {
+                    //还未解析
+                    if (GetMode.HasFlag(ParseMode.Log))
+                    {
+                        string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
+                        Debug.Log(message);
+                    }
+                    return default;
+                }
+            }
+
+            set
+            {
+                base.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// null表示还没有解析绑定
+        /// </summary>
+        [NonSerialized]
+        protected ParseBindingResult? ParseResult = null;
+        protected Func<T> Getter;
+        protected Action<T> Setter;
+        static readonly object parseLock = new object();
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
+        {
+            lock (parseLock)
+            {
+                if (ParseResult == null || force)
+                {
+                    object instance = bindInstance;
+
+                    (ParseResult, Getter, Setter) =
+                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance);
+                }
+
+                return ParseResult ?? ParseBindingResult.None;
+            }
+        }
+
+        public string DebugParseResult()
+        {
+            string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
+            Debug.Log(message);
+            return message;
+        }
     }
 
     /// <summary>
@@ -157,7 +245,7 @@ namespace Megumin.GameFramework.AI
         public bool IsRef => !string.IsNullOrEmpty(RefName);
         public CollectionSerializationData Data;
 
-        //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = value; }
+        //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = date; }
         //public bool IsRef => typeNameOrRefName.StartsWith(RefPrefix);
 
         //public const string RefPrefix = @"""$rid"":";
@@ -169,7 +257,7 @@ namespace Megumin.GameFramework.AI
         //    }
         //    set
         //    {
-        //        typeNameOrRefName = $"{RefPrefix}{value}";
+        //        typeNameOrRefName = $"{RefPrefix}{date}";
         //    }
         //}
         const string NullString = "$null";

@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<CollectionSerializationData> MemberData = new();
             public List<CollectionSerializationData> CallbackMemberData = new();
 
-            public BTNode Instantiate(IRefFinder refFinder = null, bool instanceMeta = true)
+            public BTNode Instantiate(BehaviorTree tree, bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 if (nodeType.IsSubclassOf(typeof(BTNode)))
@@ -63,18 +63,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         }
 
                         node.InstanceID = Guid.NewGuid().ToString();
+                        node.Tree = tree;
 
                         //实例化装饰器
                         foreach (var decoratorAsset in Decorators)
                         {
-                            var d = decoratorAsset.Instantiate(refFinder, instanceMeta);
+                            var d = decoratorAsset.Instantiate(tree, instanceMeta);
                             if (d != null)
                             {
                                 node.AddDecorator(d);
                             }
                         }
 
-                        DeserializeMember(node, MemberData, CallbackMemberData, refFinder);
+                        DeserializeMember(node, MemberData, CallbackMemberData, tree);
 
                         return node;
                     }
@@ -133,7 +134,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<CollectionSerializationData> MemberData = new();
             public List<CollectionSerializationData> CallbackMemberData = new();
 
-            public ITreeElement Instantiate(IRefFinder refFinder = null, bool instanceMeta = true)
+            public ITreeElement Instantiate(BehaviorTree tree, bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
@@ -145,7 +146,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
 
                 decorator.GUID = this.GUID;
-                DeserializeMember(decorator, MemberData, CallbackMemberData, refFinder);
+                decorator.Tree = tree;
+
+                DeserializeMember(decorator, MemberData, CallbackMemberData, tree);
 
                 return decorator;
             }

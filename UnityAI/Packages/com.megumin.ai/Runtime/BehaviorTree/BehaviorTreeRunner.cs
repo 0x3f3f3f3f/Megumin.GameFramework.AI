@@ -50,6 +50,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BehaviourTree.Reset();
         }
 
+        [Editor]
+        public void Rebind()
+        {
+            BehaviourTree.ParseAllBindable(gameObject, true);
+        }
+
         public void EnableTree()
         {
             BehaviorTreeManager.Instance.AddTree(this);

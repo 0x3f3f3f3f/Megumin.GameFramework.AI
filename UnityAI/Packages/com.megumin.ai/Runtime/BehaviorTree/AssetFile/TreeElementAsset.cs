@@ -122,9 +122,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void DeserializeMember(object instance,
+        public void DeserializeMember(TreeElement instance,
                                       List<CollectionSerializationData> memberData,
-                                      List<CollectionSerializationData> callbackMemberData, 
+                                      List<CollectionSerializationData> callbackMemberData,
                                       IRefFinder refFinder)
         {
             if (instance == null)
@@ -176,6 +176,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         else if (member is PropertyInfo propertyInfo)
                         {
                             propertyInfo.SetValue(instance, variable);
+                        }
+
+                        if (variable is IBindable bindable)
+                        {
+                            instance.Tree.AllBindable.Add(bindable);
                         }
                     }
                     catch (Exception e)

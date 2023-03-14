@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Megumin.Binding;
 using UnityEngine;
 using UnityEngine.Playables;
 using static PlasticGui.LaunchDiffParameters;
@@ -29,6 +30,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         private Status treestate = Status.Init;
 
+
+
         public void Reset()
         {
             treestate = Status.Init;
@@ -40,6 +43,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 item.Awake();
             }
+
+            ParseAllBindable(agent);
 
             foreach (var item in AllNodes)
             {
@@ -57,6 +62,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //        item.Start();
             //    }
             //}
+        }
+
+        public void ParseAllBindable(object agent, bool force = false)
+        {
+            foreach (var item in AllBindable)
+            {
+                if (item is IBindingParseable parseable)
+                {
+                    parseable.ParseBinding(agent, force);
+                }
+            }
         }
 
         /// <summary>

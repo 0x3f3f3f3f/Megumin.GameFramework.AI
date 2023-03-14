@@ -13,11 +13,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [HelpURL("www.baidu.com")]
     [Description]
     [Tooltip("在控制台打印日志")]
-    public class Log: ActionTaskNode
+    public class Log : ActionTaskNode
     {
         int count = 0;
 
         public string LogStr = "Hello world!";
+        public BindingVariable<string> LogStr2;
 
         protected override void OnEnter()
         {
@@ -26,8 +27,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override Status OnTick()
         {
-            Log($"Hello world! {count}");
-            return  Status.Succeeded;
+            Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2.Value} ---- {count}");
+            return Status.Succeeded;
         }
     }
 }
