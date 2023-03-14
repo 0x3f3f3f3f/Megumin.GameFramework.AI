@@ -169,6 +169,9 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         //public string typeNameOrRefName;
         public string Path;
+        /// <summary>
+        /// 必须保存类型FullName，值得真实类型，或者成员的声明类型。
+        /// </summary>
         public string TypeName;
         public bool IsRef => !string.IsNullOrEmpty(RefName);
         public string RefName;
@@ -192,62 +195,54 @@ namespace Megumin.GameFramework.AI
 
         public bool TryDeserialize(out object vara, IRefFinder refFinder)
         {
+            var type = Serialization.TypeCache.GetType(TypeName);
+            if (type == null)
+            {
+                Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
+                vara = null;
+                return false;
+            }
+
             if (IsRef)
             {
                 //typeof(IRefSharedable).IsAssignableFrom(type)
                 //引用不要构造实例，通过外部去获取
-                if (refFinder != null && refFinder.TryGetRefValue(RefName, out var refValue))
+                if (refFinder != null && refFinder.TryGetRefValue(RefName, out var refValue)
+                    && type.IsAssignableFrom(refValue?.GetType()))//AutoConvert 情况下不用验证类型
                 {
                     vara = refValue;
                     return true;
                 }
                 else
                 {
+                    Debug.LogError($"没有找到 类型匹配的 RefValue");
                     //即使missRef，也要反射构造一个参数，将RefName反序列化出来，方式第二次保存时
                     //RefName丢失。
-                    var type = Serialization.TypeCache.GetType(TypeName);
-                    if (type != null)
-                    {
-                        var variable = Activator.CreateInstance(type) as IRefSharedable;
-                        variable.Name = RefName;
+                    var variable = Activator.CreateInstance(type) as IRefSharedable;
+                    variable.Name = RefName;
 
-                        if (variable is IBindable bindable)
-                        {
-                            bindable.Path = Path;
-                        }
-
-                        vara = variable;
-                        return true;
-                    }
-                    else
+                    if (variable is IBindable bindable)
                     {
-                        Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
+                        bindable.Path = Path;
                     }
 
-                    Debug.LogError($"没有找到RefValue");
+                    vara = variable;
+                    return true;
                 }
             }
             else
             {
                 if (Data.TryDeserialize(out var value))
                 {
-                    var type = Serialization.TypeCache.GetType(TypeName);
-                    if (type != null)
-                    {
-                        var variable = Activator.CreateInstance(type) as IMMDataable;
-                        variable.SetValue(value);
+                    var variable = Activator.CreateInstance(type) as IMMDataable;
+                    variable.SetValue(value);
 
-                        if (variable is IBindable bindable)
-                        {
-                            bindable.Path = Path;
-                        }
-                        vara = variable;
-                        return true;
-                    }
-                    else
+                    if (variable is IBindable bindable)
                     {
-                        Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
+                        bindable.Path = Path;
                     }
+                    vara = variable;
+                    return true;
                 }
             }
 
