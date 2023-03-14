@@ -50,15 +50,15 @@ namespace Megumin.GameFramework.AI
 
         const string template =
 @"
-public class ParamVariable_$(type) : MMData3<$(type)> { }
+public class RefVariable_$(type) : RefVariable<$(type)> { }
 
 public class VariableCreator_$(type) : VariableCreator
 {
     public override string Name { get; set; } = ""$(type)"";
 
-    public override IRefSharedable Create()
+    public override IRefable Create()
     {
-        return new ParamVariable_$(type)() { Name = ""$(Type)"" };
+        return new RefVariable_$(type)() { RefName = ""$(Type)"" };
     }
 }";
         [Editor]

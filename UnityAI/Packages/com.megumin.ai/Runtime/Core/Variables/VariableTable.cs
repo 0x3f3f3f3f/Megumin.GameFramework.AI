@@ -22,11 +22,11 @@ namespace Megumin.GameFramework.AI
         
 #endif
         [UnityEngine.SerializeReference]
-        public List<IRefSharedable> Table = new();
+        public List<IRefable> Table = new();
 
-        public bool TryGetParam(string name, out IRefSharedable variable)
+        public bool TryGetParam(string name, out IRefable variable)
         {
-            var first = Table.FirstOrDefault(elem => elem.Name == name);
+            var first = Table.FirstOrDefault(elem => elem.RefName == name);
             if (first != null)
             {
                 variable = first;
@@ -61,7 +61,7 @@ namespace Megumin.GameFramework.AI
         /// <returns></returns>
         public string ValidName(string name)
         {
-            while (Table.Any(elem => string.Equals(elem.Name, name, StringComparison.OrdinalIgnoreCase)))
+            while (Table.Any(elem => string.Equals(elem.RefName, name, StringComparison.OrdinalIgnoreCase)))
             {
                 name += " (1)";
             }

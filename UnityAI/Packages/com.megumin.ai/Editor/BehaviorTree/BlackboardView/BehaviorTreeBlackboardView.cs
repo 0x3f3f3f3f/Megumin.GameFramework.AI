@@ -78,7 +78,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             TreeView.UndoRecord("AddNewVariable");
             var vara = creator.Create();
-            vara.Name = LookupTable.ValidName(vara.Name);
+            vara.RefName = LookupTable.ValidName(vara.RefName);
             LookupTable.Table.Add(vara);
             ReloadView();
         }
@@ -107,7 +107,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     view.Blackboard = this;
                     view.SetVariable(variable);
 
-                    //var f = new BlackboardField() { text = variable.Name };
+                    //var f = new BlackboardField() { text = variable.RefName };
 
                     Add(view);
                 }
@@ -124,7 +124,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             RemoveVariable(blackboardVariableView.Variable);
         }
 
-        public void RemoveVariable(IRefSharedable variable)
+        public void RemoveVariable(IRefable variable)
         {
             if (LookupTable?.Table.Contains(variable) ?? false)
             {

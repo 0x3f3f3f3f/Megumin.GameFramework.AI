@@ -63,13 +63,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (ignoreMember?.Contains(member.Name) ?? false)
                 {
-                    //Debug.LogError($"忽略的参数 {member.Name}");
+                    //Debug.LogError($"忽略的参数 {member.RefName}");
                     continue;
                 }
 
                 if (callbackIgnoreMember.Contains(member.Name))
                 {
-                    //Debug.LogError($"忽略的参数 {member.Name}");
+                    //Debug.LogError($"忽略的参数 {member.RefName}");
                     continue;
                 }
 
@@ -103,7 +103,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 //如果是IMMDataable
                 //特殊序列化
-                if (memberValue is IMMDataable variable)
+                if (memberValue is IVariable variable)
                 {
                     var data = variable.GetValue();
                     CollectionSerializationData valueData = new();
@@ -115,12 +115,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         mmdata.TypeName = variable.GetType().FullName;
                         if (memberValue is IBindable bindable)
                         {
-                            mmdata.Path = bindable.Path;
+                            mmdata.BindingPath = bindable.BindingPath;
                         }
 
-                        if (memberValue is IRefSharedable sharedable)
+                        if (memberValue is IRefable sharedable)
                         {
-                            mmdata.RefName = sharedable.Name;
+                            mmdata.RefName = sharedable.RefName;
                         }
                         MMdata.Add(mmdata);
                     }

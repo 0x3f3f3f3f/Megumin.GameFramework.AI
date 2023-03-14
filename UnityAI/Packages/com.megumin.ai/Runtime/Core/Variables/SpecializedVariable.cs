@@ -48,315 +48,315 @@ namespace Megumin.GameFramework.AI
         };
     }
 
-    public class ParamVariable_bool : MMData3<bool> { }
+    public class RefVariable_bool : RefVariable<bool> { }
 
     public class VariableCreator_bool : VariableCreator
     {
         public override string Name { get; set; } = "bool";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_bool() { Name = "Bool" };
+            return new RefVariable_bool() { RefName = "Bool" };
         }
     }
 
-    public class ParamVariable_int : MMData3<int> { }
+    public class RefVariable_int : RefVariable<int> { }
 
     public class VariableCreator_int : VariableCreator
     {
         public override string Name { get; set; } = "int";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_int() { Name = "Int" };
+            return new RefVariable_int() { RefName = "Int" };
         }
     }
 
-    public class ParamVariable_long : MMData3<long> { }
+    public class RefVariable_long : RefVariable<long> { }
 
     public class VariableCreator_long : VariableCreator
     {
         public override string Name { get; set; } = "long";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_long() { Name = "Long" };
+            return new RefVariable_long() { RefName = "Long" };
         }
     }
 
-    public class ParamVariable_string : MMData3<string> { }
+    public class RefVariable_string : RefVariable<string> { }
 
     public class VariableCreator_string : VariableCreator
     {
         public override string Name { get; set; } = "string";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_string() { Name = "String" };
+            return new RefVariable_string() { RefName = "String" };
         }
     }
 
-    public class ParamVariable_float : MMData3<float> { }
+    public class RefVariable_float : RefVariable<float> { }
 
     public class VariableCreator_float : VariableCreator
     {
         public override string Name { get; set; } = "float";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_float() { Name = "Float" };
+            return new RefVariable_float() { RefName = "Float" };
         }
     }
 
-    public class ParamVariable_double : MMData3<double> { }
+    public class RefVariable_double : RefVariable<double> { }
 
     public class VariableCreator_double : VariableCreator
     {
         public override string Name { get; set; } = "double";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_double() { Name = "Double" };
+            return new RefVariable_double() { RefName = "Double" };
         }
     }
 
-    public class ParamVariable_Vector2 : MMData3<Vector2> { }
+    public class RefVariable_Vector2 : RefVariable<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
     {
         public override string Name { get; set; } = "Vector2";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Vector2() { Name = "Vector2" };
+            return new RefVariable_Vector2() { RefName = "Vector2" };
         }
     }
 
-    public class ParamVariable_Vector2Int : MMData3<Vector2Int> { }
+    public class RefVariable_Vector2Int : RefVariable<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector2Int";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Vector2Int() { Name = "Vector2Int" };
+            return new RefVariable_Vector2Int() { RefName = "Vector2Int" };
         }
     }
 
-    public class ParamVariable_Vector3 : MMData3<Vector3> { }
+    public class RefVariable_Vector3 : RefVariable<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
     {
         public override string Name { get; set; } = "Vector3";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Vector3() { Name = "Vector3" };
+            return new RefVariable_Vector3() { RefName = "Vector3" };
         }
     }
 
-    public class ParamVariable_Vector3Int : MMData3<Vector3Int> { }
+    public class RefVariable_Vector3Int : RefVariable<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector3Int";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Vector3Int() { Name = "Vector3Int" };
+            return new RefVariable_Vector3Int() { RefName = "Vector3Int" };
         }
     }
 
-    public class ParamVariable_Vector4 : MMData3<Vector4> { }
+    public class RefVariable_Vector4 : RefVariable<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
     {
         public override string Name { get; set; } = "Vector4";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Vector4() { Name = "Vector4" };
+            return new RefVariable_Vector4() { RefName = "Vector4" };
         }
     }
 
-    public class ParamVariable_Rect : MMData3<Rect> { }
+    public class RefVariable_Rect : RefVariable<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
     {
         public override string Name { get; set; } = "Rect";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Rect() { Name = "Rect" };
+            return new RefVariable_Rect() { RefName = "Rect" };
         }
     }
 
-    public class ParamVariable_RectInt : MMData3<RectInt> { }
+    public class RefVariable_RectInt : RefVariable<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
     {
         public override string Name { get; set; } = "RectInt";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_RectInt() { Name = "RectInt" };
+            return new RefVariable_RectInt() { RefName = "RectInt" };
         }
     }
 
-    public class ParamVariable_Bounds : MMData3<Bounds> { }
+    public class RefVariable_Bounds : RefVariable<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
     {
         public override string Name { get; set; } = "Bounds";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Bounds() { Name = "Bounds" };
+            return new RefVariable_Bounds() { RefName = "Bounds" };
         }
     }
 
-    public class ParamVariable_BoundsInt : MMData3<BoundsInt> { }
+    public class RefVariable_BoundsInt : RefVariable<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
     {
         public override string Name { get; set; } = "BoundsInt";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_BoundsInt() { Name = "BoundsInt" };
+            return new RefVariable_BoundsInt() { RefName = "BoundsInt" };
         }
     }
 
-    public class ParamVariable_GameObject : MMData3<GameObject> { }
+    public class RefVariable_GameObject : RefVariable<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
     {
         public override string Name { get; set; } = "GameObject";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_GameObject() { Name = "GameObject" };
+            return new RefVariable_GameObject() { RefName = "GameObject" };
         }
     }
 
-    public class ParamVariable_ScriptableObject : MMData3<ScriptableObject> { }
+    public class RefVariable_ScriptableObject : RefVariable<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
     {
         public override string Name { get; set; } = "ScriptableObject";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_ScriptableObject() { Name = "ScriptableObject" };
+            return new RefVariable_ScriptableObject() { RefName = "ScriptableObject" };
         }
     }
 
-    public class ParamVariable_Trigger : MMData3<Trigger> { }
+    public class RefVariable_Trigger : RefVariable<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
     {
         public override string Name { get; set; } = "Trigger";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Trigger() { Name = "Trigger" };
+            return new RefVariable_Trigger() { RefName = "Trigger" };
         }
     }
 
-    public class ParamVariable_Color : MMData3<Color> { }
+    public class RefVariable_Color : RefVariable<Color> { }
 
     public class VariableCreator_Color : VariableCreator
     {
         public override string Name { get; set; } = "Color";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Color() { Name = "Color" };
+            return new RefVariable_Color() { RefName = "Color" };
         }
     }
 
-    public class ParamVariable_Gradient : MMData3<Gradient> { }
+    public class RefVariable_Gradient : RefVariable<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
     {
         public override string Name { get; set; } = "Gradient";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Gradient() { Name = "Gradient" };
+            return new RefVariable_Gradient() { RefName = "Gradient" };
         }
     }
 
-    public class ParamVariable_Texture2D : MMData3<Texture2D> { }
+    public class RefVariable_Texture2D : RefVariable<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
     {
         public override string Name { get; set; } = "Texture2D";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Texture2D() { Name = "Texture2D" };
+            return new RefVariable_Texture2D() { RefName = "Texture2D" };
         }
     }
 
-    public class ParamVariable_RenderTexture : MMData3<RenderTexture> { }
+    public class RefVariable_RenderTexture : RefVariable<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
     {
         public override string Name { get; set; } = "RenderTexture";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_RenderTexture() { Name = "RenderTexture" };
+            return new RefVariable_RenderTexture() { RefName = "RenderTexture" };
         }
     }
 
-    public class ParamVariable_AnimationCurve : MMData3<AnimationCurve> { }
+    public class RefVariable_AnimationCurve : RefVariable<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
     {
         public override string Name { get; set; } = "AnimationCurve";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_AnimationCurve() { Name = "AnimationCurve" };
+            return new RefVariable_AnimationCurve() { RefName = "AnimationCurve" };
         }
     }
 
-    public class ParamVariable_Mesh : MMData3<Mesh> { }
+    public class RefVariable_Mesh : RefVariable<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
     {
         public override string Name { get; set; } = "Mesh";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Mesh() { Name = "Mesh" };
+            return new RefVariable_Mesh() { RefName = "Mesh" };
         }
     }
 
-    public class ParamVariable_SkinnedMeshRenderer : MMData3<SkinnedMeshRenderer> { }
+    public class RefVariable_SkinnedMeshRenderer : RefVariable<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
     {
         public override string Name { get; set; } = "SkinnedMeshRenderer";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_SkinnedMeshRenderer() { Name = "SkinnedMeshRenderer" };
+            return new RefVariable_SkinnedMeshRenderer() { RefName = "SkinnedMeshRenderer" };
         }
     }
 
-    public class ParamVariable_Material : MMData3<Material> { }
+    public class RefVariable_Material : RefVariable<Material> { }
 
     public class VariableCreator_Material : VariableCreator
     {
         public override string Name { get; set; } = "Material";
 
-        public override IRefSharedable Create()
+        public override IRefable Create()
         {
-            return new ParamVariable_Material() { Name = "Material" };
+            return new RefVariable_Material() { RefName = "Material" };
         }
     }
 }

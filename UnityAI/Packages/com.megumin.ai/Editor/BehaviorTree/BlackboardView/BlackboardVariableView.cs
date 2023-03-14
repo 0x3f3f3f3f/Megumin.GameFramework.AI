@@ -70,7 +70,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var table = Blackboard?.LookupTable;
             if (table != null)
             {
-                if (m_TextField.text == Variable.Name)
+                if (m_TextField.text == Variable.RefName)
                 {
                     //值没有变，不要验证名字。否则会在原名字上 + （1）
                     return;
@@ -85,12 +85,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var newName = m_TextField.text;
             Blackboard?.TreeView?.UndoRecord("Change Variable Name");
-            Variable.Name = newName;
+            Variable.RefName = newName;
             BlackboardField.text = newName;
         }
 
-        public IRefSharedable Variable { get; private set; }
-        public void SetVariable(IRefSharedable instance)
+        public IRefable Variable { get; private set; }
+        public void SetVariable(IRefable instance)
         {
             Variable = instance;
             Body.Clear();
@@ -102,19 +102,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (Guid.TryParse(instance.Name, out var guid))
+            if (Guid.TryParse(instance.RefName, out var guid))
             {
                 //使用短名字
-                BlackboardField.text = instance.Name;
+                BlackboardField.text = instance.RefName;
             }
             else
             {
-                BlackboardField.text = instance.Name;
+                BlackboardField.text = instance.RefName;
             }
 
-            //BlackboardField.tooltip = instance.Name;
+            //BlackboardField.tooltip = instance.RefName;
             Type type = null;
-            if (instance is IMMDataable mMDataable)
+            if (instance is IVariable mMDataable)
             {
                 type = mMDataable.GetValue()?.GetType();
             }
@@ -165,7 +165,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public class Wapper : ScriptableObject
         {
             [SerializeReference]
-            public IRefSharedable Value;
+            public IRefable Value;
         }
 
         public override void Select(VisualElement selectionContainer, bool additive)
