@@ -11,10 +11,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
-        public Variable<string> MMDatastring;
+        //public Variable<string> MMDatastring;
         //public Variable<GameObject> MMDataGameObject;
-        public BindingVariable<string> MMData2string;
-        public RefVariable<string> MMData3string_Ref;
+        //public BindingVariable<string> MMData2string;
+        public RefVariable<string> RefVariableString;
 
         //多级泛型嵌套
         //public List<RefVariable<List<string>>> TestFuckingGeneric;

@@ -101,27 +101,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                //如果是IMMDataable
+                //如果是参数绑定
                 //特殊序列化
                 if (memberValue is IVariable variable)
                 {
-                    var data = variable.GetValue();
-                    CollectionSerializationData valueData = new();
-                    if (valueData.TrySerialize("Value", data))
+                    MMDataSerializationData mmdata = new();
+                    if (mmdata.TrySerialize(member.Name, variable))
                     {
-                        MMDataSerializationData mmdata = new();
-                        mmdata.Data = valueData;
-                        mmdata.MemberName = member.Name;
-                        mmdata.TypeName = variable.GetType().FullName;
-                        if (memberValue is IBindable bindable)
-                        {
-                            mmdata.BindingPath = bindable.BindingPath;
-                        }
-
-                        if (memberValue is IRefable sharedable)
-                        {
-                            mmdata.RefName = sharedable.RefName;
-                        }
                         MMdata.Add(mmdata);
                     }
                 }

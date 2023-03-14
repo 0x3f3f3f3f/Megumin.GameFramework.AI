@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI
 {
     /// <summary>
-    /// 用于识别公开参数 todo 重命名
+    /// 用于识别公开参数
     /// </summary>
     public interface IVariable
     {
@@ -172,9 +172,15 @@ namespace Megumin.GameFramework.AI
         //        typeNameOrRefName = $"{RefPrefix}{value}";
         //    }
         //}
-
+        const string NullString = "$null";
         public bool TryDeserialize(out object vara, IRefFinder refFinder)
         {
+            if (TypeName == NullString)
+            {
+                vara = null;
+                return true;
+            }
+
             var type = Serialization.TypeCache.GetType(TypeName);
             if (type == null)
             {
@@ -228,6 +234,41 @@ namespace Megumin.GameFramework.AI
 
             vara = null;
             return false;
+        }
+
+        public bool TrySerialize(string name, object value)
+        {
+            MemberName = name;
+
+            if (value == null)
+            {
+                TypeName = NullString;
+                return true;
+            }
+
+            TypeName = value.GetType().FullName;
+            if (value is IRefable sharedable)
+            {
+                RefName = sharedable.RefName;
+                return true;
+            }
+
+            if (value is IBindable bindable)
+            {
+                BindingPath = bindable.BindingPath;
+            }
+
+            if (value is IVariable variable)
+            {
+                var data = variable.GetValue();
+                CollectionSerializationData valueData = new();
+                if (valueData.TrySerialize("Value", data))
+                {
+                    Data = valueData;
+                }
+            }
+
+            return true;
         }
     }
 
