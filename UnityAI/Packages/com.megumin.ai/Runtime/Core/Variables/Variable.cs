@@ -155,6 +155,11 @@ namespace Megumin.GameFramework.AI
         public bool Value;
     }
 
+    public interface IRefFinder
+    {
+        bool TryGetRefValue(string refName, out object refValue);
+    }
+
     [Serializable]
     public class MMDataSerializationData
     {
@@ -162,24 +167,86 @@ namespace Megumin.GameFramework.AI
         /// <summary>
         /// 类型名和引用名公用的保存字段
         /// </summary>
-        public string typeNameOrRefName;
+        //public string typeNameOrRefName;
         public string Path;
+        public string TypeName;
+        public bool IsRef => !string.IsNullOrEmpty(RefName);
+        public string RefName;
         public CollectionSerializationData Data;
 
-        public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = value; }
-        public bool IsRef => typeNameOrRefName.StartsWith(RefPrefix);
+        //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = value; }
+        //public bool IsRef => typeNameOrRefName.StartsWith(RefPrefix);
 
-        public const string RefPrefix = @"""$rid"":";
-        public string RefName
+        //public const string RefPrefix = @"""$rid"":";
+        //public string RefName
+        //{
+        //    get
+        //    {
+        //        return typeNameOrRefName.Substring(RefPrefix.Length);
+        //    }
+        //    set
+        //    {
+        //        typeNameOrRefName = $"{RefPrefix}{value}";
+        //    }
+        //}
+
+        public bool TryDeserialize(out object vara, IRefFinder refFinder)
         {
-            get
+            if (IsRef)
             {
-                return typeNameOrRefName.Substring(RefPrefix.Length);
+                //typeof(IRefSharedable).IsAssignableFrom(type)
+                //引用不要构造实例，通过外部去获取
+                if (refFinder != null && refFinder.TryGetRefValue(RefName, out var refValue))
+                {
+                    vara = refValue;
+                    return true;
+                }
+                else
+                {
+                    //即使missRef，也要反射构造一个参数，将RefName反序列化出来，方式第二次保存时
+                    //RefName丢失。
+                    var type = Serialization.TypeCache.GetType(TypeName);
+                    if (type != null)
+                    {
+                        var variable = Activator.CreateInstance(type) as IRefSharedable;
+                        variable.Name = RefName;
+                        vara = variable;
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
+                    }
+
+                    Debug.LogError($"没有找到RefValue");
+                }
             }
-            set
+            else
             {
-                typeNameOrRefName = $"{RefPrefix}{value}";
+                if (Data.TryDeserialize(out var value))
+                {
+                    var type = Serialization.TypeCache.GetType(TypeName);
+                    if (type != null)
+                    {
+                        var variable = Activator.CreateInstance(type) as IMMDataable;
+                        variable.SetValue(value);
+
+                        if (variable is IBindable bindable)
+                        {
+                            bindable.Path = Path;
+                        }
+                        vara = variable;
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
+                    }
+                }
             }
+
+            vara = null;
+            return false;
         }
     }
 

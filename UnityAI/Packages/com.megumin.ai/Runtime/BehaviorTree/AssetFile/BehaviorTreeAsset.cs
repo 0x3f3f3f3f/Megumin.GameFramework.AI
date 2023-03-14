@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<CollectionSerializationData> MemberData = new();
             public List<CollectionSerializationData> CallbackMemberData = new();
 
-            public BTNode Instantiate(bool instanceMeta = true)
+            public BTNode Instantiate(IRefFinder refFinder = null, bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 if (nodeType.IsSubclassOf(typeof(BTNode)))
@@ -67,14 +67,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         //实例化装饰器
                         foreach (var decoratorAsset in Decorators)
                         {
-                            var d = decoratorAsset.Instantiate();
+                            var d = decoratorAsset.Instantiate(refFinder, instanceMeta);
                             if (d != null)
                             {
                                 node.AddDecorator(d);
                             }
                         }
 
-                        DeserializeMember(node, MemberData, CallbackMemberData);
+                        DeserializeMember(node, MemberData, CallbackMemberData, refFinder);
 
                         return node;
                     }
@@ -133,7 +133,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<CollectionSerializationData> MemberData = new();
             public List<CollectionSerializationData> CallbackMemberData = new();
 
-            public ITreeElement Instantiate(bool instanceMeta = true)
+            public ITreeElement Instantiate(IRefFinder refFinder = null, bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 var decorator = Activator.CreateInstance(nodeType) as BTDecorator;
@@ -145,7 +145,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
 
                 decorator.GUID = this.GUID;
-                DeserializeMember(decorator, MemberData, CallbackMemberData);
+                DeserializeMember(decorator, MemberData, CallbackMemberData, refFinder);
 
                 return decorator;
             }
@@ -235,7 +235,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             foreach (var nodeAsset in Nodes)
             {
-                var node = nodeAsset.Instantiate(instanceMeta);
+                var node = nodeAsset.Instantiate(tree, instanceMeta);
                 if (node != null)
                 {
                     tree.AddNode(node);
@@ -283,6 +283,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public void OnAfterDeserialize()
         {
             //this.LogFuncName();
+        }
+    }
+
+    public partial class BehaviorTree : IRefFinder
+    {
+        bool IRefFinder.TryGetRefValue(string refName, out object refValue)
+        {
+            refValue = null;
+            return false;
         }
     }
 }

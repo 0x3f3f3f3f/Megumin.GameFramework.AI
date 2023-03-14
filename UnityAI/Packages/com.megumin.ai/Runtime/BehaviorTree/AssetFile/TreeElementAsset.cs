@@ -138,7 +138,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void DeserializeMember(object instance,
                                       List<CollectionSerializationData> memberData,
-                                      List<CollectionSerializationData> callbackMemberData)
+                                      List<CollectionSerializationData> callbackMemberData, 
+                                      IRefFinder refFinder)
         {
             if (instance == null)
             {
@@ -172,40 +173,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 //Todo: 要不要使用TokenID查找
                 var member = instance.GetType().GetMember(variableData.MemberName)?.FirstOrDefault();
-                if (member != null && variableData.Data.TryDeserialize(out var value))
+                if (member != null && variableData.TryDeserialize(out var variable, refFinder))
                 {
-                    var type = TypeCache.GetType(variableData.TypeName);
-                    if (type != null)
+                    if (member is FieldInfo fieldInfo)
                     {
-
-                        if (variableData.IsRef)
-                        {
-                            //typeof(IRefSharedable).IsAssignableFrom(type)
-                            //引用不要构造实例，通过外部去获取
-                        }
-                        else
-                        {
-                            var variable = Activator.CreateInstance(type) as IMMDataable;
-                            variable.SetValue(value);
-
-                            if (variable is IBindable bindable)
-                            {
-                                bindable.Path = variableData.Path;
-                            }
-
-                            if (member is FieldInfo fieldInfo)
-                            {
-                                fieldInfo.SetValue(instance, variable);
-                            }
-                            else if (member is PropertyInfo propertyInfo)
-                            {
-                                propertyInfo.SetValue(instance, variable);
-                            }
-                        }
+                        fieldInfo.SetValue(instance, variable);
                     }
-                    else
+                    else if (member is PropertyInfo propertyInfo)
                     {
-                        Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{variableData.TypeName}");
+                        propertyInfo.SetValue(instance, variable);
                     }
                 }
             }
