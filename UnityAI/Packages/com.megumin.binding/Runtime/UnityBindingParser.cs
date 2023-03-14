@@ -508,7 +508,8 @@ namespace Megumin.Binding
         public static (object Instance, Type InstanceType)
             GetBindInstanceAndType(string typeFullName, GameObject gameObject)
         {
-            if (typeFullName == "UnityEngine.GameObject")
+            if (typeFullName == "UnityEngine.GameObject" ||
+                typeFullName == nameof(GameObject))
             {
                 return (gameObject, typeof(UnityEngine.GameObject));
             }
