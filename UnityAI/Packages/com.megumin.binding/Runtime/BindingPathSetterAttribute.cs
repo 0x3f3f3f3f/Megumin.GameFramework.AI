@@ -33,14 +33,15 @@ namespace Megumin.Binding
         Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
-            const int buttonWidth = 26;
+            const int settingButtonWidth = 26;
+            const int testButtonWidth = 36;
 
             var propertyPosition = position;
-            propertyPosition.width -= buttonWidth + buttonWidth + 2;
+            propertyPosition.width -= settingButtonWidth + testButtonWidth + 2;
 
             var buttonPosition = position;
-            buttonPosition.width = buttonWidth;
-            buttonPosition.x += position.width - buttonWidth;
+            buttonPosition.width = settingButtonWidth;
+            buttonPosition.x += position.width - settingButtonWidth;
 
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
@@ -50,8 +51,8 @@ namespace Megumin.Binding
             }
 
             var buttonPositionTest = position;
-            buttonPositionTest.width = buttonWidth;
-            buttonPositionTest.x += position.width - buttonWidth - buttonWidth;
+            buttonPositionTest.width = testButtonWidth;
+            buttonPositionTest.x += position.width - settingButtonWidth - testButtonWidth;
 
             if (GUI.Button(buttonPositionTest, $"Test"))
             {
@@ -222,7 +223,8 @@ namespace Megumin.Binding
                     members.Add(member.Member);
 
                     var FirstC = type.Name[0].ToString().ToUpper();
-                    if (member.Member.DeclaringType == type)
+                    //类型名放前面 自动转换时会导致 类型名长度不一样
+                    if (true || member.Member.DeclaringType == type) //暂时不显示[Inherited]
                     {
                         bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{member.ValueType.Name}]"), false, func, members);
                     }
