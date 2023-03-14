@@ -5,6 +5,7 @@ using System.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 using Megumin;
+using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {

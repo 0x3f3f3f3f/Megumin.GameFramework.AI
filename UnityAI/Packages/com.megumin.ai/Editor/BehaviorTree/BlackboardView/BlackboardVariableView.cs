@@ -1,4 +1,5 @@
 ﻿using System;
+using Megumin.Binding;
 using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;

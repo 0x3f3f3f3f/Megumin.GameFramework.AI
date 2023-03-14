@@ -8,11 +8,12 @@ using UnityEngine;
 namespace Megumin.Binding
 {
     [Serializable]
-    public class BindableValue<T> : IData<T>, IBindable<T>, IBindingParseable
+    public class BindableValue<T> : IVariable, IVariable<T>, IBindable, IBindingParseable
     {
         public string Key;
         public bool IsBinding;
-        public string BindingPath;
+        [field: SerializeField]
+        public string BindingPath { get; set; }
         public T defaultValue;
         public GameObject extnalObj;
         public int xOffset = 0, yOffset = 0;
@@ -99,6 +100,16 @@ namespace Megumin.Binding
             string message = $"ParseResult:{ParseResult}  |  Value : {Value}  |  {typeof(T)}  |  {BindingPath}";
             Debug.Log(message);
             return message;
+        }
+
+        public virtual object GetValue()
+        {
+            return Value;
+        }
+
+        public virtual void SetValue(object value)
+        {
+            Value = (T)value;
         }
     }
 

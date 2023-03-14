@@ -2,24 +2,26 @@
 
 namespace Megumin.Binding
 {
-    public interface IData
+    /// <summary>
+    /// 用于识别公开参数
+    /// </summary>
+    public interface IVariable
     {
-
+        object GetValue();
+        void SetValue(object value);
     }
 
-    public interface IData<T> : IData
+    public interface IVariable<T>
     {
         T Value { get; set; }
     }
 
+    /// <summary>
+    /// 可绑定的，绑定到一个组件的成员
+    /// </summary>
     public interface IBindable
     {
-        //string BindingPath { get; set; }
-    }
-
-    public interface IBindable<T> : IBindable
-    {
-        //To DefaultValue { get; set; }
+        string BindingPath { get; set; }
     }
 
     public interface IBindingParseable

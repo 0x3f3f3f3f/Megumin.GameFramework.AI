@@ -219,7 +219,7 @@ namespace Megumin.Binding.Test
         public List<BindableValueInt> IBindables = new List<BindableValueInt>();
 
         [SerializeReference]
-        public List<IData> InterfaceTest = new List<IData>()
+        public List<IVariable> InterfaceTest = new List<IVariable>()
         {
             new BindableValueInt() { BindingPath = "UnityEngine.GameObject/layer" },
             new BindableValueString() { BindingPath = "UnityEngine.GameObject/tag" },
