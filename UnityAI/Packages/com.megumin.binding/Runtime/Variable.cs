@@ -15,8 +15,8 @@ namespace Megumin.Binding
             return null;
         }
 
-        public virtual void SetValue(object value) 
-        { 
+        public virtual void SetValue(object value)
+        {
 
         }
     }
@@ -68,6 +68,7 @@ namespace Megumin.Binding
     [Serializable]
     public class BindingVariable<T> : Variable<T>, IBindable, IBindingParseable
     {
+        [field: BindingPathSetter]
         [field: SerializeField]
         public string BindingPath { get; set; }
         public ParseMode GetMode = ParseMode.FallbackValue;

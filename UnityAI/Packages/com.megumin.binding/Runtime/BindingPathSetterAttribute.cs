@@ -1,36 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Megumin.Binding.Editor;
-using UnityEditor;
 using UnityEngine;
+using System.Reflection;
 
-public static class EditorEx_445E7B9AEE5D4CC4B63B3B742F5430FB
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Megumin.Binding
 {
-    public static bool GetBindintString(this SerializedProperty property, bool click, out string str)
+    public class BindingPathSetterAttribute : PropertyAttribute
     {
-        if (click)
-        {
-            BindingEditor.GetBindStr(property.propertyPath);
-        }
-
-        if (BindingEditor.cacheResult.TryGetValue(property.propertyPath, out str))
-        {
-            BindingEditor.cacheResult.Remove(property.propertyPath);
-            return true;
-        }
-        str = default;
-        return false;
     }
-}
 
-namespace Megumin.Binding.Editor
-{
-    public class BindingEditor
+
+#if UNITY_EDITOR
+
+    [UnityEditor.CustomPropertyDrawer(typeof(BindingPathSetterAttribute))]
+    public class BindingPathAttributeDrawer : UnityEditor.PropertyDrawer
     {
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, GUIContent label)
+        {
+            return UnityEditor.EditorGUI.GetPropertyHeight(property, true);
+        }
+
+        static GUIContent settingIcon =
+            new(EditorGUIUtility.IconContent("settings icon")) { tooltip = "Set BindingPath" };
+
+        public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
+        {
+            const int buttonWidth = 26;
+            var propertyPosition = position;
+            propertyPosition.width -= buttonWidth + 2;
+
+            var buttonPosition = position;
+            buttonPosition.width = buttonWidth;
+            buttonPosition.x += position.width - buttonWidth;
+
+            UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
+            if (property.GetBindintString(GUI.Button(buttonPosition, settingIcon), out var str))
+            {
+                property.stringValue = str;
+            }
+        }
+    }
+
+    public static class BindingEditor
+    {
+        public static bool GetBindintString(this SerializedProperty property, bool click, out string str)
+        {
+            if (click)
+            {
+                BindingEditor.GetBindStr(property.propertyPath);
+            }
+
+            if (BindingEditor.cacheResult.TryGetValue(property.propertyPath, out str))
+            {
+                BindingEditor.cacheResult.Remove(property.propertyPath);
+                return true;
+            }
+            str = default;
+            return false;
+        }
+
         public static Dictionary<string, string> cacheResult = new Dictionary<string, string>();
         public static async void GetBindStr(string propertyPath)
         {
@@ -174,4 +209,6 @@ namespace Megumin.Binding.Editor
             return true;
         }
     }
+
+#endif
 }
