@@ -51,9 +51,9 @@ namespace Megumin.GameFramework.AI
         /// Unity 2023之前的版本不支持 多态 + 泛型序列化，所以用户自定义时不要返回泛型类型，一定要声明一个非泛型类型参数。
         /// </summary>
         /// <returns></returns>
-        public virtual TestVariable Create()
+        public virtual IRefSharedable Create()
         {
-            return new ParamVariable<int>() { Name = "VariableCreator" };
+            return new MMData3<int>() { Name = "VariableCreator" };
         }
 
         public class Separator : VariableCreator
@@ -67,9 +67,9 @@ namespace Megumin.GameFramework.AI
     {
         public override string Name { get; set; } = typeof(T).Name;
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
-            return new ParamVariable<T>() { Name = this.Name };
+            return new MMData3<T>() { Name = this.Name };
         }
     }
 }

@@ -145,6 +145,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 return;
             }
+
             //反序列化参数
             foreach (var param in memberData)
             {

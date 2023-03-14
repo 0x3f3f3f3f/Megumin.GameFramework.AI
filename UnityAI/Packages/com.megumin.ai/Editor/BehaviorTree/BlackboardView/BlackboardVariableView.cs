@@ -84,16 +84,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             var newName = m_TextField.text;
-            if (Variable is TestVariable test)
-            {
-                Blackboard?.TreeView?.UndoRecord("Change Variable Name");
-                test.Name = newName;
-                BlackboardField.text = newName;
-            }
+            Blackboard?.TreeView?.UndoRecord("Change Variable Name");
+            Variable.Name = newName;
+            BlackboardField.text = newName;
         }
 
-        public IVariable Variable { get; private set; }
-        public void SetVariable(IVariable instance)
+        public IRefSharedable Variable { get; private set; }
+        public void SetVariable(IRefSharedable instance)
         {
             Variable = instance;
             Body.Clear();
@@ -116,8 +113,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             //BlackboardField.tooltip = instance.Name;
+            Type type = null;
+            if (instance is IMMDataable mMDataable)
+            {
+                type = mMDataable.GetValue()?.GetType();
+            }
 
-            var type = instance?.GetValue()?.GetType();
+            //var type = instance?.GetValue()?.GetType();
             if (type != null)
             {
                 BlackboardField.typeText = type.Name;
@@ -163,7 +165,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public class Wapper : ScriptableObject
         {
             [SerializeReference]
-            public IVariable Value;
+            public IRefSharedable Value;
         }
 
         public override void Select(VisualElement selectionContainer, bool additive)

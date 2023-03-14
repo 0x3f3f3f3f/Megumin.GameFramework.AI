@@ -48,313 +48,313 @@ namespace Megumin.GameFramework.AI
         };
     }
 
-    public class ParamVariable_bool : ParamVariable<bool> { }
+    public class ParamVariable_bool : MMData3<bool> { }
 
     public class VariableCreator_bool : VariableCreator
     {
         public override string Name { get; set; } = "bool";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_bool() { Name = "Bool" };
         }
     }
 
-    public class ParamVariable_int : ParamVariable<int> { }
+    public class ParamVariable_int : MMData3<int> { }
 
     public class VariableCreator_int : VariableCreator
     {
         public override string Name { get; set; } = "int";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_int() { Name = "Int" };
         }
     }
 
-    public class ParamVariable_long : ParamVariable<long> { }
+    public class ParamVariable_long : MMData3<long> { }
 
     public class VariableCreator_long : VariableCreator
     {
         public override string Name { get; set; } = "long";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_long() { Name = "Long" };
         }
     }
 
-    public class ParamVariable_string : ParamVariable<string> { }
+    public class ParamVariable_string : MMData3<string> { }
 
     public class VariableCreator_string : VariableCreator
     {
         public override string Name { get; set; } = "string";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_string() { Name = "String" };
         }
     }
 
-    public class ParamVariable_float : ParamVariable<float> { }
+    public class ParamVariable_float : MMData3<float> { }
 
     public class VariableCreator_float : VariableCreator
     {
         public override string Name { get; set; } = "float";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_float() { Name = "Float" };
         }
     }
 
-    public class ParamVariable_double : ParamVariable<double> { }
+    public class ParamVariable_double : MMData3<double> { }
 
     public class VariableCreator_double : VariableCreator
     {
         public override string Name { get; set; } = "double";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_double() { Name = "Double" };
         }
     }
 
-    public class ParamVariable_Vector2 : ParamVariable<Vector2> { }
+    public class ParamVariable_Vector2 : MMData3<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
     {
         public override string Name { get; set; } = "Vector2";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Vector2() { Name = "Vector2" };
         }
     }
 
-    public class ParamVariable_Vector2Int : ParamVariable<Vector2Int> { }
+    public class ParamVariable_Vector2Int : MMData3<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector2Int";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Vector2Int() { Name = "Vector2Int" };
         }
     }
 
-    public class ParamVariable_Vector3 : ParamVariable<Vector3> { }
+    public class ParamVariable_Vector3 : MMData3<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
     {
         public override string Name { get; set; } = "Vector3";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Vector3() { Name = "Vector3" };
         }
     }
 
-    public class ParamVariable_Vector3Int : ParamVariable<Vector3Int> { }
+    public class ParamVariable_Vector3Int : MMData3<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
     {
         public override string Name { get; set; } = "Vector3Int";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Vector3Int() { Name = "Vector3Int" };
         }
     }
 
-    public class ParamVariable_Vector4 : ParamVariable<Vector4> { }
+    public class ParamVariable_Vector4 : MMData3<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
     {
         public override string Name { get; set; } = "Vector4";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Vector4() { Name = "Vector4" };
         }
     }
 
-    public class ParamVariable_Rect : ParamVariable<Rect> { }
+    public class ParamVariable_Rect : MMData3<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
     {
         public override string Name { get; set; } = "Rect";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Rect() { Name = "Rect" };
         }
     }
 
-    public class ParamVariable_RectInt : ParamVariable<RectInt> { }
+    public class ParamVariable_RectInt : MMData3<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
     {
         public override string Name { get; set; } = "RectInt";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_RectInt() { Name = "RectInt" };
         }
     }
 
-    public class ParamVariable_Bounds : ParamVariable<Bounds> { }
+    public class ParamVariable_Bounds : MMData3<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
     {
         public override string Name { get; set; } = "Bounds";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Bounds() { Name = "Bounds" };
         }
     }
 
-    public class ParamVariable_BoundsInt : ParamVariable<BoundsInt> { }
+    public class ParamVariable_BoundsInt : MMData3<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
     {
         public override string Name { get; set; } = "BoundsInt";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_BoundsInt() { Name = "BoundsInt" };
         }
     }
 
-    public class ParamVariable_GameObject : ParamVariable<GameObject> { }
+    public class ParamVariable_GameObject : MMData3<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
     {
         public override string Name { get; set; } = "GameObject";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_GameObject() { Name = "GameObject" };
         }
     }
 
-    public class ParamVariable_ScriptableObject : ParamVariable<ScriptableObject> { }
+    public class ParamVariable_ScriptableObject : MMData3<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
     {
         public override string Name { get; set; } = "ScriptableObject";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_ScriptableObject() { Name = "ScriptableObject" };
         }
     }
 
-    public class ParamVariable_Trigger : ParamVariable<Trigger> { }
+    public class ParamVariable_Trigger : MMData3<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
     {
         public override string Name { get; set; } = "Trigger";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Trigger() { Name = "Trigger" };
         }
     }
 
-    public class ParamVariable_Color : ParamVariable<Color> { }
+    public class ParamVariable_Color : MMData3<Color> { }
 
     public class VariableCreator_Color : VariableCreator
     {
         public override string Name { get; set; } = "Color";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Color() { Name = "Color" };
         }
     }
 
-    public class ParamVariable_Gradient : ParamVariable<Gradient> { }
+    public class ParamVariable_Gradient : MMData3<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
     {
         public override string Name { get; set; } = "Gradient";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Gradient() { Name = "Gradient" };
         }
     }
 
-    public class ParamVariable_Texture2D : ParamVariable<Texture2D> { }
+    public class ParamVariable_Texture2D : MMData3<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
     {
         public override string Name { get; set; } = "Texture2D";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Texture2D() { Name = "Texture2D" };
         }
     }
 
-    public class ParamVariable_RenderTexture : ParamVariable<RenderTexture> { }
+    public class ParamVariable_RenderTexture : MMData3<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
     {
         public override string Name { get; set; } = "RenderTexture";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_RenderTexture() { Name = "RenderTexture" };
         }
     }
 
-    public class ParamVariable_AnimationCurve : ParamVariable<AnimationCurve> { }
+    public class ParamVariable_AnimationCurve : MMData3<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
     {
         public override string Name { get; set; } = "AnimationCurve";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_AnimationCurve() { Name = "AnimationCurve" };
         }
     }
 
-    public class ParamVariable_Mesh : ParamVariable<Mesh> { }
+    public class ParamVariable_Mesh : MMData3<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
     {
         public override string Name { get; set; } = "Mesh";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Mesh() { Name = "Mesh" };
         }
     }
 
-    public class ParamVariable_SkinnedMeshRenderer : ParamVariable<SkinnedMeshRenderer> { }
+    public class ParamVariable_SkinnedMeshRenderer : MMData3<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
     {
         public override string Name { get; set; } = "SkinnedMeshRenderer";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_SkinnedMeshRenderer() { Name = "SkinnedMeshRenderer" };
         }
     }
 
-    public class ParamVariable_Material : ParamVariable<Material> { }
+    public class ParamVariable_Material : MMData3<Material> { }
 
     public class VariableCreator_Material : VariableCreator
     {
         public override string Name { get; set; } = "Material";
 
-        public override TestVariable Create()
+        public override IRefSharedable Create()
         {
             return new ParamVariable_Material() { Name = "Material" };
         }

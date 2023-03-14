@@ -22,9 +22,9 @@ namespace Megumin.GameFramework.AI
         
 #endif
         [UnityEngine.SerializeReference]
-        public List<IVariable> Table = new();
+        public List<IRefSharedable> Table = new();
 
-        public bool TryGetParam(string name, out IVariable variable)
+        public bool TryGetParam(string name, out IRefSharedable variable)
         {
             var first = Table.FirstOrDefault(elem => elem.Name == name);
             if (first != null)

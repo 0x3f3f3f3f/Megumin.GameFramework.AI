@@ -8,29 +8,29 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI
 {
-    public interface IVariable
-    {
-        string Name { get; }
-        object GetValue();
-    }
+    //public interface IVariable
+    //{
+    //    string Name { get; }
+    //    object GetValue();
+    //}
 
     public interface IVariable<T>
     {
         T Value { get; set; }
     }
 
-    [Serializable]
-    public class TestVariable : IVariable
-    {
-        [field: UnityEngine.SerializeField]
-        public string Name { get; set; }
+    //[Serializable]
+    //public class TestVariable : IVariable
+    //{
+    //    [field: UnityEngine.SerializeField]
+    //    public string Name { get; set; }
 
-        public string Path;
+    //    public string Path;
 
-        public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
-        public virtual object GetValue() { return null; }
-        public virtual void SetValue(object value) { }
-    }
+    //    public ParamVariableMode Mode = ParamVariableMode.MappingAndFallback;
+    //    public virtual object GetValue() { return null; }
+    //    public virtual void SetValue(object value) { }
+    //}
 
     [Flags]
     public enum ParamVariableMode
@@ -40,14 +40,58 @@ namespace Megumin.GameFramework.AI
         Direct = 1 << 1,
     }
 
+    ///// <summary>
+    ///// 需要特化类型，不然不支持泛型序列化的版本没办法UndoRecode。
+    ///// </summary>
+    ///// <typeparam name="T"></typeparam>
+    //[Serializable]
+    //public class ParamVariable<T> : TestVariable, IVariable<T>
+    //{
+    //    [field: UnityEngine.SerializeField]
+    //    public T Value { get; set; }
+
+    //    public override object GetValue()
+    //    {
+    //        return Value;
+    //    }
+
+    //    public override void SetValue(object value)
+    //    {
+    //        Value = (T)value;
+    //    }
+    //}
+
     /// <summary>
-    /// 需要特化类型，不然不支持泛型序列化的版本没办法UndoRecode。
+    /// 用于识别公开参数 todo 重命名
+    /// </summary>
+    public interface IMMDataable
+    {
+        object GetValue();
+        void SetValue(object value);
+    }
+
+    [Serializable]
+    public class MMData : IMMDataable
+    {
+        public virtual object GetValue()
+        {
+            return null;
+        }
+
+        public virtual void SetValue(object value)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// 有Value 不一定有Path ，有Path 不一定有 Name
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class ParamVariable<T> : TestVariable, IVariable<T>
+    public class MMData<T> : MMData, IVariable<T>
     {
-        [field: UnityEngine.SerializeField]
+        [field: SerializeField]
         public T Value { get; set; }
 
         public override object GetValue()
@@ -62,41 +106,26 @@ namespace Megumin.GameFramework.AI
     }
 
     /// <summary>
-    /// 用于识别公开参数 todo 重命名
-    /// </summary>
-    public interface IMMDataable
-    {
-        object GetValue();
-        void SetValue(object value);
-    }
-
-    /// <summary>
-    /// 有Value 不一定有Path ，有Path 不一定有 Name
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Serializable]
-    public class MMData<T> : IMMDataable
-    {
-        [field: SerializeField]
-        public T Value { get; set; }
-
-        public virtual object GetValue()
-        {
-            return Value;
-        }
-
-        public virtual void SetValue(object value)
-        {
-            Value = (T)value;
-        }
-    }
-
-    /// <summary>
     /// 可绑定的，绑定到一个组件
     /// </summary>
     public interface IBindable
     {
         string Path { get; set; }
+    }
+
+    /// <summary>
+    /// Get,Set 分别设置
+    /// </summary>
+    [Flags]
+    public enum ParsMode
+    {
+        None = 0,
+        Log = 1 << 0,
+        Worning = 1 << 1,
+        Error = 1 << 2,
+        ThrowException = 1 << 3,
+        FallbackValue = 1 << 4,
+        FallbackTypeDefault = 1 << 5,
     }
 
     /// <summary>
@@ -164,6 +193,7 @@ namespace Megumin.GameFramework.AI
     public class MMDataSerializationData
     {
         public string MemberName;
+        public string RefName;
         /// <summary>
         /// 类型名和引用名公用的保存字段
         /// </summary>
@@ -174,7 +204,6 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         public string TypeName;
         public bool IsRef => !string.IsNullOrEmpty(RefName);
-        public string RefName;
         public CollectionSerializationData Data;
 
         //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = value; }
@@ -249,7 +278,6 @@ namespace Megumin.GameFramework.AI
             vara = null;
             return false;
         }
-
     }
 
     [Serializable]
@@ -259,21 +287,35 @@ namespace Megumin.GameFramework.AI
         public string Path;
         public CollectionSerializationData fallbackData;
 
-        public bool TrySerialize(IVariable item)
+        public bool TrySerialize(IRefSharedable item)
         {
-            if (item is TestVariable variable)
+            if (item is IMMDataable variable)
             {
                 TypeName = variable.GetType().FullName;
-                Name = variable.Name;
-                Path = variable.Path;
-                fallbackData = new CollectionSerializationData();
-                return fallbackData.TrySerialize("fallbackData", variable.GetValue());
+
+                var data = variable.GetValue();
+                if (item is IBindable bindable)
+                {
+                    Path = bindable.Path;
+                }
+
+                if (item is IRefSharedable sharedable)
+                {
+                    Name = sharedable.Name;
+                }
+
+                CollectionSerializationData valueData = new();
+                if (valueData.TrySerialize("Value", data))
+                {
+                    fallbackData = valueData;
+                }
+                return true;
             }
 
             return false;
         }
 
-        public bool TryDeserialize(out IVariable value)
+        public bool TryDeserialize(out IRefSharedable value)
         {
             value = default;
 
@@ -282,13 +324,21 @@ namespace Megumin.GameFramework.AI
             {
                 return false;
             }
-            var variable = Activator.CreateInstance(type) as TestVariable;
+            var variable = Activator.CreateInstance(type) as IRefSharedable;
             variable.Name = Name;
-            variable.Path = Path;
-            if (fallbackData.TryDeserialize(out var data))
+            if (variable is IBindable bindable)
             {
-                variable.SetValue(data);
+                bindable.Path = Path;
             }
+
+            if (variable is IMMDataable dataable)
+            {
+                if (fallbackData.TryDeserialize(out var data))
+                {
+                    dataable.SetValue(data);
+                }
+            }
+
             value = variable;
             return true;
         }

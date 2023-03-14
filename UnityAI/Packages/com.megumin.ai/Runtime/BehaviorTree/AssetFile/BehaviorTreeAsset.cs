@@ -225,7 +225,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (item.TryDeserialize(out var va))
                 {
-                    if (va is IVariable variable)
+                    if (va is IRefSharedable variable)
                     {
                         tree.Variable.Table.Add(variable);
                     }

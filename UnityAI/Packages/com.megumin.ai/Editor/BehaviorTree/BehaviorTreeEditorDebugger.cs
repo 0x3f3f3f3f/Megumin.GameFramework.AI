@@ -108,17 +108,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Debug.Log(item.ToStringReflection());
             }
 
-            var type = typeof(Dictionary<int, string>);
-            Debug.Log(type.FullName);
-            var type2 = Type.GetType("Dictionary<,>");
-            Debug.Log(type2?.FullName);
-            var name = typeof(Dictionary<,>).FullName;
-            var test = Type.GetType(name);
+            //var type = typeof(Dictionary<int, string>);
+            //Debug.Log(type.FullName);
+            //var type2 = Type.GetType("Dictionary<,>");
+            //Debug.Log(type2?.FullName);
+            //var name = typeof(Dictionary<,>).FullName;
+            //var test = Type.GetType(name);
 
-            Megumin.Serialization.TypeCache.TryGetGenericAndSpecializedType(type.FullName, out var _, out var _);
+            //Megumin.Serialization.TypeCache.TryGetGenericAndSpecializedType(type.FullName, out var _, out var _);
 
-            var name2 = typeof(ParamVariable<>).FullName;
-            var p = Type.GetType(name2);
+            //var name2 = typeof(ParamVariable<>).FullName;
+            //var p = Type.GetType(name2);
         }
 
         /// <summary>

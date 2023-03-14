@@ -124,7 +124,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             RemoveVariable(blackboardVariableView.Variable);
         }
 
-        public void RemoveVariable(IVariable variable)
+        public void RemoveVariable(IRefSharedable variable)
         {
             if (LookupTable?.Table.Contains(variable) ?? false)
             {

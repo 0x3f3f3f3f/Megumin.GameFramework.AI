@@ -18,15 +18,15 @@ MonoBehaviour:
   Comment: load2
   StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
   VariableTable:
-  - Name: MyTestRef
+  - Name: MyTestRef222
     TypeName: Megumin.GameFramework.AI.ParamVariable_string
     Path: 
     fallbackData:
-      Name: fallbackData
-      TypeName: 
-      Data: 
+      Name: Value
+      TypeName: System.String
+      Data: sdfasdf
       RefObject: {fileID: 0}
-      DataType: 2
+      DataType: 65
       Collection: []
   Nodes:
   - StringCallbackMemberData: []
@@ -51,10 +51,10 @@ MonoBehaviour:
   - StringCallbackMemberData: []
     MMdata:
     - MemberName: MMDatastring
+      RefName: 
       Path: 
       TypeName: Megumin.GameFramework.AI.MMData`1[[System.String, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      RefName: 
       Data:
         Name: Value
         TypeName: System.String
@@ -63,10 +63,10 @@ MonoBehaviour:
         DataType: 65
         Collection: []
     - MemberName: MMData2string
+      RefName: 
       Path: 
       TypeName: Megumin.GameFramework.AI.MMData2`1[[System.String, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      RefName: 
       Data:
         Name: Value
         TypeName: System.String
@@ -75,16 +75,15 @@ MonoBehaviour:
         DataType: 65
         Collection: []
     - MemberName: MMData3string_Ref
+      RefName: MyTestRef222
       Path: 
-      TypeName: Megumin.GameFramework.AI.MMData3`1[[System.String, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      RefName: MyTestRef
+      TypeName: Megumin.GameFramework.AI.ParamVariable_string
       Data:
         Name: Value
-        TypeName: 
-        Data: 
+        TypeName: System.String
+        Data: sdfasdf
         RefObject: {fileID: 0}
-        DataType: 2
+        DataType: 65
         Collection: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: ada6836d-8b37-432e-993e-a739afa3a29c
