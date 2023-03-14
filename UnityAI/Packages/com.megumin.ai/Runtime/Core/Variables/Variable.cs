@@ -50,12 +50,12 @@ namespace Megumin.GameFramework.AI
 
         public override object GetValue()
         {
-            return date;
+            return Value;
         }
 
         public override void SetValue(object value)
         {
-            date = (T)value;
+            Value = (T)value;
         }
     }
 

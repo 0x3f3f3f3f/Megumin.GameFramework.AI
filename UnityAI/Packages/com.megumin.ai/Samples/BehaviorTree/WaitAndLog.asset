@@ -17,7 +17,17 @@ MonoBehaviour:
   test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
   Comment: loadlast
   StartNodeGUID: a734621c-96b6-4a26-898c-0e4d45f5dba2
-  VariableTable: []
+  VariableTable:
+  - Name: TestStringVariable
+    TypeName: Megumin.GameFramework.AI.RefVariable_string
+    Path: UnityEngine.GameObject/layer
+    fallbackData:
+      Name: Value
+      TypeName: 
+      Data: 
+      RefObject: {fileID: 0}
+      DataType: 2
+      Collection: []
   Nodes:
   - StringCallbackMemberData: []
     MMdata:

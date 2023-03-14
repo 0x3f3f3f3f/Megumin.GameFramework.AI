@@ -13,7 +13,10 @@ namespace Megumin.GameFramework.AI
         public TraceListener TraceListener { get; set; } = new UnityTraceListener(); 
         public ILogSetting LogSetting { get; set; }
 
-        public HashSet<IBindable> AllBindable { get; } = new();
+        /// <summary>
+        /// 参数表中的一些值也在里面，没没有做过滤
+        /// </summary>
+        public HashSet<IBindable> AllElementBindable { get; } = new();
 
         public virtual void Log(object message)
         {

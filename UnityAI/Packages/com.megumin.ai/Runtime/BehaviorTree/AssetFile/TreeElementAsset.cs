@@ -180,7 +180,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                         if (variable is IBindable bindable)
                         {
-                            instance.Tree.AllBindable.Add(bindable);
+                            instance.Tree.AllElementBindable.Add(bindable);
                         }
                     }
                     catch (Exception e)

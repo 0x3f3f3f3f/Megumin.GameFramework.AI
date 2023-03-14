@@ -66,7 +66,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void ParseAllBindable(object agent, bool force = false)
         {
-            foreach (var item in AllBindable)
+            Variable.ParseBinding(agent, force);
+
+            foreach (var item in AllElementBindable)
             {
                 if (item is IBindingParseable parseable)
                 {

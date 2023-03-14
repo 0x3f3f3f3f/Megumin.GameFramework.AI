@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI
 {
@@ -39,6 +40,12 @@ namespace Megumin.GameFramework.AI
 
         public bool TryGetParam<T>(string name, out IVariable<T> variable)
         {
+            if (TryGetParam(name, out var temp) && temp is IVariable<T> valid)
+            {
+                variable = valid;
+                return true;
+            }
+
             variable = null;
             return false;
         }
@@ -66,6 +73,17 @@ namespace Megumin.GameFramework.AI
                 name += " (1)";
             }
             return name;
+        }
+
+        public void ParseBinding(object agent, bool force)
+        {
+            foreach (var item in Table)
+            {
+                if (item is IBindingParseable parseable)
+                {
+                    parseable.ParseBinding(agent, force);
+                }
+            }
         }
     }
 }

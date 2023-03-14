@@ -56,6 +56,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BehaviourTree.ParseAllBindable(gameObject, true);
         }
 
+        [Editor]
+        public void LogVariable(string name = "TestStringVariable")
+        {
+            if (BehaviourTree.Variable.TryGetParam<string>(name,out var variable))
+            {
+                Debug.Log(variable.Value);
+            }
+        }
+
         public void EnableTree()
         {
             BehaviorTreeManager.Instance.AddTree(this);
