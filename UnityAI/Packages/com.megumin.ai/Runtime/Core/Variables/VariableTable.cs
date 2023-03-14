@@ -26,6 +26,13 @@ namespace Megumin.GameFramework.AI
 
         public bool TryGetParam(string name, out IVariable variable)
         {
+            var first = Table.FirstOrDefault(elem => elem.Name == name);
+            if (first != null)
+            {
+                variable = first;
+                return true;
+            }
+
             variable = null;
             return false;
         }

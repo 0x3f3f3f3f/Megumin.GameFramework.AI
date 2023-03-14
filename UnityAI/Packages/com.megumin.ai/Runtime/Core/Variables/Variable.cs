@@ -210,6 +210,12 @@ namespace Megumin.GameFramework.AI
                     {
                         var variable = Activator.CreateInstance(type) as IRefSharedable;
                         variable.Name = RefName;
+
+                        if (variable is IBindable bindable)
+                        {
+                            bindable.Path = Path;
+                        }
+
                         vara = variable;
                         return true;
                     }
@@ -248,6 +254,7 @@ namespace Megumin.GameFramework.AI
             vara = null;
             return false;
         }
+
     }
 
     [Serializable]

@@ -175,13 +175,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var member = instance.GetType().GetMember(variableData.MemberName)?.FirstOrDefault();
                 if (member != null && variableData.TryDeserialize(out var variable, refFinder))
                 {
-                    if (member is FieldInfo fieldInfo)
+                    try
                     {
-                        fieldInfo.SetValue(instance, variable);
+                        if (member is FieldInfo fieldInfo)
+                        {
+                            if (variable != null && !fieldInfo.FieldType.IsAssignableFrom(variable.GetType()))
+                            {
+                                //参数类型不普配
+                                Debug.LogError("参数类型不普配");
+                            }
+                            fieldInfo.SetValue(instance, variable);
+                        }
+                        else if (member is PropertyInfo propertyInfo)
+                        {
+                            propertyInfo.SetValue(instance, variable);
+                        }
                     }
-                    else if (member is PropertyInfo propertyInfo)
+                    catch (Exception e)
                     {
-                        propertyInfo.SetValue(instance, variable);
+                        Debug.LogError(e);
                     }
                 }
             }

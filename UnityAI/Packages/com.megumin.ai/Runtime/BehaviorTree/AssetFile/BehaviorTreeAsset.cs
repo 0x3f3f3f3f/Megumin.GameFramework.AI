@@ -290,6 +290,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         bool IRefFinder.TryGetRefValue(string refName, out object refValue)
         {
+            if (Variable.TryGetParam(refName,out var param))
+            {
+                refValue = param;
+                return true;
+            }
+
             refValue = null;
             return false;
         }
