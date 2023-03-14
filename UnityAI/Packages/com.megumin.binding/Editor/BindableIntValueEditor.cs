@@ -27,7 +27,7 @@ namespace Megumin.Binding.Editor
             using (new EditorGUI.PropertyScope(position, label, property))
             {
                 var ex = EditorGUI.PropertyField(position, property, label, true);
-                var bindp = property.FindPropertyRelative("BindingPath");
+                var bindp = property.FindPropertyRelative("bindingPath");
                 var xoffset = property.FindPropertyRelative("xOffset");
                 int xo = xoffset.intValue;
                 var yoffset = property.FindPropertyRelative("yOffset");
@@ -55,11 +55,6 @@ namespace Megumin.Binding.Editor
                         GUILayout.Label("MatchResult");
                         GUILayout.Label(presult.ToString());
                         GUILayout.EndHorizontal();
-                    }
-
-                    if (bindp.GetBindintString(GUILayout.Button($"{bindp.propertyPath}_Bind"), out var res))
-                    {
-                        bindp.stringValue = res;
                     }
 
                     if (GUILayout.Button($"{property.propertyPath}_TestParse"))

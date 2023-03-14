@@ -30,31 +30,98 @@ namespace Megumin.Binding
         static GUIContent settingIcon =
             new(EditorGUIUtility.IconContent("settings icon")) { tooltip = "Set BindingPath" };
 
+        Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
             const int buttonWidth = 26;
+
             var propertyPosition = position;
-            propertyPosition.width -= buttonWidth + 2;
+            propertyPosition.width -= buttonWidth + buttonWidth + 2;
 
             var buttonPosition = position;
             buttonPosition.width = buttonWidth;
             buttonPosition.x += position.width - buttonWidth;
 
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
-            if (property.GetBindintString(GUI.Button(buttonPosition, settingIcon), out var str))
+            var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
+            if (property.GetBindintString(GUI.Button(buttonPosition, settingIcon), out var str, gType))
             {
                 property.stringValue = str;
+            }
+
+            var buttonPositionTest = position;
+            buttonPositionTest.width = buttonWidth;
+            buttonPositionTest.x += position.width - buttonWidth - buttonWidth;
+
+            if (GUI.Button(buttonPositionTest, $"Test"))
+            {
+                //通过property取得实例对象
+                //https://gist.github.com/douduck08/6d3e323b538a741466de00c30aa4b61f
+
+                var obj = property.serializedObject.targetObject;
+                object data = null;
+                if (property.propertyPath.EndsWith("]"))
+                {
+                    data = property.managedReferenceValue;
+                }
+                else
+                {
+                    data = this.fieldInfo.GetValue(obj);
+                }
+
+                if (data == null)
+                {
+
+                }
+
+                if (data is IBindingParseable parseable)
+                {
+                    GameObject gameObject = obj as GameObject;
+                    if (obj is Component component)
+                    {
+                        gameObject = component.gameObject;
+                    }
+                    parseResult[property.propertyPath]
+                        = parseable.ParseBinding(gameObject, true);
+                    parseable.DebugParseResult();
+                }
+
+                //fieldInfo = this.fieldInfo; 
+                //var field2 = this.fieldInfo;
+                //var v = field2.GetValue(property.serializedObject.targetObject);
+                //var index = property.enumValueIndex;
+
+                ////Debug.Log(property.serializedObject.targetObject);
+
+                //Type type = obj.GetType();
+                //var fieldInfo = type.GetField(property.propertyPath);
+                //var fValue = fieldInfo.GetValue(obj);
+
+                //if (fValue is IBindingParseable parseable)
+                //{
+                //    GameObject gameObject = obj as GameObject;
+                //    if (obj is Component component)
+                //    {
+                //        gameObject = component.gameObject;
+                //    }
+                //    parseable.ParseBinding(gameObject, true);
+                //    parseable.DebugParseResult();
+                //}
             }
         }
     }
 
     public static class BindingEditor
     {
-        public static bool GetBindintString(this SerializedProperty property, bool click, out string str)
+        public static bool GetBindintString(this SerializedProperty property,
+                                            bool click,
+                                            out string str,
+                                            Type matchType = null,
+                                            bool autoConvert = true)
         {
             if (click)
             {
-                BindingEditor.GetBindStr(property.propertyPath);
+                BindingEditor.GetBindStr(property.propertyPath, matchType, autoConvert);
             }
 
             if (BindingEditor.cacheResult.TryGetValue(property.propertyPath, out str))
@@ -73,13 +140,19 @@ namespace Megumin.Binding
             cacheResult[propertyPath] = str;
         }
 
+        public static async void GetBindStr(string propertyPath, Type matchType, bool autoConvert = true)
+        {
+            var str = await BindingEditor.GetBindStr(matchType, autoConvert);
+            cacheResult[propertyPath] = str;
+        }
+
 
         public static Task<string> GetBindStr<T>()
         {
             return GetBindStr(typeof(T));
         }
 
-        public static Task<string> GetBindStr(Type matchType)
+        public static Task<string> GetBindStr(Type matchType, bool autoConvert = true)
         {
             TaskCompletionSource<string> source = new TaskCompletionSource<string>();
             GenericMenu.MenuFunction2 func = ms =>
@@ -112,12 +185,12 @@ namespace Megumin.Binding
                 }
             };
 
-            GenericMenu bindMenu = GetMenu(typeof(int), func);
+            GenericMenu bindMenu = GetMenu(matchType, func, autoConvert);
             bindMenu.ShowAsContext();
             return source.Task;
         }
 
-        public static GenericMenu GetMenu(Type matchType, GenericMenu.MenuFunction2 func = default)
+        public static GenericMenu GetMenu(Type matchType, GenericMenu.MenuFunction2 func = default, bool autoConvert = true)
         {
             GenericMenu bindMenu = new GenericMenu();
             //bindMenu.AddItem(new GUIContent("A"), false,
@@ -177,10 +250,26 @@ namespace Megumin.Binding
 
         public static IOrderedEnumerable<MyMember> GetMembers(Type type, Type matchType)
         {
-            var fields = type.GetFields().Where(f => matchType.IsAssignableFrom(f.FieldType));
+            var fields = type.GetFields().Where(f =>
+            {
+                if (matchType == null)
+                {
+                    return true;
+                }
+                return matchType.IsAssignableFrom(f.FieldType);
+            });
+
             var allf = from f in fields
                        select new MyMember() { Name = f.Name, Member = f, ValueType = f.FieldType };
-            var propertie = type.GetProperties().Where(f => matchType.IsAssignableFrom(f.PropertyType));
+
+            var propertie = type.GetProperties().Where(f =>
+            {
+                if (matchType == null)
+                {
+                    return true;
+                }
+                return matchType.IsAssignableFrom(f.PropertyType);
+            });
 
             var allPorp = from p in propertie
                           select new MyMember() { Name = p.Name, Member = p, ValueType = p.PropertyType };

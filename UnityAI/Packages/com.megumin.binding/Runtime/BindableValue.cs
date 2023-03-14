@@ -13,7 +13,10 @@ namespace Megumin.Binding
         public string Key;
         public bool IsBinding;
         [field: SerializeField]
-        public string BindingPath { get; set; }
+        [field: BindingPathSetter]
+        private string bindingPath;
+
+        public string BindingPath { get => bindingPath; set => bindingPath = value; }
         public T defaultValue;
         public GameObject extnalObj;
         public int xOffset = 0, yOffset = 0;
