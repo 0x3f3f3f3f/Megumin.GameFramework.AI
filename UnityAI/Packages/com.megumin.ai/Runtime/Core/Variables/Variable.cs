@@ -285,7 +285,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public interface ITreeWrapper
+    public interface ITreeElementWrapper
     {
         VariableTable GetVariableTable();
     }
@@ -311,6 +311,8 @@ namespace Megumin.GameFramework.AI
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
 
+        List<string> option = new List<string>();
+        List<string> optionDisplay = new List<string>();
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, property))
@@ -325,21 +327,30 @@ namespace Megumin.GameFramework.AI
                     buttonPosition.x += position.width - popupWidth;
 
                     //var obj = property.managedReferenceValue;
-                    List<string> option = new List<string>();
-                    option.Add("None");
+                    option.Clear();
+                    optionDisplay.Clear();
+                    option.Add("Ref: None");
+                    optionDisplay.Add("Ref: None");
 
                     var wrapper = property.serializedObject.targetObject;
                     VariableTable table = null;
-                    if (wrapper is ITreeWrapper treeWrapper)
+                    if (wrapper is ITreeElementWrapper treeWrapper)
                     {
                         table = treeWrapper.GetVariableTable();
                         foreach (var item in table.Table)
                         {
                             option.Add(item.RefName);
+                            if (item is IVariableSpecializedType specializedType)
+                            {
+                                optionDisplay.Add($"{item.RefName} : [{specializedType.SpecializedType.Name}]");
+                            }
+                            else
+                            {
+                                optionDisplay.Add(item.RefName);
+                            }
                         }
                     }
 
-                   
                     var index = 0;
                     var currentRefNameValue = refName.stringValue;
                     if (option.Contains(refName.stringValue))
@@ -353,13 +364,13 @@ namespace Megumin.GameFramework.AI
                         }
                     }
 
-                    string[] strings = option.ToArray();
+                    string[] strings = optionDisplay.ToArray();
                     EditorGUI.BeginChangeCheck();
                     index = EditorGUI.Popup(buttonPosition, index, strings);
                     if (EditorGUI.EndChangeCheck())
                     {
-                        var obj = property.GetValue<object>();
-
+                        //var obj = property.GetValue<object>();
+                        Undo.RecordObject(property.serializedObject.targetObject, "Change Ref");
                         if (index == 0)
                         {
                             //设置未null。

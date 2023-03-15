@@ -27,11 +27,12 @@ namespace Megumin.Binding
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class Variable<T> : Variable, IVariable<T>, IBindableFallback
+    public class Variable<T> : Variable, IVariable<T>, IBindableFallback, IVariableSpecializedType
     {
         [field: SerializeField]
         protected T value;
 
+        public virtual Type SpecializedType => typeof(T);
 
         public virtual T Value { get => value; set => this.value = value; }
 

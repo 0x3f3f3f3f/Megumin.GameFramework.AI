@@ -5,7 +5,7 @@ using Megumin;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeWrapper : ScriptableObject, ITreeWrapper
+    public class NodeWrapper : ScriptableObject, ITreeElementWrapper
     {
         [SerializeReference]
         public BTNode Node;
