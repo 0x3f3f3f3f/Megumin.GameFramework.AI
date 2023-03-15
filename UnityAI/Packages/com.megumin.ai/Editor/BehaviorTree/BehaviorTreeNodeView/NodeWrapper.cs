@@ -5,7 +5,7 @@ using Megumin;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeWrapper : ScriptableObject
+    public class NodeWrapper : ScriptableObject, ITreeWrapper
     {
         [SerializeReference]
         public BTNode Node;
@@ -23,6 +23,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 View.outputContainer.AddToClassList("unDisplay");
             }
+        }
+
+        public VariableTable GetVariableTable()
+        {
+            return View?.TreeView?.Tree?.Variable;
         }
 
         //TODO

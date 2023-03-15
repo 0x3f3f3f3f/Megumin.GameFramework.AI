@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Megumin.Binding;
 using Megumin.Serialization;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
+using UnityEditor.UIElements;
 #endif
 
 namespace Megumin.GameFramework.AI
@@ -23,7 +25,8 @@ namespace Megumin.GameFramework.AI
     public class RefVariable<T> : BindingVariable<T>, IRefable
     {
         [field: SerializeField]
-        public string RefName { get; set; }
+        protected string refName;
+        public string RefName { get => refName; set => refName = value; }
     }
 
     /// <summary>
@@ -256,12 +259,23 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    public interface ITreeWrapper
+    {
+        VariableTable GetVariableTable();
+    }
 
 #if UNITY_EDITOR
 
-    //[UnityEditor.CustomPropertyDrawer(typeof(TestVariable))]
+    [UnityEditor.CustomPropertyDrawer(typeof(RefVariable<>), true)]
     public class Pro : PropertyDrawer
     {
+        public override UnityEngine.UIElements.VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            var field = new PropertyField();
+            field.BindProperty(property);
+            return field;
+        }
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             if (property.isExpanded)
@@ -270,15 +284,73 @@ namespace Megumin.GameFramework.AI
             }
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, property))
             {
+                var refName = property.FindPropertyRelative("refName");
+                if (refName != null)
+                {
+                    float popupWidth = position.width - EditorGUIUtility.labelWidth;
+                    var buttonPosition = position;
+                    buttonPosition.width = popupWidth;
+                    buttonPosition.height = 18;
+                    buttonPosition.x += position.width - popupWidth;
+
+                    //var obj = property.managedReferenceValue;
+                    List<string> option = new List<string>();
+                    option.Add("None");
+
+                    var wrapper = property.serializedObject.targetObject;
+                    VariableTable table = null;
+                    if (wrapper is ITreeWrapper treeWrapper)
+                    {
+                        table = treeWrapper.GetVariableTable();
+                        foreach (var item in table.Table)
+                        {
+                            option.Add(item.RefName);
+                        }
+                    }
+
+                   
+                    var index = 0;
+                    var currentRefNameValue = refName.stringValue;
+                    if (option.Contains(refName.stringValue))
+                    {
+                        for (int i = 0; i < option.Count; i++)
+                        {
+                            if (currentRefNameValue == option[i])
+                            {
+                                index = i;
+                            }
+                        }
+                    }
+
+                    string[] strings = option.ToArray();
+                    EditorGUI.BeginChangeCheck();
+                    index = EditorGUI.Popup(buttonPosition, index, strings);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        var obj = property.GetValue<object>();
+
+                        if (index == 0)
+                        {
+                            //设置未null。
+                            property.SetValue<object>(null);
+                        }
+                        else
+                        {
+                            var variable = table.Table[index - 1];
+                            property.SetValue<object>(variable);
+                        }
+                    }
+                }
+
+                //先绘制下拉选单，后绘制整个属性，不然会和折叠功能冲突
                 var ex = EditorGUI.PropertyField(position, property, label, true);
             }
         }
     }
 #endif
 }
-
-

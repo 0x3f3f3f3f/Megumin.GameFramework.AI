@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.UIElements;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.UIElements;
 #endif
 
 namespace Megumin.Binding
@@ -22,6 +24,26 @@ namespace Megumin.Binding
     [UnityEditor.CustomPropertyDrawer(typeof(BindingPathSetterAttribute))]
     public class BindingPathAttributeDrawer : UnityEditor.PropertyDrawer
     {
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            var label = new PropertyField();
+            label.BindProperty(property);
+            label.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
+            {
+                evt.menu.AppendAction("Set BindingPath", 
+                    async a => 
+                    {
+                        var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
+                        var path = await BindingEditor.GetBindStr(gType,true);
+                        Debug.Log(path + "-----------------");
+                        property.stringValue = path;
+                    }, 
+                    DropdownMenuAction.Status.Normal);
+            });
+            return label;
+        }
+
+
         public override float GetPropertyHeight(UnityEditor.SerializedProperty property, GUIContent label)
         {
             return UnityEditor.EditorGUI.GetPropertyHeight(property, true);
