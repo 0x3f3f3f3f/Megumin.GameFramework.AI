@@ -25,6 +25,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             addItemRequested += OnAddClicked;
 
             scrollable = true;
+
+            //设置为仅垂直滚动
+            ScrollView = this.Q<ScrollView>();
+            ScrollView.mode = ScrollViewMode.Vertical;
+
             SetPosition(BehaviorTreeEditor.BlackboardLayout);
 
             // 不能使用ListView,子元素能折叠打开，动态大小，bug很多。
@@ -91,6 +96,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public VariableTable LookupTable { get; set; }
+        public ScrollView ScrollView { get; private set; }
 
         public void ReloadView(bool force = false)
         {

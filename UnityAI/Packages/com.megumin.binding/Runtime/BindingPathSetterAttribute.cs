@@ -26,21 +26,50 @@ namespace Megumin.Binding
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            var label = new PropertyField();
-            label.BindProperty(property);
-            label.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
+            var container = new VisualElement();
+            container.style.flexDirection = FlexDirection.Row;
+
+
+            var field = new PropertyField();
+            field.style.flexGrow = 1;
+
+            field.BindProperty(property);
+            //field.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
+            //{
+            //    evt.menu.AppendAction("Set BindingPath", 
+            //        async a => 
+            //        {
+            //            var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
+            //            var path = await BindingEditor.GetBindStr(gType,true);
+            //            Debug.Log(path + "-----------------");
+            //            property.stringValue = path;
+            //        }, 
+            //        DropdownMenuAction.Status.Normal);
+            //});
+
+            var settingButton = new Button();
+            settingButton.style.width = settingButtonWidth;
+            settingButton.style.backgroundImage = settingIcon.image as Texture2D;
+
+            var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
+
+            settingButton.clicked += async () =>
             {
-                evt.menu.AppendAction("Set BindingPath", 
-                    async a => 
-                    {
-                        var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
-                        var path = await BindingEditor.GetBindStr(gType,true);
-                        Debug.Log(path + "-----------------");
-                        property.stringValue = path;
-                    }, 
-                    DropdownMenuAction.Status.Normal);
-            });
-            return label;
+                var path = await BindingEditor.GetBindStr(gType, true);
+
+                //TODO, Editor hasunsavechange
+                //Undo.RecordObject(property.serializedObject.targetObject, $"Set BindingPath {property.propertyPath}");
+                //Debug.Log(path + "-----------------");
+                //property.SetValue(path);
+
+                //此时已经无法给property赋值了。改为给TextField赋值。
+                var textField = field.Q<TextField>();
+                textField.value = path;
+            };
+
+            container.Add(field);
+            container.Add(settingButton);
+            return container;
         }
 
 
@@ -52,12 +81,12 @@ namespace Megumin.Binding
         static GUIContent settingIcon =
             new(EditorGUIUtility.IconContent("settings icon")) { tooltip = "Set BindingPath" };
 
+        const int settingButtonWidth = 26;
+        const int testButtonWidth = 36;
+
         Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
-            const int settingButtonWidth = 26;
-            const int testButtonWidth = 36;
-
             var propertyPosition = position;
             propertyPosition.width -= settingButtonWidth + testButtonWidth + 2;
 

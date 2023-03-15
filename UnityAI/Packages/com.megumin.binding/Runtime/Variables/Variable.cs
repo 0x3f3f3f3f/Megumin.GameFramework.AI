@@ -81,7 +81,9 @@ namespace Megumin.Binding
     {
         [field: BindingPathSetter]
         [field: SerializeField]
-        public string BindingPath { get; set; }
+        protected string bindingPath;
+
+        public string BindingPath { get => bindingPath; set => bindingPath = value; }
         public ParseMode GetMode = ParseMode.FallbackValue;
         public ParseMode SetMode = ParseMode.FallbackValue;
 
