@@ -2,10 +2,12 @@
 using UnityEditor;
 using UnityEngine;
 using Megumin;
+using System.Collections.Generic;
+using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeWrapper : ScriptableObject, ITreeElementWrapper
+    public class NodeWrapper : ScriptableObject, IRefVariableFinder
     {
         [SerializeReference]
         public BTNode Node;
@@ -30,6 +32,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return View?.TreeView?.Tree?.Variable;
         }
 
+        IEnumerable<IRefable> IRefVariableFinder.GetVariableTable()
+        {
+            return View?.TreeView?.Tree?.Variable.Table;
+        }
+
+        public bool TryGetParam(string name, out IRefable variable)
+        {
+            variable = null;
+            if (View?.TreeView?.Tree?.Variable?.TryGetParam(name, out variable) ?? false)
+            {
+                return true;
+            }
+            return false;
+        }
+
         //TODO
         //private void OnValidate()
         //{
@@ -47,7 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //this.DrawButtonBeforeDefaultInspector();
 
 
-            var wrapper= (NodeWrapper)target;
+            var wrapper = (NodeWrapper)target;
             //内部使用了EditorGUI.BeginChangeCheck();
             //用这种方法检测是否面板更改，触发UndoRecord
             if (DrawDefaultInspector())

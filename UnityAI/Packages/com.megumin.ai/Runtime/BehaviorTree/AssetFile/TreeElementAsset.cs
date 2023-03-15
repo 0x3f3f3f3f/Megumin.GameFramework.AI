@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class TreeElementAsset
     {
         public List<string> StringCallbackMemberData = new();
-        public List<MMDataSerializationData> MMdata = new();
+        public List<RefVariableSerializationData> MMdata = new();
 
         public static void BeforeSerializeMember<T>(object instance,
                                           List<string> callbackIgnoreMember,
@@ -106,7 +106,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 //特殊序列化
                 if (memberValue is IVariable variable)
                 {
-                    MMDataSerializationData mmdata = new();
+                    RefVariableSerializationData mmdata = new();
                     if (mmdata.TrySerialize(member.Name, variable))
                     {
                         MMdata.Add(mmdata);

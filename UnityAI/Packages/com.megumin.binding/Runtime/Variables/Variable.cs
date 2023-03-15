@@ -77,7 +77,7 @@ namespace Megumin.Binding
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class BindingVariable<T> : Variable<T>, IBindable, IBindingParseable
+    public class BindingVar<T> : Variable<T>, IBindable, IBindingParseable
     {
         [field: BindingPathSetter]
         [field: SerializeField]

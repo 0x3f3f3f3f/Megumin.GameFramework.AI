@@ -54,7 +54,7 @@ namespace Megumin.GameFramework.AI
         /// <returns></returns>
         public virtual IRefable Create()
         {
-            return new RefVariable<int>() { RefName = "VariableCreator" };
+            return new RefVar<int>() { RefName = "VariableCreator" };
         }
 
         public class Separator : VariableCreator
@@ -70,7 +70,7 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable<T>() { RefName = this.Name };
+            return new RefVar<T>() { RefName = this.Name };
         }
     }
 }

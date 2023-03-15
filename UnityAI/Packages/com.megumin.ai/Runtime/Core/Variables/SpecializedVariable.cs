@@ -49,7 +49,7 @@ namespace Megumin.GameFramework.AI
         };
     }
 
-    public class RefVariable_bool : RefVariable<bool> { }
+    public class RefVariable_bool : RefVar<bool> { }
 
     public class VariableCreator_bool : VariableCreator
     {
@@ -61,7 +61,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_int : RefVariable<int> { }
+    public class RefVariable_int : RefVar<int> { }
 
     public class VariableCreator_int : VariableCreator
     {
@@ -73,7 +73,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_long : RefVariable<long> { }
+    public class RefVariable_long : RefVar<long> { }
 
     public class VariableCreator_long : VariableCreator
     {
@@ -85,7 +85,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_string : RefVariable<string> { }
+    public class RefVariable_string : RefVar<string> { }
 
     public class VariableCreator_string : VariableCreator
     {
@@ -97,7 +97,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_float : RefVariable<float> { }
+    public class RefVariable_float : RefVar<float> { }
 
     public class VariableCreator_float : VariableCreator
     {
@@ -109,7 +109,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_double : RefVariable<double> { }
+    public class RefVariable_double : RefVar<double> { }
 
     public class VariableCreator_double : VariableCreator
     {
@@ -121,7 +121,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Vector2 : RefVariable<Vector2> { }
+    public class RefVariable_Vector2 : RefVar<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
     {
@@ -133,7 +133,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Vector2Int : RefVariable<Vector2Int> { }
+    public class RefVariable_Vector2Int : RefVar<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
     {
@@ -145,7 +145,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Vector3 : RefVariable<Vector3> { }
+    public class RefVariable_Vector3 : RefVar<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
     {
@@ -157,7 +157,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Vector3Int : RefVariable<Vector3Int> { }
+    public class RefVariable_Vector3Int : RefVar<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
     {
@@ -169,7 +169,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Vector4 : RefVariable<Vector4> { }
+    public class RefVariable_Vector4 : RefVar<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
     {
@@ -181,7 +181,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Rect : RefVariable<Rect> { }
+    public class RefVariable_Rect : RefVar<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
     {
@@ -193,7 +193,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_RectInt : RefVariable<RectInt> { }
+    public class RefVariable_RectInt : RefVar<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
     {
@@ -205,7 +205,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Bounds : RefVariable<Bounds> { }
+    public class RefVariable_Bounds : RefVar<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
     {
@@ -217,7 +217,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_BoundsInt : RefVariable<BoundsInt> { }
+    public class RefVariable_BoundsInt : RefVar<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
     {
@@ -229,7 +229,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_GameObject : RefVariable<GameObject> { }
+    public class RefVariable_GameObject : RefVar<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
     {
@@ -241,7 +241,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_ScriptableObject : RefVariable<ScriptableObject> { }
+    public class RefVariable_ScriptableObject : RefVar<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
     {
@@ -253,7 +253,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Trigger : RefVariable<Trigger> { }
+    public class RefVariable_Trigger : RefVar<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
     {
@@ -265,7 +265,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Color : RefVariable<Color> { }
+    public class RefVariable_Color : RefVar<Color> { }
 
     public class VariableCreator_Color : VariableCreator
     {
@@ -277,7 +277,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Gradient : RefVariable<Gradient> { }
+    public class RefVariable_Gradient : RefVar<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
     {
@@ -289,7 +289,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Texture2D : RefVariable<Texture2D> { }
+    public class RefVariable_Texture2D : RefVar<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
     {
@@ -301,7 +301,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_RenderTexture : RefVariable<RenderTexture> { }
+    public class RefVariable_RenderTexture : RefVar<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
     {
@@ -313,7 +313,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_AnimationCurve : RefVariable<AnimationCurve> { }
+    public class RefVariable_AnimationCurve : RefVar<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
     {
@@ -325,7 +325,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Mesh : RefVariable<Mesh> { }
+    public class RefVariable_Mesh : RefVar<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
     {
@@ -337,7 +337,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_SkinnedMeshRenderer : RefVariable<SkinnedMeshRenderer> { }
+    public class RefVariable_SkinnedMeshRenderer : RefVar<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
     {
@@ -349,7 +349,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public class RefVariable_Material : RefVariable<Material> { }
+    public class RefVariable_Material : RefVar<Material> { }
 
     public class VariableCreator_Material : VariableCreator
     {

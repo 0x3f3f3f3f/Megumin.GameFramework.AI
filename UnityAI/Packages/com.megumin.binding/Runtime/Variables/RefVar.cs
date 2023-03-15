@@ -9,53 +9,19 @@ using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.Binding
 {
-    //IRefable 不要放在binding包里，和bind功能相关性不高，和参数表功能相关性更高
-
     /// <summary>
     /// 可以存放在参数表的，可以在多个节点共享的
     /// </summary>
     public interface IRefable
     {
-        string RefName { get; set; }
-    }
-
-    [Serializable]
-    public class RefVariable<T> : BindingVariable<T>, IRefable
-    {
-        [field: SerializeField]
-        protected string refName;
-        public string RefName { get => refName; set => refName = value; }
-    }
-
-    /// <summary>
-    /// 可以自动类型转换的
-    /// </summary>
-    public interface IAutoConvertable
-    {
-
-    }
-
-    /// <summary>
-    /// Wapper类可以类型转换的
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Serializable]
-    public class MMAutoConvertData<T>
-    {
         /// <summary>
-        /// 必然不是T类型，否则就不用转型了。
+        /// 如果是被引用的实例，那么代表自身的名字。
+        /// 如果是引用其他实例的实例，那么代表要引用对象的名字。
+        /// 如果一个实例是引用其他对象，那么就不必给他自身一个名字，是没有意义的。
         /// </summary>
-        public IRefable RefVar { get; set; }
-    }
-
-    /// <summary>
-    /// TODO
-    /// </summary>
-    public struct Trigger
-    {
-        public bool Value;
+        string RefName { get; set; }
     }
 
     public interface IRefFinder
@@ -63,8 +29,29 @@ namespace Megumin.GameFramework.AI
         bool TryGetRefValue(string refName, out object refValue);
     }
 
+    public interface IRefVariableFinder
+    {
+        IEnumerable<IRefable> GetVariableTable();
+        bool TryGetParam(string name, out IRefable variable);
+    }
+
+    /// <summary>
+    /// 可以引用的，可绑定参数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <remarks>
+    /// RefVariable，因为很常用，所以名字尽可能短一点
+    /// </remarks>
     [Serializable]
-    public class MMDataSerializationData
+    public class RefVar<T> : BindingVar<T>, IRefable
+    {
+        [field: SerializeField]
+        protected string refName;
+        public string RefName { get => refName; set => refName = value; }
+    }
+
+    [Serializable]
+    public class RefVariableSerializationData
     {
         public string MemberName;
         public string RefName;
@@ -285,15 +272,10 @@ namespace Megumin.GameFramework.AI
         }
     }
 
-    public interface ITreeElementWrapper
-    {
-        VariableTable GetVariableTable();
-    }
-
 #if UNITY_EDITOR
 
-    [UnityEditor.CustomPropertyDrawer(typeof(RefVariable<>), true)]
-    public class Pro : PropertyDrawer
+    [UnityEditor.CustomPropertyDrawer(typeof(RefVar<>), true)]
+    internal class RefVariableDrawer : PropertyDrawer
     {
         public override UnityEngine.UIElements.VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -317,7 +299,10 @@ namespace Megumin.GameFramework.AI
         {
             using (new EditorGUI.PropertyScope(position, label, property))
             {
+                //先绘制下拉选单，后绘制整个属性，不然会和折叠功能冲突
+
                 var refName = property.FindPropertyRelative("refName");
+                var index = 0;
                 if (refName != null)
                 {
                     float popupWidth = position.width - EditorGUIUtility.labelWidth;
@@ -333,11 +318,10 @@ namespace Megumin.GameFramework.AI
                     optionDisplay.Add("Ref: None");
 
                     var wrapper = property.serializedObject.targetObject;
-                    VariableTable table = null;
-                    if (wrapper is ITreeElementWrapper treeWrapper)
+                    if (wrapper is IRefVariableFinder treeWrapper)
                     {
-                        table = treeWrapper.GetVariableTable();
-                        foreach (var item in table.Table)
+                        var table = treeWrapper.GetVariableTable();
+                        foreach (var item in table)
                         {
                             option.Add(item.RefName);
                             if (item is IVariableSpecializedType specializedType)
@@ -351,7 +335,6 @@ namespace Megumin.GameFramework.AI
                         }
                     }
 
-                    var index = 0;
                     var currentRefNameValue = refName.stringValue;
                     if (option.Contains(refName.stringValue))
                     {
@@ -378,16 +361,28 @@ namespace Megumin.GameFramework.AI
                         }
                         else
                         {
-                            var variable = table.Table[index - 1];
-                            property.SetValue<object>(variable);
+                            if (wrapper is IRefVariableFinder getter
+                                && getter.TryGetParam(option[index], out var variable))
+                            {
+                                property.SetValue<object>(variable);
+                            }
                         }
                     }
                 }
 
-                //先绘制下拉选单，后绘制整个属性，不然会和折叠功能冲突
-                var ex = EditorGUI.PropertyField(position, property, label, true);
+                EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+                using (new UnityEditor.EditorGUI.DisabledGroupScope(index != 0))
+                {
+                    //这里如果是引用的对象，暂时不让在Inspector里修改，对象可能会被多个地方引用
+                    //让他在参数表中修改
+                    UnityEditor.EditorGUI.PropertyField(position, property, true);
+                }
             }
         }
     }
+
 #endif
 }
+
+
+

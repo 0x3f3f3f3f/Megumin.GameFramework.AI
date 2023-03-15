@@ -14,11 +14,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         //public Variable<string> MMDatastring;
         //public Variable<GameObject> MMDataGameObject;
-        //public BindingVariable<string> MMData2string;
-        public RefVariable<string> RefVariableString;
+        //public BindingVar<string> MMData2string;
+        public RefVar<string> RefVariableString;
 
         //多级泛型嵌套
-        //public List<RefVariable<List<string>>> TestFuckingGeneric;
+        //public List<RefVar<List<string>>> TestFuckingGeneric;
         //public Log Log; //隐藏在面板上的显示？还是下拉菜单 还是MMData3<Log>
         //[SerializeReference]
         //public TestVariable ExposeString;// = new ParamVariable_string() { RefName = "test1",Value ="hello",BindingPath = "GameObject/tag" };
