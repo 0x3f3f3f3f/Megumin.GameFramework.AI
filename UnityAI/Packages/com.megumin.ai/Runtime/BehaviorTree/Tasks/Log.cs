@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         int count = 0;
 
         public string LogStr = "Hello world!";
-        public BindingVariable<string> LogStr2;
+        public RefVariable<string> LogStr2;
 
         protected override void OnEnter()
         {

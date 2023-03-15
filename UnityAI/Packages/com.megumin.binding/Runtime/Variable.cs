@@ -27,13 +27,13 @@ namespace Megumin.Binding
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class Variable<T> : Variable, IVariable<T>
+    public class Variable<T> : Variable, IVariable<T>, IBindableFallback
     {
         [field: SerializeField]
-        protected T date;
+        protected T value;
 
 
-        public virtual T Value { get => date; set => this.date = value; }
+        public virtual T Value { get => value; set => this.value = value; }
 
         public override object GetValue()
         {
@@ -43,6 +43,16 @@ namespace Megumin.Binding
         public override void SetValue(object value)
         {
             Value = (T)value;
+        }
+
+        public virtual object GetFallbackValue()
+        {
+            return value;
+        }
+
+        public virtual void SetFallbackValue(object value)
+        {
+            this.value = (T)value;
         }
     }
 
@@ -96,7 +106,7 @@ namespace Megumin.Binding
 
                         if (GetMode.HasFlag(ParseMode.FallbackValue))
                         {
-                            return base.date;
+                            return base.value;
                         }
 
                         if (GetMode.HasFlag(ParseMode.FallbackTypeDefault))

@@ -24,6 +24,16 @@ namespace Megumin.Binding
         string BindingPath { get; set; }
     }
 
+    /// <summary>
+    /// 存在fallback值时，<see cref="IVariable.GetValue()"/> 获取的是未解析值。
+    /// 会导致fallback值没办法获取并序列化，所以需要一个单独的接口来获取fallback值。
+    /// </summary>
+    public interface IBindableFallback 
+    {
+        object GetFallbackValue();
+        void SetFallbackValue(object value);
+    }
+
     public interface IBindingParseable
     {
         ParseBindingResult ParseBinding(object bindInstance, bool force = false);

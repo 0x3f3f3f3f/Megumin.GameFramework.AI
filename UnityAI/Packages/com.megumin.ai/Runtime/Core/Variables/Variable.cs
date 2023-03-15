@@ -78,9 +78,9 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         public string TypeName;
         public bool IsRef => !string.IsNullOrEmpty(RefName);
-        public CollectionSerializationData Data;
+        public CollectionSerializationData fallbackData;
 
-        //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = date; }
+        //public string TypeName { get => typeNameOrRefName; set => typeNameOrRefName = fallbackValue; }
         //public bool IsRef => typeNameOrRefName.StartsWith(RefPrefix);
 
         //public const string RefPrefix = @"""$rid"":";
@@ -92,7 +92,7 @@ namespace Megumin.GameFramework.AI
         //    }
         //    set
         //    {
-        //        typeNameOrRefName = $"{RefPrefix}{date}";
+        //        typeNameOrRefName = $"{RefPrefix}{fallbackValue}";
         //    }
         //}
         const string NullString = "$null";
@@ -141,10 +141,18 @@ namespace Megumin.GameFramework.AI
             }
             else
             {
-                if (Data.TryDeserialize(out var value))
+                if (fallbackData.TryDeserialize(out var fallbackValue))
                 {
                     var variable = Activator.CreateInstance(type) as IVariable;
-                    variable.SetValue(value);
+
+                    if (variable is IBindableFallback fallback)
+                    {
+                        fallback.SetFallbackValue(fallbackValue);
+                    }
+                    else
+                    {
+                        variable.SetValue(fallbackValue);
+                    }
 
                     if (variable is IBindable bindable)
                     {
@@ -170,7 +178,7 @@ namespace Megumin.GameFramework.AI
             }
 
             TypeName = value.GetType().FullName;
-            if (value is IRefable sharedable)
+            if (value is IRefable sharedable && !string.IsNullOrEmpty(sharedable.RefName))
             {
                 RefName = sharedable.RefName;
                 return true;
@@ -183,11 +191,16 @@ namespace Megumin.GameFramework.AI
 
             if (value is IVariable variable)
             {
-                var data = variable.GetValue();
-                CollectionSerializationData valueData = new();
-                if (valueData.TrySerialize("Value", data))
+                var fallbackValue = variable.GetValue();
+                if (variable is IBindableFallback fallback)
                 {
-                    Data = valueData;
+                    fallbackValue = fallback.GetFallbackValue();
+                }
+
+                CollectionSerializationData fallbackData = new();
+                if (fallbackData.TrySerialize("fallbackValue", fallbackValue))
+                {
+                    this.fallbackData = fallbackData;
                 }
             }
 
@@ -209,6 +222,12 @@ namespace Megumin.GameFramework.AI
                 TypeName = variable.GetType().FullName;
 
                 var data = variable.GetValue();
+
+                if (item is IBindableFallback fallback)
+                {
+                    data = fallback.GetFallbackValue();
+                }
+
                 if (item is IBindable bindable)
                 {
                     Path = bindable.BindingPath;
@@ -219,10 +238,10 @@ namespace Megumin.GameFramework.AI
                     Name = sharedable.RefName;
                 }
 
-                CollectionSerializationData valueData = new();
-                if (valueData.TrySerialize("Value", data))
+                CollectionSerializationData fallbackData = new();
+                if (fallbackData.TrySerialize("fallbackValue", data))
                 {
-                    fallbackData = valueData;
+                    this.fallbackData = fallbackData;
                 }
                 return true;
             }
@@ -239,22 +258,29 @@ namespace Megumin.GameFramework.AI
             {
                 return false;
             }
-            var variable = Activator.CreateInstance(type) as IRefable;
-            variable.RefName = Name;
-            if (variable is IBindable bindable)
+            var refable = Activator.CreateInstance(type) as IRefable;
+            refable.RefName = Name;
+            if (refable is IBindable bindable)
             {
                 bindable.BindingPath = Path;
             }
 
-            if (variable is IVariable dataable)
+            if (refable is IVariable variable)
             {
-                if (fallbackData.TryDeserialize(out var data))
+                if (fallbackData.TryDeserialize(out var fallbackValue))
                 {
-                    dataable.SetValue(data);
+                    if (refable is IBindableFallback fallback)
+                    {
+                        fallback.SetFallbackValue(fallbackValue);
+                    }
+                    else
+                    {
+                        variable.SetValue(fallbackValue);
+                    }
                 }
             }
 
-            value = variable;
+            value = refable;
             return true;
         }
     }
