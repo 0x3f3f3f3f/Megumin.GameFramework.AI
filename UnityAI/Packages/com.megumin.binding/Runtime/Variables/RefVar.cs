@@ -299,6 +299,7 @@ namespace Megumin.Binding
             field.BindProperty(property);
             field.AddToClassList("refVar");
 
+            //https://forum.unity.com/threads/propertyfield-name-contain-a-period-how-to-write-uss-selector.1412943
             StyleSheet styleSheet = Resources.Load<StyleSheet>("RefVar");
             field.styleSheets.Add(styleSheet);
 

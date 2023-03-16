@@ -284,19 +284,19 @@ namespace Megumin.Binding.Test
 
         [Header("UNITY_2023_1_OR_NEWER  SerializeReference 泛型特化支持")]
         [SerializeReference]
-        public IData mydata1 = new BindableValueInt();
+        public IVariable mydata1 = new BindableValueInt();
 
         [SerializeReference]
-        public IData<int> mydata2 = new BindableValueInt();
+        public IVariable<int> mydata2 = new BindableValueInt();
 
         [SerializeReference]
-        public IData<int> mydata3 = new BindableValue<int>();
+        public IVariable<int> mydata3 = new BindableValue<int>();
 
         [SerializeReference]
-        public IData mydata4 = new BindableValue<int>();
+        public IVariable mydata4 = new BindableValue<int>();
 
         [SerializeReference]
-        public List<IData> DatasList1 = new List<IData>()
+        public List<IVariable> DatasList1 = new List<IVariable>()
         {
             new BindableValueInt(){ Value = 101},
             new BindableValue<int>{ Value = 102},
@@ -304,7 +304,7 @@ namespace Megumin.Binding.Test
         };
 
         [SerializeReference]
-        public List<IData<int>> DatasList2 = new List<IData<int>>()
+        public List<IVariable<int>> DatasList2 = new List<IVariable<int>>()
         {
             new BindableValueInt(){ Value = 101},
             new BindableValue<int>{ Value = 102},
