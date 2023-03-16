@@ -22,7 +22,7 @@ MonoBehaviour:
     TypeName: Megumin.GameFramework.AI.RefVariable_string
     Path: 
     fallbackData:
-      Name: Value
+      Name: fallbackValue
       TypeName: System.String
       Data: hello
       RefObject: {fileID: 0}
@@ -32,7 +32,7 @@ MonoBehaviour:
     TypeName: Megumin.GameFramework.AI.RefVariable_int
     Path: 
     fallbackData:
-      Name: Value
+      Name: fallbackValue
       TypeName: System.Int32
       Data: 0
       RefObject: {fileID: 0}
@@ -60,16 +60,82 @@ MonoBehaviour:
     CallbackMemberData: []
   - StringCallbackMemberData: []
     MMdata:
-    - MemberName: RefVariableString
-      RefName: Test1
+    - MemberName: RefVarListString
+      RefName: 
       BindingPath: 
-      TypeName: Megumin.GameFramework.AI.RefVariable_string
-      Data:
-        Name: 
-        TypeName: 
+      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String,
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
+          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         Data: 
         RefObject: {fileID: 0}
-        DataType: 0
+        DataType: 262145
+        Collection:
+        - Name: Element0
+          TypeName: System.String
+          Data: A
+          RefObject: {fileID: 0}
+          DataType: 65
+        - Name: Element1
+          TypeName: System.String
+          Data: B
+          RefObject: {fileID: 0}
+          DataType: 65
+        - Name: Element2
+          TypeName: System.String
+          Data: C
+          RefObject: {fileID: 0}
+          DataType: 65
+    - MemberName: VariableString
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.Variable`1[[System.String, mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.String
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 65
+        Collection: []
+    - MemberName: VariableGameObject
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.Variable`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: UnityEngine.GameObject
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 257
+        Collection: []
+    - MemberName: BindingVarString
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.BindingVar`1[[System.String, mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.String
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 65
+        Collection: []
+    - MemberName: RefVarString
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.RefVar`1[[System.String, mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.String
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 65
         Collection: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: ada6836d-8b37-432e-993e-a739afa3a29c
