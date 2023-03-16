@@ -119,8 +119,6 @@ namespace Megumin.Serialization
                     //制作泛型类
                     if (TryMakeGenericType(typeFullName, out type))
                     {
-                        allType[typeFullName] = type;
-                        hotType[typeFullName] = type;
                         return true;
                     }
 
@@ -235,24 +233,47 @@ namespace Megumin.Serialization
             }
         }
 
-        // 定义一个静态的正则表达式对象，用于匹配泛型类型全名和方括号内的内容
+        /// <summary>
+        /// 用于匹配非嵌套的特化泛型类型,或者嵌套特化泛型的最内层
+        /// </summary>
+        /// <remarks>
+        /// 原理是泛型部分不能含有方括号,特化部分不能含有`,以此来匹配最内层泛型
+        /// <para/>
+        /// 思路：
+        /// 用正则提取最内层特化泛型类型,将内侧类型替换为hashcode,并生成类型缓存。
+        /// 循环向外层测试, 直到不能匹配
+        /// </remarks>
+        public static readonly Regex NonNestedSpecializedGenericType
+            = new(@"(?<generic>[^\[\]]*?`\d+)\[(?<specialized>[^`]*?\])\]");
+
+        /// <summary>
+        /// 用于匹配泛型类型全名和方括号内的内容
+        /// </summary>
         public static readonly Regex GenericRegex = new(@"^(?<generic>.*?`\d+)\[(?<specialized>.*)\]$");
-        // 定义一个静态的正则表达式对象，用于匹配方括号内的每个子串
+
+        /// <summary>
+        /// 用于匹配方括号内的每个子串
+        /// </summary>
         public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[]+(?=[,\]])");
 
         /// <summary>
-        /// 输入一个泛型类型全名，输出一个泛型类型全名和一个特化类型全名的列表
+        /// 用于匹配方括号内的每个子串
+        /// </summary>
+        public static readonly Regex InnerType = new(@"\[(?<typeShortName>(?<=\[)[^,\[]+(?=[,\]]))[^\[\]]*?\]");
+
+        /// <summary>
+        /// 输入一个非嵌套的特化泛型类型全名，输出一个泛型类型全名和一个特化类型全名的列表
         /// </summary>
         /// <param name="fullName"></param>
         /// <param name="genericTypeName"></param>
         /// <param name="specializedTypeNames"></param>
         /// <returns></returns>
-        public static bool TryGetGenericAndSpecializedTypeName(string fullName,
+        public static bool TryGetNonNestedSpecializedGenericTypeName(string fullName,
                                                                out string genericTypeName,
                                                                out List<string> specializedTypeNames)
         {
             // 使用 GenericRegex 对象匹配输入字符串
-            Match match = GenericRegex.Match(fullName);
+            Match match = NonNestedSpecializedGenericType.Match(fullName);
 
             // 如果匹配成功
             if (match.Success)
@@ -280,25 +301,24 @@ namespace Megumin.Serialization
         }
 
         /// <summary>
-        /// 输入一个泛型类型全名，输出一个泛型类型和一个特化类型数组
+        /// 输入一个非嵌套的特化泛型类型全名，输出一个泛型类型和一个特化类型数组
         /// </summary>
         /// <param name="fullName"></param>
         /// <param name="genericType"></param>
         /// <param name="specializedTypes"></param>
         /// <param name="forceRecache"></param>
         /// <returns></returns>
-        public static bool TryGetGenericAndSpecializedType(string fullName,
+        public static bool TryGeNonNestedSpecializedGenericType(string fullName,
                                                            out Type genericType,
-                                                           out Type[] specializedTypes,
-                                                           bool forceRecache = false)
+                                                           out Type[] specializedTypes)
         {
-            if (TryGetGenericAndSpecializedTypeName(fullName, out var genericTypeName, out var specializedTypeNames))
+            if (TryGetNonNestedSpecializedGenericTypeName(fullName, out var genericTypeName, out var specializedTypeNames))
             {
                 if (TryGetType(genericTypeName, out genericType))
                 {
                     if (genericType.IsGenericType)
                     {
-                        if (TryGetType(specializedTypeNames, out specializedTypes, forceRecache))
+                        if (TryGetType(specializedTypeNames, out specializedTypes))
                         {
                             return true;
                         }
@@ -324,38 +344,141 @@ namespace Megumin.Serialization
         public static bool TryMakeGenericType(string fullName, out Type type)
         {
             //制作泛型类
-            if (TryGetGenericAndSpecializedType(fullName, out var gType, out var specializedTypes))
+            var inners = NonNestedSpecializedGenericType.Matches(fullName);
+            if (inners.Count == 1 && fullName.StartsWith(inners[0].Value))
             {
-                try
+                //只有一个匹配，并以匹配结果开始，认为是非嵌套泛型
+                //这里没用相等比较而用了StartsWith，因为可能带有AssemblyQualifiedName时，末尾会带有程序集名。
+
+                Match match = inners[0];
+
+                // 获取泛型类型全名，并赋值给输出参数 genericTypeName
+                var genericTypeName = match.Groups["generic"].Value;
+
+                // 获取方括号内的内容，并赋值给输出参数 specializedString
+                var specializedString = match.Groups["specialized"].Value;
+                // 使用 SpecializedRegex 对象匹配 specializedString 中的每个子串，并将其添加到输出参数 specializedTypeNames 中
+                var match2 = SpecializedRegex.Matches(specializedString);
+                var specializedTypeNames = new List<string>();
+                foreach (Match item in match2)
                 {
-                    var temp = gType.MakeGenericType(specializedTypes);
-                    if (temp != null)
+                    specializedTypeNames.Add(item.Value);
+                }
+
+                if (specializedTypeNames.Count == 0)
+                {
+                    //没有找到特化类型名
+                    type = null;
+                    return false;
+                }
+
+                if (TryGetType(genericTypeName, out var genericType) && genericType.IsGenericType)
+                {
+                    if (TryGetType(specializedTypeNames, out var specializedTypes))
                     {
-                        type = temp;
-                        return true;
+                        try
+                        {
+                            var temp = genericType.MakeGenericType(specializedTypes);
+                            if (temp != null)
+                            {
+                                type = temp;
+
+                                //在递归时fullName内部可能已经被替换为hashcode。
+                                allType[type.FullName] = type;
+                                hotType[type.FullName] = type;
+
+                                if (type.FullName != fullName)
+                                {
+                                    //将替hashcode换后的临时名字也缓存，下一次遇到时不用在正则解析了。
+                                    allType[fullName] = type;
+                                    hotType[fullName] = type;
+                                }
+
+                                return true;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            //Debug.LogError($"TryMakeGenericType Error. {fullName}");
+                        }
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    //Debug.LogWarning($"TryMakeGenericType {fullName}");
+                    //为了防止错误检测一下是不是泛型
+                    Debug.LogError($"TryGetGenericType Error. {{ {genericTypeName} }} not IsGenericType.");
                 }
             }
+            else if (inners.Count >= 1)
+            {
+                foreach (Match item in inners)
+                {
+                    //内层特化泛型类型名字
+                    var innerSpecializedGenericTypeName = item.Value;
+                    if (TryGetType(innerSpecializedGenericTypeName, out var innerType))
+                    {
+                        var hashcode = innerSpecializedGenericTypeName.GetHashCode().ToString();
+                        allType[hashcode] = innerType;
+                        hotType[hashcode] = innerType;
+                        fullName = fullName.Replace(innerSpecializedGenericTypeName, hashcode);
+                    }
+                    else
+                    {
+                        Debug.LogError($"InnerSpecializedGenericType Error: {innerSpecializedGenericTypeName}");
+                        type = null;
+                        return false;
+                    }
+                }
+
+                return TryGetType(fullName, out type);
+            }
+            else
+            {
+                //非泛型字符串
+            }
+
             type = null;
             return false;
         }
 
         public static void Test()
         {
-            Dictionary<List<string>, Dictionary<List<int>, float>> test = new();
-            var type = test.GetType();
+            List<int> a = new();
+            TestMake(a);
+
+            Dictionary<int, float> b = new();
+            TestMake(b);
+
+            Dictionary<List<int>, float> c = new();
+            TestMake(c);
+
+            Dictionary<List<int>, List<string>> d = new();
+            TestMake(d);
+
+            Dictionary<string, Dictionary<int, string>> e = new();
+            TestMake(e);
+
+            Dictionary<Dictionary<int, string>, float> f = new();
+            TestMake(f);
+
+            Dictionary<Dictionary<int, string>, List<float>> g = new();
+            TestMake(g);
+
+            Dictionary<List<double>, List<Dictionary<List<byte>, List<bool>>>> fuckType = new();
+            TestMake(fuckType);
+        }
+
+        static void TestMake<T>(T obj = default)
+        {
+            var type = typeof(T);
             var fullName = type.FullName;
-            if (TryGetType(fullName, out var resultType))
+            if (TryMakeGenericType(fullName, out var makeType) && type == makeType)
             {
-                Debug.Log(resultType.FullName);
+                Debug.Log($"测试通过  {fullName}");
             }
             else
             {
-                Debug.LogError($"{fullName}  无法解析");
+                Debug.LogError($"无法解析  {fullName}");
             }
         }
 
