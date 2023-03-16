@@ -297,6 +297,10 @@ namespace Megumin.Binding
 
             var field = new PropertyField();
             field.BindProperty(property);
+            field.AddToClassList("refVar");
+
+            StyleSheet styleSheet = Resources.Load<StyleSheet>("RefVar");
+            field.styleSheets.Add(styleSheet);
 
             //此时元素还没有生成
             //var foldoutToggle = field.Q<Toggle>(className: "unity-foldout__toggle");

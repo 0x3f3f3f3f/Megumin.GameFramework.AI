@@ -1,0 +1,4 @@
+.refVar .refName {
+    display: none;
+    background-color: rgba(250, 0, 0, 255);
+}
