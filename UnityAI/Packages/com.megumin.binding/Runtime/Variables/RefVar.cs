@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -279,8 +280,28 @@ namespace Megumin.Binding
     {
         public override UnityEngine.UIElements.VisualElement CreatePropertyGUI(SerializedProperty property)
         {
+            //var container = new VisualElement();
+
+            //foreach (SerializedProperty item in property)
+            //{
+            //    if (item.name == "Ref Name")
+            //    {
+            //        continue;
+            //    }
+
+            //    var memberField = new PropertyField();
+            //    memberField.BindProperty(item);
+            //    memberField.style.flexGrow = 1;
+            //    container.Add(memberField);
+            //}
+
             var field = new PropertyField();
             field.BindProperty(property);
+
+            //此时元素还没有生成
+            //var foldoutToggle = field.Q<Toggle>(className: "unity-foldout__toggle");
+            //foldoutToggle.value = true;
+            //foldoutToggle.style.display = DisplayStyle.None;
             return field;
         }
 

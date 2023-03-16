@@ -285,6 +285,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            SOTree.name = Tree.Asset?.name;
+
             this.LogMethodName();
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 

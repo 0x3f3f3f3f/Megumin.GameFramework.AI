@@ -26,13 +26,21 @@ namespace Megumin.Binding
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
+            //使用StyleSheet代替 C# styles override inline
+            //https://docs.unity3d.com/Documentation/Manual/UIE-uss-selector-precedence.html
+            //https://forum.unity.com/threads/uxml-parsing-at-runtime.1327311/
+            //必须使用uss文件，没有办法从一个uss字符解析。
+            StyleSheet styleSheet = Resources.Load<StyleSheet>("BindingPathSetterAttribute");
             var container = new VisualElement();
-            container.style.flexDirection = FlexDirection.Row;
+            container.AddToClassList("bindingPathSetterAttribute");
+            container.name = "bindingPathSetterAttribute";
 
+            container.styleSheets.Add(styleSheet);
+            //container.style.flexDirection = FlexDirection.Row;
 
             var field = new PropertyField();
-            field.style.flexGrow = 1;
-
+            //field.style.flexGrow = 1;
+            field.AddToClassList("bindingPath");
             field.BindProperty(property);
             //field.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
             //{
@@ -48,8 +56,10 @@ namespace Megumin.Binding
             //});
 
             var settingButton = new Button();
-            settingButton.style.width = settingButtonWidth;
-            settingButton.style.backgroundImage = settingIcon.image as Texture2D;
+            settingButton.AddToClassList("settingButton");
+            //settingButton.style.width = settingButtonWidth;
+            settingButton.tooltip = "Set BindingPath";
+            //settingButton.style.backgroundImage = settingIcon.image as Texture2D;
 
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
 

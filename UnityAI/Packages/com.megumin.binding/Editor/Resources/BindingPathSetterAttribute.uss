@@ -1,0 +1,16 @@
+.bindingPathSetterAttribute {
+    flex-direction: row;
+}
+
+.bindingPathSetterAttribute .bindingPath {
+    flex-grow: 1;
+}
+
+.bindingPathSetterAttribute .settingButton {
+    background-image: resource('d_settings icon');
+    width: 22px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
