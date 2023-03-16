@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Megumin.Serialization
 {
+    /// <summary>
+    /// 第一次调用会导致卡顿，在调用前使用多线程初始化，防止阻塞主线程。
+    /// </summary>
     public static class TypeCache
     {
 
@@ -193,7 +196,7 @@ namespace Megumin.Serialization
         static readonly object cachelock = new object();
 
         /// <summary>
-        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
+        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。<seealso cref="CacheAllTypesAsync(bool)"/>
         /// </summary>
         /// <param name="forceRecache">强制搜索所有程序集</param>
         public static void CacheAllTypes(bool forceRecache = false)
@@ -234,14 +237,14 @@ namespace Megumin.Serialization
         }
 
         /// <summary>
-        /// 用于匹配非嵌套的特化泛型类型,或者嵌套特化泛型的最内层
+        /// 用于匹配非嵌套的特化泛型类型，或者嵌套特化泛型的最内层
         /// </summary>
         /// <remarks>
-        /// 原理是泛型部分不能含有方括号,特化部分不能含有`,以此来匹配最内层泛型
+        /// 原理是泛型部分不能含有方括号，特化部分不能含有`，以此来匹配最内层泛型
         /// <para/>
         /// 思路：
-        /// 用正则提取最内层特化泛型类型,将内侧类型替换为hashcode,并生成类型缓存。
-        /// 循环向外层测试, 直到不能匹配
+        /// 用正则提取最内层特化泛型类型，将内侧类型替换为hashcode，并生成类型缓存。
+        /// 循环向外层测试，直到不能匹配
         /// </remarks>
         public static readonly Regex NonNestedSpecializedGenericType
             = new(@"(?<generic>[^\[\]]*?`\d+)\[(?<specialized>[^`]*?\])\]");
@@ -269,8 +272,8 @@ namespace Megumin.Serialization
         /// <param name="specializedTypeNames"></param>
         /// <returns></returns>
         public static bool TryGetNonNestedSpecializedGenericTypeName(string fullName,
-                                                               out string genericTypeName,
-                                                               out List<string> specializedTypeNames)
+                                                                     out string genericTypeName,
+                                                                     out List<string> specializedTypeNames)
         {
             // 使用 GenericRegex 对象匹配输入字符串
             Match match = NonNestedSpecializedGenericType.Match(fullName);
@@ -306,11 +309,10 @@ namespace Megumin.Serialization
         /// <param name="fullName"></param>
         /// <param name="genericType"></param>
         /// <param name="specializedTypes"></param>
-        /// <param name="forceRecache"></param>
         /// <returns></returns>
-        public static bool TryGeNonNestedSpecializedGenericType(string fullName,
-                                                           out Type genericType,
-                                                           out Type[] specializedTypes)
+        public static bool TryGetNonNestedSpecializedGenericType(string fullName,
+                                                                 out Type genericType,
+                                                                 out Type[] specializedTypes)
         {
             if (TryGetNonNestedSpecializedGenericTypeName(fullName, out var genericTypeName, out var specializedTypeNames))
             {
@@ -330,19 +332,24 @@ namespace Megumin.Serialization
                     }
                 }
             }
+
             genericType = null;
             specializedTypes = null;
             return false;
         }
 
+        static readonly Unity.Profiling.ProfilerMarker tryMakeGenericType = new(nameof(TryMakeGenericType));
+
         /// <summary>
-        /// 输入一个泛型类型全名，输出一个特化泛型类型
+        /// 制作泛型类型，输入一个特化泛型类型全名，输出一个特化泛型类型
         /// </summary>
         /// <param name="fullName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
         public static bool TryMakeGenericType(string fullName, out Type type)
         {
+            using var profiler = tryMakeGenericType.Auto();
+
             //制作泛型类
             var inners = NonNestedSpecializedGenericType.Matches(fullName);
             if (inners.Count == 1 && fullName.StartsWith(inners[0].Value))
@@ -384,10 +391,11 @@ namespace Megumin.Serialization
                                 type = temp;
 
                                 //在递归时fullName内部可能已经被替换为hashcode。
-                                allType[type.FullName] = type;
-                                hotType[type.FullName] = type;
+                                string realFullName = type.FullName;
+                                allType[realFullName] = type;
+                                hotType[realFullName] = type;
 
-                                if (type.FullName != fullName)
+                                if (realFullName != fullName)
                                 {
                                     //将替hashcode换后的临时名字也缓存，下一次遇到时不用在正则解析了。
                                     allType[fullName] = type;
