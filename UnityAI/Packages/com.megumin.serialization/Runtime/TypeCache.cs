@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace Megumin.Serialization
 
 #if UNITY_5_3_OR_NEWER
 
-        static readonly Dictionary<string, Type> hotComponentType = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> hotComponentType = new();
         public static Type GetComponentType(string typeFullName, bool forceRecache = false)
         {
             TryGetComponentType(typeFullName, out var type, forceRecache);
@@ -50,7 +49,7 @@ namespace Megumin.Serialization
             }
         }
 
-        static readonly Dictionary<string, Type> hotUnityObjectType = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> hotUnityObjectType = new();
         public static Type GetUnityObjectType(string typeFullName, bool forceRecache = false)
         {
             TryGetUnityObjectType(typeFullName, out var type, forceRecache);
@@ -87,7 +86,7 @@ namespace Megumin.Serialization
 
 #endif
 
-        static readonly Dictionary<string, Type> hotType = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> hotType = new();
         public static Type GetType(string typeFullName, bool forceRecache = false)
         {
             TryGetType(typeFullName, out var type, forceRecache);
@@ -150,9 +149,9 @@ namespace Megumin.Serialization
             return true;
         }
 
-        static readonly Dictionary<string, Type> allType = new Dictionary<string, Type>();
-        static readonly Dictionary<string, Type> allComponentType = new Dictionary<string, Type>();
-        static readonly Dictionary<string, Type> allUnityObjectType = new Dictionary<string, Type>();
+        static readonly Dictionary<string, Type> allType = new();
+        static readonly Dictionary<string, Type> allComponentType = new();
+        static readonly Dictionary<string, Type> allUnityObjectType = new();
         static bool CacheTypeInit = false;
 
         public static bool LogCacheWorning =
@@ -193,7 +192,7 @@ namespace Megumin.Serialization
         /// <summary>
         /// 防止多个线程同时缓存浪费性能。
         /// </summary>
-        static readonly object cachelock = new object();
+        static readonly object cachelock = new();
 
         /// <summary>
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。<seealso cref="CacheAllTypesAsync(bool)"/>
@@ -246,7 +245,7 @@ namespace Megumin.Serialization
         /// 用正则提取最内层特化泛型类型，将内侧类型替换为hashcode，并生成类型缓存。
         /// 循环向外层测试，直到不能匹配
         /// </remarks>
-        public static readonly Regex NonNestedSpecializedGenericType
+        public static readonly Regex NonNestedSpecializedGenericTypeRegex
             = new(@"(?<generic>[^\[\]]*?`\d+)\[(?<specialized>[^`]*?\])\]");
 
         /// <summary>
@@ -262,7 +261,7 @@ namespace Megumin.Serialization
         /// <summary>
         /// 用于匹配方括号内的每个子串
         /// </summary>
-        public static readonly Regex InnerType = new(@"\[(?<typeShortName>(?<=\[)[^,\[]+(?=[,\]]))[^\[\]]*?\]");
+        public static readonly Regex InnerTypeRegex = new(@"\[(?<typeShortName>(?<=\[)[^,\[]+(?=[,\]]))[^\[\]]*?\]");
 
         /// <summary>
         /// 输入一个非嵌套的特化泛型类型全名，输出一个泛型类型全名和一个特化类型全名的列表
@@ -276,7 +275,7 @@ namespace Megumin.Serialization
                                                                      out List<string> specializedTypeNames)
         {
             // 使用 GenericRegex 对象匹配输入字符串
-            Match match = NonNestedSpecializedGenericType.Match(fullName);
+            Match match = NonNestedSpecializedGenericTypeRegex.Match(fullName);
 
             // 如果匹配成功
             if (match.Success)
@@ -351,7 +350,7 @@ namespace Megumin.Serialization
             using var profiler = tryMakeGenericType.Auto();
 
             //制作泛型类
-            var inners = NonNestedSpecializedGenericType.Matches(fullName);
+            var inners = NonNestedSpecializedGenericTypeRegex.Matches(fullName);
             if (inners.Count == 1 && fullName.StartsWith(inners[0].Value))
             {
                 //只有一个匹配，并以匹配结果开始，认为是非嵌套泛型
