@@ -71,6 +71,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 //这里值已经改变了，再Record已经来不及了
                 //Todo BUG, Undo时没办法回退ChangeVersion，造成编辑器未保存状态无法消除
+                //TODO, 打开关闭foldout也会触发，需要过滤掉。
                 wrapper.View.TreeView.IncrementChangeVersion($"Inspector Changed");
             }
 

@@ -97,7 +97,7 @@ MonoBehaviour:
       fallbackData:
         Name: fallbackValue
         TypeName: System.String
-        Data: 
+        Data: AA
         RefObject: {fileID: 0}
         DataType: 65
         Collection: []
@@ -110,32 +110,31 @@ MonoBehaviour:
         Name: fallbackValue
         TypeName: UnityEngine.GameObject
         Data: 
-        RefObject: {fileID: 0}
+        RefObject: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
         DataType: 257
         Collection: []
     - MemberName: BindingVarString
       RefName: 
-      BindingPath: 
+      BindingPath: UnityEngine.Transform/name
       TypeName: Megumin.Binding.BindingVar`1[[System.String, mscorlib, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       fallbackData:
         Name: fallbackValue
         TypeName: System.String
-        Data: 
+        Data: SADDAS
         RefObject: {fileID: 0}
         DataType: 65
         Collection: []
     - MemberName: RefVarString
-      RefName: 
+      RefName: Test1
       BindingPath: 
-      TypeName: Megumin.Binding.RefVar`1[[System.String, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      TypeName: Megumin.GameFramework.AI.RefVariable_string
       fallbackData:
-        Name: fallbackValue
-        TypeName: System.String
+        Name: 
+        TypeName: 
         Data: 
         RefObject: {fileID: 0}
-        DataType: 65
+        DataType: 0
         Collection: []
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: ada6836d-8b37-432e-993e-a739afa3a29c

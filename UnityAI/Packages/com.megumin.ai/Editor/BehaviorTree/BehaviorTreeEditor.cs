@@ -36,6 +36,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("ToolTip", true, SettingsScope.User),
             new MySetting<bool>("MiniMap", false, SettingsScope.User),
             new MySetting<bool>("TODO", false, SettingsScope.User),
+            //new MySetting<bool>("RingGraph", false, SettingsScope.User),
+            //new MySetting<bool>("DiamondGraph", false, SettingsScope.User),
         };
 
         internal readonly static MySetting<Rect> BlackboardLayout
