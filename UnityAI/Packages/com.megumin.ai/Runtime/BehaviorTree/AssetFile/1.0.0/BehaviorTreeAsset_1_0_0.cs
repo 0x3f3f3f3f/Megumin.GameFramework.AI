@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
+    public class BehaviorTreeAsset_1_0_0 : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string Version = new Version(1, 0, 0).ToString();
         public bool UseSerializeReferenceGeneric = false;

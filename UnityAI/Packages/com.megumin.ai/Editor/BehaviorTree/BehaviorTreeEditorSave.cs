@@ -70,13 +70,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public BehaviorTreeAsset CreateScriptObjectTreeAssset()
+        public BehaviorTreeAsset_1_0_0 CreateScriptObjectTreeAssset()
         {
             var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
             if (!string.IsNullOrEmpty(path))
             {
                 Debug.Log(path);
-                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset>();
+                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset_1_0_0>();
                 treeAsset.SaveTree(TreeView.Tree);
                 AssetDatabase.CreateAsset(treeAsset, path);
                 AssetDatabase.Refresh();

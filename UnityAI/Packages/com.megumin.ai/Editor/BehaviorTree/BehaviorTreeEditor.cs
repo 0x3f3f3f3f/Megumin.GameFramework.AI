@@ -60,7 +60,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             var asset = EditorUtility.InstanceIDToObject(instanceID);
 
-            if (asset is BehaviorTreeAsset behaviorTreeAsset)
+            if (asset is BehaviorTreeAsset_1_0_0 behaviorTreeAsset)
             {
                 var wnd = GetWindow(behaviorTreeAsset);
                 wnd.SelectTree(behaviorTreeAsset);
@@ -76,7 +76,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private VisualTreeAsset m_VisualTreeAsset = default;
 
         public BehaviorTreeView TreeView { get; private set; }
-        public BehaviorTreeAsset CurrentAsset { get; private set; }
+        public BehaviorTreeAsset_1_0_0 CurrentAsset { get; private set; }
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
@@ -294,7 +294,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
             {
-                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset>()
+                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset_1_0_0>()
                                      .FirstOrDefault(elem => elem.name == "BTtree");
                 AssetDatabase.OpenAsset(asset);
             };
@@ -302,7 +302,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var test2 = root.Q<ToolbarButton>("test2");
             test2.clicked += () =>
             {
-                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset>()
+                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset_1_0_0>()
                                      .FirstOrDefault(elem => elem.name == "BTtree 1");
                 AssetDatabase.OpenAsset(asset);
             };
@@ -377,7 +377,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName(TreeView);
         }
 
-        public void SelectTree(BehaviorTreeAsset behaviorTreeAsset)
+        public void SelectTree(BehaviorTreeAsset_1_0_0 behaviorTreeAsset)
         {
             this.LogMethodName();
             this.CurrentAsset = behaviorTreeAsset;
