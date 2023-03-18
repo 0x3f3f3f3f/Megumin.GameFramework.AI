@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -199,6 +200,7 @@ namespace Megumin.Serialization
         /// 防止多个线程同时缓存浪费性能。
         /// </summary>
         static readonly object cachelock = new();
+        static HashSet<string> CachedAssemblyName = new();
 
         /// <summary>
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。<seealso cref="CacheAllTypesAsync(bool)"/>
@@ -208,36 +210,55 @@ namespace Megumin.Serialization
         {
             lock (cachelock)
             {
+                if (forceRecache)
+                {
+                    CachedAssemblyName.Clear();
+                }
                 if (CacheTypeInit == false || forceRecache)
                 {
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
                     //var debugabs = assemblies.ToArray();
                     foreach (var assembly in assemblies)
                     {
-                        //var debug = assembly.GetTypes();
-                        foreach (var extype in assembly.GetTypes())
+                        if (CachedAssemblyName.Contains(assembly.FullName))
                         {
-                            AddToDic(allType, extype);
-
-#if UNITY_5_3_OR_NEWER
-
-                            if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
-                            {
-                                AddToDic(allUnityObjectType, extype);
-
-                                if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
-                                {
-                                    AddToDic(allComponentType, extype);
-                                }
-                            }
-
-#endif
-
+                            continue;
                         }
+
+                        CacheAssembly(assembly);
                     }
 
                     CacheTypeInit = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 缓存一个程序集中的所有类型
+        /// </summary>
+        /// <param name="assembly"></param>
+        public static void CacheAssembly(Assembly assembly)
+        {
+            CachedAssemblyName.Add(assembly.FullName);
+            //var debug = assembly.GetTypes();
+            foreach (var extype in assembly.GetTypes())
+            {
+                AddToDic(allType, extype);
+
+#if UNITY_5_3_OR_NEWER
+
+                if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
+                {
+                    AddToDic(allUnityObjectType, extype);
+
+                    if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
+                    {
+                        AddToDic(allComponentType, extype);
+                    }
+                }
+
+#endif
+
             }
         }
 
@@ -505,6 +526,11 @@ namespace Megumin.Serialization
         public static Task CacheAllTypesAsync(bool force = false)
         {
             return Task.Run(() => { CacheAllTypes(force); });
+        }
+
+        public static Task CacheAssemblyAsync(Assembly assembly)
+        {
+            return Task.Run(() => { CacheAssembly(assembly); });
         }
 
         /// <summary>
