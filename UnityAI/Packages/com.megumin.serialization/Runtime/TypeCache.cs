@@ -206,7 +206,8 @@ namespace Megumin.Serialization
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。<seealso cref="CacheAllTypesAsync(bool)"/>
         /// </summary>
         /// <param name="forceRecache">强制搜索所有程序集</param>
-        public static void CacheAllTypes(bool forceRecache = false)
+        /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
+        public static void CacheAllTypes(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
         {
             lock (cachelock)
             {
@@ -221,6 +222,11 @@ namespace Megumin.Serialization
                     foreach (var assembly in assemblies)
                     {
                         if (CachedAssemblyName.Contains(assembly.FullName))
+                        {
+                            continue;
+                        }
+
+                        if (assemblyFilter?.Invoke(assembly) ?? false)
                         {
                             continue;
                         }
@@ -260,6 +266,29 @@ namespace Megumin.Serialization
 #endif
 
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public static bool AssemblyFilter(Assembly assembly)
+        {
+            //过滤掉一些，不然肯能太卡
+            var assName = assembly.FullName;
+            if (assName.StartsWith("mscorlib", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            //可以通过这个宏来强行搜索unity中的类型
+            if (assName.StartsWith("Unity", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -522,10 +551,11 @@ namespace Megumin.Serialization
         /// TODO,编辑模式初始化时加个进度条
         /// </summary>
         /// <param name="force"></param>
+        /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
         /// <returns></returns>
-        public static Task CacheAllTypesAsync(bool force = false)
+        public static Task CacheAllTypesAsync(bool force = false, Func<Assembly, bool> assemblyFilter = null)
         {
-            return Task.Run(() => { CacheAllTypes(force); });
+            return Task.Run(() => { CacheAllTypes(force, assemblyFilter); });
         }
 
         public static Task CacheAssemblyAsync(Assembly assembly)
