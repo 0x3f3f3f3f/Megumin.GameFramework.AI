@@ -60,9 +60,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             var asset = EditorUtility.InstanceIDToObject(instanceID);
 
-            if (asset is BehaviorTreeAsset_1_0_0 behaviorTreeAsset)
+            if (asset is IBehaviorTreeAsset behaviorTreeAsset)
             {
-                var wnd = GetWindow(behaviorTreeAsset);
+                var wnd = GetWindow(behaviorTreeAsset.AssetObject);
                 wnd.SelectTree(behaviorTreeAsset);
                 return true;
             }
@@ -100,7 +100,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             emptyEditor = item;
                         }
 
-                        if (item.CurrentAsset == asset)
+                        if (item.CurrentAsset?.AssetObject == asset)
                         {
                             Debug.Log($"找到匹配的已打开EditorWindow {asset}");
                             item.Focus();

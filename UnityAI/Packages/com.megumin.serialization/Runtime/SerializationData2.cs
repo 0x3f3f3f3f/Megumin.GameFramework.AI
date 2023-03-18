@@ -119,7 +119,7 @@ namespace Megumin.Serialization
                         if (!cahce.TryGetValue(memberValue, out var refName))
                         {
                             //当前还没有缓存这个引用对象
-                            refName = $"{refName}.{memberName}";
+                            refName = $"{myName111}.{memberName}";
                             needS.Push((refName, memberValue));
                         }
 
