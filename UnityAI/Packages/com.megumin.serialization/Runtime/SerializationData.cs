@@ -252,6 +252,10 @@ namespace Megumin.Serialization
         }
     }
 
+    /// <summary>
+    /// 设计缺陷无法处理循环嵌套。
+    /// 应该使用展开引用的序列化方式
+    /// </summary>
     [Serializable]
     public class CollectionSerializationData : BasicTypeSerializationData
     {
