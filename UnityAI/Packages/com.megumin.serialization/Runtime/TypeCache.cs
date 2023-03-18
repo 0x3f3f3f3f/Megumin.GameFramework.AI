@@ -162,6 +162,12 @@ namespace Megumin.Serialization
         true;
 #endif
 
+        /// <summary>
+        /// 私有类可能导致名字冲突，一个名字仅能保存一个类型，优先Public
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <param name="type"></param>
+        /// <param name="logworning"></param>
         static void AddToDic(Dictionary<string, Type> dic, Type type, bool logworning = false)
         {
             //可能存在同名类型 internal,internal Component类型仍然可以挂在gameobject上，所以也要缓存。
@@ -391,13 +397,14 @@ namespace Megumin.Serialization
 
                                 //在递归时fullName内部可能已经被替换为hashcode。
                                 string realFullName = type.FullName;
-                                allType[realFullName] = type;
+                                //只添加到hotType即可，添加到allType没有意义。而且allType元素数量太多，添加操作更开销更大
+                                //allType[realFullName] = type;
                                 hotType[realFullName] = type;
 
                                 if (realFullName != fullName)
                                 {
                                     //将替hashcode换后的临时名字也缓存，下一次遇到时不用在正则解析了。
-                                    allType[fullName] = type;
+                                    //allType[fullName] = type;
                                     hotType[fullName] = type;
                                 }
 
@@ -424,8 +431,9 @@ namespace Megumin.Serialization
                     var innerSpecializedGenericTypeName = item.Value;
                     if (TryGetType(innerSpecializedGenericTypeName, out var innerType))
                     {
+                        //hashcode 以数字或者符号开头，肯定不会和已有类型名冲突，是安全的。
                         var hashcode = innerSpecializedGenericTypeName.GetHashCode().ToString();
-                        allType[hashcode] = innerType;
+                        //allType[hashcode] = innerType;
                         hotType[hashcode] = innerType;
                         fullName = fullName.Replace(innerSpecializedGenericTypeName, hashcode);
                     }
