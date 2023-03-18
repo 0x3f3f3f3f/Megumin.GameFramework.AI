@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    /// <summary>
+    /// 序列化架构设计缺陷，不能实现序列化 <![CDATA[List<RefVar<T>>]]> 类型
+    /// </summary>
     public partial class BehaviorTreeAsset_1_0_0 : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string Version = new Version(1, 0, 0).ToString();
@@ -293,20 +296,5 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTreeAsset_1_0_0 : IBehaviorTreeAsset
     {
         public UnityEngine.Object AssetObject => this;
-    }
-
-    public partial class BehaviorTree : IRefFinder
-    {
-        bool IRefFinder.TryGetRefValue(string refName, out object refValue)
-        {
-            if (Variable.TryGetParam(refName, out var param))
-            {
-                refValue = param;
-                return true;
-            }
-
-            refValue = null;
-            return false;
-        }
     }
 }

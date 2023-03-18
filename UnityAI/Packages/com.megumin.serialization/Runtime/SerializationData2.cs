@@ -36,54 +36,52 @@ namespace Megumin.Serialization
         }
     }
 
-
-
-
-
     [Serializable]
-    public class UnityObjRef
+    public class UnityObjectData : SerializationData
     {
-        public string Name;
         public UnityEngine.Object Ref;
     }
 
+    /// <summary>
+    /// 没有子成员的序列化数据，不包含嵌套的
+    /// </summary>
     [Serializable]
-    public class Basic
+    public class BasicData : SerializationData
     {
-        public string Name;
         public string Type;
         public string Value;
     }
 
     [Serializable]
-    public class ObjData : IComparable<ObjData>
+    public class ObjectData : SerializationData, IComparable<ObjectData>
     {
-        public string Name;
         public string Type;
-        public List<Basic> Member;
+        public List<BasicData> Member;
 
         const string NullType = "$null";
         const string RefType = "$ref";
 
-        public bool TreS(string myName111, object node,
-            Stack<(string name, object value)> needS,
-            List<UnityObjRef> objRefs, Dictionary<object, string> cahce)
+        public bool TrySerialize(string objectRefName,
+                                 object value,
+                                 Stack<(string name, object value)> needS,
+                                 List<UnityObjectData> objRefs,
+                                 Dictionary<object, string> cahce)
         {
-            Name = myName111;
+            Name = objectRefName;
 
-            if (node == null)
+            if (value == null)
             {
                 Type = NullType;
                 return true;
             }
 
-            var type = node.GetType();
+            var type = value.GetType();
             Type = type.FullName;
 
-            bool TrySMember(string memberName,
+            bool TrySerializeMember(string memberName,
                 object memberValue,
                 Type memberType,
-                out Basic basic)
+                out BasicData basic)
             {
                 basic = new();
 
@@ -92,10 +90,10 @@ namespace Megumin.Serialization
                 if (typeof(UnityEngine.Object).IsAssignableFrom(memberType))
                 {
                     basic.Type = RefType;
-                    var refName = $"{myName111}.{memberName}";
+                    var refName = $"{objectRefName}.{memberName}";
                     basic.Value = refName;
 
-                    UnityObjRef unityObjRef = new();
+                    UnityObjectData unityObjRef = new();
                     unityObjRef.Name = refName;
                     unityObjRef.Ref = memberValue as UnityEngine.Object;
                     objRefs.Add(unityObjRef);
@@ -109,7 +107,7 @@ namespace Megumin.Serialization
                 {
                     var memberValueType = memberValue.GetType();
                     basic.Type = memberValueType.FullName;
-                    if (StringFormatter.TrySerialize(memberValueType, out var destination))
+                    if (StringFormatter.TrySerialize(memberValue, out var destination))
                     {
                         basic.Value = destination;
                     }
@@ -119,7 +117,7 @@ namespace Megumin.Serialization
                         if (!cahce.TryGetValue(memberValue, out var refName))
                         {
                             //当前还没有缓存这个引用对象
-                            refName = $"{myName111}.{memberName}";
+                            refName = $"{objectRefName}.{memberName}";
                             needS.Push((refName, memberValue));
                         }
 
@@ -131,7 +129,7 @@ namespace Megumin.Serialization
                         //}
                         //else
                         //{
-                        //    Debug.LogError($"myName111.{basic.Name} {basic.Type}序列化失败");
+                        //    Debug.LogError($"objectRefName.{basic.Name} {basic.Type}序列化失败");
                         //    continue;
                         //}
                     }
@@ -140,19 +138,19 @@ namespace Megumin.Serialization
                 return true;
             }
 
-            List<Basic> ms = new();
-            if (node is IDictionary dictionary)
+            List<BasicData> ms = new();
+            if (value is IDictionary dictionary)
             {
                 Debug.LogError($"不支持字典");
                 return false;
             }
-            else if (node is IList list)
+            else if (value is IList list)
             {
                 var index = 0;
                 var memberType = type.GetGenericArguments()[0];
                 foreach (var item in list)
                 {
-                    if (TrySMember($"Element{index}", item, memberType, out var basic))
+                    if (TrySerializeMember($"Element{index}", item, memberType, out var basic))
                     {
                         ms.Add(basic);
                     }
@@ -165,8 +163,8 @@ namespace Megumin.Serialization
                 var members = type.GetFields();
                 foreach (var fieldInfo in members)
                 {
-                    var memberValue = fieldInfo.GetValue(node);
-                    if (TrySMember(fieldInfo.Name, memberValue, fieldInfo.FieldType, out var basic))
+                    var memberValue = fieldInfo.GetValue(value);
+                    if (TrySerializeMember(fieldInfo.Name, memberValue, fieldInfo.FieldType, out var basic))
                     {
                         ms.Add(basic);
                     }
@@ -181,7 +179,7 @@ namespace Megumin.Serialization
         }
 
 
-        public int CompareTo(ObjData other)
+        public int CompareTo(ObjectData other)
         {
             return Name.CompareTo(other.Name);
         }

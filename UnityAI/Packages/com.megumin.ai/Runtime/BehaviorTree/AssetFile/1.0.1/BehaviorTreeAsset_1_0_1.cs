@@ -8,14 +8,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
     {
-        public List<UnityObjRef> UnityObjectRef;
-        public List<ObjData> datas;
+        public List<UnityObjectData> UnityObjectRef;
+        public List<ObjectData> datas;
 
         public void Se(BehaviorTree tree)
         {
             Dictionary<object, string> cahce = new();
             Stack<(string name, object value)> needS = new();
-            List<UnityObjRef> objRefs = new();
+            List<UnityObjectData> objRefs = new();
 
             foreach (var variable in tree.Variable.Table)
             {
@@ -35,18 +35,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            List<ObjData> AllSedRefData = new();
+            List<ObjectData> AllSedRefData = new();
             while (needS.Count > 0)
             {
-                if (AllSedRefData.Count > 1000)
+                if (AllSedRefData.Count > 10)
                 {
                     Debug.LogError($"Too Large!!");
                     break;
                 }
 
                 var item = needS.Pop();
-                ObjData data = new ObjData();
-                if (data.TreS(item.name, item.value, needS, objRefs, cahce))
+                ObjectData data = new ObjectData();
+                if (data.TrySerialize(item.name, item.value, needS, objRefs, cahce))
                 {
                     AllSedRefData.Add(data);
                 }

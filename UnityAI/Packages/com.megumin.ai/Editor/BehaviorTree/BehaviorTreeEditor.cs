@@ -294,17 +294,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var test1 = root.Q<ToolbarButton>("test1");
             test1.clicked += () =>
             {
-                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset_1_0_0>()
-                                     .FirstOrDefault(elem => elem.name == "BTtree");
-                AssetDatabase.OpenAsset(asset);
+
             };
 
             var test2 = root.Q<ToolbarButton>("test2");
             test2.clicked += () =>
             {
-                var asset = Resources.FindObjectsOfTypeAll<BehaviorTreeAsset_1_0_0>()
-                                     .FirstOrDefault(elem => elem.name == "BTtree 1");
-                AssetDatabase.OpenAsset(asset);
+                
             };
 
             var test3 = root.Q<ToolbarButton>("test3");

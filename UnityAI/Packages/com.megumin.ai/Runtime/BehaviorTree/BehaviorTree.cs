@@ -256,4 +256,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
     }
+
+    public partial class BehaviorTree : IRefFinder
+    {
+        bool IRefFinder.TryGetRefValue(string refName, out object refValue)
+        {
+            if (Variable.TryGetParam(refName, out var param))
+            {
+                refValue = param;
+                return true;
+            }
+
+            refValue = null;
+            return false;
+        }
+    }
 }
