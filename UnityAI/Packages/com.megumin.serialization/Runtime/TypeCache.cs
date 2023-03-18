@@ -9,6 +9,8 @@ using UnityEngine;
 namespace Megumin.Serialization
 {
     /// <summary>
+    /// 类型缓存。
+    /// 通过缓存所有已加载程序集，实现通过类型全名获取类型。
     /// 第一次调用会导致卡顿，在调用前使用多线程初始化，防止阻塞主线程。
     /// </summary>
     public static class TypeCache
@@ -37,7 +39,6 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes();
                 if (allComponentType.TryGetValue(typeFullName, out type))
                 {
                     hotComponentType[typeFullName] = type;
@@ -45,6 +46,15 @@ namespace Megumin.Serialization
                 }
                 else
                 {
+                    if (CacheAllTypes())
+                    {
+                        if (allComponentType.TryGetValue(typeFullName, out type))
+                        {
+                            hotComponentType[typeFullName] = type;
+                            return true;
+                        }
+                    }
+
                     return false;
                 }
             }
@@ -72,7 +82,6 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes();
                 if (allUnityObjectType.TryGetValue(typeFullName, out type))
                 {
                     hotUnityObjectType[typeFullName] = type;
@@ -80,6 +89,15 @@ namespace Megumin.Serialization
                 }
                 else
                 {
+                    if (CacheAllTypes())
+                    {
+                        if (allUnityObjectType.TryGetValue(typeFullName, out type))
+                        {
+                            hotUnityObjectType[typeFullName] = type;
+                            return true;
+                        }
+                    }
+
                     return false;
                 }
             }
@@ -111,7 +129,13 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes();
+                //Q：触发CacheAllTypes 防在allType.TryGetValue前还是allType.TryGetValue失败后？
+                //A：放在前面，优点是第一次调用时能直接触发，不用double check
+                //A：放在后面，以后每次获取类型时，不用去检查是否已经初始化缓存，性能可以稍稍高一点。
+                //   但是由于有hotType机制，只有第一次获取这个类型时才有性能提升。
+                //   缺点是 allType.TryGetValue需要写2次。
+                //结论：放在后面，allType.TryGetValue找不到类型只有第一次和错误类型名，是极小概率事件
+
                 if (allType.TryGetValue(typeFullName, out type))
                 {
                     hotType[typeFullName] = type;
@@ -119,7 +143,17 @@ namespace Megumin.Serialization
                 }
                 else
                 {
-                    //制作泛型类
+                    //没有找到类型时，看看是不是还没有初始化
+                    if (CacheAllTypes())
+                    {
+                        if (allType.TryGetValue(typeFullName, out type))
+                        {
+                            hotType[typeFullName] = type;
+                            return true;
+                        }
+                    }
+
+                    //现有类型不存在，尝试制作泛型类型
                     if (TryMakeGenericType(typeFullName, out type))
                     {
                         return true;
@@ -131,13 +165,12 @@ namespace Megumin.Serialization
         }
 
         public static bool TryGetType(List<string> typeFullName,
-                                      out Type[] types,
-                                      bool forceRecache = false)
+                                      out Type[] types)
         {
             types = new Type[typeFullName.Count];
             for (int i = 0; i < typeFullName.Count; i++)
             {
-                if (TryGetType(typeFullName[i], out var type, forceRecache))
+                if (TryGetType(typeFullName[i], out var type))
                 {
                     types[i] = type;
                 }
@@ -208,14 +241,20 @@ namespace Megumin.Serialization
         /// </summary>
         /// <param name="forceRecache">强制搜索所有程序集</param>
         /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
-        public static void CacheAllTypes(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
+        /// <returns>
+        /// <see langword="true"/>：缓存发生变化
+        /// <see langword="false"/>：缓存没有发生变化
+        /// </returns>
+        public static bool CacheAllTypes(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
         {
             lock (cachelock)
             {
+                bool hasChange = false;
                 if (forceRecache)
                 {
                     CachedAssemblyName.Clear();
                 }
+
                 if (CacheTypeInit == false || forceRecache)
                 {
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
@@ -232,11 +271,14 @@ namespace Megumin.Serialization
                             continue;
                         }
 
+                        hasChange = true;
                         CacheAssembly(assembly);
                     }
 
                     CacheTypeInit = true;
                 }
+
+                return hasChange;
             }
         }
 
