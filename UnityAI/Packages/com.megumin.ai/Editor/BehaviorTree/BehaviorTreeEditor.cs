@@ -76,7 +76,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private VisualTreeAsset m_VisualTreeAsset = default;
 
         public BehaviorTreeView TreeView { get; private set; }
-        public BehaviorTreeAsset_1_0_0 CurrentAsset { get; private set; }
+        public IBehaviorTreeAsset CurrentAsset { get; private set; }
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
         public static void ShowExample()
@@ -94,7 +94,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     if (item)
                     {
-                        if (!emptyEditor && !item.CurrentAsset && item.TreeView?.SOTree?.Tree == null)
+                        if (!emptyEditor && item.CurrentAsset == null && item.TreeView?.SOTree?.Tree == null)
                         {
                             //找到一个打开的空的Editor
                             emptyEditor = item;
@@ -124,7 +124,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void UpdateTitle()
         {
-            if (CurrentAsset)
+            if (CurrentAsset != null)
             {
                 string title = CurrentAsset.name;
                 if (IsDebugMode)
@@ -141,7 +141,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void UpdateSaveMessage()
         {
-            if (CurrentAsset)
+            if (CurrentAsset != null)
             {
                 saveChangesMessage = $"{CurrentAsset.name} 有未保存改动";
             }
@@ -208,7 +208,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             AllActiveEditor.Add(this);
 
-            if (CurrentAsset)
+            if (CurrentAsset != null)
             {
                 //通常重载时被触发。
                 EditorReloading();
@@ -227,7 +227,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             else
             {
                 Debug.Log("脚本重新编译 导致窗口重载");
-                AssetDatabase.OpenAsset(CurrentAsset);
+                SelectTree(CurrentAsset);
             }
         }
 
@@ -242,10 +242,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var saveAs = root.Q<ToolbarMenu>("saveAs");
             saveAs.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
             saveAs.menu.AppendAction("Save as ScriptObject",
-                                     a => CreateScriptObjectTreeAssset(),
+                                     a => CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_0>(),
                                      a => DropdownMenuAction.Status.Normal);
             saveAs.menu.AppendAction("Save as BehaviorTreeAsset_1_0_1",
-                                     a => CreateBehaviorTreeAsset_1_0_1(),
+                                     a => CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_1>(),
                                      a => DropdownMenuAction.Status.Normal);
 
             var showInProject = root.Q<ToolbarButton>("showInProject");
@@ -338,9 +338,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void ShowInProject()
         {
-            if (CurrentAsset)
+            if (CurrentAsset != null)
             {
-                Selection.activeObject = CurrentAsset;
+                if (CurrentAsset.AssetObject)
+                {
+                    Selection.activeObject = CurrentAsset.AssetObject;
+                }
             }
         }
 
@@ -377,7 +380,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName(TreeView);
         }
 
-        public void SelectTree(BehaviorTreeAsset_1_0_0 behaviorTreeAsset)
+        public void SelectTree(IBehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogMethodName();
             this.CurrentAsset = behaviorTreeAsset;

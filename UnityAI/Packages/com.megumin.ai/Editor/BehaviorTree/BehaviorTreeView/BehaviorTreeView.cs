@@ -274,7 +274,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 else
                 {
-                    if (EditorWindow.CurrentAsset)
+                    if (EditorWindow.CurrentAsset != null)
                     {
                         SOTree.Tree = EditorWindow.CurrentAsset.Instantiate();
                     }

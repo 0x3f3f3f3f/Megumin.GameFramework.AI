@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeAsset_1_0_0 : ScriptableObject//, ISerializationCallbackReceiver
+    public partial class BehaviorTreeAsset_1_0_0 : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string Version = new Version(1, 0, 0).ToString();
         public bool UseSerializeReferenceGeneric = false;
@@ -288,6 +288,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             //this.LogFuncName();
         }
+    }
+
+    public partial class BehaviorTreeAsset_1_0_0 : IBehaviorTreeAsset
+    {
+        public UnityEngine.Object AssetObject => this;
     }
 
     public partial class BehaviorTree : IRefFinder

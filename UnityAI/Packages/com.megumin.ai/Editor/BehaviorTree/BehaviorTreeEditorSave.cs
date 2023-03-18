@@ -42,12 +42,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (!CurrentAsset)
+            if (CurrentAsset == null)
             {
-                CurrentAsset = CreateScriptObjectTreeAssset();
+                CurrentAsset = CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_0>();
             }
 
-            if (!CurrentAsset)
+            if (CurrentAsset == null)
             {
                 Debug.Log($"保存资源失败，没有找到Asset文件");
                 return;
@@ -56,8 +56,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var success = CurrentAsset.SaveTree(TreeView.Tree);
             if (success)
             {
-                EditorUtility.SetDirty(CurrentAsset);
-                AssetDatabase.SaveAssetIfDirty(CurrentAsset);
+                EditorUtility.SetDirty(CurrentAsset.AssetObject);
+                AssetDatabase.SaveAssetIfDirty(CurrentAsset.AssetObject);
                 AssetDatabase.Refresh();
 
                 Debug.Log($"保存资源成功");
@@ -70,36 +70,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public BehaviorTreeAsset_1_0_0 CreateScriptObjectTreeAssset()
+        public T CreateScriptObjectTreeAssset<T>()
+            where T : ScriptableObject, IBehaviorTreeAsset
         {
             var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
             if (!string.IsNullOrEmpty(path))
             {
                 Debug.Log(path);
-                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset_1_0_0>();
+                var treeAsset = ScriptableObject.CreateInstance<T>();
                 treeAsset.SaveTree(TreeView.Tree);
                 AssetDatabase.CreateAsset(treeAsset, path);
                 AssetDatabase.Refresh();
 
                 SelectTree(treeAsset);
-                return treeAsset;
-            }
-
-            return null;
-        }
-
-        public BehaviorTreeAsset_1_0_1 CreateBehaviorTreeAsset_1_0_1()
-        {
-            var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
-            if (!string.IsNullOrEmpty(path))
-            {
-                Debug.Log(path);
-                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset_1_0_1>();
-                treeAsset.Se(TreeView.Tree);
-                AssetDatabase.CreateAsset(treeAsset, path);
-                AssetDatabase.Refresh();
-
-                //SelectTree(treeAsset);
                 return treeAsset;
             }
 
