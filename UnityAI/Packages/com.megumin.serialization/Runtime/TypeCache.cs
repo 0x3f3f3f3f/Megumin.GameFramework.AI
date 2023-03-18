@@ -39,24 +39,13 @@ namespace Megumin.Serialization
             }
             else
             {
-                if (allComponentType.TryGetValue(typeFullName, out type))
+                if (TryGetTypeDerivedFrom<Component>(typeFullName, out type))
                 {
                     hotComponentType[typeFullName] = type;
                     return true;
                 }
-                else
-                {
-                    if (CacheAllTypes())
-                    {
-                        if (allComponentType.TryGetValue(typeFullName, out type))
-                        {
-                            hotComponentType[typeFullName] = type;
-                            return true;
-                        }
-                    }
 
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -82,24 +71,13 @@ namespace Megumin.Serialization
             }
             else
             {
-                if (allUnityObjectType.TryGetValue(typeFullName, out type))
+                if (TryGetTypeDerivedFrom<UnityEngine.Object>(typeFullName, out type))
                 {
-                    hotUnityObjectType[typeFullName] = type;
+                    hotComponentType[typeFullName] = type;
                     return true;
                 }
-                else
-                {
-                    if (CacheAllTypes())
-                    {
-                        if (allUnityObjectType.TryGetValue(typeFullName, out type))
-                        {
-                            hotUnityObjectType[typeFullName] = type;
-                            return true;
-                        }
-                    }
 
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -164,6 +142,26 @@ namespace Megumin.Serialization
             }
         }
 
+        public static Type GetTypeDerivedFrom<T>(string typeFullName)
+        {
+            TryGetTypeDerivedFrom<T>(typeFullName, out var type);
+            return type;
+        }
+
+        public static bool TryGetTypeDerivedFrom<T>(string typeFullName, out Type type)
+        {
+            if (TryGetType(typeFullName, out var result)
+                && typeof(T).IsAssignableFrom(result)
+                /*&& result.IsSubclassOf(typeof(T))*/)
+            {
+                type = result;
+                return true;
+            }
+
+            type = null;
+            return false;
+        }
+
         public static bool TryGetType(List<string> typeFullName,
                                       out Type[] types)
         {
@@ -184,8 +182,8 @@ namespace Megumin.Serialization
         }
 
         static readonly Dictionary<string, Type> allType = new();
-        static readonly Dictionary<string, Type> allComponentType = new();
-        static readonly Dictionary<string, Type> allUnityObjectType = new();
+        //static readonly Dictionary<string, Type> allComponentType = new();
+        //static readonly Dictionary<string, Type> allUnityObjectType = new();
         static bool CacheTypeInit = false;
 
         public static bool LogCacheWorning =
@@ -294,19 +292,21 @@ namespace Megumin.Serialization
             {
                 AddToDic(allType, extype);
 
-#if UNITY_5_3_OR_NEWER
+                //因为有hot机制，额外缓存unity相关类型只有第一次查找每个类型时有收益。
+                //缓存时不在额外缓存unity相关类型，获取时额外从总类型查找。提高缓存时的速度。减少内存占用。
+                //#if UNITY_5_3_OR_NEWER
 
-                if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
-                {
-                    AddToDic(allUnityObjectType, extype);
+                //                if (typeof(UnityEngine.Object).IsAssignableFrom(extype))
+                //                {
+                //                    AddToDic(allUnityObjectType, extype);
 
-                    if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
-                    {
-                        AddToDic(allComponentType, extype);
-                    }
-                }
+                //                    if (typeof(UnityEngine.Component).IsAssignableFrom(extype))
+                //                    {
+                //                        AddToDic(allComponentType, extype);
+                //                    }
+                //                }
 
-#endif
+                //#endif
 
             }
         }

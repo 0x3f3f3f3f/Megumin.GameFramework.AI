@@ -519,9 +519,12 @@ namespace Megumin.Binding
 
             if (type == null)
             {
+                //没有找到Component，可能是一个接口类型。尝试取得一个实现了接口的组件。
                 type = Serialization.TypeCache.GetType(typeFullName);
                 if (type != null && type.IsInterface)
                 {
+                    //通过名字不能从Children获取组件，还是要自己先取得类型
+                    //var comp = gameObject.GetComponent(typeFullName);
                     var comp = gameObject.GetComponentInChildren(type);
                     if (comp)
                     {
