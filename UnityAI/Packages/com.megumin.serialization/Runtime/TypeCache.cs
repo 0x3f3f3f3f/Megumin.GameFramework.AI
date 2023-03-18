@@ -17,13 +17,13 @@ namespace Megumin.Serialization
 #if UNITY_5_3_OR_NEWER
 
         static readonly Dictionary<string, Type> hotComponentType = new();
-        public static Type GetComponentType(string typeFullName, bool forceRecache = false)
+        public static Type GetComponentType(string typeFullName)
         {
-            TryGetComponentType(typeFullName, out var type, forceRecache);
+            TryGetComponentType(typeFullName, out var type);
             return type;
         }
 
-        public static bool TryGetComponentType(string typeFullName, out Type type, bool forceRecache = false)
+        public static bool TryGetComponentType(string typeFullName, out Type type)
         {
             if (string.IsNullOrEmpty(typeFullName))
             {
@@ -37,7 +37,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes(forceRecache);
+                CacheAllTypes();
                 if (allComponentType.TryGetValue(typeFullName, out type))
                 {
                     hotComponentType[typeFullName] = type;
@@ -51,13 +51,13 @@ namespace Megumin.Serialization
         }
 
         static readonly Dictionary<string, Type> hotUnityObjectType = new();
-        public static Type GetUnityObjectType(string typeFullName, bool forceRecache = false)
+        public static Type GetUnityObjectType(string typeFullName)
         {
-            TryGetUnityObjectType(typeFullName, out var type, forceRecache);
+            TryGetUnityObjectType(typeFullName, out var type);
             return type;
         }
 
-        public static bool TryGetUnityObjectType(string typeFullName, out Type type, bool forceRecache = false)
+        public static bool TryGetUnityObjectType(string typeFullName, out Type type)
         {
 
             if (string.IsNullOrEmpty(typeFullName))
@@ -72,7 +72,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes(forceRecache);
+                CacheAllTypes();
                 if (allUnityObjectType.TryGetValue(typeFullName, out type))
                 {
                     hotUnityObjectType[typeFullName] = type;
@@ -88,14 +88,14 @@ namespace Megumin.Serialization
 #endif
 
         static readonly Dictionary<string, Type> hotType = new();
-        public static Type GetType(string typeFullName, bool forceRecache = false)
+        public static Type GetType(string typeFullName)
         {
-            TryGetType(typeFullName, out var type, forceRecache);
+            TryGetType(typeFullName, out var type);
             return type;
         }
 
         static readonly Unity.Profiling.ProfilerMarker tryGetTypeMarker = new(nameof(TryGetType));
-        public static bool TryGetType(string typeFullName, out Type type, bool forceRecache = false)
+        public static bool TryGetType(string typeFullName, out Type type)
         {
             using var profiler = tryGetTypeMarker.Auto();
 
@@ -111,7 +111,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                CacheAllTypes(forceRecache);
+                CacheAllTypes();
                 if (allType.TryGetValue(typeFullName, out type))
                 {
                     hotType[typeFullName] = type;
@@ -203,7 +203,8 @@ namespace Megumin.Serialization
         static HashSet<string> CachedAssemblyName = new();
 
         /// <summary>
-        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。<seealso cref="CacheAllTypesAsync(bool)"/>
+        /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
+        /// <seealso cref="CacheAllTypesAsync(bool, Func{Assembly, bool})"/>
         /// </summary>
         /// <param name="forceRecache">强制搜索所有程序集</param>
         /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
