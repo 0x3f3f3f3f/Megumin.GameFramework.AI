@@ -5,13 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace Megumin.GameFramework.AI
 {
     public class AITree
     {
-        public TraceListener TraceListener { get; set; } = new UnityTraceListener(); 
+        /// <summary>
+        /// 唯一ID
+        /// </summary>
+        [field: SerializeField]
+        public string GUID { get; set; }
+
+        public TraceListener TraceListener { get; set; } = new UnityTraceListener();
         public ILogSetting LogSetting { get; set; }
 
         /// <summary>
@@ -22,7 +29,7 @@ namespace Megumin.GameFramework.AI
         public virtual void Log(object message)
         {
             if (LogSetting?.Enabled == true)
-            {  
+            {
                 TraceListener?.WriteLine(message);
             }
         }

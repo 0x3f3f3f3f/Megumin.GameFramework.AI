@@ -178,6 +178,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return false;
             }
 
+            if (!Guid.TryParse(tree.GUID, out var _))
+            {
+                tree.GUID = Guid.NewGuid().ToString();
+            }
+
             StartNodeGUID = tree.StartNode?.GUID;
 
             Nodes.Clear();

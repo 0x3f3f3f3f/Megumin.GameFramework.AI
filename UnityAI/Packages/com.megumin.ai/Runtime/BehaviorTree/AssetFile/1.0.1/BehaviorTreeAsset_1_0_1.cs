@@ -11,11 +11,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<UnityObjectData> UnityObjectRef;
         public List<ObjectData> datas;
 
-        public void Se(BehaviorTree tree)
+        public bool SaveTree(BehaviorTree tree)
         {
+            if (tree == null)
+            {
+                return false;
+            }
+
+            if (!Guid.TryParse(tree.GUID, out var _))
+            {
+                tree.GUID = Guid.NewGuid().ToString();
+            }
+
             Dictionary<object, string> cahce = new();
             Stack<(string name, object value)> needS = new();
             List<UnityObjectData> objRefs = new();
+            cahce.Add(tree, tree.GUID);
 
             foreach (var variable in tree.Variable.Table)
             {
@@ -55,6 +66,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             AllSedRefData.Sort();
             datas = AllSedRefData;
             UnityObjectRef = objRefs;
+            return true;
         }
 
 
@@ -64,12 +76,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTree Instantiate(bool instanceMeta = true)
         {
             return new BehaviorTree();
-        }
-
-        public bool SaveTree(BehaviorTree tree)
-        {
-            Se(tree);
-            return true;
         }
     }
 }

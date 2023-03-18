@@ -241,6 +241,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Debug.Log("new tree");
                 SOTree.Tree = new BehaviorTree();
+                SOTree.Tree.GUID = Guid.NewGuid().ToString();
             }
 
             return SOTree;
