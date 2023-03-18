@@ -506,5 +506,16 @@ namespace Megumin.Serialization
         {
             return Task.Run(() => { CacheAllTypes(force); });
         }
+
+        /// <summary>
+        /// 预热一个类型，可以避免在全类型中查找。
+        /// 其他模块可以将常用类型使用static代码，在调用TypeCache前预热。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void HotType<T>()
+        {
+            var type = typeof(T);
+            hotType[type.FullName] = type;
+        }
     }
 }
