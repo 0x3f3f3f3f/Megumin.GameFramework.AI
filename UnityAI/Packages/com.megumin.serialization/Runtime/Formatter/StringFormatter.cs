@@ -46,6 +46,24 @@ namespace Megumin.Serialization
             return null;
         }
 
+        public static bool TrySerialize(object instance, out string destination)
+        {
+            if (instance == null)
+            {
+                destination = null;
+                return true;
+            }
+
+            if (TryGet(instance.GetType().FullName, out var formatter))
+            {
+                destination = formatter.Serialize(instance);
+                return true;
+            }
+
+            destination = null;
+            return false;
+        }
+
         public static bool TryDeserialize(string typeFullName, string source, out object value)
         {
             if (TryGet(typeFullName, out var formatter))

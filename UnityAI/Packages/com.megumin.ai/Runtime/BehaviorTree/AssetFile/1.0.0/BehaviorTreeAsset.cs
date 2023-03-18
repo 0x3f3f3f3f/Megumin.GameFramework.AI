@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeAsset : ScriptableObject//, ISerializationCallbackReceiver
     {
-        public string Version = AssetVersion.v1_0_0.ToString();
+        public string Version = new Version(1, 0, 0).ToString();
         public bool UseSerializeReferenceGeneric = false;
         public string test = "行为树SO资产";
         public string Comment = "load2";
@@ -294,7 +294,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         bool IRefFinder.TryGetRefValue(string refName, out object refValue)
         {
-            if (Variable.TryGetParam(refName,out var param))
+            if (Variable.TryGetParam(refName, out var param))
             {
                 refValue = param;
                 return true;

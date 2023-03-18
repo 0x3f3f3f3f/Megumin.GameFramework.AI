@@ -244,6 +244,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             saveAs.menu.AppendAction("Save as ScriptObject",
                                      a => CreateScriptObjectTreeAssset(),
                                      a => DropdownMenuAction.Status.Normal);
+            saveAs.menu.AppendAction("Save as BehaviorTreeAsset_1_0_1",
+                                     a => CreateBehaviorTreeAsset_1_0_1(),
+                                     a => DropdownMenuAction.Status.Normal);
 
             var showInProject = root.Q<ToolbarButton>("showInProject");
             showInProject.clicked += ShowInProject;
@@ -405,10 +408,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (!string.IsNullOrEmpty(path))
             {
                 Debug.Log(path);
-                var tree = ScriptableObject.CreateInstance<BehaviorTreeAsset>();
-                AssetDatabase.CreateAsset(tree, path);
+                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset>();
+                treeAsset.SaveTree(TreeView.Tree);
+                AssetDatabase.CreateAsset(treeAsset, path);
                 AssetDatabase.Refresh();
-                return tree;
+
+                SelectTree(treeAsset);
+                return treeAsset;
+            }
+
+            return null;
+        }
+
+        public BehaviorTreeAsset_1_0_1 CreateBehaviorTreeAsset_1_0_1()
+        {
+            var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
+            if (!string.IsNullOrEmpty(path))
+            {
+                Debug.Log(path);
+                var treeAsset = ScriptableObject.CreateInstance<BehaviorTreeAsset_1_0_1>();
+                treeAsset.Se(TreeView.Tree);
+                AssetDatabase.CreateAsset(treeAsset, path);
+                AssetDatabase.Refresh();
+
+                //SelectTree(treeAsset);
+                return treeAsset;
             }
 
             return null;
