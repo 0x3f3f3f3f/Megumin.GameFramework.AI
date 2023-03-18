@@ -38,7 +38,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             List<ObjData> AllSedRefData = new();
             while (needS.Count > 0)
             {
-                if (AllSedRefData.Count > 100000)
+                if (AllSedRefData.Count > 1000)
                 {
                     Debug.LogError($"Too Large!!");
                     break;
