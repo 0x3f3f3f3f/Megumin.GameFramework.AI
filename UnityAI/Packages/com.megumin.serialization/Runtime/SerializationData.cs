@@ -7,7 +7,7 @@ namespace Megumin.Serialization
 {
     public interface ISerializationData
     {
-       
+
     }
 
     public abstract class SerializationData : ISerializationData
@@ -45,6 +45,11 @@ namespace Megumin.Serialization
         /// </summary>
         IsUnityBasicType = 1 << 9,
         IsVariable = 1 << 10,
+        /// <summary>
+        /// 用户回调和框架默认模式只能二选一。
+        /// 如果用户回调都都失败，框架默认模式也大概率失败，没有调用的意义。
+        /// </summary>
+        IsUserCallbackFormatter = 1 << 11,
 
         //16-23
         IsCollection = 1 << 16,
@@ -99,16 +104,29 @@ namespace Megumin.Serialization
 
         public virtual bool TrySerializeNotNull(string name, object value)
         {
-            Name = name;
-
-            var valueActualType = value.GetType();
-            TypeName = valueActualType.FullName;
-            if (valueActualType.IsClass)
+            //用户回调和框架默认模式只能二选一
+            //如果用户回调都都失败，框架默认模式也大概率失败，没有调用的意义。
+            if (value is ICallbackFormatter<BasicTypeSerializationData> callbackFormatter)
             {
-                DataType |= SerializationDataType.IsClass;
+                DataType |= SerializationDataType.IsUserCallbackFormatter;
+                if (callbackFormatter.TrySerialize(this))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                var valueActualType = value.GetType();
+                TypeName = valueActualType.FullName;
+                if (valueActualType.IsClass)
+                {
+                    DataType |= SerializationDataType.IsClass;
+                }
+
+                return TrySerializeByType(valueActualType, name, value);
             }
 
-            return TrySerializeByType(valueActualType, name, value);
+            return false;
         }
 
         protected virtual bool TrySerializeByType(Type valueActualType, string name, object value)
@@ -154,60 +172,83 @@ namespace Megumin.Serialization
 
         public virtual bool TryDeserializeNotNull(out object value)
         {
-            if (DataType.HasFlag(SerializationDataType.IsUnityObject))
+            //用户回调和框架默认模式只能二选一
+            //如果用户回调都都失败，框架默认模式也大概率失败，没有调用的意义。
+            if (DataType.HasFlag(SerializationDataType.IsUserCallbackFormatter))
             {
-                if (RefObject)
+                if (TryCreateInstance<ICallbackFormatter<BasicTypeSerializationData>>(out var formatter))
                 {
-                    value = RefObject;
-                    return true;
-                }
-                else
-                {
-                    //unity null
-                    var dateType = TypeCache.GetType(TypeName);
-                    var refObjetType = RefObject?.GetType();
-                    if (dateType.IsAssignableFrom(refObjetType))
+                    if (formatter.TryDeserialize(this))
                     {
-                        //没有重新打开编辑器时，销毁的对象仍然有真实类型，missRrefrence等情况
+                        value = formatter;
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                if (DataType.HasFlag(SerializationDataType.IsUnityObject))
+                {
+                    if (RefObject)
+                    {
                         value = RefObject;
                         return true;
                     }
                     else
                     {
-                        //重新打开编辑器时，无法准确获取真实类型，RefObject变为UnityEngine.Object 类型，
-                        //需要返回null，否则SetValue时会导致类型不匹配异常
-                        value = null;
-                        return true;
+                        //unity null
+                        var dateType = TypeCache.GetType(TypeName);
+                        var refObjetType = RefObject?.GetType();
+                        if (dateType.IsAssignableFrom(refObjetType))
+                        {
+                            //没有重新打开编辑器时，销毁的对象仍然有真实类型，missRrefrence等情况
+                            value = RefObject;
+                            return true;
+                        }
+                        else
+                        {
+                            //重新打开编辑器时，无法准确获取真实类型，RefObject变为UnityEngine.Object 类型，
+                            //需要返回null，否则SetValue时会导致类型不匹配异常
+                            value = null;
+                            return true;
+                        }
                     }
                 }
-            }
 
-            if (DataType.HasFlag(SerializationDataType.IsString))
-            {
-                value = Data;
-                return true;
-            }
+                if (DataType.HasFlag(SerializationDataType.IsString))
+                {
+                    value = Data;
+                    return true;
+                }
 
-            if (StringFormatter.TryDeserialize(TypeName, Data, out value))
-            {
-                return true;
+                if (StringFormatter.TryDeserialize(TypeName, Data, out value))
+                {
+                    return true;
+                }
             }
 
             value = default;
             return false;
         }
 
-        public static object TryCreateInstance(Type cType)
+        public virtual bool TryCreateInstance<T>(out T insance)
         {
             try
             {
-                return Activator.CreateInstance(cType);
+                var dateType = TypeCache.GetType(TypeName);
+                var instance = Activator.CreateInstance(dateType);
+                if (instance is T result)
+                {
+                    insance = result;
+                    return true;
+                }
             }
             catch (Exception)
             {
 
             }
-            return null;
+            insance = default;
+            return false;
         }
     }
 
@@ -294,10 +335,7 @@ namespace Megumin.Serialization
                 }
                 else
                 {
-                    Type listType = Type.GetType(TypeName);
-                    var list = TryCreateInstance(listType) as IList;
-
-                    if (list != null)
+                    if (TryCreateInstance<IList>(out var list))
                     {
                         foreach (var item in Collection)
                         {

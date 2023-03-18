@@ -12,7 +12,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
-        public RefVar<List<string>> RefVarListString;
+        public List<Variable<int>> ListVariableInt;
+        //public List<RefVar<int>> ListRefVarInt;
 
         //多级泛型嵌套
         //public List<RefVar<List<string>>> TestFuckingGeneric;
@@ -34,7 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Space]
         public List<int> ListInt = new();
         public List<string> ListString = new();
-        public List<GameObject> ListGameObject = new ();
+        public List<GameObject> ListGameObject = new();
 
         [Space]
         public float[] ArrayFloat;
@@ -53,6 +54,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Variable<GameObject> VariableGameObject;
         public BindingVar<string> BindingVarString;
         public RefVar<string> RefVarString;
+        public RefVar<List<string>> RefVarListString;
+        public RefVar<List<GameObject>> RefVarListGameObject;
+
+
+
+
 
         [Serializable]
         public class MyClass

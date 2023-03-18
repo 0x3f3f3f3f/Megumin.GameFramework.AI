@@ -60,35 +60,6 @@ MonoBehaviour:
     CallbackMemberData: []
   - StringCallbackMemberData: []
     MMdata:
-    - MemberName: RefVarListString
-      RefName: 
-      BindingPath: 
-      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
-          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-        Data: 
-        RefObject: {fileID: 0}
-        DataType: 262145
-        Collection:
-        - Name: Element0
-          TypeName: System.String
-          Data: A
-          RefObject: {fileID: 0}
-          DataType: 65
-        - Name: Element1
-          TypeName: System.String
-          Data: B
-          RefObject: {fileID: 0}
-          DataType: 65
-        - Name: Element2
-          TypeName: System.String
-          Data: C
-          RefObject: {fileID: 0}
-          DataType: 65
     - MemberName: VariableString
       RefName: 
       BindingPath: 
@@ -136,11 +107,59 @@ MonoBehaviour:
         RefObject: {fileID: 0}
         DataType: 0
         Collection: []
+    - MemberName: RefVarListString
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String,
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
+          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 262145
+        Collection:
+        - Name: Element0
+          TypeName: System.String
+          Data: A
+          RefObject: {fileID: 0}
+          DataType: 65
+        - Name: Element1
+          TypeName: System.String
+          Data: B
+          RefObject: {fileID: 0}
+          DataType: 65
+        - Name: Element2
+          TypeName: System.String
+          Data: C
+          RefObject: {fileID: 0}
+          DataType: 65
+    - MemberName: RefVarListGameObject
+      RefName: 
+      BindingPath: 
+      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+      fallbackData:
+        Name: fallbackValue
+        TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+        Data: 
+        RefObject: {fileID: 0}
+        DataType: 262145
+        Collection:
+        - Name: Element0
+          TypeName: UnityEngine.GameObject
+          Data: 
+          RefObject: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+          DataType: 257
     TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     GUID: ada6836d-8b37-432e-993e-a739afa3a29c
     Meta:
       x: 193
-      y: 261.56
+      y: 261
       index: 0
       Name: 
       FriendlyName: 
@@ -151,6 +170,24 @@ MonoBehaviour:
     ChildNodes: []
     Decorators: []
     MemberData:
+    - Name: ListVariableInt
+      TypeName: System.Collections.Generic.List`1[[Megumin.Binding.Variable`1[[System.Int32,
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
+        Megumin.Binding, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      Data: 
+      RefObject: {fileID: 0}
+      DataType: 262145
+      Collection:
+      - Name: Element0
+        TypeName: System.Int32
+        Data: 77
+        RefObject: {fileID: 0}
+        DataType: 2048
+      - Name: Element1
+        TypeName: System.Int32
+        Data: 230
+        RefObject: {fileID: 0}
+        DataType: 2048
     - Name: Sbyte
       TypeName: System.SByte
       Data: -128

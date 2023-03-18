@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Serialization;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -27,7 +28,10 @@ namespace Megumin.Binding
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    public class Variable<T> : Variable, IVariable<T>, IBindableFallback, IVariableSpecializedType
+    public class Variable<T> : Variable,
+        IVariable<T>,
+        IBindableFallback,
+        IVariableSpecializedType
     {
         [field: SerializeField]
         protected T value;
