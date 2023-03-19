@@ -107,11 +107,6 @@ namespace Megumin.Serialization
                 {
                     var memberValueType = memberValue.GetType();
                     basic.Type = memberValueType.FullName;
-                    if (memberValueType.IsEnum)
-                    {
-                        basic.Type = StringFormatter.EnumTypeName;
-                    }
-
                     if (StringFormatter.TrySerialize(memberValue, out var destination))
                     {
                         basic.Value = destination;

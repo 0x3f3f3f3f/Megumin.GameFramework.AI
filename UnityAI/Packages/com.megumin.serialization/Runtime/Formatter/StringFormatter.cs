@@ -11,7 +11,6 @@ namespace Megumin.Serialization
 {
     public partial class StringFormatter
     {
-        public const string EnumTypeName = "$Enum";
         protected static readonly Lazy<Dictionary<string, IFormatter<string>>> lut = new(InitFormaters);
 
         public static Dictionary<string, IFormatter<string>> Lut => lut.Value;
@@ -57,15 +56,16 @@ namespace Megumin.Serialization
             }
 
             Type type = instance.GetType();
-            string fullName = type.FullName;
-            if (type.IsEnum)
-            {
-                fullName = EnumTypeName;
-            }
-
-            if (TryGet(fullName, out var formatter))
+            if (TryGet(type.FullName, out var formatter))
             {
                 if (formatter.TrySerialize(instance, out destination))
+                {
+                    return true;
+                }
+            }
+            else if (type.IsEnum)
+            {
+                if (EnumFormatter.Instance.TrySerialize(instance, out destination))
                 {
                     return true;
                 }
@@ -80,6 +80,14 @@ namespace Megumin.Serialization
             if (TryGet(typeFullName, out var formatter))
             {
                 return formatter.TryDeserialize(source, out value);
+            }
+            else
+            {
+                if (TypeCache.TryGetType(typeFullName, out var type)
+                    && type.IsEnum)
+                {
+                    return EnumFormatter.Instance.TryDeserialize(source, out value);
+                }
             }
 
             value = default;
@@ -123,8 +131,7 @@ namespace Megumin.Serialization
                 { typeof(DateTimeOffset).FullName,new DateTimeOffsetFormatter() },
                 { typeof(TimeSpan).FullName,new TimeSpanFormatter() },
                 { typeof(Type).FullName,new TypeFormatter() },
-
-                { EnumTypeName,new EnumFormatter() },
+                { typeof(Enum).FullName,new EnumFormatter() },
 
             };
             return fs;
@@ -405,6 +412,7 @@ namespace Megumin.Serialization
 
         public sealed class EnumFormatter : IFormatter<string, Enum>
         {
+            public readonly static EnumFormatter Instance = new();
 
             public string Serialize(object value)
             {
@@ -427,7 +435,7 @@ namespace Megumin.Serialization
                     return Enum.TryParse(type, sp[1], out value);
                 }
 
-                value = default;
+                value = 0;
                 return false;
             }
 
@@ -449,6 +457,51 @@ namespace Megumin.Serialization
                         value = @enum;
                         return true;
                     }
+                }
+
+                value = default;
+                return false;
+            }
+        }
+
+        public sealed class EnumGenericFormatter<T> : IFormatter<string, T>
+            where T : struct, System.Enum
+        {
+            public readonly static EnumGenericFormatter<T> Instance = new();
+            public string Serialize(object value)
+            {
+                return value.ToString();
+            }
+
+            public bool TrySerialize(object value, out string destination)
+            {
+                destination = value.ToString();
+                return true;
+            }
+
+            public bool TryDeserialize(string source, out object value)
+            {
+                if (Enum.TryParse<T>(source, out var result))
+                {
+                    value = result;
+                    return true;
+                }
+
+                value = default;
+                return false;
+            }
+
+            public bool TrySerialize(T value, out string destination)
+            {
+                destination = value.ToString();
+                return true;
+            }
+
+            public bool TryDeserialize(string source, out T value)
+            {
+                if (Enum.TryParse<T>(source, out value))
+                {
+                    return true;
                 }
 
                 value = default;
