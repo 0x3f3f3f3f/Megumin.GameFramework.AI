@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65406e01bae0c3547a8c197c183c8913, type: 3}
   m_Name: StringFormatterGenerator
   m_EditorClassIdentifier: 
-  Folder: {fileID: 0}
+  Folder: {fileID: 102900000, guid: 8c054f3e7637ecd4c8bf0f11012dcfd5, type: 3}
   types:
   - bool
   - byte
