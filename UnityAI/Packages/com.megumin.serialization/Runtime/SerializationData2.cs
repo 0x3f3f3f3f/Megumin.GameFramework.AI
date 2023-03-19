@@ -187,6 +187,73 @@ namespace Megumin.Serialization
             return true;
         }
 
+        public bool TryCreateInstance(out object value)
+        {
+            if (Type == NullType)
+            {
+                value = null;
+                return true;
+            }
+
+            if (TypeCache.TryGetType(Type, out var type))
+            {
+                try
+                {
+                    value = Activator.CreateInstance(type);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        public bool TryDeserialize(object value, Dictionary<string, object> cache)
+        {
+            if (Type == NullType)
+            {
+                return true;
+            }
+
+            if (value == null)
+            {
+                return false;
+            }
+
+            bool TryDeserializeMember(BasicData data,
+                out object memberValue)
+            {
+                if (data.Type == NullType)
+                {
+                    memberValue = null;
+                    return true;
+                }
+                else if (data.Type == RefType)
+                {
+                    return cache.TryGetValue(data.Value, out memberValue);
+                }
+                else
+                {
+                    return StringFormatter.TryDeserialize(data.Type, data.Value, out memberValue);
+                }
+            }
+
+            foreach (var memberData in Member)
+            {
+                if (TryDeserializeMember(memberData, out var memberValue))
+                {
+                    var fieldInfo = value.GetType().GetField(memberData.Name);
+                    fieldInfo.SetValue(value, memberValue);
+                }
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// 序列化哪些成员，增加一个回调函数
         /// </summary>
