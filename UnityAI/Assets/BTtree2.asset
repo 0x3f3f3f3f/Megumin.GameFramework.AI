@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnityObjectRef: []
   datas:
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb
+  - Name: b85b4565-100b-48e8-a830-a8050b01ca67
     Type: Megumin.GameFramework.AI.BehaviorTree.Log
     Member:
     - Name: LogStr
@@ -22,228 +22,39 @@ MonoBehaviour:
       Value: Hello world!
     - Name: LogStr2
       Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2
+      Value: b85b4565-100b-48e8-a830-a8050b01ca67.LogStr2
     - Name: Meta
       Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.Meta
+      Value: b85b4565-100b-48e8-a830-a8050b01ca67.Meta
     - Name: Decorators
       Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.Decorators
+      Value: b85b4565-100b-48e8-a830-a8050b01ca67.Decorators
     - Name: InstanceID
       Type: $null
       Value: 
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.Decorators
+  - Name: b85b4565-100b-48e8-a830-a8050b01ca67.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
     Member: []
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2
+  - Name: b85b4565-100b-48e8-a830-a8050b01ca67.LogStr2
     Type: Megumin.Binding.RefVar`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
       PublicKeyToken=b77a5c561934e089]]
     Member:
     - Name: GetMode
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.GetMode
+      Type: $Enum
+      Value: Megumin.Binding.ParseMode:FallbackValue
     - Name: SetMode
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 16
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-    Type: Megumin.Binding.ParseMode
-    Member:
-    - Name: value__
-      Type: System.Int32
-      Value: 32
-    - Name: None
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.None
-    - Name: Log
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Log
-    - Name: Worning
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Worning
-    - Name: Error
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.Error
-    - Name: ThrowException
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.ThrowException
-    - Name: FallbackValue
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackValue
-    - Name: FallbackTypeDefault
-      Type: $ref
-      Value: fa90b573-f4b0-43c5-be85-f149c99a5ceb.LogStr2.SetMode.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault.FallbackTypeDefault
-  - Name: fa90b573-f4b0-43c5-be85-f149c99a5ceb.Meta
+      Type: $Enum
+      Value: Megumin.Binding.ParseMode:FallbackValue
+  - Name: b85b4565-100b-48e8-a830-a8050b01ca67.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
     - Name: x
       Type: System.Single
-      Value: 177
+      Value: 148
     - Name: y
       Type: System.Single
-      Value: 184
+      Value: 99
     - Name: index
       Type: System.Int32
       Value: 0

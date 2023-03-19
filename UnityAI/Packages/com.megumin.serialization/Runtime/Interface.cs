@@ -27,7 +27,7 @@ namespace Megumin.Serialization
     {
         [Obsolete("",true)]
         T Serialize(object value);
-        //bool TrySerialize(object value, out T destination);
+        bool TrySerialize(object value, out T destination);
         bool TryDeserialize(T source, out object value);
     }
 
