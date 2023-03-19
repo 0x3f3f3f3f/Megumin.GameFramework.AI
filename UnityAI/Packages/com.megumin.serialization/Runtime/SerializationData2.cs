@@ -246,8 +246,7 @@ namespace Megumin.Serialization
             {
                 if (TryDeserializeMember(memberData, out var memberValue))
                 {
-                    var fieldInfo = value.GetType().GetField(memberData.Name);
-                    fieldInfo.SetValue(value, memberValue);
+                    value.TrySetMemberValue(memberData.Name, memberValue);
                 }
             }
 
