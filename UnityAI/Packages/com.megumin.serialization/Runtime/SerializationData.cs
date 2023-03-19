@@ -144,9 +144,9 @@ namespace Megumin.Serialization
             else
             {
                 //这里一定要取值得真实类型，解决多态序列化
-                if (StringFormatter.TryGet(valueActualType, out var formatter))
+                if (StringFormatter.TrySerialize(valueActualType, out var destination))
                 {
-                    Data = formatter.Serialize(value);
+                    Data = destination;
                 }
                 else
                 {

@@ -25,7 +25,9 @@ namespace Megumin.Serialization
     /// <typeparam name="T"></typeparam>
     public interface IFormatter<T>
     {
+        [Obsolete("",true)]
         T Serialize(object value);
+        //bool TrySerialize(object value, out T destination);
         bool TryDeserialize(T source, out object value);
     }
 
@@ -37,6 +39,7 @@ namespace Megumin.Serialization
     /// <typeparam name="V"></typeparam>
     public interface IFormatter<T, V> : IFormatter<T>
     {
+        bool TrySerialize(V value, out T destination);
         bool TryDeserialize(T source, out V value);
     }
 

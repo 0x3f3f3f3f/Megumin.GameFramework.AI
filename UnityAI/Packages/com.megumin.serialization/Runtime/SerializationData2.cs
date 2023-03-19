@@ -169,6 +169,15 @@ namespace Megumin.Serialization
                         ms.Add(basic);
                     }
                 }
+
+                //MemberFilter memberFilter = null;
+                //foreach (var (memberName, memberValue, memberType) in memberFilter.Invoke(value))
+                //{
+                //    if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
+                //    {
+                //        ms.Add(basic);
+                //    }
+                //}
             }
 
             if (ms.Count > 0)
@@ -178,6 +187,19 @@ namespace Megumin.Serialization
             return true;
         }
 
+        /// <summary>
+        /// 序列化哪些成员，增加一个回调函数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public delegate IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
+            MemberFilter(object value);
+
+        public virtual IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
+            GetSerializeMember(object value)
+        {
+            yield break;
+        }
 
         public int CompareTo(ObjectData other)
         {

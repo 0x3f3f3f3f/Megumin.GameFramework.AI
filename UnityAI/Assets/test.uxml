@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.megumin.binding/Editor/Resources/RefVar.uss?fileID=7433441132597879392&amp;guid=dc2d5adf640cd294dac1002826bca693&amp;type=3#RefVar" />
+</ui:UXML>

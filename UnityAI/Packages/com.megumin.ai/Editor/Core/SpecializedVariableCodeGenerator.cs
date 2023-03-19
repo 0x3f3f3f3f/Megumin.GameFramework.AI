@@ -101,7 +101,7 @@ public class VariableCreator_$(type) : VariableCreator
                     }
 
                     var code = template.Replace("$(type)", type)
-                                       .Replace("$(Type)", generator.UpperFirstChar(type));
+                                       .Replace("$(Type)", generator.UpperStartChar(type));
 
                     generator.PushTemplate(code);
                 }

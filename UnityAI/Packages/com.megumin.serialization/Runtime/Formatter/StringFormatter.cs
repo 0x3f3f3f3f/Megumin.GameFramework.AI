@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Megumin.Serialization
 {
-    public class StringFormatter
+    public partial class StringFormatter
     {
         protected static readonly Lazy<Dictionary<string, IFormatter<string>>> lut = new(InitFormaters);
 
@@ -26,17 +26,18 @@ namespace Megumin.Serialization
             return Lut.TryGetValue(type.FullName, out formatter);
         }
 
-        public static bool TryGet(string type, out IFormatter<string> formatter)
+        public static bool TryGet(string typeFullName, out IFormatter<string> formatter)
         {
             formatter = default;
-            if (type == null)
+            if (typeFullName == null)
             {
                 return false;
             }
 
-            return Lut.TryGetValue(type, out formatter);
+            return Lut.TryGetValue(typeFullName, out formatter);
         }
 
+        [Obsolete("", true)]
         public static string Serialize(object instance)
         {
             if (TryGet(instance?.GetType(), out var formatter))
@@ -54,11 +55,13 @@ namespace Megumin.Serialization
                 return true;
             }
 
-            if (TryGet(instance.GetType().FullName, out var formatter))
-            {
-                destination = formatter.Serialize(instance);
-                return true;
-            }
+            //if (TryGet(instance.GetType().FullName, out var formatter))
+            //{
+            //    if (formatter.TrySerialize(instance, out destination))
+            //    {
+            //        return true;
+            //    }
+            //}
 
             destination = null;
             return false;
@@ -77,7 +80,7 @@ namespace Megumin.Serialization
 
         static Dictionary<string, IFormatter<string>> InitFormaters()
         {
-            //https://learn.microsoft.com/zh-cn/dotnet/api/system.type.isprimitive?view=net-8.0
+            //https://learn.microsoft.com/zh-cn/dotnet/api/system.typeFullName.isprimitive?view=net-8.0
             var fs = new Dictionary<string, IFormatter<string>>()
             {
                 { typeof(bool).FullName,new BoolFormatter() },
@@ -119,12 +122,15 @@ namespace Megumin.Serialization
             return fs;
         }
 
+
+
+
         /// <summary>
         /// https://docs.unity3d.com/ScriptReference/JsonUtility.ToJson.html
         /// 基元类型不能使用
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public class UnityJsonFormatter<T> : IFormatter<string>
+        public class UnityJsonFormatter<T> : IFormatter<string, object>
         {
             public string Serialize(object value)
             {
@@ -145,233 +151,11 @@ namespace Megumin.Serialization
 
                 return false;
             }
-        }
 
-        public sealed class BoolFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
+            public bool TrySerialize(object value, out string destination)
             {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (bool.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class ByteFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (byte.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class SByteFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (sbyte.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class CharFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (char.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class ShortFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (short.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class UShortFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (ushort.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class IntFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (int.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class UIntFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (uint.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class LongFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (long.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class ULongFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (ulong.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class FloatFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (float.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
-            }
-        }
-
-        public sealed class DoubleFormatter : IFormatter<string>
-        {
-            public string Serialize(object value)
-            {
-                return value.ToString();
-            }
-
-            public bool TryDeserialize(string source, out object value)
-            {
-                if (double.TryParse(source, out var result))
-                {
-                    value = result;
-                    return true;
-                }
-                value = default;
-                return false;
+                destination = UnityEngine.JsonUtility.ToJson(value);
+                return true;
             }
         }
 

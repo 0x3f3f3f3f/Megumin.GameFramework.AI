@@ -29,7 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)
             {
-                if (item.CurrentAsset == behaviorTreeRunner.BehaviorTreeAsset)
+                if (item.CurrentAsset.AssetObject == behaviorTreeRunner.BehaviorTreeAsset)
                 {
                     if (item.IsDebugMode)
                     {
@@ -89,7 +89,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 foreach (var item in list)
                 {
                     if (item.BehaviorTreeAsset && item.BehaviourTree != null &&
-                        item.BehaviorTreeAsset == CurrentAsset)
+                        item.BehaviorTreeAsset == CurrentAsset.AssetObject)
                     {
                         BeginDebug(item);
                         break;
