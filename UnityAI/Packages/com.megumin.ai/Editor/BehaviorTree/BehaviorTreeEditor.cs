@@ -312,6 +312,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 MySettingPrefs[8].SetValue(evt.newValue);
                 SetSettingValueClass(MySettingPrefs[8]);
             });
+
+            var help = root.Q<ToolbarMenu>("help");
+            help.menu.AppendAction("Samples",
+                a =>
+                {
+
+                }, a => DropdownMenuAction.Status.Normal);
+            help.menu.AppendAction("GitHub",
+                a =>
+                {
+                    System.Diagnostics.Process.Start("https://github.com/0x3f3f3f3f/Megumin.GameFramework.AI");
+                }, a => DropdownMenuAction.Status.Normal);
+            help.menu.AppendAction("Feedback",
+                a =>
+                {
+
+                }, a => DropdownMenuAction.Status.Normal);
         }
 
         internal void SetSettingValueClass(UserSetting<bool> setting)

@@ -22,7 +22,7 @@
         <uie:ToolbarSpacer />
         <uie:ToolbarToggle label="Graph Inspector" name="graphInspector" class="topbar-button" style="display: none;" />
         <uie:ToolbarSpacer style="display: none;" />
-        <uie:ToolbarButton text="Help" display-tooltip-when-elided="true" name="help" class="topbar-button" />
+        <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Help" name="help" />
     </uie:Toolbar>
     <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviorTreeView name="behaviorTreeView" class="behaviorTreeView" />
 </ui:UXML>
