@@ -65,7 +65,8 @@ namespace Megumin.Serialization
                                  object value,
                                  Stack<(string name, object value)> needS,
                                  List<UnityObjectData> objRefs,
-                                 Dictionary<object, string> cahce)
+                                 Dictionary<object, string> cahce,
+                                 GetSerializeMembers<object> getSerializeMembers = null)
         {
             Name = objectRefName;
 
@@ -160,24 +161,26 @@ namespace Megumin.Serialization
             }
             else
             {
-                var members = type.GetFields();
-                foreach (var fieldInfo in members)
+                if (getSerializeMembers != null)
                 {
-                    var memberValue = fieldInfo.GetValue(value);
-                    if (TrySerializeMember(fieldInfo.Name, memberValue, fieldInfo.FieldType, out var basic))
+                    foreach (var (memberName, memberValue, memberType) in getSerializeMembers.Invoke(value))
                     {
-                        ms.Add(basic);
+                        if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
+                        {
+                            ms.Add(basic);
+                        }
                     }
                 }
-
-                //MemberFilter memberFilter = null;
-                //foreach (var (memberName, memberValue, memberType) in memberFilter.Invoke(value))
-                //{
-                //    if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
-                //    {
-                //        ms.Add(basic);
-                //    }
-                //}
+                else
+                {
+                    foreach (var (memberName, memberValue, memberType) in value.GetSerializeMembers())
+                    {
+                        if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
+                        {
+                            ms.Add(basic);
+                        }
+                    }
+                }
             }
 
             if (ms.Count > 0)
@@ -251,20 +254,6 @@ namespace Megumin.Serialization
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// 序列化哪些成员，增加一个回调函数
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public delegate IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
-            MemberFilter(object value);
-
-        public virtual IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
-            GetSerializeMember(object value)
-        {
-            yield break;
         }
 
         public int CompareTo(ObjectData other)
