@@ -29,13 +29,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         static List<MySetting<bool>> MySettingPrefs = new()
         {
-            new MySetting<bool>("FloatingTip", true, SettingsScope.User),
+            new MySetting<bool>("TODO", false, SettingsScope.User),
             new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
             new MySetting<bool>("NodeIcon", true, SettingsScope.User),
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
             new MySetting<bool>("ToolTip", true, SettingsScope.User),
             new MySetting<bool>("MiniMap", false, SettingsScope.User),
-            new MySetting<bool>("TODO", false, SettingsScope.User),
+            new MySetting<bool>("FloatingTip", true, SettingsScope.User),
+            new MySetting<bool>("Blackboard", true, SettingsScope.User),
+            new MySetting<bool>("GraphInspector", false, SettingsScope.User),
             //new MySetting<bool>("RingGraph", false, SettingsScope.User),
             //new MySetting<bool>("DiamondGraph", false, SettingsScope.User),
         };
@@ -51,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             get
             {
-                return MySettingPrefs[6].value ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Hidden;
+                return MySettingPrefs[0].value ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Hidden;
             }
         }
 
@@ -261,6 +263,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
+            var edit = root.Q<ToolbarMenu>("edit");
+            edit.menu.AppendAction("Test1", a => { }, a => DropdownMenuAction.Status.Normal);
+            edit.menu.AppendAction("Test2", a => { }, a => DropdownMenuAction.Status.Normal);
+
             var prefs = root.Q<ToolbarMenu>("prefs");
 
             prefs.menu.AppendAction("Reset All Prefs",
@@ -291,33 +297,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 UpdateHasUnsavedChanges();
             };
 
-            var test1 = root.Q<ToolbarButton>("test1");
-            test1.clicked += () =>
+            var blackboardToggle = root.Q<ToolbarToggle>("blackboard");
+            blackboardToggle.value = MySettingPrefs[7].value;
+            blackboardToggle.RegisterValueChangedCallback(evt =>
             {
+                MySettingPrefs[7].SetValue(evt.newValue);
+                SetSettingValueClass(MySettingPrefs[7]);
+            });
 
-            };
-
-            var test2 = root.Q<ToolbarButton>("test2");
-            test2.clicked += () =>
+            var graphInspectorToggle = root.Q<ToolbarToggle>("graphInspector");
+            graphInspectorToggle.value = MySettingPrefs[8].value;
+            graphInspectorToggle.RegisterValueChangedCallback(evt =>
             {
-                
-            };
-
-            var test3 = root.Q<ToolbarButton>("test3");
-            test3.clicked += () =>
-            {
-
-            };
-
-            //var showFloatingTipToggle = root.Q<ToolbarToggle>("showFloatingTip");
-            //showFloatingTipToggle.value = showFloatingTip.value;
-            //TreeView.FloatingTip.Show(showFloatingTip.value);
-
-            //showFloatingTipToggle.RegisterValueChangedCallback(evt =>
-            //{
-            //    showFloatingTip.SetValue(evt.newValue);
-            //    TreeView.FloatingTip.Show(evt.newValue);
-            //});
+                MySettingPrefs[8].SetValue(evt.newValue);
+                SetSettingValueClass(MySettingPrefs[8]);
+            });
         }
 
         internal void SetSettingValueClass(UserSetting<bool> setting)

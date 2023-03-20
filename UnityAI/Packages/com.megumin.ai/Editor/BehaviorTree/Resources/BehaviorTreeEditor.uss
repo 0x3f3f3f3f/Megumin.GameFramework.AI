@@ -62,6 +62,10 @@ BehaviorTreeView .debug {
     display: none;
 }
 
+.disable_Blackboard BehaviorTreeBlackboardView {
+    display: none;
+}
+
 .customTip {
     min-height: 0;
 }
