@@ -221,13 +221,33 @@ namespace Megumin.Serialization
             {
                 try
                 {
-                    //数组和集合创建实例时要附带容量
-                    var count = Member?.Count ?? 0;
                     if (type.IsArray)
                     {
+                        //数组和集合创建实例时要附带容量
+                        var count = Member?.Count ?? 0;
                         value = Activator.CreateInstance(type, new object[] { count });
                         return true;
                     }
+                    //这里不要带容量了，List用Insert方式添加
+                    //else if (type.IsGenericType)
+                    //{
+                    //    //泛型集合
+                    //    if (type.GetGenericTypeDefinition() == typeof(List<>))
+                    //    {
+                    //        //数组和集合创建实例时要附带容量
+                    //        var count = Member?.Count ?? 0;
+                    //        value = Activator.CreateInstance(type, new object[] { count });
+                    //        return true;
+                    //    }
+                    //    else if (type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    //    {
+                    //        //数组和集合创建实例时要附带容量
+                    //        var count = Member?.Count ?? 0;
+                    //        value = Activator.CreateInstance(type, new object[] { count });
+                    //        return true;
+                    //    }
+                    //}
+
                     value = Activator.CreateInstance(type);
                     return true;
                 }
@@ -277,6 +297,17 @@ namespace Megumin.Serialization
                 {
                     Debug.LogError($"不支持字典");
                     return false;
+                }
+                else if (value is Array array)
+                {
+                    for (int i = 0; i < Member.Count; i++)
+                    {
+                        var memberData = Member[i];
+                        if (TryDeserializeMember(memberData, out var memberValue))
+                        {
+                            array.SetValue(memberValue, i);
+                        }
+                    }
                 }
                 else if (value is IList list)
                 {
