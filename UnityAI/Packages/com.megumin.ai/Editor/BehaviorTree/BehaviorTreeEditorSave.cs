@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (CurrentAsset == null)
             {
-                CurrentAsset = CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_0>();
+                CurrentAsset = CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_1>();
             }
 
             if (CurrentAsset == null)

@@ -156,42 +156,52 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             cacheRefObj.Add(tree.GUID, tree);
 
             //缓存Unity引用对象
-            foreach (var item in UnityObjectRef)
+            if (UnityObjectRef != null)
             {
-                cacheRefObj.Add(item.Name, item.Ref);
+                foreach (var item in UnityObjectRef)
+                {
+                    cacheRefObj.Add(item.Name, item.Ref);
+                }
             }
 
             //先创建引用实例
 
             //创建参数表实例
             Dictionary<ObjectData, object> variableCache = new();
-            foreach (var item in variables)
+            if (variables != null)
             {
-                if (string.IsNullOrEmpty(item.Name))
+                foreach (var item in variables)
                 {
-                    Debug.LogError($"意外错误，没有引用名字");
-                    continue;
-                }
-                if (item.TryCreateInstance(out var instance))
-                {
-                    cacheRefObj.Add(item.Name, instance);
-                    variableCache.Add(item, instance);
+                    if (string.IsNullOrEmpty(item.Name))
+                    {
+                        Debug.LogError($"意外错误，没有引用名字");
+                        continue;
+                    }
+                    if (item.TryCreateInstance(out var instance))
+                    {
+                        cacheRefObj.Add(item.Name, instance);
+                        variableCache.Add(item, instance);
+                    }
                 }
             }
 
+
             //创建节点引用实例
             Dictionary<ObjectData, object> treeelementCache = new();
-            foreach (var item in treeElements)
+            if (treeElements != null)
             {
-                if (string.IsNullOrEmpty(item.Name))
+                foreach (var item in treeElements)
                 {
-                    Debug.LogError($"意外错误，没有引用名字");
-                    continue;
-                }
-                if (item.TryCreateInstance(out var instance))
-                {
-                    cacheRefObj.Add(item.Name, instance);
-                    treeelementCache.Add(item, instance);
+                    if (string.IsNullOrEmpty(item.Name))
+                    {
+                        Debug.LogError($"意外错误，没有引用名字");
+                        continue;
+                    }
+                    if (item.TryCreateInstance(out var instance))
+                    {
+                        cacheRefObj.Add(item.Name, instance);
+                        treeelementCache.Add(item, instance);
+                    }
                 }
             }
 
