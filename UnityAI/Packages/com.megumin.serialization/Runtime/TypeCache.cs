@@ -713,6 +713,33 @@ namespace Megumin.Serialization
 
             hotType[aliasName] = type;
         }
+
+        /// <summary>
+        /// 用于序列化时缩短名字
+        /// </summary>
+        public static List<string> StripTypeNameList { get; } = new()
+        {
+            ", mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            ", UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            ", Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        };
+
+        /// <summary>
+        /// 缩短类型全名，不影响类型查找和反序列化
+        /// </summary>
+        /// <param name="typeFullName"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 不确定会不会产生类型冲突，谨慎使用
+        /// </remarks>
+        public static string StripTypeName(this string typeFullName)
+        {
+            foreach (var item in StripTypeNameList)
+            {
+                typeFullName = typeFullName.Replace(item, "");
+            }
+            return typeFullName;
+        }
     }
 
     public static partial class TypeCache
