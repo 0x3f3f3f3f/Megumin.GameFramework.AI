@@ -13,7 +13,7 @@ namespace Megumin.Serialization
     /// 通过缓存所有已加载程序集，实现通过类型全名获取类型。
     /// 第一次调用会导致卡顿，在调用前使用多线程初始化，防止阻塞主线程。
     /// </summary>
-    public static class TypeCache
+    public static partial class TypeCache
     {
 
 #if UNITY_5_3_OR_NEWER
@@ -135,6 +135,11 @@ namespace Megumin.Serialization
                     if (TryMakeGenericType(typeFullName, out type))
                     {
                         return true;
+                    }
+
+                    if (typeFullName.EndsWith("[]"))
+                    {
+                        Debug.LogError($"{typeFullName} 没有解析成功");
                     }
 
                     return false;
@@ -552,35 +557,72 @@ namespace Megumin.Serialization
         public static void Test()
         {
             List<int> a = new();
-            TestMake(a);
+            TestParse(a);
 
             Dictionary<int, float> b = new();
-            TestMake(b);
+            TestParse(b);
 
             Dictionary<List<int>, float> c = new();
-            TestMake(c);
+            TestParse(c);
 
             Dictionary<List<int>, List<string>> d = new();
-            TestMake(d);
+            TestParse(d);
 
             Dictionary<string, Dictionary<int, string>> e = new();
-            TestMake(e);
+            TestParse(e);
 
             Dictionary<Dictionary<int, string>, float> f = new();
-            TestMake(f);
+            TestParse(f);
 
             Dictionary<Dictionary<int, string>, List<float>> g = new();
-            TestMake(g);
+            TestParse(g);
 
             Dictionary<List<double>, List<Dictionary<List<byte>, List<bool>>>> fuckType = new();
-            TestMake(fuckType);
+            TestParse(fuckType);
+
+            //数组，多维数组
+            int rank = 0;
+            int length = 0;
+            int[] h = new int[3];
+            rank = h.Rank;
+            length = h.Length;
+            TestParse(h);
+
+            GameObject[] i = new GameObject[3];
+            rank = i.Rank;
+            length = i.Length;
+            TestParse(i);
+
+            int[][] j = new int[2][];
+            rank = j.Rank;
+            length = j.Length;
+            TestParse(j);
+
+            int[,] k = new int[4, 2];
+            rank = k.Rank;
+            length = k.Length;
+            TestParse(k);
+
+            int[][,] jaggedArray4 = new int[3][,]
+            {
+                new int[,] { {1,3}, {5,7} },
+                new int[,] { {0,2}, {4,6}, {8,10} },
+                new int[,] { {11,22}, {99,88}, {0,9} }
+            };
+            rank = jaggedArray4.Rank;
+            length = jaggedArray4.Length;
+            TestParse(jaggedArray4);
+
+            Type type = jaggedArray4.GetType();
+            int r = type.GetArrayRank();
+            type.MakeArrayType();
         }
 
-        static void TestMake<T>(T obj = default)
+        static void TestParse<T>(T obj = default)
         {
             var type = typeof(T);
             var fullName = type.FullName;
-            if (TryMakeGenericType(fullName, out var makeType) && type == makeType)
+            if (TryGetType(fullName, out var makeType) && type == makeType)
             {
                 Debug.Log($"测试通过  {fullName}");
             }
@@ -642,6 +684,26 @@ namespace Megumin.Serialization
             }
 
             hotType[aliasName] = type;
+        }
+    }
+
+    public static partial class TypeCache
+    {
+        static readonly Unity.Profiling.ProfilerMarker tryMakeArrayType = new(nameof(TryMakeArrayType));
+
+        /// <summary>
+        /// 制作数组类型，输入一个数组类型全名，输出一个数组类型类型
+        /// </summary>
+        /// <param name="fullName"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool TryMakeArrayType(string fullName, out Type type)
+        {
+            using var profiler = tryMakeArrayType.Auto();
+
+
+            type = null;
+            return false;
         }
     }
 }
