@@ -331,7 +331,7 @@ namespace Megumin.Binding
                 var index = 0;
                 if (refName != null)
                 {
-                    float popupWidth = position.width - EditorGUIUtility.labelWidth;
+                    float popupWidth = position.width - EditorGUIUtility.labelWidth - 2;
                     var buttonPosition = position;
                     buttonPosition.width = popupWidth;
                     buttonPosition.height = 18;
@@ -396,7 +396,11 @@ namespace Megumin.Binding
                     }
                 }
 
-                EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+                if (index != 0)
+                {
+                    EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+                }
+
                 using (new UnityEditor.EditorGUI.DisabledGroupScope(index != 0))
                 {
                     //这里如果是引用的对象，暂时不让在Inspector里修改，对象可能会被多个地方引用

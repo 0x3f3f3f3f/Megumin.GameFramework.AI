@@ -51,6 +51,9 @@ MonoBehaviour:
     - Name: refName
       Type: System.String
       Value: Test2
+    - Name: value
+      Type: System.Int32
+      Value: -10
     - Name: bindingPath
       Type: System.String
       Value: 
@@ -123,9 +126,9 @@ MonoBehaviour:
     - Name: InstanceID
       Type: System.String
       Value: 163e01a6-3bbf-4bf7-9f50-fb7ee5c0b569
-    - Name: ListRefVarInt
+    - Name: TestFuckingGeneric
       Type: $ref
-      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric
     - Name: Sbyte
       Type: System.SByte
       Value: -128
@@ -180,6 +183,9 @@ MonoBehaviour:
     - Name: RefVarString
       Type: $ref
       Value: Test1
+    - Name: ArrayRefVarString
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayRefVarString
     - Name: RefVarListString
       Type: $ref
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListString
@@ -192,6 +198,9 @@ MonoBehaviour:
     - Name: ListBindingVarInt
       Type: $ref
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt
+    - Name: ListRefVarInt
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt
     - Name: GUID
       Type: System.String
       Value: ada6836d-8b37-432e-993e-a739afa3a29c
@@ -204,6 +213,33 @@ MonoBehaviour:
     - Name: 1
       Type: System.Single
       Value: -4.86
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayRefVarString
+    Type: Megumin.Binding.RefVar`1[[System.String]][]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayRefVarString.0
+    - Name: 1
+      Type: $ref
+      Value: Test1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayRefVarString.0
+    Type: Megumin.Binding.RefVar`1[[System.String]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: System.String
+      Value: Hello123
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.GameObject/tag
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject
     Type: UnityEngine.ScriptableObject[]
     Member:
@@ -311,7 +347,7 @@ MonoBehaviour:
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.0
     - Name: 1
       Type: $ref
-      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.1
+      Value: Test2
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.0
     Type: Megumin.Binding.RefVar`1[[System.Int32]]
     Member:
@@ -320,34 +356,10 @@ MonoBehaviour:
       Value: 
     - Name: value
       Type: System.Int32
-      Value: -28
+      Value: -53
     - Name: bindingPath
       Type: System.String
-      Value: UnityEngine.Transform/hierarchyCount
-    - Name: GetMode
-      Type: Megumin.Binding.ParseMode
-      Value: Megumin.Binding.ParseMode:None
-    - Name: SetMode
-      Type: Megumin.Binding.ParseMode
-      Value: Megumin.Binding.ParseMode:None
-  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.1
-    Type: Megumin.Binding.RefVar`1[[System.Int32]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: value
-      Type: System.Int32
-      Value: 70
-    - Name: bindingPath
-      Type: System.String
-      Value: UnityEngine.UI.Image/depth
-    - Name: GetMode
-      Type: Megumin.Binding.ParseMode
-      Value: Megumin.Binding.ParseMode:None
-    - Name: SetMode
-      Type: Megumin.Binding.ParseMode
-      Value: Megumin.Binding.ParseMode:None
+      Value: UnityEngine.GameObject/layer
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListString
     Type: System.Collections.Generic.List`1[[System.String]]
     Member:
@@ -445,6 +457,70 @@ MonoBehaviour:
     - Name: 2
       Type: System.String
       Value: C
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric
+    Type: System.Collections.Generic.List`1[[Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String]]]],
+      Megumin.Binding]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.0
+    Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String]]]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.0.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.0.value
+    Type: System.Collections.Generic.List`1[[System.String]]
+    Member:
+    - Name: 0
+      Type: System.String
+      Value: Hello1
+    - Name: 1
+      Type: System.String
+      Value: Hello2
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.1
+    Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String]]]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.1.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric.1.value
+    Type: System.Collections.Generic.List`1[[System.String]]
+    Member:
+    - Name: 0
+      Type: System.String
+      Value: Hello3
+    - Name: 1
+      Type: System.String
+      Value: Hello4
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject
     Type: Megumin.Binding.Variable`1[[UnityEngine.GameObject]]
     Member:

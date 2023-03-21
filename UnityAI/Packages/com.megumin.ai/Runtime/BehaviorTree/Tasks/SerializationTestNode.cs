@@ -12,16 +12,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
-        public List<RefVar<int>> ListRefVarInt;
-
-        //多级泛型嵌套
-        //public List<RefVar<List<string>>> TestFuckingGeneric;
-        //public Log Log; //隐藏在面板上的显示？还是下拉菜单 还是MMData3<Log>
-        //[SerializeReference]
-        //public TestVariable ExposeString;// = new ParamVariable_string() { RefName = "test1",Value ="hello",BindingPath = "GameObject/tag" };
-        //public ParamVariable<GameObject> ExposeGameObject;
-
-
         [Space]
         public sbyte Sbyte;
         public float Float = 3f;
@@ -53,12 +43,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Variable<GameObject> VariableGameObject;
         public BindingVar<string> BindingVarString;
         public RefVar<string> RefVarString;
+        public RefVar<string>[] ArrayRefVarString;
         public RefVar<List<string>> RefVarListString;
         public RefVar<List<GameObject>> RefVarListGameObject;
         public List<Variable<int>> ListVariableInt;
         public List<BindingVar<int>> ListBindingVarInt;
-
-
+        public List<RefVar<int>> ListRefVarInt;
+        //多级泛型嵌套
+        public List<RefVar<List<string>>> TestFuckingGeneric;
 
         [Serializable]
         public class MyClass
