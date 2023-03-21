@@ -16,7 +16,7 @@ namespace Megumin.Serialization
     public delegate IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
         GetSerializeMembers<in T>(T value);
 
-    internal static class Extension_9E4697883E4048E9B612E58CDAB01B77
+    public static class Extension_9E4697883E4048E9B612E58CDAB01B77
     {
         /// <summary>
         /// 使用反射对实例的一个成员赋值
@@ -28,12 +28,13 @@ namespace Megumin.Serialization
         /// <returns></returns>
         public static bool TrySetMemberValue<T>(this T instance, string memberName, object value)
         {
-            var member = instance?.GetType().GetMember(memberName)?.FirstOrDefault();
+            const BindingFlags BindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            var member = instance?.GetType().GetMember(memberName, BindingAttr)?.FirstOrDefault();
             try
             {
                 if (member is FieldInfo fieldInfo)
                 {
-                    if (value != null && fieldInfo.FieldType.IsAssignableFrom(value.GetType()))
+                    if (value != null && !fieldInfo.FieldType.IsAssignableFrom(value.GetType()))
                     {
                         //参数类型不普配
                         Debug.LogError("参数类型不普配");
@@ -42,7 +43,7 @@ namespace Megumin.Serialization
                 }
                 else if (member is PropertyInfo propertyInfo)
                 {
-                    if (value != null && propertyInfo.PropertyType.IsAssignableFrom(value.GetType()))
+                    if (value != null && !propertyInfo.PropertyType.IsAssignableFrom(value.GetType()))
                     {
                         //参数类型不普配
                         Debug.LogError("参数类型不普配");
@@ -143,13 +144,16 @@ namespace Megumin.Serialization
 
         public static bool CanSerializable(this FieldInfo field)
         {
-            if (field.IsPublic == false)
+            var hasSerializeField = field.IsDefined(typeof(SerializeField), true);
+            if (hasSerializeField)
             {
-                var hasSerializeField = field.IsDefined(typeof(SerializeField), true);
-                if (hasSerializeField == false)
-                {
-                    return false;
-                }
+                return true;
+            }
+
+            var hasSerializeReference = field.IsDefined(typeof(SerializeReference), true);
+            if (hasSerializeReference)
+            {
+                return true;
             }
 
             var hasNonSerialized = field.IsDefined(typeof(NonSerializedAttribute), true);

@@ -245,11 +245,14 @@ namespace Megumin.Serialization
                 }
             }
 
-            foreach (var memberData in Member)
+            if (Member != null)
             {
-                if (TryDeserializeMember(memberData, out var memberValue))
+                foreach (var memberData in Member)
                 {
-                    value.TrySetMemberValue(memberData.Name, memberValue);
+                    if (TryDeserializeMember(memberData, out var memberValue))
+                    {
+                        value.TrySetMemberValue(memberData.Name, memberValue);
+                    }
                 }
             }
 
