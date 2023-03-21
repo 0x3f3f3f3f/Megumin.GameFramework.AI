@@ -36,9 +36,9 @@ namespace Megumin.Serialization
 
         public bool TrySerialize(string objectRefName,
                                  object value,
-                                 Stack<(string name, object value)> needS,
+                                 Stack<(string name, object value)> needSerialization,
                                  List<UnityObjectData> objRefs,
-                                 Dictionary<object, string> cahce,
+                                 Dictionary<object, string> cacheRef,
                                  GetSerializeMembers<object> getSerializeMembers = null)
         {
             Name = objectRefName;
@@ -88,11 +88,11 @@ namespace Megumin.Serialization
                     else
                     {
                         //当作引用序列化
-                        if (!cahce.TryGetValue(memberValue, out var refName))
+                        if (!cacheRef.TryGetValue(memberValue, out var refName))
                         {
                             //当前还没有缓存这个引用对象
                             refName = $"{objectRefName}.{memberName}";
-                            needS.Push((refName, memberValue));
+                            needSerialization.Push((refName, memberValue));
                         }
 
                         basic.Type = RefType;

@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         [field: SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
-        public BehaviorTreeAsset_1_0_0 BehaviorTreeAsset;
+        public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
         public int Order = 0;
         public bool AutoEnable = true;

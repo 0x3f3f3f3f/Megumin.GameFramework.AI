@@ -33,43 +33,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             GUID = tree.GUID;
             StartNodeGUID = tree.StartNode?.GUID;
 
-            Dictionary<object, string> cahce = new();
-            Stack<(string name, object value)> needS = new();
+            Dictionary<object, string> cacheRef = new();
+            Stack<(string name, object value)> needSerialization = new();
             List<UnityObjectData> objRefs = new();
 
             //缓存所有已知引用对象
-            cahce.Add(tree, tree.GUID);
+            cacheRef.Add(tree, tree.GUID);
 
             foreach (var variable in tree.Variable.Table)
             {
-                cahce.Add(variable, variable.RefName);
-                needS.Push((variable.RefName, variable));
+                cacheRef.Add(variable, variable.RefName);
+                needSerialization.Push((variable.RefName, variable));
             }
 
             foreach (var node in tree.AllNodes)
             {
-                cahce.Add(node, node.GUID);
+                cacheRef.Add(node, node.GUID);
 
                 foreach (var decorator in node.Decorators)
                 {
-                    cahce.Add(decorator, decorator.GUID);
+                    cacheRef.Add(decorator, decorator.GUID);
                 }
             }
 
             {
                 //序列化参数表
                 List<ObjectData> variableDatas = new();
-                while (needS.Count > 0)
+                while (needSerialization.Count > 0)
                 {
-                    if (variableDatas.Count > 100)
-                    {
-                        Debug.LogError($"Too Large!!");
-                        break;
-                    }
-
-                    var item = needS.Pop();
+                    var item = needSerialization.Pop();
                     ObjectData data = new ObjectData();
-                    if (data.TrySerialize(item.name, item.value, needS, objRefs, cahce, GetSerializeMembers))
+                    if (data.TrySerialize(item.name, item.value, needSerialization, objRefs, cacheRef, GetSerializeMembers))
                     {
                         variableDatas.Add(data);
                     }
@@ -84,25 +78,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 List<ObjectData> treeElementData = new();
                 foreach (var node in tree.AllNodes)
                 {
-                    needS.Push((node.GUID, node));
+                    needSerialization.Push((node.GUID, node));
 
                     foreach (var decorator in node.Decorators)
                     {
-                        needS.Push((decorator.GUID, decorator));
+                        needSerialization.Push((decorator.GUID, decorator));
                     }
                 }
 
-                while (needS.Count > 0)
+                while (needSerialization.Count > 0)
                 {
-                    if (treeElementData.Count > 100)
-                    {
-                        Debug.LogError($"Too Large!!");
-                        break;
-                    }
-
-                    var item = needS.Pop();
+                    var item = needSerialization.Pop();
                     ObjectData data = new ObjectData();
-                    if (data.TrySerialize(item.name, item.value, needS, objRefs, cahce, GetSerializeMembers))
+                    if (data.TrySerialize(item.name, item.value, needSerialization, objRefs, cacheRef, GetSerializeMembers))
                     {
                         treeElementData.Add(data);
                     }
