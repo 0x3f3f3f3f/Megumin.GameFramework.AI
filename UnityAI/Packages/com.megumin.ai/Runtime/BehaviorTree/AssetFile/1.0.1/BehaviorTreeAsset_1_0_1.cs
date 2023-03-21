@@ -11,7 +11,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
     {
         public string GUID;
-        public string StartNodeGUID = "";
+        [field: SerializeField]
+        public string StartNodeGUID { get; set; } = "";
         public bool UseSerializeReferenceGeneric = false;
         public List<UnityObjectData> UnityObjectRef;
         public List<ObjectData> variables;
@@ -149,9 +150,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             BehaviorTree tree = new();
             tree.GUID = GUID;
+            tree.InstanceGUID = Guid.NewGuid().ToString();
             if (!Guid.TryParse(tree.GUID, out var _))
             {
                 tree.GUID = Guid.NewGuid().ToString();
+            }
+
+            if (UseSerializeReferenceGeneric)
+            {
+                //多态序列化 + 泛型
+                //
+                Debug.Log("至少需要unity2023");
+                return tree;
             }
 
             Dictionary<string, object> cacheRefObj = new();
@@ -231,6 +241,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
+            tree.Asset = this;
             return tree;
         }
     }

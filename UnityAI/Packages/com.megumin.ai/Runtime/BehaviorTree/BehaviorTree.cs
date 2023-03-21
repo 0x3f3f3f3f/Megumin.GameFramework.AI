@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
-        public BehaviorTreeAsset_1_0_0 Asset { get; internal set; }
+        public IBehaviorTreeAsset Asset { get; internal set; }
 
         [Space]
         [SerializeReference]

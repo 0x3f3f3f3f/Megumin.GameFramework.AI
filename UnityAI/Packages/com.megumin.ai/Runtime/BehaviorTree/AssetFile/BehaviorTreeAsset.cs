@@ -18,6 +18,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <returns></returns>
         UnityEngine.Object AssetObject { get; }
+        string StartNodeGUID { get; set; }
+
         BehaviorTree Instantiate(bool instanceMeta = true);
         bool SaveTree(BehaviorTree tree);
     }

@@ -16,7 +16,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool UseSerializeReferenceGeneric = false;
         public string test = "行为树SO资产";
         public string Comment = "load2";
-        public string StartNodeGUID = "";
+        [field: SerializeField]
+        public string StartNodeGUID { get; set; } = "";
 
         public List<VariableSerializationData> VariableTable = new();
         public List<NodeAsset> Nodes = new();
