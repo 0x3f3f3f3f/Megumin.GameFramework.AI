@@ -10,10 +10,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
     {
+        public string GUID;
+        public string StartNodeGUID = "";
+        public bool UseSerializeReferenceGeneric = false;
         public List<UnityObjectData> UnityObjectRef;
         public List<ObjectData> variables;
         public List<ObjectData> treeElements;
-        public string GUID;
+
 
         public bool SaveTree(BehaviorTree tree)
         {
@@ -27,6 +30,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 tree.GUID = Guid.NewGuid().ToString();
             }
             GUID = tree.GUID;
+            StartNodeGUID = tree.StartNode?.GUID;
 
             Dictionary<object, string> cahce = new();
             Stack<(string name, object value)> needS = new();
@@ -214,6 +218,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (item.Value is BTNode node)
                     {
                         tree.AddNode(node);
+                        if (node.GUID == StartNodeGUID)
+                        {
+                            tree.StartNode = node;
+                        }
                     }
 
                     if (item.Value is TreeElement element)
