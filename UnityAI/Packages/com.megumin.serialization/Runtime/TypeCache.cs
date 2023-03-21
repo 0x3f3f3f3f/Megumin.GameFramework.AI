@@ -137,9 +137,9 @@ namespace Megumin.Serialization
                         return true;
                     }
 
-                    if (typeFullName.EndsWith("[]"))
+                    if (TryMakeArrayType(typeFullName, out type))
                     {
-                        Debug.LogError($"{typeFullName} 没有解析成功");
+                        return true;
                     }
 
                     return false;
@@ -593,7 +593,7 @@ namespace Megumin.Serialization
             length = i.Length;
             TestParse(i);
 
-            int[][] j = new int[2][];
+            List<int>[] j = new List<int>[3];
             rank = j.Rank;
             length = j.Length;
             TestParse(j);
@@ -602,6 +602,17 @@ namespace Megumin.Serialization
             rank = k.Rank;
             length = k.Length;
             TestParse(k);
+
+            int[,,,] l = new int[4, 2, 3, 5];
+            rank = l.Rank;
+            length = l.Length;
+            TestParse(l);
+
+
+            int[][] m = new int[2][];
+            rank = m.Rank;
+            length = m.Length;
+            TestParse(m);
 
             int[][,] jaggedArray4 = new int[3][,]
             {
@@ -612,10 +623,6 @@ namespace Megumin.Serialization
             rank = jaggedArray4.Rank;
             length = jaggedArray4.Length;
             TestParse(jaggedArray4);
-
-            Type type = jaggedArray4.GetType();
-            int r = type.GetArrayRank();
-            type.MakeArrayType();
         }
 
         static void TestParse<T>(T obj = default)
@@ -689,6 +696,9 @@ namespace Megumin.Serialization
 
     public static partial class TypeCache
     {
+        public static readonly Regex ArrayRegex
+            = new(@"^(?<element>.*?)\[(?<rank>,*)\]");
+
         static readonly Unity.Profiling.ProfilerMarker tryMakeArrayType = new(nameof(TryMakeArrayType));
 
         /// <summary>
@@ -697,10 +707,37 @@ namespace Megumin.Serialization
         /// <param name="fullName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
+        /// <remarks>
+        /// 无法创建交错数组，没找到对应API
+        /// </remarks>
         public static bool TryMakeArrayType(string fullName, out Type type)
         {
             using var profiler = tryMakeArrayType.Auto();
 
+            // 使用 ArrayRegex 对象匹配输入字符串
+            Match match = ArrayRegex.Match(fullName);
+            if (match.Success)
+            {
+                var elementTypeName = match.Groups["element"].Value;
+                var rank = match.Groups["rank"].Value.Length + 1;
+
+                if (TryGetType(elementTypeName, out var elementType))
+                {
+                    if (rank > 1)
+                    {
+                        type = elementType.MakeArrayType(rank);
+                        hotType[fullName] = type;
+                        return true;
+                    }
+                    else if (rank >= 0)
+                    {
+                        //elementType.MakeArrayType(1); 的结果与预期不同 返回int[*],不知道为什么多个*号
+                        type = elementType.MakeArrayType();
+                        hotType[fullName] = type;
+                        return true;
+                    }
+                }
+            }
 
             type = null;
             return false;
