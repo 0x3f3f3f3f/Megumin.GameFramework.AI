@@ -341,6 +341,8 @@ namespace Megumin.Serialization
 
         /// <summary>
         /// 用于匹配非嵌套的特化泛型类型，或者嵌套特化泛型的最内层
+        /// <para/>末尾的<![CDATA[(?!\[,*\])]]>是一个 零宽负向先行断言，排除泛型数组，不能以数组[]或者[,]结尾。
+        /// https://www.runoob.com/w3cnote/reg-lookahead-lookbehind.html
         /// </summary>
         /// <remarks>
         /// 原理是泛型部分不能含有方括号，特化部分不能含有`，以此来匹配最内层泛型
@@ -350,7 +352,7 @@ namespace Megumin.Serialization
         /// 循环向外层测试，直到不能匹配
         /// </remarks>
         public static readonly Regex NonNestedSpecializedGenericTypeRegex
-            = new(@"(?<generic>[^\[\]]*?`\d+)\[(?<specialized>[^`]*?\])\]");
+            = new(@"(?<generic>[^\[\]]+?`\d+)\[(?<specialized>[^`]{2,}?\])\](?!\[,*\])");
 
         /// <summary>
         /// 用于匹配泛型类型全名和方括号内的内容
@@ -360,7 +362,7 @@ namespace Megumin.Serialization
         /// <summary>
         /// 用于匹配方括号内的每个子串
         /// </summary>
-        public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[]+(?=[,\]])");
+        public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[\]]+(?=[,\]])");
 
         /// <summary>
         /// 用于匹配方括号内的每个子串
