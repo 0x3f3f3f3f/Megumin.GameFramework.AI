@@ -12,8 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
-        public List<Variable<int>> ListVariableInt;
-        //public List<RefVar<int>> ListRefVarInt;
+        public List<RefVar<int>> ListRefVarInt;
 
         //多级泛型嵌套
         //public List<RefVar<List<string>>> TestFuckingGeneric;
@@ -56,8 +55,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar<string> RefVarString;
         public RefVar<List<string>> RefVarListString;
         public RefVar<List<GameObject>> RefVarListGameObject;
-
-
+        public List<Variable<int>> ListVariableInt;
+        public List<BindingVar<int>> ListBindingVarInt;
 
 
 

@@ -9,334 +9,451 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e71738a9993da41a37d76210d86152, type: 3}
+  m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: BTtree 1
   m_EditorClassIdentifier: 
-  Version: 1.0.0
+  GUID: e234a291-7fe0-4707-947f-2d732f70a480
+  <StartNodeGUID>k__BackingField: 06fc2185-9850-45e4-b76e-a200613a9391
   UseSerializeReferenceGeneric: 0
-  test: "\u884C\u4E3A\u6811SO\u8D44\u4EA7"
-  Comment: load2
-  StartNodeGUID: 06fc2185-9850-45e4-b76e-a200613a9391
-  VariableTable:
+  UnityObjectRef:
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.GameObject
+    Ref: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ScriptableObject
+    Ref: {fileID: 0}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject.value.0
+    Ref: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject.value
+    Ref: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject.0
+    Ref: {fileID: 1068529831357515114, guid: fdeda3b2ca86b6542a303cbe4f00c3c4, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject.1
+    Ref: {fileID: 4413694071827464959, guid: b38883e90def0f047b5072ccf0930af0, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject.0
+    Ref: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914, type: 3}
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject.1
+    Ref: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
+  variables:
   - Name: Test1
-    TypeName: Megumin.GameFramework.AI.RefVariable_string
-    Path: 
-    fallbackData:
-      Name: fallbackValue
-      TypeName: System.String
-      Data: hello
-      RefObject: {fileID: 0}
-      DataType: 65
-      Collection: []
+    Type: Megumin.GameFramework.AI.RefVariable_string
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: Test1
+    - Name: value
+      Type: System.String
+      Value: hello
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   - Name: Test2
-    TypeName: Megumin.GameFramework.AI.RefVariable_int
-    Path: 
-    fallbackData:
-      Name: fallbackValue
-      TypeName: System.Int32
-      Data: 0
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
-  Nodes:
-  - StringCallbackMemberData: []
-    MMdata: []
-    TypeName: Megumin.GameFramework.AI.BehaviorTree.Repeater
-    GUID: 06fc2185-9850-45e4-b76e-a200613a9391
-    Meta:
-      x: 247.1501
-      y: 101.06252
-      index: 0
-      Name: 
-      FriendlyName: 
-      Description: 
-      FriendlyDescription: 
-      Comment: 
-      IsStartNode: 1
-    ChildNodes:
-    - ada6836d-8b37-432e-993e-a739afa3a29c
-    Decorators: []
-    MemberData: []
-    CallbackMemberData: []
-  - StringCallbackMemberData: []
-    MMdata:
-    - MemberName: VariableString
-      RefName: 
-      BindingPath: 
-      TypeName: Megumin.Binding.Variable`1[[System.String, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: System.String
-        Data: AA
-        RefObject: {fileID: 0}
-        DataType: 65
-        Collection: []
-    - MemberName: VariableGameObject
-      RefName: 
-      BindingPath: 
-      TypeName: Megumin.Binding.Variable`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: UnityEngine.GameObject
-        Data: 
-        RefObject: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
-        DataType: 257
-        Collection: []
-    - MemberName: BindingVarString
-      RefName: 
-      BindingPath: UnityEngine.Transform/name
-      TypeName: Megumin.Binding.BindingVar`1[[System.String, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: System.String
-        Data: SADDAS
-        RefObject: {fileID: 0}
-        DataType: 65
-        Collection: []
-    - MemberName: RefVarString
-      RefName: Test1
-      BindingPath: 
-      TypeName: Megumin.GameFramework.AI.RefVariable_string
-      fallbackData:
-        Name: 
-        TypeName: 
-        Data: 
-        RefObject: {fileID: 0}
-        DataType: 0
-        Collection: []
-    - MemberName: RefVarListString
-      RefName: 
-      BindingPath: 
-      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
-          Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-        Data: 
-        RefObject: {fileID: 0}
-        DataType: 262145
-        Collection:
-        - Name: Element0
-          TypeName: System.String
-          Data: A
-          RefObject: {fileID: 0}
-          DataType: 65
-        - Name: Element1
-          TypeName: System.String
-          Data: B
-          RefObject: {fileID: 0}
-          DataType: 65
-        - Name: Element2
-          TypeName: System.String
-          Data: C
-          RefObject: {fileID: 0}
-          DataType: 65
-    - MemberName: RefVarListGameObject
-      RefName: 
-      BindingPath: 
-      TypeName: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      fallbackData:
-        Name: fallbackValue
-        TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-        Data: 
-        RefObject: {fileID: 0}
-        DataType: 262145
-        Collection:
-        - Name: Element0
-          TypeName: UnityEngine.GameObject
-          Data: 
-          RefObject: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
-          DataType: 257
-    TypeName: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
-    GUID: ada6836d-8b37-432e-993e-a739afa3a29c
-    Meta:
-      x: 193
-      y: 261
-      index: 0
-      Name: 
-      FriendlyName: 
-      Description: 
-      FriendlyDescription: 
-      Comment: 
-      IsStartNode: 0
-    ChildNodes: []
-    Decorators: []
-    MemberData:
-    - Name: ListVariableInt
-      TypeName: System.Collections.Generic.List`1[[Megumin.Binding.Variable`1[[System.Int32,
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
-        Megumin.Binding, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 262145
-      Collection:
-      - Name: Element0
-        TypeName: System.Int32
-        Data: 77
-        RefObject: {fileID: 0}
-        DataType: 2048
-      - Name: Element1
-        TypeName: System.Int32
-        Data: 230
-        RefObject: {fileID: 0}
-        DataType: 2048
+    Type: Megumin.GameFramework.AI.RefVariable_int
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: Test2
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  treeElements:
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391
+    Type: Megumin.GameFramework.AI.BehaviorTree.Repeater
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: 06fc2185-9850-45e4-b76e-a200613a9391.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: 06fc2185-9850-45e4-b76e-a200613a9391.Decorators
+    - Name: InstanceID
+      Type: System.String
+      Value: 86f9214b-4392-4f24-abdc-51012d14603e
+    - Name: children
+      Type: $ref
+      Value: 06fc2185-9850-45e4-b76e-a200613a9391.children
+    - Name: GUID
+      Type: System.String
+      Value: 06fc2185-9850-45e4-b76e-a200613a9391
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.children
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+      Megumin.GameFramework.AI]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 247.1501
+    - Name: y
+      Type: System.Single
+      Value: 101.0625
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
+    - Name: IsStartNode
+      Type: System.Boolean
+      Value: True
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c
+    Type: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.Decorators
+    - Name: InstanceID
+      Type: System.String
+      Value: 163e01a6-3bbf-4bf7-9f50-fb7ee5c0b569
+    - Name: ListRefVarInt
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt
     - Name: Sbyte
-      TypeName: System.SByte
-      Data: -128
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: System.SByte
+      Value: -128
     - Name: Float
-      TypeName: System.Single
-      Data: 6.45
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: System.Single
+      Value: 6.45
     - Name: DateTimeOffset
-      TypeName: System.DateTimeOffset
-      Data: 133228359203156070
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: System.DateTimeOffset
+      Value: 133228359203156070
     - Name: TestVector2
-      TypeName: UnityEngine.Vector2
-      Data: '{"x":2.4600000381469728,"y":3.9100000858306886}'
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: UnityEngine.Vector2
+      Value: '{"x":2.4600000381469728,"y":3.9100000858306886}'
     - Name: GameObject
-      TypeName: UnityEngine.GameObject
-      Data: 
-      RefObject: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
-        type: 3}
-      DataType: 257
-      Collection: []
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.GameObject
     - Name: ScriptableObject
-      TypeName: Megumin.GameFramework.AI.BehaviorTree.BehaviorTreeAsset
-      Data: 
-      RefObject: {fileID: 11400000}
-      DataType: 257
-      Collection: []
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ScriptableObject
     - Name: ListInt
-      TypeName: System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 262145
-      Collection:
-      - Name: Element0
-        TypeName: System.Int32
-        Data: 66
-        RefObject: {fileID: 0}
-        DataType: 0
-      - Name: Element1
-        TypeName: System.Int32
-        Data: -48
-        RefObject: {fileID: 0}
-        DataType: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListInt
     - Name: ListString
-      TypeName: System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 262145
-      Collection:
-      - Name: Element0
-        TypeName: System.String
-        Data: AAA
-        RefObject: {fileID: 0}
-        DataType: 65
-      - Name: Element1
-        TypeName: System.String
-        Data: bbb
-        RefObject: {fileID: 0}
-        DataType: 65
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListString
     - Name: ListGameObject
-      TypeName: System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 262145
-      Collection:
-      - Name: Element0
-        TypeName: UnityEngine.GameObject
-        Data: 
-        RefObject: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914,
-          type: 3}
-        DataType: 257
-      - Name: Element1
-        TypeName: UnityEngine.GameObject
-        Data: 
-        RefObject: {fileID: 166880, guid: 391be5df5ef62f345bb76a1051c04da7, type: 3}
-        DataType: 257
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject
     - Name: ArrayFloat
-      TypeName: System.Single[]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 131073
-      Collection:
-      - Name: Element0
-        TypeName: System.Single
-        Data: 1.05
-        RefObject: {fileID: 0}
-        DataType: 0
-      - Name: Element1
-        TypeName: System.Single
-        Data: -4.86
-        RefObject: {fileID: 0}
-        DataType: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayFloat
     - Name: ArrayString
-      TypeName: System.String[]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 131073
-      Collection:
-      - Name: Element0
-        TypeName: System.String
-        Data: CCC
-        RefObject: {fileID: 0}
-        DataType: 65
-      - Name: Element1
-        TypeName: System.String
-        Data: ddd
-        RefObject: {fileID: 0}
-        DataType: 65
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayString
     - Name: ArrayScriptableObject
-      TypeName: UnityEngine.ScriptableObject[]
-      Data: 
-      RefObject: {fileID: 0}
-      DataType: 131073
-      Collection:
-      - Name: Element0
-        TypeName: UnityEngine.UIElements.StyleSheet
-        Data: 
-        RefObject: {fileID: 1068529831357515114, guid: fdeda3b2ca86b6542a303cbe4f00c3c4,
-          type: 3}
-        DataType: 257
-      - Name: Element1
-        TypeName: UnityEngine.UIElements.ThemeStyleSheet
-        Data: 
-        RefObject: {fileID: 4413694071827464959, guid: b38883e90def0f047b5072ccf0930af0,
-          type: 3}
-        DataType: 257
-    CallbackMemberData:
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject
     - Name: CallbackReceiverString
-      TypeName: 
-      Data: "\u6492\u65E6\u53D1\u5C04\u70B9"
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: System.String
+      Value: "\u6492\u65E6\u53D1\u5C04\u70B9"
     - Name: CallbackReceiverMyClass
-      TypeName: 
-      Data: -40|103
-      RefObject: {fileID: 0}
-      DataType: 0
-      Collection: []
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.CallbackReceiverMyClass
+    - Name: VariableString
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.VariableString
+    - Name: VariableGameObject
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject
+    - Name: BindingVarString
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.BindingVarString
+    - Name: RefVarString
+      Type: $ref
+      Value: Test1
+    - Name: RefVarListString
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListString
+    - Name: RefVarListGameObject
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject
+    - Name: ListVariableInt
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt
+    - Name: ListBindingVarInt
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt
+    - Name: GUID
+      Type: System.String
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayFloat
+    Type: System.Single[]
+    Member:
+    - Name: 0
+      Type: System.Single
+      Value: 1.05
+    - Name: 1
+      Type: System.Single
+      Value: -4.86
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject
+    Type: UnityEngine.ScriptableObject[]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayScriptableObject.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayString
+    Type: System.String[]
+    Member:
+    - Name: 0
+      Type: System.String
+      Value: CCC
+    - Name: 1
+      Type: System.String
+      Value: ddd
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.BindingVarString
+    Type: Megumin.Binding.BindingVar`1[[System.String]]
+    Member:
+    - Name: value
+      Type: System.String
+      Value: SADDAS
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.Transform/name
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.CallbackReceiverMyClass
+    Type: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode+MyClass
+    Member:
+    - Name: a
+      Type: System.Int32
+      Value: -40
+    - Name: b
+      Type: System.Int32
+      Value: 103
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt
+    Type: System.Collections.Generic.List`1[[Megumin.Binding.BindingVar`1[[System.Int32]],
+      Megumin.Binding]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt.0
+    Type: Megumin.Binding.BindingVar`1[[System.Int32]]
+    Member:
+    - Name: value
+      Type: System.Int32
+      Value: 111
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.Transform/childCount
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListBindingVarInt.1
+    Type: Megumin.Binding.BindingVar`1[[System.Int32]]
+    Member:
+    - Name: value
+      Type: System.Int32
+      Value: -22
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.GameObject/layer
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject
+    Type: System.Collections.Generic.List`1[[UnityEngine.GameObject]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListGameObject.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListInt
+    Type: System.Collections.Generic.List`1[[System.Int32]]
+    Member:
+    - Name: 0
+      Type: System.Int32
+      Value: 66
+    - Name: 1
+      Type: System.Int32
+      Value: -48
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt
+    Type: System.Collections.Generic.List`1[[Megumin.Binding.RefVar`1[[System.Int32]],
+      Megumin.Binding]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.0
+    Type: Megumin.Binding.RefVar`1[[System.Int32]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: System.Int32
+      Value: -28
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.Transform/hierarchyCount
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt.1
+    Type: Megumin.Binding.RefVar`1[[System.Int32]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: System.Int32
+      Value: 70
+    - Name: bindingPath
+      Type: System.String
+      Value: UnityEngine.UI.Image/depth
+    - Name: GetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+    - Name: SetMode
+      Type: Megumin.Binding.ParseMode
+      Value: Megumin.Binding.ParseMode:None
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListString
+    Type: System.Collections.Generic.List`1[[System.String]]
+    Member:
+    - Name: 0
+      Type: System.String
+      Value: AAA
+    - Name: 1
+      Type: System.String
+      Value: bbb
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt
+    Type: System.Collections.Generic.List`1[[Megumin.Binding.Variable`1[[System.Int32]],
+      Megumin.Binding]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt.0
+    - Name: 1
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt.1
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt.0
+    Type: Megumin.Binding.Variable`1[[System.Int32]]
+    Member:
+    - Name: value
+      Type: System.Int32
+      Value: -35
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ListVariableInt.1
+    Type: Megumin.Binding.Variable`1[[System.Int32]]
+    Member:
+    - Name: value
+      Type: System.Int32
+      Value: 35
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 193
+    - Name: y
+      Type: System.Single
+      Value: 261
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject
+    Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject]]]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject.value
+    Type: System.Collections.Generic.List`1[[UnityEngine.GameObject]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject.value.0
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListString
+    Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[System.String]]]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListString.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListString.value
+    Type: System.Collections.Generic.List`1[[System.String]]
+    Member:
+    - Name: 0
+      Type: System.String
+      Value: A
+    - Name: 1
+      Type: System.String
+      Value: B
+    - Name: 2
+      Type: System.String
+      Value: C
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject
+    Type: Megumin.Binding.Variable`1[[UnityEngine.GameObject]]
+    Member:
+    - Name: value
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject.value
+  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.VariableString
+    Type: Megumin.Binding.Variable`1[[System.String]]
+    Member:
+    - Name: value
+      Type: System.String
+      Value: AA
