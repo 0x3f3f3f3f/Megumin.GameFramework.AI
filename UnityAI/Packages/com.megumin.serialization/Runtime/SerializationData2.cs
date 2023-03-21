@@ -166,13 +166,17 @@ namespace Megumin.Serialization
 
                 foreach (var item in list)
                 {
-                    if (TrySerializeMember($"Element{index}", item, memberType, out var basic))
+                    if (TrySerializeMember($"{index}", item, memberType, out var basic))
                     {
                         ms.Add(basic);
                     }
+                    else
+                    {
+                        //无论如何也要保证元素对齐
+                        ms.Add(new BasicData() { Name = $"{index}", Type = NullType });
+                    }
                     index++;
                 }
-                return true;
             }
             else
             {
@@ -217,6 +221,13 @@ namespace Megumin.Serialization
             {
                 try
                 {
+                    //数组和集合创建实例时要附带容量
+                    var count = Member?.Count ?? 0;
+                    if (type.IsArray)
+                    {
+                        value = Activator.CreateInstance(type, new object[] { count });
+                        return true;
+                    }
                     value = Activator.CreateInstance(type);
                     return true;
                 }
@@ -262,11 +273,31 @@ namespace Megumin.Serialization
 
             if (Member != null)
             {
-                foreach (var memberData in Member)
+                if (value is IDictionary dictionary)
                 {
-                    if (TryDeserializeMember(memberData, out var memberValue))
+                    Debug.LogError($"不支持字典");
+                    return false;
+                }
+                else if (value is IList list)
+                {
+                    for (int i = 0; i < Member.Count; i++)
                     {
-                        value.TrySetMemberValue(memberData.Name, memberValue);
+                        var memberData = Member[i];
+                        if (TryDeserializeMember(memberData, out var memberValue))
+                        {
+                            //Todo? 这里会不会导致乱序？
+                            list.Insert(i, memberValue);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var memberData in Member)
+                    {
+                        if (TryDeserializeMember(memberData, out var memberValue))
+                        {
+                            value.TrySetMemberValue(memberData.Name, memberValue);
+                        }
                     }
                 }
             }
