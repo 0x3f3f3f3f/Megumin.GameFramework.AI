@@ -361,8 +361,14 @@ namespace Megumin.Serialization
 
         /// <summary>
         /// 用于匹配方括号内的每个子串
+        /// <para/>前面是[，
+        /// <para/>中间是特化类型名：不为,[]的名字 和 0个或多个[,]可能是数组的方括号串 构成的特化类型名
+        /// <para/>后面是,或]
         /// </summary>
-        public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[\]]+(?=[,\]])");
+        /// <remarks>
+        /// 这里可以匹配交错数组名，但是后续制作泛型是，交错数组仍是无法解析类型的。
+        /// </remarks>
+        public static readonly Regex SpecializedRegex = new(@"(?<=\[)[^,\[\]]+(?:\[,*\])*(?=[,\]])");
 
         /// <summary>
         /// 用于匹配方括号内的每个子串
@@ -625,6 +631,19 @@ namespace Megumin.Serialization
             rank = jaggedArray4.Rank;
             length = jaggedArray4.Length;
             TestParse(jaggedArray4);
+
+            //泛型和数组互相组合
+            List<int[]> genericAndArray1 = new();
+            TestParse(genericAndArray1);
+
+            Dictionary<List<int>, string[]> genericAndArray2 = new();
+            TestParse(genericAndArray2);
+
+            List<int[,,]> genericAndArray3 = new();
+            TestParse(genericAndArray3);
+
+            Dictionary<int[,,], Dictionary<int[], int[,,,,]>> genericAndArray4 = new();
+            TestParse(genericAndArray4);
         }
 
         static void TestParse<T>(T obj = default)
@@ -698,8 +717,11 @@ namespace Megumin.Serialization
 
     public static partial class TypeCache
     {
-        public static readonly Regex ArrayRegex
-            = new(@"^(?<element>.*?)\[(?<rank>,*)\]");
+        /// <summary>
+        /// 用于匹配数组类型。
+        /// 目前故意不支持交错数组。
+        /// </summary>
+        public static readonly Regex ArrayRegex = new(@"^(?<element>.+?)\[(?<rank>,*)\]");
 
         static readonly Unity.Profiling.ProfilerMarker tryMakeArrayType = new(nameof(TryMakeArrayType));
 
@@ -710,7 +732,7 @@ namespace Megumin.Serialization
         /// <param name="type"></param>
         /// <returns></returns>
         /// <remarks>
-        /// 无法创建交错数组，没找到对应API
+        /// 无法创建交错数组，没找到对应API，所以正则故意没有匹配交错数组。
         /// </remarks>
         public static bool TryMakeArrayType(string fullName, out Type type)
         {
