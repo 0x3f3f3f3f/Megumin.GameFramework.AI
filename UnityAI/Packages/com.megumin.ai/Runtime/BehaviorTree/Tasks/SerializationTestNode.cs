@@ -12,6 +12,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
+        [TreeElementRefAttribute]
+        public BTNode NodeRef;
+
         [Space]
         public sbyte Sbyte;
         public float Float = 3f;
