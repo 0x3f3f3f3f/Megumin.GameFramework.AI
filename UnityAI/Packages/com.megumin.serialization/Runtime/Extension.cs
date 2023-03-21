@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -135,6 +136,12 @@ namespace Megumin.Serialization
                     || (memberValue?.Equals(defaultMemberValue) ?? false))
                 {
                     //Debug.Log($"值为初始值或者默认值没必要保存");
+                    continue;
+                }
+
+                if (memberValue is IDictionary)
+                {
+                    //暂时不支持字典
                     continue;
                 }
 

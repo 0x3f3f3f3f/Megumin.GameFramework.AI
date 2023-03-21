@@ -148,7 +148,22 @@ namespace Megumin.Serialization
             else if (value is IList list)
             {
                 var index = 0;
-                var memberType = type.GetGenericArguments()[0];
+                Type memberType = null;
+                if (type.IsArray)
+                {
+                    memberType = type.GetElementType();
+                }
+                else
+                {
+                    memberType = type.GetGenericArguments()?[0];
+                }
+
+                if (memberType == null)
+                {
+                    Debug.LogError($"找不到特化类型");
+                    return false;
+                }
+
                 foreach (var item in list)
                 {
                     if (TrySerializeMember($"Element{index}", item, memberType, out var basic))
