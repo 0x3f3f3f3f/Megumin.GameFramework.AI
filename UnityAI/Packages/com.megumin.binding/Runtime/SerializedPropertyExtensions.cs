@@ -19,6 +19,9 @@ using UnityEngine;
 
 namespace Megumin
 {
+    /// <summary>
+    /// https://gist.github.com/douduck08/6d3e323b538a741466de00c30aa4b61f
+    /// </summary>
     public static class SerializedPropertyExtensions_B4C8CAE8AAFD410981DE4CCC2553F15F
     {
 
@@ -125,7 +128,7 @@ namespace Megumin
                     ((object[])list)[index] = value;
                     return true;
                 }
-                else if (value is IEnumerable)
+                else if (list is IEnumerable)
                 {
                     ((IList)list)[index] = value;
                     return true;
