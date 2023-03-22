@@ -79,6 +79,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         private VisualTreeAsset m_VisualTreeAsset = default;
 
         public BehaviorTreeView TreeView { get; private set; }
+        /// <summary>
+        /// 保存资产引用，切换运行模式和重写编译时，保持打开的窗口不变。
+        /// </summary>
+        public UnityEngine.Object CurrentAsset_AssetObject;
         public IBehaviorTreeAsset CurrentAsset { get; private set; }
 
         [MenuItem("Megumin AI/BehaviorTreeEditor")]
@@ -211,26 +215,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             AllActiveEditor.Add(this);
 
-            if (CurrentAsset != null)
-            {
-                //通常重载时被触发。
-                EditorReloading();
-            }
-
+            EditorReloading();
             UpdateTitle();
         }
 
+        /// <summary>
+        /// 通常重载时被触发。
+        /// </summary>
         private void EditorReloading()
         {
             if (Application.isPlaying)
             {
                 Debug.Log("编辑器运行 导致窗口重载");
-                DebugSearchInstance();
+                
             }
             else
             {
                 Debug.Log("脚本重新编译 导致窗口重载");
+            }
+
+            if (CurrentAsset == null)
+            {
+                SelectTree(CurrentAsset_AssetObject as IBehaviorTreeAsset);
+            }
+            else
+            {
                 SelectTree(CurrentAsset);
+            }
+
+            if (Application.isPlaying)
+            {
+                DebugSearchInstance();
             }
         }
 
@@ -392,7 +407,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             this.LogMethodName();
             this.CurrentAsset = behaviorTreeAsset;
-
+            this.CurrentAsset_AssetObject = behaviorTreeAsset?.AssetObject;
             if (EditorApplication.isPlaying)
             {
                 //debug 模式关联
