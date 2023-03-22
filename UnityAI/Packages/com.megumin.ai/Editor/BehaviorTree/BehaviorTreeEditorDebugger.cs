@@ -71,6 +71,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var so = TreeView.CreateSOWrapperIfNull();
             so.Tree = behaviorTreeRunner.BehaviourTree;
             TreeView.ReloadView(true);
+            TreeView.DelayFrameAll();
             UpdateTitle();
         }
 

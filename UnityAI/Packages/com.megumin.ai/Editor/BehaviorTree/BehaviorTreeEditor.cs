@@ -232,7 +232,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (Application.isPlaying)
             {
                 Debug.Log("编辑器运行 导致窗口重载");
-                
+
             }
             else
             {
@@ -411,6 +411,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void SelectTree(IBehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogMethodName();
+
+            var isChangeTree = CurrentAsset != behaviorTreeAsset
+                || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
+
             this.CurrentAsset = behaviorTreeAsset;
             this.CurrentAsset_AssetObject = behaviorTreeAsset?.AssetObject;
             if (EditorApplication.isPlaying)
@@ -427,7 +431,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            TreeView?.ReloadView(true);
+            if (TreeView != null)
+            {
+                TreeView.ReloadView(true);
+                if (isChangeTree)
+                {
+                    //新打开的行为树，剧中所有节点
+                    TreeView.DelayFrameAll();
+                }
+            }
         }
 
         public override void DiscardChanges()

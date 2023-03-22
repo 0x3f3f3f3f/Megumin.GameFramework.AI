@@ -380,6 +380,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        /// <summary>
+        /// 延迟一下在FrameAll，可能调用是布局还没有计算完完成
+        /// </summary>
+        internal async void DelayFrameAll()
+        {
+            await this.Delay(15);
+            FrameAll();
+        }
+
         public Vector2 LastContextualMenuMousePosition = Vector2.one * 100;
         public BehaviorTree Tree => SOTree?.Tree;
 
