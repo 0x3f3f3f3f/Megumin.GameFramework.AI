@@ -213,6 +213,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             title = typeName;
             name = typeName;
 
+            RefreshNodeIndex();
+
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
 
