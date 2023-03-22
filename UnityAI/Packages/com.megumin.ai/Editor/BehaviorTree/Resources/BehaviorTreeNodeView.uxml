@@ -1,31 +1,37 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
     <ui:VisualElement name="node-border">
-        <ui:VisualElement name="top">
+        <ui:VisualElement name="top" class="section">
+            <ui:VisualElement name="leftMarkArea" class="markArea" />
             <ui:VisualElement name="input" class="portContainer" />
-            <ui:VisualElement name="divider" class="vertical" />
-            <ui:VisualElement name="decorator" class="decoratorContainer">
-                <ui:ListView class="decoratorList" />
-            </ui:VisualElement>
-            <ui:VisualElement name="body">
-                <ui:VisualElement name="header">
-                    <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
-                    <ui:VisualElement name="title">
-                        <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
-                        <ui:VisualElement name="title-button-container">
-                            <ui:VisualElement name="collapse-button">
-                                <ui:VisualElement name="icon" />
-                            </ui:VisualElement>
+            <ui:VisualElement name="rightMarkArea" class="markArea" />
+        </ui:VisualElement>
+        <ui:VisualElement name="divider" class="vertical" />
+        <ui:VisualElement name="decorator" class="decoratorContainer">
+            <ui:ListView class="decoratorList" />
+        </ui:VisualElement>
+        <ui:VisualElement name="body">
+            <ui:VisualElement name="header">
+                <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
+                <ui:VisualElement name="title">
+                    <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
+                    <ui:VisualElement name="title-button-container">
+                        <ui:VisualElement name="collapse-button">
+                            <ui:VisualElement name="icon" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="contents">
-                    <ui:Label display-tooltip-when-elided="true" name="description" class="contentLabel" />
-                    <ui:Label display-tooltip-when-elided="true" name="guid" class="contentLabel" />
-                    <ui:VisualElement name="divider" class="horizontal" />
-                </ui:VisualElement>
             </ui:VisualElement>
+            <ui:VisualElement name="contents">
+                <ui:Label display-tooltip-when-elided="true" name="description" class="contentLabel" />
+                <ui:Label display-tooltip-when-elided="true" name="guid" class="contentLabel" />
+                <ui:VisualElement name="divider" class="horizontal" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom" class="section">
+            <ui:VisualElement name="leftMarkArea" class="markArea" />
             <ui:VisualElement name="output" class="portContainer" />
+            <ui:VisualElement name="rightMarkArea" class="markArea" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="selection-border" picking-mode="Ignore" />

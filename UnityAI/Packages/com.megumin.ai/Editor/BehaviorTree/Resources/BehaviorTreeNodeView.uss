@@ -19,11 +19,28 @@
     margin-right: 6px;
 }
 
+.section {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.markArea {
+    width: 32px;
+    max-width: 32px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
 .portContainer {
     align-items: center;
     flex-direction: row;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-grow: 1;
 }
 
 #input > .port {
