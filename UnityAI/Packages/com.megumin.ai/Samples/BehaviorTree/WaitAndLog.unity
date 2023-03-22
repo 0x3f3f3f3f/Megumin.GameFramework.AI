@@ -134,12 +134,12 @@ GameObject:
   - component: {fileID: 58892203}
   - component: {fileID: 58892204}
   m_Layer: 0
-  m_Name: TestAgent
+  m_Name: WaitAndLogAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &58892203
 Transform:
   m_ObjectHideFlags: 0
@@ -168,7 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <BehaviourTree>k__BackingField:
+    <GUID>k__BackingField: 
     InstanceGUID: 
+    Variable:
+      Table: []
     AllNodes: []
   BehaviorTreeAsset: {fileID: 11400000, guid: f4bc91675148295479165d17c026a6d9, type: 2}
   TickMode: 1
@@ -178,6 +181,64 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &116712484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 116712486}
+  - component: {fileID: 116712485}
+  m_Layer: 0
+  m_Name: SelectorAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &116712485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116712484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <BehaviourTree>k__BackingField:
+    <GUID>k__BackingField: 
+    InstanceGUID: 
+    Variable:
+      Table: []
+    AllNodes: []
+  BehaviorTreeAsset: {fileID: 11400000, guid: 173b74acef6c5ff449e198fda0f49003, type: 2}
+  TickMode: 1
+  Order: 0
+  AutoEnable: 1
+  EnableLog: 1
+  references:
+    version: 2
+    RefIds: []
+--- !u!4 &116712486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116712484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2118817459
 GameObject:
   m_ObjectHideFlags: 0

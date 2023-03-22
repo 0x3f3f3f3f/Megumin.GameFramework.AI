@@ -91,6 +91,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         void CreateUIBuilderDebugNode()
         {
+            if (Application.isPlaying)
+            {
+                return;
+            }
             using var undom = UndoMute.Enter("CreateUIBuilderDebugNode");
 
             var testParent = new Sequence();
