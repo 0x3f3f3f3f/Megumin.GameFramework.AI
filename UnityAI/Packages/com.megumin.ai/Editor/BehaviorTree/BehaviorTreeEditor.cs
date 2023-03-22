@@ -437,7 +437,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (isChangeTree)
                 {
                     //新打开的行为树，剧中所有节点
-                    TreeView.DelayFrameAll();
+                    //TreeView.DelayFrameAll();
                 }
             }
         }

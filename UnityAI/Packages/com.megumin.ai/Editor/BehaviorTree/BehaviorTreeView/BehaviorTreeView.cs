@@ -325,6 +325,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 
+            //赋值viewDataKey 后会自动保存布局和缩放。
+            viewDataKey = Tree.GUID;
+
             foreach (var node in Tree.AllNodes)
             {
                 var nodeViwe = CreateNodeView(node);
