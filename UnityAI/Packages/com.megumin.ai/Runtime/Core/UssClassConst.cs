@@ -9,6 +9,8 @@ namespace Megumin.GameFramework.AI
     internal class UssClassConst
     {
         public const string running = nameof(running);
+        public const string succeeded = nameof(succeeded);
+        public const string failed = nameof(failed);
 
         public const string flowPoint = nameof(flowPoint);
     }

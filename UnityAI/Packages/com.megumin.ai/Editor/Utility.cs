@@ -122,15 +122,39 @@ namespace Megumin.GameFramework.AI.Editor
             Utility.RepaintWindows("Inspector");
         }
 
-        public static void SetToClassList(this VisualElement visualElement, string className, bool enable = true)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visualElement"></param>
+        /// <param name="className"></param>
+        /// <param name="enable"></param>
+        /// <returns>ClassList 是否发生变化</returns>
+        public static bool SetToClassList(this VisualElement visualElement, string className, bool enable = true)
         {
+            bool hasClass = visualElement.ClassListContains(className);
             if (enable)
             {
-                visualElement.AddToClassList(className);
+                if (hasClass)
+                {
+                    return false;
+                }
+                else
+                {
+                    visualElement.AddToClassList(className);
+                    return true;
+                }
             }
             else
             {
-                visualElement.RemoveFromClassList(className);
+                if (hasClass)
+                {
+                    visualElement.RemoveFromClassList(className);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

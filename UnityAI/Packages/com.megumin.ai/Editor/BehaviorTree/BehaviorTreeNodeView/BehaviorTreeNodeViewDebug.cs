@@ -28,6 +28,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 edge.SetToClassList(UssClassConst.running, isRunning);
                 //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.running, isRunning); }).ExecuteLater(10);
             }
+
+            UpdateCompletedState();
+        }
+
+        private async void UpdateCompletedState()
+        {
+            bool hasChanged = false;
+            var isSucceeded = Node?.State == Status.Succeeded;
+            hasChanged |= this.SetToClassList(UssClassConst.succeeded, isSucceeded);
+            var isFailed = Node?.State == Status.Failed;
+            hasChanged |= this.SetToClassList(UssClassConst.failed, isFailed);
+
+            //if (hasChanged)
+            //{
+            //    var res = this.Delay(3000);
+            //    UpdateCompletedState();
+            //}
         }
     }
 }

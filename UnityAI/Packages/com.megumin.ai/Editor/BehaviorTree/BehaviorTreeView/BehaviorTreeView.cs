@@ -93,37 +93,67 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             using var undom = UndoMute.Enter("CreateUIBuilderDebugNode");
 
-            var node = new Sequence();
-            node.GUID = Guid.NewGuid().ToString();
-            node.AddDecorator<Loop>();
-            node.AddDecorator<Cooldown>();
+            var testParent = new Sequence();
+            testParent.GUID = Guid.NewGuid().ToString();
+            testParent.AddDecorator<Loop>();
+            testParent.AddDecorator<Cooldown>();
 
-            var nodeView = CreateNodeView(node, true);
+            var testParentView = CreateNodeView(testParent, true);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
-            nodeView.AddToClassList("uiBuilderDebugNode");
-            this.AddElement(nodeView);
+            testParentView.AddToClassList("uiBuilderDebugNode");
+            this.AddElement(testParentView);
 
-            var node2 = new Log();
-            node2.Meta = new NodeMeta() { x = 100, y = 300 };
-            node2.GUID = Guid.NewGuid().ToString();
-            var nodeView2 = CreateNodeView(node2, true);
-            //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
-            nodeView2.AddToClassList("uiBuilderDebugNode");
-            nodeView2.AddToClassList("startNode");
-            this.AddElement(nodeView2);
+            {
+                var node2 = new Log();
+                node2.Meta = new NodeMeta() { x = 100, y = 300 };
+                node2.GUID = Guid.NewGuid().ToString();
+                var nodeView = CreateNodeView(node2, true);
+                //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+                nodeView.AddToClassList("uiBuilderDebugNode");
+                nodeView.AddToClassList("startNode");
+                this.AddElement(nodeView);
 
-            nodeView2.ConnectParentNodeView(nodeView);
+                nodeView.ConnectParentNodeView(testParentView);
+            }
 
-            var runningTest = new Wait();
-            runningTest.Meta = new NodeMeta() { x = 300, y = 300 };
-            runningTest.GUID = Guid.NewGuid().ToString();
-            var runningTestView = CreateNodeView(runningTest, true);
-            //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
-            runningTestView.AddToClassList("uiBuilderDebugNode");
-            runningTestView.AddToClassList(UssClassConst.running);
-            this.AddElement(runningTestView);
-            var edge = runningTestView.ConnectParentNodeView(nodeView);
-            edge.AddToClassList(UssClassConst.running);
+            {
+                var succeededTest = new Wait();
+                succeededTest.Meta = new NodeMeta() { x = 300, y = 500 };
+                succeededTest.GUID = Guid.NewGuid().ToString();
+                var nodeView = CreateNodeView(succeededTest, true);
+                //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+                nodeView.AddToClassList("uiBuilderDebugNode");
+                nodeView.AddToClassList(UssClassConst.succeeded);
+                this.AddElement(nodeView);
+                var edge = nodeView.ConnectParentNodeView(testParentView);
+                edge.AddToClassList(UssClassConst.succeeded);
+            }
+
+            {
+                var runningTest = new Wait();
+                runningTest.Meta = new NodeMeta() { x = 500, y = 300 };
+                runningTest.GUID = Guid.NewGuid().ToString();
+                var nodeView = CreateNodeView(runningTest, true);
+                //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+                nodeView.AddToClassList("uiBuilderDebugNode");
+                nodeView.AddToClassList(UssClassConst.running);
+                this.AddElement(nodeView);
+                var edge = nodeView.ConnectParentNodeView(testParentView);
+                edge.AddToClassList(UssClassConst.running);
+            }
+
+            {
+                var failedTest = new Wait();
+                failedTest.Meta = new NodeMeta() { x = 700, y = 500 };
+                failedTest.GUID = Guid.NewGuid().ToString();
+                var nodeView = CreateNodeView(failedTest, true);
+                //在UIBuilder中显示，在BehaviorTreeEditor中不显示。
+                nodeView.AddToClassList("uiBuilderDebugNode");
+                nodeView.AddToClassList(UssClassConst.failed);
+                this.AddElement(nodeView);
+                var edge = nodeView.ConnectParentNodeView(testParentView);
+                edge.AddToClassList(UssClassConst.failed);
+            }
         }
 
         public void CreateMinimap()
