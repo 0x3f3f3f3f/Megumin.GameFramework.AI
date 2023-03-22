@@ -24,13 +24,13 @@ namespace Megumin
     /// </summary>
     public static class SerializedPropertyExtensions_B4C8CAE8AAFD410981DE4CCC2553F15F
     {
-
+        static readonly Regex rgx = new Regex(@"\[\d+\]");
         public static T GetValue<T>(this SerializedProperty property) where T : class
         {
             object obj = property.serializedObject.targetObject;
             string path = property.propertyPath.Replace(".Array.data", "");
             string[] fieldStructure = path.Split('.');
-            Regex rgx = new Regex(@"\[\d+\]");
+
             for (int i = 0; i < fieldStructure.Length; i++)
             {
                 if (fieldStructure[i].Contains("["))
@@ -51,7 +51,7 @@ namespace Megumin
             object obj = property.serializedObject.targetObject;
             string path = property.propertyPath.Replace(".Array.data", "");
             string[] fieldStructure = path.Split('.');
-            Regex rgx = new Regex(@"\[\d+\]");
+
             for (int i = 0; i < fieldStructure.Length - 1; i++)
             {
                 if (fieldStructure[i].Contains("["))
@@ -73,7 +73,6 @@ namespace Megumin
             }
             else
             {
-                Debug.Log(value);
                 return SetFieldValue(fieldName, obj, value);
             }
         }
