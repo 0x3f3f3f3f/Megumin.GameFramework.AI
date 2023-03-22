@@ -69,16 +69,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DebugInstance = behaviorTreeRunner;
             var so = TreeView.CreateSOWrapperIfNull();
             so.Tree = behaviorTreeRunner.BehaviourTree;
-            UpdateTitle();
             TreeView.ReloadView(true);
+            UpdateTitle();
         }
 
         internal void EndDebug()
         {
             IsDebugMode = false;
             TreeView.SOTree.Tree = null;
-            UpdateTitle();
+
             TreeView.ReloadView(true);
+            UpdateTitle();
         }
 
         private void DebugSearchInstance()
@@ -89,7 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 foreach (var item in list)
                 {
                     if (item.BehaviorTreeAsset && item.BehaviourTree != null &&
-                        item.BehaviorTreeAsset == CurrentAsset.AssetObject)
+                        item.BehaviorTreeAsset == CurrentAsset?.AssetObject)
                     {
                         BeginDebug(item);
                         break;

@@ -82,6 +82,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// <summary>
         /// 保存资产引用，切换运行模式和重写编译时，保持打开的窗口不变。
         /// </summary>
+        /// <remarks>
+        /// 原理是EditorWindow本身是一个ScriptableObject，重载时所有静态变量都会重置。
+        /// 只有ScriptableObject的序列化对象才能保存下来。
+        /// EditorWindow是一个内存SO对象。
+        /// </remarks>
         public UnityEngine.Object CurrentAsset_AssetObject;
         public IBehaviorTreeAsset CurrentAsset { get; private set; }
 
