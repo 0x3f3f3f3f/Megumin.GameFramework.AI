@@ -13,6 +13,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeView
     {
+        /// <summary>
+        /// 更新节点序号
+        /// </summary>
+        public void UpdateNodeIndex()
+        {
+            Tree?.UpdateNodeIndex();
+            foreach (var item in graphElements)
+            {
+                if (item is BehaviorTreeNodeView nodeView)
+                {
+                    nodeView.RefreshNodeIndex();
+                }
+            }
+        }
+
         public void SortChild(BTParentNode parentNode)
         {
             parentNode.children.Sort((lhs, rhs) =>
@@ -40,6 +55,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             parentNode.children.Add(childNode);
             //重新排序
             SortChild(parentNode);
+            UpdateNodeIndex();
         }
 
         public void DisconnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
@@ -60,6 +76,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //重新排序
             SortChild(parentNode);
+            UpdateNodeIndex();
         }
     }
 }

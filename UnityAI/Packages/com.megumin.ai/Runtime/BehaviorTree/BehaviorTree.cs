@@ -236,6 +236,44 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             return false;
         }
+
+        internal void UpdateNodeIndex()
+        {
+            foreach (var item in AllNodes)
+            {
+                if (item.Meta != null)
+                {
+                    item.Meta.index = -1;
+                }
+            }
+
+            var index = 0;
+
+            void SetNodeIndex(BTNode node)
+            {
+                if (node == null)
+                {
+                    return;
+                }
+
+                if (node.Meta != null)
+                {
+                    node.Meta.index = index;
+                }
+
+                index++;
+
+                if (node is BTParentNode parentNode)
+                {
+                    foreach (var child in parentNode.children)
+                    {
+                        SetNodeIndex(child);
+                    }
+                }
+            }
+
+            SetNodeIndex(StartNode);
+        }
     }
 
     public partial class BehaviorTree

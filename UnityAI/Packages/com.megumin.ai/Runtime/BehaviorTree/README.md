@@ -27,7 +27,7 @@ https://robohub.org/introduction-to-behavior-trees/
 * [x] Undo/Redo 
 * [x] 通过节点打开cs文件
 * [ ] 通过节点打开节点View文件
-* [ ] 节点序号
+* [x] 节点序号
 
 - [x] 保存为ScriptObject资产
 - [ ] 保存为Json资产

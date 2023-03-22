@@ -9,9 +9,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Serializable]
     public class NodeMeta
     {
-        public float x;
-        public float y;
-        public int index;
+        public float x = 100;
+        public float y = 100;
+        public int index = -1;
         public string Name;
         public string FriendlyName;
         public string Description;

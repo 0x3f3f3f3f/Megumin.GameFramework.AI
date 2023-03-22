@@ -33,7 +33,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
             Icon = this.Q<Button>("icon", "treeElementIcon");
-
+            Index = this.Q<Label>("nodeIndex");
             decoratorContainer = this.Q<VisualElement>("decorator");
             //decoratorContainer.AddManipulator(new TestMouseManipulator());
             //为了屏蔽 装饰器内 框选误选中node。 组织事件向父级传播。
@@ -74,6 +74,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
         public Button Icon { get; private set; }
+        public Label Index { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
         public BTNode Node { get; private set; }
@@ -131,6 +132,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     TreeView.SortChild(parentNode);
                 }
             }
+
+            TreeView?.UpdateNodeIndex();
         }
 
 
@@ -261,6 +264,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     break;
                 default:
                     break;
+            }
+        }
+
+        internal void RefreshNodeIndex()
+        {
+            if (Node?.Meta != null)
+            {
+                Index.text = Node.Meta.index.ToString();
             }
         }
 
