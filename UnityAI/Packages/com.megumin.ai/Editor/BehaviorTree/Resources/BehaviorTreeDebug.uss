@@ -6,6 +6,10 @@
     background-color: rgba(89, 45, 45, 0.75);
 }
 
+.failed.node.behaviorTreeNode #runningState {
+    background-image: resource('d_p4_deletedlocal@2x');
+}
+
 .failed.edge #注释{
     --edge-color: rgb(146, 133, 133);
     --edge-colorMode: defaultColor;
@@ -13,6 +17,10 @@
 
 .succeeded.node.behaviorTreeNode > #node-border {
     background-color: rgba(52, 89, 45, 0.84);
+}
+
+.succeeded.node.behaviorTreeNode #runningState {
+    background-image: resource('testpassed');
 }
 
 .succeeded.edge #注释{
