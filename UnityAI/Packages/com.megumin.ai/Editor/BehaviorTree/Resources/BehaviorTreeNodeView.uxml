@@ -4,7 +4,9 @@
         <ui:VisualElement name="top" class="section">
             <ui:VisualElement name="leftMarkArea" class="markArea" />
             <ui:VisualElement name="input" class="portContainer" />
-            <ui:VisualElement name="rightMarkArea" class="markArea" />
+            <ui:VisualElement name="rightMarkArea" class="markArea">
+                <ui:VisualElement name="runningState" class="runningState" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="divider" class="vertical" />
         <ui:VisualElement name="decorator" class="decoratorContainer">
