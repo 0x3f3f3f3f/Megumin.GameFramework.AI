@@ -221,6 +221,28 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+#body #header .nodeIndex {
+    width: 14px;
+    height: 14px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.85);
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    -unity-text-align: middle-center;
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgb(204, 204, 204);
+    white-space: nowrap;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
 #body #contents .contentLabel {
     color: rgb(137, 137, 137);
     font-size: 12px;
@@ -238,6 +260,10 @@
 }
 
 .disable_NodeIcon #body #header > #icon {
+    display: none;
+}
+
+.disable_NodeIndex #body #header .nodeIndex {
     display: none;
 }
 

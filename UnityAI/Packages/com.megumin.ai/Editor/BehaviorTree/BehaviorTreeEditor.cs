@@ -30,14 +30,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         static List<MySetting<bool>> MySettingPrefs = new()
         {
             new MySetting<bool>("TODO", false, SettingsScope.User),
-            new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
-            new MySetting<bool>("NodeIcon", true, SettingsScope.User),
-            new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
-            new MySetting<bool>("ToolTip", true, SettingsScope.User),
-            new MySetting<bool>("MiniMap", false, SettingsScope.User),
-            new MySetting<bool>("FloatingTip", true, SettingsScope.User),
             new MySetting<bool>("Blackboard", true, SettingsScope.User),
             new MySetting<bool>("GraphInspector", false, SettingsScope.User),
+            new MySetting<bool>("MiniMap", false, SettingsScope.User),
+            new MySetting<bool>("ToolTip", true, SettingsScope.User),
+            new MySetting<bool>("FloatingTip", true, SettingsScope.User),
+            new MySetting<bool>("NodeIndex", false, SettingsScope.User),
+            new MySetting<bool>("NodeIcon", true, SettingsScope.User),
+            new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
+            new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
             //new MySetting<bool>("RingGraph", false, SettingsScope.User),
             //new MySetting<bool>("DiamondGraph", false, SettingsScope.User),
         };
@@ -298,19 +299,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             };
 
             var blackboardToggle = root.Q<ToolbarToggle>("blackboard");
-            blackboardToggle.value = MySettingPrefs[7].value;
+            blackboardToggle.value = MySettingPrefs[1].value;
             blackboardToggle.RegisterValueChangedCallback(evt =>
             {
-                MySettingPrefs[7].SetValue(evt.newValue);
-                SetSettingValueClass(MySettingPrefs[7]);
+                MySettingPrefs[1].SetValue(evt.newValue);
+                SetSettingValueClass(MySettingPrefs[1]);
             });
 
             var graphInspectorToggle = root.Q<ToolbarToggle>("graphInspector");
-            graphInspectorToggle.value = MySettingPrefs[8].value;
+            graphInspectorToggle.value = MySettingPrefs[2].value;
             graphInspectorToggle.RegisterValueChangedCallback(evt =>
             {
-                MySettingPrefs[8].SetValue(evt.newValue);
-                SetSettingValueClass(MySettingPrefs[8]);
+                MySettingPrefs[2].SetValue(evt.newValue);
+                SetSettingValueClass(MySettingPrefs[2]);
             });
 
             var help = root.Q<ToolbarMenu>("help");
