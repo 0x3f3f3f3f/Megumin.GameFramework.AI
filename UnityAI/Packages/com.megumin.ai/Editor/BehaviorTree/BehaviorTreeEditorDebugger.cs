@@ -65,6 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public BehaviorTreeRunner DebugInstance { get; set; }
         internal void BeginDebug(BehaviorTreeRunner behaviorTreeRunner)
         {
+            this.LogMethodName();
             IsDebugMode = true;
             DebugInstance = behaviorTreeRunner;
             var so = TreeView.CreateSOWrapperIfNull();
@@ -89,8 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 var list = BehaviorTreeManager.Instance.AllTree;
                 foreach (var item in list)
                 {
-                    if (item.BehaviorTreeAsset && item.BehaviourTree != null &&
-                        item.BehaviorTreeAsset == CurrentAsset?.AssetObject)
+                    if (CanAttachDebug(item))
                     {
                         BeginDebug(item);
                         break;
@@ -99,6 +99,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        /// <summary>
+        /// 能不能进入Debug模式
+        /// </summary>
+        /// <param name="behaviorTreeRunner"></param>
+        /// <returns></returns>
+        public bool CanAttachDebug(BehaviorTreeRunner behaviorTreeRunner)
+        {
+            if (behaviorTreeRunner.BehaviorTreeAsset && behaviorTreeRunner.BehaviourTree != null &&
+                        behaviorTreeRunner.BehaviorTreeAsset == CurrentAsset?.AssetObject)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
 
         [MenuItem("Megumin AI/TestButton")]

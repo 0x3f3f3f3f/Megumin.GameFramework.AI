@@ -8,7 +8,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>, ILogSetting
     {
-        [field: SerializeField]
+        //[field: SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
         public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
@@ -18,17 +18,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool EnableLog = true;
         bool ILogSetting.Enabled => EnableLog;
 
-        private void Awake()
+        private void InitTree()
         {
-            BehaviourTree = BehaviorTreeAsset.Instantiate();
-            BehaviourTree.LogSetting = this;
-            BehaviourTree.Init(gameObject);
+            if (BehaviourTree == null && BehaviorTreeAsset)
+            {
+                BehaviourTree = BehaviorTreeAsset.Instantiate();
+                BehaviourTree.LogSetting = this;
+                BehaviourTree.Init(gameObject);
+            }
         }
 
         private void OnEnable()
         {
             if (AutoEnable)
             {
+                InitTree();
                 EnableTree();
             }
         }

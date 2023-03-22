@@ -9,11 +9,6 @@ https://robohub.org/introduction-to-behavior-trees/
   * [ ] Relay节点
   * [ ] Placeholder节点
 
-- [x] 增加/删除节点
-- [x] 连接/断开节点
-- [x] 复制/粘贴节点
-- [x] 移动子节点时重新排序子节点
-
 + [x] 公开参数绑定
 + [x] List Array ~~Dictionary~~
 + [x] 最多2层的嵌套泛型
@@ -23,22 +18,29 @@ https://robohub.org/introduction-to-behavior-trees/
 - [ ] 组合Group
 - [ ] 子树
 
++ [x] 增加/删除节点
++ [x] 连接/断开节点
++ [x] 复制/粘贴节点
++ [x] 移动子节点时重新排序子节点
+
 * [x] 有未保存改动时关闭编辑器进行提示
 * [x] Undo/Redo 
 * [x] 通过节点打开cs文件
 * [ ] 通过节点打开节点View文件
 * [x] 节点序号
 
-- [x] 保存为ScriptObject资产
-- [ ] 保存为Json资产
-- [x] 自动使用编辑器打开资产文件
+- [x] 保存为ScriptObject文件
+- [ ] 保存为Json文件
+- [x] 自动使用编辑器打开文件
 - [ ] 生成行为树代码，消除反射，消除绑定
 
 + [x] 保存编辑器用户偏好设置
 + [ ] 编辑器Log可选设置
 + [ ] 多语言Log
 
-- [ ] 调试
+- [x] 每个行为树文件和实例独立编辑器窗口
+- [x] 调试
+- [x] 支持多个实例同时调试
 - [ ] 远程调试
 - [ ] 游戏内实时编辑器/行为树查看器。（目前GraphView只支持编辑器，等unity realtime支持时迁移）
 

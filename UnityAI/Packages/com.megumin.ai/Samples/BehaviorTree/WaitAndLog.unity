@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &58892203
 Transform:
   m_ObjectHideFlags: 0
@@ -167,20 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BehaviourTree>k__BackingField:
-    <GUID>k__BackingField: 
-    InstanceGUID: 
-    Variable:
-      Table: []
-    AllNodes: []
   BehaviorTreeAsset: {fileID: 11400000, guid: f4bc91675148295479165d17c026a6d9, type: 2}
   TickMode: 1
   Order: 0
   AutoEnable: 1
   EnableLog: 0
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &116712484
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,20 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BehaviourTree>k__BackingField:
-    <GUID>k__BackingField: 
-    InstanceGUID: 
-    Variable:
-      Table: []
-    AllNodes: []
   BehaviorTreeAsset: {fileID: 11400000, guid: 173b74acef6c5ff449e198fda0f49003, type: 2}
   TickMode: 1
   Order: 0
   AutoEnable: 1
   EnableLog: 1
-  references:
-    version: 2
-    RefIds: []
 --- !u!4 &116712486
 Transform:
   m_ObjectHideFlags: 0
