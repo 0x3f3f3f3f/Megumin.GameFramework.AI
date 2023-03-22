@@ -17,19 +17,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class Log : ActionTaskNode
     {
         int count = 0;
-
+        public float waitTime = 0.15f;
         public string LogStr = "Hello world!";
         public RefVar<string> LogStr2;
+        float entertime;
 
         protected override void OnEnter()
         {
+            entertime = Time.time;
             count++;
         }
 
         protected override Status OnTick()
         {
-            Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2.Value} ---- {count}");
-            return Status.Succeeded;
+            if (Time.time - entertime >= waitTime)
+            {
+                Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2.Value} ---- {count}");
+                return Status.Succeeded;
+            }
+            return Status.Running;
         }
     }
 }

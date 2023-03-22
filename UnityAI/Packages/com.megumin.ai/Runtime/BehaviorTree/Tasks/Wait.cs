@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         protected override Status OnTick()
         {
             //Debug.Log($"Wait Time :{Time.time - entertime}");
-            if (Time.time - entertime > waitTime)
+            if (Time.time - entertime >= waitTime)
             {
                 return Status.Succeeded;
             }
