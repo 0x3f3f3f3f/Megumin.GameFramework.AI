@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 执行时遇到未开启的节点就忽略。根据父节点返回特定值。
         /// </summary>
-        public bool Enabled { get; internal set; } = true;
+        public virtual bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
 

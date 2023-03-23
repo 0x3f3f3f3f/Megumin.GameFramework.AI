@@ -8,13 +8,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     /// <summary>
     /// 用于反序列化失败
-    /// TODO 如果父是Sequence，返回成功。否则返回失败。类似Disable Mute
     /// </summary>
-    internal class MissingNode : ActionTaskNode
+    public class MissingNode : ActionTaskNode
     {
-        protected override Status OnTick()
+        public override bool Enabled
         {
-            return base.OnTick();
+            get => false;
+            internal set => throw new NotSupportedException();
         }
     }
 }
