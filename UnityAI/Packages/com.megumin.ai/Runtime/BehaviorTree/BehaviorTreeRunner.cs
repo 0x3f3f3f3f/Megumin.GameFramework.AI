@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeRunner : MonoBehaviour, IComparer<BehaviorTreeRunner>, ILogSetting
+    public class BehaviorTreeRunner : MonoBehaviour, IComparable<BehaviorTreeRunner>, ILogSetting
     {
         //[field: SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
@@ -63,7 +63,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Editor]
         public void LogVariable(string name = "TestStringVariable")
         {
-            if (BehaviourTree.Variable.TryGetParam<string>(name,out var variable))
+            if (BehaviourTree.Variable.TryGetParam<string>(name, out var variable))
             {
                 Debug.Log(variable.Value);
             }
@@ -74,14 +74,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BehaviorTreeManager.Instance.AddTree(this);
         }
 
-        public int Compare(BehaviorTreeRunner x, BehaviorTreeRunner y)
+        public int CompareTo(BehaviorTreeRunner other)
         {
-            return x.Order.CompareTo(y.Order);
+            return Order.CompareTo(other.Order);
         }
 
         public void TickTree()
         {
             BehaviourTree.Tick();
         }
+
     }
 }
