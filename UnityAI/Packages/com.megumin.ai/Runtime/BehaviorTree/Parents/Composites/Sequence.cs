@@ -18,27 +18,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 current = i;
                 var child = children[current];
 
-
-                if (child.Enabled == false)
-                {
-                    continue;
-                }
-
-                if (child.State != Status.Running)
-                {
-                    //已经运行的节点不在检查
-                    var enterType = child.CanEnter();
-                    if (enterType == EnterType.False)
-                    {
-                        return Status.Failed;
-                    }
-
-                    if (enterType == EnterType.Ignore)
-                    {
-                        continue;
-                    }
-                }
-
                 switch (child.Tick())
                 {
                     case Status.Failed:

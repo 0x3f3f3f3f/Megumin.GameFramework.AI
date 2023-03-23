@@ -81,33 +81,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             Decorators.Remove(decorator);
         }
 
-        /// <summary>
-        /// <para/> Q:为什么CanEnter不放在Tick内部？
-        /// <para/> A:当条件中止时需要在不Tick的状态下获取EnterType，放在Tick里会执行2次CanEnter
-        /// 
-        /// 
-        /// TODO：条件装饰器等价与 含有一个Sequence父 + 前面条件叶子节点。
-        /// 如果CanEnter返回false，Sequence父逻辑上是失败。
-        /// 所以直接视为当前节点返回失败。
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public EnterType CanEnter()
-        {
-            foreach (var pre in Decorators)
-            {
-                if (pre is IConditionable conditionable)
-                {
-                    if (conditionable.Cal() == false)
-                    {
-                        return EnterType.False;
-                    }
-                }
-            }
-            return EnterType.True;
-        }
-
-        bool abortSelf = false;
 
         internal void Awake()
         {
@@ -177,15 +150,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 是不是检查过可执行
         /// </summary>
-        bool IsCheckedCanExecute { get; set; }
+        internal protected bool IsCheckedCanExecute { get; set; }
         /// <summary>
         /// 是不是执行过前置装饰器
         /// </summary>
-        bool IsExecutedPreDecorator { get; set; }
+        internal protected bool IsExecutedPreDecorator { get; set; }
         /// <summary>
         /// 不是执行过Enter
         /// </summary>
-        bool IsExecutedEnter { get; set; }
+        internal protected bool IsExecutedEnter { get; set; }
+
+        /// <summary>
+        /// 是不是自身条件中断
+        /// </summary>
+
+        internal protected bool abortSelf = false;
 
         public Status Tick()
         {

@@ -100,22 +100,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     return Status.Failed;
                 }
 
-                if (StartNode.State != Status.Running)
-                {
-                    //已经运行的节点不在检查
-                    var enterType = StartNode.CanEnter();
-                    if (enterType == EnterType.False)
-                    {
-                        return Status.Failed;
-                    }
-
-                    if (enterType == EnterType.Ignore)
-                    {
-                        Debug.Log($"StartNode is Ignore");
-                        return Status.Failed;
-                    }
-                }
-
                 treestate = StartNode.Tick();
                 if (treestate == Status.Succeeded || treestate == Status.Failed)
                 {
