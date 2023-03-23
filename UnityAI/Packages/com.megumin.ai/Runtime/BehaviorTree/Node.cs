@@ -187,14 +187,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     AbortSelf();
                 }
-
-                //父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
-                //等同于Ignore。
-                if (from is Selector)
+                else
                 {
-                    return Status.Failed;
+                    //父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
+                    //等同于Ignore。
+                    if (from is Selector)
+                    {
+                        State = Status.Failed;
+                    }
+                    else
+                    {
+                        State = Status.Succeeded;
+                    }
                 }
-                return Status.Succeeded;
+               
+                return State;
             }
 
             //条件阶段
