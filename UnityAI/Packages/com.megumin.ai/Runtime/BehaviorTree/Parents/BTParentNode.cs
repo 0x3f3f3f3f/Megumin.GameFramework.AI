@@ -65,7 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (item.State == Status.Running)
                 {
-                    item.Abort();
+                    item.Abort(this);
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override void OnAbort()
         {
-            Child0.Abort();
+            Child0.Abort(this);
         }
     }
 
@@ -161,7 +161,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override void OnAbort()
         {
-            Child0.Abort();
+            Child0.Abort(this);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 current = i;
                 var child = children[current];
 
-                switch (child.Tick())
+                switch (child.Tick(this))
                 {
                     case Status.Failed:
                         return Status.Failed;

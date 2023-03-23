@@ -21,7 +21,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (Time.time - startTime > duration)
             {
-                Child0.Abort();
+                Child0.Abort(this);
                 return Status.Failed;
             }
             return base.OnTick();

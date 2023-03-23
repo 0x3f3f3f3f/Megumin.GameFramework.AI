@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                var state = child.Tick();
+                var state = child.Tick(this);
                 if (state == Status.Failed)
                 {
                     comp.Add(child);
@@ -56,7 +56,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                child.Abort();
+                child.Abort(this);
             }
         }
 

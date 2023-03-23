@@ -100,7 +100,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     return Status.Failed;
                 }
 
-                treestate = StartNode.Tick();
+                treestate = StartNode.Tick(null);
                 if (treestate == Status.Succeeded || treestate == Status.Failed)
                 {
                     Debug.Log($"tree complate. {treestate}");

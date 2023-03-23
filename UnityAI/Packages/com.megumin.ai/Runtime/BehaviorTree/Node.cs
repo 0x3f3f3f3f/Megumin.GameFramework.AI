@@ -166,7 +166,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         internal protected bool abortSelf = false;
 
-        public Status Tick()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="from">当前调用的父节点</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 使用参数获得父节点，而不是从节点连接关系取得父节点。
+        /// 如果行为树文件拓扑结构允许菱形或者环形，可能有多个父节点。
+        /// 但是运行时同一时刻只可能有一个调用父节点。
+        /// </remarks>
+        public Status Tick(BTNode from)
         {
             //无论Enabled 是不是true，都要先进入Tick函数再说，不能在外部判断false然后跳过
             //否则在IsRunning期间被改为false，无法触发AbortSelf。
@@ -178,7 +188,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     AbortSelf();
                 }
 
-                //TODO,父节点是Selctor 返回Failed，等同于Ignore。
+                //父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
+                //等同于Ignore。
+                if (from is Selector)
+                {
+                    return Status.Failed;
+                }
                 return Status.Succeeded;
             }
 
@@ -292,7 +307,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         Status AbortSelf()
         {
-            return Abort();
+            return Abort(this);
         }
 
         /// <summary>
@@ -302,7 +317,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <remarks>
         /// 几乎所有情况都应该返回<see cref="Status.Failed"/>,但是保留返回其他值的可能。
         /// </remarks>
-        public Status Abort()
+        public Status Abort(BTNode from)
         {
             State = Status.Failed;
             OnAbort();
