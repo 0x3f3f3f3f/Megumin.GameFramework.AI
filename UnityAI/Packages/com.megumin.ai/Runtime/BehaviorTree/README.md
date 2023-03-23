@@ -68,45 +68,46 @@ Selector--> CompositeNode--> BTParentNode
 ```mermaid
 graph TB
 
-subgraph Pre
+subgraph Return [Returen State]
 direction TB
-    prd{PreDecorator}
+    rs(Succeeded)
+    rf(Failed)
 end
 
-subgraph Post
+subgraph Condi [Condition]
 direction TB
-    pod{PostDecorator}
+    a(IsCheckedCanExecute) --> |false|CanExecute
+    b(AbortType:Self) --> CanExecute --> ExecuteConditionDecorator
+end
+
+subgraph Execute
+direction TB
+    ExecutePreDecorator --> |IsCompleted:false| Running --> |IsCompleted| ExecutePostDecorator
+    ExecutePreDecorator --> |IsCompleted| ExecutePostDecorator
 end
 
 subgraph Running
 direction TB
     Enter --> OnTick(((OnTick)))
-    OnTick --success--> Exit
-    OnTick --failed--> Exit
-    Abort --failed--> Exit
+    OnTick --> |IsCompleted| Exit
 end
 
-rs(Succeeded)
-rf(Failed)
+subgraph AbortSelf
+direction TB
+    OnAbort --> callExit[Call Exit if need] --> ExecuteAbortDecorator
+end
 
-Enabled --> |true| CanEnter
-CanEnter --> |true| Pre
+Enabled --> |true| Condi
+Condi --> |true| Execute
+Execute --> ResetFlag
 
-Pre --> |success| Post
-Pre --> |failed| Post
-Pre --> |running| Enter
-Exit --> |success| Post
-Exit --> |failed| Post
+Enabled --> |false| AbortSelf
+Condi --> |false| AbortSelf
+AbortSelf --> ResetFlag
 
-Post --> |success| rs
-Post --> |failed| rf
+ResetFlag --> Return
 
-CanEnter --> |false&&running| Abort
-CanEnter --> |false| rf
-
-Enabled --> |false&&running| Abort
 ```
-
 ## 装饰器
 
 在UE中装饰器并没有保存在Task内部，在组合节点的子成员是一个新类，包含了装饰器和Task。  

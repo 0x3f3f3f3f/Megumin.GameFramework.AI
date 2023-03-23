@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public int Order = 0;
         public bool AutoEnable = true;
 
-        public bool EnableLog = true;
+        public bool EnableLog = false;
         bool ILogSetting.Enabled => EnableLog;
 
         private void InitTree()

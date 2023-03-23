@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -199,8 +200,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     {
                         State = Status.Succeeded;
                     }
+
+                    ResetFlag();
                 }
-               
+
                 return State;
             }
 
@@ -212,10 +215,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var canEnter = CanExecute();
                 if (canEnter == false)
                 {
+                    //离开节点
                     State = Status.Failed;
                     if (IsInnerRunning)
                     {
                         State = AbortSelf();
+                    }
+                    else
+                    {
+                        ResetFlag();
                     }
                     return State;
                 }
@@ -231,62 +239,65 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
-        protected void Execute()
+        private void Execute()
         {
             //前置阶段
             if (IsExecutedPreDecorator == false)
             {
                 IsExecutedPreDecorator = true;
-                State = ExecutePreDeco();
+                State = ExecutePreDecorator();
             }
 
-            Running();
+            if (IsCompleted == false)
+            {
+                Running();
+            }
 
             //后置阶段 当前已经完成
             if (IsCompleted)
             {
-                State = ExecutePostDeco();
+                State = ExecutePostDecorator();
                 ResetFlag();
             }
         }
 
-        protected void Running()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Running()
         {
             //Enter Exit函数不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
-            if (IsCompleted == false)
+            IsInnerRunning = true;
+            State = Status.Running;
+
+            if (IsExecutedEnter == false)
             {
-                IsInnerRunning = true;
-                State = Status.Running;
+                IsExecutedEnter = true;
+                Enter();
+            }
 
-                if (IsExecutedEnter == false)
+            //OnTick 阶段
+            State = OnTick();
+
+            if (IsCompleted)
+            {
+                if (IsExecutedEnter)
                 {
-                    IsExecutedEnter = true;
-                    Enter();
-                }
-
-                //OnTick 阶段
-                State = OnTick();
-
-                if (IsCompleted)
-                {
-                    if (IsExecutedEnter)
-                    {
-                        //与enter互斥对应
-                        //如果没有调用Enter，那么应不应该调用Exit？
-                        Exit();
-                    }
+                    //与enter互斥对应
+                    //如果没有调用Enter，那么应不应该调用Exit？
+                    Exit();
                 }
             }
         }
 
-        void Enter()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Enter()
         {
             Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
             OnEnter();
         }
 
-        void Exit()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Exit()
         {
             OnExit(State);
             Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this.GetType().Name}");
@@ -295,6 +306,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 离开节点，重置flag
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void ResetFlag()
         {
             IsCheckedCanExecute = false;
@@ -336,7 +348,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 Exit();
             }
 
-            State = ExecuteAbortDeco();
+            State = ExecuteAbortDecorator();
             ResetFlag();
             return State;
         }
@@ -363,7 +375,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 调用前置装饰器
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private Status ExecutePreDeco()
+        private Status ExecutePreDecorator()
         {
             var res = Status.Running;
 
@@ -378,7 +390,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return res;
         }
 
-        private Status ExecutePostDeco()
+        private Status ExecutePostDecorator()
         {
             var res = State;
             //倒序遍历
@@ -394,7 +406,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return res;
         }
 
-        private Status ExecuteAbortDeco()
+        private Status ExecuteAbortDecorator()
         {
             //倒序遍历
             for (int i = Decorators.Count - 1; i >= 0; i--)

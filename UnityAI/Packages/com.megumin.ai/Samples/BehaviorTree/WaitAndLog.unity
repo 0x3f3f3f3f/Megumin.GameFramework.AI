@@ -188,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &116712485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,11 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BehaviorTreeAsset: {fileID: 11400000, guid: 0011300df034daa4c8571c1f042924ca, type: 2}
+  BehaviorTreeAsset: {fileID: 11400000, guid: 173b74acef6c5ff449e198fda0f49003, type: 2}
   TickMode: 1
   Order: 0
   AutoEnable: 1
-  EnableLog: 1
+  EnableLog: 0
 --- !u!4 &116712486
 Transform:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1773235785
 Transform:
   m_ObjectHideFlags: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   TickMode: 1
   Order: 0
   AutoEnable: 1
-  EnableLog: 1
+  EnableLog: 0
 --- !u!1 &2118817459
 GameObject:
   m_ObjectHideFlags: 0
