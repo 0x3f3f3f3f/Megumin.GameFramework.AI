@@ -64,6 +64,7 @@ Selector--> CompositeNode--> BTParentNode
 
 
 ## 节点函数的执行顺序
+Tick函数内部大致调用过程，具体细节请阅读源码。
 
 ```mermaid
 graph TB
@@ -74,39 +75,43 @@ direction TB
     rf(Failed)
 end
 
-subgraph Condi [Condition]
+subgraph Condition [Condition]
 direction TB
-    a(IsCheckedCanExecute) --> |false|CanExecute
-    b(AbortType:Self) --> CanExecute --> ExecuteConditionDecorator
+    ecd>ExecuteConditionDecorator]
+    a([IsCheckedCanExecute]) --> |false|CanExecute
+    b([AbortType:Self]) --> CanExecute --> ecd
 end
 
 subgraph Execute
 direction TB
-    ExecutePreDecorator --> |IsCompleted:false| Running --> |IsCompleted| ExecutePostDecorator
-    ExecutePreDecorator --> |IsCompleted| ExecutePostDecorator
+    epred>ExecutePreDecorator]
+    epostd>ExecutePostDecorator]
+    epred --> |IsCompleted:false| Running --> |IsCompleted| epostd
+    epred --> |IsCompleted| epostd
 end
 
 subgraph Running
 direction TB
-    Enter --> OnTick(((OnTick)))
-    OnTick --> |IsCompleted| Exit
+    Enter/OnEnter --> OnTick(((OnTick)))
+    OnTick --> |IsCompleted| Exit/OnExit
 end
 
 subgraph AbortSelf
 direction TB
-    OnAbort --> callExit[Call Exit if need] --> ExecuteAbortDecorator
+    ead>ExecuteAbortDecorator]
+    Abort/OnAbort --> callExit[Call Exit if need] --> ead
 end
 
-Enabled --> |true| Condi
-Condi --> |true| Execute
+e([Enabled])
+e --> |true| Condition
+Condition --> |true| Execute
 Execute --> ResetFlag
 
-Enabled --> |false| AbortSelf
-Condi --> |false| AbortSelf
+e --> |false| AbortSelf
+Condition --> |false| AbortSelf
 AbortSelf --> ResetFlag
 
 ResetFlag --> Return
-
 ```
 ## 装饰器
 
