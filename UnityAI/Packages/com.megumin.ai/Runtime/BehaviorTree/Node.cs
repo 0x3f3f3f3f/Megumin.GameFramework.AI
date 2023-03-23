@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 成员不是在所有情况下都会用到，保持未初始化能有效节省内存。
     /// </summary>
     [Serializable]
-    public class BTNode : TreeElement
+    public partial class BTNode : TreeElement
     {
         public NodeMeta Meta;
         /// <summary>
@@ -26,6 +26,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [SerializeReference]
         public List<ITreeElement> Decorators = new();
 
+        /// <summary>
+        /// 执行时遇到未开启的节点就忽略。根据父节点返回特定值。
+        /// </summary>
         public bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
@@ -60,7 +63,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        
+
 
         public ITreeElement AddDecorator(ITreeElement decorator)
         {
@@ -101,6 +104,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// <para/> Q:为什么CanEnter不放在Tick内部？
         /// <para/> A:当条件中止时需要在不Tick的状态下获取EnterType，放在Tick里会执行2次CanEnter
+        /// 
+        /// 
+        /// TODO：条件装饰器等价与 含有一个Sequence父 + 前面条件叶子节点。
+        /// 如果CanEnter返回false，Sequence父逻辑上是失败。
+        /// 所以直接视为当前节点返回失败。
+        /// 
         /// </summary>
         /// <returns></returns>
         public EnterType CanEnter()
@@ -118,8 +127,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return EnterType.True;
         }
 
+        bool abortSelf = false;
+
         public Status Tick()
         {
+            return Tick2();
             if (State != Status.Running)
             {
                 FrontDerators();
@@ -133,6 +145,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             return res;
         }
+
+
 
         private void FrontDerators()
         {
@@ -159,6 +173,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 if (pre is IPostDecorator decirator)
                 {
                     res = decirator.AfterNodeExit(res, this);
+                    State = res;
                 }
             }
 
@@ -229,6 +244,144 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             return new ValueTask<bool>(true);
         }
+    }
+
+    public partial class BTNode
+    {
+        public bool IsRunning { get; set; }
+        bool IsCheckedCanEnter { get; set; }
+        /// <summary>
+        /// 是不是执行过前置装饰器和Enter
+        /// </summary>
+        bool IsExcutedPreD { get; set; }
+        bool IsCalledEnter { get; set; }
+        public Status Tick2()
+        {
+            //无论Enabled 是不是true，都要先进入Tick函数再说，不能在外部判断false然后跳过
+            //否则在IsRunning期间被改为false，无法触发AbortSelf。
+            //AbortSelf 只能由行为树Tick期间调用，因为装饰器等同于节点，不能由外部调用。
+            if (Enabled == false)
+            {
+                if (IsRunning)
+                {
+                    AbortSelf();
+                }
+
+                //TODO,父节点是Selctor 返回Failed，等同于Ignore。
+                return Status.Succeeded;
+            }
+
+            //条件阶段
+            if (IsCheckedCanEnter == false || abortSelf)
+            {
+                var canEnter = CanEnter2();
+                if (canEnter == false)
+                {
+                    State = Status.Failed;
+                    if (IsRunning)
+                    {
+                        State = AbortSelf();
+                    }
+                    return State;
+                }
+
+                IsCheckedCanEnter = true;
+            }
+
+            //前置阶段
+            if (IsExcutedPreD == false)
+            {
+                CallPreDeco();
+            }
+
+            if (IsCalledEnter == false)
+            {
+                IsCalledEnter = true;
+                Enter();
+            }
+
+            //OnTick 阶段
+            IsRunning = true;
+            if (State == Status.Succeeded || State == Status.Failed)
+            {
+                //当前已经完成，跳过OnTick
+            }
+            else
+            {
+                State = OnTick();
+            }
+
+            //后置阶段 当前已经完成
+            if (State == Status.Succeeded || State == Status.Failed)
+            {
+                if (IsCalledEnter)
+                {
+                    //与enter互斥对应
+                    //如果没有调用Enter，那么应不应该调用Exit？
+                    State = Exit(State);
+                }
+
+                State = CallPostDeco();
+                ResetFlag();
+            }
+
+            return State;
+        }
+
+        public void ResetFlag()
+        {
+            //离开节点，重置flag
+            IsCheckedCanEnter = false;
+            IsExcutedPreD = false;
+            IsCalledEnter = false;
+            IsRunning = false;
+        }
+
+        private Status CallPostDeco()
+        {
+            BackDerators(State);
+            return State;
+        }
+
+        /// <summary>
+        /// 调用前置装饰器
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void CallPreDeco()
+        {
+            IsExcutedPreD = true;
+            FrontDerators();
+
+        }
+
+        public bool CanEnter2()
+        {
+            foreach (var pre in Decorators)
+            {
+                if (pre is IConditionable conditionable)
+                {
+                    if (conditionable.Cal() == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 中断自身
+        /// 中断时不要调用后置装饰器，后置装饰器可能会修改State结果值。仅调用中断装饰器
+        /// </summary>
+        /// <remarks>
+        /// 几乎所有情况都应该返回<see cref="Status.Failed"/>,但是保留返回其他值的可能。
+        /// </remarks>
+        Status AbortSelf()
+        {
+            return Status.Failed;
+        }
+
+
     }
 }
 

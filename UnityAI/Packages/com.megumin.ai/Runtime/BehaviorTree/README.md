@@ -62,7 +62,53 @@ Selector--> CompositeNode--> BTParentNode
 ```
 
 
+
+## 节点函数的执行顺序
+
+```mermaid
+graph TB
+
+subgraph Pre
+direction TB
+    prd{PreDecorator}
+end
+
+subgraph Post
+direction TB
+    pod{PostDecorator}
+end
+
+subgraph Running
+direction TB
+    Enter --> OnTick(((OnTick)))
+    OnTick --success--> Exit
+    OnTick --failed--> Exit
+    Abort --failed--> Exit
+end
+
+rs(Succeeded)
+rf(Failed)
+
+Enabled --> |true| CanEnter
+CanEnter --> |true| Pre
+
+Pre --> |success| Post
+Pre --> |failed| Post
+Pre --> |running| Enter
+Exit --> |success| Post
+Exit --> |failed| Post
+
+Post --> |success| rs
+Post --> |failed| rf
+
+CanEnter --> |false&&running| Abort
+CanEnter --> |false|rf
+
+Enabled --> |false&&running| Abort
+```
+
 ## 装饰器
+
 在UE中装饰器并没有保存在Task内部，在组合节点的子成员是一个新类，包含了装饰器和Task。  
 
 而本库才用方式是装饰器放在Task内部，并认为装饰器是Task的一部分。
