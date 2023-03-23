@@ -102,7 +102,7 @@ Post --> |success| rs
 Post --> |failed| rf
 
 CanEnter --> |false&&running| Abort
-CanEnter --> |false|rf
+CanEnter --> |false| rf
 
 Enabled --> |false&&running| Abort
 ```
