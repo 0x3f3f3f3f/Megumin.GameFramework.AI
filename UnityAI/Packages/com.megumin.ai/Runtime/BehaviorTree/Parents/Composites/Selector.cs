@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
                 else
                 {
-                    if (dynamicAbort || child.CanAbortLowerPriority())
+                    if (Dynamic || child.CanAbortLowerPriority())
                     {
                         //一种情况是，当条件装饰一直成功，但是节点本身一直失败，
                         //这时不能终止正在运行的节点，否则会导致不停的终止重新进入。
@@ -33,10 +33,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             //这里标记一下已经检查过了，马上下一次Tick就不要重复检查，防止连续调用2次。
                             target.IsCheckedCanExecute = true;
                         }
+                        else
+                        {
+                            //前面的节点条件装饰器失败，不需要继续检查节点本身，等于节点结果失败。跳过节点。
+                        }
                     }
                 }
 
-                void AbortLastRunning()
+                void TryAbortLastRunning()
                 {
                     if (i < current)
                     {
@@ -52,13 +56,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     var result = target.Tick(this);
                     if (result == Status.Running)
                     {
-                        AbortLastRunning();
+                        TryAbortLastRunning();
                         current = i;
                         return Status.Running;
                     }
                     else if (result == Status.Succeeded)
                     {
-                        AbortLastRunning();
+                        TryAbortLastRunning();
                         current = i;
                         return Status.Succeeded;
                     }

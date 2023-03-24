@@ -417,7 +417,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 检查允许终止自身的条件装饰器，能否继续执行
+        /// 检查含有终止自身标记的条件装饰器，能否继续执行
         /// </summary>
         /// <returns>
         /// <see langword="true"/>可以继续执行
@@ -429,13 +429,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.AbortType.HasFlag(AbortType.Self)
-                        && conditionable.Cal() == false)
+                    if (conditionable.AbortType.HasFlag(AbortType.Self))
                     {
-                        return false;
+                        if (conditionable.Cal() == false)
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+
             return true;
         }
 
@@ -453,10 +456,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return hasAbort;
         }
 
-        [Obsolete("Use CanAbortLowerPriority && CanExecute instead.", true)]
+        /// <summary>
+        /// 检查含有终止低优先级标记的条件装饰器，能否继续执行
+        /// </summary>
+        /// <returns></returns>
         public bool ExecuteConditionDecoratorCheckAbortLowerPriority()
         {
-            return CanAbortLowerPriority() && CanExecute();
+            foreach (var pre in Decorators)
+            {
+                if (pre is IConditionDecorator conditionable)
+                {
+                    if (conditionable.AbortType.HasFlag(AbortType.LowerPriority))
+                    {
+                        if (conditionable.Cal() == false)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
