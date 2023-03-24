@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 条件终止 动态模式
         /// </summary>
-        bool dynamicAbort = false;
+        public bool dynamicAbort = false;
 
         /// <summary>
         /// 测试一个节点是不是自己的子代

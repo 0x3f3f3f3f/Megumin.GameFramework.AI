@@ -216,7 +216,20 @@ A：采用`立刻进入下一个节点`的方案。
   为了保证装饰器和叶子节点的一致性，统一为立刻进入下一个节点。
 
 ## 条件终止
-仅针对条件装饰器和条件叶子节点。
+```cs
+[Flags]
+public enum AbortType
+{
+    None = 0,
+    Self = 1 << 0,
+    LowerPriority = 1 << 1,
+    Both = Self | LowerPriority
+}
+```
+两种终止类型：  
+- Self：当自身处于`Running`时，每次Tick都重新求值节点的进入条件。如果结果由true变为false，则终止自身节点，节点向上级返回Failed。
+- LowerPriority：当自身`右侧节点`处于`Running`时，上级节点每次Tick会额外重新求值当前节点的进入条件。如果结果改变，则重新执行前节点。如果执行结果发生改变，则终止处于`Running`的节点。
+    - 不同的父节点对待LowerPriority的策略不同。
 
 
 ---

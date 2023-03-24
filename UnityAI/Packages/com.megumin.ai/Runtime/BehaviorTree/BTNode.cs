@@ -115,6 +115,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             return Status.Succeeded;
         }
+
+
+        string tipString = null;
+        public string TipString
+        {
+            get
+            {
+                if (tipString == null)
+                {
+                    tipString = $"{GetType().Name}[{ShortGUID}]";
+                }
+                return tipString;
+            }
+        }
+
+        public override string ToString()
+        {
+            return TipString;
+        }
     }
 
     public partial class BTNode
@@ -401,15 +420,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return true;
         }
 
-        public bool ExecuteConditionDecoratorCheckAbortLowerPriority()
+        /// <summary>
+        /// 当前节点能否终止低优先级节点
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanAbortLowerPriority()
         {
             var hasAbort = Decorators.Any(static elem =>
             {
                 return elem is IConditionDecorator conditionable
                         && conditionable.AbortType.HasFlag(AbortType.LowerPriority);
             });
+            return hasAbort;
+        }
 
-            return hasAbort && CanExecute();
+        [Obsolete("Use CanAbortLowerPriority && CanExecute instead.", true)]
+        public bool ExecuteConditionDecoratorCheckAbortLowerPriority()
+        {
+            return CanAbortLowerPriority() && CanExecute();
         }
 
         /// <summary>
