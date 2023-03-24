@@ -78,8 +78,13 @@ end
 subgraph Condition [Condition]
 direction TB
     ecd>ExecuteConditionDecorator]
-    a([IsCheckedCanExecute]) --> |false|CanExecute
-    b([AbortType:Self]) --> CanExecute --> ecd
+    a([IsCheckedCanExecute])
+
+    a--> |false|CanExecute
+    CanExecute --> |all|ecd
+    CanExecute -->|Set:true|a
+    a--> |true|CanExecuteWithAbortSelf
+    CanExecuteWithAbortSelf --> |OnlyAbortSelf|ecd
 end
 
 subgraph Execute
@@ -209,6 +214,10 @@ A：采用`立刻进入下一个节点`的方案。
 - 类比状态机，状态机中不允许某一时刻处于2个状态夹缝状态，总是立刻进入下一个状态。
 - 装饰器等同于常规行为树的叶子节点。而且装饰器很难实现下一次tick才进入下一个装饰器。  
   为了保证装饰器和叶子节点的一致性，统一为立刻进入下一个节点。
+
+## 条件终止
+仅针对条件装饰器和条件叶子节点。
+
 
 ---
 ---

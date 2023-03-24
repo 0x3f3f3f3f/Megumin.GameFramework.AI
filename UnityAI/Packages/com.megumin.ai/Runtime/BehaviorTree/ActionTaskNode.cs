@@ -24,7 +24,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public interface IConditionDecorator: IDecorator, IConditionable
     {
-
+        AbortType AbortType { get; }
     }
 
     internal interface IPreDecorator : IDecorator

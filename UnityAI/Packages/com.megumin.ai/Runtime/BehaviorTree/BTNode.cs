@@ -208,30 +208,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //条件阶段
-            if (IsCheckedCanExecute == false || abortSelf)
+            if (Condition() == false)
             {
-                IsCheckedCanExecute = true;
-
-                var canEnter = CanExecute();
-                if (canEnter == false)
+                //离开节点
+                State = Status.Failed;
+                if (IsInnerRunning)
                 {
-                    //离开节点
-                    State = Status.Failed;
-                    if (IsInnerRunning)
-                    {
-                        State = AbortSelf();
-                    }
-                    else
-                    {
-                        ResetFlag();
-                    }
-                    return State;
+                    State = AbortSelf();
                 }
+                else
+                {
+                    ResetFlag();
+                }
+                return State;
             }
 
             Execute();
 
             return State;
+        }
+
+        bool Condition()
+        {
+            if (IsCheckedCanExecute)
+            {
+                return ExecuteConditionDecoratorCheckAbortSelf();
+            }
+            else
+            {
+                IsCheckedCanExecute = true;
+                return CanExecute();
+            }
         }
 
         /// <summary>
@@ -369,6 +376,40 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// 检查允许终止自身的条件装饰器，能否继续执行
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/>可以继续执行
+        /// <see langword="false"/>不能继续执行，应该终止自身
+        /// </returns>
+        protected bool ExecuteConditionDecoratorCheckAbortSelf()
+        {
+            foreach (var pre in Decorators)
+            {
+                if (pre is IConditionDecorator conditionable)
+                {
+                    if (conditionable.AbortType.HasFlag(AbortType.Self)
+                        && conditionable.Cal() == false)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool ExecuteConditionDecoratorCheckAbortLowerPriority()
+        {
+            var hasAbort = Decorators.Any(static elem =>
+            {
+                return elem is IConditionDecorator conditionable
+                        && conditionable.AbortType.HasFlag(AbortType.LowerPriority);
+            });
+
+            return hasAbort && CanExecute();
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public bool Result { get; set; }
+        public AbortType AbortType { get; }
     }
 }
 

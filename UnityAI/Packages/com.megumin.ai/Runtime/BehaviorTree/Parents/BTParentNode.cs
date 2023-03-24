@@ -17,6 +17,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<BTNode> children = new();
 
         /// <summary>
+        /// 条件终止 动态模式
+        /// </summary>
+        bool dynamicAbort = false;
+
+        /// <summary>
         /// 测试一个节点是不是自己的子代
         /// </summary>
         /// <param name="node"></param>
