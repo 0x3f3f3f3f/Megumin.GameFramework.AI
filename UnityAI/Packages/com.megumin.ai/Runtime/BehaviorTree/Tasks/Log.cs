@@ -28,7 +28,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             count++;
         }
 
-        protected override Status OnTick()
+        protected override Status OnTick(BTNode from)
         {
             if (Time.time - entertime >= waitTime)
             {

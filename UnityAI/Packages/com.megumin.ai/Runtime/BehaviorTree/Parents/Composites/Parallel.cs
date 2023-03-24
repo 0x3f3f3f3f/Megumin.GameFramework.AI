@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             comp.Clear();
         }
 
-        protected override Status OnTick()
+        protected override Status OnTick(BTNode from)
         {
             for (int i = 0; i < children.Count; i++)
             {

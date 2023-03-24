@@ -11,7 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public class Sequence : CompositeNode
     {
-        protected override Status OnTick()
+        protected override Status OnTick(BTNode from)
         {
             for (int i = current; i < children.Count; i++)
             {

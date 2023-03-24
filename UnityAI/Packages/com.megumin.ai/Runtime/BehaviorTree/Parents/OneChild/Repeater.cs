@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public int loopCount = 2;
 
         int cur = 0;
-        protected override Status OnTick()
+        protected override Status OnTick(BTNode from)
         {
             var res = Child0.Tick(this);
             if (res == Status.Succeeded || res == Status.Failed)

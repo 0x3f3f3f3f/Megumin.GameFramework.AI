@@ -111,11 +111,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected virtual void OnAbort() { }
 
-        protected virtual Status OnTick()
+        protected virtual Status OnTick(BTNode from)
         {
             return Status.Succeeded;
         }
 
+
+
+        /// <summary>
+        /// 根据调用节点返回不同的结果值，使调用节点忽略当前节点。
+        /// <para/> 父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
+        protected Status GetIgnoreResult(BTNode from)
+        {
+            if (from is Selector)
+            {
+                return Status.Failed;
+            }
+            else
+            {
+                return Status.Succeeded;
+            }
+        }
 
         string tipString = null;
         public string TipString
@@ -242,7 +261,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return State;
             }
 
-            Execute();
+            Execute(from);
 
             return State;
         }
@@ -265,7 +284,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
-        private void Execute()
+        private void Execute(BTNode from)
         {
             //前置阶段
             if (IsExecutedPreDecorator == false)
@@ -276,7 +295,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (IsCompleted == false)
             {
-                Running();
+                Running(from);
             }
 
             //后置阶段 当前已经完成
@@ -288,7 +307,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Running()
+        private void Running(BTNode from)
         {
             //Enter Exit函数不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
@@ -302,7 +321,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //OnTick 阶段
-            State = OnTick();
+            State = OnTick(from);
 
             if (IsCompleted)
             {
@@ -318,7 +337,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Enter()
         {
-            Log($"[{Time.time:0.00}] Enter Node {this.GetType().Name}");
+            Log($"[{Time.time:0.00}] Enter Node {this}");
             OnEnter();
         }
 
@@ -326,7 +345,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         private void Exit()
         {
             OnExit(State);
-            Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this.GetType().Name}");
+            Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this}");
         }
 
         /// <summary>
