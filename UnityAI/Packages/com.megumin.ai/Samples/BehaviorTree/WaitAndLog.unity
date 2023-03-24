@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 1127915010}
   - component: {fileID: 1127915009}
   m_Layer: 0
-  m_Name: AbortSelfAgent
+  m_Name: AbortTypeAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
