@@ -3,6 +3,7 @@
     <ui:VisualElement name="contentContainer" class="border" style="flex-direction: row;">
         <ui:VisualElement name="header" style="flex-direction: row; flex-grow: 1; align-items: center;">
             <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
+            <ui:Button display-tooltip-when-elided="true" name="abortType" class="abortType" />
             <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" class="title" />
         </ui:VisualElement>
         <ui:VisualElement name="markerContainer" class="markerContainer">

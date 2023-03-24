@@ -84,6 +84,45 @@ BehaviorTreeDecoratorView {
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
+.abortType {
+    display: none;
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-image: url('project://database/Packages/com.unity.settings-manager/Content/Options.png?fileID=2800000&guid=9eff477e4332346818c96745043dae9e&type=3#Options');
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.abortType.abortTypeSelf {
+    display: flex;
+    background-image: resource("animatorstatetransition icon");
+}
+
+.abortType.abortTypeLowerPriority {
+    display: flex;
+    background-image: resource("areaeffector2d icon");
+}
+
+.abortType.abortTypeSelf.abortTypeLowerPriority {
+    display: flex;
+    background-image: resource("compositecollider2d icon");
+}
+
 .marker {
     width: 18px;
     height: 18px;
@@ -115,6 +154,6 @@ BehaviorTreeDecoratorView {
     -unity-font-style: bold;
 }
 
-.disable_DecoratorIcon #header > #icon{
+.disable_DecoratorIcon #header > #icon {
     display: none;
 }

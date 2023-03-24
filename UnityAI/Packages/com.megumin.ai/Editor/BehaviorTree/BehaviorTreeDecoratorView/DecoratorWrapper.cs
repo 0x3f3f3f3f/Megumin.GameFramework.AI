@@ -36,6 +36,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //这里值已经改变了，再Record已经来不及了
                 //Todo BUG, Undo时没办法回退ChangeVersion，造成编辑器未保存状态无法消除
                 wrapper?.View?.NodeView?.TreeView?.IncrementChangeVersion($"Inspector Changed");
+                wrapper?.View?.ReloadView();
             }
 
             //this.DrawButtonAfterDefaultInspector();

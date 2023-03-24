@@ -13,5 +13,10 @@ namespace Megumin.GameFramework.AI
         public const string failed = nameof(failed);
 
         public const string flowPoint = nameof(flowPoint);
+
+        public const string enableMarker = nameof(enableMarker);
+
+        public const string abortTypeSelf = nameof(abortTypeSelf);
+        public const string abortTypeLowerPriority = nameof(abortTypeLowerPriority);
     }
 }

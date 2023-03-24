@@ -18,6 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override VisualElement contentContainer => ContentContainer;
         public VisualElement ContentContainer { get; private set; }
         public Button Icon { get; private set; }
+        public Button AbortTypeButton { get; private set; }
         public Label Title { get; }
         public VisualElement CMarker { get; private set; }
         public VisualElement FMarker { get; private set; }
@@ -33,6 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             ContentContainer = this.Q("contentContainer");
             Icon = this.Q<Button>("icon", "treeElementIcon");
+            AbortTypeButton = this.Q<Button>("abortType", "abortType");
             Title = this.Q<Label>("title-label");
             CMarker = this.Q("cMarker");
             FMarker = this.Q("fMarker");
@@ -122,7 +124,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return soWrapper;
         }
 
-        public const string EnableMarkClass = "enableMarker";
+
         public void ReloadView()
         {
             SODecorator = CreateSOWrapperIfNull(Decorator);
@@ -134,10 +136,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
 
-            CMarker.SetToClassList(EnableMarkClass, Decorator is IConditionDecorator);
-            FMarker.SetToClassList(EnableMarkClass, Decorator is IPreDecorator);
-            BMarker.SetToClassList(EnableMarkClass, Decorator is IPostDecorator);
-            AMarker.SetToClassList(EnableMarkClass, Decorator is IAbortDecorator);
+            RefreshAbortTypeUI();
+
+            CMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IConditionDecorator);
+            FMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IPreDecorator);
+            BMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IPostDecorator);
+            AMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IAbortDecorator);
 
 
             var attri = type?.GetCustomAttribute<ColorAttribute>();
@@ -145,6 +149,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 contentContainer.style.backgroundColor = attri.Color;
             }
+        }
+
+        public void RefreshAbortTypeUI()
+        {
+            var hasSelf = (Decorator as IAbortable)?.AbortType.HasFlag(AbortType.Self) ?? false;
+            AbortTypeButton.SetToClassList(UssClassConst.abortTypeSelf, hasSelf);
+            var hasLow = (Decorator as IAbortable)?.AbortType.HasFlag(AbortType.LowerPriority) ?? false;
+            AbortTypeButton.SetToClassList(UssClassConst.abortTypeLowerPriority, hasLow);
         }
 
         public override void OnSelected()
