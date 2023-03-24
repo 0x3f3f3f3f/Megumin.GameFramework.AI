@@ -227,9 +227,39 @@ public enum AbortType
 }
 ```
 两种终止类型：  
-- Self：当自身处于`Running`时，每次Tick都重新求值节点的进入条件。如果结果由true变为false，则终止自身节点，节点向上级返回Failed。
-- LowerPriority：当自身`右侧节点`处于`Running`时，上级节点每次Tick会额外重新求值当前节点的进入条件。如果结果改变，则重新执行前节点。如果执行结果发生改变，则终止处于`Running`的节点。
-    - 不同的父节点对待LowerPriority的策略不同。
+- Self：当自身处于`Running`时，每次Tick都对含有AbortType.Self的条件装饰器重新求值。如果结果由true变为false，则终止自身节点，节点向上级返回Failed。
+- LowerPriority：当`右侧节点`处于`Running`时，上级节点每次Tick会额外对含有AbortType.LowerPriority的条件装饰器重新求值。如果结果改变，则重新执行前节点。如果执行结果发生改变，则终止处于`Running`的节点。
+
+不要被终止类型的名词误导，不同的行为树实现条件终止的处理方式略有差异。  
+但总的来说是都是符合直觉的。可以笼统的理解为，已经处理过的节点条件改变时，允许反悔，重新执行，并结束正在允许的节点。
+
+### 不同的父节点对LowerPriority的处理方式不同。
+#### Selector对`每个子节点`的`所有的条件装饰器`重新求值：
+- 如果重新求值结果为true：还要重新执行这个节点：  
+    - 如果这个节点Succeeded，则终止处于`Running`的节点，Selector直接返回Succeeded。  
+    - 如果这个节点Running，则终止处于`Running`的节点，改为执行这个节点。  
+    - 如果这个节点Failed，则继续执行处于`Running`的节点。  
+- 如果重新求值结果为false，则继续执行处于`Running`的节点。  
+#### Sequence对`每个子节点`的`含有AbortType.LowerPriority的条件装饰器`重新求值：  
+- 如果重新求值结果为true，则继续执行处于`Running`的节点。  
+- 如果重新求值结果为false，则终止处于`Running`的节点，Sequence直接返回Failed。
+
+### Dynamic
+- Dynamic是另一种条件终止的实现方式。  
+- Dynamic仅可以标记在父节点上。  
+- Dynamic比AbortType性能开销更高，也更不容易理解。  
+- **强烈建议使用AbortType，而不是Dynamic。** 但是仍然尊重用户的选择。  
+
+不同的父节点对Dynamic的处理方式不同。  
+#### Selector标记为Dynamic：  
+- 与Selector对LowerPriority的处理方式相同。 
+#### Sequence标记为Dynamic：对`每个子节点`的`所有的条件装饰器`重新求值：
+- 如果重新求值结果为true：还要重新执行这个节点： 
+    - 如果这个节点Succeeded，则继续执行处于`Running`的节点。  
+    - 如果这个节点Running，则终止处于`Running`的节点，改为执行这个节点。  
+    - 如果这个节点Failed，则终止处于`Running`的节点，Sequence直接返回Failed。  
+- 如果重新求值结果为false，则终止处于`Running`的节点，Sequence直接返回Failed。  
+- `特别注意`：如果Sequence含有多个非条件子节点，第一个非条件节点总是会终止后面的非条件节点，并重新运行。会造成死循环。所以如果没有特别需要，不要对Sequence标记Dynamic。  
 
 
 ---
