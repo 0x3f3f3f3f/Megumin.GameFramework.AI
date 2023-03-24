@@ -60,6 +60,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;
             DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
 
+            //设置为仅垂直滚动
+            DecoretorListView.horizontalScrollingEnabled = false; //不生效
+
+            var scrollView = DecoretorListView.Q<ScrollView>();
+            scrollView.mode = ScrollViewMode.Vertical;
+            scrollView.horizontalScrollerVisibility =  ScrollerVisibility.Hidden;
+            scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            scrollView.contentViewport.style.overflow = Overflow.Visible;
 
             this.RegisterCallback<TooltipEvent>(OnToolTip);
         }
