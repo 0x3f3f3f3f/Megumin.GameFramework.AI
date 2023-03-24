@@ -117,39 +117,70 @@ namespace Megumin.Binding
                         //解析失败
                         if (GetMode.HasFlag(ParseMode.Log))
                         {
-                            string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
-                            Debug.Log(message);
+                            DebugLogInValue();
                         }
-
-                        if (GetMode.HasFlag(ParseMode.FallbackValue))
-                        {
-                            return base.value;
-                        }
-
-                        if (GetMode.HasFlag(ParseMode.FallbackTypeDefault))
-                        {
-                            return default;
-                        }
-
-                        throw new Exception();
                     }
-
                 }
                 else
                 {
                     //还未解析
                     if (GetMode.HasFlag(ParseMode.Log))
                     {
-                        string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
-                        Debug.Log(message);
+                        DebugLogInValue();
                     }
+                }
+
+                if (GetMode.HasFlag(ParseMode.FallbackValue))
+                {
+                    return base.value;
+                }
+
+                if (GetMode.HasFlag(ParseMode.FallbackTypeDefault))
+                {
                     return default;
                 }
+
+                throw new Exception();
             }
 
             set
             {
-                base.Value = value;
+                if (ParseResult.HasValue)
+                {
+                    if (ParseResult.Value.HasFlag(ParseBindingResult.Set))
+                    {
+                        //解析成功
+                        Setter(value);
+                    }
+                    else
+                    {
+                        //解析失败
+                        if (SetMode.HasFlag(ParseMode.Log))
+                        {
+                            DebugLogInValue();
+                        }
+                    }
+                }
+                else
+                {
+                    //还未解析
+                    if (SetMode.HasFlag(ParseMode.Log))
+                    {
+                        DebugLogInValue();
+                    }
+                }
+
+                if (SetMode.HasFlag(ParseMode.FallbackValue))
+                {
+                    base.value = value;
+                }
+
+                if (SetMode.HasFlag(ParseMode.FallbackTypeDefault))
+                {
+                    return;
+                }
+
+                throw new Exception();
             }
         }
 
@@ -178,6 +209,17 @@ namespace Megumin.Binding
         }
 
         public string DebugParseResult()
+        {
+            string message = $"ParseResult:{ParseResult}  | Value:{Value} |  {typeof(T)}  |  {BindingPath}";
+            Debug.Log(message);
+            return message;
+        }
+
+        /// <summary>
+        /// 在Value Get Set内使用的Log方法
+        /// </summary>
+        /// <returns></returns>
+        protected string DebugLogInValue()
         {
             string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
             Debug.Log(message);
