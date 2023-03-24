@@ -49,6 +49,16 @@ namespace Megumin.Binding
         [field: SerializeField]
         protected string refName;
         public string RefName { get => refName; set => refName = value; }
+
+        public static implicit operator RefVar<T>(T value)
+        {
+            return new RefVar<T> { value = value };
+        }
+
+        public static implicit operator T(RefVar<T> var)
+        {
+            return var.Value;
+        }
     }
 
     [Serializable]

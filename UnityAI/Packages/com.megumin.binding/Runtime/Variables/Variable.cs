@@ -59,6 +59,16 @@ namespace Megumin.Binding
         {
             this.value = (T)value;
         }
+
+        public static implicit operator Variable<T>(T value)
+        {
+            return new Variable<T> { value = value };
+        }
+
+        public static implicit operator T(Variable<T> var)
+        {
+            return var.Value;
+        }
     }
 
     /// <summary>
@@ -172,6 +182,16 @@ namespace Megumin.Binding
             string message = $"ParseResult:{ParseResult}  |  {typeof(T)}  |  {BindingPath}";
             Debug.Log(message);
             return message;
+        }
+
+        public static implicit operator BindingVar<T>(T value)
+        {
+            return new BindingVar<T> { value = value };
+        }
+
+        public static implicit operator T(BindingVar<T> var)
+        {
+            return var.Value;
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Megumin.Binding;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Icon("ICONS/sg_graph_icon.png")]
     public class Wait : ActionTaskNode
     {
-        public float waitTime = 3f;
+        public RefVar<float> waitTime = 5.0f;
 
         float entertime;
         protected override void OnEnter()
