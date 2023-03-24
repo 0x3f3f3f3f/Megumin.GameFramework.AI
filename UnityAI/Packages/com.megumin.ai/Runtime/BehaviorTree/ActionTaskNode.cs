@@ -22,9 +22,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     }
 
-    public interface IConditionDecorator: IDecorator, IConditionable
+    /// <summary>
+    /// 可终止的
+    /// </summary>
+    public interface IAbortable
     {
         AbortType AbortType { get; }
+    }
+
+    public interface IConditionDecorator : IDecorator, IConditionable, IAbortable
+    {
+
     }
 
     internal interface IPreDecorator : IDecorator

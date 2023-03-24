@@ -105,11 +105,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return true;
         }
 
-        public static List<string> IgnoreSerializeMember = new()
-        {
-            nameof(BTNode.Tree),
-        };
-
         /// <summary>
         /// 装饰器，子节点直接引用序列化，自动关联引用。不用额外处理
         /// </summary>
@@ -121,9 +116,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in instance.GetSerializeMembers())
             {
-                if (instance is BTNode)
+                if (instance is TreeElement treeElement)
                 {
-                    if (IgnoreSerializeMember.Contains(item.MemberName))
+                    if (item.MemberType == typeof(AITree))
                     {
                         continue;
                     }
