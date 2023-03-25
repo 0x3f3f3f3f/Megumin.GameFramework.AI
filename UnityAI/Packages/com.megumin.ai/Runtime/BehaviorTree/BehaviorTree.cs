@@ -221,19 +221,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
 
-        internal void UpdateNodeIndex()
+        internal void UpdateNodeIndexDepth()
         {
             foreach (var item in AllNodes)
             {
                 if (item.Meta != null)
                 {
                     item.Meta.index = -1;
+                    item.Meta.depth = -1;
                 }
             }
 
             var index = 0;
-
-            void SetNodeIndex(BTNode node)
+            void SetNodeIndex(BTNode node, int depth = 0)
             {
                 if (node == null)
                 {
@@ -243,15 +243,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 if (node.Meta != null)
                 {
                     node.Meta.index = index;
+                    node.Meta.depth = depth;
                 }
 
                 index++;
 
                 if (node is BTParentNode parentNode)
                 {
+                    var nextDepth = depth + 1;
                     foreach (var child in parentNode.children)
                     {
-                        SetNodeIndex(child);
+                        SetNodeIndex(child, nextDepth);
                     }
                 }
             }

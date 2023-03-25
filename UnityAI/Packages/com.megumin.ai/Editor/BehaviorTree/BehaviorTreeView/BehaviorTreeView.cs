@@ -551,7 +551,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             UndoRecord("Change Start Node");
             Tree.StartNode = behaviorTreeNodeView.SONode.Node;
-            Tree.UpdateNodeIndex();
+            Tree.UpdateNodeIndexDepth();
             //需要重载整个View. 节点的unotConnected 属性会大面积改变。
             //ReloadView();
             //behaviorTreeNodeView.AddToClassList(StartNodeClass);

@@ -24,7 +24,7 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         [field: SerializeField]
         public string GUID { get; set; }
-        public string ShortGUID => GUID[..13];
+        public string ShortGUID => GUID?[..13];
 
         public AITree Tree { get; set; }
 

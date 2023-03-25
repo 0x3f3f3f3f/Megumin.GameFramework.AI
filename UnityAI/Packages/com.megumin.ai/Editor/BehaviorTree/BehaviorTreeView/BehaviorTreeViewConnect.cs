@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// </summary>
         public void UpdateNodeIndex()
         {
-            Tree?.UpdateNodeIndex();
+            Tree?.UpdateNodeIndexDepth();
             foreach (var item in graphElements)
             {
                 if (item is BehaviorTreeNodeView nodeView)
