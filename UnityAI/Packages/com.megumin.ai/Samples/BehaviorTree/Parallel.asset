@@ -24,6 +24,44 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 04e0f8d0-00b4-4f16-ab64-583521bd31a1
+  - Name: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77
+    Type: Megumin.GameFramework.AI.BehaviorTree.Empty
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.Decorators
+    - Name: children
+      Type: $ref
+      Value: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.children
+    - Name: GUID
+      Type: System.String
+      Value: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77
+  - Name: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.children
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 515
+    - Name: y
+      Type: System.Single
+      Value: 41.00001
+    - Name: index
+      Type: System.Int32
+      Value: 4
+    - Name: depth
+      Type: System.Int32
+      Value: 1
   - Name: 2ab55af1-6b09-48ab-8bda-968a568fb30d
     Type: Megumin.GameFramework.AI.BehaviorTree.Parallel
     Member:
@@ -50,6 +88,9 @@ MonoBehaviour:
       Type: $ref
       Value: e109c2fe-5824-4929-b1d8-73084b9ba641
     - Name: 1
+      Type: $ref
+      Value: 16fc4098-eb97-4c81-aa0a-57b1d0a9ef77
+    - Name: 2
       Type: $ref
       Value: ade1233d-f953-4ce4-a441-e54f6df9f9d1
   - Name: 2ab55af1-6b09-48ab-8bda-968a568fb30d.comp
@@ -120,7 +161,7 @@ MonoBehaviour:
       Value: 207.7841
     - Name: index
       Type: System.Int32
-      Value: 6
+      Value: 7
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -239,7 +280,7 @@ MonoBehaviour:
       Value: 207.7841
     - Name: index
       Type: System.Int32
-      Value: 5
+      Value: 6
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -292,7 +333,7 @@ MonoBehaviour:
       Value: 38.99998
     - Name: index
       Type: System.Int32
-      Value: 4
+      Value: 5
     - Name: depth
       Type: System.Int32
       Value: 1
