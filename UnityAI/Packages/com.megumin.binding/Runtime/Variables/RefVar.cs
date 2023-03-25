@@ -406,11 +406,7 @@ namespace Megumin.Binding
                     }
                 }
 
-                if (index != 0)
-                {
-                    EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-                }
-
+                EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
                 using (new UnityEditor.EditorGUI.DisabledGroupScope(index != 0))
                 {
                     //这里如果是引用的对象，暂时不让在Inspector里修改，对象可能会被多个地方引用
