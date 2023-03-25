@@ -175,6 +175,15 @@ Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后
 
 显而易见的是，转换次数越多，性能越低。
 
+## 类名变更
+- 序列化成员更改命名。保证仍能反序列化成功。 
+    - 支持FormerlySerializedAsAttribute特性
+    - 支持SerializationAliasAttribute特性
+- 节点更换类名   
+    - 使用SerializationAliasAttribute特性标记在类型上，注意别名一定是旧的类型全名，包含命名空间。  
+    编辑器会自动查找SerializationAlias保证旧的文件仍能反序列化成功。重新保存后变更为新名字。  
+    - 或者手动写一个静态函数，在反序列化前使用TypeCache.HotType 设置别名。  
+
 ## 概率与冷却
 
 ## 环形拓扑和菱形拓扑

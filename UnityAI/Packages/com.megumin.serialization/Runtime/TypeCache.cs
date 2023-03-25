@@ -167,6 +167,31 @@ namespace Megumin.Serialization
             return false;
         }
 
+        public static List<Type> GetTypesDerivedFrom<T>()
+        {
+            List<Type> result = new List<Type>();
+            TryGetTypesDerivedFrom<T>(result);
+            return result;
+        }
+
+        public static bool TryGetTypesDerivedFrom<T>(List<Type> types)
+        {
+            bool has = false;
+            if (types != null)
+            {
+                CacheAllTypes();
+                foreach (var item in allType)
+                {
+                    if (typeof(T).IsAssignableFrom(item.Value))
+                    {
+                        has = true;
+                        types.Add(item.Value);
+                    }
+                }
+            }
+            return has;
+        }
+
         public static bool TryGetType(List<string> typeFullName,
                                       out Type[] types)
         {
@@ -714,6 +739,40 @@ namespace Megumin.Serialization
             hotType[aliasName] = type;
         }
 
+        public static void HotAllTypeAlias()
+        {
+            foreach (var item in allType)
+            {
+                var type = item.Value;
+                HotTypeAlias(type);
+            }
+        }
+
+        public static void HotTypeAlias(Type type)
+        {
+            //类型继承的别名不考虑
+            var attris = type.GetCustomAttributes<SerializationAliasAttribute>(false);
+            if (attris != null)
+            {
+                foreach (var attri in attris)
+                {
+                    hotType[attri.Alias] = type;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 处理<see cref="SerializationAliasAttribute"/>特性。用于类名变更
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void HotTypeAliasDerivedFrom<T>()
+        {
+            foreach (var type in GetTypesDerivedFrom<T>())
+            {
+                HotTypeAlias(type);
+            }
+        }
+
         /// <summary>
         /// 用于序列化时缩短名字
         /// </summary>
@@ -794,4 +853,22 @@ namespace Megumin.Serialization
             return false;
         }
     }
+
+    /// <summary>
+    /// 别名。如果标记在类型上，要使用类型全名，带上命名空间。
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
+    public class SerializationAliasAttribute : Attribute
+    {
+        /// <summary>
+        /// 别名
+        /// </summary>
+        public string Alias { get; set; }
+
+        public SerializationAliasAttribute(string alias)
+        {
+            Alias = alias;
+        }
+    }
+
 }

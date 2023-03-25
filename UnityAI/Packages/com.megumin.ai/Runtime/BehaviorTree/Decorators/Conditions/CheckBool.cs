@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Serialization;
 using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     //[FormerlySerializedAs("CheckBool")]
     [Serializable]
+    [SerializationAlias("CheckBool")]
     public class CheckBool : ConditionDecorator, IConditionDecorator
     {
         [FormerlySerializedAs("A")]
@@ -23,5 +25,4 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool Result { get; set; }
     }
 }
-
 

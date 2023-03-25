@@ -39,10 +39,23 @@ namespace Megumin.Serialization
                 foreach (var elem in members)
                 {
                     var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
-                    if (attri?.oldName == memberName)
+                    if (string.Equals(attri?.oldName, memberName))
                     {
                         member = elem;
                         break;
+                    }
+
+                    var attri2 = elem.GetCustomAttributes<SerializationAliasAttribute>();
+                    if (attri2 != null)
+                    {
+                        foreach (var attri3 in attri2)
+                        {
+                            if (string.Equals(attri3.Alias, memberName))
+                            {
+                                member = elem;
+                                break;
+                            }
+                        }
                     }
                 }
             }

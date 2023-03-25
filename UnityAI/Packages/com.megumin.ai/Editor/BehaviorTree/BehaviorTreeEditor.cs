@@ -408,9 +408,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName(TreeView);
         }
 
+        static bool HotTypeAlias = false;
         public void SelectTree(IBehaviorTreeAsset behaviorTreeAsset)
         {
             this.LogMethodName();
+
+            if (HotTypeAlias == false)
+            {
+                //第一次反序列化之前处理一下类型别名。防止节点改名后报错。
+                Megumin.Serialization.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
+                HotTypeAlias = true;
+            }
 
             var isChangeTree = CurrentAsset != behaviorTreeAsset
                 || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
