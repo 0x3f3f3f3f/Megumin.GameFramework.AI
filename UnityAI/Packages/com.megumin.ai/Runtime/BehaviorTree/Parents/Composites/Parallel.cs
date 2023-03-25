@@ -9,11 +9,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public enum FinishMode
     {
+        /// <summary>
+        /// 任意一个子节点失败，返回失败。
+        /// </summary>
         AnyFailed = 0,
+        /// <summary>
+        /// 任意一个子节点成功，返回成功。
+        /// </summary>
         AnySucceeded = 1,
+        /// <summary>
+        /// 任意一个子节点完成，返回完成节点的结果。
+        /// </summary>
         AnyCompleted = 2,
 
+        /// <summary>
+        /// 等待所有子节点都完成，任意一个子节点成功，返回成功。
+        /// </summary>
         AnySucceededWaitAll = 3,
+        /// <summary>
+        /// 等待所有子节点都完成，任意一个子节点失败，返回失败。
+        /// </summary>
         AnyFailedWaitAll = 4,
     }
 

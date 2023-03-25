@@ -144,6 +144,19 @@ ResetFlag --> Return
 - [ ] 后置装饰器 用B↑表示，从下到上执行 在退出节点后调用
 - [ ] 中断装饰器 用A↑表示，从下到上执行 在中断节点发生时退出节点后调用
 
+## 平行节点Parallel
+根据FinishMode有不同的行为
+- AnyFailed  
+  任意一个子节点失败，返回失败。
+- AnySucceeded  
+  任意一个子节点成功，返回成功。
+- AnyCompleted  
+  任意一个子节点完成，返回完成节点的结果。
+- AnySucceededWaitAll  
+  等待所有子节点都完成，任意一个子节点成功，返回成功。
+- AnyFailedWaitAll
+  等待所有子节点都完成，任意一个子节点失败，返回失败。
+
 ## Abort
 Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后通牒。  
 当Abort发生时，递归调用子节点，Abort执行OnAbort Exit BackDerators。
