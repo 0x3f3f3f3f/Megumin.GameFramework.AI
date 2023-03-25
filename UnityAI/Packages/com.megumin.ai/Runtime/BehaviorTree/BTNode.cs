@@ -282,7 +282,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 当前状态是否完成
         /// </summary>
-        bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
+        public bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
         private void Execute(BTNode from)
         {
