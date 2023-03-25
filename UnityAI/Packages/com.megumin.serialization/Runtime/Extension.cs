@@ -62,21 +62,38 @@ namespace Megumin.Serialization
 
             try
             {
+                Type valueType = value?.GetType();
+
                 if (member is FieldInfo fieldInfo)
                 {
-                    if (value != null && !fieldInfo.FieldType.IsAssignableFrom(value.GetType()))
+                    if (value is UnityEngine.Object uobj && !uobj && fieldInfo.FieldType != valueType)
+                    {
+                        //空的UnityEngine.Object 反序列化后丢失真实类型。
+                        //需要改为null，否则SetValue时会导致类型不匹配异常
+                        value = null;
+                    }
+
+                    if (fieldInfo.FieldType.IsAssignableFrom(valueType) == false)
                     {
                         //参数类型不普配
-                        Debug.LogError("参数类型不普配");
+                        Debug.LogError($"{member.Name}:{fieldInfo.FieldType.FullName} 参数类型不普配 value:{valueType?.FullName}");
                     }
+
                     fieldInfo.SetValue(instance, value);
                 }
                 else if (member is PropertyInfo propertyInfo)
                 {
-                    if (value != null && !propertyInfo.PropertyType.IsAssignableFrom(value.GetType()))
+                    if (value is UnityEngine.Object uobj && !uobj && propertyInfo.PropertyType != valueType)
+                    {
+                        //空的UnityEngine.Object 反序列化后丢失真实类型。
+                        //需要改为null，否则SetValue时会导致类型不匹配异常
+                        value = null;
+                    }
+
+                    if (propertyInfo.PropertyType.IsAssignableFrom(valueType) == false)
                     {
                         //参数类型不普配
-                        Debug.LogError("参数类型不普配");
+                        Debug.LogError($"{member.Name}:{propertyInfo.PropertyType.FullName} 参数类型不普配 value:{valueType?.FullName}");
                     }
                     propertyInfo.SetValue(instance, value);
                 }

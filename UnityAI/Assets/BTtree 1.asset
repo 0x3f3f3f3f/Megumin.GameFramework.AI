@@ -18,8 +18,6 @@ MonoBehaviour:
   UnityObjectRef:
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.GameObject
     Ref: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053, type: 3}
-  - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ScriptableObject
-    Ref: {fileID: 0}
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.RefVarListGameObject.value.0
     Ref: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.VariableGameObject.value
@@ -96,6 +94,12 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 101.0625
+    - Name: index
+      Type: System.Int32
+      Value: 0
+    - Name: depth
+      Type: System.Int32
+      Value: 0
     - Name: Name
       Type: System.String
       Value: 
@@ -126,9 +130,6 @@ MonoBehaviour:
     - Name: InstanceID
       Type: System.String
       Value: 163e01a6-3bbf-4bf7-9f50-fb7ee5c0b569
-    - Name: TestFuckingGeneric
-      Type: $ref
-      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric
     - Name: Sbyte
       Type: System.SByte
       Value: -128
@@ -144,9 +145,6 @@ MonoBehaviour:
     - Name: GameObject
       Type: $ref
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.GameObject
-    - Name: ScriptableObject
-      Type: $ref
-      Value: ada6836d-8b37-432e-993e-a739afa3a29c.ScriptableObject
     - Name: ListInt
       Type: $ref
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListInt
@@ -201,6 +199,9 @@ MonoBehaviour:
     - Name: ListRefVarInt
       Type: $ref
       Value: ada6836d-8b37-432e-993e-a739afa3a29c.ListRefVarInt
+    - Name: TestFuckingGeneric
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c.TestFuckingGeneric
     - Name: GUID
       Type: System.String
       Value: ada6836d-8b37-432e-993e-a739afa3a29c
@@ -400,6 +401,12 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 261
+    - Name: index
+      Type: System.Int32
+      Value: 1
+    - Name: depth
+      Type: System.Int32
+      Value: 1
     - Name: Name
       Type: System.String
       Value: 
