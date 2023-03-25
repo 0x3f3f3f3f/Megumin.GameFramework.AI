@@ -35,12 +35,16 @@ namespace Megumin.Serialization
 
             if (member == null)
             {
-                member = members.FirstOrDefault(elem
-                        =>
-                        {
-                            var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
-                            return attri?.oldName == memberName;
-                        });
+                //支持序列化成员改名
+                foreach (var elem in members)
+                {
+                    var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
+                    if (attri?.oldName == memberName)
+                    {
+                        member = elem;
+                        break;
+                    }
+                }
             }
 
             try

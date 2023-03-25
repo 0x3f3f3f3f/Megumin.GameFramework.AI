@@ -14,7 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [FormerlySerializedAs("A")]
         public bool A = false;
         [FormerlySerializedAs("B")]
-        public bool B = false;
+        public bool C = false;
         public bool Cal()
         {
             return A;

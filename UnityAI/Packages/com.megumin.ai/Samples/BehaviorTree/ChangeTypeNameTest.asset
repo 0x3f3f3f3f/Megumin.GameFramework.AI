@@ -24,7 +24,7 @@ MonoBehaviour:
     - Name: A
       Type: System.Boolean
       Value: True
-    - Name: B
+    - Name: C
       Type: System.Boolean
       Value: True
     - Name: GUID
