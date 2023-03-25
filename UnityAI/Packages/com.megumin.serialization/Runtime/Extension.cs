@@ -30,7 +30,19 @@ namespace Megumin.Serialization
         public static bool TrySetMemberValue<T>(this T instance, string memberName, object value)
         {
             const BindingFlags BindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var member = instance?.GetType().GetMember(memberName, BindingAttr)?.FirstOrDefault();
+            var members = instance?.GetType().GetMembers(BindingAttr);
+            var member = members?.FirstOrDefault(elem => elem.Name == memberName);
+
+            if (member == null)
+            {
+                member = members.FirstOrDefault(elem
+                        =>
+                        {
+                            var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
+                            return attri?.oldName == memberName;
+                        });
+            }
+
             try
             {
                 if (member is FieldInfo fieldInfo)

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
+  m_Name: ChangeTypeNameTest
+  m_EditorClassIdentifier: 
+  GUID: 2083c270-c1ce-4a97-92e4-7367177ed8a7
+  <StartNodeGUID>k__BackingField: 
+  UseSerializeReferenceGeneric: 0
+  UnityObjectRef: []
+  variables: []
+  treeElements:
+  - Name: 52600aa4-538c-46bb-87b0-121c76bafcbc
+    Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
+    Member:
+    - Name: A
+      Type: System.Boolean
+      Value: True
+    - Name: B
+      Type: System.Boolean
+      Value: True
+    - Name: GUID
+      Type: System.String
+      Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03
+    Type: Megumin.GameFramework.AI.BehaviorTree.Log
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.Decorators
+    - Name: LogStr2
+      Type: $ref
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.LogStr2
+    - Name: GUID
+      Type: System.String
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.LogStr2
+    Type: Megumin.Binding.RefVar`1[[System.String]]
+    Member: []
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 253
+    - Name: y
+      Type: System.Single
+      Value: 217
