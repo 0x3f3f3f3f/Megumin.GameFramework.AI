@@ -65,7 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var scrollView = DecoretorListView.Q<ScrollView>();
             scrollView.mode = ScrollViewMode.Vertical;
-            scrollView.horizontalScrollerVisibility =  ScrollerVisibility.Hidden;
+            scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
             scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             scrollView.contentViewport.style.overflow = Overflow.Visible;
 
@@ -218,8 +218,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var type = node?.GetType();
             var typeName = type?.Name ?? "NullNode";
-            title = typeName;
             name = typeName;
+            title = node.GetTitle();
 
             RefreshNodeIndex();
 

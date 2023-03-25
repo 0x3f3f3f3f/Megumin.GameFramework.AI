@@ -50,7 +50,7 @@ https://robohub.org/introduction-to-behavior-trees/
 
 ## 支持的Attribute
 - [x] Category
-- [ ] DisplayName
+- [x] DisplayName
 - [x] Icon
 - [x] HelpURL
 - [x] Description

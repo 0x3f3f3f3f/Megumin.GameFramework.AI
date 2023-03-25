@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -278,6 +279,31 @@ namespace Megumin.GameFramework.AI.Editor
                 }
             }
             return null;
+        }
+
+        public static string GetTitle<T>(this T obj)
+        {
+            var title = "Unknown";
+
+            if (obj is ITitleable titleable)
+            {
+                title = titleable.Title;
+            }
+            else
+            {
+                var type = obj?.GetType();
+                if (type != null)
+                {
+                    title = type.Name;
+                    var attribute = type.GetCustomAttribute<DisplayNameAttribute>(false);
+                    if (attribute != null)
+                    {
+                        title = attribute.DisplayName;
+                    }
+                }
+            }
+
+            return title;
         }
     }
 }

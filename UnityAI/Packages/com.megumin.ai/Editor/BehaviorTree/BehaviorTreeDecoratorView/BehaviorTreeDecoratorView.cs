@@ -131,7 +131,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             SODecorator.View = this;
             SODecorator.Decorator = Decorator;
             var type = Decorator?.GetType();
-            Title.text = type?.Name;
+            Title.text = Decorator.GetTitle();
 
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
