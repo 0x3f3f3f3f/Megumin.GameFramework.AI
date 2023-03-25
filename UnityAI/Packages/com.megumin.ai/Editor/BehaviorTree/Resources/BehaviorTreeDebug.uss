@@ -2,7 +2,7 @@
     display: none;
 }
 
-.failed.node.behaviorTreeNode > #node-border {
+.failed.node.behaviorTreeNode > #node-border #注释{
     background-color: rgba(89, 45, 45, 0.75);
 }
 
@@ -15,7 +15,7 @@
     --edge-colorMode: defaultColor;
 }
 
-.succeeded.node.behaviorTreeNode > #node-border {
+.succeeded.node.behaviorTreeNode > #node-border #注释{
     background-color: rgba(52, 89, 45, 0.84);
 }
 
