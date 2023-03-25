@@ -29,6 +29,10 @@ https://robohub.org/introduction-to-behavior-trees/
 * [ ] 通过节点打开节点View文件
 * [x] 节点序号
 
++ [ ] 选中节点时，提示条件终止可影响的节点
+
+* [ ] TwoChild节点创建特有的节点View
+
 - [x] 保存为ScriptObject文件
 - [ ] 保存为Json文件
 - [x] 自动使用编辑器打开文件
@@ -46,11 +50,13 @@ https://robohub.org/introduction-to-behavior-trees/
 
 ## 支持的Attribute
 - [x] Category
+- [ ] DisplayName
 - [x] Icon
 - [x] HelpURL
 - [x] Description
 - [x] Tooltip
 - [x] Color
+- [x] SerializationAlias
 
 # 实现细节
 ## 架构图
