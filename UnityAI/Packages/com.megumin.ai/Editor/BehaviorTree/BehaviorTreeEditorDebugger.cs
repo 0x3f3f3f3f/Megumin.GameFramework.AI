@@ -23,13 +23,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public void AddTreeRunner(BehaviorTreeRunner behaviorTreeRunner)
+        public void AddDebugInstanceTree(BehaviorTree tree)
         {
-            behaviorTreeRunner.LogMethodName();
             //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)
             {
-                if (item.CurrentAsset.AssetObject == behaviorTreeRunner.BehaviorTreeAsset)
+                if (item.CurrentAsset.AssetObject == tree.Asset.AssetObject)
                 {
                     if (item.IsDebugMode)
                     {
@@ -37,7 +36,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                     else
                     {
-                        item.BeginDebug(behaviorTreeRunner);
+                        item.BeginDebug(tree);
                     }
                 }
             }
@@ -62,14 +61,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public bool IsRemoteDebug { get; set; }
         public bool IsIdel => CurrentAsset == null;
 
-        public BehaviorTreeRunner DebugInstance { get; set; }
-        internal void BeginDebug(BehaviorTreeRunner behaviorTreeRunner)
+        public BehaviorTree DebugInstance { get; set; }
+        internal void BeginDebug(BehaviorTree tree)
         {
             this.LogMethodName();
             IsDebugMode = true;
-            DebugInstance = behaviorTreeRunner;
+            DebugInstance = tree;
             var so = TreeView.CreateSOWrapperIfNull();
-            so.Tree = behaviorTreeRunner.BehaviourTree;
+            so.Tree = tree;
             TreeView.ReloadView(true);
             UpdateTitle();
         }
@@ -77,14 +76,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void EndDebug()
         {
             IsDebugMode = false;
+            DebugInstance = null;
             TreeView.SOTree.Tree = null;
-
             TreeView.ReloadView(true);
             UpdateTitle();
         }
 
         private void DebugSearchInstance()
         {
+            if (IsDebugMode)
+            {
+                return;
+            }
+
             if (BehaviorTreeManager.Instance)
             {
                 var list = BehaviorTreeManager.Instance.AllTree;
@@ -104,10 +108,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// </summary>
         /// <param name="behaviorTreeRunner"></param>
         /// <returns></returns>
-        public bool CanAttachDebug(BehaviorTreeRunner behaviorTreeRunner)
+        public bool CanAttachDebug(BehaviorTree tree)
         {
-            if (behaviorTreeRunner.BehaviorTreeAsset && behaviorTreeRunner.BehaviourTree != null &&
-                        behaviorTreeRunner.BehaviorTreeAsset == CurrentAsset?.AssetObject)
+            if (tree != null && tree.Asset.AssetObject == CurrentAsset?.AssetObject)
             {
                 return true;
             }

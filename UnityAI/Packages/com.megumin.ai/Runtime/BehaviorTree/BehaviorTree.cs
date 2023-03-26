@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Megumin.Binding;
 using UnityEngine;
-using UnityEngine.Playables;
-using static PlasticGui.LaunchDiffParameters;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -27,6 +23,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<BTNode> AllNodes = new();
 
         public Dictionary<string, BTNode> GuidDic { get; } = new();
+        public bool IsRunning { get; internal set; }
 
         private Status treestate = Status.Init;
 

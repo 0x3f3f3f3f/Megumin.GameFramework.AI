@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,8 +38,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (instance && instance != this)
             {
-                //±»´íÎó´´½¨
-                Debug.LogError("BehaviorTreeManager ÒÑ¾­´æÔÚµ¥Àı£¬Õâ¸öÊµÀı±»×Ô¶¯Ïú»Ù¡£");
+                //è¢«é”™è¯¯åˆ›å»º
+                Debug.LogError("BehaviorTreeManager å·²ç»å­˜åœ¨å•ä¾‹ï¼Œè¿™ä¸ªå®ä¾‹è¢«è‡ªåŠ¨é”€æ¯ã€‚");
                 if (name == nameof(BehaviorTreeManager))
                 {
                     DestroyImmediate(gameObject);
@@ -64,64 +64,71 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public partial class BehaviorTreeManager
     {
+        ///https://theburningmonk.com/2011/03/hashset-vs-list-vs-dictionary/
+        ///éå†æ“ä½œè¿œå¤šäºæ·»åŠ åˆ é™¤æ“ä½œã€‚ä½¿ç”¨listè€Œä¸æ˜¯hashsetã€‚
         /// <summary>
-        /// ²»Ó¦¸Ã±£´æRunner£¬Ó¦¸ÃÖ±½Ó±£´æTree£¬¿ÉÄÜÓÃ»§»áÊµÏÖ×Ô¼ºµÄRunner£¬²»Òª½«RunnerÓëManagerñîºÏ
+        /// ä¸åº”è¯¥ä¿å­˜Runnerï¼Œåº”è¯¥ç›´æ¥ä¿å­˜Treeï¼Œå¯èƒ½ç”¨æˆ·ä¼šå®ç°è‡ªå·±çš„Runnerï¼Œä¸è¦å°†Runnerä¸Managerè€¦åˆ
         /// </summary>
-        public List<BehaviorTreeRunner> AllTree = new();
-        List<BehaviorTreeRunner> UpdateTree = new();
-        List<BehaviorTreeRunner> FixedUpdateTree = new();
-        List<BehaviorTreeRunner> LateUpdateTree = new();
+        public List<BehaviorTree> AllTree = new();
+        List<BehaviorTree> UpdateTree = new();
+        List<BehaviorTree> FixedUpdateTree = new();
+        List<BehaviorTree> LateUpdateTree = new();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="behaviorTreeRunner"></param>
-        public void AddTree(BehaviorTreeRunner behaviorTreeRunner)
+        /// <param name="tree"></param>
+        public void AddTree(BehaviorTree tree, TickMode tickMode)
         {
-            if (AllTree.Contains(behaviorTreeRunner))
+            if(tree == null)
             {
-                AllTree.Remove(behaviorTreeRunner);
-                UpdateTree.Remove(behaviorTreeRunner);
-                FixedUpdateTree.Remove(behaviorTreeRunner);
-                LateUpdateTree.Remove(behaviorTreeRunner);
+                return;
             }
 
-            AllTree.Add(behaviorTreeRunner);
-            if (behaviorTreeRunner.TickMode.HasFlag(TickMode.Update))
+            if (AllTree.Contains(tree) == false)
             {
-                UpdateTree.Add(behaviorTreeRunner);
-                UpdateTree.Sort();
+                AllTree.Add(tree);
             }
 
-            if (behaviorTreeRunner.TickMode.HasFlag(TickMode.FixedUpdate))
+
+            if (tickMode.HasFlag(TickMode.Update))
             {
-                FixedUpdateTree.Add(behaviorTreeRunner);
-                FixedUpdateTree.Sort();
+                if (UpdateTree.Contains(tree) == false)
+                {
+                    UpdateTree.Add(tree);
+                }
             }
 
-            if (behaviorTreeRunner.TickMode.HasFlag(TickMode.LateUpdate))
+            if (tickMode.HasFlag(TickMode.FixedUpdate))
             {
-                LateUpdateTree.Add(behaviorTreeRunner);
-                LateUpdateTree.Sort();
+                if (FixedUpdateTree.Contains(tree) == false)
+                {
+                    FixedUpdateTree.Add(tree);
+                }
             }
 
-            TreeDebugger?.AddTreeRunner(behaviorTreeRunner);
+            if (tickMode.HasFlag(TickMode.LateUpdate))
+            {
+                if (LateUpdateTree.Contains(tree) == false)
+                {
+                    LateUpdateTree.Add(tree);
+                }
+            }
+
+            TreeDebugger?.AddDebugInstanceTree(tree);
         }
 
-        List<BehaviorTreeRunner> needRemoveTree = new();
-        public void RemoveTree(BehaviorTreeRunner behaviorTreeRunner)
+        List<BehaviorTree> needRemoveTree = new();
+        public void RemoveTree(BehaviorTree tree)
         {
-            needRemoveTree.Add(behaviorTreeRunner);
+            needRemoveTree.Add(tree);
         }
 
         private void Update()
         {
             foreach (var item in UpdateTree)
             {
-                if (item)
-                {
-                    item.TickTree();
-                }
+                item.Tick();
             }
             RemoveImmediate();
             TreeDebugger?.PostTick();
@@ -131,10 +138,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in FixedUpdateTree)
             {
-                if (item)
-                {
-                    item.TickTree();
-                }
+                item.Tick();
             }
             RemoveImmediate();
             TreeDebugger?.PostTick();
@@ -144,10 +148,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in LateUpdateTree)
             {
-                if (item)
-                {
-                    item.TickTree();
-                }
+                item.Tick();
             }
             RemoveImmediate();
             TreeDebugger?.PostTick();
@@ -157,10 +158,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in needRemoveTree)
             {
-                AllTree.Remove(item);
-                UpdateTree.Remove(item);
-                FixedUpdateTree.Remove(item);
-                LateUpdateTree.Remove(item);
+                if (item != null)
+                {
+                    AllTree.Remove(item);
+                    UpdateTree.Remove(item);
+                    FixedUpdateTree.Remove(item);
+                    LateUpdateTree.Remove(item);
+                }
             }
             needRemoveTree.Clear();
         }
@@ -173,7 +177,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public interface ITreeDebugger
     {
-        void AddTreeRunner(BehaviorTreeRunner behaviorTreeRunner);
+        void AddDebugInstanceTree(BehaviorTree tree);
         void PostTick();
         void StopDebug();
     }

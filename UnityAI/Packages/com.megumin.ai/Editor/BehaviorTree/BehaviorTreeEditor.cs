@@ -431,10 +431,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (Selection.activeGameObject)
                 {
                     var runner = Selection.activeGameObject.GetComponent<BehaviorTreeRunner>();
-                    if (CanAttachDebug(runner))
+                    if (runner)
                     {
-                        BeginDebug(runner);
-                        return;
+                        if (CanAttachDebug(runner.BehaviourTree))
+                        {
+                            BeginDebug(runner.BehaviourTree);
+                            return;
+                        }
                     }
                 }
             }

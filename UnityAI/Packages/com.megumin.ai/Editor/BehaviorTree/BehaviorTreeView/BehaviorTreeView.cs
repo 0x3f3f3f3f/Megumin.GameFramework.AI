@@ -305,7 +305,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 if (EditorWindow.IsDebugMode)
                 {
-                    SOTree.Tree = EditorWindow.DebugInstance.BehaviourTree;
+                    SOTree.Tree = EditorWindow.DebugInstance;
                 }
                 else
                 {

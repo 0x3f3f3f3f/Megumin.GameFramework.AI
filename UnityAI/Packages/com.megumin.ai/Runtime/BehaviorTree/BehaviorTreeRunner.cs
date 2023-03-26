@@ -43,13 +43,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (BehaviourTree != null)
             {
-                BehaviorTreeManager.Instance.AddTree(this);
+                BehaviorTreeManager.Instance.AddTree(BehaviourTree, TickMode);
+                BehaviourTree.IsRunning = true;
             }
         }
 
         public void DisableTree()
         {
-            BehaviorTreeManager.Instance.RemoveTree(this);
+            BehaviorTreeManager.Instance.RemoveTree(BehaviourTree);
+            BehaviourTree.IsRunning = false;
         }
 
         [Editor]
