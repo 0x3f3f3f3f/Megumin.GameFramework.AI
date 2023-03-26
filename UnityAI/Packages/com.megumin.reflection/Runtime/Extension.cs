@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.Serialization
+namespace Megumin.Reflection
 {
     /// <summary>
     /// 序列化哪些成员委托

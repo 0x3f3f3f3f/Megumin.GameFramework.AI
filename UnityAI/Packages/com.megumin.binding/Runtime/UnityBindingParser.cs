@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using static Megumin.Serialization.TypeCache;
+using static Megumin.Reflection.TypeCache;
 
 namespace Megumin.Binding
 {
@@ -520,7 +520,7 @@ namespace Megumin.Binding
             if (type == null)
             {
                 //没有找到Component，可能是一个接口类型。尝试取得一个实现了接口的组件。
-                type = Serialization.TypeCache.GetType(typeFullName);
+                type = Reflection.TypeCache.GetType(typeFullName);
                 if (type != null && type.IsInterface)
                 {
                     //通过名字不能从Children获取组件，还是要自己先取得类型

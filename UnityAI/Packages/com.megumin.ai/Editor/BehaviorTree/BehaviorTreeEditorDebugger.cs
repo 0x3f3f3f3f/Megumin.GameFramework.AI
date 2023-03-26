@@ -124,7 +124,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Debug.Log(item.ToStringReflection());
             }
 
-            Megumin.Serialization.TypeCache.Test();
+            Megumin.Reflection.TypeCache.Test();
             //var type = typeof(Dictionary<int, string>);
             //Debug.Log(type.FullName);
             //var type2 = Type.GetType("Dictionary<,>");

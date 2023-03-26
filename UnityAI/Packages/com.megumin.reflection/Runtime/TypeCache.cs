@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.Serialization
+namespace Megumin.Reflection
 {
     /// <summary>
     /// 类型缓存。

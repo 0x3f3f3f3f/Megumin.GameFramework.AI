@@ -102,7 +102,7 @@ namespace Megumin.Binding
                 return true;
             }
 
-            var type = Serialization.TypeCache.GetType(TypeName);
+            var type = Reflection.TypeCache.GetType(TypeName);
             if (type == null)
             {
                 Debug.LogError($"反序列化公开参数 没有找到对应类型 TypeName:{TypeName}");
@@ -251,7 +251,7 @@ namespace Megumin.Binding
         {
             value = default;
 
-            var type = Megumin.Serialization.TypeCache.GetType(TypeName);
+            var type = Megumin.Reflection.TypeCache.GetType(TypeName);
             if (type == null)
             {
                 return false;

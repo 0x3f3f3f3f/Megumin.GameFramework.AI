@@ -416,7 +416,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (HotTypeAlias == false)
             {
                 //第一次反序列化之前处理一下类型别名。防止节点改名后报错。
-                Megumin.Serialization.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
+                Megumin.Reflection.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
                 HotTypeAlias = true;
             }
 
