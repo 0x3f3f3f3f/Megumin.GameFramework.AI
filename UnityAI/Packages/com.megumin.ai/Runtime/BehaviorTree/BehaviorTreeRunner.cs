@@ -50,8 +50,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void DisableTree()
         {
-            BehaviorTreeManager.Instance.RemoveTree(BehaviourTree);
-            BehaviourTree.IsRunning = false;
+            if (BehaviourTree != null)
+            {
+                BehaviorTreeManager.Instance.RemoveTree(BehaviourTree);
+                BehaviourTree.IsRunning = false;
+            }
         }
 
         [Editor]
@@ -94,5 +97,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
+        private void OnValidate()
+        {
+            if (BehaviourTree?.IsRunning == true)
+            {
+                EnableTree();
+            }
+        }
     }
 }
+
+

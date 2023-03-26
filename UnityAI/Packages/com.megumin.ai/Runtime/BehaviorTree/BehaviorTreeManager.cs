@@ -80,7 +80,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <param name="tree"></param>
         public void AddTree(BehaviorTree tree, TickMode tickMode)
         {
-            if(tree == null)
+            if (tree == null)
             {
                 return;
             }
@@ -98,6 +98,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     UpdateTree.Add(tree);
                 }
             }
+            else
+            {
+                UpdateTree.Remove(tree);
+            }
 
             if (tickMode.HasFlag(TickMode.FixedUpdate))
             {
@@ -106,6 +110,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     FixedUpdateTree.Add(tree);
                 }
             }
+            else
+            {
+                FixedUpdateTree.Remove(tree);
+            }
 
             if (tickMode.HasFlag(TickMode.LateUpdate))
             {
@@ -113,6 +121,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     LateUpdateTree.Add(tree);
                 }
+            }
+            else
+            {
+                LateUpdateTree.Remove(tree);
             }
 
             TreeDebugger?.AddDebugInstanceTree(tree);

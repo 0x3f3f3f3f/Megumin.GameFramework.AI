@@ -25,6 +25,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void AddDebugInstanceTree(BehaviorTree tree)
         {
+            if (tree == null)
+            {
+                return;
+            }
+
+            if (BehaviorTreeEditor.AllActiveEditor.Any(elem => elem.DebugInstance == tree))
+            {
+                return;
+            }
+
             //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)
             {
