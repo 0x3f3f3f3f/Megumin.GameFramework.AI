@@ -74,12 +74,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
+        static readonly Unity.Profiling.ProfilerMarker tickProfilerMarker = new(nameof(Tick));
+
         /// <summary>
         /// Todo 抽象出runner ，分别 root - leaf 驱动，last leaf， 异步。三种方式根调用不一样。但是都需要Tick。
         /// </summary>
         /// <returns></returns>
         public Status Tick()
         {
+            using var profiler = tickProfilerMarker.Auto();
+
             if (treestate == Status.Succeeded || treestate == Status.Failed)
             {
                 //整个树已经执行完，不在执行

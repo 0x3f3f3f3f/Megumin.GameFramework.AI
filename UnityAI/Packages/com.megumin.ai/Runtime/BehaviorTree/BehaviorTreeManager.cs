@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -138,30 +139,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         private void Update()
         {
+            Profiler.BeginSample("UpdateTick");
+
             foreach (var item in UpdateTree)
             {
                 item.Tick();
             }
+
+            Profiler.EndSample();
+
             RemoveImmediate();
             TreeDebugger?.PostTick();
         }
 
         private void FixedUpdate()
         {
+            Profiler.BeginSample("FixedUpdateTick");
+
             foreach (var item in FixedUpdateTree)
             {
                 item.Tick();
             }
+
+            Profiler.EndSample();
+
             RemoveImmediate();
             TreeDebugger?.PostTick();
         }
 
         private void LateUpdate()
         {
+            Profiler.BeginSample("LateUpdateTick");
+
             foreach (var item in LateUpdateTree)
             {
                 item.Tick();
             }
+
+            Profiler.EndSample();
+
             RemoveImmediate();
             TreeDebugger?.PostTick();
         }
