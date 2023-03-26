@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.Binding.Test

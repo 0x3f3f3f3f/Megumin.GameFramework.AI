@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Megumin.Binding
+namespace Megumin.Reflection
 {
     public interface ITypeAdpterGet<T>
     {

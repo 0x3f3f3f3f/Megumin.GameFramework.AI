@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Megumin.Binding
+namespace Megumin.Reflection
 {
     /// <summary>
     /// 用于连接获取实例委托和成员取值委托。将2个委托组个成一个强类型<see cref="Func{TResult}"/>委托。
