@@ -84,7 +84,10 @@ MonoBehaviour:
   - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c
   - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -130,6 +133,9 @@ MonoBehaviour:
     - Name: InstanceID
       Type: System.String
       Value: 163e01a6-3bbf-4bf7-9f50-fb7ee5c0b569
+    - Name: ElemRef
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c
     - Name: Sbyte
       Type: System.SByte
       Value: -128
@@ -540,3 +546,9 @@ MonoBehaviour:
     - Name: value
       Type: System.String
       Value: AA
+  - Name: dee63b1b-27e0-4978-929b-a91c21a6ac4c
+    Type: Megumin.GameFramework.AI.BehaviorTree.Loop
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c

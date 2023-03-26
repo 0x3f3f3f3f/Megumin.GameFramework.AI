@@ -135,24 +135,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return Status.Succeeded;
             }
         }
-
-        string tipString = null;
-        public string TipString
-        {
-            get
-            {
-                if (tipString == null)
-                {
-                    tipString = $"{GetType().Name}[{ShortGUID}]";
-                }
-                return tipString;
-            }
-        }
-
-        public override string ToString()
-        {
-            return TipString;
-        }
     }
 
     public partial class BTNode

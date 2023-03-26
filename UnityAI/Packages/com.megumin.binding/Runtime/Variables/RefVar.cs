@@ -13,7 +13,7 @@ using UnityEditor.UIElements;
 namespace Megumin.Binding
 {
     /// <summary>
-    /// 可以存放在参数表的，可以在多个节点共享的
+    /// 可以被引用的，可以共享的
     /// </summary>
     public interface IRefable
     {
@@ -392,7 +392,7 @@ namespace Megumin.Binding
                         Undo.RecordObject(property.serializedObject.targetObject, "Change Ref");
                         if (index == 0)
                         {
-                            //设置未null。
+                            //设置为null。
                             property.SetValue<object>(null);
                         }
                         else

@@ -17,6 +17,7 @@ namespace Megumin.GameFramework.AI
         string GUID { get; }
     }
 
+    [Serializable]
     public class TreeElement : ITreeElement
     {
         /// <summary>
@@ -31,6 +32,24 @@ namespace Megumin.GameFramework.AI
         public virtual void Log(object message)
         {
             Tree?.Log(message);
+        }
+
+        string tipString = null;
+        public string TipString
+        {
+            get
+            {
+                if (tipString == null)
+                {
+                    tipString = $"[{ShortGUID}] {GetType().Name}";
+                }
+                return tipString;
+            }
+        }
+
+        public override string ToString()
+        {
+            return TipString;
         }
     }
 

@@ -4,10 +4,11 @@ using UnityEngine;
 using Megumin;
 using System.Collections.Generic;
 using Megumin.Binding;
+using System;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeWrapper : ScriptableObject, IRefVariableFinder
+    public class NodeWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
     {
         [SerializeReference]
         public BTNode Node;
@@ -45,6 +46,29 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return true;
             }
             return false;
+        }
+
+        public void GetAllRefDerivedFrom(Type baseType, List<ITreeElement> refables)
+        {
+            var tree = View?.TreeView?.Tree;
+            if (tree != null)
+            {
+                foreach (var node in tree.AllNodes)
+                {
+                    if (baseType.IsAssignableFrom(node.GetType()))
+                    {
+                        refables.Add(node);
+                    }
+
+                    foreach (var d in node.Decorators)
+                    {
+                        if (baseType.IsAssignableFrom(d.GetType()))
+                        {
+                            refables.Add(d);
+                        }
+                    }
+                }
+            }
         }
 
         //TODO

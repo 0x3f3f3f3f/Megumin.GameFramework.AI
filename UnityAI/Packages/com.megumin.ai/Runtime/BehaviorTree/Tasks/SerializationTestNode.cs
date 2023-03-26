@@ -13,7 +13,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<string>
     {
         [TreeElementRefAttribute]
-        public BTNode NodeRef;
+        public TreeElement ElemRef;
 
         [Space]
         public sbyte Sbyte;
