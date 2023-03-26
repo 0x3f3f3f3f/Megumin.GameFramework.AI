@@ -12,7 +12,7 @@ https://robohub.org/introduction-to-behavior-trees/
 + [x] 公开参数绑定
 + [x] List Array ~~Dictionary~~
 + [x] 最多2层的嵌套泛型
-+ [ ] TreeElement循环引用。Task引用其他Task。
++ [x] TreeElement循环引用。Task引用其他Task。
 
 - [ ] 笔记节点StickyNote
 - [ ] 组合Group
@@ -206,6 +206,9 @@ Abort 理解为当前节点最后一次不调用Tick函数的Tick，视为最后
 查找特性比较耗时，推荐更换命名后，重新保存下已有的行为树文件，将名字更新。  
 如果需要运行时解析旧名字，同理，在游戏开始时，反序列化之前使用TypeCache.HotType设置别名。
 
+## 节点引用
+可以在节点中声明引用含有Serializable特性的节点。
+使用BindingPathSetterAttribute，则可以在Inspector中选择树种的节点引用。
 
 ## 概率与冷却
 

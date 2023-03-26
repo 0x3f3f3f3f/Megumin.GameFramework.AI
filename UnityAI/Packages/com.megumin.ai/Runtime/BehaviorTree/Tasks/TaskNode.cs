@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-
+    [Serializable]
     public class BTTaskNode : BTNode
     {
 
     }
 
+    [Serializable]
     public class ActionTaskNode : BTTaskNode
     {
     }
 
+    [Serializable]
     public class ConditionTaskNode : BTTaskNode
     {
     }
