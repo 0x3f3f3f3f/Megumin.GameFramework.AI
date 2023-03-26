@@ -2,6 +2,7 @@
     "name": "Megumin.Binding",
     "rootNamespace": "Megumin.Binding",
     "references": [
+        "GUID:e3141e3383f7d54428a008f1df9a1c9d",
         "GUID:b9e29b1e857abb4438a4cdde4aef4bee"
     ],
     "includePlatforms": [],

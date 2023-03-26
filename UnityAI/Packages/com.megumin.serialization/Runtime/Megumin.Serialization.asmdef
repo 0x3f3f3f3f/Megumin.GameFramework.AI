@@ -1,7 +1,9 @@
 {
     "name": "Megumin.Serialization",
     "rootNamespace": "Megumin.Serialization",
-    "references": [],
+    "references": [
+        "GUID:e3141e3383f7d54428a008f1df9a1c9d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
