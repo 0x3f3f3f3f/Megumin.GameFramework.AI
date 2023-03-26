@@ -32,6 +32,12 @@
       "source": "local",
       "dependencies": {}
     },
+    "com.megumin.reflection": {
+      "version": "file:com.megumin.reflection",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.megumin.serialization": {
       "version": "file:com.megumin.serialization",
       "depth": 0,
