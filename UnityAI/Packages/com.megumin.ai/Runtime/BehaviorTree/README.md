@@ -6,8 +6,8 @@ https://robohub.org/introduction-to-behavior-trees/
 ## 基础功能
 
 * [x] 基础节点库实现
-  * [ ] Relay节点
-  * [ ] Placeholder节点
+  * [ ] 为Unity默认组件生成节点
+  * [ ] 视觉听觉感知组件和节点
 
 + [x] 公开参数绑定
 + [x] List Array ~~Dictionary~~
