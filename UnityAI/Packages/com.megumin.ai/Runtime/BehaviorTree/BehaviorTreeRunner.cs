@@ -18,7 +18,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool EnableLog = false;
         bool ILogSetting.Enabled => EnableLog;
 
-        private void InitTree()
+        private void OnEnable()
+        {
+            this.LogMethodName();
+            if (AutoEnable)
+            {
+                EnableTree();
+            }
+        }
+
+        private void OnDisable()
+        {
+            DisableTree();
+        }
+
+        public void EnableTree()
         {
             if (BehaviourTree == null && BehaviorTreeAsset)
             {
@@ -26,20 +40,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviourTree.LogSetting = this;
                 BehaviourTree.Init(gameObject);
             }
-        }
 
-        private void OnEnable()
-        {
-            if (AutoEnable)
+            if (BehaviourTree != null)
             {
-                InitTree();
-                EnableTree();
+                BehaviorTreeManager.Instance.AddTree(this);
             }
         }
 
-        // Use this for initialization
-        void Start()
+        public void DisableTree()
         {
+            BehaviorTreeManager.Instance.RemoveTree(this);
         }
 
         [Editor]
@@ -69,11 +79,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void EnableTree()
-        {
-            BehaviorTreeManager.Instance.AddTree(this);
-        }
-
         public int CompareTo(BehaviorTreeRunner other)
         {
             return Order.CompareTo(other.Order);
@@ -81,7 +86,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void TickTree()
         {
-            BehaviourTree.Tick();
+            if (enabled)
+            {
+                BehaviourTree.Tick();
+            }
         }
 
     }

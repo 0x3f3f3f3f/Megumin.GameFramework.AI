@@ -55,28 +55,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             DontDestroyOnLoad(gameObject);
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         private void OnApplicationQuit()
         {
             IsApplicationQuiting = true;
             TreeDebugger?.StopDebug();
         }
-
-
     }
 
     public partial class BehaviorTreeManager
     {
+        /// <summary>
+        /// 不应该保存Runner，应该直接保存Tree，可能用户会实现自己的Runner，不要将Runner与Manager耦合
+        /// </summary>
         public List<BehaviorTreeRunner> AllTree = new();
         List<BehaviorTreeRunner> UpdateTree = new();
         List<BehaviorTreeRunner> FixedUpdateTree = new();
         List<BehaviorTreeRunner> LateUpdateTree = new();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="behaviorTreeRunner"></param>
         public void AddTree(BehaviorTreeRunner behaviorTreeRunner)
         {
             if (AllTree.Contains(behaviorTreeRunner))
@@ -109,17 +108,61 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             TreeDebugger?.AddTreeRunner(behaviorTreeRunner);
         }
 
-        void Update()
+        List<BehaviorTreeRunner> needRemoveTree = new();
+        public void RemoveTree(BehaviorTreeRunner behaviorTreeRunner)
+        {
+            needRemoveTree.Add(behaviorTreeRunner);
+        }
+
+        private void Update()
         {
             foreach (var item in UpdateTree)
             {
-                if (item && item.enabled)
+                if (item)
                 {
                     item.TickTree();
                 }
             }
-
+            RemoveImmediate();
             TreeDebugger?.PostTick();
+        }
+
+        private void FixedUpdate()
+        {
+            foreach (var item in FixedUpdateTree)
+            {
+                if (item)
+                {
+                    item.TickTree();
+                }
+            }
+            RemoveImmediate();
+            TreeDebugger?.PostTick();
+        }
+
+        private void LateUpdate()
+        {
+            foreach (var item in LateUpdateTree)
+            {
+                if (item)
+                {
+                    item.TickTree();
+                }
+            }
+            RemoveImmediate();
+            TreeDebugger?.PostTick();
+        }
+
+        void RemoveImmediate()
+        {
+            foreach (var item in needRemoveTree)
+            {
+                AllTree.Remove(item);
+                UpdateTree.Remove(item);
+                FixedUpdateTree.Remove(item);
+                LateUpdateTree.Remove(item);
+            }
+            needRemoveTree.Clear();
         }
     }
 
