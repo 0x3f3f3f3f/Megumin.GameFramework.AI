@@ -157,6 +157,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             AbortTypeButton.SetToClassList(UssClassConst.abortTypeSelf, hasSelf);
             var hasLow = (Decorator as IAbortable)?.AbortType.HasFlag(AbortType.LowerPriority) ?? false;
             AbortTypeButton.SetToClassList(UssClassConst.abortTypeLowerPriority, hasLow);
+            AbortTypeButton.tooltip = null;
+            if (hasSelf && hasLow)
+            {
+                AbortTypeButton.tooltip = "AbortType.Both";
+            }
+            else if (hasSelf)
+            {
+                AbortTypeButton.tooltip = "AbortType.Self";
+            }
+            else if (hasLow)
+            {
+                AbortTypeButton.tooltip = "AbortType.LowerPriority";
+            }
         }
 
         public override void OnSelected()
