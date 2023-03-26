@@ -90,7 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public UnityEngine.Object CurrentAsset_AssetObject;
         public IBehaviorTreeAsset CurrentAsset { get; private set; }
 
-        [MenuItem("Megumin AI/BehaviorTreeEditor")]
+        [MenuItem("Megumin/BehaviorTreeEditor")]
         public static void ShowExample()
         {
             var wnd = GetWindow();

@@ -116,26 +116,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
 
-        [MenuItem("Megumin AI/TestButton")]
+        [MenuItem("Megumin/Log All Active BehaviorTreeEditor")]
         public static void TestButton()
         {
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)
             {
                 Debug.Log(item.ToStringReflection());
             }
-
-            Megumin.Reflection.TypeCache.Test();
-            //var type = typeof(Dictionary<int, string>);
-            //Debug.Log(type.FullName);
-            //var type2 = Type.GetType("Dictionary<,>");
-            //Debug.Log(type2?.FullName);
-            //var name = typeof(Dictionary<,>).FullName;
-            //var test = Type.GetType(name);
-
-            //Megumin.Serialization.TypeCache.TryGetGenericAndSpecializedType(type.FullName, out var _, out var _);
-
-            //var name2 = typeof(ParamVariable<>).FullName;
-            //var p = Type.GetType(name2);
         }
 
         /// <summary>
