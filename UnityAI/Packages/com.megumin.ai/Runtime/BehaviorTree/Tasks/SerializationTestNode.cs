@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {
-        [TreeElementRefAttribute]
+        [TreeElementSetter]
         public TreeElement ElemRef;
 
         [Space]

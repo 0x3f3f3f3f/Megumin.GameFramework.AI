@@ -58,6 +58,9 @@ MonoBehaviour:
     - Name: index
       Type: System.Int32
       Value: 4
+    - Name: depth
+      Type: System.Int32
+      Value: 1
     - Name: Name
       Type: System.String
       Value: 
@@ -125,6 +128,9 @@ MonoBehaviour:
     - Name: index
       Type: System.Int32
       Value: 2
+    - Name: depth
+      Type: System.Int32
+      Value: 1
     - Name: Name
       Type: System.String
       Value: 
@@ -202,6 +208,9 @@ MonoBehaviour:
     - Name: index
       Type: System.Int32
       Value: 0
+    - Name: depth
+      Type: System.Int32
+      Value: 0
   - Name: b89b0615-3375-4144-b446-7a506116a83c
     Type: Megumin.GameFramework.AI.BehaviorTree.Wait
     Member:
@@ -234,6 +243,9 @@ MonoBehaviour:
       Type: System.Single
       Value: 293.9999
     - Name: index
+      Type: System.Int32
+      Value: 1
+    - Name: depth
       Type: System.Int32
       Value: 1
     - Name: Name
@@ -333,3 +345,6 @@ MonoBehaviour:
     - Name: index
       Type: System.Int32
       Value: 3
+    - Name: depth
+      Type: System.Int32
+      Value: 1

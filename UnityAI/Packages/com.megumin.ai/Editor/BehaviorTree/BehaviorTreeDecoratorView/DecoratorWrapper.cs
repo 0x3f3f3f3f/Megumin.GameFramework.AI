@@ -6,7 +6,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
 
 
-    public class DecoratorWrapper : ScriptableObject
+    public class DecoratorWrapper : TreeElementWrapper
     {
         [SerializeReference]
         public ITreeElement Decorator;
@@ -18,6 +18,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
 
         }
+
+        public override BehaviorTree Tree => View?.NodeView?.TreeView?.Tree;
     }
 
     [CustomEditor(typeof(DecoratorWrapper), true, isFallback = false)]

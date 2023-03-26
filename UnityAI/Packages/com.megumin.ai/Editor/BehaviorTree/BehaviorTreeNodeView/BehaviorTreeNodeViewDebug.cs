@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             UpdateCompletedState();
         }
 
-        private async void UpdateCompletedState()
+        private void UpdateCompletedState()
         {
             bool hasChanged = false;
             var isSucceeded = Node?.State == Status.Succeeded;

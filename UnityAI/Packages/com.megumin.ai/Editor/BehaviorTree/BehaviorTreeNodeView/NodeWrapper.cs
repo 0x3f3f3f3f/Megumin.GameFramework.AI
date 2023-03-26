@@ -8,10 +8,54 @@ using System;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
+    public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
+    {
+        public abstract BehaviorTree Tree { get; }
+
+        public void GetAllElementsDerivedFrom(Type baseType, List<ITreeElement> refables)
+        {
+            if (Tree != null)
+            {
+                foreach (var node in Tree.AllNodes)
+                {
+                    if (baseType.IsAssignableFrom(node.GetType()))
+                    {
+                        refables.Add(node);
+                    }
+
+                    foreach (var d in node.Decorators)
+                    {
+                        if (baseType.IsAssignableFrom(d.GetType()))
+                        {
+                            refables.Add(d);
+                        }
+                    }
+                }
+            }
+        }
+
+        IEnumerable<IRefable> IRefVariableFinder.GetVariableTable()
+        {
+            return Tree?.Variable.Table;
+        }
+
+        public bool TryGetParam(string name, out IRefable variable)
+        {
+            variable = null;
+            if (Tree?.Variable?.TryGetParam(name, out variable) ?? false)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public class NodeWrapper : TreeElementWrapper
     {
         [SerializeReference]
         public BTNode Node;
+
+        public override BehaviorTree Tree => View?.TreeView?.Tree;
 
         public BehaviorTreeNodeView View { get; internal set; }
 
@@ -33,43 +77,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return View?.TreeView?.Tree?.Variable;
         }
 
-        IEnumerable<IRefable> IRefVariableFinder.GetVariableTable()
-        {
-            return View?.TreeView?.Tree?.Variable.Table;
-        }
-
-        public bool TryGetParam(string name, out IRefable variable)
-        {
-            variable = null;
-            if (View?.TreeView?.Tree?.Variable?.TryGetParam(name, out variable) ?? false)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public void GetAllRefDerivedFrom(Type baseType, List<ITreeElement> refables)
-        {
-            var tree = View?.TreeView?.Tree;
-            if (tree != null)
-            {
-                foreach (var node in tree.AllNodes)
-                {
-                    if (baseType.IsAssignableFrom(node.GetType()))
-                    {
-                        refables.Add(node);
-                    }
-
-                    foreach (var d in node.Decorators)
-                    {
-                        if (baseType.IsAssignableFrom(d.GetType()))
-                        {
-                            refables.Add(d);
-                        }
-                    }
-                }
-            }
-        }
 
         //TODO
         //private void OnValidate()

@@ -12,19 +12,19 @@ using UnityEditor;
 
 namespace Megumin.GameFramework.AI
 {
-    public class TreeElementRefAttribute : PropertyAttribute
+    public class TreeElementSetterAttribute : PropertyAttribute
     {
     }
 
     public interface ITreeElementWrapper
     {
-        void GetAllRefDerivedFrom(Type baseType, List<ITreeElement> refables);
+        void GetAllElementsDerivedFrom(Type baseType, List<ITreeElement> elems);
     }
 
 #if UNITY_EDITOR
 
-    [UnityEditor.CustomPropertyDrawer(typeof(TreeElementRefAttribute))]
-    public class TreeElementRefAttributeDrawer : UnityEditor.PropertyDrawer
+    [UnityEditor.CustomPropertyDrawer(typeof(TreeElementSetterAttribute))]
+    public class TreeElementSetterAttributeDrawer : UnityEditor.PropertyDrawer
     {
         public override float GetPropertyHeight(UnityEditor.SerializedProperty property, GUIContent label)
         {
@@ -39,24 +39,28 @@ namespace Megumin.GameFramework.AI
         }
 
         List<string> option = new List<string>();
-        List<ITreeElement> elems = new();
+        string[] displayedOptions = null;
+        List<ITreeElement> elems = null;
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
             if (typeof(ITreeElement).IsAssignableFrom(fieldInfo.FieldType))
             {
-                option.Clear();
-                elems.Clear();
-                option.Add("Ref: None");
-
-                var wrapper = property.serializedObject.targetObject;
-                if (wrapper is ITreeElementWrapper elemWrapper)
+                if (elems == null)
                 {
-                    elemWrapper.GetAllRefDerivedFrom(fieldInfo.FieldType, elems);
-
-                    foreach (var item in elems)
+                    option.Clear();
+                    option.Add("Ref: None");
+                    elems = new();
+                    var wrapper = property.serializedObject.targetObject;
+                    if (wrapper is ITreeElementWrapper elemWrapper)
                     {
-                        option.Add(item.ToString());
+                        elemWrapper.GetAllElementsDerivedFrom(fieldInfo.FieldType, elems);
+
+                        foreach (var item in elems)
+                        {
+                            option.Add(item.ToString());
+                        }
                     }
+                    displayedOptions = option.ToArray();
                 }
 
                 var obj = property.GetValue<ITreeElement>();
@@ -72,10 +76,9 @@ namespace Megumin.GameFramework.AI
                     }
                 }
 
-                string[] strings = option.ToArray();
                 //EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
                 EditorGUI.BeginChangeCheck();
-                index = EditorGUI.Popup(position, label.text, index, strings);
+                index = EditorGUI.Popup(position, label.text, index, displayedOptions);
                 if (EditorGUI.EndChangeCheck())
                 {
                     //var obj = property.GetValue<object>();
