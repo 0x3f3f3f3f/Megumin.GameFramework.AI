@@ -75,6 +75,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return false;
         }
 
+        public static bool OnOpenAsset(IBehaviorTreeAsset behaviorTreeAsset)
+        {
+            if (behaviorTreeAsset is UnityEngine.Object obj && !obj)
+            {
+                return false;
+            }
+
+            if (behaviorTreeAsset != null)
+            {
+                var wnd = GetWindow(behaviorTreeAsset.AssetObject);
+                wnd.SelectTree(behaviorTreeAsset);
+                return true;
+            }
+
+            return false;
+        }
+
         [SerializeField]
         private VisualTreeAsset m_VisualTreeAsset = default;
 

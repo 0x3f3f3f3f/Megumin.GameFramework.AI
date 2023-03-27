@@ -227,6 +227,11 @@ namespace Megumin.Serialization
             return true;
         }
 
+        /// <summary>
+        /// 仅根据类型反射创建对象实例
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool TryCreateInstance(out object value)
         {
             if (Type == NullType)
@@ -279,7 +284,13 @@ namespace Megumin.Serialization
             return false;
         }
 
-        public bool TryDeserialize(object value, IRefFinder refFinder)
+        /// <summary>
+        /// 将成员反序列到指定实例中
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="refFinder"></param>
+        /// <returns></returns>
+        public bool TryDeserialize(object value, IRefFinder refFinder = null)
         {
             if (Type == NullType)
             {
@@ -363,6 +374,21 @@ namespace Megumin.Serialization
         public int CompareTo(ObjectData other)
         {
             return Name.CompareTo(other.Name);
+        }
+
+        public bool TryInstantiate<T>(out T value, IRefFinder refFinder = null)
+        {
+            if (TryCreateInstance(out var temp) && temp is T tValue)
+            {
+                if (TryDeserialize(temp, refFinder))
+                {
+                    value = tValue;
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
         }
     }
 }

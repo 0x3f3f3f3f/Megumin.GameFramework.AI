@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
 
@@ -76,7 +77,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         refFinder = null;
                     }
                 }
-
+                Override?.ParseBinding(gameObject, true);
                 BehaviourTree = BehaviorTreeAsset.Instantiate(InitOption, refFinder);
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.Init(gameObject);
@@ -98,47 +99,51 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        [Editor]
-        public void EditorTree()
-        {
-            UnityEditor.AssetDatabase.OpenAsset(BehaviorTreeAsset);
-        }
-
-        [Editor]
         public void ResetTree()
         {
             BehaviourTree.Reset();
         }
 
-        [Editor]
-        public void Rebind()
+        public void ReParseBinding()
         {
-            BehaviourTree.ParseAllBindable(gameObject, true);
+            Override?.ParseBinding(gameObject, true);
+            BehaviourTree?.ParseAllBindable(gameObject, true);
         }
 
-        [Editor]
-        public void LogVariable(string name = "TestStringVariable")
+        public void LogVariables()
         {
-            if (BehaviourTree.Variable.TryGetParam<string>(name, out var variable))
+            if (Override != null)
             {
-                Debug.Log(variable.Value);
+                foreach (var item in Override.Table)
+                {
+                    if (item is IBindingParseable parseable)
+                    {
+                        parseable.DebugParseResult();
+                    }
+                    else
+                    {
+                        Debug.Log(item);
+                    }
+                }
+            }
+
+            if (BehaviourTree != null)
+            {
+                foreach (var item in BehaviourTree.Variable.Table)
+                {
+                    if (item is IBindingParseable parseable)
+                    {
+                        parseable.DebugParseResult();
+                    }
+                    else
+                    {
+                        Debug.Log(item);
+                    }
+                }
             }
         }
 
         public VariableTable Override = new();
-
-        [Editor]
-        public void OverrideVariable()
-        {
-            Override.Table.Add(new RefVariable_string());
-            if (BehaviorTreeAsset)
-            {
-                foreach (var item in BehaviorTreeAsset.variables)
-                {
-
-                }
-            }
-        }
 
         private void OnValidate()
         {
