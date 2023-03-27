@@ -10,7 +10,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
     {
-        public string GUID;
+        public string Version = new Version(1, 0, 1).ToString();
+        [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
+        [field: SerializeField]
+        public string GUID { get; set; } = Guid.NewGuid().ToString();
         [field: SerializeField]
         public string StartNodeGUID { get; set; } = "";
         public bool UseSerializeReferenceGeneric = false;

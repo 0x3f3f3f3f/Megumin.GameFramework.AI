@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: WaitAndLog
   m_EditorClassIdentifier: 
-  GUID: 80149b52-f951-4e0d-b64b-e465c40573c0
+  Version: 1.0.1
+  <GUID>k__BackingField: 71ad0dfc-da1a-4b3c-b95d-b4276312641a
   <StartNodeGUID>k__BackingField: a734621c-96b6-4a26-898c-0e4d45f5dba2
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []

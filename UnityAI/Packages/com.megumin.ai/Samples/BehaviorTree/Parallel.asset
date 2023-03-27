@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Parallel
   m_EditorClassIdentifier: 
-  GUID: fb8f00e7-93c5-4032-b427-d7593a6379e6
+  Version: 1.0.1
+  <GUID>k__BackingField: 23ca1a82-c3d6-470e-8fa9-fafc6dd40d10
   <StartNodeGUID>k__BackingField: 2ab55af1-6b09-48ab-8bda-968a568fb30d
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []

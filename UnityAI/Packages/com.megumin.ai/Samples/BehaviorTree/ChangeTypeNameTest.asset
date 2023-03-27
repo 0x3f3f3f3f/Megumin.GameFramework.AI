@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: ChangeTypeNameTest
   m_EditorClassIdentifier: 
-  GUID: 62797f74-5de7-4fda-accb-d9ee49865a34
+  Version: 1.0.1
+  <GUID>k__BackingField: 097c7a6e-f201-4e62-9647-eb3532c6192c
   <StartNodeGUID>k__BackingField: 
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []

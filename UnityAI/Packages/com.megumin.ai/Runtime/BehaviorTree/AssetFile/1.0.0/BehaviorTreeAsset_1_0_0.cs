@@ -13,6 +13,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTreeAsset_1_0_0 : ScriptableObject//, ISerializationCallbackReceiver
     {
         public string Version = new Version(1, 0, 0).ToString();
+        [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
+        [field: SerializeField]
+        public string GUID { get; set; } = Guid.NewGuid().ToString();
         public bool UseSerializeReferenceGeneric = false;
         public string test = "行为树SO资产";
         public string Comment = "load2";

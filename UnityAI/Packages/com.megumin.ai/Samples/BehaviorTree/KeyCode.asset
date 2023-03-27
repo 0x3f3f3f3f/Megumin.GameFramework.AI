@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: KeyCode
   m_EditorClassIdentifier: 
-  GUID: ebc28e44-bb8a-479b-a540-20c6f8e54846
+  Version: 1.0.1
+  <GUID>k__BackingField: bd76d30e-9bc4-4736-a0ae-c140537c6f5b
   <StartNodeGUID>k__BackingField: a734621c-96b6-4a26-898c-0e4d45f5dba2
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []

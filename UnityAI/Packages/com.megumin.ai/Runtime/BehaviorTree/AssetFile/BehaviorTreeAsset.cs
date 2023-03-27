@@ -13,8 +13,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public interface IBehaviorTreeAsset
     {
+        string GUID { get; set; }
         string name { get; set; }
-
         /// <summary>
         /// Json文件可能需要Wrapper
         /// </summary>

@@ -298,7 +298,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Checked file", a => { }, a => DropdownMenuAction.Status.Checked);
             file.menu.AppendAction("Disabled file", a => { }, a => DropdownMenuAction.Status.Disabled);
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
-
+            file.menu.AppendAction("Change GUID", a => 
+                                                {
+                                                    if (CurrentAsset != null)
+                                                    {
+                                                        CurrentAsset.GUID = Guid.NewGuid().ToString();
+                                                    }
+                                                }, a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var edit = root.Q<ToolbarMenu>("edit");

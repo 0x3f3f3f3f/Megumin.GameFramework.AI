@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: MissNode
   m_EditorClassIdentifier: 
-  GUID: 64f05cce-0fb9-4cb7-a246-e6084ca9d709
+  Version: 1.0.1
+  <GUID>k__BackingField: 6fe6df8b-f2b3-42ea-a96a-accb408bd7a6
   <StartNodeGUID>k__BackingField: 0e2c3966-8fb4-47a0-86f6-bac7cb107708
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
