@@ -7,13 +7,6 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-
-    public interface IConditionable
-    {
-        bool Cal();
-        bool Result { get; }
-    }
-
     /// <summary>
     /// 装饰器
     /// </summary>
@@ -30,9 +23,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         AbortType AbortType { get; }
     }
 
-    public interface IConditionDecorator : IDecorator, IConditionable, IAbortable
+    public interface IConditionDecorator : IDecorator, IAbortable
     {
-
+        bool CheckCondition();
+        bool LastCheckResult { get; }
     }
 
     internal interface IPreDecorator : IDecorator

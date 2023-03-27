@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &58892203
 Transform:
   m_ObjectHideFlags: 0
@@ -169,12 +169,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: f4bc91675148295479165d17c026a6d9, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table:
     - rid: 7759799527483113569
+    - rid: 7759799527483113848
+    - rid: 7759799527483113860
   references:
     version: 2
     RefIds:
@@ -186,6 +198,22 @@ MonoBehaviour:
         GetMode: 16
         SetMode: 16
         refName: TestStringVariable
+    - rid: 7759799527483113848
+      type: {class: RefVariable_Vector2, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {x: 0, y: 0}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: Vector2
+    - rid: 7759799527483113860
+      type: {class: RefVariable_GameObject, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {fileID: 0}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: GameObject
 --- !u!1 &116712484
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,9 +245,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: 173b74acef6c5ff449e198fda0f49003, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table: []
   references:
@@ -271,9 +309,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: f6992b249188ea240bc8fe2572436ef8, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table: []
   references:
@@ -293,6 +341,97 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1409874967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409874969}
+  - component: {fileID: 1409874968}
+  m_Layer: 0
+  m_Name: KeyCodeAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1409874968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409874967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BehaviorTreeAsset: {fileID: 11400000, guid: ce27a7e5e7f79004f9f9edf5f3b88484, type: 2}
+  TickMode: 1
+  AutoEnable: 1
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
+  Override:
+    Table:
+    - rid: 7759799527483113569
+    - rid: 7759799527483113848
+    - rid: 7759799527483113860
+  references:
+    version: 2
+    RefIds:
+    - rid: 7759799527483113569
+      type: {class: RefVariable_string, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: TestOverride
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: TestStringVariable
+    - rid: 7759799527483113848
+      type: {class: RefVariable_Vector2, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {x: 0, y: 0}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: Vector2
+    - rid: 7759799527483113860
+      type: {class: RefVariable_GameObject, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {fileID: 0}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: GameObject
+--- !u!4 &1409874969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409874967}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1551718193
 GameObject:
@@ -325,9 +464,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: 2103c26da11d51b4392b5445374003c3, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table: []
   references:
@@ -379,9 +528,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: 8c9547f88249d184aa3a97a406b3d285, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table: []
   references:
@@ -448,9 +607,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BehaviorTreeAsset: {fileID: 11400000, guid: 0011300df034daa4c8571c1f042924ca, type: 2}
   TickMode: 1
-  Order: 0
   AutoEnable: 1
-  EnableLog: 0
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    TaskInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+  RunOption:
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
   Override:
     Table: []
   references:

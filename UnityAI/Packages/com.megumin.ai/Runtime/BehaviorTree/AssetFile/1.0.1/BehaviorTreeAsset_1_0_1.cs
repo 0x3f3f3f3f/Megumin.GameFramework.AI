@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using Megumin.Binding;
 using Megumin.Reflection;
-using System.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 
@@ -247,6 +245,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             tree.Asset = this;
             return tree;
+        }
+
+        [Editor]
+        public void ChangeGUID()
+        {
+            GUID = Guid.NewGuid().ToString();
         }
     }
 

@@ -14,10 +14,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 条件装饰器
     /// </summary>
-    public class ConditionDecorator : BTDecorator, IAbortable
+    public class ConditionDecorator : BTDecorator, IAbortable, IConditionDecorator
     {
         [field: SerializeField]
         public AbortType AbortType { get; set; }
+
+        public bool CheckCondition()
+        {
+            LastCheckResult = OnCheckCondition();
+            return LastCheckResult;
+        }
+
+        protected virtual bool OnCheckCondition()
+        {
+            return false;
+        }
+
+        public bool LastCheckResult { get; protected set; }
     }
 }
 

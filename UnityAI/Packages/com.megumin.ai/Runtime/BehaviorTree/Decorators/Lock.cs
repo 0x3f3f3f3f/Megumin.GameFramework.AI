@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 保证同名锁同一时间只能有一个Task执行
     /// </summary>
-    internal class Lock : BTDecorator, IPostDecorator, IPreDecorator, IConditionable
+    internal class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
         BehaviorTree tree;
         public string lockName;
@@ -24,13 +24,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             tree.locDic.Add(lockName, this);
         }
 
-        public bool Cal()
+        public bool CheckCondition()
         {
             tree.locDic.TryGetValue(lockName, out var result);
-            Result = result == this;
-            return Result;
+            LastCheckResult = result == this;
+            return LastCheckResult;
         }
 
-        public bool Result { get; private set; }
+        public bool LastCheckResult { get; private set; }
     }
 }

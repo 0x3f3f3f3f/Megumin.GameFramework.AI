@@ -389,7 +389,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.Cal() == false)
+                    if (conditionable.CheckCondition() == false)
                     {
                         return false;
                     }
@@ -413,7 +413,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if (conditionable.AbortType.HasFlag(AbortType.Self))
                     {
-                        if (conditionable.Cal() == false)
+                        if (conditionable.CheckCondition() == false)
                         {
                             return false;
                         }
@@ -450,7 +450,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if (conditionable.AbortType.HasFlag(AbortType.LowerPriority))
                     {
-                        if (conditionable.Cal() == false)
+                        if (conditionable.CheckCondition() == false)
                         {
                             return false;
                         }

@@ -10,15 +10,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class CheckBool : ConditionDecorator, IConditionDecorator
     {
         [FormerlySerializedAs("A")]
-        public bool A = false;
-        [FormerlySerializedAs("B")]
-        public bool C = false;
-        public bool Cal()
-        {
-            return A;
-        }
+        public bool Success = false;
 
-        public bool Result { get; set; }
+        protected override bool OnCheckCondition()
+        {
+            return Success;
+        }
     }
 }
 

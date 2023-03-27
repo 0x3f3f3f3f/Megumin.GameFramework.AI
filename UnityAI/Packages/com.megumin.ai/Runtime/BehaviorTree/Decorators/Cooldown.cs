@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 成功执行后进入CD.
     /// </summary>
-    public class Cooldown : BTDecorator, IPostDecorator,IConditionable
+    public class Cooldown : ConditionDecorator, IPostDecorator, IConditionDecorator
     {
         public double cooldownTime = 5;
         public double nextCanEnterTime;
@@ -24,12 +24,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public bool Cal()
+        public bool CheckCondition()
         {
-            Result = Time.time > nextCanEnterTime;
-            return Result;
+            LastCheckResult = Time.time > nextCanEnterTime;
+            return LastCheckResult;
         }
 
-        public bool Result { get; private set; }
+        public bool LastCheckResult { get; private set; }
     }
 }
