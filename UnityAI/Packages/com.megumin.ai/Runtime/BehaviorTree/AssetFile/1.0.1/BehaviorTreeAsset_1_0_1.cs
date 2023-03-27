@@ -131,7 +131,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public UnityEngine.Object AssetObject => this;
 
-        public BehaviorTree Instantiate(bool instanceMeta = true)
+        public BehaviorTree Instantiate(bool instanceMeta = true, IRefFinder refFinder = null)
         {
             BehaviorTree tree = new();
             tree.GUID = GUID;
@@ -149,7 +149,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return tree;
             }
 
-            Dictionary<string, object> cacheRefObj = new();
+            RefFinder finder = new RefFinder();
+            Dictionary<string, object> cacheRefObj = finder.RefDic;
+            finder.Override = refFinder;
+
+
             cacheRefObj.Add(tree.GUID, tree);
 
             //缓存Unity引用对象
@@ -206,7 +210,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //反序列化参数表
             foreach (var item in variableCache)
             {
-                if (item.Key.TryDeserialize(item.Value, cacheRefObj))
+                if (item.Key.TryDeserialize(item.Value, finder))
                 {
                     if (item.Value is IRefable variable)
                     {
@@ -218,7 +222,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //反序列化树节点 节点父子关系和装饰器关系自动关联
             foreach (var item in treeelementCache)
             {
-                if (item.Key.TryDeserialize(item.Value, cacheRefObj))
+                if (item.Key.TryDeserialize(item.Value, finder))
                 {
                     if (item.Value is BTNode node)
                     {
@@ -240,4 +244,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return tree;
         }
     }
+
 }
+
+

@@ -25,11 +25,6 @@ namespace Megumin.Binding
         string RefName { get; set; }
     }
 
-    public interface IRefFinder
-    {
-        bool TryGetRefValue(string refName, out object refValue);
-    }
-
     public interface IRefVariableFinder
     {
         IEnumerable<IRefable> GetVariableTable();

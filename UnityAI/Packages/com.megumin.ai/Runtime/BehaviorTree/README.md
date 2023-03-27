@@ -1,6 +1,4 @@
 # BehaviorTree
-https://robohub.org/introduction-to-behavior-trees/
-
 
 # 快速入门
 ## 基础功能
@@ -300,6 +298,7 @@ public enum AbortType
 ---
 ---
 # 参考连接
+- https://robohub.org/introduction-to-behavior-trees/
 
 # 特别鸣谢
 

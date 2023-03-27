@@ -61,4 +61,12 @@ namespace Megumin.Serialization
         /// <param name="source"></param>
         void OnAfterDeserialize(List<T> source);
     }
+
+    /// <summary>
+    /// 引用查找器
+    /// </summary>
+    public interface IRefFinder
+    {
+        bool TryGetRefValue(string refName, out object refValue);
+    }
 }

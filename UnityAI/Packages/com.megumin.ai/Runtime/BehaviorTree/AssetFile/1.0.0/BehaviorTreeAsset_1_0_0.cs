@@ -219,7 +219,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <param name="instanceMeta">非调试和编辑状态下，所有树允许共享meta数据，节省性能</param>
         /// <returns></returns>
-        public BehaviorTree Instantiate(bool instanceMeta = true)
+        public BehaviorTree Instantiate(bool instanceMeta = true, IRefFinder refFinder = null)
         {
             var tree = new BehaviorTree();
             tree.InstanceGUID = Guid.NewGuid().ToString();

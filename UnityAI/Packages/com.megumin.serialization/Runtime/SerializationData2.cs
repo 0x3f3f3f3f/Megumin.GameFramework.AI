@@ -6,6 +6,51 @@ using UnityEngine;
 
 namespace Megumin.Serialization
 {
+
+    public class RefFinder : IRefFinder
+    {
+        public Dictionary<string, object> RefDic { get; } = new();
+        public RefFinder() { }
+
+        public IRefFinder Override { get; set; }
+
+        public IRefFinder Fallback { get; set; }
+        //public IRefFinder BubbleFallback { get; set; }
+
+        public static IRefFinder GlobalFallback { get; set; }
+
+        public bool TryGetRefValue(string refName, out object refValue)
+        {
+            if (Override != null && Override.TryGetRefValue(refName, out refValue))
+            {
+                return true;
+            }
+
+            if (RefDic.TryGetValue(refName, out refValue))
+            {
+                return true;
+            }
+
+            if (Fallback != null && Fallback.TryGetRefValue(refName, out refValue))
+            {
+                return true;
+            }
+
+            //if (BubbleFallback != null && BubbleFallback.TryGetRefValue(refName, out refValue))
+            //{
+            //    return true;
+            //}
+
+            if (GlobalFallback != null && GlobalFallback.TryGetRefValue(refName, out refValue))
+            {
+                return true;
+            }
+
+            refValue = null;
+            return false;
+        }
+    }
+
     [Serializable]
     public class UnityObjectData : SerializationData
     {
@@ -234,7 +279,7 @@ namespace Megumin.Serialization
             return false;
         }
 
-        public bool TryDeserialize(object value, Dictionary<string, object> cache)
+        public bool TryDeserialize(object value, IRefFinder refFinder)
         {
             if (Type == NullType)
             {
@@ -256,7 +301,13 @@ namespace Megumin.Serialization
                 }
                 else if (data.Type == RefType)
                 {
-                    return cache.TryGetValue(data.Value, out memberValue);
+                    if (refFinder == null)
+                    {
+                        memberValue = null;
+                        return true;
+                    }
+
+                    return refFinder.TryGetRefValue(data.Value, out memberValue);
                 }
                 else
                 {

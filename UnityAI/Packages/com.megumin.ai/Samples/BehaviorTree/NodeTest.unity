@@ -172,6 +172,14 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table:
+    - rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &116712484
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +214,11 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &116712486
 Transform:
   m_ObjectHideFlags: 0
@@ -255,6 +268,11 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1127915010
 Transform:
   m_ObjectHideFlags: 0
@@ -304,6 +322,11 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1551718195
 Transform:
   m_ObjectHideFlags: 0
@@ -353,6 +376,11 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1665237523
 Transform:
   m_ObjectHideFlags: 0
@@ -417,6 +445,11 @@ MonoBehaviour:
   Order: 0
   AutoEnable: 1
   EnableLog: 0
+  Override:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2118817459
 GameObject:
   m_ObjectHideFlags: 0

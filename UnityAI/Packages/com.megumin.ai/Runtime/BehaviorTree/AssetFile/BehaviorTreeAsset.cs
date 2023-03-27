@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding;
+using Megumin.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -20,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         UnityEngine.Object AssetObject { get; }
         string StartNodeGUID { get; set; }
 
-        BehaviorTree Instantiate(bool instanceMeta = true);
+        BehaviorTree Instantiate(bool instanceMeta = true, IRefFinder overrideRef = null);
         bool SaveTree(BehaviorTree tree);
     }
 }
