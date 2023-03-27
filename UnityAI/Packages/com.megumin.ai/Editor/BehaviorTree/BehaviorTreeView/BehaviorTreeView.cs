@@ -286,6 +286,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             ReloadView(false);
         }
 
+        static readonly InitOption initOption = new()
+        {
+            AsyncInit = false,
+            TaskInit = false,
+            SharedMeta = false,
+            LazyInitSubtree = false,
+        };
+
         public void ReloadView(bool force)
         {
             EditorWindow.UpdateTitle();
@@ -311,7 +319,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     if (EditorWindow.CurrentAsset != null)
                     {
-                        SOTree.Tree = EditorWindow.CurrentAsset.Instantiate();
+                        SOTree.Tree = EditorWindow.CurrentAsset.Instantiate(initOption);
                     }
                     else
                     {

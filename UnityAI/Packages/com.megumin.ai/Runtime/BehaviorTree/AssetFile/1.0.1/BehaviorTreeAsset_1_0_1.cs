@@ -131,8 +131,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public UnityEngine.Object AssetObject => this;
 
-        public BehaviorTree Instantiate(bool instanceMeta = true, IRefFinder refFinder = null)
+        public BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
         {
+            if (initOption == null)
+            {
+                return null;
+            }
+
             BehaviorTree tree = new();
             tree.GUID = GUID;
             tree.InstanceGUID = Guid.NewGuid().ToString();

@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         UnityEngine.Object AssetObject { get; }
         string StartNodeGUID { get; set; }
 
-        BehaviorTree Instantiate(bool instanceMeta = true, IRefFinder overrideRef = null);
+        BehaviorTree Instantiate(InitOption initOption, IRefFinder overrideRef = null);
         bool SaveTree(BehaviorTree tree);
     }
 }

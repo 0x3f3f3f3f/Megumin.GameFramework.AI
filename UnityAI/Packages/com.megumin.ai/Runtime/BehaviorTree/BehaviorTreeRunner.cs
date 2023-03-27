@@ -77,7 +77,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                 }
 
-                BehaviourTree = BehaviorTreeAsset.Instantiate(false, refFinder);
+                BehaviourTree = BehaviorTreeAsset.Instantiate(InitOption, refFinder);
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.Init(gameObject);
             }
