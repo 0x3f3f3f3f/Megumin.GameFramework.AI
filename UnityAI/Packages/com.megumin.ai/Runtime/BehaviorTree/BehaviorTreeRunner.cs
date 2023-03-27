@@ -20,10 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         [field: SerializeField]
         public OperationTree OnDisabled { get; set; } = OperationTree.Disable;
-        //Todo
-        //完成时重新开始
-        //后台线程异步实例化
-        //预加载子树
+        public InitOption InitOption;
         public RunOption RunOption;
 
 

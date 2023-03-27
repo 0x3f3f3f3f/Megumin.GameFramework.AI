@@ -47,9 +47,12 @@ namespace Megumin.GameFramework.AI
         Stop = 1 << 9,
     }
 
+    [Serializable]
     public class InitOption
     {
-        public bool UseBackgroundThread;
-
+        public bool AsyncInit = true;
+        public bool TaskInit = true;
+        public bool SharedMeta = true;
+        public bool LazyInitSubtree = false;
     }
 }
