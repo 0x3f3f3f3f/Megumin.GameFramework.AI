@@ -7,28 +7,37 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BehaviorTreeRunner : MonoBehaviour, IComparable<BehaviorTreeRunner>, ILogSetting
+    public class BehaviorTreeRunner : MonoBehaviour
     {
         //[field: SerializeField]
         public BehaviorTree BehaviourTree { get; protected set; }
         public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
-        public int Order = 0;
+
         public bool AutoEnable = true;
+        [field: SerializeField]
+        public OperationTree OnEnabled { get; set; } = OperationTree.Enable;
 
-        public bool EnableLog = false;
-        bool ILogSetting.Enabled => EnableLog;
-
+        [field: SerializeField]
+        public OperationTree OnDisabled { get; set; } = OperationTree.Disable;
         //Todo
         //完成时重新开始
         //后台线程异步实例化
         //预加载子树
-
+        public RunOption RunOption;
 
 
         private void OnEnable()
         {
-            this.LogMethodName();
+            if (BehaviourTree != null)
+            {
+                if (OnEnabled.HasFlag(OperationTree.Enable)
+                    || OnEnabled.HasFlag(OperationTree.Resume))
+                {
+                    DisableTree();
+                }
+            }
+
             if (AutoEnable)
             {
                 EnableTree();
@@ -37,7 +46,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         private void OnDisable()
         {
-            DisableTree();
+            if (BehaviourTree != null)
+            {
+                if (OnDisabled.HasFlag(OperationTree.Disable)
+                    || OnDisabled.HasFlag(OperationTree.Pause))
+                {
+                    DisableTree();
+                }
+            }
         }
 
         public void EnableTree()
@@ -65,7 +81,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
 
                 BehaviourTree = BehaviorTreeAsset.Instantiate(false, refFinder);
-                BehaviourTree.LogSetting = this;
+                BehaviourTree.RunOption = RunOption;
                 BehaviourTree.Init(gameObject);
             }
 
@@ -127,23 +143,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public int CompareTo(BehaviorTreeRunner other)
-        {
-            return Order.CompareTo(other.Order);
-        }
-
-        public void TickTree()
-        {
-            if (enabled)
-            {
-                BehaviourTree.Tick();
-            }
-        }
-
         private void OnValidate()
         {
             if (BehaviourTree?.IsRunning == true)
             {
+                //调试时tickmode改变
                 EnableTree();
             }
         }

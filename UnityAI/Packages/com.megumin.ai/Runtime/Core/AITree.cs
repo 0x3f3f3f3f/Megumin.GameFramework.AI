@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI
         public string GUID { get; set; }
 
         public TraceListener TraceListener { get; set; } = new UnityTraceListener();
-        public ILogSetting LogSetting { get; set; }
+        public IRunOption RunOption { get; set; }
 
         /// <summary>
         /// 参数表中的一些值也在里面，没没有做过滤
@@ -28,7 +28,7 @@ namespace Megumin.GameFramework.AI
 
         public virtual void Log(object message)
         {
-            if (LogSetting?.Enabled == true)
+            if (RunOption?.Log == true)
             {
                 TraceListener?.WriteLine(message);
             }
