@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: AbortType
   m_EditorClassIdentifier: 
-  GUID: 2083c270-c1ce-4a97-92e4-7367177ed8a7
+  GUID: a50b4db1-56b2-45c5-8b76-fdddbdbcfb6d
   <StartNodeGUID>k__BackingField: 8842f6ab-3690-42dd-82a6-e06307b530d0
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []

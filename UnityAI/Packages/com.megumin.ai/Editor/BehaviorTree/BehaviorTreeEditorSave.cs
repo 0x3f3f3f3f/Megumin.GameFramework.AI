@@ -68,6 +68,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Debug.Log($"保存资源失败");
             }
+
+            CheckGUID();
+        }
+
+        public static void CheckGUID()
+        {
+            var all = CollectAllAsset<BehaviorTreeAsset_1_0_1>();
+            if (all != null)
+            {
+                var g = from elem in all
+                        group elem by elem.obj.GUID;
+                var gs = all.GroupBy(elem => elem.obj.GUID).Where(g => g.Count() > 1);
+                foreach (var item in gs)
+                {
+                    var str = $"Guid is same. {item.Key}";
+                    foreach (var item1 in item)
+                    {
+                        str += $"  Path:{item1.path}";
+                    }
+                    Debug.LogError(str);
+                }
+            }
         }
 
         public T CreateScriptObjectTreeAssset<T>()
@@ -100,6 +122,43 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 AssetDatabase.Refresh();
             }
         }
+
+
+        static List<(T obj, string guid, long localId, string path)>
+            CollectAllAsset<T>(List<string> collectFolder = null)
+            where T : UnityEngine.Object
+        {
+            List<(T obj, string guid, long localId, string path)> list = new List<(T obj, string guid, long localId, string path)>();
+
+#if UNITY_EDITOR
+
+            var FindAssetsFolders = new string[] { "Assets", "Packages" };
+            if (collectFolder != null)
+            {
+                FindAssetsFolders = collectFolder.ToArray();
+            }
+
+            string[] GUIDs = AssetDatabase.FindAssets($"t:{typeof(T).Name}",
+                FindAssetsFolders);
+
+            for (int i = 0; i < GUIDs.Length; i++)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(GUIDs[i]);
+                var sos = AssetDatabase.LoadAllAssetsAtPath(path);
+                foreach (var item in sos)
+                {
+                    if (item != null && item is T so)
+                    {
+                        AssetDatabase.TryGetGUIDAndLocalFileIdentifier(so, out var tempGUID, out long localID);
+                        list.Add((so, tempGUID, localID, path));
+                    }
+                }
+            }
+#endif
+
+            return list;
+        }
+
 
     }
 }

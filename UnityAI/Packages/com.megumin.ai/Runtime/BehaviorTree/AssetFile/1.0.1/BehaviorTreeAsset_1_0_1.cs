@@ -251,6 +251,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public void ChangeGUID()
         {
             GUID = Guid.NewGuid().ToString();
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.AssetDatabase.SaveAssetIfDirty(this);
+#endif
         }
     }
 
