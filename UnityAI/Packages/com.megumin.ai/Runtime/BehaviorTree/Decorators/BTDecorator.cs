@@ -16,12 +16,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public class ConditionDecorator : BTDecorator, IAbortable, IConditionDecorator
     {
+        public bool Invert = false;
+
         [field: SerializeField]
         public AbortType AbortType { get; set; }
 
         public bool CheckCondition()
         {
             LastCheckResult = OnCheckCondition();
+
+            if (Invert)
+            {
+                LastCheckResult = !LastCheckResult;
+            }
+
             return LastCheckResult;
         }
 

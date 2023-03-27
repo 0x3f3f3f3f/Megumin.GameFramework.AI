@@ -494,16 +494,19 @@ MonoBehaviour:
   - Name: e7b51916-ca4a-4b6f-8fcd-a195676ce7ee.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: eb4e4eac-18d8-4160-abff-e03080fff525
   - Name: e7b51916-ca4a-4b6f-8fcd-a195676ce7ee.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
     - Name: x
       Type: System.Single
-      Value: 360.7717
+      Value: 306.5432
     - Name: y
       Type: System.Single
-      Value: 713.0001
+      Value: 713
     - Name: index
       Type: System.Int32
       Value: 8
@@ -537,6 +540,18 @@ MonoBehaviour:
     - Name: bindingPath
       Type: System.String
       Value: 
+  - Name: eb4e4eac-18d8-4160-abff-e03080fff525
+    Type: Megumin.GameFramework.AI.BehaviorTree.MouseEvent
+    Member:
+    - Name: Invert
+      Type: System.Boolean
+      Value: True
+    - Name: GUID
+      Type: System.String
+      Value: eb4e4eac-18d8-4160-abff-e03080fff525
+    - Name: AbortType
+      Type: Megumin.GameFramework.AI.BehaviorTree.AbortType
+      Value: Megumin.GameFramework.AI.BehaviorTree.AbortType:Self
   - Name: fb065585-7de8-4be3-ac57-d2b91b53a01b
     Type: Megumin.GameFramework.AI.BehaviorTree.Wait
     Member:
