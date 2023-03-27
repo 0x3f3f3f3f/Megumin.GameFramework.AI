@@ -174,12 +174,18 @@ MonoBehaviour:
   EnableLog: 0
   Override:
     Table:
-    - rid: -2
+    - rid: 7759799527483113569
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 7759799527483113569
+      type: {class: RefVariable_string, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: TestOverride
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: TestStringVariable
 --- !u!1 &116712484
 GameObject:
   m_ObjectHideFlags: 0

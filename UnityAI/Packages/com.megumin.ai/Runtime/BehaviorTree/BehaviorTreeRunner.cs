@@ -117,6 +117,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Editor]
         public void OverrideVariable()
         {
+            Override.Table.Add(new RefVariable_string());
             if (BehaviorTreeAsset)
             {
                 foreach (var item in BehaviorTreeAsset.variables)
