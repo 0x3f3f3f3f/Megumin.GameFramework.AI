@@ -85,28 +85,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             using var profiler = tickProfilerMarker.Auto();
 
+            if (StartNode == null)
+            {
+                return Status.Failed;
+            }
+
+            if (StartNode.Enabled == false)
+            {
+                Debug.Log($"StartNode is not Enabled!");
+                return Status.Failed;
+            }
+
+            if (treestate == Status.Succeeded)
+            {
+                if (RunOption != null && RunOption.OnSucceeded.HasFlag(OperationTree.ReStart))
+                {
+                    treestate = Status.Init;
+                }
+                else
+                {
+                    return Status.Succeeded;
+                }
+            }
+
+            if (treestate == Status.Failed)
+            {
+                if (RunOption != null && RunOption.OnFailed.HasFlag(OperationTree.ReStart))
+                {
+                    treestate = Status.Init;
+                }
+                else
+                {
+                    return Status.Failed;
+                }
+            }
+
+            treestate = StartNode.Tick(null);
             if (treestate == Status.Succeeded || treestate == Status.Failed)
             {
-                //整个树已经执行完，不在执行
-            }
-            else
-            {
-                if (StartNode == null)
-                {
-                    return Status.Failed;
-                }
-
-                if (StartNode.Enabled == false)
-                {
-                    Debug.Log($"StartNode is not Enabled!");
-                    return Status.Failed;
-                }
-
-                treestate = StartNode.Tick(null);
-                if (treestate == Status.Succeeded || treestate == Status.Failed)
-                {
-                    Debug.Log($"tree complate. {treestate}");
-                }
+                Debug.Log($"tree complate. {treestate}");
             }
 
             return treestate;
