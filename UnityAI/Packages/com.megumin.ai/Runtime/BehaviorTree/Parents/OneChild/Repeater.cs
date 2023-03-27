@@ -17,12 +17,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         int cur = 0;
         protected override Status OnTick(BTNode from)
         {
+            if (loopCount == 0)
+            {
+                return base.OnTick(from);
+            }
+
             var res = Child0.Tick(this);
+
             if (res == Status.Succeeded || res == Status.Failed)
             {
                 cur++;
-                Debug.Log($"Repeater: complete {cur}");
-                if (cur >= loopCount)
+                Log($"Repeater: complete {cur}");
+                if (loopCount >= 0 && cur >= loopCount)
                 {
                     return res;
                 }
