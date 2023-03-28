@@ -10,10 +10,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeNodeView
     {
+        bool isRunning = false;
+        Status lastTickState = Status.Init;
         internal void OnPostTick()
         {
+            if (Node == null)
+            {
+                return;
+            }
+
             //this.LogMethodName();
-            var isRunning = Node?.State == Status.Running;
+            isRunning = Node.State == Status.Running;
             this.SetToClassList(UssClassConst.running, isRunning);
             InputPort.SetToClassList(UssClassConst.running, isRunning);
             OutputPort.SetToClassList(UssClassConst.running, isRunning);
@@ -29,15 +36,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.running, isRunning); }).ExecuteLater(10);
             }
 
+            if (isRunning || lastTickState != Node.State)
+            {
+                RefreshDetail();
+            }
+
             UpdateCompletedState();
+
+            lastTickState = Node.State;
         }
 
         private void UpdateCompletedState()
         {
             bool hasChanged = false;
-            var isSucceeded = Node?.State == Status.Succeeded;
+            var isSucceeded = Node.State == Status.Succeeded;
             hasChanged |= this.SetToClassList(UssClassConst.succeeded, isSucceeded);
-            var isFailed = Node?.State == Status.Failed;
+            var isFailed = Node.State == Status.Failed;
             hasChanged |= this.SetToClassList(UssClassConst.failed, isFailed);
 
             //if (hasChanged)
