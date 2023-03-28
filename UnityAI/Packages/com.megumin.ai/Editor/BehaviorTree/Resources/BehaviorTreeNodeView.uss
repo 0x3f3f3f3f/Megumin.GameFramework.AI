@@ -284,3 +284,29 @@
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 }
+
+#body .detailContainer {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 1px;
+    overflow: hidden;
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+#body .detail {
+    font-size: 8px;
+    background-color: rgba(26, 26, 26, 0.5);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    flex-grow: 1;
+}
