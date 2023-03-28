@@ -1,8 +1,8 @@
-﻿.behaviorTreeEditor .uiBuilderDebugNode {
+.behaviorTreeEditor .uiBuilderDebugNode {
     display: none;
 }
 
-.failed.node.behaviorTreeNode > #node-border #注释{
+.failed.node.behaviorTreeNode > #node-border #注释 {
     background-color: rgba(89, 45, 45, 0.75);
 }
 
@@ -10,12 +10,12 @@
     background-image: resource('d_p4_deletedlocal@2x');
 }
 
-.failed.edge #注释{
+.failed.edge #注释 {
     --edge-color: rgb(146, 133, 133);
     --edge-colorMode: defaultColor;
 }
 
-.succeeded.node.behaviorTreeNode > #node-border #注释{
+.succeeded.node.behaviorTreeNode > #node-border #注释 {
     background-color: rgba(52, 89, 45, 0.84);
 }
 
@@ -23,7 +23,7 @@
     background-image: resource('testpassed');
 }
 
-.succeeded.edge #注释{
+.succeeded.edge #注释 {
     --edge-color: rgb(133, 146, 133);
     --edge-colorMode: defaultColor;
 }
@@ -50,8 +50,12 @@
     background-color: rgb(215, 215, 6);
 }
 
-.running.node.behaviorTreeNode #header {
+.running.node.behaviorTreeNode #body {
 }
 
-.running.node.behaviorTreeNode #header #title {
+.running.node.behaviorTreeNode #body #title {
+}
+
+.running.node.behaviorTreeNode #body .detail #注释{
+    background-color: rgb(215, 215, 6);
 }

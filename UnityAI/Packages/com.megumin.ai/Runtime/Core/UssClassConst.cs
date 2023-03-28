@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI
 {
-    internal class UssClassConst
+    public class UssClassConst
     {
         public const string running = nameof(running);
         public const string succeeded = nameof(succeeded);
@@ -18,7 +18,10 @@ namespace Megumin.GameFramework.AI
 
         public const string abortTypeSelf = nameof(abortTypeSelf);
         public const string abortTypeLowerPriority = nameof(abortTypeLowerPriority);
-        
+
         public const string displayDetail = nameof(displayDetail);
+
+        public const string zoomOut = nameof(zoomOut);
+        public const string zoomIn = nameof(zoomIn);
     }
 }

@@ -14,7 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     // Usually you will only have a single Settings instance, so it is convenient to define a UserSetting<T> implementation
     // that points to your instance. In this way you avoid having to pass the Settings parameter in setting field definitions.
-    internal class MySetting<T> : UserSetting<T>
+    public class MySetting<T> : UserSetting<T>
     {
         public string FriendKey { get; set; }
         public MySetting(string key, T value, SettingsScope scope = SettingsScope.Project)
@@ -35,6 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("MiniMap", false, SettingsScope.User),
             new MySetting<bool>("ToolTip", true, SettingsScope.User),
             new MySetting<bool>("FloatingTip", true, SettingsScope.User),
+            new MySetting<bool>("FriendlyZoom", true, SettingsScope.User),
             new MySetting<bool>("NodeIndex", false, SettingsScope.User),
             new MySetting<bool>("NodeIcon", true, SettingsScope.User),
             new MySetting<bool>("NodeDetail", true, SettingsScope.User),
@@ -46,6 +47,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         internal readonly static MySetting<Rect> BlackboardLayout
             = new MySetting<Rect>("BlackboardLayout", new Rect(0, 0, 340, 400), SettingsScope.User);
+
+        public static MySetting<bool> ToolTipSetting => MySettingPrefs[4];
+        public static MySetting<bool> FriendlyZoomSetting => MySettingPrefs[6];
 
         /// <summary>
         /// 是否显示还还没有实现的Feature。默认是隐藏，否则会给用户造成困惑为什么变灰点不了。
@@ -209,7 +213,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             root.RegisterCallback<TooltipEvent>(evt =>
             {
-                if (!MySettingPrefs[4])
+                if (!ToolTipSetting)
                 {
                     //关闭TooltipEvent
                     evt.StopImmediatePropagation();
@@ -299,7 +303,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             file.menu.AppendAction("Checked file", a => { }, a => DropdownMenuAction.Status.Checked);
             file.menu.AppendAction("Disabled file", a => { }, a => DropdownMenuAction.Status.Disabled);
             file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
-            file.menu.AppendAction("Change GUID", a => 
+            file.menu.AppendAction("Change GUID", a =>
                                                 {
                                                     if (CurrentAsset != null)
                                                     {

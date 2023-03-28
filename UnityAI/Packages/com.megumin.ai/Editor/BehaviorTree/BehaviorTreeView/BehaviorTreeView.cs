@@ -57,6 +57,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             serializeGraphElements += OnSerializeGraphElements;
             canPasteSerializedData += OnCanPasteSerializedData;
             unserializeAndPaste += OnUnserializeAndPaste;
+            viewTransformChanged += OnViewTransformChanged;
         }
 
         public void Dispose()
@@ -220,6 +221,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             return graphViewChange;
+        }
+
+        private void OnViewTransformChanged(GraphView graphView)
+        {
+            //Debug.Log(contentViewContainer.transform.scale);
+            if (BehaviorTreeEditor.FriendlyZoomSetting)
+            {
+                var level = contentViewContainer.transform.scale.x;
+                this.SetToClassList(UssClassConst.zoomOut, level < 0.75f);
+                this.SetToClassList(UssClassConst.zoomIn, level > 2.25f);
+            }
+            else
+            {
+                this.SetToClassList(UssClassConst.zoomOut, false);
+                this.SetToClassList(UssClassConst.zoomIn, false);
+            }
         }
 
         public void OnMouseMove(MouseMoveEvent evt)

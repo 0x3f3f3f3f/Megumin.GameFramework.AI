@@ -322,3 +322,7 @@
 .disable_NodeDetail #center #body .detailContainer {
     display: none;
 }
+
+.zoomOut #center #body .detailContainer {
+    display: none;
+}
