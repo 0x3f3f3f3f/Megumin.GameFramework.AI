@@ -37,6 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("FloatingTip", true, SettingsScope.User),
             new MySetting<bool>("NodeIndex", false, SettingsScope.User),
             new MySetting<bool>("NodeIcon", true, SettingsScope.User),
+            new MySetting<bool>("NodeDetail", true, SettingsScope.User),
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
             new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
             //new MySetting<bool>("RingGraph", false, SettingsScope.User),

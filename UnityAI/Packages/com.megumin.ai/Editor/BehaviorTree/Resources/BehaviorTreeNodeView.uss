@@ -219,6 +219,8 @@
 #center #titleBar > #title {
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0);
+    max-height: 48px;
+    height: initial;
 }
 
 #center #body .nodeIndex {
@@ -309,4 +311,8 @@
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
     flex-grow: 1;
+}
+
+.disable_NodeDetail #center #body .detailContainer {
+    display: none;
 }
