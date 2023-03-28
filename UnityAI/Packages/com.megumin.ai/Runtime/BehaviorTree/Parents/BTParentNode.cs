@@ -19,6 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 条件终止 动态模式
         /// </summary>
+        [Tooltip("It is recommended to use AbortType instead of Dynamic.")]
         public bool Dynamic = false;
 
         /// <summary>
