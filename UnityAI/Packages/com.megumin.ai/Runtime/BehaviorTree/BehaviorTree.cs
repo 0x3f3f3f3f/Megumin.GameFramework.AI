@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Space]
         public VariableTable Variable = new();
 
-        public readonly Dictionary<string, object> locDic = new Dictionary<string, object>();
+        public readonly Dictionary<string, object> lockDic = new Dictionary<string, object>();
         public BTNode StartNode { get; set; }
         public IBehaviorTreeAsset Asset { get; internal set; }
 

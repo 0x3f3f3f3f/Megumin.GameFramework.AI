@@ -15,22 +15,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string lockName;
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            tree.locDic.Remove(lockName);
+            tree.lockDic.Remove(lockName);
             return result;
         }
 
         public void BeforeNodeEnter(BTNode bTNode)
         {
-            tree.locDic.Add(lockName, this);
+            if (string.IsNullOrEmpty(lockName))
+            {
+                lockName = bTNode.InstanceID;
+            }
+
+            tree.lockDic.Add(lockName, this);
         }
 
-        public bool CheckCondition()
+        protected override bool OnCheckCondition()
         {
-            tree.locDic.TryGetValue(lockName, out var result);
-            LastCheckResult = result == this;
-            return LastCheckResult;
+            tree.lockDic.TryGetValue(lockName, out var result);
+            return result == this;
         }
-
-        public bool LastCheckResult { get; private set; }
     }
 }
