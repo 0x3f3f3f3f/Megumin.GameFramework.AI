@@ -294,7 +294,7 @@
     overflow: hidden;
     flex-grow: 1;
     flex-direction: row;
-    padding-bottom: 1px;
+    padding-bottom: 2px;
 }
 
 #body .detailContainer.displayDetail {
@@ -302,13 +302,21 @@
 }
 
 #body .detail {
-    font-size: 8px;
+    font-size: 10px;
     background-color: rgba(26, 26, 26, 0.5);
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
     flex-grow: 1;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 110px;
+    white-space: normal;
+    max-height: 38px;
+    -unity-text-align: upper-left;
 }
 
 .disable_NodeDetail #center #body .detailContainer {
