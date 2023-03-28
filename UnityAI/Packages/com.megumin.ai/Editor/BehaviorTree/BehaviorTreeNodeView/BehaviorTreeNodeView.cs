@@ -33,6 +33,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
             Icon = this.Q<Button>("icon", "treeElementIcon");
+            DynamicMarker = this.Q<Label>("dynamicMarker");
 
             DetailContainer = this.Q("detailContainer");
             Detail = this.Q<Label>("detail");
@@ -86,6 +87,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
         public Button Icon { get; private set; }
+        public Label DynamicMarker { get; private set; }
         public VisualElement DetailContainer { get; private set; }
         public Label Detail { get; private set; }
         public Label Index { get; private set; }
@@ -232,6 +234,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
+            RefreshDynamicMarker();
 
             ShortGUID.text = node?.GUID.Substring(0, 13) ?? string.Empty;
             SONode = CreateSOWrapperIfNull(node, forceReCreateSoWrapper);
@@ -292,7 +295,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (Node is IDetailable detailable)
                 {
                     var detail = detailable.GetDetail();
-                    if (!string.IsNullOrEmpty(detail)) 
+                    if (!string.IsNullOrEmpty(detail))
                     {
                         showDetail = true;
                     }
@@ -300,6 +303,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
             DetailContainer.SetToClassList(UssClassConst.displayDetail, showDetail);
+        }
+
+        internal void RefreshDynamicMarker()
+        {
+            var showDynamicMarker = false;
+            if (DynamicMarker != null)
+            {
+                if (Node is BTParentNode parentNode)
+                {
+                    showDynamicMarker = parentNode.Dynamic;
+                }
+                DynamicMarker.SetToClassList(UssClassConst.isDynamic, showDynamicMarker);
+            }
         }
 
         internal void RefreshNodeIndex()

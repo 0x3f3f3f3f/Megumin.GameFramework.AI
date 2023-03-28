@@ -16,6 +16,7 @@
             <ui:VisualElement name="body">
                 <ui:VisualElement name="titleBar">
                     <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
+                    <ui:Label text="D" display-tooltip-when-elided="true" name="dynamicMarker" tooltip="This is a Dynamic node." class="dynamicMarker" />
                     <ui:VisualElement name="title">
                         <ui:Label name="title-label" text="TestNode" class="unity-text-element unity-label" />
                         <ui:VisualElement name="title-button-container">
