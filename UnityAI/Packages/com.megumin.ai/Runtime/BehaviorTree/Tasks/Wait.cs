@@ -23,5 +23,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             return Status.Running;
         }
+
+        public string LogString()
+        {
+            return "Wait: waitTime. Left: 0.5f";
+        }
     }
 }
