@@ -288,19 +288,17 @@
 }
 
 #body .detailContainer {
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    display: none;
     padding-left: 8px;
     padding-right: 8px;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 1px;
     overflow: hidden;
     flex-grow: 1;
     flex-direction: row;
+    padding-bottom: 1px;
+}
+
+#body .detailContainer.displayDetail {
+    display: flex;
 }
 
 #body .detail {

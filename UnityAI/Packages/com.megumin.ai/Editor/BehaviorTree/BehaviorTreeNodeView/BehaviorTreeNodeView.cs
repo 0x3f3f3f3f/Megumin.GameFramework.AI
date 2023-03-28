@@ -33,6 +33,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
             Icon = this.Q<Button>("icon", "treeElementIcon");
+
+            DetailContainer = this.Q("detailContainer");
+            Detail = this.Q<Label>("detail");
+
             Index = this.Q<Label>("nodeIndex");
             decoratorContainer = this.Q<VisualElement>("decorator");
             //decoratorContainer.AddManipulator(new TestMouseManipulator());
@@ -82,6 +86,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
         public Button Icon { get; private set; }
+        public VisualElement DetailContainer { get; private set; }
+        public Label Detail { get; private set; }
         public Label Index { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
@@ -221,6 +227,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             name = typeName;
             title = node.GetTitle();
 
+            RefreshDetail();
             RefreshNodeIndex();
 
             //使用自定义图标
@@ -275,6 +282,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 default:
                     break;
             }
+        }
+
+        internal void RefreshDetail()
+        {
+            var showDetail = false;
+            if (Detail != null)
+            {
+                if (Node is IDetailable detailable)
+                {
+                    var detail = detailable.GetDetail();
+                    if (!string.IsNullOrEmpty(detail)) 
+                    {
+                        showDetail = true;
+                    }
+                    Detail.text = detail;
+                }
+            }
+            DetailContainer.SetToClassList(UssClassConst.displayDetail, showDetail);
         }
 
         internal void RefreshNodeIndex()

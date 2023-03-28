@@ -24,12 +24,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public bool CheckCondition()
+        protected override bool OnCheckCondition()
         {
-            LastCheckResult = Time.time > nextCanEnterTime;
-            return LastCheckResult;
+            return Time.time > nextCanEnterTime;
         }
-
-        public bool LastCheckResult { get; private set; }
     }
 }

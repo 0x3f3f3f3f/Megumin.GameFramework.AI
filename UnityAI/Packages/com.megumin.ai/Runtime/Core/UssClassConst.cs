@@ -18,5 +18,7 @@ namespace Megumin.GameFramework.AI
 
         public const string abortTypeSelf = nameof(abortTypeSelf);
         public const string abortTypeLowerPriority = nameof(abortTypeLowerPriority);
+        
+        public const string displayDetail = nameof(displayDetail);
     }
 }

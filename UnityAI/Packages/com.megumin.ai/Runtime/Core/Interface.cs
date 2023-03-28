@@ -15,6 +15,11 @@ namespace Megumin.GameFramework.AI
         string Title { get; }
     }
 
+    public interface IDetailable
+    {
+        string GetDetail();
+    }
+
 
     [Flags]
     public enum Status

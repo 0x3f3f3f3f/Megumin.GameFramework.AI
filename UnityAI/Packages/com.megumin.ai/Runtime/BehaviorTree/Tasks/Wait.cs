@@ -4,20 +4,24 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Icon("ICONS/sg_graph_icon.png")]
-    public class Wait : ActionTaskNode
+    public class Wait : ActionTaskNode, IDetailable
     {
         public RefVar<float> waitTime = 5.0f;
 
         float entertime;
+        private float left;
+
         protected override void OnEnter()
         {
             entertime = Time.time;
+            left = waitTime.Value;
         }
 
         protected override Status OnTick(BTNode from)
         {
             //Debug.Log($"Wait Time :{Time.time - entertime}");
-            if (Time.time - entertime >= waitTime)
+            left = waitTime.Value - (Time.time - entertime);
+            if (left <= 0)
             {
                 return Status.Succeeded;
             }
@@ -27,6 +31,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string LogString()
         {
             return "Wait: waitTime. Left: 0.5f";
+        }
+
+        public string GetDetail()
+        {
+            if (State == Status.Running)
+            {
+                return $"Wait: {waitTime.Value}. Left:{left}";
+            }
+            else
+            {
+                return $"Wait: {waitTime.Value}.";
+            }
         }
     }
 }
