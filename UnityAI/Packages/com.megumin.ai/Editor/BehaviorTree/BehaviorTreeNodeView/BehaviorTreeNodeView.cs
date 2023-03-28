@@ -29,7 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             styleSheets.Add(styleSheet);
             this.AddToClassList("behaviorTreeNode");
 
-            Header = this.Q("header");
+            Body = this.Q("body");
             Description = this.Q<Label>("description");
             ShortGUID = this.Q<Label>("guid");
             Icon = this.Q<Button>("icon", "treeElementIcon");
@@ -78,7 +78,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Port InputPort { get; private set; }
         public Port OutputPort { get; private set; }
-        public VisualElement Header { get; private set; }
+        public VisualElement Body { get; private set; }
         public Label Description { get; private set; }
         public Label ShortGUID { get; private set; }
         public Button Icon { get; private set; }
@@ -249,7 +249,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 var attri = type?.GetCustomAttribute<ColorAttribute>();
                 if (attri != null)
                 {
-                    Header.style.backgroundColor = attri.Color;
+                    Body.style.backgroundColor = attri.Color;
                 }
             }
 
