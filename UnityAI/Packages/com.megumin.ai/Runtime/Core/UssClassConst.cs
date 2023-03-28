@@ -25,5 +25,6 @@ namespace Megumin.GameFramework.AI
         public const string zoomIn = nameof(zoomIn);
 
         public const string isDynamic = nameof(isDynamic);
+        public const string isInvert = nameof(isInvert);
     }
 }

@@ -18,6 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override VisualElement contentContainer => ContentContainer;
         public VisualElement ContentContainer { get; private set; }
         public Button Icon { get; private set; }
+        public Label InvertMarker { get; private set; }
         public Button AbortTypeButton { get; private set; }
         public Label Title { get; }
         public VisualElement CMarker { get; private set; }
@@ -34,6 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             ContentContainer = this.Q("contentContainer");
             Icon = this.Q<Button>("icon", "treeElementIcon");
+            InvertMarker = this.Q<Label>("invertMarker");
             AbortTypeButton = this.Q<Button>("abortType", "abortType");
             Title = this.Q<Label>("title-label");
             CMarker = this.Q("cMarker");
@@ -135,6 +137,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
+
+            var showInvert = false;
+            if (Decorator is ConditionDecorator condition)
+            {
+                showInvert = condition.Invert;
+            }
+            InvertMarker.SetToClassList(UssClassConst.isInvert, showInvert);
 
             RefreshAbortTypeUI();
 
