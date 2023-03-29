@@ -140,11 +140,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public bool TryGetFirstParent(out BTParentNode parentNode)
         {
-            if (Tree is BehaviorTree behaviorTree)
+            if (Tree != null)
             {
-                return behaviorTree.TryGetFirstParent(this, out parentNode);
+                return Tree.TryGetFirstParent(this, out parentNode);
             }
-            parentNode = default;
+
+            parentNode = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 获取执行路径
+        /// </summary>
+        /// <param name="exetutePath"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool TryGetFirstExetutePath(List<BTParentNode> exetutePath)
+        {
+            if (Tree != null)
+            {
+                return Tree.TryGetFirstExetutePath(this, exetutePath);
+            }
+
             return false;
         }
     }

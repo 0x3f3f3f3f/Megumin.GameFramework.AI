@@ -121,7 +121,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (instance is BehaviorTreeElement treeElement)
                 {
-                    if (item.MemberType == typeof(AITree))
+                    if (item.MemberValue == treeElement.Tree)
                     {
                         continue;
                     }

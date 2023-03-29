@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
@@ -296,6 +295,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             parentNode = null;
+            return false;
+        }
+
+        public bool TryGetFirstExetutePath(BTNode node, List<BTParentNode> exetutePath)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+
+            if (StartNode is BTParentNode parentNode)
+            {
+                return parentNode.IsDescendant(node, exetutePath);
+            }
+
             return false;
         }
     }

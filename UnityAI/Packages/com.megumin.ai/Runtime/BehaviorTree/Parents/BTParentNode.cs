@@ -40,7 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public bool IsDescendant(BTNode node)
+        public bool IsDescendant(BTNode node, List<BTParentNode> parentPath = null)
         {
             if (node == null)
             {
@@ -51,14 +51,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (child.GUID == node.GUID)
                 {
+                    parentPath?.Add(this);
                     return true;
                 }
 
                 if (child is BTParentNode parentNode)
                 {
-                    var result = parentNode.IsDescendant(node);
+                    var result = parentNode.IsDescendant(node, parentPath);
                     if (result)
                     {
+                        parentPath?.Add(this);
                         return true;
                     }
                 }

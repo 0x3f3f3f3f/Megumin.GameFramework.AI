@@ -331,12 +331,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal void RefeshEnabled()
         {
             //自己或者父有没有关闭的节点
-            bool isEnableOrDescendant = false;
+            bool isMute = false;
             if (Node != null)
             {
-                List<int> a;
+                if (Node.Enabled == false)
+                {
+                    isMute = true;
+                }
+                else
+                {
+                    List<BTParentNode> nodes = new();
+                    if (Node.TryGetFirstExetutePath(nodes))
+                    {
+                        foreach (var node in nodes)
+                        {
+                            if (node.Enabled == false)
+                            {
+                                isMute = true;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
-
+            this.SetToClassList(UssClassConst.isMute, isMute);
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
