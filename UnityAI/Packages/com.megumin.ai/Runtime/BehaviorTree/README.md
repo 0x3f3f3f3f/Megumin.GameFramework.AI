@@ -261,7 +261,10 @@ public enum AbortType
 ```
 两种终止类型：  
 - Self：当自身处于`Running`时，每次Tick都对含有AbortType.Self的条件装饰器重新求值。如果结果由true变为false，则终止自身节点，节点向上级返回Failed。
-- LowerPriority：当`右侧节点`处于`Running`时，上级节点每次Tick会额外对含有AbortType.LowerPriority的条件装饰器重新求值。如果结果改变，则重新执行前节点。如果执行结果发生改变，则终止处于`Running`的节点。
+- LowerPriority：当`右侧节点`处于`Running`时，上级节点每次Tick会额外对含有AbortType.LowerPriority的条件装饰器重新求值。  
+  如果条件装饰器结果改变，则重新执行这个节点。  
+  如果节点的执行结果发生改变，则终止处于`Running`的节点。  
+  如果节点的执行结果没有改变，则继续执行`Running`的节点。  
 
 不要被终止类型的名词误导，不同的行为树实现条件终止的处理方式略有差异。  
 但总的来说是都是符合直觉的。可以笼统的理解为，已经处理过的节点条件改变时，允许反悔，重新执行，并结束正在允许的节点。

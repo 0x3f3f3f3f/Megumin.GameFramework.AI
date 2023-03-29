@@ -69,6 +69,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             //target = child;
                             //这里标记一下已经检查过了，马上下一次Tick就不要重复检查，防止连续调用2次。
                             //target.IsCheckedCanExecute = true;
+
+                            //注意，这里马上会Tick这个child，会继续调用 CanExecute，
+                            //所以标记AbortLowerPriority的条件装饰器被连续调用2次，这是无法避免的。
+                            //可能优化方式是记录求值时的帧号，但是开销反而更大，所以目前保持现状。
                         }
                         else
                         {
