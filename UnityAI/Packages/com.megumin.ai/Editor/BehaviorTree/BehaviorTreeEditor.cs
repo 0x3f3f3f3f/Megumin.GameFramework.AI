@@ -445,8 +445,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             this.LogMethodName();
 
-            if (HotTypeAlias == false)
+            if (HotTypeAlias == false && behaviorTreeAsset != null)
             {
+                //在没有行为树文件时不需要触发 缓存别名。防止第一次打开空编辑器卡顿。
+
                 //Megumin.Reflection.TypeCache.CacheAssembly(typeof(int).Assembly);
                 //Megumin.Reflection.TypeCache.CacheAssembly(typeof(GameObject).Assembly);
                 //因为要处理别名，无论如何都会触发CacheAllType.
