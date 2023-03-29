@@ -18,6 +18,7 @@ namespace Megumin.GameFramework.AI
         [field: SerializeField]
         public string GUID { get; set; }
 
+        [field: NonSerialized]
         public TraceListener TraceListener { get; set; } = new UnityTraceListener();
         public IRunOption RunOption { get; set; }
 

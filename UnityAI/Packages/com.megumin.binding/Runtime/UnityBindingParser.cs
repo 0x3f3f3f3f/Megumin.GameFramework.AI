@@ -49,9 +49,9 @@ namespace Megumin.Binding
             Action<T> Setter = null;
 
 
-            if (string.IsNullOrEmpty(bindingString))
+            if (string.IsNullOrEmpty(bindingString) || string.IsNullOrEmpty(bindingString.Trim()))
             {
-
+                //空白内容默认解析失败。
             }
             else
             {

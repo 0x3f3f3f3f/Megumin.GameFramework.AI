@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
@@ -121,8 +122,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             treestate = StartNode.Tick(null);
-            if (treestate == Status.Succeeded || treestate == Status.Failed)
+            TotalTickCount++;
+
+            if (treestate == Status.Succeeded)
             {
+                CompletedCount++;
+                SucceededCount++;
+                Debug.Log($"tree complate. {treestate}");
+            }
+            else if (treestate == Status.Failed)
+            {
+                CompletedCount++;
+                FailedCount++;
                 Debug.Log($"tree complate. {treestate}");
             }
 
@@ -346,5 +357,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             refValue = null;
             return false;
         }
+    }
+
+    public partial class BehaviorTree
+    {
+        //Realtime Data
+        public int CompletedCount { get; protected set; } = 0;
+        public int SucceededCount { get; protected set; } = 0;
+        public int FailedCount { get; protected set; } = 0;
+        /// <summary>
+        /// 可以用于节点区分是不是当前tick。
+        /// </summary>
+        public int TotalTickCount { get; protected set; } = 0;
     }
 }
