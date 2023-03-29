@@ -583,6 +583,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             ReloadAllNodeView();
         }
+
+        internal void RefreshAllNodeEnabled()
+        {
+            foreach (var item in graphElements)
+            {
+                if (item is BehaviorTreeNodeView nodeView)
+                {
+                    nodeView.RefeshEnabled();
+                }
+            }
+        }
     }
 }
 

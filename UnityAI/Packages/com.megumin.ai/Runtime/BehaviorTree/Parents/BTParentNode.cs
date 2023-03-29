@@ -22,12 +22,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Tooltip("It is recommended to use AbortType instead of Dynamic.")]
         public bool Dynamic = false;
 
+        public bool ContainsChild(BTNode node)
+        {
+            foreach (BTNode child in children)
+            {
+                if (child.GUID == node.GUID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// 测试一个节点是不是自己的子代
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        internal bool IsDescendant(BTNode node)
+        public bool IsDescendant(BTNode node)
         {
             if (node == null)
             {

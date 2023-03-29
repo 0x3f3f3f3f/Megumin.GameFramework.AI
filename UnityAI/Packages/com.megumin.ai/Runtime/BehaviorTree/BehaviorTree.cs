@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
@@ -278,6 +279,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             SetNodeIndex(StartNode);
+        }
+
+        public bool TryGetFirstParent(BTNode node, out BTParentNode parentNode)
+        {
+            foreach (var item in AllNodes)
+            {
+                if (item is BTParentNode p)
+                {
+                    if (p.ContainsChild(node))
+                    {
+                        parentNode = p;
+                        return true;
+                    }
+                }
+            }
+
+            parentNode = null;
+            return false;
         }
     }
 

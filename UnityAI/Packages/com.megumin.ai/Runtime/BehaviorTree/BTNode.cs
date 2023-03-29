@@ -137,6 +137,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return Status.Succeeded;
             }
         }
+
+        public bool TryGetFirstParent(out BTParentNode parentNode)
+        {
+            if (Tree is BehaviorTree behaviorTree)
+            {
+                return behaviorTree.TryGetFirstParent(this, out parentNode);
+            }
+            parentNode = default;
+            return false;
+        }
     }
 
     public partial class BTNode

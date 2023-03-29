@@ -263,6 +263,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            RefeshEnabled();
+
             CreatePort(node);
             AddToClassList(typeName);
 
@@ -324,6 +326,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Index.text = Node.Meta.index.ToString();
             }
+        }
+
+        internal void RefeshEnabled()
+        {
+            //自己或者父有没有关闭的节点
+            bool isEnableOrDescendant = false;
+            if (Node != null)
+            {
+                List<int> a;
+            }
+
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
