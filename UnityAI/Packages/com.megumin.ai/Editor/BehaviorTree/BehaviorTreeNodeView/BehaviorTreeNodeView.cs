@@ -75,6 +75,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             scrollView.contentViewport.style.overflow = Overflow.Visible;
 
             this.RegisterCallback<TooltipEvent>(OnToolTip);
+            RegisterCallback<KeyDownEvent>(OnKeyDownEvent, TrickleDown.NoTrickleDown);
         }
 
         public NodeWrapper SONode;
@@ -434,6 +435,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             evt.StopPropagation();
+        }
+
+        protected virtual void OnKeyDownEvent(KeyDownEvent evt)
+        {
+            if (evt.keyCode == KeyCode.M)
+            {
+                if (Node != null)
+                {
+                    Node.Enabled = !Node.Enabled;
+                    TreeView.RefreshAllNodeEnabled();
+                }
+            }
         }
     }
 }
