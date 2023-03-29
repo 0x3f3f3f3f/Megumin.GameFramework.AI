@@ -11,8 +11,12 @@ namespace Megumin.Reflection
     /// <summary>
     /// 类型缓存。
     /// 通过缓存所有已加载程序集，实现通过类型全名获取类型。
-    /// 第一次调用会导致卡顿，在调用前使用多线程初始化，防止阻塞主线程。
+    /// 第一次调用会导致卡顿，在调用前考虑使用多线程初始化，防止阻塞主线程。
     /// </summary>
+    /// <remarks>
+    /// 为了防止第一次卡顿，可以考虑<see cref="CacheAssembly(Assembly, bool)"/>手动缓存马上就会使用到的类型。
+    /// 再使用<see cref="CacheAllTypesAsync(bool, Func{Assembly, bool})"/>异步缓存所有类型。
+    /// </remarks>
     public static partial class TypeCache
     {
 
@@ -225,7 +229,8 @@ namespace Megumin.Reflection
 #endif
 
         /// <summary>
-        /// 私有类可能导致名字冲突，一个名字仅能保存一个类型，优先Public
+        /// 私有类可能导致名字冲突，一个名字仅能保存一个类型。
+        /// 优先Public。后添加的替换先添加的。
         /// </summary>
         /// <param name="dic"></param>
         /// <param name="type"></param>
@@ -233,13 +238,12 @@ namespace Megumin.Reflection
         static void AddToDic(Dictionary<string, Type> dic, Type type, bool logworning = false)
         {
             //可能存在同名类型 internal,internal Component类型仍然可以挂在gameobject上，所以也要缓存。
-
-            if (dic.ContainsKey(type.FullName))
+            if (dic.TryGetValue(type.FullName, out var old))
             {
-                var old = dic[type.FullName];
-                if (old.IsPublic.CompareTo(type.IsPublic) <= 0)
+                if (old != type && old.IsPublic.CompareTo(type.IsPublic) <= 0)
                 {
-                    //Public 优先
+                    //Public 优先 。
+                    //后添加的替换先添加的。
                     //Unity比System优先，程序集字母顺序unity靠后，自动满足条件。
                     dic[type.FullName] = type;
                 }
@@ -289,18 +293,12 @@ namespace Megumin.Reflection
                     //var debugabs = assemblies.ToArray();
                     foreach (var assembly in assemblies)
                     {
-                        if (CachedAssemblyName.Contains(assembly.FullName))
-                        {
-                            continue;
-                        }
-
                         if (assemblyFilter?.Invoke(assembly) ?? false)
                         {
                             continue;
                         }
 
-                        hasChange = true;
-                        CacheAssembly(assembly);
+                        hasChange |= CacheAssembly(assembly, forceRecache);
                     }
 
                     CacheTypeInit = true;
@@ -311,12 +309,26 @@ namespace Megumin.Reflection
         }
 
         /// <summary>
-        /// 缓存一个程序集中的所有类型
+        /// 缓存一个程序集中的所有类型。
         /// </summary>
         /// <param name="assembly"></param>
-        public static void CacheAssembly(Assembly assembly)
+        /// <remarks>
+        /// 建议游戏开始时手动缓存 System(先) 和 unity(后) 程序集。足以应付大多数常见类型。之后有更多时间缓存全部类型。
+        /// </remarks>
+        public static bool CacheAssembly(Assembly assembly, bool forceRecache = false)
         {
-            CachedAssemblyName.Add(assembly.FullName);
+            if (forceRecache)
+            {
+                CachedAssemblyName.Add(assembly.FullName);
+            }
+            else
+            {
+                if (CachedAssemblyName.Add(assembly.FullName) == false)
+                {
+                    return false;
+                }
+            }
+
             //var debug = assembly.GetTypes();
             foreach (var extype in assembly.GetTypes())
             {
@@ -339,6 +351,8 @@ namespace Megumin.Reflection
                 //#endif
 
             }
+
+            return true;
         }
 
         /// <summary>
@@ -688,17 +702,17 @@ namespace Megumin.Reflection
         /// <summary>
         /// TODO,编辑模式初始化时加个进度条
         /// </summary>
-        /// <param name="force"></param>
+        /// <param name="forceRecache"></param>
         /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
         /// <returns></returns>
-        public static Task CacheAllTypesAsync(bool force = false, Func<Assembly, bool> assemblyFilter = null)
+        public static Task CacheAllTypesAsync(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
         {
-            return Task.Run(() => { CacheAllTypes(force, assemblyFilter); });
+            return Task.Run(() => { CacheAllTypes(forceRecache, assemblyFilter); });
         }
 
-        public static Task CacheAssemblyAsync(Assembly assembly)
+        public static Task CacheAssemblyAsync(Assembly assembly, bool forceRecache = false)
         {
-            return Task.Run(() => { CacheAssembly(assembly); });
+            return Task.Run(() => { CacheAssembly(assembly, forceRecache); });
         }
 
         /// <summary>
