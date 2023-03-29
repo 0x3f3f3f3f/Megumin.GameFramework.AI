@@ -283,6 +283,8 @@ namespace Megumin.Reflection
         {
             lock (cachelock)
             {
+                //using ProgressBarScope sope = new("CacheAllTypes");
+
                 bool hasChange = false;
                 if (forceRecache)
                 {
@@ -896,5 +898,30 @@ namespace Megumin.Reflection
             Alias = alias;
         }
     }
+}
+
+#if UNITY_EDITOR
+
+namespace Megumin
+{
+    using System.Diagnostics;
+    using UnityEditor;
+
+    //[Conditional("UnityEditor")]
+    public struct ProgressBarScope : IDisposable
+    {
+        public ProgressBarScope(string title, string info = "", float progress = 0f)
+        {
+            EditorUtility.DisplayProgressBar(title, info, progress);
+        }
+
+        public void Dispose()
+        {
+            EditorUtility.ClearProgressBar();
+        }
+    }
 
 }
+
+#endif
+
