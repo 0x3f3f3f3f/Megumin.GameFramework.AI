@@ -28,6 +28,7 @@ namespace Megumin.GameFramework.AI
         public string GUID { get; set; }
         public string ShortGUID => GUID?[..13];
 
+        [field: NonSerialized]
         public T Tree { get; set; }
 
         public virtual void Log(object message)
