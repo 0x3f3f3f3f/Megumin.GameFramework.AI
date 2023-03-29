@@ -25,15 +25,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public NodeMeta Meta;
         /// <summary>
+        /// 执行时遇到未开启的节点就忽略。根据父节点返回特定值。
+        /// </summary>
+        [field: SerializeField]
+        public bool Enabled { get; internal set; } = true;
+
+        /// <summary>
         /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
         [SerializeReference]
         public List<ITreeElement> Decorators = new();
 
-        /// <summary>
-        /// 执行时遇到未开启的节点就忽略。根据父节点返回特定值。
-        /// </summary>
-        public virtual bool Enabled { get; internal set; } = true;
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
 
@@ -210,17 +212,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
                 else
                 {
-                    //父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
-                    //等同于Ignore。
-                    if (from is Selector)
-                    {
-                        State = Status.Failed;
-                    }
-                    else
-                    {
-                        State = Status.Succeeded;
-                    }
-
+                    State = GetIgnoreResult(from);
                     ResetFlag();
                 }
 

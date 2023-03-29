@@ -11,12 +11,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 用于反序列化失败
     /// </summary>
     [Category("Debug")]
-    public class MissingNode : ActionTaskNode
+    public class MissingNode : BTParentNode
     {
-        public override bool Enabled
+        protected override Status OnTick(BTNode from)
         {
-            get => false;
-            internal set => throw new NotSupportedException();
+            return GetIgnoreResult(from);
         }
     }
 }
