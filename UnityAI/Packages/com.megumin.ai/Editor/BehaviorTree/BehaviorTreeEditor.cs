@@ -26,6 +26,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
     public partial class BehaviorTreeEditor : EditorWindow
     {
+        static BehaviorTreeEditor()
+        {
+            Megumin.Reflection.TypeCache.CacheAllTypesAsync();
+        }
 
         static List<MySetting<bool>> MySettingPrefs = new()
         {
@@ -443,6 +447,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (HotTypeAlias == false)
             {
+                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(int).Assembly);
+                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(GameObject).Assembly);
+                //因为要处理别名，无论如何都会触发CacheAllType.
                 //第一次反序列化之前处理一下类型别名。防止节点改名后报错。
                 Megumin.Reflection.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
                 HotTypeAlias = true;

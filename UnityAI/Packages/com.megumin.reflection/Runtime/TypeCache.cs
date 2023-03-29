@@ -16,6 +16,8 @@ namespace Megumin.Reflection
     /// <remarks>
     /// 为了防止第一次卡顿，可以考虑<see cref="CacheAssembly(Assembly, bool)"/>手动缓存马上就会使用到的类型。
     /// 再使用<see cref="CacheAllTypesAsync(bool, Func{Assembly, bool})"/>异步缓存所有类型。
+    /// <para/> 因为特化的泛型在程序集中不存在，
+    /// 所以特化泛型肯定会触发<see cref="CacheAllTypes(bool, Func{Assembly, bool})"/>
     /// </remarks>
     public static partial class TypeCache
     {
@@ -603,6 +605,13 @@ namespace Megumin.Reflection
 
         public static void Test()
         {
+            System.Diagnostics.Stopwatch stopwatch = new();
+            stopwatch.Start();
+
+            //因为有泛型，无论如何都会触发CacheAllType.
+            CacheAssembly(typeof(int).Assembly);
+            CacheAssembly(typeof(GameObject).Assembly);
+
             List<int> a = new();
             TestParse(a);
 
@@ -683,6 +692,9 @@ namespace Megumin.Reflection
 
             Dictionary<int[,,], Dictionary<int[], int[,,,,]>> genericAndArray4 = new();
             TestParse(genericAndArray4);
+
+            stopwatch.Stop();
+            Debug.Log($"ElapsedTime: {stopwatch.ElapsedMilliseconds}");
         }
 
         static void TestParse<T>(T obj = default)
