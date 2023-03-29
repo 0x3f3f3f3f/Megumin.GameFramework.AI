@@ -6,6 +6,10 @@
     background-color: rgba(0, 0, 0, 0.55);
 }
 
+.node.isMute #selection-border {
+    background-color: rgba(26, 26, 26, 0.55);
+}
+
 .node #center {
     border-left-width: 1px;
     border-right-width: 1px;
@@ -353,7 +357,6 @@
     border-bottom-right-radius: 4px;
 }
 
-    
 #body .dynamicMarker.isDynamic {
     display: flex;
 }
