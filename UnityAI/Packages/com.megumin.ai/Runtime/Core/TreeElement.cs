@@ -18,7 +18,8 @@ namespace Megumin.GameFramework.AI
     }
 
     [Serializable]
-    public class TreeElement : ITreeElement
+    public class TreeElement<T> : ITreeElement
+        where T : AITree
     {
         /// <summary>
         /// 节点唯一ID
@@ -27,7 +28,7 @@ namespace Megumin.GameFramework.AI
         public string GUID { get; set; }
         public string ShortGUID => GUID?[..13];
 
-        public AITree Tree { get; set; }
+        public T Tree { get; set; }
 
         public virtual void Log(object message)
         {

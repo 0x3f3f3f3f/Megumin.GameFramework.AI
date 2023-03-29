@@ -130,7 +130,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void DeserializeMember(TreeElement instance,
+        public void DeserializeMember(BehaviorTreeElement instance,
                                       List<CollectionSerializationData> memberData,
                                       List<CollectionSerializationData> callbackMemberData,
                                       IRefFinder refFinder)

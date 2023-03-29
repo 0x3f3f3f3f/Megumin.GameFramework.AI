@@ -21,7 +21,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 含有装饰器 等价与 一个父节点 + 前后条件叶子节点 的组合节点。逻辑上视为一个组合节点。
     /// </remarks>
     [Serializable]
-    public partial class BTNode : TreeElement
+    public partial class BTNode : BehaviorTreeElement
     {
         public NodeMeta Meta;
         /// <summary>

@@ -119,7 +119,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             foreach (var item in instance.GetSerializeMembers())
             {
-                if (instance is TreeElement treeElement)
+                if (instance is BehaviorTreeElement treeElement)
                 {
                     if (item.MemberType == typeof(AITree))
                     {
@@ -239,7 +239,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         }
                     }
 
-                    if (item.Value is TreeElement element)
+                    if (item.Value is BehaviorTreeElement element)
                     {
                         element.Tree = tree;
                     }

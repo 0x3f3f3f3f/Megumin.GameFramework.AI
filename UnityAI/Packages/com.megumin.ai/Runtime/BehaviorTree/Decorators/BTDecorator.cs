@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class BTDecorator : TreeElement, IDecorator
+    public class BTDecorator : BehaviorTreeElement, IDecorator
     {
     }
 
