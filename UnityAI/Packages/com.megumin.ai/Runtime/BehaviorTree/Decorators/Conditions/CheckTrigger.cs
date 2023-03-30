@@ -7,13 +7,13 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class CheckEvent : ConditionDecorator, IDetailable
+    public class CheckTrigger : ConditionDecorator, IDetailable
     {
-        public RefVar<string> EventName;
+        public RefVar<string> TriggerName;
 
         protected override bool OnCheckCondition(BTNode container)
         {
-            if (Tree.TryGetEvent(EventName, container, out var eventData))
+            if (Tree.TryGetTrigger(TriggerName, out var eventData))
             {
                 return true;
             }
@@ -22,8 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return @$"Evt: ""{EventName?.Value}""";
+            return @$"Trg: ""{TriggerName?.Value}""";
         }
     }
 }
-

@@ -378,7 +378,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BTNode LastTick { get; set; } = null;
 
         /// <summary>
-        /// 事件存在一个tick
+        /// 事件生命周期为一个tick
         /// </summary>
         Dictionary<string, EventData> eventCache = new();
 
@@ -411,7 +411,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void SendEvent(string eventName, BTNode sendNode)
+        public void SendEvent(string eventName, BTNode sendNode = null)
         {
             EventData eventData = new();
             eventData.SendTick = TotalTickCount;
@@ -478,6 +478,41 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //return false;
+        }
+
+        /// <summary>
+        /// 事件生命周期为一个tick
+        /// </summary>
+        Dictionary<string, TriggerData> triggerCache = new();
+        public class TriggerData
+        {
+            public BTNode SendNode { get; set; }
+            public int SendTick { get; set; }
+        }
+
+        public void SetTrigger(string triggerName, BTNode sendNode = null)
+        {
+            TriggerData eventData = new();
+            eventData.SendTick = TotalTickCount;
+            eventData.SendNode = sendNode;
+            triggerCache[triggerName] = eventData;
+        }
+
+        public bool TryGetTrigger(string triggerName, out TriggerData triggerData)
+        {
+            if (triggerCache.TryGetValue(triggerName, out triggerData))
+            {
+                triggerCache.Remove(triggerName);
+                return true;
+            }
+
+            triggerData = null;
+            return false;
+        }
+
+        public void ResetTrigger(string triggerName)
+        {
+            triggerCache.Remove(triggerName);
         }
     }
 }
