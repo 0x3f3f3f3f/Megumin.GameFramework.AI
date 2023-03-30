@@ -7,8 +7,8 @@
                 <ui:Label text="I" display-tooltip-when-elided="true" name="invertMarker" tooltip="Condition result is invert." class="invertMarker" />
                 <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" class="title" />
             </ui:VisualElement>
-            <ui:VisualElement name="decoratorDetailContainer" style="background-color: rgb(159, 61, 61);">
-                <ui:Label text="This is detail" display-tooltip-when-elided="true" name="decoratorDetail" style="width: 80px; flex-grow: 1; flex-shrink: 1; font-size: 10px; white-space: normal;" />
+            <ui:VisualElement name="decoratorDetailContainer" class="decoratorDetailContainer">
+                <ui:Label text="This is detail" display-tooltip-when-elided="true" name="decoratorDetail" class="decoratorDetail" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="markerContainer" class="markerContainer">

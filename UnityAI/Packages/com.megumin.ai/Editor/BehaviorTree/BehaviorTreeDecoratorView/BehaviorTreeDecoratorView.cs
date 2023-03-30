@@ -21,6 +21,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Label InvertMarker { get; private set; }
         public Button AbortTypeButton { get; private set; }
         public Label Title { get; }
+        public VisualElement DetailContainer { get; private set; }
+        public Label Detail { get; private set; }
         public VisualElement CMarker { get; private set; }
         public VisualElement FMarker { get; private set; }
         public VisualElement BMarker { get; private set; }
@@ -38,6 +40,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             InvertMarker = this.Q<Label>("invertMarker");
             AbortTypeButton = this.Q<Button>("abortType", "abortType");
             Title = this.Q<Label>("title-label");
+
+            DetailContainer = this.Q("decoratorDetailContainer");
+            Detail = this.Q<Label>("decoratorDetail");
+
             CMarker = this.Q("cMarker");
             FMarker = this.Q("fMarker");
             BMarker = this.Q("bMarker");
@@ -146,6 +152,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             InvertMarker.SetToClassList(UssClassConst.isInvert, showInvert);
 
             RefreshAbortTypeUI();
+            RefreshDetail();
 
             CMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IConditionDecorator);
             FMarker.SetToClassList(UssClassConst.enableMarker, Decorator is IPreDecorator);
@@ -164,6 +171,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             AbortTypeButton.RefreshAbortTypeBadge(Decorator);
         }
+
+        public void RefreshDetail()
+        {
+            var showDetail = false;
+            if (Detail != null)
+            {
+                if (Decorator is IDetailable detailable)
+                {
+                    var detail = detailable.GetDetail();
+                    if (!string.IsNullOrEmpty(detail))
+                    {
+                        showDetail = true;
+                    }
+                    Detail.text = detail;
+                }
+            }
+            DetailContainer.SetToClassList(UssClassConst.displayDetail, showDetail);
+        }
+
 
         public override void OnSelected()
         {
