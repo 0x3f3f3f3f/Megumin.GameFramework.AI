@@ -360,3 +360,10 @@
 #body .dynamicMarker.isDynamic {
     display: flex;
 }
+
+.badgeContainer {
+    flex-direction: row-reverse;
+    position: absolute;
+    top: -2px;
+    right: -5px;
+}
