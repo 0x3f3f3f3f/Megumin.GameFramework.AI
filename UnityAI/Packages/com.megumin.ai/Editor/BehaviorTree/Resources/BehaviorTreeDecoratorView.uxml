@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BehaviorTreeDecoratorView" />
-    <ui:VisualElement name="contentContainer" class="border" style="flex-direction: row;">
+    <ui:VisualElement name="contentContainer" class="border decoratorCenter" style="flex-direction: row;">
         <ui:VisualElement name="titleBar" style="flex-direction: row; flex-grow: 1; align-items: center;">
             <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
             <ui:Label text="I" display-tooltip-when-elided="true" name="invertMarker" tooltip="Condition result is invert." class="invertMarker" />
@@ -12,6 +12,8 @@
             <ui:Label text="B↑" display-tooltip-when-elided="true" name="bMarker" class="marker markerLabel bMarker" />
             <ui:Label text="A↑" display-tooltip-when-elided="true" name="aMarker" class="marker markerLabel aMarker" />
         </ui:VisualElement>
-        <ui:Button display-tooltip-when-elided="true" name="abortType" class="abortType" />
+        <ui:VisualElement name="toprightBadgeContainer" picking-mode="Ignore" class="badgeContainer top right">
+            <ui:Button display-tooltip-when-elided="true" name="abortType" class="abortType" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

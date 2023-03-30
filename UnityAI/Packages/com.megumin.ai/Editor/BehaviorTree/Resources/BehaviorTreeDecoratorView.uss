@@ -86,9 +86,6 @@ BehaviorTreeDecoratorView {
 
 .abortType {
     display: none;
-    position: absolute;
-    top: -3px;
-    right: -8px;
     width: 14px;
     height: 14px;
     margin-left: 0;
@@ -191,4 +188,11 @@ BehaviorTreeDecoratorView {
 
 .invertMarker.isInvert {
     display: flex;
+}
+
+.decoratorCenter > .badgeContainer {
+    flex-direction: row-reverse;
+    position: absolute;
+    top: -3px;
+    right: -8px;
 }
