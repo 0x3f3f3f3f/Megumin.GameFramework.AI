@@ -61,8 +61,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //}, TrickleDown.NoTrickleDown);
 
             DecoretorListView = decoratorContainer.Q<ListView>();
-            DecoretorListView.reorderable = true;
-            DecoretorListView.reorderMode = ListViewReorderMode.Animated;
+            //DecoretorListView.reorderable = true;
+            //DecoretorListView.reorderMode = ListViewReorderMode.Animated;
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
             DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;

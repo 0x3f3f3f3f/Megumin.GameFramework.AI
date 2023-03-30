@@ -10,7 +10,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="divider" class="vertical" />
         <ui:VisualElement name="decorator" class="decoratorContainer">
-            <ui:ListView class="decoratorList" />
+            <ui:ListView virtualization-method="DynamicHeight" reorder-mode="Animated" reorderable="true" class="decoratorList" />
         </ui:VisualElement>
         <ui:VisualElement name="center">
             <ui:VisualElement name="body">
