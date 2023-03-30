@@ -30,9 +30,10 @@
                     <ui:Label text="Wait: waitTime. Left: 0.5" display-tooltip-when-elided="true" name="detail" class="detail" />
                 </ui:VisualElement>
                 <ui:VisualElement name="toprightBadgeContainer" picking-mode="Ignore" class="badgeContainer top right">
-                    <ui:Label text="-1" display-tooltip-when-elided="true" name="nodeIndex" class="nodeIndex" />
-                    <ui:VisualElement name="testBadge" style="background-color: rgb(217, 23, 23); width: 14px; height: 14px;" />
-                    <ui:VisualElement name="testBadge" style="background-color: rgb(23, 217, 73); width: 14px; height: 14px;" />
+                    <ui:Label text="-1" display-tooltip-when-elided="true" name="nodeIndex" class="nodeIndex nodeBadge" />
+                    <ui:Button display-tooltip-when-elided="true" name="abortType" class="nodeBadge nodeAbortType abortType" />
+                    <ui:VisualElement name="testBadge" class="nodeBadge" style="background-color: rgb(217, 23, 23); width: 14px; height: 14px;" />
+                    <ui:VisualElement name="testBadge" class="nodeBadge" style="background-color: rgb(23, 217, 73); width: 14px; height: 14px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="contents">

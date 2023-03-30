@@ -38,6 +38,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DetailContainer = this.Q("detailContainer");
             Detail = this.Q<Label>("detail");
 
+            ToprightBadgeContainer = this.Q("toprightBadgeContainer");
+            AbortTypeButton = ToprightBadgeContainer.Q<Button>("abortType", "abortType");
+
             Index = this.Q<Label>("nodeIndex");
             decoratorContainer = this.Q<VisualElement>("decorator");
             //decoratorContainer.AddManipulator(new TestMouseManipulator());
@@ -91,6 +94,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Label DynamicMarker { get; private set; }
         public VisualElement DetailContainer { get; private set; }
         public Label Detail { get; private set; }
+        public VisualElement ToprightBadgeContainer { get; private set; }
+        public Button AbortTypeButton { get; private set; }
         public Label Index { get; private set; }
         public VisualElement decoratorContainer { get; }
         public ListView DecoretorListView { get; }
@@ -232,6 +237,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             RefreshDetail();
             RefreshNodeIndex();
+            RefreshAbortTypeUI();
 
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);
@@ -356,6 +362,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
             this.SetToClassList(UssClassConst.isMute, isMute);
+        }
+
+        public void RefreshAbortTypeUI()
+        {
+            AbortTypeButton.RefreshAbortTypeBadge(Node);
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)

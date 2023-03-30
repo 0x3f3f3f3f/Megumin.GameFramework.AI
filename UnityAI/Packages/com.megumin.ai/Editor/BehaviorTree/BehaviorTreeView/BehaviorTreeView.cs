@@ -34,7 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            this.SetupZoom(0.2f, 4f, ContentZoomer.DefaultScaleStep * 0.75f, ContentZoomer.DefaultReferenceScale);
+            this.SetupZoom(0.2f, 5f, ContentZoomer.DefaultScaleStep * 0.75f, ContentZoomer.DefaultReferenceScale);
             //SetupZoom 会自动添加ContentZoomer，手动添加会导致maxScale无效。
             //this.AddManipulator(new ContentZoomer());
 
