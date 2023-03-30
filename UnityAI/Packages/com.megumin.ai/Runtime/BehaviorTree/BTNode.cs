@@ -267,7 +267,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return State;
         }
 
-        bool Condition()
+        protected virtual bool Condition()
         {
             if (IsCheckedCanExecute)
             {
@@ -285,7 +285,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         public bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
-        private void Execute(BTNode from)
+        protected virtual void Execute(BTNode from)
         {
             //前置阶段
             if (IsExecutedPreDecorator == false)
@@ -365,9 +365,40 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 当前节点能否被执行
         /// </summary>
         /// <returns></returns>
-        public bool CanExecute()
+        public virtual bool CanExecute()
         {
             return ExecuteConditionDecorator();
+        }
+
+        /// <summary>
+        /// 仅仅考虑终止低优先级标记求解值
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// 终止低优先级可能不仅仅受装饰器影响，用户可能会扩展其他功能，所以这里用虚函数包装。
+        /// </remarks>
+        public virtual bool CanAbortLowerPriority()
+        {
+            return ExecuteConditionDecoratorCheckAbortLowerPriority();
+        }
+
+        /// <summary>
+        /// 当前节点有没有终止低优先级节点标记，需不需要做终止测试
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// 为节点本身也可以需要终止低优先级节点标记预留，用户可以自行扩展。
+        /// 实现<see cref="IAbortable"/>接口编辑器UI会自动显示标记。
+        /// </remarks>
+        public virtual bool HasAbortLowerPriorityFlag()
+        {
+            //TODO 增加version 缓存结果值？
+            var hasAbort = Decorators.Any(static elem =>
+            {
+                return elem is IConditionDecorator conditionable
+                        && conditionable.AbortType.HasFlag(AbortType.LowerPriority);
+            });
+            return hasAbort;
         }
 
         Status AbortSelf()
@@ -444,25 +475,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 当前节点能否终止低优先级节点
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool HasAbortLowerPriorityFlag()
-        {
-            //TODO 增加version 缓存结果值？
-            var hasAbort = Decorators.Any(static elem =>
-            {
-                return elem is IConditionDecorator conditionable
-                        && conditionable.AbortType.HasFlag(AbortType.LowerPriority);
-            });
-            return hasAbort;
-        }
-
-        /// <summary>
         /// 检查含有终止低优先级标记的条件装饰器，能否继续执行
         /// </summary>
         /// <returns></returns>
-        public bool ExecuteConditionDecoratorCheckAbortLowerPriority()
+        protected bool ExecuteConditionDecoratorCheckAbortLowerPriority()
         {
             foreach (var pre in Decorators)
             {
