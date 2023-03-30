@@ -447,8 +447,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 当前节点能否终止低优先级节点
         /// </summary>
         /// <returns></returns>
-        public virtual bool CanAbortLowerPriority()
+        public virtual bool HasAbortLowerPriorityFlag()
         {
+            //TODO 增加version 缓存结果值？
             var hasAbort = Decorators.Any(static elem =>
             {
                 return elem is IConditionDecorator conditionable

@@ -22,21 +22,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
                 else
                 {
-                    if (Dynamic || child.CanAbortLowerPriority())
+                    if (Dynamic || child.HasAbortLowerPriorityFlag())
                     {
-                        //一种情况是，当条件装饰一直成功，但是节点本身一直失败，
-                        //这时不能终止正在运行的节点，否则会导致不停的终止重新进入。
-                        //所以触发终止应该放在节点本身tick之后，如果没有失败，则触发终止。
-                        if (child.CanExecute())
-                        {
-                            target = child;
-                            //这里标记一下已经检查过了，马上下一次Tick就不要重复检查，防止连续调用2次。
-                            target.IsCheckedCanExecute = true;
-                        }
-                        else
-                        {
-                            //前面的节点条件装饰器失败，不需要继续检查节点本身，等于节点结果失败。跳过节点。
-                        }
+                        target = child;
                     }
                 }
 

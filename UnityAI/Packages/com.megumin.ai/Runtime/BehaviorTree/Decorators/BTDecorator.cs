@@ -21,8 +21,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [field: SerializeField]
         public AbortType AbortType { get; set; }
 
+        public bool LastCheckResult { get; protected set; }
+
+        //每帧只求解一次。TODO，还没有考虑好要不要加
+        //public int LastCheckTickCount { get; protected set; } = -1;
+        //public bool CalOnceOnTick = false;
+
         public bool CheckCondition()
         {
+            //if (CalOnceOnTick)
+            //{
+            //    if (Tree.TotalTickCount == LastCheckTickCount)
+            //    {
+            //        return LastCheckResult;
+            //    }
+            //}
+            //LastCheckTickCount = Tree.TotalTickCount;
+
             LastCheckResult = OnCheckCondition();
 
             if (Invert)
@@ -37,8 +52,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             return false;
         }
-
-        public bool LastCheckResult { get; protected set; }
     }
 }
 
