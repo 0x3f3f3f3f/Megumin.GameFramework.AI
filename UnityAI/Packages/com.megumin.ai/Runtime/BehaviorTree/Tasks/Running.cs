@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SendEvent : ActionTaskNode
+    [Category("Debug")]
+    public class Running : ActionTaskNode
     {
-        public RefVar<string> EventName;
         protected override Status OnTick(BTNode from)
         {
-            Tree.SendEvent(EventName);
-            return base.OnTick(from);
+            return Status.Running;
         }
     }
 }
+
+

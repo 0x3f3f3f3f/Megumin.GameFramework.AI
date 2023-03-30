@@ -369,5 +369,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 可以用于节点区分是不是当前tick。
         /// </summary>
         public int TotalTickCount { get; protected set; } = 0;
+
+        public void SendEvent(string eventName)
+        {
+
+        }
+
+        public bool TryGetEvent(string eventName, out object eventData)
+        {
+            eventData = null;
+            return false;
+        }
     }
 }

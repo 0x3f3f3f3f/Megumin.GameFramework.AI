@@ -7,13 +7,18 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SendEvent : ActionTaskNode
+    public class CheckEvent : ConditionDecorator
     {
         public RefVar<string> EventName;
-        protected override Status OnTick(BTNode from)
+
+        protected override bool OnCheckCondition()
         {
-            Tree.SendEvent(EventName);
-            return base.OnTick(from);
+            if (Tree.TryGetEvent(EventName, out var eventData))
+            {
+                return true;
+            }
+            return base.OnCheckCondition();
         }
     }
 }
+
