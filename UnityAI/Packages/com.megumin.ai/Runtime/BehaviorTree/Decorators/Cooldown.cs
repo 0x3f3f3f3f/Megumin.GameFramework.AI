@@ -24,7 +24,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(BTNode container)
         {
             return Time.time > nextCanEnterTime;
         }

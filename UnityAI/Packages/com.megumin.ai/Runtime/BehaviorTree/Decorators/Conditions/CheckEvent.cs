@@ -11,13 +11,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public RefVar<string> EventName;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(BTNode container)
         {
-            if (Tree.TryGetEvent(EventName, out var eventData))
+            if (Tree.TryGetEvent(EventName, container, out var eventData))
             {
                 return true;
             }
-            return base.OnCheckCondition();
+            return base.OnCheckCondition(container);
         }
     }
 }

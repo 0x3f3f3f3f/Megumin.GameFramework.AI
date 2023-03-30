@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [FormerlySerializedAs("A")]
         public bool Success = false;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(BTNode container)
         {
             return Success;
         }

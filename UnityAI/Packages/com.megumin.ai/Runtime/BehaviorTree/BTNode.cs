@@ -228,6 +228,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </remarks>
         public Status Tick(BTNode from)
         {
+            Tree.LastTickNodeIndex = Meta?.index ?? -1;
+            Tree.LastTick = this;
+
             //无论Enabled 是不是true，都要先进入Tick函数再说，不能在外部判断false然后跳过
             //否则在IsRunning期间被改为false，无法触发AbortSelf。
             //AbortSelf 只能由行为树Tick期间调用，因为装饰器等同于节点，不能由外部调用。
@@ -439,7 +442,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.CheckCondition() == false)
+                    if (conditionable.CheckCondition(this) == false)
                     {
                         return false;
                     }
@@ -463,7 +466,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if (conditionable.AbortType.HasFlag(AbortType.Self))
                     {
-                        if (conditionable.CheckCondition() == false)
+                        if (conditionable.CheckCondition(this) == false)
                         {
                             return false;
                         }
@@ -486,7 +489,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if (conditionable.AbortType.HasFlag(AbortType.LowerPriority))
                     {
-                        if (conditionable.CheckCondition() == false)
+                        if (conditionable.CheckCondition(this) == false)
                         {
                             return false;
                         }

@@ -29,7 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             tree.lockDic.Add(lockName, this);
         }
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(BTNode container)
         {
             tree.lockDic.TryGetValue(lockName, out var result);
             return result == this;
