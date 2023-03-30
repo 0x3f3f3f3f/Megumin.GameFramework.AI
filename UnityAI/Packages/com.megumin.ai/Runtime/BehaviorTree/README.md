@@ -298,6 +298,32 @@ public enum AbortType
 - 如果重新求值结果为false，则终止处于`Running`的节点，Sequence直接返回Failed。  
 - `特别注意`：如果Sequence含有多个非条件子节点，第一个非条件节点总是会终止后面的非条件节点，并重新运行。会造成死循环。所以如果没有特别需要，不要对Sequence标记Dynamic。  
 
+## Event Trigger
+Event和Trigger都是记录在树中的标记。  
+
+- Event生命周期为1个Tick，1个Tick后自动消除。  
+  有效期内，任何时刻任何节点检查Event结果都为true。
+- Trigger生命周期为永久，直到ResetTrigger。  
+  有效期内，任何时刻任何节点检查Event结果都为true。
+
+通常CheckTrigger装饰器可以选择何时ResetTrigger
+- Immediate 检测成功后立刻ResetTrigger
+- EnterNode 检测成功后如果能成功进入所属节点，ResetTrigger
+- LeaveNode 检测成功后如果能成功进入所属节点，离开节点时ResetTrigger
+
+默认是Immediate。  
+某些用例，节点上可能有多个条件节点，如果不是所有条件节点都成功，则节点不会进入执行。  
+这种情况下可能不希望消耗掉Trigger，则可以设置为EnterNode。  
+
+
+## 扩展节点
+默认节点和默认节点的默认行为参数可能无法满足用户的所有需求。  
+由用户根据项目需要扩展节点是非常常见的。  
+
+应当首选从框架提供的基类接口继承。  
+如果基类不符合需求，可以考虑通过接口继承。相当一部分功能编辑器是直接通过接口支持。  
+如果运气好的话，即使扩展节点缺失了某些接口，框架仍能正常工作。  
+随着架构重构，功能总是从基类向接口拆分，耦合越来越低。  
 
 ---
 ---

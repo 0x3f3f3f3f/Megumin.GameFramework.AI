@@ -502,7 +502,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (triggerCache.TryGetValue(triggerName, out triggerData))
             {
-                triggerCache.Remove(triggerName);
                 return true;
             }
 
