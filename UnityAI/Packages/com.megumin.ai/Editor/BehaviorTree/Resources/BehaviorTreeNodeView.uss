@@ -235,9 +235,6 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: rgba(128, 128, 128, 0.85);
-    position: absolute;
-    top: -2px;
-    right: -5px;
     -unity-text-align: middle-center;
     font-size: 10px;
     -unity-font-style: bold;
