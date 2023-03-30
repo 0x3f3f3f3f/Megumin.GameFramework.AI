@@ -37,11 +37,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (State == Status.Running)
             {
-                return $"Wait: {waitTime.Value}. Left:{left:0.0000}";
+                return $"Wait: {waitTime.Value:0.000}  Left:{left:0.000}";
             }
             else
             {
-                return $"Wait: {waitTime.Value}.";
+                return $"Wait: {waitTime.Value:0.000}";
             }
         }
     }

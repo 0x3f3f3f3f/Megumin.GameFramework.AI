@@ -7,7 +7,7 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class CheckEvent : ConditionDecorator
+    public class CheckEvent : ConditionDecorator,ITitleable
     {
         public RefVar<string> EventName;
 
@@ -19,6 +19,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
             return base.OnCheckCondition(container);
         }
+
+        public string Title => $"CheckEvent {EventName?.Value}";
     }
 }
 
