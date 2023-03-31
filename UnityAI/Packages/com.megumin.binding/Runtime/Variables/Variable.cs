@@ -233,6 +233,10 @@ namespace Megumin.Binding
 
         public static implicit operator T(BindingVar<T> var)
         {
+            if (var == null)
+            {
+                return default;
+            }
             return var.Value;
         }
     }

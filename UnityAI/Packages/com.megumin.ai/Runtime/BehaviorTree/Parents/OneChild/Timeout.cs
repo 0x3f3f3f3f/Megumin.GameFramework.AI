@@ -7,6 +7,12 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    /// <summary>
+    /// 超时节点
+    /// </summary>
+    /// <remarks>
+    /// 如果用装饰器实现，需要条件装饰标记为AbortSelf。
+    /// </remarks>
     public class Timeout : OneChildNode
     {
         public float duration = 1.0f;
