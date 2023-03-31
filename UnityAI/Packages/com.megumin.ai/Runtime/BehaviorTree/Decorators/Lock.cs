@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -11,11 +12,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     internal class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
-        BehaviorTree tree;
-        public string lockName;
+        public RefVar<string> lockName;
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            tree.lockDic.Remove(lockName);
+            Tree.lockDic.Remove(lockName);
             return result;
         }
 
@@ -26,12 +26,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 lockName = bTNode.InstanceID;
             }
 
-            tree.lockDic.Add(lockName, this);
+            Tree.lockDic.Add(lockName, this);
         }
 
         protected override bool OnCheckCondition(BTNode container)
         {
-            tree.lockDic.TryGetValue(lockName, out var result);
+            Tree.lockDic.TryGetValue(lockName, out var result);
             return result == this;
         }
     }
