@@ -29,11 +29,11 @@ namespace Megumin.Binding
         {
             Instance = new UnityBindingParser();
 
-            if (Application.isPlaying) ///编辑器模式不要预调研，频繁修改代码会很卡并且打印警告
-            {
-                ///预调用
-                CacheAllTypesAsync();
-            }
+            //if (Application.isPlaying) ///编辑器模式不要预调研，频繁修改代码会很卡并且打印警告
+            //{
+            //    ///预调用
+            //    CacheAllTypesAsync();
+            //}
         }
 
         /// <summary>
