@@ -16,7 +16,7 @@ namespace Megumin.Binding
     /// https://codeblog.jonskeet.uk/2008/08/09/making-reflection-fly-and-exploring-delegates/
     /// https://www.cnblogs.com/xinaixia/p/5777886.html
     /// </summary>
-    public class UnityBindingParser : BindingParser
+    public partial class UnityBindingParser : BindingParser
     {
         /// <summary>
         /// 这里自动初始化，如果导致项目启动过慢，请修改此处，并手动在适当位置初始化。
@@ -55,17 +55,9 @@ namespace Megumin.Binding
             }
             else
             {
+                GameObject rootInstance = GetRootInstance(bindingInstance);
+
                 var path = bindingString.Split('/');
-                GameObject rootInstance = bindingInstance as GameObject;
-
-                if (!rootInstance)
-                {
-                    if (bindingInstance is Component component)
-                    {
-                        rootInstance = component.gameObject;
-                    }
-                }
-
                 var (instance, instanceType) = GetBindInstanceAndType(path[0], rootInstance);
 
                 if (instanceType != null)
@@ -142,6 +134,21 @@ namespace Megumin.Binding
             }
 
             return (ParseResult, Getter, Setter);
+        }
+
+        public static GameObject GetRootInstance(object bindingInstance)
+        {
+            GameObject rootInstance = bindingInstance as GameObject;
+
+            if (!rootInstance)
+            {
+                if (bindingInstance is Component component)
+                {
+                    rootInstance = component.gameObject;
+                }
+            }
+
+            return rootInstance;
         }
 
         /// <summary>
@@ -273,14 +280,7 @@ namespace Megumin.Binding
 
             try
             {
-                var methodName = memberName;
-                if (memberName.EndsWith("()"))
-                {
-                    methodName = memberName.Replace("()", "");
-                    //TODO 泛型函数
-                }
-
-                var methodInfo = instanceType.GetMethod(methodName);
+                MethodInfo methodInfo = GetMethodInfo(instanceType, memberName);
                 //TODO，区分方法重载
 
                 if (methodInfo != null)
@@ -330,6 +330,19 @@ namespace Megumin.Binding
                 Debug.LogWarning($"ParseError:  {e}");
             }
             return hasMember;
+        }
+
+        public static MethodInfo GetMethodInfo(Type type, string memberName)
+        {
+            var methodName = memberName;
+            if (memberName.EndsWith("()"))
+            {
+                methodName = memberName.Replace("()", "");
+                //TODO 泛型函数
+            }
+
+            var methodInfo = type.GetMethod(methodName);
+            return methodInfo;
         }
 
         /// <summary>
@@ -506,6 +519,9 @@ namespace Megumin.Binding
         /// <param name="typeFullName"></param>
         /// <param name="gameObject"></param>
         /// <returns></returns>
+        /// <remarks>
+        /// 可能是静态类型，不能只返回instance。
+        /// </remarks>
         public static (object Instance, Type InstanceType)
             GetBindInstanceAndType(string typeFullName, GameObject gameObject)
         {
@@ -548,8 +564,76 @@ namespace Megumin.Binding
         }
 
 
+        /// <summary>
+        /// Unity和纯C#运行时解析逻辑时不一样的，unity中第一个字符串表示组件，在纯C#运行时可能会忽略第一个字符串。
+        /// </summary>
+        /// <param name="typeFullName"></param>
+        /// <param name="rootInstance"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 可能是静态类型，不能只返回instance。
+        /// </remarks>
+        public static (object Instance, Type InstanceType)
+            GetBindInstanceAndType2(Span<string> path, GameObject rootInstance)
+        {
+            if (path.Length == 0)
+            {
+                return (rootInstance, typeof(GameObject));
+            }
+            else if (path.Length == 1)
+            {
+                return GetBindInstanceAndType(path[0], rootInstance);
+            }
+            else
+            {
+                //多个层级
+                var (instance, instanceType) = GetBindInstanceAndType(path[0], rootInstance);
 
+                //使用实例链的方式处理多级层级绑定
+                object innerIntance = instance;
+                Type innerInStanceType = instanceType;
 
+                for (int i = 1; i < path.Length; i++)
+                {
+                    //一级一级反射获取实例
+                    var member = path[i];
+                    //处理中间层级 每级都取得实例，优点是最终生成的委托性能较高。缺点是中间级别如果对象重新赋值，需要重新绑定。
+                    (innerIntance, innerInStanceType) = GetInstanceAndType(innerInStanceType, innerIntance, member);
+                }
+                return (innerIntance, innerInStanceType);
+            }
+        }
+
+    }
+
+    public partial class UnityBindingParser
+    {
+        public override bool TryCreateMethodDelegate(string bindingPath,
+                                            object bindingInstance,
+                                            Type delegateType,
+                                            out Delegate methodDelegate)
+        {
+            var path = bindingPath.Split('/');
+            if (path.Length <= 1)
+            {
+                methodDelegate = null;
+                return false;
+            }
+
+            var rootInstance = GetRootInstance(bindingInstance);
+
+            var (instance, instanceType) = GetBindInstanceAndType2(new Span<string>(path, 0, path.Length - 1), rootInstance);
+            var memberName = path[path.Length - 1];
+            MethodInfo methodInfo = GetMethodInfo(instanceType, memberName);
+            if (methodInfo != null)
+            {
+                var d = methodInfo.CreateDelegate(delegateType, instance);
+                methodDelegate = d;
+                return true;
+            }
+            methodDelegate = null;
+            return false;
+        }
     }
 }
 
