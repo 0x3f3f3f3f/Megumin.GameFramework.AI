@@ -12,21 +12,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     public class Remap : BTDecorator, IPostDecorator
     {
-        bool invers = true;
+        public Status SucceededTo = Status.Succeeded;
+        public Status FailedTo = Status.Failed;
+        public Status RunningTo = Status.Running;
+
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
             var newResult = result;
-            if (invers)
+            if (result == Status.Succeeded)
             {
-                switch (result)
-                {
-                    case Status.Succeeded:
-                        newResult = Status.Failed;
-                        break;
-                    case Status.Failed:
-                        newResult = Status.Succeeded;
-                        break;
-                }
+                newResult = SucceededTo;
+            }
+            else if (result == Status.Failed)
+            {
+                newResult = FailedTo;
+            }
+            if (newResult == Status.Running)
+            {
+                newResult = RunningTo;
             }
 
             Debug.LogError($"{result}--{bTNode}--{newResult}");
