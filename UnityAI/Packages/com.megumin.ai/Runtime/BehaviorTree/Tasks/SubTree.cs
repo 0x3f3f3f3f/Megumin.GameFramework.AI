@@ -18,6 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             if (BehaviourTree == null)
             {
                 BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
+                BehaviourTree.BindAgent(Tree.Agent);
             }
 
             return BehaviourTree.TickSubTree(from);

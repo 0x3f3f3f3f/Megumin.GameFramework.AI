@@ -129,7 +129,7 @@ MonoBehaviour:
       Value: 
     - Name: LogStr2
       Type: $ref
-      Value: 9934bbdc-fb10-4d47-87d9-d673822a3970.LogStr2
+      Value: Str1
     - Name: GUID
       Type: System.String
       Value: 9934bbdc-fb10-4d47-87d9-d673822a3970
@@ -137,18 +137,6 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
     Member: []
-  - Name: 9934bbdc-fb10-4d47-87d9-d673822a3970.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: value
-      Type: System.String
-      Value: I am subtree
-    - Name: bindingPath
-      Type: System.String
-      Value: 
   - Name: 9934bbdc-fb10-4d47-87d9-d673822a3970.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:

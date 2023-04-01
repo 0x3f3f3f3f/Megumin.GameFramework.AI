@@ -147,7 +147,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 tree.GUID = Guid.NewGuid().ToString();
             }
 
+            tree.RootTree = tree;
             tree.InitOption = initOption;
+
             if (UseSerializeReferenceGeneric)
             {
                 //多态序列化 + 泛型
@@ -156,7 +158,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return tree;
             }
 
-            RefFinder finder = new RefFinder();
+            RefFinder finder = new();
             finder.Parent = refFinder;
 
             tree.RefFinder = finder;

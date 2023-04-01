@@ -35,22 +35,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         internal void Init(object agent)
         {
-            SetAgent(agent);
+            //SetAgent(agent);
 
-            foreach (var item in AllNodes)
-            {
-                item.Awake();
-            }
+            //foreach (var item in AllNodes)
+            //{
+            //    item.Awake();
+            //}
 
-            ParseAllBindable(agent);
 
-            foreach (var item in AllNodes)
-            {
-                if (item.Enabled)
-                {
-                    item.Enable();
-                }
-            }
+
+            //foreach (var item in AllNodes)
+            //{
+            //    if (item.Enabled)
+            //    {
+            //        item.Enable();
+            //    }
+            //}
 
             // Start在第一次Tick时调用一次
             //foreach (var item in AllNodes)
@@ -348,9 +348,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string InstanceName { get; protected set; }
 
-        public virtual void SetAgent(object agent)
+        public virtual void BindAgent(object agent)
         {
             Agent = agent;
+
             if (Agent is UnityEngine.Object obj && obj)
             {
                 InstanceName = obj.name;
@@ -359,6 +360,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 InstanceName = InstanceGUID;
             }
+
+            ParseAllBindable(agent);
         }
 
         /// <summary>

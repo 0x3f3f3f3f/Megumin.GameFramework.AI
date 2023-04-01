@@ -85,20 +85,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
 
-        internal void Awake()
-        {
+        //internal void Awake()
+        //{
 
-        }
+        //}
 
-        internal void Enable()
-        {
+        //internal void Enable()
+        //{
 
-        }
+        //}
 
-        internal void Start()
-        {
+        //internal void Start()
+        //{
 
-        }
+        //}
 
         /// <summary>
         /// 不要再函数内修改State值，会导致流程错误
