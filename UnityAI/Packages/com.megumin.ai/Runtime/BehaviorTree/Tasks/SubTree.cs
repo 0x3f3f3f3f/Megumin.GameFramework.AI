@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class SubTree : ActionTaskNode, IDetailable, IBuildContextualMenuable
     {
-        public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
+        public BehaviorTreeAsset_1_1 BehaviorTreeAsset;
 
         [field: NonSerialized]
         public BehaviorTree BehaviourTree { get; set; }

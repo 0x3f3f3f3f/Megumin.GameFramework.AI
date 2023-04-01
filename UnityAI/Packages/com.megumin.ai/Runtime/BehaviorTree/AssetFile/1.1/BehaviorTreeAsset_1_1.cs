@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
+    public partial class BehaviorTreeAsset_1_1 : ScriptableObject, IBehaviorTreeAsset
     {
         public string Version = new Version(1, 1, 0).ToString();
         [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
@@ -246,7 +246,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     else
                     {
                         //TODO 使用missnode代替确实node
-                        
+
                     }
                 }
             }

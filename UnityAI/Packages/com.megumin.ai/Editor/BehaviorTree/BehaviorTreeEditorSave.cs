@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (CurrentAsset == null)
             {
-                CurrentAsset = CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0_1>();
+                CurrentAsset = CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_1>();
             }
 
             if (CurrentAsset == null)
@@ -74,7 +74,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public static void CheckGUID()
         {
-            var all = CollectAllAsset<BehaviorTreeAsset_1_0_1>();
+            var all = CollectAllAsset<BehaviorTreeAsset_1_1>();
             if (all != null)
             {
                 var g = from elem in all
