@@ -147,6 +147,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 tree.GUID = Guid.NewGuid().ToString();
             }
 
+            tree.InitOption = initOption;
             if (UseSerializeReferenceGeneric)
             {
                 //多态序列化 + 泛型
@@ -156,18 +157,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             RefFinder finder = new RefFinder();
-            Dictionary<string, object> cacheRefObj = finder.RefDic;
-            finder.Override = refFinder;
+            finder.Parent = refFinder;
 
+            tree.RefFinder = finder;
 
-            cacheRefObj.Add(tree.GUID, tree);
+            finder.RefDic.Add(tree.GUID, tree);
 
             //缓存Unity引用对象
             if (UnityObjectRef != null)
             {
                 foreach (var item in UnityObjectRef)
                 {
-                    cacheRefObj.Add(item.Name, item.Ref);
+                    finder.RefDic.Add(item.Name, item.Ref);
                 }
             }
 
@@ -186,7 +187,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                     if (item.TryCreateInstance(out var instance))
                     {
-                        cacheRefObj.Add(item.Name, instance);
+                        finder.RefDic.Add(item.Name, instance);
                         variableCache.Add(item, instance);
                     }
                 }
@@ -206,7 +207,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                     if (item.TryCreateInstance(out var instance))
                     {
-                        cacheRefObj.Add(item.Name, instance);
+                        finder.RefDic.Add(item.Name, instance);
                         treeelementCache.Add(item, instance);
                     }
                 }

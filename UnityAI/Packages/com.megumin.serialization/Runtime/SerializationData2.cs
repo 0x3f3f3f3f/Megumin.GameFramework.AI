@@ -12,7 +12,7 @@ namespace Megumin.Serialization
         public Dictionary<string, object> RefDic { get; } = new();
         public RefFinder() { }
 
-        public IRefFinder Override { get; set; }
+        public IRefFinder Parent { get; set; }
 
         public IRefFinder Fallback { get; set; }
         //public IRefFinder BubbleFallback { get; set; }
@@ -21,7 +21,7 @@ namespace Megumin.Serialization
 
         public bool TryGetRefValue(string refName, out object refValue)
         {
-            if (Override != null && Override.TryGetRefValue(refName, out refValue))
+            if (Parent != null && Parent.TryGetRefValue(refName, out refValue))
             {
                 return true;
             }

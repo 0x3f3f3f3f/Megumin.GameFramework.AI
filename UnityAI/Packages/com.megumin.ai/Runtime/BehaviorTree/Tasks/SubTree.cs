@@ -10,9 +10,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
 
+        [field: NonSerialized]
+        public BehaviorTree BehaviourTree { get; set; }
+
         protected override Status OnTick(BTNode from)
         {
-            return base.OnTick(from);
+            if (BehaviourTree == null)
+            {
+                BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
+            }
+
+            return BehaviourTree.TickSubTree(from);
         }
 
         public string GetDetail()

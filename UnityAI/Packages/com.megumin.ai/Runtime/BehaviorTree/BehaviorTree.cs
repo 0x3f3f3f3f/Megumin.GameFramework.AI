@@ -25,9 +25,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<BTNode> AllNodes = new();
 
         public Dictionary<string, BTNode> GuidDic { get; } = new();
-        
-
-
+        public InitOption InitOption { get; set; }
+        public RefFinder RefFinder { get; set; }
 
         public void Reset()
         {
@@ -76,7 +75,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        static readonly Unity.Profiling.ProfilerMarker tickProfilerMarker = new(nameof(Tick));
+        static readonly Unity.Profiling.ProfilerMarker tickProfilerMarker = new("Tick");
 
         /// <summary>
         /// Todo 抽象出runner ，分别 root - leaf 驱动，last leaf， 异步。三种方式根调用不一样。但是都需要Tick。
@@ -85,17 +84,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Status Tick()
         {
             using var profiler = tickProfilerMarker.Auto();
-
-            if (StartNode == null)
-            {
-                return Status.Failed;
-            }
-
-            if (StartNode.Enabled == false)
-            {
-                Debug.Log($"StartNode is not Enabled!");
-                return Status.Failed;
-            }
 
             if (treestate == Status.Succeeded)
             {
@@ -122,8 +110,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             RemoveLifeEndEventData();
-            treestate = StartNode.Tick(null);
 
+            return TickSubTree();
+        }
+
+        public Status TickSubTree(BTNode from = null)
+        {
+            treestate = TickStartNode(from);
             TotalTickCount++;
 
             if (treestate == Status.Succeeded)
@@ -138,8 +131,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 FailedCount++;
                 Debug.Log($"tree complate. {treestate}");
             }
-
             return treestate;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="from">如果是子树时存在父节点</param>
+        /// <returns></returns>
+        protected Status TickStartNode(BTNode from)
+        {
+            if (StartNode == null)
+            {
+                return Status.Failed;
+            }
+
+            if (StartNode.Enabled == false)
+            {
+                Debug.Log($"StartNode is not Enabled!");
+                return Status.Failed;
+            }
+            return StartNode.Tick(from);
         }
 
         public BTNode AddNode(BTNode node)

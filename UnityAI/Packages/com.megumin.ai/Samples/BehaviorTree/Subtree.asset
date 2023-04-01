@@ -17,7 +17,19 @@ MonoBehaviour:
   <StartNodeGUID>k__BackingField: 520a6dee-91c5-4759-a078-0cbe8d0e602f
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
-  variables: []
+  variables:
+  - Name: Str1
+    Type: Megumin.GameFramework.AI.RefVariable_string
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: Str1
+    - Name: value
+      Type: System.String
+      Value: I am subtree
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   treeElements:
   - Name: 296b3a20-faf5-433e-a0c6-c92156defad2
     Type: Megumin.GameFramework.AI.BehaviorTree.Wait
