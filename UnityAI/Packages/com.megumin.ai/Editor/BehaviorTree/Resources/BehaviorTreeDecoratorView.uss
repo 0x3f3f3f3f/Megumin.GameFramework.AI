@@ -61,7 +61,7 @@ BehaviorTreeDecoratorView {
     border-top-right-radius: 1px;
     border-bottom-right-radius: 1px;
     align-items: flex-end;
-    margin-left: 14px;
+    margin-left: 10px;
     margin-bottom: 2px;
 }
 
@@ -203,6 +203,7 @@ BehaviorTreeDecoratorView {
 
 #decoratorBody .decoratorDetailContainer {
     display: none;
+    flex-direction: row;
     flex-grow: 1;
 }
 
@@ -229,7 +230,7 @@ BehaviorTreeDecoratorView {
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
     margin-left: 8px;
-    margin-right: 0;
+    margin-right: 4px;
     margin-top: 0;
     margin-bottom: 2px;
     padding-left: 0;
