@@ -30,25 +30,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 return;
             }
 
-            if (BehaviorTreeEditor.AllActiveEditor.Any(elem => elem.DebugInstance == tree))
+            if (EditorApplication.isPlaying)
             {
-                return;
-            }
-
-            //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
-            foreach (var item in BehaviorTreeEditor.AllActiveEditor)
-            {
-                if (item.CurrentAsset.AssetObject == tree.Asset.AssetObject)
+                if (BehaviorTreeEditor.AllActiveEditor.Any(elem => elem.DebugInstance == tree))
                 {
-                    if (item.IsDebugMode)
-                    {
+                    return;
+                }
 
-                    }
-                    else
+                //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
+                foreach (var item in BehaviorTreeEditor.AllActiveEditor)
+                {
+                    if (item.CurrentAsset.AssetObject == tree.Asset.AssetObject)
                     {
-                        item.BeginDebug(tree);
+                        if (item.IsDebugMode)
+                        {
+
+                        }
+                        else
+                        {
+                            item.BeginDebug(tree);
+                        }
                     }
                 }
+            }
+            else
+            {
+                BehaviorTreeEditor.OnOpenAsset(tree.Asset);
             }
         }
 

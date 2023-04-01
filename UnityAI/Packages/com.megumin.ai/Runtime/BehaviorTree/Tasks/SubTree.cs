@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SubTree : ActionTaskNode, IDetailable
+    public class SubTree : ActionTaskNode, IDetailable, IBuildContextualMenuable
     {
         public BehaviorTreeAsset_1_0_1 BehaviorTreeAsset;
 
@@ -33,6 +35,33 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             else
             {
                 return "Null";
+            }
+        }
+
+        public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            bool hasAsset = BehaviorTreeAsset;
+            evt.menu.AppendAction("EditorTree",
+                a => EditorTree(),
+                hasAsset ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+
+            evt.menu.AppendSeparator();
+        }
+
+        protected void EditorTree()
+        {
+            if (BehaviourTree == null)
+            {
+#if UNITY_EDITOR
+                if (BehaviorTreeAsset)
+                {
+                    UnityEditor.AssetDatabase.OpenAsset(BehaviorTreeAsset);
+                }
+#endif
+            }
+            else
+            {
+                BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(BehaviourTree);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -15,10 +16,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Tooltip("在控制台打印日志")]
     [Description("TestActionNode")]
     [Color(0.82f, 0.58f, 0.23f, 0.75f)]
-    internal class TestActionNode : ActionTaskNode, IAbortable
+    internal class TestActionNode : ActionTaskNode, IAbortable, IBuildContextualMenuable
     {
         [field: SerializeField]
         public AbortType AbortType { get; set; } = AbortType.LowerPriority;
+
+        public void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction("NodeCustomMenu", a => { Debug.Log(111); }, DropdownMenuAction.Status.Normal);
+        }
     }
 
     [DisplayName("DisplayName_TestBTDecorator")]

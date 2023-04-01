@@ -38,7 +38,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (isRunning || lastTickState != Node.State)
             {
+                //进入Running 第一次Tick
                 RefreshDetail();
+
+                if (Node is SubTree subTree)
+                {
+                    BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(subTree.BehaviourTree);
+                }
             }
 
             UpdateCompletedState();

@@ -398,6 +398,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             evt.menu.AppendSeparator();
 
             BuildContextualMenuDecorator(evt);
+
+            if (Node is IBuildContextualMenuable buildable)
+            {
+                buildable.BuildContextualMenu(evt);
+            }
         }
 
         public DropdownMenuAction.Status GetSetStartStatus(DropdownMenuAction arg)
