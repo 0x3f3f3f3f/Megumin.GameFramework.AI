@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public partial class BehaviorTreeAsset_1_0_1 : ScriptableObject, IBehaviorTreeAsset
     {
-        public string Version = new Version(1, 0, 1).ToString();
+        public string Version = new Version(1, 1, 0).ToString();
         [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
         [field: SerializeField]
         public string GUID { get; set; } = Guid.NewGuid().ToString();
@@ -19,6 +19,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public bool UseSerializeReferenceGeneric = false;
         public List<UnityObjectData> UnityObjectRef;
         public List<ObjectData> variables;
+        public List<ObjectData> nodes;
+        public List<ObjectData> decorators;
         public List<ObjectData> treeElements;
 
 
@@ -79,15 +81,42 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 //序列化节点
                 List<ObjectData> treeElementData = new();
+                List<ObjectData> nodeDatas = new();
+                List<ObjectData> decoratorDatas = new();
+
+                void SaveNode(BTNode node)
+                {
+                    ObjectData nodeData = new ObjectData();
+                    if (nodeData.TrySerialize(node.GUID, node, needSerialization, objRefs, cacheRef, GetSerializeMembers))
+                    {
+                        nodeDatas.Add(nodeData);
+                    }
+                }
+
+                void SaveDeco(ITreeElement decorator)
+                {
+                    ObjectData decoratorData = new ObjectData();
+                    if (decoratorData.TrySerialize(decorator.GUID, decorator, needSerialization, objRefs, cacheRef, GetSerializeMembers))
+                    {
+                        decoratorDatas.Add(decoratorData);
+                    }
+                }
+
                 foreach (var node in tree.AllNodes)
                 {
-                    needSerialization.Push((node.GUID, node));
+                    SaveNode(node);
 
                     foreach (var decorator in node.Decorators)
                     {
-                        needSerialization.Push((decorator.GUID, decorator));
+                        SaveDeco(decorator);
                     }
                 }
+
+                nodeDatas.Sort();
+                nodes = nodeDatas;
+
+                decoratorDatas.Sort();
+                decorators = decoratorDatas;
 
                 while (needSerialization.Count > 0)
                 {
@@ -106,6 +135,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             UnityObjectRef = objRefs;
             return true;
+
+
         }
 
         /// <summary>
@@ -196,8 +227,47 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
 
-            //创建节点引用实例
+            //创建节点实例
             Dictionary<ObjectData, object> treeelementCache = new();
+            if (nodes != null)
+            {
+                foreach (var item in nodes)
+                {
+                    if (string.IsNullOrEmpty(item.Name))
+                    {
+                        Debug.LogError($"意外错误，没有引用名字");
+                        continue;
+                    }
+                    if (item.TryCreateInstance(out var instance))
+                    {
+                        finder.RefDic.Add(item.Name, instance);
+                        treeelementCache.Add(item, instance);
+                    }
+                    else
+                    {
+                        //TODO 使用missnode代替确实node
+                        
+                    }
+                }
+            }
+
+            if (decorators != null)
+            {
+                foreach (var item in decorators)
+                {
+                    if (string.IsNullOrEmpty(item.Name))
+                    {
+                        Debug.LogError($"意外错误，没有引用名字");
+                        continue;
+                    }
+                    if (item.TryCreateInstance(out var instance))
+                    {
+                        finder.RefDic.Add(item.Name, instance);
+                        treeelementCache.Add(item, instance);
+                    }
+                }
+            }
+
             if (treeElements != null)
             {
                 foreach (var item in treeElements)

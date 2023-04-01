@@ -18,19 +18,7 @@ MonoBehaviour:
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
   variables: []
-  treeElements:
-  - Name: 52600aa4-538c-46bb-87b0-121c76bafcbc
-    Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
-    Member:
-    - Name: A
-      Type: System.Boolean
-      Value: True
-    - Name: C
-      Type: System.Boolean
-      Value: True
-    - Name: GUID
-      Type: System.String
-      Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
+  nodes:
   - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03
     Type: Megumin.GameFramework.AI.BehaviorTree.Log
     Member:
@@ -46,6 +34,17 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 896edbe0-845e-4985-8db7-3626dfcd4b03
+  decorators:
+  - Name: 52600aa4-538c-46bb-87b0-121c76bafcbc
+    Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
+    Member:
+    - Name: Success
+      Type: System.Boolean
+      Value: True
+    - Name: GUID
+      Type: System.String
+      Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
+  treeElements:
   - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
