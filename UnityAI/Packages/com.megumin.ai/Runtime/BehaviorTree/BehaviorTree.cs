@@ -25,9 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<BTNode> AllNodes = new();
 
         public Dictionary<string, BTNode> GuidDic { get; } = new();
-        public bool IsRunning { get; internal set; }
-
-        private Status treestate = Status.Init;
+        
 
 
 
@@ -38,6 +36,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         internal void Init(object agent)
         {
+            SetAgent(agent);
+
             foreach (var item in AllNodes)
             {
                 item.Awake();
@@ -329,6 +329,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public partial class BehaviorTree
     {
+        public bool IsRunning { get; internal set; }
+        public object Agent { get; protected set; }
+
+        private Status treestate = Status.Init;
+
+        public string InstanceName { get; protected set; }
+
+        public virtual void SetAgent(object agent)
+        {
+            Agent = agent;
+            if (Agent is UnityEngine.Object obj && obj)
+            {
+                InstanceName = obj.name;
+            }
+            else
+            {
+                InstanceName = InstanceGUID;
+            }
+        }
+
         /// <summary>
         /// 用于编辑中UndoRedo时实例对象改变。
         /// </summary>

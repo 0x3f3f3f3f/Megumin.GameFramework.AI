@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -137,13 +138,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             needRemoveTree.Add(tree);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void TickTree(BehaviorTree tree)
+        {
+            Profiler.BeginSample(tree.InstanceName);
+            tree.Tick();
+            Profiler.EndSample();
+        }
+
         private void Update()
         {
             Profiler.BeginSample("UpdateTick");
 
             foreach (var item in UpdateTree)
             {
-                item.Tick();
+                TickTree(item);
             }
 
             Profiler.EndSample();
@@ -158,7 +167,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             foreach (var item in FixedUpdateTree)
             {
-                item.Tick();
+                TickTree(item);
             }
 
             Profiler.EndSample();
@@ -173,7 +182,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             foreach (var item in LateUpdateTree)
             {
-                item.Tick();
+                TickTree(item);
             }
 
             Profiler.EndSample();

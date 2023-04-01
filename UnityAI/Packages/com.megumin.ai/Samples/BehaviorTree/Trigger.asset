@@ -86,7 +86,7 @@ MonoBehaviour:
       Value: 332
     - Name: index
       Type: System.Int32
-      Value: 4
+      Value: 5
     - Name: depth
       Type: System.Int32
       Value: 1
@@ -123,7 +123,7 @@ MonoBehaviour:
       Value: 552
     - Name: index
       Type: System.Int32
-      Value: 11
+      Value: 12
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -237,11 +237,51 @@ MonoBehaviour:
       Value: 510
     - Name: index
       Type: System.Int32
-      Value: 7
+      Value: 8
     - Name: depth
       Type: System.Int32
       Value: 2
   - Name: 5fca3076-5bc1-4151-8260-6a04c81e5734.waitTime
+    Type: Megumin.Binding.RefVar`1[[System.Single]]
+    Member:
+    - Name: value
+      Type: System.Single
+      Value: 5
+  - Name: 6f15c007-4acf-47d4-8190-ee505dfec47e
+    Type: Megumin.GameFramework.AI.BehaviorTree.Wait
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: 6f15c007-4acf-47d4-8190-ee505dfec47e.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: 6f15c007-4acf-47d4-8190-ee505dfec47e.Decorators
+    - Name: waitTime
+      Type: $ref
+      Value: 6f15c007-4acf-47d4-8190-ee505dfec47e.waitTime
+    - Name: GUID
+      Type: System.String
+      Value: 6f15c007-4acf-47d4-8190-ee505dfec47e
+  - Name: 6f15c007-4acf-47d4-8190-ee505dfec47e.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: 6f15c007-4acf-47d4-8190-ee505dfec47e.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 151
+    - Name: y
+      Type: System.Single
+      Value: 529
+    - Name: index
+      Type: System.Int32
+      Value: 4
+    - Name: depth
+      Type: System.Int32
+      Value: 2
+  - Name: 6f15c007-4acf-47d4-8190-ee505dfec47e.waitTime
     Type: Megumin.Binding.RefVar`1[[System.Single]]
     Member:
     - Name: value
@@ -304,7 +344,7 @@ MonoBehaviour:
       Value: 510
     - Name: index
       Type: System.Int32
-      Value: 5
+      Value: 6
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -345,6 +385,9 @@ MonoBehaviour:
     - Name: 1
       Type: $ref
       Value: bf57250d-2963-4183-9710-98428f31ed5c
+    - Name: 2
+      Type: $ref
+      Value: 6f15c007-4acf-47d4-8190-ee505dfec47e
   - Name: a9f48778-eb3c-4804-a7c3-a9a889683b97.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
@@ -357,10 +400,10 @@ MonoBehaviour:
     Member:
     - Name: x
       Type: System.Single
-      Value: -22.49998
+      Value: -37.00002
     - Name: y
       Type: System.Single
-      Value: 323.6068
+      Value: 321.4999
     - Name: index
       Type: System.Int32
       Value: 1
@@ -413,7 +456,7 @@ MonoBehaviour:
       Value: 329
     - Name: index
       Type: System.Int32
-      Value: 8
+      Value: 9
     - Name: depth
       Type: System.Int32
       Value: 1
@@ -447,10 +490,10 @@ MonoBehaviour:
     Member:
     - Name: x
       Type: System.Single
-      Value: 63.99997
+      Value: -71.00005
     - Name: y
       Type: System.Single
-      Value: 501.809
+      Value: 525
     - Name: index
       Type: System.Int32
       Value: 3
@@ -496,7 +539,7 @@ MonoBehaviour:
       Value: 552
     - Name: index
       Type: System.Int32
-      Value: 9
+      Value: 10
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -554,10 +597,10 @@ MonoBehaviour:
     Member:
     - Name: x
       Type: System.Single
-      Value: -140
+      Value: -275.0001
     - Name: y
       Type: System.Single
-      Value: 505.9999
+      Value: 529
     - Name: index
       Type: System.Int32
       Value: 2
@@ -603,7 +646,7 @@ MonoBehaviour:
       Value: 552
     - Name: index
       Type: System.Int32
-      Value: 10
+      Value: 11
     - Name: depth
       Type: System.Int32
       Value: 2
@@ -670,7 +713,7 @@ MonoBehaviour:
       Value: 510
     - Name: index
       Type: System.Int32
-      Value: 6
+      Value: 7
     - Name: depth
       Type: System.Int32
       Value: 2

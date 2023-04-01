@@ -279,7 +279,7 @@ MonoBehaviour:
   - Name: baf87fa0-c482-4a3f-975e-2a2d25625ce1
     Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
     Member:
-    - Name: A
+    - Name: Success
       Type: System.Boolean
       Value: True
     - Name: GUID
@@ -291,7 +291,7 @@ MonoBehaviour:
   - Name: c77c9edc-e3ae-4f42-9b0e-d274cb466a6b
     Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
     Member:
-    - Name: A
+    - Name: Success
       Type: System.Boolean
       Value: True
     - Name: GUID
@@ -300,7 +300,7 @@ MonoBehaviour:
   - Name: ce829d74-5665-4c8c-b5ff-3bff105335fa
     Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
     Member:
-    - Name: A
+    - Name: Success
       Type: System.Boolean
       Value: True
     - Name: GUID

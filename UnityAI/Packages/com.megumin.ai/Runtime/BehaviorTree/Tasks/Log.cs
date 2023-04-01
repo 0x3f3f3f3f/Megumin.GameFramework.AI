@@ -40,7 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return $"LogStr:{LogStr} ---- LogStr2:{LogStr2?.Value} ---- {count}";
+            return $"LogStr:{LogStr} ---- LogStr2:{LogStr2?.Value}";
         }
     }
 }

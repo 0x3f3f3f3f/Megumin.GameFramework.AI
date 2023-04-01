@@ -11,6 +11,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public float x = 100;
         public float y = 100;
+        /// <summary>
+        /// TODO, index 要不要序列化，每次修改树节点会导致序列化文件大量变更。
+        /// </summary>
         public int index = -1;
         public int depth = -1;
         public string Name;
