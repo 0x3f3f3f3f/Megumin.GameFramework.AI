@@ -21,6 +21,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //this.LogMethodName();
             isRunning = Node.State == Status.Running;
+            if (isRunning)
+            {
+                RefreshDetail();
+            }
+
+            if (lastTickState != Node.State)
+            {
+                OnStateChange();
+
+                if (isRunning)
+                {
+                    ChangeToRunning();
+                }
+                else
+                {
+                    UpdateCompletedState();
+                }
+            }
+
+            lastTickState = Node.State;
+        }
+
+        private void OnStateChange()
+        {
             this.SetToClassList(UssClassConst.running, isRunning);
             InputPort.SetToClassList(UssClassConst.running, isRunning);
             OutputPort.SetToClassList(UssClassConst.running, isRunning);
@@ -35,25 +59,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 edge.SetToClassList(UssClassConst.running, isRunning);
                 //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.running, isRunning); }).ExecuteLater(10);
             }
+        }
 
-            if (isRunning || lastTickState != Node.State)
+        private void ChangeToRunning()
+        {
+            //进入Running 第一次Tick
+
+            if (Node is SubTree subTree)
             {
-                //进入Running 第一次Tick
-                RefreshDetail();
-
-                if (Node is SubTree subTree)
-                {
-                    BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(subTree.BehaviourTree);
-                }
+                BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(subTree.BehaviourTree);
             }
-
-            UpdateCompletedState();
-
-            lastTickState = Node.State;
         }
 
         private void UpdateCompletedState()
         {
+            RefreshDetail();
+
             bool hasChanged = false;
             var isSucceeded = Node.State == Status.Succeeded;
             hasChanged |= this.SetToClassList(UssClassConst.succeeded, isSucceeded);

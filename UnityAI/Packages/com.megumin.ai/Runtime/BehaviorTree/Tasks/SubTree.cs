@@ -50,18 +50,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected void EditorTree()
         {
-            if (BehaviourTree == null)
-            {
+
 #if UNITY_EDITOR
-                if (BehaviorTreeAsset)
-                {
-                    UnityEditor.AssetDatabase.OpenAsset(BehaviorTreeAsset);
-                }
-#endif
-            }
-            else
+            if (BehaviorTreeAsset)
             {
-                BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(BehaviourTree);
+                UnityEditor.AssetDatabase.OpenAsset(BehaviorTreeAsset);
+            }
+#endif
+
+            if (Application.isPlaying && BehaviourTree != null)
+            {
+                BehaviorTreeManager.TreeDebugger?.AddDebugInstanceTree(BehaviourTree);
             }
         }
     }
