@@ -12,15 +12,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 用于反序列化失败
     /// </summary>
     [Category("Debug")]
-    public class MissingNode : BTParentNode, IDetailable
+    public class MissingDecorator : BTDecorator, IDetailable
     {
         public string MissType { get; set; }
         public ObjectData OrignalData { get; set; }
-
-        protected override Status OnTick(BTNode from)
-        {
-            return GetIgnoreResult(from);
-        }
 
         public string GetDetail()
         {
@@ -28,3 +23,5 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 }
+
+

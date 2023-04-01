@@ -228,7 +228,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
 
             //创建节点实例
-            Dictionary<ObjectData, object> treeelementCache = new();
+            Dictionary<ObjectData, object> treeObjCache = new();
             if (nodes != null)
             {
                 foreach (var item in nodes)
@@ -238,16 +238,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         Debug.LogError($"意外错误，没有引用名字");
                         continue;
                     }
+
                     if (item.TryCreateInstance(out var instance))
                     {
-                        finder.RefDic.Add(item.Name, instance);
-                        treeelementCache.Add(item, instance);
+
                     }
                     else
                     {
-                        //TODO 使用missnode代替确实node
-
+                        //使用MissingNode代替
+                        MissingNode missing = new();
+                        missing.MissType = item.Type;
+                        missing.GUID = item.Name;
+                        missing.OrignalData = item;
+                        instance = missing;
                     }
+
+                    finder.RefDic.Add(item.Name, instance);
+                    treeObjCache.Add(item, instance);
                 }
             }
 
@@ -260,11 +267,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         Debug.LogError($"意外错误，没有引用名字");
                         continue;
                     }
+
                     if (item.TryCreateInstance(out var instance))
                     {
-                        finder.RefDic.Add(item.Name, instance);
-                        treeelementCache.Add(item, instance);
+
                     }
+                    else
+                    {
+                        //使用MissingDecorator代替
+                        MissingDecorator missing = new();
+                        missing.MissType = item.Type;
+                        missing.GUID = item.Name;
+                        missing.OrignalData = item;
+                        instance = missing;
+                    }
+
+                    finder.RefDic.Add(item.Name, instance);
+                    treeObjCache.Add(item, instance);
                 }
             }
 
@@ -280,7 +299,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (item.TryCreateInstance(out var instance))
                     {
                         finder.RefDic.Add(item.Name, instance);
-                        treeelementCache.Add(item, instance);
+                        treeObjCache.Add(item, instance);
                     }
                 }
             }
@@ -299,7 +318,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             //反序列化树节点 节点父子关系和装饰器关系自动关联
-            foreach (var item in treeelementCache)
+            foreach (var item in treeObjCache)
             {
                 if (item.Key.TryDeserialize(item.Value, finder))
                 {
