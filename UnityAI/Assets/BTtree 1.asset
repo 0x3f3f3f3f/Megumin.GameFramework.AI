@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: BTtree 1
   m_EditorClassIdentifier: 
-  GUID: e234a291-7fe0-4707-947f-2d732f70a480
+  Version: 1.1.0
+  <GUID>k__BackingField: 38eec1aa-807f-4201-af64-2774d1ddc84f
   <StartNodeGUID>k__BackingField: 06fc2185-9850-45e4-b76e-a200613a9391
   UseSerializeReferenceGeneric: 0
   UnityObjectRef:
@@ -55,7 +56,7 @@ MonoBehaviour:
     - Name: bindingPath
       Type: System.String
       Value: 
-  treeElements:
+  nodes:
   - Name: 06fc2185-9850-45e4-b76e-a200613a9391
     Type: Megumin.GameFramework.AI.BehaviorTree.Repeater
     Member:
@@ -74,53 +75,6 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 06fc2185-9850-45e4-b76e-a200613a9391
-  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.children
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
-      Megumin.GameFramework.AI]]
-    Member:
-    - Name: 0
-      Type: $ref
-      Value: ada6836d-8b37-432e-993e-a739afa3a29c
-  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
-      Megumin.GameFramework.AI]]
-    Member:
-    - Name: 0
-      Type: $ref
-      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c
-  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Meta
-    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
-    Member:
-    - Name: x
-      Type: System.Single
-      Value: 247.1501
-    - Name: y
-      Type: System.Single
-      Value: 101.0625
-    - Name: index
-      Type: System.Int32
-      Value: 0
-    - Name: depth
-      Type: System.Int32
-      Value: 0
-    - Name: Name
-      Type: System.String
-      Value: 
-    - Name: FriendlyName
-      Type: System.String
-      Value: 
-    - Name: Description
-      Type: System.String
-      Value: 
-    - Name: FriendlyDescription
-      Type: System.String
-      Value: 
-    - Name: Comment
-      Type: System.String
-      Value: 
-    - Name: IsStartNode
-      Type: System.Boolean
-      Value: True
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c
     Type: Megumin.GameFramework.AI.BehaviorTree.SerializationTestNode
     Member:
@@ -211,6 +165,61 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: ada6836d-8b37-432e-993e-a739afa3a29c
+  decorators:
+  - Name: dee63b1b-27e0-4978-929b-a91c21a6ac4c
+    Type: Megumin.GameFramework.AI.BehaviorTree.Loop
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c
+  treeElements:
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.children
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+      Megumin.GameFramework.AI]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: ada6836d-8b37-432e-993e-a739afa3a29c
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+      Megumin.GameFramework.AI]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c
+  - Name: 06fc2185-9850-45e4-b76e-a200613a9391.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 247.1501
+    - Name: y
+      Type: System.Single
+      Value: 101.0625
+    - Name: index
+      Type: System.Int32
+      Value: 0
+    - Name: depth
+      Type: System.Int32
+      Value: 0
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
+    - Name: IsStartNode
+      Type: System.Boolean
+      Value: True
   - Name: ada6836d-8b37-432e-993e-a739afa3a29c.ArrayFloat
     Type: System.Single[]
     Member:
@@ -546,9 +555,3 @@ MonoBehaviour:
     - Name: value
       Type: System.String
       Value: AA
-  - Name: dee63b1b-27e0-4978-929b-a91c21a6ac4c
-    Type: Megumin.GameFramework.AI.BehaviorTree.Loop
-    Member:
-    - Name: GUID
-      Type: System.String
-      Value: dee63b1b-27e0-4978-929b-a91c21a6ac4c

@@ -80,7 +80,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             {
                 //序列化节点
-                List<ObjectData> treeElementData = new();
                 List<ObjectData> nodeDatas = new();
                 List<ObjectData> decoratorDatas = new();
 
@@ -118,6 +117,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 decoratorDatas.Sort();
                 decorators = decoratorDatas;
 
+                List<ObjectData> treeElementData = new();
                 while (needSerialization.Count > 0)
                 {
                     var item = needSerialization.Pop();
