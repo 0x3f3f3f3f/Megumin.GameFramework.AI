@@ -401,7 +401,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (Node is ISubtreeTreeElement subtreeNode)
             {
-                evt.menu.AppendAction("Inline Subtree", a => { TreeView.InlineSubtree(subtreeNode); }, DropdownMenuAction.Status.Normal);
+                evt.menu.AppendAction("Inline Subtree _⚠️", a => { TreeView.InlineSubtree(subtreeNode); }, DropdownMenuAction.Status.Normal);
                 evt.menu.AppendSeparator();
             }
 

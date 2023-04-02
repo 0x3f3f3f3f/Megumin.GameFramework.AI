@@ -164,13 +164,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
 
-                if (hostnode.TryGetFirstParent(out var parent))
+                //直接使用Tree 获取子树父节点，有时候Undo/Redo 后节点找不到树。
+                if (Tree.TryGetFirstParent(hostnode, out var parent))
                 {
                     parent.RemoveChild(hostnode);
                     parent.AddChild(subtree.StartNode);
                 }
 
                 Tree.RemoveNode(hostnode);
+
+                //移动装饰器
+                foreach (var item in hostnode.Decorators)
+                {
+                    subtree.StartNode.AddDecorator(item);
+                }
 
                 Tree.UpdateNodeIndexDepth();
                 IncrementChangeVersion("InlineSubtree");
@@ -181,3 +188,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
     }
 }
+
+
+
