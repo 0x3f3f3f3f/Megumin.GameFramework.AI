@@ -199,8 +199,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 subTreeNode.Meta.x = exportNode.Meta.x;
                 subTreeNode.Meta.y = exportNode.Meta.y;
 
-                BehaviorTree subtree = new();
-                subtree.GUID = Guid.NewGuid().ToString();
+                BehaviorTree exportTree = new();
+
+                if (Guid.TryParse(asset.GUID, out var _))
+                {
+                    //尽量使用源资源的树guid
+                    exportTree.GUID = asset.GUID;
+                }
+                else
+                {
+                    exportTree.GUID = Guid.NewGuid().ToString();
+                }
 
                 Tree.AddNode(subTreeNode);
                 if (Tree.TryGetFirstParent(exportNode, out var parent))
@@ -212,7 +221,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 void ChangeTree(BTNode node)
                 {
                     Tree.RemoveNode(node);
-                    subtree.AddNode(node);
+                    exportTree.AddNode(node);
+                    //所有节点都要更换GUID，防止父树进行Undo操作，会造成父数和子树的节点ID冲突。
+                    node.GUID = Guid.NewGuid().ToString();
 
                     if (node is BTParentNode parentNode)
                     {
@@ -223,16 +234,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
                 ChangeTree(exportNode);
-                subtree.StartNode = exportNode;
-                subtree.UpdateNodeIndexDepth();
+                exportTree.StartNode = exportNode;
+                exportTree.UpdateNodeIndexDepth();
 
-                asset.SaveTree(subtree);
+                asset.SaveTree(exportTree);
                 EditorUtility.SetDirty(asset);
                 AssetDatabase.SaveAssetIfDirty(asset);
                 AssetDatabase.Refresh();
 
                 //引用的参数表无法导出到子树，无法计算引用关系。
-                Debug.Log("Note: tree variables can not export.");
+                Debug.Log("Note: Export node GUID was changed!  Note: tree variables can not export.");
 
                 Tree.UpdateNodeIndexDepth();
                 IncrementChangeVersion("ConvertToSubtree");

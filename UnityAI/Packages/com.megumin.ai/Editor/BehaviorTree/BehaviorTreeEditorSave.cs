@@ -119,10 +119,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 Debug.Log(path);
                 var treeAsset = ScriptableObject.CreateInstance<T>();
-                treeAsset.SaveTree(TreeView.Tree);
                 AssetDatabase.CreateAsset(treeAsset, path);
                 AssetDatabase.Refresh();
-                //AssetDatabase.ImportAsset(path);
+                AssetDatabase.ImportAsset(path);
                 asset = treeAsset;
 
                 return true;
