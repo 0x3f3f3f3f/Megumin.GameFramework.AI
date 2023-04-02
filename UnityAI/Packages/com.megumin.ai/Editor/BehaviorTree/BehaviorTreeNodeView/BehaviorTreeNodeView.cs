@@ -399,11 +399,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             BuildContextualMenuDecorator(evt);
 
-            if (Node is ISubtreeTreeElement subtreeNode)
-            {
-                evt.menu.AppendAction("Inline Subtree _⚠️", a => { TreeView.InlineSubtree(subtreeNode); }, DropdownMenuAction.Status.Normal);
-                evt.menu.AppendSeparator();
-            }
+            //Subtree
+            evt.menu.AppendAction("Convert To/Subtree",
+                a => { TreeView.ConvertToSubtree(Node); },
+                (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Convert To/Inline Node",
+                a => { TreeView.InlineSubtree(Node as ISubtreeTreeElement); },
+                (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+            evt.menu.AppendSeparator();
 
             if (Node is IBuildContextualMenuable buildable)
             {

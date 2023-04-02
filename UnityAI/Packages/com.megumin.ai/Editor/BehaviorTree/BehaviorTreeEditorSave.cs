@@ -111,6 +111,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return null;
         }
 
+        public bool TryCreateTreeAssset<T>(out T asset)
+            where T : ScriptableObject, IBehaviorTreeAsset
+        {
+            var path = EditorUtility.SaveFilePanelInProject("保存", "BTtree", "asset", "test");
+            if (!string.IsNullOrEmpty(path))
+            {
+                Debug.Log(path);
+                var treeAsset = ScriptableObject.CreateInstance<T>();
+                treeAsset.SaveTree(TreeView.Tree);
+                AssetDatabase.CreateAsset(treeAsset, path);
+                AssetDatabase.Refresh();
+                //AssetDatabase.ImportAsset(path);
+                asset = treeAsset;
+
+                return true;
+            }
+
+            asset = default;
+            return false;
+        }
+
         private void SaveTreeAsJson(DropdownMenuAction obj)
         {
             var path = EditorUtility.SaveFilePanelInProject("保存", "BTJson", "json", "test");

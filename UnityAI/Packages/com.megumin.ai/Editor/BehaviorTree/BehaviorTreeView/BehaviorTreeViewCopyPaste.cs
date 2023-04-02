@@ -182,8 +182,61 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Tree.UpdateNodeIndexDepth();
                 IncrementChangeVersion("InlineSubtree");
                 ReloadView();
-
+                Debug.Log("Note: Inline node GUID was changed!");
                 ChangeSelection(added);
+            }
+        }
+
+        public void ConvertToSubtree(BTNode exportNode)
+        {
+            if (EditorWindow.TryCreateTreeAssset<BehaviorTreeAsset_1_1>(out var asset))
+            {
+                using var mute = UndoBeginScope($"ConvertToSubtree");
+                SubTree subTreeNode = new();
+                subTreeNode.GUID = Guid.NewGuid().ToString();
+                subTreeNode.BehaviorTreeAsset = asset;
+                subTreeNode.Meta = new();
+                subTreeNode.Meta.x = exportNode.Meta.x;
+                subTreeNode.Meta.y = exportNode.Meta.y;
+
+                BehaviorTree subtree = new();
+                subtree.GUID = Guid.NewGuid().ToString();
+
+                Tree.AddNode(subTreeNode);
+                if (Tree.TryGetFirstParent(exportNode, out var parent))
+                {
+                    parent.AddChild(subTreeNode);
+                    parent.RemoveChild(exportNode);
+                }
+
+                void ChangeTree(BTNode node)
+                {
+                    Tree.RemoveNode(node);
+                    subtree.AddNode(node);
+
+                    if (node is BTParentNode parentNode)
+                    {
+                        foreach (var item in parentNode.children)
+                        {
+                            ChangeTree(item);
+                        }
+                    }
+                }
+                ChangeTree(exportNode);
+                subtree.StartNode = exportNode;
+                subtree.UpdateNodeIndexDepth();
+
+                asset.SaveTree(subtree);
+                EditorUtility.SetDirty(asset);
+                AssetDatabase.SaveAssetIfDirty(asset);
+                AssetDatabase.Refresh();
+
+                //引用的参数表无法导出到子树，无法计算引用关系。
+                Debug.Log("Note: tree variables can not export.");
+
+                Tree.UpdateNodeIndexDepth();
+                IncrementChangeVersion("ConvertToSubtree");
+                ReloadView();
             }
         }
     }
