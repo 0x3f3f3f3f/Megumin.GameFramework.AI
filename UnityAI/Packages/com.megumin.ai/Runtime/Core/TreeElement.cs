@@ -9,13 +9,6 @@ using System.ComponentModel;
 
 namespace Megumin.GameFramework.AI
 {
-    public interface ITreeElement
-    {
-        /// <summary>
-        /// 节点唯一ID
-        /// </summary>
-        string GUID { get; }
-    }
 
     [Serializable]
     public class TreeElement<T> : ITreeElement

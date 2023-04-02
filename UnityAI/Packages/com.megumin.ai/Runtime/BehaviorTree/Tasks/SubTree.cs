@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SubTree : ActionTaskNode, IDetailable, IBuildContextualMenuable
+    public class SubTree : ActionTaskNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement
     {
         public BehaviorTreeAsset_1_1 BehaviorTreeAsset;
 
@@ -63,5 +63,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviorTreeManager.TreeDebugger?.AddDebugInstanceTree(BehaviourTree);
             }
         }
+
+        object ISubtreeTreeElement.TreeAsset => BehaviorTreeAsset;
     }
 }

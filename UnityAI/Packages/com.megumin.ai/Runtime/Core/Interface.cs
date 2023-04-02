@@ -42,6 +42,20 @@ namespace Megumin.GameFramework.AI
     {
         void BuildContextualMenu(ContextualMenuPopulateEvent evt);
     }
+
+
+    public interface ITreeElement
+    {
+        /// <summary>
+        /// 节点唯一ID
+        /// </summary>
+        string GUID { get; }
+    }
+
+    public interface ISubtreeTreeElement : ITreeElement
+    {
+        object TreeAsset { get; }
+    }
 }
 
 

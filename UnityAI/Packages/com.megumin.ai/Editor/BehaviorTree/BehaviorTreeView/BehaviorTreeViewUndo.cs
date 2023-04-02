@@ -46,7 +46,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //Undo.RecordObject(SOTree, name);
             SOTree.ChangeVersion++;
-            LoadVersion = SOTree.ChangeVersion;
+            //LoadVersion = SOTree.ChangeVersion;
 
             EditorWindow?.UpdateHasUnsavedChanges();
         }

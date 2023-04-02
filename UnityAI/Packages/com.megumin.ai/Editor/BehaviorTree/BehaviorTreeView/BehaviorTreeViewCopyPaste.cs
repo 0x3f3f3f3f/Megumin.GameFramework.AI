@@ -101,5 +101,83 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
         }
+
+        public void ChangeSelection(List<BTNode> nodes)
+        {
+            ClearSelection();
+            foreach (var node in nodes)
+            {
+                var graphElement = GetElementByGuid(node.GUID);
+                if (graphElement != null)
+                {
+                    AddToSelection(graphElement);
+                }
+            }
+        }
+
+        public void InlineSubtree(ISubtreeTreeElement subtreeNode)
+        {
+            if (Tree != null
+                && subtreeNode is BTNode hostnode
+                && subtreeNode.TreeAsset is IBehaviorTreeAsset treeAsset)
+            {
+
+                var subtree = treeAsset.Instantiate(editorInitOption, Tree.RefFinder);
+
+                if (subtree.StartNode == null)
+                {
+                    Debug.LogError("subtree.StartNode == null");
+                    return;
+                }
+
+                using var mute = UndoBeginScope($"InlineSubtree");
+
+                //合并参数表
+                foreach (var item in subtree.Variable.Table)
+                {
+                    if (Tree.Variable.TryGetParam(item.RefName, out var _))
+                    {
+                        //父树已经含有同名参数，跳过
+                    }
+                    else
+                    {
+                        //将子树参数表加入父树
+                        Tree.Variable.Table.Add(item);
+                    }
+                }
+
+                //合并节点。
+                var offsetx = hostnode.Meta.x - subtree.StartNode.Meta.x;
+                var offsety = hostnode.Meta.y - subtree.StartNode.Meta.y;
+
+                List<BTNode> added = new();
+                foreach (var item in subtree.AllNodes)
+                {
+                    if (item.Meta.index >= 0)
+                    {
+                        item.Meta.x += offsetx;
+                        item.Meta.y += offsety;
+                        //一定要更换GUID，防止冲突
+                        item.GUID = Guid.NewGuid().ToString();
+                        Tree.AddNode(item);
+                        added.Add(item);
+                    }
+                }
+
+                if (hostnode.TryGetFirstParent(out var parent))
+                {
+                    parent.RemoveChild(hostnode);
+                    parent.AddChild(subtree.StartNode);
+                }
+
+                Tree.RemoveNode(hostnode);
+
+                Tree.UpdateNodeIndexDepth();
+                IncrementChangeVersion("InlineSubtree");
+                ReloadView();
+
+                ChangeSelection(added);
+            }
+        }
     }
 }
