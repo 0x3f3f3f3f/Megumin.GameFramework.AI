@@ -118,6 +118,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             if (!string.IsNullOrEmpty(path))
             {
                 Debug.Log(path);
+
+                //要先删除原有资源才行，不然会导致资产不刷新，要重启编辑器才能刷新资源
+                AssetDatabase.DeleteAsset(path);
+                AssetDatabase.Refresh();
+
                 var treeAsset = ScriptableObject.CreateInstance<T>();
                 AssetDatabase.CreateAsset(treeAsset, path);
                 AssetDatabase.Refresh();
