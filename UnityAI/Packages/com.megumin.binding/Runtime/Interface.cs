@@ -68,5 +68,6 @@ namespace Megumin.Binding
         Get = 1 << 0,
         Set = 1 << 1,
         Both = Get | Set,
+        Method = 1 << 2,
     }
 }

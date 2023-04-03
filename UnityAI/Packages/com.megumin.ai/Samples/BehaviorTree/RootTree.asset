@@ -134,7 +134,7 @@ MonoBehaviour:
       Value: I am rootTree
     - Name: bindingPath
       Type: System.String
-      Value: 
+      Value: UnityEngine.GameObject/tag
   - Name: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:

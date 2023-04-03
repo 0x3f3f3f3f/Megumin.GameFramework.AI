@@ -370,6 +370,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             SharedMeta[item.Key.Name] = meta;
                         }
                     }
+
+                    if (item.Value is IBindingParseable parseable)
+                    {
+                        tree.AlBindingParseable.Add(parseable);
+                    }
                 }
             }
 

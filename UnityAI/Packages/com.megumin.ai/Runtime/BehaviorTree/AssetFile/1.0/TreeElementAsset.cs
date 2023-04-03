@@ -186,9 +186,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             propertyInfo.SetValue(instance, variable);
                         }
 
-                        if (variable is IBindable bindable)
+                        if (variable is IBindingParseable bindingParseable)
                         {
-                            instance.Tree.AllElementBindable.Add(bindable);
+                            instance.Tree.AlBindingParseable.Add(bindingParseable);
                         }
                     }
                     catch (Exception e)

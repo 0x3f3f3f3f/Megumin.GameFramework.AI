@@ -65,7 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             using var profiler = parseAllBindableMarker.Auto();
             Variable.ParseBinding(agent, force);
 
-            foreach (var item in AllElementBindable)
+            foreach (var item in AlBindingParseable)
             {
                 if (item is IBindingParseable parseable)
                 {
