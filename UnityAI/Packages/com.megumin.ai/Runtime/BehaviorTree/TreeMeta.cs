@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Serializable]
-    public class TreeMeta
+    public class TreeMeta : IAIMeta
     {
         public TreeMeta Clone()
         {

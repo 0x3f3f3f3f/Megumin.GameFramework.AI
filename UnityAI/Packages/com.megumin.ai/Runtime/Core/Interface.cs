@@ -56,6 +56,11 @@ namespace Megumin.GameFramework.AI
     {
         object TreeAsset { get; }
     }
+
+    public interface IAIMeta
+    {
+
+    }
 }
 
 

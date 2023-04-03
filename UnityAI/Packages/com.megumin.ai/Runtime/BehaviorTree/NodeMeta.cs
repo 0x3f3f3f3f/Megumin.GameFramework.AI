@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Serializable]
-    public class NodeMeta
+    public class NodeMeta: IAIMeta
     {
         public float x = 100;
         public float y = 100;

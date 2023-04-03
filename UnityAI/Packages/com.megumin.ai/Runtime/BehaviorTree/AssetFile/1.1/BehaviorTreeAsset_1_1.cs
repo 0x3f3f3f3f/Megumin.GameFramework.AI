@@ -33,6 +33,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return false;
             }
 
+            SharedMeta.Clear();
+
             if (!Guid.TryParse(tree.GUID, out var _))
             {
                 tree.GUID = Guid.NewGuid().ToString();
@@ -164,6 +166,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         public UnityEngine.Object AssetObject => this;
+
+        public Dictionary<string, object> SharedMeta { get; } = new();
 
         public BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
         {
@@ -298,10 +302,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         Debug.LogError($"意外错误，没有引用名字");
                         continue;
                     }
+
                     if (item.TryCreateInstance(out var instance))
                     {
-                        finder.RefDic.Add(item.Name, instance);
-                        treeObjCache.Add(item, instance);
+                        if (initOption.SharedMeta && instance is IAIMeta)
+                        {
+                            if (SharedMeta.TryGetValue(item.Name, out var shared))
+                            {
+                                //使用共享的meta实例。
+                                finder.RefDic.Add(item.Name, shared);
+                            }
+                            else
+                            {
+                                finder.RefDic.Add(item.Name, instance);
+                                treeObjCache.Add(item, instance);
+                            }
+                        }
+                        else
+                        {
+                            finder.RefDic.Add(item.Name, instance);
+                            treeObjCache.Add(item, instance);
+                        }
                     }
                 }
             }
@@ -336,6 +357,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (item.Value is BehaviorTreeElement element)
                     {
                         element.Tree = tree;
+                    }
+
+                    if (item.Value is IAIMeta meta)
+                    {
+                        if (SharedMeta.ContainsKey(item.Key.Name) == false)
+                        {
+                            SharedMeta[item.Key.Name] = meta;
+                        }
                     }
                 }
             }
