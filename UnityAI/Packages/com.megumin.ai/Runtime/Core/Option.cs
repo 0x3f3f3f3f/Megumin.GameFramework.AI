@@ -52,6 +52,9 @@ namespace Megumin.GameFramework.AI
     {
         public bool AsyncInit = true;
         public bool TaskInit = true;
+        /// <summary>
+        /// 运行时通常不会修改meta信息，也不会修改树结构。可以考虑共享meta。
+        /// </summary>
         public bool SharedMeta = true;
         public bool LazyInitSubtree = false;
     }
