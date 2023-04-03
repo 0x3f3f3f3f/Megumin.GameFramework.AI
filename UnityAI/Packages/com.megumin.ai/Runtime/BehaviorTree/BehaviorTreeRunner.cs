@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using Codice.Client.Common;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
@@ -54,8 +56,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void EnableTree()
+        /// <summary>
+        /// 由于可能是异步，防止多次实例化
+        /// </summary>
+        bool isIniting = false;
+        public async void EnableTree()
         {
+            if (isIniting)
+            {
+                return;
+            }
+            isIniting = true;
+
             if (BehaviourTree == null && BehaviorTreeAsset)
             {
                 RefFinder refFinder = null;
@@ -78,8 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                 }
                 Override?.ParseBinding(gameObject, true);
-
-                BehaviourTree = BehaviorTreeAsset.Instantiate(InitOption, refFinder);
+                BehaviourTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.BindAgent(gameObject);
             }
@@ -89,6 +100,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviorTreeManager.Instance.AddTree(BehaviourTree, TickMode);
                 BehaviourTree.IsRunning = true;
             }
+
+            isIniting = false;
         }
 
         public void DisableTree()

@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BTNode StartNode { get; set; }
         public IBehaviorTreeAsset Asset { get; internal set; }
 
-        
+
         public InitOption InitOption { get; set; }
         public RefFinder RefFinder { get; set; }
 

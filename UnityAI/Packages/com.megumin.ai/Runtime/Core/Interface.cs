@@ -55,6 +55,7 @@ namespace Megumin.GameFramework.AI
     public interface ISubtreeTreeElement : ITreeElement
     {
         object TreeAsset { get; }
+        void BindAgent(object agent);
     }
 
     public interface IAIMeta

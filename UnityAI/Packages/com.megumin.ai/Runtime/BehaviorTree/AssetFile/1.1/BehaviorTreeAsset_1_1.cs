@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
 using Megumin.Serialization;
@@ -371,6 +372,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             tree.Asset = this;
             tree.UpdateNodeIndexDepth();
+
+            if (initOption.LazyInitSubtree)
+            {
+
+            }
+            else
+            {
+                foreach (var item in tree.AllNodes)
+                {
+                    if (item is SubTree subtreeNode)
+                    {
+                        subtreeNode.InstantiateSubTree();
+                    }
+                }
+            }
+
             return tree;
         }
 

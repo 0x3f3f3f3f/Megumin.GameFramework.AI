@@ -19,11 +19,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (BehaviourTree == null)
             {
-                BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
+                InstantiateSubTree();
                 BehaviourTree.BindAgent(Tree.Agent);
             }
 
             return BehaviourTree.TickSubTree(from);
+        }
+
+        public BehaviorTree InstantiateSubTree()
+        {
+            BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
+            return BehaviourTree;
         }
 
         public string GetDetail()
@@ -65,5 +71,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
         object ISubtreeTreeElement.TreeAsset => BehaviorTreeAsset;
+
+        public void BindAgent(object agent)
+        {
+            BehaviourTree?.BindAgent(agent);
+        }
     }
 }

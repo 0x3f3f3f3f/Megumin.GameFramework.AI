@@ -25,6 +25,34 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         BehaviorTree Instantiate(InitOption initOption, IRefFinder overrideRef = null);
         bool SaveTree(BehaviorTree tree);
     }
+
+    public static class BehaviorTreeAssetExtension
+    {
+        public static Task<BehaviorTree> InstantiateAsync(this IBehaviorTreeAsset treeAsset,
+                                                          InitOption initOption,
+                                                          IRefFinder refFinder = null)
+        {
+            if (treeAsset == null || initOption == null)
+            {
+                return Task.FromResult<BehaviorTree>(null);
+            }
+
+            if (initOption.AsyncTaskInit)
+            {
+                return Task.Run(() =>
+                {
+                    var tree = treeAsset.Instantiate(initOption, refFinder);
+                    return tree;
+                });
+            }
+            else
+            {
+                var tree = treeAsset.Instantiate(initOption, refFinder);
+                return Task.FromResult(tree);
+            }
+        }
+
+    }
 }
 
 

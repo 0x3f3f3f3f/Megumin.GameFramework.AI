@@ -50,12 +50,18 @@ namespace Megumin.GameFramework.AI
     [Serializable]
     public class InitOption
     {
-        public bool AsyncInit = true;
-        public bool TaskInit = true;
+        /// <summary>
+        /// 使用多线程异步实例化，防止阻塞主线程。
+        /// 缺点是不会在当前帧立刻完成并执行行为树。
+        /// </summary>
+        public bool AsyncTaskInit = true;
         /// <summary>
         /// 运行时通常不会修改meta信息，也不会修改树结构。可以考虑共享meta。
         /// </summary>
         public bool SharedMeta = true;
+        /// <summary>
+        /// 延迟实例化子树，推迟到子树节点运行时实例化。
+        /// </summary>
         public bool LazyInitSubtree = false;
     }
 }
