@@ -14,7 +14,7 @@
 
 - [ ] 笔记节点StickyNote
 - [ ] 组合Group
-- [ ] 子树
+- [x] 子树
 
 + [x] 增加/删除节点
 + [x] 连接/断开节点
@@ -66,7 +66,7 @@
 - AsyncBindAgent  
   使用多线程异步绑定，解析binding对象。  
 - SharedMeta
-  同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点位置等运行时无关信息。  
+  同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  
 - LazyInitSubtree
   延迟实例化子树，推迟到子树节点运行时实例化。  
   默认是false。
@@ -87,12 +87,24 @@
 ---
 ---
 # 实现细节
+
 ## 架构图
+
 ```mermaid
-graph RL
-Log --> ActionTaskNode--> BTTaskNode-->BTNode
-Loop--> OneChildNode--> BTParentNode-->BTNode
-Selector--> CompositeNode--> BTParentNode
+graph BT
+BTNode --> BehaviorTreeElement
+Log --> ActionTaskNode --> BTTaskNode-->BTNode
+Wait --> ActionTaskNode
+Selector --> CompositeNode --> BTParentNode
+Sequence --> CompositeNode
+Repeater --> OneChildNode --> BTParentNode-->BTNode
+SimpleParallel --> TwoChildNode --> BTParentNode
+
+BTDecorator --> BehaviorTreeElement
+CheckEvent ---> ConditionDecorator --> BTDecorator
+KeyCodeEvent ---> ConditionDecorator
+Inverter ----> BTDecorator
+Loop ----> BTDecorator
 ```
 
 ## 节点函数的执行顺序
