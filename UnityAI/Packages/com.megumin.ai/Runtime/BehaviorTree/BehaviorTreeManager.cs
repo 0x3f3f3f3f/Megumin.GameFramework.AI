@@ -21,14 +21,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTreeManager : MonoBehaviour
     {
         private static BehaviorTreeManager instance;
-
+        const string ManagerName = "[BehaviorTreeManager]";
         public static BehaviorTreeManager Instance
         {
             get
             {
                 if (!instance && !IsApplicationQuiting && Application.isPlaying)
                 {
-                    instance = new GameObject("BehaviorTreeManager").AddComponent<BehaviorTreeManager>();
+                    instance = GameObject.Find(ManagerName)?.GetComponent<BehaviorTreeManager>();
+                    if (!instance)
+                    {
+                        instance = new GameObject(ManagerName).AddComponent<BehaviorTreeManager>();
+                    }
                 }
                 return instance;
             }
@@ -42,7 +46,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 //被错误创建
                 Debug.LogError("BehaviorTreeManager 已经存在单例，这个实例被自动销毁。");
-                if (name == nameof(BehaviorTreeManager))
+                if (name == ManagerName)
                 {
                     DestroyImmediate(gameObject);
                 }

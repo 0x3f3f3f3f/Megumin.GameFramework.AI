@@ -58,8 +58,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //}
         }
 
+        static readonly Unity.Profiling.ProfilerMarker parseAllBindableMarker = new("ParseAllBindable");
+
         public void ParseAllBindable(object agent, bool force = false)
         {
+            using var profiler = parseAllBindableMarker.Auto();
             Variable.ParseBinding(agent, force);
 
             foreach (var item in AllElementBindable)

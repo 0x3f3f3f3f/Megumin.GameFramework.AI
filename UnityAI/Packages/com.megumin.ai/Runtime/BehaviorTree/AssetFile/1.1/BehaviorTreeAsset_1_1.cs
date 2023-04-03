@@ -170,8 +170,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public Dictionary<string, object> SharedMeta { get; } = new();
 
+        static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new("Instantiate");
         public BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
         {
+            using var profiler = instantiateMarker.Auto();
+
             if (initOption == null)
             {
                 return null;
