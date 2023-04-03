@@ -215,7 +215,7 @@ namespace Megumin.Reflection
                 return false;
             }
 
-            return true;
+            return field.IsPublic;
         }
     }
 }
