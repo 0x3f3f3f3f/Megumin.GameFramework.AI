@@ -29,13 +29,30 @@ namespace Megumin.GameFramework.AI
     }
 
     /// <summary>
-    /// TODO,使用负数
+    /// 执行失败的错误码
     /// </summary>
-    [Flags]
     public enum FailedCode
     {
+        None = 0,
+        Abort = -1,
+        Error = -2,
+        Test0 = -3,
+    }
+
+    /// <summary>
+    /// 按位枚举使用负数，不能按位取消，取消时会取消掉符号位。
+    /// </summary>
+    [Flags]
+    public enum TestFailedCode2 : uint
+    {
         None,
-        Abort = 1 << 0,
+        A = 1 << 0,
+        B = 1 << 1,
+        C = 1 << 2,
+        D = 1 << 3,
+        Test0 = 1 << 4,
+        Test1 = 0x80000000,
+        Test2 = 0xFFFFFFFF,
     }
 
     public interface IBuildContextualMenuable
