@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +25,7 @@ namespace Megumin.Reflection
 
 #if UNITY_5_3_OR_NEWER
 
-        static readonly Dictionary<string, Type> hotComponentType = new();
+        static readonly ConcurrentDictionary<string, Type> hotComponentType = new();
         public static Type GetComponentType(string typeFullName)
         {
             TryGetComponentType(typeFullName, out var type);
@@ -55,7 +56,7 @@ namespace Megumin.Reflection
             }
         }
 
-        static readonly Dictionary<string, Type> hotUnityObjectType = new();
+        static readonly ConcurrentDictionary<string, Type> hotUnityObjectType = new();
         public static Type GetUnityObjectType(string typeFullName)
         {
             TryGetUnityObjectType(typeFullName, out var type);
@@ -89,7 +90,10 @@ namespace Megumin.Reflection
 
 #endif
 
-        static readonly Dictionary<string, Type> hotType = new();
+        /// <summary>
+        /// 使用ConcurrentDictionary 解决多线程访问问题
+        /// </summary>
+        static readonly ConcurrentDictionary<string, Type> hotType = new();
         public static Type GetType(string typeFullName)
         {
             TryGetType(typeFullName, out var type);
