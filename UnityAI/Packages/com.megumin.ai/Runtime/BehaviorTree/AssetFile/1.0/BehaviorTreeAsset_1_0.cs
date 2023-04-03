@@ -294,6 +294,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             tree.Asset = this;
+            tree.UpdateNodeIndexDepth();
             return tree;
         }
 

@@ -329,9 +329,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         internal void RefreshNodeIndex()
         {
-            if (Node?.Meta != null)
+            if (Node != null)
             {
-                Index.text = Node.Meta.index.ToString();
+                Index.text = Node.Index.ToString();
             }
         }
 

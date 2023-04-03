@@ -165,31 +165,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
     }
-
-    public partial class BTNode
-    {
-        [Obsolete("test", true)]
-        public async ValueTask<bool> Extest()
-        {
-            var state = Status.Running;
-            while (state != Status.Running)
-            {
-                //FrontDerators();
-                Enter();
-                var res = await onticktest();
-                //var res2 = Exit(default);
-                //res2 = BackDerators(res2);
-            }
-
-            return true;
-        }
-
-        [Obsolete("test", true)]
-        ValueTask<bool> onticktest()
-        {
-            return new ValueTask<bool>(true);
-        }
-    }
 }
 
 

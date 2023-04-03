@@ -45,7 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </remarks>
         public Status Tick(BTNode from)
         {
-            Tree.LastTickNodeIndex = Meta?.index ?? -1;
+            Tree.LastTickNodeIndex = Index;
             Tree.LastTick = this;
 
             //无论Enabled 是不是true，都要先进入Tick函数再说，不能在外部判断false然后跳过

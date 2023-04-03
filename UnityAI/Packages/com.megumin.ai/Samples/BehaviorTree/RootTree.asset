@@ -144,12 +144,6 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 218
-    - Name: index
-      Type: System.Int32
-      Value: 4
-    - Name: depth
-      Type: System.Int32
-      Value: 1
     - Name: Name
       Type: System.String
       Value: 
@@ -178,12 +172,6 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 218
-    - Name: index
-      Type: System.Int32
-      Value: 3
-    - Name: depth
-      Type: System.Int32
-      Value: 1
     - Name: Name
       Type: System.String
       Value: 
@@ -240,12 +228,6 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 66
-    - Name: index
-      Type: System.Int32
-      Value: 0
-    - Name: depth
-      Type: System.Int32
-      Value: 0
   - Name: 541563ce-f18b-4a67-9918-f19d8a61aed8.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
@@ -259,12 +241,6 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 218
-    - Name: index
-      Type: System.Int32
-      Value: 1
-    - Name: depth
-      Type: System.Int32
-      Value: 1
   - Name: 541563ce-f18b-4a67-9918-f19d8a61aed8.waitTime
     Type: Megumin.Binding.RefVar`1[[System.Single]]
     Member:
@@ -284,12 +260,6 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 218
-    - Name: index
-      Type: System.Int32
-      Value: 2
-    - Name: depth
-      Type: System.Int32
-      Value: 1
     - Name: Name
       Type: System.String
       Value: 

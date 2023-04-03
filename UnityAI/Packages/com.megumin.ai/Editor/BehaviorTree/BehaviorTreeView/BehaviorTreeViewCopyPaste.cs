@@ -153,7 +153,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 List<BTNode> added = new();
                 foreach (var item in subtree.AllNodes)
                 {
-                    if (item.Meta.index >= 0)
+                    if (item.Index >= 0)
                     {
                         item.Meta.x += offsetx;
                         item.Meta.y += offsety;
