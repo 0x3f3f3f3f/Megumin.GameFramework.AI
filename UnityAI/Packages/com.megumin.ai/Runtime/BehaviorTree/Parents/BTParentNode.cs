@@ -35,26 +35,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
 
-        public bool AddChild(BTNode node)
-        {
-            if (ContainsChild(node))
-            {
-                return false;
-            }
-            children.Add(node);
-            return true;
-        }
-
-        public bool RemoveChild(BTNode node)
-        {
-            if (ContainsChild(node))
-            {
-                children.RemoveAll(elem => elem.GUID == node.GUID);
-                return true;
-            }
-            return false;
-        }
-
         /// <summary>
         /// 测试一个节点是不是自己的子代
         /// </summary>

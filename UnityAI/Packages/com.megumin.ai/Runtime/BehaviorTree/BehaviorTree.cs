@@ -20,11 +20,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BTNode StartNode { get; set; }
         public IBehaviorTreeAsset Asset { get; internal set; }
 
-        [Space]
-        [SerializeReference]
-        public List<BTNode> AllNodes = new();
-
-        public Dictionary<string, BTNode> GuidDic { get; } = new();
+        
         public InitOption InitOption { get; set; }
         public RefFinder RefFinder { get; set; }
 
@@ -154,58 +150,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return StartNode.Tick(from);
         }
 
-        public BTNode AddNode(BTNode node)
-        {
-            node.Tree = this;
-            AllNodes.Add(node);
-            GuidDic[node.GUID] = node;
-            return node;
-        }
-
-        public bool RemoveNode(BTNode node)
-        {
-            if (node == null)
-            {
-                return false;
-            }
-
-            if (node.Tree == this)
-            {
-                node.Tree = null;
-            }
-
-            GuidDic.Remove(node.GUID);
-            return AllNodes.Remove(node);
-        }
-
-
-        public T AddNode<T>() where T : BTNode, new()
-        {
-            var node = new T();
-            node.GUID = Guid.NewGuid().ToString();
-            node.InstanceID = Guid.NewGuid().ToString();
-            AddNode(node);
-            return node;
-        }
-
-        internal BTNode AddNewNode(Type type)
-        {
-            if (type.IsSubclassOf(typeof(BTNode)))
-            {
-                var node = Activator.CreateInstance(type) as BTNode;
-                if (node != null)
-                {
-                    node.GUID = Guid.NewGuid().ToString();
-                    AddNode(node);
-                }
-                return node;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public BTNode GetNodeByGuid(string guid)
         {
             if (GuidDic.TryGetValue(guid, out var node))
@@ -263,40 +207,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return false;
-        }
-
-        public void UpdateNodeIndexDepth()
-        {
-            foreach (var item in AllNodes)
-            {
-                item.Index = -1;
-                item.Depth = -1;
-            }
-
-            var index = 0;
-            void SetNodeIndex(BTNode node, int depth = 0)
-            {
-                if (node == null)
-                {
-                    return;
-                }
-
-                node.Index = index;
-                node.Depth = depth;
-
-                index++;
-
-                if (node is BTParentNode parentNode)
-                {
-                    var nextDepth = depth + 1;
-                    foreach (var child in parentNode.children)
-                    {
-                        SetNodeIndex(child, nextDepth);
-                    }
-                }
-            }
-
-            SetNodeIndex(StartNode);
         }
 
         public bool TryGetFirstParent(BTNode node, out BTParentNode parentNode)

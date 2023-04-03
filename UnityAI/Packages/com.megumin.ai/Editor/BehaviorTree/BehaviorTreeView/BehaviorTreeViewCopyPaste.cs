@@ -167,8 +167,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //直接使用Tree 获取子树父节点，有时候Undo/Redo 后节点找不到树。
                 if (Tree.TryGetFirstParent(hostnode, out var parent))
                 {
-                    parent.RemoveChild(hostnode);
-                    parent.AddChild(subtree.StartNode);
+                    Tree.Disconnect(parent, hostnode);
+                    Tree.Connect(parent, subtree.StartNode);
                 }
 
                 Tree.RemoveNode(hostnode);
@@ -214,8 +214,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Tree.AddNode(subTreeNode);
                 if (Tree.TryGetFirstParent(exportNode, out var parent))
                 {
-                    parent.AddChild(subTreeNode);
-                    parent.RemoveChild(exportNode);
+                    Tree.Disconnect(parent, exportNode);
+                    Tree.Connect(parent, subTreeNode);
                 }
 
                 void ChangeTree(BTNode node)
