@@ -259,6 +259,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             Agent = agent;
             ParseAllBindable(agent);
+            foreach (var item in AllNodes)
+            {
+                if (item is IBindAgentable bindAgentable)
+                {
+                    bindAgentable.BindAgent(agent);
+                }
+            }
         }
 
         /// <summary>
