@@ -92,7 +92,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 Override?.ParseBinding(gameObject, true);
                 BehaviourTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
                 BehaviourTree.RunOption = RunOption;
-                BehaviourTree.BindAgent(gameObject);
+                BehaviourTree.InstanceName = gameObject.name;
+                if (InitOption.AsyncBindAgent)
+                {
+                    await BehaviourTree.BindAgentAsync(gameObject);
+                }
+                else
+                {
+                    BehaviourTree.BindAgent(gameObject);
+                }
             }
 
             if (BehaviourTree != null)

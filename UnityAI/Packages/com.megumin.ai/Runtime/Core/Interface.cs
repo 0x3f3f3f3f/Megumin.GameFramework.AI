@@ -52,15 +52,27 @@ namespace Megumin.GameFramework.AI
         string GUID { get; }
     }
 
-    public interface ISubtreeTreeElement : ITreeElement
+    public interface IBindAgentable
+    {
+        void BindAgent(object agent);
+    }
+
+    public interface ISubtreeTreeElement : ITreeElement, IBindAgentable
     {
         object TreeAsset { get; }
-        void BindAgent(object agent);
     }
 
     public interface IAIMeta
     {
 
+    }
+
+    public static class AIExtension_2B7BA837510B4CB4B28E3191F6A1D13C
+    {
+        public static Task BindAgentAsync(this IBindAgentable bindAgentable, object agent)
+        {
+            return Task.Run(() => bindAgentable.BindAgent(agent));
+        }
     }
 }
 
