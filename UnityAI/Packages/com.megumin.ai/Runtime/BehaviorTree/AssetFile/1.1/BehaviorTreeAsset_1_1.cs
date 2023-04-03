@@ -5,6 +5,7 @@ using Megumin.Binding;
 using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -21,7 +22,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public List<ObjectData> variables;
         public List<ObjectData> nodes;
         public List<ObjectData> decorators;
-        public List<ObjectData> treeElements;
+        [FormerlySerializedAs("treeElements")]
+        public List<ObjectData> refObjs;
 
 
         public bool SaveTree(BehaviorTree tree)
@@ -117,19 +119,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 decoratorDatas.Sort();
                 decorators = decoratorDatas;
 
-                List<ObjectData> treeElementData = new();
+                List<ObjectData> refObjsDatas = new();
                 while (needSerialization.Count > 0)
                 {
                     var item = needSerialization.Pop();
                     ObjectData data = new ObjectData();
                     if (data.TrySerialize(item.name, item.value, needSerialization, objRefs, cacheRef, GetSerializeMembers))
                     {
-                        treeElementData.Add(data);
+                        refObjsDatas.Add(data);
                     }
                 }
 
-                treeElementData.Sort();
-                treeElements = treeElementData;
+                refObjsDatas.Sort();
+                refObjs = refObjsDatas;
             }
 
 
@@ -287,9 +289,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            if (treeElements != null)
+            if (refObjs != null)
             {
-                foreach (var item in treeElements)
+                foreach (var item in refObjs)
                 {
                     if (string.IsNullOrEmpty(item.Name))
                     {
