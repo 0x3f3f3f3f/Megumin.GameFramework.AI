@@ -85,14 +85,14 @@ BehaviorTreeView .debug {
 }
 
 BehaviorTreeView .node.startNode {
-    border-left-width: 4px;
-    border-right-width: 4px;
-    border-top-width: 4px;
-    border-bottom-width: 4px;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 20px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 20px;
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 14px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 14px;
     border-left-color: rgba(245, 144, 20, 0.76);
     border-right-color: rgba(245, 144, 20, 0.76);
     border-top-color: rgba(245, 144, 20, 0.76);
