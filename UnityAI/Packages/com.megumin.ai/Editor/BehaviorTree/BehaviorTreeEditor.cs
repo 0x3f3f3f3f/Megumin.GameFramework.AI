@@ -115,6 +115,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// </remarks>
         public UnityEngine.Object CurrentAsset_AssetObject;
         public IBehaviorTreeAsset CurrentAsset { get; private set; }
+        public UnityObjectView DebugInstanceGameObject { get; private set; }
 
         [MenuItem("Megumin/BehaviorTreeEditor")]
         public static void ShowExample()
@@ -182,7 +183,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             return item;
                         }
 
-                        if (item.IsSameAsset(tree.Asset))
+                        if (item.IsDebugMode == false && item.IsSameAsset(tree.Asset))
                         {
                             Debug.Log($"找到匹配的已打开EditorWindow");
                             item.Focus();
@@ -282,6 +283,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.EditorWindow = this;
 
             CreateTopbar();
+            CreateBottomBar();
 
             //应用默认用户首选项
             foreach (var item in MySettingPrefs)
@@ -395,6 +397,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 UpdateHasUnsavedChanges();
             };
 
+            DebugInstanceGameObject = root.Q<UnityObjectView>("debugInstanceGameObject");
+
             var blackboardToggle = root.Q<ToolbarToggle>("blackboard");
             blackboardToggle.value = MySettingPrefs[1].value;
             blackboardToggle.RegisterValueChangedCallback(evt =>
@@ -427,6 +431,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
 
                 }, a => DropdownMenuAction.Status.Normal);
+        }
+
+
+
+        private void CreateBottomBar()
+        {
+            VisualElement root = rootVisualElement;
+            var bottomBar = root.Q<Toolbar>("bottomBar");
+            //DebugInstanceGameObject = bottomBar.Q<ObjectField>("debugInstanceGameObject");
+            //DebugInstanceGameObject.SetEnabled(false);
+
         }
 
         internal void SetSettingValueClass(UserSetting<bool> setting)

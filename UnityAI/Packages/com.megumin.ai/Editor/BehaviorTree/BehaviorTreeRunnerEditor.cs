@@ -23,6 +23,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (Application.isPlaying && behaviorTreeRunner.BehaviourTree != null)
                 {
                     var editor = BehaviorTreeEditor.GetWindow(behaviorTreeRunner.BehaviourTree);
+                    if (editor.CurrentAsset == null)
+                    {
+                        //todo 新窗口 退出playmode 销毁
+                        //editor.Close();
+                    }
+
                     editor.SetTreeAsset(behaviorTreeRunner.BehaviorTreeAsset);
                     editor.BeginDebug(behaviorTreeRunner.BehaviourTree);
                     editor.Focus();
