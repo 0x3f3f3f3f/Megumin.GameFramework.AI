@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -168,7 +169,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public UnityEngine.Object AssetObject => this;
 
-        public Dictionary<string, object> SharedMeta { get; } = new();
+        public ConcurrentDictionary<string, object> SharedMeta { get; } = new();
 
         static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new("Instantiate");
         public BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
