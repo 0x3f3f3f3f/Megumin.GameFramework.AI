@@ -10,6 +10,10 @@
     background-image: resource('d_p4_deletedlocal@2x');
 }
 
+.isAbort.failed.node.behaviorTreeNode #runningState {
+    background-image: resource('d_p4_deletedremote@2x');
+}
+
 .failed.edge #注释 {
     --edge-color: rgb(146, 133, 133);
     --edge-colorMode: defaultColor;

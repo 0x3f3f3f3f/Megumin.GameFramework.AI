@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI
         public const string running = nameof(running);
         public const string succeeded = nameof(succeeded);
         public const string failed = nameof(failed);
+        public const string isAbort = nameof(isAbort);
 
         public const string flowPoint = nameof(flowPoint);
 

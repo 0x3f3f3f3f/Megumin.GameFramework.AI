@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 是不是进入Enter OnTick Exit 域中
         /// </summary>
         public bool IsInnerRunning { get; set; }
+        public FailedCode FailedCode { get; set; } = FailedCode.None;
         /// <summary>
         /// 是不是检查过可执行
         /// </summary>
@@ -66,6 +67,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return State;
             }
 
+            FailedCode = FailedCode.None;
             //条件阶段
             if (Condition() == false)
             {
@@ -236,6 +238,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Status Abort(BTNode from)
         {
             State = Status.Failed;
+            FailedCode = FailedCode.Abort;
+
             OnAbort();
 
             if (IsExecutedEnter)

@@ -25,18 +25,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 RefreshDetail();
             }
+            else
+            {
+                var isAbort = Node.FailedCode == FailedCode.Abort;
+                this.SetToClassList(UssClassConst.isAbort, isAbort);
+            }
 
             if (lastTickState != Node.State)
             {
                 OnStateChange();
-
+                UpdateCompletedState();
                 if (isRunning)
                 {
                     ChangeToRunning();
-                }
-                else
-                {
-                    UpdateCompletedState();
                 }
             }
 
@@ -80,7 +81,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             hasChanged |= this.SetToClassList(UssClassConst.succeeded, isSucceeded);
             var isFailed = Node.State == Status.Failed;
             hasChanged |= this.SetToClassList(UssClassConst.failed, isFailed);
-
+            var isAbort = Node.FailedCode == FailedCode.Abort;
+            hasChanged |= this.SetToClassList(UssClassConst.isAbort, isAbort);
             //if (hasChanged)
             //{
             //    var res = this.Delay(3000);
