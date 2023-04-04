@@ -108,6 +108,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DebugInstance = null;
             rootVisualElement.SetToClassList(UssClassConst.debugMode, IsDebugMode);
             TreeView.SOTree.Tree = null;
+
+            if (DebugInstanceGameObject != null)
+            {
+                DebugInstanceGameObject.Value = null;
+            }
+
             TreeView.ReloadView(true);
             UpdateTitle();
         }
