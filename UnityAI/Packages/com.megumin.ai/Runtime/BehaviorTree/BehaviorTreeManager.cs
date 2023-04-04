@@ -146,7 +146,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         protected void TickTree(BehaviorTree tree)
         {
             Profiler.BeginSample(tree.InstanceName);
+            Profiler.BeginSample("TickTree");
             tree.Tick();
+            Profiler.EndSample();
             Profiler.EndSample();
         }
 
