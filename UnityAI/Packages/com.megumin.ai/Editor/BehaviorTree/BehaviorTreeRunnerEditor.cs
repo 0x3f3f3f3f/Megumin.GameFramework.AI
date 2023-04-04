@@ -20,9 +20,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             bool hasAsset = behaviorTreeRunner.BehaviorTreeAsset;
             if (GUILayout.Button("EditorTree"))
             {
-                if (hasAsset)
+                if (Application.isPlaying && behaviorTreeRunner.BehaviourTree != null)
                 {
-                    BehaviorTreeEditor.OnOpenAsset(behaviorTreeRunner.BehaviorTreeAsset);
+                    var editor = BehaviorTreeEditor.GetWindow(null,true);
+                    editor.SetTreeAsset(behaviorTreeRunner.BehaviorTreeAsset);
+                    editor.BeginDebug(behaviorTreeRunner.BehaviourTree);
+                }
+                else
+                {
+                    if (hasAsset)
+                    {
+                        BehaviorTreeEditor.OnOpenAsset(behaviorTreeRunner.BehaviorTreeAsset);
+                    }
                 }
             }
 

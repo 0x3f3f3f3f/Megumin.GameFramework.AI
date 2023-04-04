@@ -84,7 +84,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return false;
         }
 
-        public static bool OnOpenAsset(IBehaviorTreeAsset behaviorTreeAsset)
+        public static bool OnOpenAsset(IBehaviorTreeAsset behaviorTreeAsset, bool forceNewEditor = false)
         {
             if (behaviorTreeAsset is UnityEngine.Object obj && !obj)
             {
@@ -93,7 +93,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (behaviorTreeAsset != null)
             {
-                var wnd = GetWindow(behaviorTreeAsset.AssetObject);
+                var wnd = GetWindow(behaviorTreeAsset.AssetObject, forceNewEditor);
                 wnd.SelectTree(behaviorTreeAsset);
                 return true;
             }
@@ -122,10 +122,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var wnd = GetWindow();
         }
 
-        private static BehaviorTreeEditor GetWindow(UnityEngine.Object asset = null)
+        public static BehaviorTreeEditor GetWindow(UnityEngine.Object asset = null, bool forceNewEditor = false)
         {
             BehaviorTreeEditor[] array = Resources.FindObjectsOfTypeAll(typeof(BehaviorTreeEditor)) as BehaviorTreeEditor[];
-            if (array != null)
+            if (array != null && forceNewEditor == false)
             {
                 BehaviorTreeEditor emptyEditor = null;
                 foreach (var item in array)
@@ -457,11 +457,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 HotTypeAlias = true;
             }
 
-            var isChangeTree = CurrentAsset != behaviorTreeAsset
-                || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
-
-            this.CurrentAsset = behaviorTreeAsset;
-            this.CurrentAsset_AssetObject = behaviorTreeAsset?.AssetObject;
+            bool isChangeTree = SetTreeAsset(behaviorTreeAsset);
             if (EditorApplication.isPlaying)
             {
                 //debug 模式关联
@@ -488,6 +484,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     //TreeView.DelayFrameAll();
                 }
             }
+        }
+
+        public bool SetTreeAsset(IBehaviorTreeAsset behaviorTreeAsset)
+        {
+            var isChangeTree = CurrentAsset != behaviorTreeAsset
+                || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
+
+            this.CurrentAsset = behaviorTreeAsset;
+            this.CurrentAsset_AssetObject = behaviorTreeAsset?.AssetObject;
+            return isChangeTree;
         }
 
         public override void DiscardChanges()
