@@ -8,6 +8,7 @@ namespace Megumin.GameFramework.AI
 {
     public class UssClassConst
     {
+        public const string debugMode = nameof(debugMode);
         public const string isMute = nameof(isMute);
 
         public const string running = nameof(running);
@@ -28,6 +29,5 @@ namespace Megumin.GameFramework.AI
 
         public const string isDynamic = nameof(isDynamic);
         public const string isInvert = nameof(isInvert);
-
     }
 }

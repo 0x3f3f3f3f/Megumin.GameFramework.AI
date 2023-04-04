@@ -22,9 +22,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 if (Application.isPlaying && behaviorTreeRunner.BehaviourTree != null)
                 {
-                    var editor = BehaviorTreeEditor.GetWindow(null,true);
+                    var editor = BehaviorTreeEditor.GetWindow(behaviorTreeRunner.BehaviourTree);
                     editor.SetTreeAsset(behaviorTreeRunner.BehaviorTreeAsset);
                     editor.BeginDebug(behaviorTreeRunner.BehaviourTree);
+                    editor.Focus();
                 }
                 else
                 {

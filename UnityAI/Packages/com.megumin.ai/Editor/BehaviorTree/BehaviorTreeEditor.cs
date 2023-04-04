@@ -160,6 +160,51 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return wnd;
         }
 
+        public static BehaviorTreeEditor GetWindow(BehaviorTree tree,
+                                                   bool forceNewEditor = false)
+        {
+            BehaviorTreeEditor[] array = Resources.FindObjectsOfTypeAll(typeof(BehaviorTreeEditor)) as BehaviorTreeEditor[];
+            if (array != null && forceNewEditor == false)
+            {
+                BehaviorTreeEditor emptyEditor = null;
+                foreach (var item in array)
+                {
+                    if (item)
+                    {
+                        if (!emptyEditor && item.CurrentAsset == null && item.TreeView?.SOTree?.Tree == null)
+                        {
+                            //找到一个打开的空的Editor
+                            emptyEditor = item;
+                        }
+
+                        if (tree != null && item.DebugInstance == tree)
+                        {
+                            return item;
+                        }
+
+                        if (item.IsSameAsset(tree.Asset))
+                        {
+                            Debug.Log($"找到匹配的已打开EditorWindow");
+                            item.Focus();
+                            item.UpdateTitle();
+                            item.UpdateHasUnsavedChanges();
+                            return item;
+                        }
+                    }
+                }
+
+                if (emptyEditor)
+                {
+                    return emptyEditor;
+                }
+            }
+
+            BehaviorTreeEditor wnd = CreateWindow<BehaviorTreeEditor>(typeof(BehaviorTreeEditor), typeof(SceneView));
+
+            return wnd;
+        }
+
+
         public void UpdateTitle()
         {
             if (CurrentAsset != null)
@@ -488,12 +533,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public bool SetTreeAsset(IBehaviorTreeAsset behaviorTreeAsset)
         {
-            var isChangeTree = CurrentAsset != behaviorTreeAsset
-                || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
+            bool isChangeTree = IsSameAsset(behaviorTreeAsset);
 
             this.CurrentAsset = behaviorTreeAsset;
             this.CurrentAsset_AssetObject = behaviorTreeAsset?.AssetObject;
             return isChangeTree;
+        }
+
+        public bool IsSameAsset(IBehaviorTreeAsset behaviorTreeAsset)
+        {
+            return CurrentAsset != behaviorTreeAsset
+                            || CurrentAsset_AssetObject != behaviorTreeAsset?.AssetObject;
         }
 
         public override void DiscardChanges()

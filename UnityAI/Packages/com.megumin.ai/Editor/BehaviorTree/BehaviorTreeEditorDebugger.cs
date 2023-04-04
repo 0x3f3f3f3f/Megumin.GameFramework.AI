@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Megumin.GameFramework.AI.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -84,9 +85,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             IsDebugMode = true;
             DebugInstance = tree;
+            rootVisualElement.SetToClassList(UssClassConst.debugMode, IsDebugMode);
             var so = TreeView.CreateSOWrapperIfNull();
             so.Tree = tree;
             TreeView.ReloadView(true);
+            OnPostTick();
             UpdateTitle();
         }
 
@@ -94,6 +97,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             IsDebugMode = false;
             DebugInstance = null;
+            rootVisualElement.SetToClassList(UssClassConst.debugMode, IsDebugMode);
             TreeView.SOTree.Tree = null;
             TreeView.ReloadView(true);
             UpdateTitle();
