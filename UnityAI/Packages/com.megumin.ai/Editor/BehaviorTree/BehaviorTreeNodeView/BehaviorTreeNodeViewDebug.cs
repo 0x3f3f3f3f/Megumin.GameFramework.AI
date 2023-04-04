@@ -57,7 +57,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             foreach (var edge in InputPort.connections)
             {
-                edge.SetToClassList(UssClassConst.running, isRunning);
+                bool edgeRunning = false; 
+                if (edge.output.node is BehaviorTreeNodeView nodeView)
+                {
+                    if (nodeView.Node != null && nodeView.Node.State == Status.Running)
+                    {
+                        edgeRunning = true;
+                    }
+                }
+
+                edge.SetToClassList(UssClassConst.running, isRunning && edgeRunning);
                 //edge.schedule.Execute(() => { edge.SetToClassList(UssClassConst.running, isRunning); }).ExecuteLater(10);
             }
         }
