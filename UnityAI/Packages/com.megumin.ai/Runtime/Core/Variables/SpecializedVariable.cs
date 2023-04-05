@@ -36,6 +36,7 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_BoundsInt(),
             new Separator(),
             new VariableCreator_GameObject(),
+            new VariableCreator_Transform(),
             new VariableCreator_ScriptableObject(),
             new VariableCreator_Trigger(),
             new VariableCreator_Color(),
@@ -49,7 +50,7 @@ namespace Megumin.GameFramework.AI
         };
     }
 
-    public class RefVariable_bool : RefVar<bool> { }
+    public class RefVar_bool : RefVar<bool> { }
 
     public class VariableCreator_bool : VariableCreator
     {
@@ -57,11 +58,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_bool() { RefName = "Bool" };
+            return new RefVar_bool() { RefName = "Bool" };
         }
     }
 
-    public class RefVariable_int : RefVar<int> { }
+    public class RefVar_int : RefVar<int> { }
 
     public class VariableCreator_int : VariableCreator
     {
@@ -69,11 +70,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_int() { RefName = "Int" };
+            return new RefVar_int() { RefName = "Int" };
         }
     }
 
-    public class RefVariable_long : RefVar<long> { }
+    public class RefVar_long : RefVar<long> { }
 
     public class VariableCreator_long : VariableCreator
     {
@@ -81,11 +82,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_long() { RefName = "Long" };
+            return new RefVar_long() { RefName = "Long" };
         }
     }
 
-    public class RefVariable_string : RefVar<string> { }
+    public class RefVar_string : RefVar<string> { }
 
     public class VariableCreator_string : VariableCreator
     {
@@ -93,11 +94,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_string() { RefName = "String" };
+            return new RefVar_string() { RefName = "String" };
         }
     }
 
-    public class RefVariable_float : RefVar<float> { }
+    public class RefVar_float : RefVar<float> { }
 
     public class VariableCreator_float : VariableCreator
     {
@@ -105,11 +106,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_float() { RefName = "Float" };
+            return new RefVar_float() { RefName = "Float" };
         }
     }
 
-    public class RefVariable_double : RefVar<double> { }
+    public class RefVar_double : RefVar<double> { }
 
     public class VariableCreator_double : VariableCreator
     {
@@ -117,11 +118,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_double() { RefName = "Double" };
+            return new RefVar_double() { RefName = "Double" };
         }
     }
 
-    public class RefVariable_Vector2 : RefVar<Vector2> { }
+    public class RefVar_Vector2 : RefVar<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
     {
@@ -129,11 +130,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Vector2() { RefName = "Vector2" };
+            return new RefVar_Vector2() { RefName = "Vector2" };
         }
     }
 
-    public class RefVariable_Vector2Int : RefVar<Vector2Int> { }
+    public class RefVar_Vector2Int : RefVar<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
     {
@@ -141,11 +142,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Vector2Int() { RefName = "Vector2Int" };
+            return new RefVar_Vector2Int() { RefName = "Vector2Int" };
         }
     }
 
-    public class RefVariable_Vector3 : RefVar<Vector3> { }
+    public class RefVar_Vector3 : RefVar<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
     {
@@ -153,11 +154,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Vector3() { RefName = "Vector3" };
+            return new RefVar_Vector3() { RefName = "Vector3" };
         }
     }
 
-    public class RefVariable_Vector3Int : RefVar<Vector3Int> { }
+    public class RefVar_Vector3Int : RefVar<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
     {
@@ -165,11 +166,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Vector3Int() { RefName = "Vector3Int" };
+            return new RefVar_Vector3Int() { RefName = "Vector3Int" };
         }
     }
 
-    public class RefVariable_Vector4 : RefVar<Vector4> { }
+    public class RefVar_Vector4 : RefVar<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
     {
@@ -177,11 +178,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Vector4() { RefName = "Vector4" };
+            return new RefVar_Vector4() { RefName = "Vector4" };
         }
     }
 
-    public class RefVariable_Rect : RefVar<Rect> { }
+    public class RefVar_Rect : RefVar<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
     {
@@ -189,11 +190,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Rect() { RefName = "Rect" };
+            return new RefVar_Rect() { RefName = "Rect" };
         }
     }
 
-    public class RefVariable_RectInt : RefVar<RectInt> { }
+    public class RefVar_RectInt : RefVar<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
     {
@@ -201,11 +202,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_RectInt() { RefName = "RectInt" };
+            return new RefVar_RectInt() { RefName = "RectInt" };
         }
     }
 
-    public class RefVariable_Bounds : RefVar<Bounds> { }
+    public class RefVar_Bounds : RefVar<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
     {
@@ -213,11 +214,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Bounds() { RefName = "Bounds" };
+            return new RefVar_Bounds() { RefName = "Bounds" };
         }
     }
 
-    public class RefVariable_BoundsInt : RefVar<BoundsInt> { }
+    public class RefVar_BoundsInt : RefVar<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
     {
@@ -225,11 +226,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_BoundsInt() { RefName = "BoundsInt" };
+            return new RefVar_BoundsInt() { RefName = "BoundsInt" };
         }
     }
 
-    public class RefVariable_GameObject : RefVar<GameObject> { }
+    public class RefVar_GameObject : RefVar<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
     {
@@ -237,11 +238,23 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_GameObject() { RefName = "GameObject" };
+            return new RefVar_GameObject() { RefName = "GameObject" };
         }
     }
 
-    public class RefVariable_ScriptableObject : RefVar<ScriptableObject> { }
+    public class RefVar_Transform : RefVar<Transform> { }
+
+    public class VariableCreator_Transform : VariableCreator
+    {
+        public override string Name { get; set; } = "Transform";
+
+        public override IRefable Create()
+        {
+            return new RefVar_Transform() { RefName = "Transform" };
+        }
+    }
+
+    public class RefVar_ScriptableObject : RefVar<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
     {
@@ -249,11 +262,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_ScriptableObject() { RefName = "ScriptableObject" };
+            return new RefVar_ScriptableObject() { RefName = "ScriptableObject" };
         }
     }
 
-    public class RefVariable_Trigger : RefVar<Trigger> { }
+    public class RefVar_Trigger : RefVar<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
     {
@@ -261,11 +274,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Trigger() { RefName = "Trigger" };
+            return new RefVar_Trigger() { RefName = "Trigger" };
         }
     }
 
-    public class RefVariable_Color : RefVar<Color> { }
+    public class RefVar_Color : RefVar<Color> { }
 
     public class VariableCreator_Color : VariableCreator
     {
@@ -273,11 +286,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Color() { RefName = "Color" };
+            return new RefVar_Color() { RefName = "Color" };
         }
     }
 
-    public class RefVariable_Gradient : RefVar<Gradient> { }
+    public class RefVar_Gradient : RefVar<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
     {
@@ -285,11 +298,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Gradient() { RefName = "Gradient" };
+            return new RefVar_Gradient() { RefName = "Gradient" };
         }
     }
 
-    public class RefVariable_Texture2D : RefVar<Texture2D> { }
+    public class RefVar_Texture2D : RefVar<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
     {
@@ -297,11 +310,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Texture2D() { RefName = "Texture2D" };
+            return new RefVar_Texture2D() { RefName = "Texture2D" };
         }
     }
 
-    public class RefVariable_RenderTexture : RefVar<RenderTexture> { }
+    public class RefVar_RenderTexture : RefVar<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
     {
@@ -309,11 +322,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_RenderTexture() { RefName = "RenderTexture" };
+            return new RefVar_RenderTexture() { RefName = "RenderTexture" };
         }
     }
 
-    public class RefVariable_AnimationCurve : RefVar<AnimationCurve> { }
+    public class RefVar_AnimationCurve : RefVar<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
     {
@@ -321,11 +334,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_AnimationCurve() { RefName = "AnimationCurve" };
+            return new RefVar_AnimationCurve() { RefName = "AnimationCurve" };
         }
     }
 
-    public class RefVariable_Mesh : RefVar<Mesh> { }
+    public class RefVar_Mesh : RefVar<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
     {
@@ -333,11 +346,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Mesh() { RefName = "Mesh" };
+            return new RefVar_Mesh() { RefName = "Mesh" };
         }
     }
 
-    public class RefVariable_SkinnedMeshRenderer : RefVar<SkinnedMeshRenderer> { }
+    public class RefVar_SkinnedMeshRenderer : RefVar<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
     {
@@ -345,11 +358,11 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_SkinnedMeshRenderer() { RefName = "SkinnedMeshRenderer" };
+            return new RefVar_SkinnedMeshRenderer() { RefName = "SkinnedMeshRenderer" };
         }
     }
 
-    public class RefVariable_Material : RefVar<Material> { }
+    public class RefVar_Material : RefVar<Material> { }
 
     public class VariableCreator_Material : VariableCreator
     {
@@ -357,7 +370,7 @@ namespace Megumin.GameFramework.AI
 
         public override IRefable Create()
         {
-            return new RefVariable_Material() { RefName = "Material" };
+            return new RefVar_Material() { RefName = "Material" };
         }
     }
 }

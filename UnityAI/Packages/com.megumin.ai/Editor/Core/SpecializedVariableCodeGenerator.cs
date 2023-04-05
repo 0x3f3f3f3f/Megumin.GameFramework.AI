@@ -34,6 +34,7 @@ namespace Megumin.GameFramework.AI
             "BoundsInt",
             "----",
             "GameObject",
+            "Transform",
             "ScriptableObject",
             "Trigger",
             "Color",
@@ -50,7 +51,7 @@ namespace Megumin.GameFramework.AI
 
         const string template =
 @"
-public class RefVariable_$(type) : RefVariable<$(type)> { }
+public class RefVar_$(type) : RefVar<$(type)> { }
 
 public class VariableCreator_$(type) : VariableCreator
 {
@@ -58,7 +59,7 @@ public class VariableCreator_$(type) : VariableCreator
 
     public override IRefable Create()
     {
-        return new RefVariable_$(type)() { RefName = ""$(Type)"" };
+        return new RefVar_$(type)() { RefName = ""$(Type)"" };
     }
 }";
         [Editor]
@@ -67,6 +68,7 @@ public class VariableCreator_$(type) : VariableCreator
             CSCodeGenerator generator = new();
             generator.Push($"using System;");
             generator.Push($"using System.Collections.Generic;");
+            generator.Push($"using Megumin.Binding;");
             generator.Push($"using UnityEngine;");
             generator.PushBlankLines();
 

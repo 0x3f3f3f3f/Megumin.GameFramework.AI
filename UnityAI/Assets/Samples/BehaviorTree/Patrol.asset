@@ -17,7 +17,13 @@ MonoBehaviour:
   <StartNodeGUID>k__BackingField: 73f56cae-a6ca-4405-871a-4863e0c2e24d
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
-  variables: []
+  variables:
+  - Name: DesTarget
+    Type: Megumin.GameFramework.AI.RefVar_Transform
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: DesTarget
   nodes:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d
     Type: Megumin.GameFramework.AI.BehaviorTree.Sequence
@@ -39,7 +45,7 @@ MonoBehaviour:
     Member:
     - Name: Des
       Type: $ref
-      Value: 806a9c87-3e38-4c37-803a-d8675184030a.Des
+      Value: DesTarget
     - Name: Meta
       Type: $ref
       Value: 806a9c87-3e38-4c37-803a-d8675184030a.Meta
@@ -64,9 +70,15 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Decorators
+    - Name: InstanceID
+      Type: System.String
+      Value: 
     - Name: GUID
       Type: System.String
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
+    - Name: Enabled
+      Type: System.Boolean
+      Value: False
   decorators: []
   refObjs:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.children
@@ -96,9 +108,6 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
     Member: []
-  - Name: 806a9c87-3e38-4c37-803a-d8675184030a.Des
-    Type: Megumin.Binding.RefVar`1[[UnityEngine.Transform]]
-    Member: []
   - Name: 806a9c87-3e38-4c37-803a-d8675184030a.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -114,9 +123,27 @@ MonoBehaviour:
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Des
     Type: Megumin.Binding.RefVar`1[[UnityEngine.Transform]]
-    Member: []
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList
     Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject]]]]
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: $ref
+      Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList.value
+    Type: System.Collections.Generic.List`1[[UnityEngine.GameObject]]
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
@@ -127,3 +154,18 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 288.12
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 

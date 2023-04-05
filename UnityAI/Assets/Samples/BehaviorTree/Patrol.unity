@@ -542,8 +542,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: -0.46205, y: -0.003461374, z: 0.0018033695, w: -0.88684535}
-  m_LocalPosition: {x: -10.273888, y: 55.222626, z: -58.81978}
+  m_LocalRotation: {x: -0.32428846, y: 0.016171588, z: -0.0055460357, w: -0.94580376}
+  m_LocalPosition: {x: -0.35799602, y: 16.900436, z: -20.44168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -749,10 +749,19 @@ MonoBehaviour:
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
   Override:
-    Table: []
+    Table:
+    - rid: 4997520165436391442
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4997520165436391442
+      type: {class: RefVar_Transform, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {fileID: 894475673}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: DesTarget
 --- !u!1 &1477009386
 GameObject:
   m_ObjectHideFlags: 0
