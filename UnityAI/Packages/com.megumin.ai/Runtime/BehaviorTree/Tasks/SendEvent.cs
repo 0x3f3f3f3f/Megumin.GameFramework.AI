@@ -7,7 +7,7 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SendEvent : ActionTaskNode, IDetailable
+    public class SendEvent : BTActionNode, IDetailable
     {
         public RefVar<string> EventName;
         protected override Status OnTick(BTNode from)

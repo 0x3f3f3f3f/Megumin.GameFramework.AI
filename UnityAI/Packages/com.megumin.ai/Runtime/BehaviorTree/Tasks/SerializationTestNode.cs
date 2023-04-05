@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
-    public class SerializationTestNode : ActionTaskNode,
+    public class SerializationTestNode : BTActionNode,
         ISerializationCallbackReceiver<CollectionSerializationData>,
         ISerializationCallbackReceiver<string>
     {

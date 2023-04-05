@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void CreateStandardNodeMenu(List<SearchTreeEntry> tree)
         {
-            tree.AddTypesDerivedFrom<ActionTaskNode>("Action");
+            tree.AddTypesDerivedFrom<BTActionNode>("Action");
             tree.AddTypesDerivedFrom<CompositeNode>("Composite");
             tree.AddTypesDerivedFrom<OneChildNode>("OneChildNode");
             tree.AddTypesDerivedFrom<TwoChildNode>("TwoChildNode");

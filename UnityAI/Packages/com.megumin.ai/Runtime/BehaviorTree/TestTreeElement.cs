@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Tooltip("在控制台打印日志")]
     [Description("TestActionNode")]
     [Color(0.82f, 0.58f, 0.23f, 0.75f)]
-    internal class TestActionNode : ActionTaskNode, IAbortable, IBuildContextualMenuable
+    internal class TestActionNode : BTActionNode, IAbortable, IBuildContextualMenuable
     {
         [field: SerializeField]
         public AbortType AbortType { get; set; } = AbortType.LowerPriority;

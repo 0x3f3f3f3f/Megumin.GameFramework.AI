@@ -97,7 +97,6 @@
     height: 100%;
     width: initial;
     flex-grow: 1;
-    border: 0;
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
@@ -183,8 +182,12 @@
     position: absolute;
 }
 
-.ActionTaskNode #center #body {
+.BTActionNode #center #body {
     background-color: rgb(96, 45, 160);
+}
+
+.BTConditionNode #center #body {
+    background-color: rgb(221, 218, 49);
 }
 
 .BTParentNode #center #body {

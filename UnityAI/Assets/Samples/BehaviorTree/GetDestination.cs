@@ -5,7 +5,7 @@ using Megumin.GameFramework.AI;
 using Megumin.GameFramework.AI.BehaviorTree;
 using UnityEngine;
 
-public class GetDestination : ActionTaskNode
+public class GetDestination : BTActionNode
 {
     public RefVar<List<GameObject>> DestinationList;
     public RefVar<Transform> Des;

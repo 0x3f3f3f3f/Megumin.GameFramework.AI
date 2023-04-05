@@ -14,7 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [HelpURL("www.baidu.com")]
     [Description]
     [Tooltip("在控制台打印日志")]
-    public class Log : ActionTaskNode, IDetailable
+    public class Log : BTActionNode, IDetailable
     {
         int count = 0;
         public float waitTime = 0.15f;

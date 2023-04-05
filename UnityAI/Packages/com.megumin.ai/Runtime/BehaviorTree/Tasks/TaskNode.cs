@@ -13,7 +13,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     }
 
     [Serializable]
-    public class ActionTaskNode : BTTaskNode
+    public class BTActionNode : BTTaskNode
     {
 
     }
@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 使用条件装饰器代替条件任务节点
     /// </summary>
     [Serializable]
-    public class BTConditionTaskNode : BTTaskNode
+    public class BTConditionNode : BTTaskNode
     {
         protected sealed override Status OnTick(BTNode from)
         {

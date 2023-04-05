@@ -207,7 +207,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 outputContainer.Add(OutputPort);
             }
 
-            outputContainer.SetToClassList("unDisplay", node is ActionTaskNode);
+            outputContainer.SetToClassList("unDisplay", node is BTActionNode);
         }
 
         /// <summary>
@@ -280,20 +280,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         void UpdateNodeType()
         {
-            RemoveFromClassList(nameof(ActionTaskNode));
-            RemoveFromClassList(nameof(BTParentNode));
-
-            switch (SONode?.Node)
-            {
-                case ActionTaskNode _:
-                    AddToClassList(nameof(ActionTaskNode));
-                    break;
-                case BTParentNode _:
-                    AddToClassList(nameof(BTParentNode));
-                    break;
-                default:
-                    break;
-            }
+            this.SetToClassList(nameof(BTActionNode), Node is BTActionNode);
+            this.SetToClassList(nameof(BTParentNode), Node is BTParentNode);
+            this.SetToClassList(nameof(BTConditionNode), Node is BTConditionNode);
         }
 
         internal void RefreshDetail()

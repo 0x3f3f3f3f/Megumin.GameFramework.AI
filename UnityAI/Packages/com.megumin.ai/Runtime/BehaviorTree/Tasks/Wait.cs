@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Icon("ICONS/sg_graph_icon.png")]
-    public class Wait : ActionTaskNode, IDetailable
+    public class Wait : BTActionNode, IDetailable
     {
         public RefVar<float> waitTime = 5.0f;
 
