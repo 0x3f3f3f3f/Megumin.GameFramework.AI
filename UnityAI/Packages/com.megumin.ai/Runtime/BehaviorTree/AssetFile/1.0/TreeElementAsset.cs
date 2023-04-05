@@ -188,7 +188,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                         if (variable is IBindingParseable bindingParseable)
                         {
-                            instance.Tree.AlBindingParseable.Add(bindingParseable);
+                            instance.Tree.AllBindingParseable.Add(bindingParseable);
+                        }
+
+                        if (variable is IBindAgentable bindAgentable)
+                        {
+                            instance.Tree.AllBindAgentable.Add(bindAgentable);
                         }
                     }
                     catch (Exception e)

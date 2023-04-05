@@ -11,7 +11,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 序列化架构设计缺陷，不能实现序列化 <![CDATA[List<RefVar<T>>]]> 类型
     /// </summary>
-    public partial class BehaviorTreeAsset_1_0 : ScriptableObject//, ISerializationCallbackReceiver
+    [Obsolete]
+    public partial class BehaviorTreeAsset_1_0 : ScriptableObject, IBehaviorTreeAsset
     {
         public string Version = new Version(1, 0, 0).ToString();
         [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
@@ -22,6 +23,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string Comment = "load2";
         [field: SerializeField]
         public string StartNodeGUID { get; set; } = "";
+        public UnityEngine.Object AssetObject => this;
 
         public List<VariableSerializationData> VariableTable = new();
         public List<NodeAsset> Nodes = new();
@@ -308,10 +310,5 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             //this.LogFuncName();
         }
-    }
-
-    public partial class BehaviorTreeAsset_1_0 : IBehaviorTreeAsset
-    {
-        public UnityEngine.Object AssetObject => this;
     }
 }

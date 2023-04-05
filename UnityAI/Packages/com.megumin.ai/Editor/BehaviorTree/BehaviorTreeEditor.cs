@@ -337,9 +337,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var saveAs = root.Q<ToolbarMenu>("saveAs");
             saveAs.menu.AppendAction("Save as Json", SaveTreeAsJson, a => DropdownMenuAction.Status.Normal);
-            saveAs.menu.AppendAction("Save as BehaviorTreeAsset_1_0_0 [Obsolete]",
-                                     a => CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_0>(),
-                                     a => DropdownMenuAction.Status.Normal);
             saveAs.menu.AppendAction("Save as BehaviorTreeAsset_1_1_0",
                                      a => CreateScriptObjectTreeAssset<BehaviorTreeAsset_1_1>(),
                                      a => DropdownMenuAction.Status.Normal);

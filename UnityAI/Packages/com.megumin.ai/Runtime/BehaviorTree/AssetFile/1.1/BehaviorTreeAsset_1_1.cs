@@ -374,7 +374,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                     if (item.Value is IBindingParseable parseable)
                     {
-                        tree.AlBindingParseable.Add(parseable);
+                        tree.AllBindingParseable.Add(parseable);
+                    }
+
+                    if (item.Value is IBindAgentable bindAgentable)
+                    {
+                        tree.AllBindAgentable.Add(bindAgentable);
                     }
                 }
             }

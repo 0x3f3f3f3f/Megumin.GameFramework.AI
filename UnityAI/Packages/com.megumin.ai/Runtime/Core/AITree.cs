@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI
         /// <summary>
         /// 参数表中的一些值也在里面，没没有做过滤
         /// </summary>
-        public HashSet<IBindingParseable> AlBindingParseable { get; } = new();
+        public HashSet<IBindingParseable> AllBindingParseable { get; } = new();
 
         public virtual void Log(object message)
         {

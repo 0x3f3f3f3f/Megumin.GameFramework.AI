@@ -13,6 +13,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public GameObject GameObject { get; set; }
         public Transform Transform => GameObject != null ? GameObject.transform : null;
 
+        public HashSet<IBindAgentable> AllBindAgentable { get; } = new();
+
         public virtual void BindAgent(object agent)
         {
             Agent = agent;
@@ -28,12 +30,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
 
             ParseAllBindable(agent);
-            foreach (var item in AllNodes)
+            foreach (var item in AllBindAgentable)
             {
-                if (item is IBindAgentable bindAgentable)
-                {
-                    bindAgentable.BindAgent(agent);
-                }
                 item.BindAgent(agent);
             }
         }
