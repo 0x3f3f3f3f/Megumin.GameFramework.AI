@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -21,8 +22,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string String = "Hello!";
         public DateTimeOffset DateTimeOffset = DateTimeOffset.Now;
         public Vector2 TestVector2 = Vector2.one;
-        public GameObject GameObject;
-        public ScriptableObject ScriptableObject;
+        public GameObject TestGameObject;
+        public ScriptableObject TestScriptableObject;
 
         [Space]
         public List<int> ListInt = new();
