@@ -69,6 +69,9 @@ namespace Megumin.GameFramework.AI
         string GUID { get; }
     }
 
+    /// <summary>
+    /// 可以绑定代理的
+    /// </summary>
     public interface IBindAgentable
     {
         void BindAgent(object agent);

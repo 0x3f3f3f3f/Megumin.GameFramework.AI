@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Serializable]
-    public class BehaviorTreeElement : TreeElement<BehaviorTree>, IBindAgentable
+    public partial class BehaviorTree : IBindAgentable
     {
         public object Agent { get; set; }
         public GameObject GameObject { get; set; }
@@ -26,11 +25,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 GameObject = agent as GameObject;
             }
+
+
+            ParseAllBindable(agent);
+            foreach (var item in AllNodes)
+            {
+                if (item is IBindAgentable bindAgentable)
+                {
+                    bindAgentable.BindAgent(agent);
+                }
+                item.BindAgent(agent);
+            }
         }
     }
 }
-
-
-
 
 

@@ -72,8 +72,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         object ISubtreeTreeElement.TreeAsset => BehaviorTreeAsset;
 
-        public void BindAgent(object agent)
+        public override void BindAgent(object agent)
         {
+            base.BindAgent(agent);
             BehaviourTree?.BindAgent(agent);
         }
     }

@@ -246,27 +246,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
-    public partial class BehaviorTree : IBindAgentable
+    public partial class BehaviorTree
     {
         public bool IsRunning { get; internal set; }
-        public object Agent { get; protected set; }
-
+        
         private Status treestate = Status.Init;
 
         public string InstanceName { get; set; } = "anonymity";
-
-        public virtual void BindAgent(object agent)
-        {
-            Agent = agent;
-            ParseAllBindable(agent);
-            foreach (var item in AllNodes)
-            {
-                if (item is IBindAgentable bindAgentable)
-                {
-                    bindAgentable.BindAgent(agent);
-                }
-            }
-        }
 
         /// <summary>
         /// 用于编辑中UndoRedo时实例对象改变。

@@ -8,4 +8,10 @@ public class MoveTo : ActionTaskNode
 {
     public RefVar<Transform> Des;
 
+    protected override void OnEnter()
+    {
+        base.OnEnter();
+        var des = Vector3.Distance(Transform.position, Des.Value.position);
+        Debug.LogError($"Distance : {des}");
+    }
 }
