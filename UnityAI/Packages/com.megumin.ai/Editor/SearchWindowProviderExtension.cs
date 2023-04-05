@@ -38,6 +38,11 @@ namespace Megumin.GameFramework.AI.Editor
                     continue;
                 }
 
+                if (type.IsGenericTypeDefinition)
+                {
+                    continue;
+                }
+
                 GUIContent content = CreateEntryGUIContent(type);
                 SearchTreeEntry entry = new(content)
                 {

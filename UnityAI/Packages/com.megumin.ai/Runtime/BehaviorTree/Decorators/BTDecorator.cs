@@ -9,6 +9,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BTDecorator : BehaviorTreeElement, IDecorator
     {
+
+    }
+
+    public class BTDecorator<T> : BTDecorator
+    {
+        public T MyAgent { get; set; }
+
+        public override void BindAgent(object agent)
+        {
+            base.BindAgent(agent);
+            if (agent is T tAgent)
+            {
+                MyAgent = tAgent;
+            }
+            else
+            {
+                if (GameObject)
+                {
+                    MyAgent = GameObject.GetComponentInChildren<T>();
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -51,6 +73,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         protected virtual bool OnCheckCondition(BTNode container)
         {
             return false;
+        }
+    }
+
+    public class ConditionDecorator<T> : ConditionDecorator
+    {
+        public T MyAgent { get; set; }
+
+        public override void BindAgent(object agent)
+        {
+            base.BindAgent(agent);
+            if (agent is T tAgent)
+            {
+                MyAgent = tAgent;
+            }
+            else
+            {
+                if (GameObject)
+                {
+                    MyAgent = GameObject.GetComponentInChildren<T>();
+                }
+            }
         }
     }
 }

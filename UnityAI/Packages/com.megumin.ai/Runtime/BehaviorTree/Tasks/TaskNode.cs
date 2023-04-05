@@ -19,6 +19,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     }
 
     /// <summary>
+    /// 泛型节点，方便获取泛型Agent。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class BTActionNode<T> : BTActionNode
+    {
+        public T MyAgent { get; set; }
+
+        public override void BindAgent(object agent)
+        {
+            base.BindAgent(agent);
+            if (agent is T tAgent)
+            {
+                MyAgent = tAgent;
+            }
+            else
+            {
+                if (GameObject)
+                {
+                    MyAgent = GameObject.GetComponentInChildren<T>();
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 使用条件装饰器代替条件任务节点
     /// </summary>
     [Serializable]
