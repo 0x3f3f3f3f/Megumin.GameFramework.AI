@@ -71,10 +71,19 @@ namespace Megumin.GameFramework.AI.Editor
                 var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
                 var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
                 var code = script.text;
-                if (code.Contains($"class {type.Name}")
-                    && code.Contains(type.Namespace))
+                if (code.Contains($"class {type.Name}"))
                 {
-                    return new ValueTask<MonoScript>(script);
+                    if (string.IsNullOrEmpty(type.Namespace))
+                    {
+                        return new ValueTask<MonoScript>(script);
+                    }
+                    else
+                    {
+                        if (code.Contains(type.Namespace))
+                        {
+                            return new ValueTask<MonoScript>(script);
+                        }
+                    }
                 }
             }
 
