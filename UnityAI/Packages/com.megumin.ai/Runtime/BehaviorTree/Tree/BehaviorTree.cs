@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
@@ -72,6 +73,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     parseable.ParseBinding(agent, force);
                 }
             }
+        }
+
+        public Task ParseAllBindableAsync(object agent, bool force = false)
+        {
+            return Task.Run(() => ParseAllBindable(agent, force));
         }
 
         static readonly Unity.Profiling.ProfilerMarker tickProfilerMarker = new("Tick");
@@ -249,7 +255,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public partial class BehaviorTree
     {
         public bool IsRunning { get; internal set; }
-        
+
         private Status treestate = Status.Init;
 
         public string InstanceName { get; set; } = "anonymity";

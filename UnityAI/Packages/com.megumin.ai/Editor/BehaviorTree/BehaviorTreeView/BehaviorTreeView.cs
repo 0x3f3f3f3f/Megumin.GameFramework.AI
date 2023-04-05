@@ -305,8 +305,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         static readonly InitOption editorInitOption = new()
         {
-            AsyncTaskInit = false,
-            AsyncBindAgent = false,
+            AsyncInit = false,
+            AsyncParseBinding = false,
             SharedMeta = false,
             LazyInitSubtree = true,
         };

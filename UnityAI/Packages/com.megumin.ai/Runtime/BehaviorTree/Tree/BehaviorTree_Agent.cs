@@ -28,8 +28,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 GameObject = agent as GameObject;
             }
 
-
-            ParseAllBindable(agent);
             foreach (var item in AllBindAgentable)
             {
                 item.BindAgent(agent);

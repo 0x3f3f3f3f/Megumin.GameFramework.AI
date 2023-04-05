@@ -37,7 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return Task.FromResult<BehaviorTree>(null);
             }
 
-            if (initOption.AsyncTaskInit)
+            if (initOption.AsyncInit)
             {
                 return Task.Run(() =>
                 {

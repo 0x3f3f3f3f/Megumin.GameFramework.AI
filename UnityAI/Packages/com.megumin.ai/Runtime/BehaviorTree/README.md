@@ -59,11 +59,11 @@
 
 ## 参数设置
 实例化参数 InitOption：  
-- AsyncTaskInit  
+- AsyncInit  
   使用多线程异步实例化行为树。  
   缺点是不会在当前帧立刻完成并执行行为树。  
   并且初始化过程不能调用unity方法。  
-- AsyncBindAgent  
+- AsyncParseBinding  
   使用多线程异步绑定，解析binding对象。  
 - SharedMeta
   同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  

@@ -74,6 +74,10 @@ namespace Megumin.GameFramework.AI
     /// </summary>
     public interface IBindAgentable
     {
+        /// <summary>
+        /// 由于泛型Agent，必须在主线程调用，所以和ParseBinding分开。
+        /// </summary>
+        /// <param name="agent"></param>
         void BindAgent(object agent);
     }
 
@@ -89,10 +93,7 @@ namespace Megumin.GameFramework.AI
 
     public static class AIExtension_2B7BA837510B4CB4B28E3191F6A1D13C
     {
-        public static Task BindAgentAsync(this IBindAgentable bindAgentable, object agent)
-        {
-            return Task.Run(() => bindAgentable.BindAgent(agent));
-        }
+        
     }
 }
 
