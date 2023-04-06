@@ -37,7 +37,11 @@ namespace Megumin.Binding
     }
 
     /// <summary>
-    /// 可以引用的，可绑定参数
+    /// 可以引用的，可绑定参数。
+    /// <para>
+    /// 在Unity2023之前，在节点直接声明泛型，会导致无法公开到参数表示，使用特化类型。
+    /// TODO,特化类型和参数表类型移动到当前包。
+    /// </para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <remarks>
@@ -346,7 +350,7 @@ namespace Megumin.Binding
                 }
                 else
                 {
-                    UnityEditor.EditorGUI.PropertyField(position, property, true);
+                    UnityEditor.EditorGUI.PropertyField(position, property, label, true);
                 }
             }
         }

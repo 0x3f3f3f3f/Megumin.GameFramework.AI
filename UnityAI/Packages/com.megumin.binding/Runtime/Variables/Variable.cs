@@ -173,6 +173,7 @@ namespace Megumin.Binding
                 if (SetMode.HasFlag(ParseMode.FallbackValue))
                 {
                     base.value = value;
+                    return;
                 }
 
                 if (SetMode.HasFlag(ParseMode.FallbackTypeDefault))

@@ -18,27 +18,24 @@ MonoBehaviour:
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
   variables:
-  - Name: DesTarget
+  - Name: Des
     Type: Megumin.GameFramework.AI.RefVar_Transform
     Member:
     - Name: refName
       Type: System.String
-      Value: DesTarget
-  - Name: String
-    Type: Megumin.GameFramework.AI.RefVar_String
+      Value: Des
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  - Name: DesList
+    Type: Megumin.GameFramework.AI.RefVar_Transform_List
     Member:
     - Name: refName
       Type: System.String
-      Value: String
-  - Name: Array<Bool>
-    Type: Megumin.GameFramework.AI.RefVar_Bool_Array
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: Array<Bool>
+      Value: DesList
     - Name: value
       Type: $ref
-      Value: Array<Bool>.value
+      Value: DesList.value
     - Name: bindingPath
       Type: System.String
       Value: 
@@ -63,7 +60,7 @@ MonoBehaviour:
     Member:
     - Name: Des
       Type: $ref
-      Value: DesTarget
+      Value: Des
     - Name: Meta
       Type: $ref
       Value: 806a9c87-3e38-4c37-803a-d8675184030a.Meta
@@ -76,12 +73,12 @@ MonoBehaviour:
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
     Type: GetDestination
     Member:
+    - Name: Destination
+      Type: $ref
+      Value: Des
     - Name: DestinationList
       Type: $ref
-      Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList
-    - Name: Des
-      Type: $ref
-      Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Des
+      Value: DesList
     - Name: Meta
       Type: $ref
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Meta
@@ -94,9 +91,6 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
   decorators: []
   refObjs:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.children
@@ -135,39 +129,12 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 288
-  - Name: Array<Bool>.value
-    Type: System.Boolean[]
-    Member:
-    - Name: 0
-      Type: System.Boolean
-      Value: True
+  - Name: DesList.value
+    Type: System.Collections.Generic.List`1[[UnityEngine.Transform]]
+    Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
-    Member: []
-  - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Des
-    Type: Megumin.Binding.RefVar`1[[UnityEngine.Transform]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: bindingPath
-      Type: System.String
-      Value: 
-  - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList
-    Type: Megumin.Binding.RefVar`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject]]]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: value
-      Type: $ref
-      Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList.value
-    - Name: bindingPath
-      Type: System.String
-      Value: 
-  - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.DestinationList.value
-    Type: System.Collections.Generic.List`1[[UnityEngine.GameObject]]
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta

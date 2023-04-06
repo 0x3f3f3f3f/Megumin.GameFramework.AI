@@ -25,6 +25,8 @@ public class MoveTo : BTActionNode<NavMeshAgent>
         {
             return Status.Running;
         }
+
+        Debug.LogError($"MoveTo Succeeded: {Des.Value.name}£º{Des.Value.position}");
         return Status.Succeeded;
     }
 }

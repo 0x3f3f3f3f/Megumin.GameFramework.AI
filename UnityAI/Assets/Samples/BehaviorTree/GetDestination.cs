@@ -7,16 +7,20 @@ using UnityEngine;
 
 public class GetDestination : BTActionNode
 {
-    public RefVar<List<GameObject>> DestinationList;
-    public RefVar<Transform> Des;
+    public RefVar_Transform Destination;
+    public RefVar_Transform_List DestinationList;
 
     protected override void OnEnter()
     {
         var list = DestinationList?.Value;
         if (list == null || list.Count == 0)
         {
+            
+        }
+        else
+        {
             System.Random random = new System.Random();
-            Des.Value = list[random.Next(0, list.Count)].transform;
+            Destination.Value = list[random.Next(0, list.Count)].transform;
         }
     }
 }

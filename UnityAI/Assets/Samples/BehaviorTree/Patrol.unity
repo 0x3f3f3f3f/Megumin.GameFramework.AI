@@ -749,10 +749,30 @@ MonoBehaviour:
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
   Override:
-    Table: []
+    Table:
+    - rid: 4997520190495522835
+    - rid: 4997520190495522867
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4997520190495522835
+      type: {class: RefVar_Transform, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value: {fileID: 894475673}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: Des
+    - rid: 4997520190495522867
+      type: {class: RefVar_Transform_List, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
+      data:
+        value:
+        - {fileID: 894475673}
+        - {fileID: 657906155}
+        bindingPath: 
+        GetMode: 16
+        SetMode: 16
+        refName: DesList
 --- !u!1 &1477009386
 GameObject:
   m_ObjectHideFlags: 0
