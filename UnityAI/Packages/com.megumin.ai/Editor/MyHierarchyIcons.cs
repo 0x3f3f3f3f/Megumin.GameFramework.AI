@@ -48,6 +48,25 @@ namespace Megumin.GameFramework.AI.Editor
                 GUI.Label(selectionRect, Icon);
             }
         }
+
+        public static Texture2D GetImporterIcon(MonoBehaviour monoBehaviour)
+        {
+            var script = MonoScript.FromMonoBehaviour(monoBehaviour);
+            var path = AssetDatabase.GetAssetPath(script);
+
+            var imp = AssetImporter.GetAtPath(path);
+
+            if (imp is MonoImporter mono)
+            {
+                return mono.GetIcon();
+            }
+            else if (imp is PluginImporter plugin)
+            {
+                return plugin.GetIcon(monoBehaviour.GetType().Name);
+            }
+
+            return null;
+        }
     }
 }
 
