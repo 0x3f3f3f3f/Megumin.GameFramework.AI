@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         }
 
-        public override BehaviorTree Tree => View?.NodeView?.TreeView?.Tree;
+        public override BehaviorTreeView TreeView => View?.NodeView?.TreeView;
     }
 
     [CustomEditor(typeof(DecoratorWrapper), true, isFallback = false)]

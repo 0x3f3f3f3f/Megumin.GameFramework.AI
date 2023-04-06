@@ -33,6 +33,7 @@ namespace Megumin.Binding
     {
         IEnumerable<IRefable> GetVariableTable();
         bool TryGetParam(string name, out IRefable variable);
+        void Export(IRefable currentValue);
     }
 
     /// <summary>
@@ -413,11 +414,12 @@ namespace Megumin.Binding
                         }
                     }
 
+                    IRefable currentValue = null;
                     var enableExport = false;
                     if (index == 0 && !string.IsNullOrEmpty(refName.stringValue))
                     {
-                        var obj = property.GetValue<object>();
-                        if (obj != null)
+                        currentValue = property.GetValue<IRefable>();
+                        if (currentValue != null)
                         {
                             enableExport = true;
                         }
@@ -427,7 +429,10 @@ namespace Megumin.Binding
                     {
                         if (GUI.Button(exportButtonPos, "Export"))
                         {
-                            Debug.Log("Export");
+                            if (wrapper is IRefVariableFinder treeWrapper2)
+                            {
+                                treeWrapper2.Export(currentValue);
+                            }
                         }
                     }
                 }

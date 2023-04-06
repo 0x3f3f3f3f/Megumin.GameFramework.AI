@@ -10,7 +10,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
     {
-        public abstract BehaviorTree Tree { get; }
+        public BehaviorTree Tree => TreeView?.Tree;
+        public abstract BehaviorTreeView TreeView { get; }
 
         public void GetAllElementsDerivedFrom(Type baseType, List<ITreeElement> refables)
         {
@@ -48,6 +49,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
             return false;
         }
+
+        public void Export(IRefable currentValue)
+        {
+            TreeView.Blackboard.AddNewVariable(currentValue);
+        }
     }
 
     public class NodeWrapper : TreeElementWrapper
@@ -55,7 +61,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [SerializeReference]
         public BTNode Node;
 
-        public override BehaviorTree Tree => View?.TreeView?.Tree;
+        public override BehaviorTreeView TreeView => View?.TreeView;
 
         public BehaviorTreeNodeView View { get; internal set; }
 

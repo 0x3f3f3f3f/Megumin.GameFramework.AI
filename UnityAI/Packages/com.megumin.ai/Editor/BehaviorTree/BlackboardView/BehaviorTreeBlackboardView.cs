@@ -85,6 +85,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView.UndoRecord("AddNewVariable");
             var vara = creator.Create();
             vara.RefName = LookupTable.ValidName(vara.RefName);
+            AddNewVariable(vara);
+        }
+
+        public void AddNewVariable(IRefable vara)
+        {
             LookupTable.Table.Add(vara);
             ReloadView();
         }

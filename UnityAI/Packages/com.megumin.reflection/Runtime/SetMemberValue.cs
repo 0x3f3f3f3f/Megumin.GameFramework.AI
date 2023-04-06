@@ -76,7 +76,7 @@ namespace Megumin.Reflection
                     if (fieldInfo.FieldType.IsAssignableFrom(valueType) == false)
                     {
                         //参数类型不普配
-                        Debug.LogError($"{member.Name}:{fieldInfo.FieldType.FullName} 参数类型不普配 value:{valueType?.FullName}");
+                        Debug.LogWarning($"{member.Name}:{fieldInfo.FieldType.FullName} 参数类型不普配 value:{valueType?.FullName}");
                     }
 
                     fieldInfo.SetValue(instance, value);
@@ -93,7 +93,7 @@ namespace Megumin.Reflection
                     if (propertyInfo.PropertyType.IsAssignableFrom(valueType) == false)
                     {
                         //参数类型不普配
-                        Debug.LogError($"{member.Name}:{propertyInfo.PropertyType.FullName} 参数类型不普配 value:{valueType?.FullName}");
+                        Debug.LogWarning($"{member.Name}:{propertyInfo.PropertyType.FullName} 参数类型不普配 value:{valueType?.FullName}");
                     }
                     propertyInfo.SetValue(instance, value);
                 }
