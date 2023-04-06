@@ -54,7 +54,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             foreach (var variable in tree.Variable.Table)
             {
                 cacheRef.Add(variable, variable.RefName);
-                needSerialization.Push((variable.RefName, variable));
             }
 
             foreach (var node in tree.AllNodes)
@@ -70,17 +69,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 //序列化参数表
                 List<ObjectData> variableDatas = new();
-                while (needSerialization.Count > 0)
+
+                foreach (var variable in tree.Variable.Table)
                 {
-                    var item = needSerialization.Pop();
                     ObjectData data = new ObjectData();
-                    if (data.TrySerialize(item.name, item.value, needSerialization, objRefs, cacheRef, GetSerializeMembers))
+                    if (data.TrySerialize(variable.RefName, variable, needSerialization, objRefs, cacheRef, GetSerializeMembers))
                     {
                         variableDatas.Add(data);
                     }
                 }
 
-                variableDatas.Sort();
+                //参数表保持顺序
+                //variableDatas.Sort();
                 variables = variableDatas;
             }
 
@@ -341,6 +341,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (item.Value is IRefable variable)
                     {
                         tree.Variable.Table.Add(variable);
+                    }
+
+                    if (item.Value is IBindingParseable parseable)
+                    {
+                        tree.AllBindingParseable.Add(parseable);
+                    }
+
+                    if (item.Value is IBindAgentable bindAgentable)
+                    {
+                        tree.AllBindAgentable.Add(bindAgentable);
                     }
                 }
             }

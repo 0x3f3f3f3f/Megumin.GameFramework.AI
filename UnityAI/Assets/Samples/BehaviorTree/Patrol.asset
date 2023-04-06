@@ -24,6 +24,24 @@ MonoBehaviour:
     - Name: refName
       Type: System.String
       Value: DesTarget
+  - Name: String
+    Type: Megumin.GameFramework.AI.RefVar_String
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: String
+  - Name: Array<Bool>
+    Type: Megumin.GameFramework.AI.RefVar_Bool_Array
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: Array<Bool>
+    - Name: value
+      Type: $ref
+      Value: Array<Bool>.value
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   nodes:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d
     Type: Megumin.GameFramework.AI.BehaviorTree.Sequence
@@ -117,6 +135,12 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 288
+  - Name: Array<Bool>.value
+    Type: System.Boolean[]
+    Member:
+    - Name: 0
+      Type: System.Boolean
+      Value: True
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]

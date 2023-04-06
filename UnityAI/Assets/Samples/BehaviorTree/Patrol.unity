@@ -739,8 +739,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -749,19 +749,10 @@ MonoBehaviour:
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
   Override:
-    Table:
-    - rid: 4997520165436391442
+    Table: []
   references:
     version: 2
-    RefIds:
-    - rid: 4997520165436391442
-      type: {class: RefVar_Transform, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: {fileID: 894475673}
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: DesTarget
+    RefIds: []
 --- !u!1 &1477009386
 GameObject:
   m_ObjectHideFlags: 0

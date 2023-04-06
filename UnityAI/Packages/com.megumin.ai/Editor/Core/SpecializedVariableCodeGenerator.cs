@@ -52,41 +52,41 @@ namespace Megumin.GameFramework.AI
         const string template =
 @"
 [Serializable]
-public class RefVar_$(type) : RefVar<$(type)> { }
+public class RefVar_$(Type) : RefVar<$(type)> { }
 
-public class VariableCreator_$(type) : VariableCreator
+public class VariableCreator_$(Type) : VariableCreator
 {
     public override string Name { get; set; } = ""$(type)"";
 
     public override IRefable Create()
     {
-        return new RefVar_$(type)() { RefName = ""$(Type)"" };
+        return new RefVar_$(Type)() { RefName = ""$(Type)"" };
     }
 }
 
 [Serializable]
-public class RefVar_$(type)_List : RefVar<List<$(type)>> { }
+public class RefVar_$(Type)_List : RefVar<List<$(type)>> { }
 
-public class VariableCreator_$(type)_List : VariableCreator
+public class VariableCreator_$(Type)_List : VariableCreator
 {
     public override string Name { get; set; } = ""List/$(type)"";
 
     public override IRefable Create()
     {
-        return new RefVar_$(type)_List() { RefName = ""List<$(Type)>"", value = new() };
+        return new RefVar_$(Type)_List() { RefName = ""List<$(Type)>"", value = new() };
     }
 }
 
 [Serializable]
-public class RefVar_$(type)_Array : RefVar<$(type)[]> { }
+public class RefVar_$(Type)_Array : RefVar<$(type)[]> { }
 
-public class VariableCreator_$(type)_Array : VariableCreator
+public class VariableCreator_$(Type)_Array : VariableCreator
 {
     public override string Name { get; set; } = ""Array/$(type)"";
 
     public override IRefable Create()
     {
-        return new RefVar_$(type)_Array() { RefName = ""Array<$(Type)>"" };
+        return new RefVar_$(Type)_Array() { RefName = ""Array<$(Type)>"" };
     }
 }";
 
@@ -113,37 +113,42 @@ public class VariableCreator_$(type)_Array : VariableCreator
 
                     foreach (var type in types)
                     {
+                        var Type = generator.UpperStartChar(type);
                         if (type == "----")
                         {
-                            //generator.Push($"new Separator(),");
+                            generator.Push($"new Separator() {{ Name = \"Array/\" }},");
                         }
                         else
                         {
-                            generator.Push($"new VariableCreator_{type}_Array(),");
+                            generator.Push($"new VariableCreator_{Type}_Array(),");
                         }
                     }
+                    generator.Push($"new Separator(),");
 
                     foreach (var type in types)
                     {
+                        var Type = generator.UpperStartChar(type);
                         if (type == "----")
                         {
-                            //generator.Push($"new Separator(),");
+                            generator.Push($"new Separator() {{ Name = \"List/\" }},");
                         }
                         else
                         {
-                            generator.Push($"new VariableCreator_{type}_List(),");
+                            generator.Push($"new VariableCreator_{Type}_List(),");
                         }
                     }
+                    generator.Push($"new Separator(),");
 
                     foreach (var type in types)
                     {
+                        var Type = generator.UpperStartChar(type);
                         if (type == "----")
                         {
                             generator.Push($"new Separator(),");
                         }
                         else
                         {
-                            generator.Push($"new VariableCreator_{type}(),");
+                            generator.Push($"new VariableCreator_{Type}(),");
                         }
                     }
                     generator.EndScopeWithSemicolon();
@@ -151,13 +156,14 @@ public class VariableCreator_$(type)_Array : VariableCreator
 
                 foreach (var type in types)
                 {
+                    var Type = generator.UpperStartChar(type);
                     if (type == "----")
                     {
                         continue;
                     }
 
                     var code = template.Replace("$(type)", type)
-                                       .Replace("$(Type)", generator.UpperStartChar(type));
+                                       .Replace("$(Type)", Type);
 
                     generator.PushTemplate(code);
                 }

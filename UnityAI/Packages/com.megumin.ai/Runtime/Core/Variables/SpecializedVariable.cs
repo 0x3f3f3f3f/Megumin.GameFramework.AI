@@ -18,12 +18,13 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         public static List<VariableCreator> AllCreator = new()
         {
-            new VariableCreator_bool_Array(),
-            new VariableCreator_int_Array(),
-            new VariableCreator_long_Array(),
-            new VariableCreator_string_Array(),
-            new VariableCreator_float_Array(),
-            new VariableCreator_double_Array(),
+            new VariableCreator_Bool_Array(),
+            new VariableCreator_Int_Array(),
+            new VariableCreator_Long_Array(),
+            new VariableCreator_String_Array(),
+            new VariableCreator_Float_Array(),
+            new VariableCreator_Double_Array(),
+            new Separator() { Name = "Array/" },
             new VariableCreator_Vector2_Array(),
             new VariableCreator_Vector2Int_Array(),
             new VariableCreator_Vector3_Array(),
@@ -33,6 +34,7 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_RectInt_Array(),
             new VariableCreator_Bounds_Array(),
             new VariableCreator_BoundsInt_Array(),
+            new Separator() { Name = "Array/" },
             new VariableCreator_GameObject_Array(),
             new VariableCreator_Transform_Array(),
             new VariableCreator_ScriptableObject_Array(),
@@ -45,12 +47,14 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_Mesh_Array(),
             new VariableCreator_SkinnedMeshRenderer_Array(),
             new VariableCreator_Material_Array(),
-            new VariableCreator_bool_List(),
-            new VariableCreator_int_List(),
-            new VariableCreator_long_List(),
-            new VariableCreator_string_List(),
-            new VariableCreator_float_List(),
-            new VariableCreator_double_List(),
+            new Separator(),
+            new VariableCreator_Bool_List(),
+            new VariableCreator_Int_List(),
+            new VariableCreator_Long_List(),
+            new VariableCreator_String_List(),
+            new VariableCreator_Float_List(),
+            new VariableCreator_Double_List(),
+            new Separator() { Name = "List/" },
             new VariableCreator_Vector2_List(),
             new VariableCreator_Vector2Int_List(),
             new VariableCreator_Vector3_List(),
@@ -60,6 +64,7 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_RectInt_List(),
             new VariableCreator_Bounds_List(),
             new VariableCreator_BoundsInt_List(),
+            new Separator() { Name = "List/" },
             new VariableCreator_GameObject_List(),
             new VariableCreator_Transform_List(),
             new VariableCreator_ScriptableObject_List(),
@@ -72,12 +77,13 @@ namespace Megumin.GameFramework.AI
             new VariableCreator_Mesh_List(),
             new VariableCreator_SkinnedMeshRenderer_List(),
             new VariableCreator_Material_List(),
-            new VariableCreator_bool(),
-            new VariableCreator_int(),
-            new VariableCreator_long(),
-            new VariableCreator_string(),
-            new VariableCreator_float(),
-            new VariableCreator_double(),
+            new Separator(),
+            new VariableCreator_Bool(),
+            new VariableCreator_Int(),
+            new VariableCreator_Long(),
+            new VariableCreator_String(),
+            new VariableCreator_Float(),
+            new VariableCreator_Double(),
             new Separator(),
             new VariableCreator_Vector2(),
             new VariableCreator_Vector2Int(),
@@ -105,236 +111,236 @@ namespace Megumin.GameFramework.AI
     }
 
     [Serializable]
-    public class RefVar_bool : RefVar<bool> { }
+    public class RefVar_Bool : RefVar<bool> { }
 
-    public class VariableCreator_bool : VariableCreator
+    public class VariableCreator_Bool : VariableCreator
     {
         public override string Name { get; set; } = "bool";
 
         public override IRefable Create()
         {
-            return new RefVar_bool() { RefName = "Bool" };
+            return new RefVar_Bool() { RefName = "Bool" };
         }
     }
 
     [Serializable]
-    public class RefVar_bool_List : RefVar<List<bool>> { }
+    public class RefVar_Bool_List : RefVar<List<bool>> { }
 
-    public class VariableCreator_bool_List : VariableCreator
+    public class VariableCreator_Bool_List : VariableCreator
     {
         public override string Name { get; set; } = "List/bool";
 
         public override IRefable Create()
         {
-            return new RefVar_bool_List() { RefName = "List<Bool>", value = new() };
+            return new RefVar_Bool_List() { RefName = "List<Bool>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_bool_Array : RefVar<bool[]> { }
+    public class RefVar_Bool_Array : RefVar<bool[]> { }
 
-    public class VariableCreator_bool_Array : VariableCreator
+    public class VariableCreator_Bool_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/bool";
 
         public override IRefable Create()
         {
-            return new RefVar_bool_Array() { RefName = "Array<Bool>" };
+            return new RefVar_Bool_Array() { RefName = "Array<Bool>" };
         }
     }
 
     [Serializable]
-    public class RefVar_int : RefVar<int> { }
+    public class RefVar_Int : RefVar<int> { }
 
-    public class VariableCreator_int : VariableCreator
+    public class VariableCreator_Int : VariableCreator
     {
         public override string Name { get; set; } = "int";
 
         public override IRefable Create()
         {
-            return new RefVar_int() { RefName = "Int" };
+            return new RefVar_Int() { RefName = "Int" };
         }
     }
 
     [Serializable]
-    public class RefVar_int_List : RefVar<List<int>> { }
+    public class RefVar_Int_List : RefVar<List<int>> { }
 
-    public class VariableCreator_int_List : VariableCreator
+    public class VariableCreator_Int_List : VariableCreator
     {
         public override string Name { get; set; } = "List/int";
 
         public override IRefable Create()
         {
-            return new RefVar_int_List() { RefName = "List<Int>", value = new() };
+            return new RefVar_Int_List() { RefName = "List<Int>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_int_Array : RefVar<int[]> { }
+    public class RefVar_Int_Array : RefVar<int[]> { }
 
-    public class VariableCreator_int_Array : VariableCreator
+    public class VariableCreator_Int_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/int";
 
         public override IRefable Create()
         {
-            return new RefVar_int_Array() { RefName = "Array<Int>" };
+            return new RefVar_Int_Array() { RefName = "Array<Int>" };
         }
     }
 
     [Serializable]
-    public class RefVar_long : RefVar<long> { }
+    public class RefVar_Long : RefVar<long> { }
 
-    public class VariableCreator_long : VariableCreator
+    public class VariableCreator_Long : VariableCreator
     {
         public override string Name { get; set; } = "long";
 
         public override IRefable Create()
         {
-            return new RefVar_long() { RefName = "Long" };
+            return new RefVar_Long() { RefName = "Long" };
         }
     }
 
     [Serializable]
-    public class RefVar_long_List : RefVar<List<long>> { }
+    public class RefVar_Long_List : RefVar<List<long>> { }
 
-    public class VariableCreator_long_List : VariableCreator
+    public class VariableCreator_Long_List : VariableCreator
     {
         public override string Name { get; set; } = "List/long";
 
         public override IRefable Create()
         {
-            return new RefVar_long_List() { RefName = "List<Long>", value = new() };
+            return new RefVar_Long_List() { RefName = "List<Long>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_long_Array : RefVar<long[]> { }
+    public class RefVar_Long_Array : RefVar<long[]> { }
 
-    public class VariableCreator_long_Array : VariableCreator
+    public class VariableCreator_Long_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/long";
 
         public override IRefable Create()
         {
-            return new RefVar_long_Array() { RefName = "Array<Long>" };
+            return new RefVar_Long_Array() { RefName = "Array<Long>" };
         }
     }
 
     [Serializable]
-    public class RefVar_string : RefVar<string> { }
+    public class RefVar_String : RefVar<string> { }
 
-    public class VariableCreator_string : VariableCreator
+    public class VariableCreator_String : VariableCreator
     {
         public override string Name { get; set; } = "string";
 
         public override IRefable Create()
         {
-            return new RefVar_string() { RefName = "String" };
+            return new RefVar_String() { RefName = "String" };
         }
     }
 
     [Serializable]
-    public class RefVar_string_List : RefVar<List<string>> { }
+    public class RefVar_String_List : RefVar<List<string>> { }
 
-    public class VariableCreator_string_List : VariableCreator
+    public class VariableCreator_String_List : VariableCreator
     {
         public override string Name { get; set; } = "List/string";
 
         public override IRefable Create()
         {
-            return new RefVar_string_List() { RefName = "List<String>", value = new() };
+            return new RefVar_String_List() { RefName = "List<String>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_string_Array : RefVar<string[]> { }
+    public class RefVar_String_Array : RefVar<string[]> { }
 
-    public class VariableCreator_string_Array : VariableCreator
+    public class VariableCreator_String_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/string";
 
         public override IRefable Create()
         {
-            return new RefVar_string_Array() { RefName = "Array<String>" };
+            return new RefVar_String_Array() { RefName = "Array<String>" };
         }
     }
 
     [Serializable]
-    public class RefVar_float : RefVar<float> { }
+    public class RefVar_Float : RefVar<float> { }
 
-    public class VariableCreator_float : VariableCreator
+    public class VariableCreator_Float : VariableCreator
     {
         public override string Name { get; set; } = "float";
 
         public override IRefable Create()
         {
-            return new RefVar_float() { RefName = "Float" };
+            return new RefVar_Float() { RefName = "Float" };
         }
     }
 
     [Serializable]
-    public class RefVar_float_List : RefVar<List<float>> { }
+    public class RefVar_Float_List : RefVar<List<float>> { }
 
-    public class VariableCreator_float_List : VariableCreator
+    public class VariableCreator_Float_List : VariableCreator
     {
         public override string Name { get; set; } = "List/float";
 
         public override IRefable Create()
         {
-            return new RefVar_float_List() { RefName = "List<Float>", value = new() };
+            return new RefVar_Float_List() { RefName = "List<Float>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_float_Array : RefVar<float[]> { }
+    public class RefVar_Float_Array : RefVar<float[]> { }
 
-    public class VariableCreator_float_Array : VariableCreator
+    public class VariableCreator_Float_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/float";
 
         public override IRefable Create()
         {
-            return new RefVar_float_Array() { RefName = "Array<Float>" };
+            return new RefVar_Float_Array() { RefName = "Array<Float>" };
         }
     }
 
     [Serializable]
-    public class RefVar_double : RefVar<double> { }
+    public class RefVar_Double : RefVar<double> { }
 
-    public class VariableCreator_double : VariableCreator
+    public class VariableCreator_Double : VariableCreator
     {
         public override string Name { get; set; } = "double";
 
         public override IRefable Create()
         {
-            return new RefVar_double() { RefName = "Double" };
+            return new RefVar_Double() { RefName = "Double" };
         }
     }
 
     [Serializable]
-    public class RefVar_double_List : RefVar<List<double>> { }
+    public class RefVar_Double_List : RefVar<List<double>> { }
 
-    public class VariableCreator_double_List : VariableCreator
+    public class VariableCreator_Double_List : VariableCreator
     {
         public override string Name { get; set; } = "List/double";
 
         public override IRefable Create()
         {
-            return new RefVar_double_List() { RefName = "List<Double>", value = new() };
+            return new RefVar_Double_List() { RefName = "List<Double>", value = new() };
         }
     }
 
     [Serializable]
-    public class RefVar_double_Array : RefVar<double[]> { }
+    public class RefVar_Double_Array : RefVar<double[]> { }
 
-    public class VariableCreator_double_Array : VariableCreator
+    public class VariableCreator_Double_Array : VariableCreator
     {
         public override string Name { get; set; } = "Array/double";
 
         public override IRefable Create()
         {
-            return new RefVar_double_Array() { RefName = "Array<Double>" };
+            return new RefVar_Double_Array() { RefName = "Array<Double>" };
         }
     }
 
