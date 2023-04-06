@@ -1,4 +1,5 @@
-﻿using Megumin.Binding;
+﻿using System.Threading.Tasks;
+using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
 
@@ -83,19 +84,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         refFinder = null;
                     }
                 }
-                Override?.ParseBinding(gameObject, true);
+
+                //声明一个临时变量，方式闭包捕获gameObject，造成在非主线程访问gameObject。
+                //防止 UnityException: get_gameObject can only be called from the main thread.
+                var agent = gameObject;
                 BehaviourTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.InstanceName = gameObject.name;
-                BehaviourTree.BindAgent(gameObject);
+                BehaviourTree.BindAgent(agent);
 
+                //Override?.ParseBinding(gameObject, true);
                 if (InitOption.AsyncParseBinding)
                 {
-                    await BehaviourTree.ParseAllBindableAsync(gameObject);
+                    await Task.Run(() => Override?.ParseBinding(agent, true));
+                    await BehaviourTree.ParseAllBindableAsync(agent);
                 }
                 else
                 {
-                    BehaviourTree.ParseAllBindable(gameObject);
+                    Override?.ParseBinding(agent, true);
+                    BehaviourTree.ParseAllBindable(agent);
                 }
             }
 

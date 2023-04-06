@@ -15,7 +15,7 @@ public class GetDestination : BTActionNode
         var list = DestinationList?.Value;
         if (list == null || list.Count == 0)
         {
-            
+            Destination.value = Transform;
         }
         else
         {
