@@ -62,7 +62,35 @@ public class VariableCreator_$(type) : VariableCreator
     {
         return new RefVar_$(type)() { RefName = ""$(Type)"" };
     }
+}
+
+[Serializable]
+public class RefVar_$(type)_List : RefVar<List<$(type)>> { }
+
+public class VariableCreator_$(type)_List : VariableCreator
+{
+    public override string Name { get; set; } = ""List/$(type)"";
+
+    public override IRefable Create()
+    {
+        return new RefVar_$(type)_List() { RefName = ""List<$(Type)>"", value = new() };
+    }
+}
+
+[Serializable]
+public class RefVar_$(type)_Array : RefVar<$(type)[]> { }
+
+public class VariableCreator_$(type)_Array : VariableCreator
+{
+    public override string Name { get; set; } = ""Array/$(type)"";
+
+    public override IRefable Create()
+    {
+        return new RefVar_$(type)_Array() { RefName = ""Array<$(Type)>"" };
+    }
 }";
+
+
         [Editor]
         public void Generate()
         {
@@ -82,6 +110,31 @@ public class VariableCreator_$(type) : VariableCreator
                     generator.PushComment("用户可以在这里添加参数类型到菜单。");
                     generator.Push($"public static List<VariableCreator> AllCreator = new()");
                     generator.BeginScope();
+
+                    foreach (var type in types)
+                    {
+                        if (type == "----")
+                        {
+                            //generator.Push($"new Separator(),");
+                        }
+                        else
+                        {
+                            generator.Push($"new VariableCreator_{type}_Array(),");
+                        }
+                    }
+
+                    foreach (var type in types)
+                    {
+                        if (type == "----")
+                        {
+                            //generator.Push($"new Separator(),");
+                        }
+                        else
+                        {
+                            generator.Push($"new VariableCreator_{type}_List(),");
+                        }
+                    }
+
                     foreach (var type in types)
                     {
                         if (type == "----")

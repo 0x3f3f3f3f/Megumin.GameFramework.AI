@@ -34,7 +34,7 @@ namespace Megumin.Binding
         IVariableSpecializedType
     {
         [field: SerializeField]
-        protected T value;
+        public T value;
 
         public virtual Type SpecializedType => typeof(T);
 
