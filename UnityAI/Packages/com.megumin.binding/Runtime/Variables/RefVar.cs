@@ -344,11 +344,16 @@ namespace Megumin.Binding
                 var index = 0;
                 if (refName != null)
                 {
-                    float popupWidth = position.width - EditorGUIUtility.labelWidth - 2;
-                    var buttonPosition = position;
-                    buttonPosition.width = popupWidth;
-                    buttonPosition.height = 18;
-                    buttonPosition.x += position.width - popupWidth;
+                    float exportButtonWidth = 46f;
+                    var exportButtonPos = position;
+                    exportButtonPos.xMin = exportButtonPos.xMax - exportButtonWidth;
+                    exportButtonPos.height = 18;
+
+                    float popupWidth = position.xMax - EditorGUIUtility.labelWidth - exportButtonWidth - 7;
+                    var selectPopupPos = position;
+                    selectPopupPos.width = popupWidth;
+                    selectPopupPos.x += EditorGUIUtility.labelWidth - 13;
+                    selectPopupPos.height = 18;
 
                     //var obj = property.managedReferenceValue;
                     option.Clear();
@@ -388,7 +393,7 @@ namespace Megumin.Binding
 
                     string[] strings = optionDisplay.ToArray();
                     EditorGUI.BeginChangeCheck();
-                    index = EditorGUI.Popup(buttonPosition, index, strings);
+                    index = EditorGUI.Popup(selectPopupPos, index, strings);
                     if (EditorGUI.EndChangeCheck())
                     {
                         //var obj = property.GetValue<object>();
@@ -405,6 +410,24 @@ namespace Megumin.Binding
                             {
                                 property.SetValue<object>(variable);
                             }
+                        }
+                    }
+
+                    var enableExport = false;
+                    if (index == 0 && !string.IsNullOrEmpty(refName.stringValue))
+                    {
+                        var obj = property.GetValue<object>();
+                        if (obj != null)
+                        {
+                            enableExport = true;
+                        }
+                    }
+
+                    using (new UnityEditor.EditorGUI.DisabledGroupScope(enableExport == false))
+                    {
+                        if (GUI.Button(exportButtonPos, "Export"))
+                        {
+                            Debug.Log("Export");
                         }
                     }
                 }

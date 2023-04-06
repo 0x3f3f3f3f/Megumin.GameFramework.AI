@@ -173,8 +173,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -183,37 +183,10 @@ MonoBehaviour:
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
   Override:
-    Table:
-    - rid: 7759799527483113569
-    - rid: 7759799527483113848
-    - rid: 7759799527483113860
+    Table: []
   references:
     version: 2
-    RefIds:
-    - rid: 7759799527483113569
-      type: {class: RefVariable_string, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: TestOverride
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: TestStringVariable
-    - rid: 7759799527483113848
-      type: {class: RefVariable_Vector2, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: {x: 0, y: 0}
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: Vector2
-    - rid: 7759799527483113860
-      type: {class: RefVariable_GameObject, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: {fileID: 0}
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: GameObject
+    RefIds: []
 --- !u!1 &116712484
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +222,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -313,8 +286,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -377,8 +350,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -456,8 +429,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -505,8 +478,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -515,37 +488,10 @@ MonoBehaviour:
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
   Override:
-    Table:
-    - rid: 7759799527483113569
-    - rid: 7759799527483113848
-    - rid: 7759799527483113860
+    Table: []
   references:
     version: 2
-    RefIds:
-    - rid: 7759799527483113569
-      type: {class: RefVariable_string, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: TestOverride
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: TestStringVariable
-    - rid: 7759799527483113848
-      type: {class: RefVariable_Vector2, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: {x: 0, y: 0}
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: Vector2
-    - rid: 7759799527483113860
-      type: {class: RefVariable_GameObject, ns: Megumin.GameFramework.AI, asm: Megumin.GameFramework.AI}
-      data:
-        value: {fileID: 0}
-        bindingPath: 
-        GetMode: 16
-        SetMode: 16
-        refName: GameObject
+    RefIds: []
 --- !u!4 &1409874969
 Transform:
   m_ObjectHideFlags: 0
@@ -611,8 +557,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -660,8 +606,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -739,8 +685,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -788,8 +734,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
@@ -867,8 +813,8 @@ MonoBehaviour:
   <OnEnabled>k__BackingField: 64
   <OnDisabled>k__BackingField: 128
   InitOption:
-    AsyncTaskInit: 1
-    AsyncBindAgent: 1
+    AsyncInit: 1
+    AsyncParseBinding: 1
     SharedMeta: 1
     LazyInitSubtree: 0
   RunOption:
