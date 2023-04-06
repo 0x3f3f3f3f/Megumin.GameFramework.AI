@@ -51,6 +51,7 @@ namespace Megumin.GameFramework.AI
 
         const string template =
 @"
+[Serializable]
 public class RefVar_$(type) : RefVar<$(type)> { }
 
 public class VariableCreator_$(type) : VariableCreator

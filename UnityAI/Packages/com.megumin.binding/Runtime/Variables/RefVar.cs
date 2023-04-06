@@ -339,111 +339,119 @@ namespace Megumin.Binding
         {
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                //先绘制下拉选单，后绘制整个属性，不然会和折叠功能冲突
-
-                var refName = property.FindPropertyRelative("refName");
-                var index = 0;
-                if (refName != null)
+                var wrapper = property.serializedObject.targetObject;
+                if (wrapper is IRefVariableFinder treeWrapper)
                 {
-                    float exportButtonWidth = 46f;
-                    var exportButtonPos = position;
-                    exportButtonPos.xMin = exportButtonPos.xMax - exportButtonWidth;
-                    exportButtonPos.height = 18;
-
-                    float popupWidth = position.xMax - EditorGUIUtility.labelWidth - exportButtonWidth - 7;
-                    var selectPopupPos = position;
-                    selectPopupPos.width = popupWidth;
-                    selectPopupPos.x += EditorGUIUtility.labelWidth - 13;
-                    selectPopupPos.height = 18;
-
-                    //var obj = property.managedReferenceValue;
-                    option.Clear();
-                    optionDisplay.Clear();
-                    option.Add("Ref: None");
-                    optionDisplay.Add("Ref: None");
-
-                    var wrapper = property.serializedObject.targetObject;
-                    if (wrapper is IRefVariableFinder treeWrapper)
-                    {
-                        var table = treeWrapper.GetVariableTable();
-                        foreach (var item in table)
-                        {
-                            option.Add(item.RefName);
-                            if (item is IVariableSpecializedType specializedType)
-                            {
-                                optionDisplay.Add($"{item.RefName} : [{specializedType.SpecializedType.Name}]");
-                            }
-                            else
-                            {
-                                optionDisplay.Add(item.RefName);
-                            }
-                        }
-                    }
-
-                    var currentRefNameValue = refName.stringValue;
-                    if (option.Contains(refName.stringValue))
-                    {
-                        for (int i = 0; i < option.Count; i++)
-                        {
-                            if (currentRefNameValue == option[i])
-                            {
-                                index = i;
-                            }
-                        }
-                    }
-
-                    string[] strings = optionDisplay.ToArray();
-                    EditorGUI.BeginChangeCheck();
-                    index = EditorGUI.Popup(selectPopupPos, index, strings);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        //var obj = property.GetValue<object>();
-                        Undo.RecordObject(property.serializedObject.targetObject, "Change Ref");
-                        if (index == 0)
-                        {
-                            //设置为null。
-                            property.SetValue<object>(null);
-                        }
-                        else
-                        {
-                            if (wrapper is IRefVariableFinder getter
-                                && getter.TryGetParam(option[index], out var variable))
-                            {
-                                property.SetValue<object>(variable);
-                            }
-                        }
-                    }
-
-                    IRefable currentValue = null;
-                    var enableExport = false;
-                    if (index == 0 && !string.IsNullOrEmpty(refName.stringValue))
-                    {
-                        currentValue = property.GetValue<IRefable>();
-                        if (currentValue != null)
-                        {
-                            enableExport = true;
-                        }
-                    }
-
-                    using (new UnityEditor.EditorGUI.DisabledGroupScope(enableExport == false))
-                    {
-                        if (GUI.Button(exportButtonPos, "Export"))
-                        {
-                            if (wrapper is IRefVariableFinder treeWrapper2)
-                            {
-                                treeWrapper2.Export(currentValue);
-                            }
-                        }
-                    }
+                    OnGUISelector(position, property, label, treeWrapper);
                 }
-
-                EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-                using (new UnityEditor.EditorGUI.DisabledGroupScope(index != 0))
+                else
                 {
-                    //这里如果是引用的对象，暂时不让在Inspector里修改，对象可能会被多个地方引用
-                    //让他在参数表中修改
                     UnityEditor.EditorGUI.PropertyField(position, property, true);
                 }
+            }
+        }
+
+        public void OnGUISelector(Rect position,
+                                  SerializedProperty property,
+                                  GUIContent label,
+                                  IRefVariableFinder treeWrapper)
+        {
+            //先绘制下拉选单，后绘制整个属性，不然会和折叠功能冲突
+
+            var refName = property.FindPropertyRelative("refName");
+            var index = 0;
+            if (refName != null)
+            {
+                float exportButtonWidth = 46f;
+                var exportButtonPos = position;
+                exportButtonPos.xMin = exportButtonPos.xMax - exportButtonWidth;
+                exportButtonPos.height = 18;
+
+                float popupWidth = position.xMax - EditorGUIUtility.labelWidth - exportButtonWidth - 7;
+                var selectPopupPos = position;
+                selectPopupPos.width = popupWidth;
+                selectPopupPos.x += EditorGUIUtility.labelWidth - 13;
+                selectPopupPos.height = 18;
+
+                //var obj = property.managedReferenceValue;
+                option.Clear();
+                optionDisplay.Clear();
+                option.Add("Ref: None");
+                optionDisplay.Add("Ref: None");
+
+                var table = treeWrapper.GetVariableTable();
+                foreach (var item in table)
+                {
+                    option.Add(item.RefName);
+                    if (item is IVariableSpecializedType specializedType)
+                    {
+                        optionDisplay.Add($"{item.RefName} : [{specializedType.SpecializedType.Name}]");
+                    }
+                    else
+                    {
+                        optionDisplay.Add(item.RefName);
+                    }
+                }
+
+                var currentRefNameValue = refName.stringValue;
+                if (option.Contains(refName.stringValue))
+                {
+                    for (int i = 0; i < option.Count; i++)
+                    {
+                        if (currentRefNameValue == option[i])
+                        {
+                            index = i;
+                        }
+                    }
+                }
+
+                string[] strings = optionDisplay.ToArray();
+                EditorGUI.BeginChangeCheck();
+                index = EditorGUI.Popup(selectPopupPos, index, strings);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    //var obj = property.GetValue<object>();
+                    Undo.RecordObject(property.serializedObject.targetObject, "Change Ref");
+                    if (index == 0)
+                    {
+                        //设置为null。
+                        property.SetValue<object>(null);
+                    }
+                    else
+                    {
+                        if (treeWrapper.TryGetParam(option[index], out var variable))
+                        {
+                            property.SetValue<object>(variable);
+                        }
+                    }
+                }
+
+                IRefable currentValue = null;
+                var enableExport = false;
+                if (index == 0 && !string.IsNullOrEmpty(refName.stringValue))
+                {
+                    currentValue = property.GetValue<IRefable>();
+                    if (currentValue != null)
+                    {
+                        enableExport = true;
+                    }
+                }
+
+                using (new UnityEditor.EditorGUI.DisabledGroupScope(enableExport == false))
+                {
+                    if (GUI.Button(exportButtonPos, "Export"))
+                    {
+                        treeWrapper.Export(currentValue);
+                    }
+                }
+            }
+
+            EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+            using (new UnityEditor.EditorGUI.DisabledGroupScope(index != 0))
+            {
+                //这里如果是引用的对象，暂时不让在Inspector里修改，对象可能会被多个地方引用
+                //让他在参数表中修改
+                UnityEditor.EditorGUI.PropertyField(position, property, true);
             }
         }
     }

@@ -50,6 +50,7 @@ namespace Megumin.GameFramework.AI
         };
     }
 
+    [Serializable]
     public class RefVar_bool : RefVar<bool> { }
 
     public class VariableCreator_bool : VariableCreator
@@ -62,6 +63,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_int : RefVar<int> { }
 
     public class VariableCreator_int : VariableCreator
@@ -74,6 +76,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_long : RefVar<long> { }
 
     public class VariableCreator_long : VariableCreator
@@ -86,6 +89,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_string : RefVar<string> { }
 
     public class VariableCreator_string : VariableCreator
@@ -98,6 +102,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_float : RefVar<float> { }
 
     public class VariableCreator_float : VariableCreator
@@ -110,6 +115,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_double : RefVar<double> { }
 
     public class VariableCreator_double : VariableCreator
@@ -122,6 +128,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Vector2 : RefVar<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
@@ -134,6 +141,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Vector2Int : RefVar<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
@@ -146,6 +154,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Vector3 : RefVar<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
@@ -158,6 +167,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Vector3Int : RefVar<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
@@ -170,6 +180,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Vector4 : RefVar<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
@@ -182,6 +193,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Rect : RefVar<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
@@ -194,6 +206,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_RectInt : RefVar<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
@@ -206,6 +219,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Bounds : RefVar<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
@@ -218,6 +232,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_BoundsInt : RefVar<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
@@ -230,6 +245,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_GameObject : RefVar<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
@@ -242,6 +258,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Transform : RefVar<Transform> { }
 
     public class VariableCreator_Transform : VariableCreator
@@ -254,6 +271,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_ScriptableObject : RefVar<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
@@ -266,6 +284,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Trigger : RefVar<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
@@ -278,6 +297,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Color : RefVar<Color> { }
 
     public class VariableCreator_Color : VariableCreator
@@ -290,6 +310,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Gradient : RefVar<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
@@ -302,6 +323,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Texture2D : RefVar<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
@@ -314,6 +336,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_RenderTexture : RefVar<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
@@ -326,6 +349,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_AnimationCurve : RefVar<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
@@ -338,6 +362,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Mesh : RefVar<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
@@ -350,6 +375,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_SkinnedMeshRenderer : RefVar<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
@@ -362,6 +388,7 @@ namespace Megumin.GameFramework.AI
         }
     }
 
+    [Serializable]
     public class RefVar_Material : RefVar<Material> { }
 
     public class VariableCreator_Material : VariableCreator
