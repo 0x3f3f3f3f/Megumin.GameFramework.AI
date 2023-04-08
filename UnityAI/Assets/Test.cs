@@ -5,9 +5,12 @@ using System.ComponentModel;
 using Megumin.GameFramework.AI;
 using Megumin.GameFramework.AI.BehaviorTree;
 using UnityEngine;
+using Megumin;
 
 public class Test : MonoBehaviour
 {
+    public GameObjectFilter Filter;
+    public TagMask test111;
     [SerializeReference]
     public object[] Decorator = new object[5];
     public BTNode test = new BTNode();

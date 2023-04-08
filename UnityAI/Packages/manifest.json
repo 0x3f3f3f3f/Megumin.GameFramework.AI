@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "com.megumin.common": "file:W:/Git/Megumin.Common",
     "com.megumin.explosion4unity": "file:W:/Git/Megumin.Explosion/Megumin.UnityPackage/Packages/megumin.explosion4unity",
+    "com.megumin.perception": "file:W:/Git/Megumin.GameFramework.Perception",
     "com.megumin.referenceviewer": "file:W:/Git/ReferenceViewer",
     "com.unity.ai.navigation": "1.1.1",
     "com.unity.collab-proxy": "1.17.7",

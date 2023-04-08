@@ -18,6 +18,12 @@
         "com.megumin.serialization": "0.0.1"
       }
     },
+    "com.megumin.common": {
+      "version": "file:W:/Git/Megumin.Common",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.megumin.explosion4unity": {
       "version": "file:W:/Git/Megumin.Explosion/Megumin.UnityPackage/Packages/megumin.explosion4unity",
       "depth": 0,
@@ -25,6 +31,12 @@
       "dependencies": {
         "com.unity.settings-manager": "1.0.3"
       }
+    },
+    "com.megumin.perception": {
+      "version": "file:W:/Git/Megumin.GameFramework.Perception",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.megumin.referenceviewer": {
       "version": "file:W:/Git/ReferenceViewer",
