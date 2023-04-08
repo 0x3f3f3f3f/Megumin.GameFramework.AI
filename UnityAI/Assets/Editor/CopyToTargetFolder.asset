@@ -15,5 +15,9 @@ MonoBehaviour:
   packageName:
   - com.megumin.common
   - com.megumin.perception
+  - com.megumin.reflection
+  - com.megumin.serialization
+  - com.megumin.binding
+  - com.megumin.ai
   targets:
   - ../../Megumin.GameFramework.AI.Samples/AISamples/Assets/Megumin
