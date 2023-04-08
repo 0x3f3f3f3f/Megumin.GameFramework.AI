@@ -29,7 +29,7 @@ namespace Megumin.GameFramework.AI.Editor
             generator.Push($"using System;");
             generator.PushBlankLines();
 
-            generator.Push($"namespace Megumin.GameFramework.AI.Serialization");
+            generator.Push($"namespace Megumin.Serialization");
             using (generator.NewScope)
             {
                 foreach (string type in Types)
@@ -45,14 +45,14 @@ namespace Megumin.GameFramework.AI.Editor
 
             var fileName = "GenericSpecializationParameterData.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);
-            var path = Path.GetFullPath(Path.Combine(dir, fileName));
+            string filePath = Path.Combine(dir, fileName);
+            var path = Path.GetFullPath(filePath);
             Debug.Log(path);
             generator.Generate(path);
 
             //Open
-            string assetPath = path.MakeUnityProjectRelativePath();
-            AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
-            var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+            AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
+            var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
             AssetDatabase.OpenAsset(script);
         }
     }

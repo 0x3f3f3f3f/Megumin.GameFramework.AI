@@ -114,14 +114,14 @@ public sealed class $(Type)Formatter : IFormatter<string, $(type)>
 
             var fileName = "StringFormatterPrimitive.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);
-            var path = Path.GetFullPath(Path.Combine(dir, fileName));
+            string filePath = Path.Combine(dir, fileName);
+            var path = Path.GetFullPath(filePath);
             Debug.Log(path);
             generator.Generate(path);
 
             //Open
-            string assetPath = path.MakeUnityProjectRelativePath();
-            AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
-            var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+            AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
+            var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
             AssetDatabase.OpenAsset(script);
         }
 
