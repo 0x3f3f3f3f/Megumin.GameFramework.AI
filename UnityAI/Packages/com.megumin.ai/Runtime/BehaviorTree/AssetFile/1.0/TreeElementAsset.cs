@@ -16,6 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 目前框架<see cref="ISerializationCallbackReceiver"/>只支持<see cref="string"/>和<see cref="CollectionSerializationData"/>类型。
     /// 当类型时string时，用户可以可以fallback到json序列化。
     /// </remarks>
+    [Obsolete]
     public class TreeElementAsset
     {
         public List<string> StringCallbackMemberData = new();

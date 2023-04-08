@@ -90,11 +90,6 @@ namespace Megumin.GameFramework.AI
     {
 
     }
-
-    public static class AIExtension_2B7BA837510B4CB4B28E3191F6A1D13C
-    {
-        
-    }
 }
 
 
