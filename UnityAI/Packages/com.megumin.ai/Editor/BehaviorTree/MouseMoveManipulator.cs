@@ -51,12 +51,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnMouseDown(MouseDownEvent evt)
         {
-            this.LogMethodName(evt.ToStringReflection());
+            this.LogMethodName();
         }
 
         private void OnMouseUp(MouseUpEvent evt)
         {
-            this.LogMethodName(evt.ToStringReflection());
+            this.LogMethodName();
         }
 
         protected override void UnregisterCallbacksFromTarget()

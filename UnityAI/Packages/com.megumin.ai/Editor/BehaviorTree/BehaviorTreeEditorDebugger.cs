@@ -160,7 +160,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)
             {
-                Debug.Log(item.ToStringReflection());
+                Debug.Log(item);
             }
         }
 
