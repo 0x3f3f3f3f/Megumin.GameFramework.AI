@@ -1,5 +1,13 @@
 # BehaviorTree
 
+# 依赖
+- "com.unity.settings-manager": "1.0.3"
+
+1. 在Unity中打开Window -> Package Manager。
+2. 点击左上角的“+”并选择“Add package by name”。
+3. 输入UPM包的名字，版本可选填。
+4. 点击“Add”按钮，等待Unity下载和安装UPM包。
+
 # 快速入门
 ## 基础功能
 

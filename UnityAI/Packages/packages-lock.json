@@ -36,7 +36,9 @@
       "version": "file:W:/Git/Megumin.GameFramework.Perception",
       "depth": 0,
       "source": "local",
-      "dependencies": {}
+      "dependencies": {
+        "com.megumin.common": "0.0.1"
+      }
     },
     "com.megumin.referenceviewer": {
       "version": "file:W:/Git/ReferenceViewer",
