@@ -91,7 +91,13 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
-  decorators: []
+  decorators:
+  - Name: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
+    Type: Megumin.GameFramework.AI.BehaviorTree.Loop
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
   refObjs:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.children
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
@@ -106,7 +112,10 @@ MonoBehaviour:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
       Megumin.GameFramework.AI]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:

@@ -14,12 +14,14 @@ public class MoveTo : BTActionNode<NavMeshAgent>
     {
         Debug.LogError($"MyAgent : {MyAgent}");
         MyAgent.SetDestination(Des.Value.position);
+        this.Transform.LookAt(Des.Value);
     }
 
     protected override Status OnTick(BTNode from)
     {
         var current = Vector3.Scale(Transform.position, new Vector3(1, 0, 1));
         var des = Vector3.Distance(current, Des.Value.position);
+
         Debug.Log($"Distance : {des}");
         if (des > 0.25f)
         {

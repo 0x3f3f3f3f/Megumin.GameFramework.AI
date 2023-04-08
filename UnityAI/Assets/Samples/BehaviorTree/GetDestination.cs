@@ -10,6 +10,7 @@ public class GetDestination : BTActionNode
     public RefVar_Transform Destination;
     public RefVar_Transform_List DestinationList;
 
+    int index = 0;
     protected override void OnEnter()
     {
         var list = DestinationList?.Value;
@@ -19,8 +20,8 @@ public class GetDestination : BTActionNode
         }
         else
         {
-            System.Random random = new System.Random();
-            Destination.Value = list[random.Next(0, list.Count)].transform;
+            Destination.Value = list[index % list.Count].transform;
+            index++;
         }
     }
 }
