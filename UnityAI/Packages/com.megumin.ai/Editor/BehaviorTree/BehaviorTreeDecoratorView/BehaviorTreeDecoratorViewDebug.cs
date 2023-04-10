@@ -15,5 +15,31 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeDecoratorView
     {
+        bool isRunning = false;
+        Status lastTickState = Status.Init;
+
+        internal void OnPostTick()
+        {
+            if (Decorator == null || Decorator.Owner == null)
+            {
+                return;
+            }
+
+            isRunning = Decorator.Owner.State == Status.Running;
+
+            if (isRunning)
+            {
+                RefreshDetail();
+            }
+
+
+
+            if (lastTickState != Decorator.Owner.State)
+            {
+                RefreshDetail();
+            }
+
+            lastTickState = Decorator.Owner.State;
+        }
     }
 }

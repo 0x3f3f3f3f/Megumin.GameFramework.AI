@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (Time.time - entertime >= waitTime)
             {
-                Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2.Value} ---- {count}");
+                Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2?.Value} ---- {count}");
                 return Status.Succeeded;
             }
             return Status.Running;

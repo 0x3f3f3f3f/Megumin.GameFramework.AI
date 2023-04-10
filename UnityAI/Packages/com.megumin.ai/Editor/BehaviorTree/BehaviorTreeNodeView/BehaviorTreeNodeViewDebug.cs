@@ -42,6 +42,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             lastTickState = Node.State;
+
+            //foreach (var item in AllDecoratorView)
+            //{
+            //    item.OnPostTick();
+            //}
         }
 
         private void OnStateChange()

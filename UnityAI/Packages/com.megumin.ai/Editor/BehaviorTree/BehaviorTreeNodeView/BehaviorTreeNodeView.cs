@@ -67,6 +67,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             DecoretorListView.bindItem += ListViewBindDecorator;
             DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;
             DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
+            DecoretorListView.destroyItem += DecoretorListView_destroyItem;
 
             //设置为仅垂直滚动
             DecoretorListView.horizontalScrollingEnabled = false; //不生效

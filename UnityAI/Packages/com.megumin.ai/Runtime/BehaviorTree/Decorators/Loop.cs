@@ -32,7 +32,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return $"loopcount : {loopCount}";
+            if (Owner.State == Status.Running)
+            {
+                return $"Count: {cur} / {loopCount}";
+            }
+            return $"Count : {loopCount}";
         }
     }
 }

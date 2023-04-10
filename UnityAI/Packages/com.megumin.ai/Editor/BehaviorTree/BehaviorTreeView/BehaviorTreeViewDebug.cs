@@ -16,11 +16,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         internal void OnPostTick()
         {
+            var list = graphElements.ToList();
             foreach (var item in graphElements)
             {
                 if (item is BehaviorTreeNodeView nodeView)
                 {
                     nodeView.OnPostTick();
+                }
+
+                if (item is BehaviorTreeDecoratorView decoratorView)
+                {
+                    decoratorView.OnPostTick();
                 }
             }
         }

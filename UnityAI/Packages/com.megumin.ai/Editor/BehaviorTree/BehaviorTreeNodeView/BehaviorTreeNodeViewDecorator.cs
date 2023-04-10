@@ -79,10 +79,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             RefreshDecoratorListView();
         }
 
+        List<BehaviorTreeDecoratorView> AllDecoratorView = new();
         internal protected VisualElement ListViewMakeDecoratorView()
         {
             var elem = new BehaviorTreeDecoratorView();
             elem.NodeView = this;
+            AllDecoratorView.Add(elem);
             return elem;
         }
 
@@ -92,6 +94,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var decorator = SONode.Node.Decorators[index];
                 decoratorView.SetDecorator(decorator);
+            }
+        }
+
+        internal protected void DecoretorListView_destroyItem(VisualElement obj)
+        {
+            if (obj is BehaviorTreeDecoratorView decoratorView)
+            {
+                AllDecoratorView.Remove(decoratorView);
             }
         }
 

@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 
     /// </summary>
-    public class Repeater : OneChildNode
+    public class Repeater : OneChildNode, IDetailable
     {
         public int loopCount = 2;
 
@@ -35,6 +35,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return Status.Running;
+        }
+
+        public string GetDetail()
+        {
+            if (State == Status.Running)
+            {
+                return $"Count: {cur} / {loopCount}";
+            }
+            return $"Count : {loopCount}";
         }
     }
 }
