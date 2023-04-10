@@ -264,6 +264,13 @@ ResetFlag --> Return
 查找特性比较耗时，推荐更换命名后，重新保存下已有的行为树文件，将名字更新。  
 如果需要运行时解析旧名字，同理，在游戏开始时，反序列化之前使用TypeCache.HotType设置别名。
 
+## 类型变更
+节点序列化成员类型变更时，由于类型不匹配，会导致原有行为树文件反序列失败。  
+在成员或者节点类型上使用SetMemberByAttribute，指定一个反射赋值时的回调方法。  
+成员回调方法签名是 bool FuncName(object memberValue);   
+类型回调方法签名是 bool FuncName(string memberName,object memberValue);  
+方法不能是私有的或者静态的。  
+
 ## 节点引用
 可以在节点中声明引用含有Serializable特性的节点。
 使用BindingPathSetterAttribute，则可以在Inspector中选择树种的节点引用。
