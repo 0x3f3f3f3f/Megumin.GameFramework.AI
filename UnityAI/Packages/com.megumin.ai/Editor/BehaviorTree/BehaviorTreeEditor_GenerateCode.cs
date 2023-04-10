@@ -9,6 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     partial class BehaviorTreeEditor
     {
+        //TODO, 重构代码，不然后面还要改
         public void GenerateCode()
         {
             BehaviorTreeAsset_1_1 behaviorTree = CurrentAsset.AssetObject as BehaviorTreeAsset_1_1;
@@ -60,11 +61,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 generator.Push($"BehaviorTree tree = new();");
                 generator.Push($"tree.GUID = \"{behaviorTree.GUID}\";");
+                generator.Push($"tree.RootTree = tree;");
+                generator.Push($"tree.InitOption = initOption;");
+                generator.PushBlankLines();
 
 
+                generator.Push("//生成节点");
+                foreach (var item in behaviorTree.nodes)
+                {
+                    var varName = SafeVarName(item.Name);
+                    generator.Push($"var {varName} = new {item.Type}();");
+                }
 
                 generator.Push($"return tree;");
             }
+        }
+
+        public string SafeVarName(string refName)
+        {
+            var name = $"temp_{refName}";
+            name = name.Replace('-', '_');
+            name = name.Replace('.', '_');
+            return name;
         }
     }
 }

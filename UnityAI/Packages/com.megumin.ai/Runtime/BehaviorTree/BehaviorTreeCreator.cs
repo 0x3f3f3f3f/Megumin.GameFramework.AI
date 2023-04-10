@@ -40,6 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             var creatorTypeName = $"BT_{treeName}_{guid}_Creator";
             creatorTypeName = creatorTypeName.Replace('-', '_');
+            creatorTypeName = creatorTypeName.Replace('.', '_');
             return creatorTypeName;
         }
     }
