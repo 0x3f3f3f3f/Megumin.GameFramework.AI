@@ -80,7 +80,7 @@ BehaviorTreeDecoratorView {
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    background-image: url('project://database/Packages/com.unity.settings-manager/Content/Options.png?fileID=2800000&guid=9eff477e4332346818c96745043dae9e&type=3#Options');
+    background-image: resource('sv_icon_dot0_pix16_gizmo');
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
@@ -104,7 +104,6 @@ BehaviorTreeDecoratorView {
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    background-image: url('project://database/Packages/com.unity.settings-manager/Content/Options.png?fileID=2800000&guid=9eff477e4332346818c96745043dae9e&type=3#Options');
     background-color: rgb(178, 125, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
