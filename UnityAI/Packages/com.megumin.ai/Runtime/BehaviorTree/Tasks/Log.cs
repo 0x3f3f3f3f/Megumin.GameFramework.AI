@@ -10,10 +10,8 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Debug")]
-    [Icon("Icons/Overlays/ToolsToggle.png")]
+    [Icon("console.infoicon@2x")]
     [HelpURL("www.baidu.com")]
-    [Description]
-    [Tooltip("在控制台打印日志")]
     public class Log : BTActionNode, IDetailable
     {
         int count = 0;

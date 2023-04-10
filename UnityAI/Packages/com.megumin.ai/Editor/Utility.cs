@@ -252,9 +252,13 @@ namespace Megumin.GameFramework.AI.Editor
 
             if (!iconCache.TryGetValue(path, out texture2D))
             {
-                //Resources.Load 需要路径不包含扩展名
-                var withoutExtensionPath = path.Replace(Path.GetExtension(path), "");
-                var iconTexture = Resources.Load<Texture2D>(withoutExtensionPath);
+                var iconTexture = Resources.Load<Texture2D>(path);
+                if (!iconTexture)
+                {
+                    //Resources.Load 需要路径不包含扩展名
+                    var withoutExtensionPath = Path.ChangeExtension(path, null);
+                    iconTexture = Resources.Load<Texture2D>(withoutExtensionPath);
+                }
 
                 if (!iconTexture)
                 {
