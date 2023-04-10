@@ -5,10 +5,25 @@
 ///********************************************************************************************************************************
 
 using System;
+using Megumin.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public partial class BT_WaitAndLog_71ad0dfc_da1a_4b3c_b95d_b4276312641a_Creator : BehaviorTreeCreator
+    public sealed partial class BT_WaitAndLog_71ad0dfc_da1a_4b3c_b95d_b4276312641a_Creator : BehaviorTreeCreator
     {
+        static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new("WaitAndLog_Init");
+        public override BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
+        {
+            using var profiler = instantiateMarker.Auto();
+
+            if (initOption == null)
+            {
+                return null;
+            }
+
+            BehaviorTree tree = new();
+            tree.GUID = "71ad0dfc-da1a-4b3c-b95d-b4276312641a";
+            return tree;
+        }
     }
 }
