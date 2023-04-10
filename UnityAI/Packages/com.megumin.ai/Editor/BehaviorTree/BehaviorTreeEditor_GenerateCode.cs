@@ -21,19 +21,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
             using (generator.NewScope)
             {
-                generator.Push($"public partial class $(ClassName)");
+                generator.Push($"public partial class $(ClassName) : BehaviorTreeCreator");
                 using (generator.NewScope)
                 {
 
                 }
             }
 
-
-
-            var className = $"BT_{behaviorTree.name}_{behaviorTree.GUID}";
-            className = className.Replace('-', '_');
-
-            generator.Macro["$(ClassName)"] = className;
+            generator.Macro["$(ClassName)"] =
+                BehaviorTreeCreator.GetCreatorTypeName(behaviorTree.TreeName, behaviorTree.GUID);
 
 
             string filePath = $"Assets/{behaviorTree.name}_Gene.cs";

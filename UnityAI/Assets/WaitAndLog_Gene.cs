@@ -8,7 +8,7 @@ using System;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public partial class BT_WaitAndLog_71ad0dfc_da1a_4b3c_b95d_b4276312641a: BehaviorTreeCreator
+    public partial class BT_WaitAndLog_71ad0dfc_da1a_4b3c_b95d_b4276312641a_Creator : BehaviorTreeCreator
     {
     }
 }
