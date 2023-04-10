@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class SubTree : BTActionNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement
+    public class SubTree : BTActionNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement, IBindingParseable
     {
         public BehaviorTreeAsset_1_1 BehaviorTreeAsset;
 
@@ -21,6 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 InstantiateSubTree();
                 BehaviourTree.BindAgent(Tree.Agent);
+                BehaviourTree.ParseAllBindable(Tree.Agent);
             }
 
             return BehaviourTree.TickSubTree(from);
@@ -29,6 +31,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public BehaviorTree InstantiateSubTree()
         {
             BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
+            BehaviourTree.RunOption = Tree.RunOption;
+            if (GameObject)
+            {
+                BehaviourTree.InstanceName = GameObject.name;
+            }
             return BehaviourTree;
         }
 
@@ -76,6 +83,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             base.BindAgent(agent);
             BehaviourTree?.BindAgent(agent);
+        }
+
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
+        {
+            BehaviourTree?.ParseAllBindable(Agent);
+            return ParseBindingResult.Both;
+        }
+
+        public string DebugParseResult()
+        {
+            return null;
         }
     }
 }

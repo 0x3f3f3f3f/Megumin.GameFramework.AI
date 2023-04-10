@@ -407,6 +407,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             DeserializeObj(decoratorObjCache);
             DeserializeObj(nodeObjCache);
 
+            //设置装饰器Owner
+            foreach (var item in tree.AllNodes)
+            {
+                foreach (var decorator in item.Decorators)
+                {
+                    decorator.Owner = item;
+                }
+            }
+
             tree.Asset = this;
             tree.UpdateNodeIndexDepth();
 

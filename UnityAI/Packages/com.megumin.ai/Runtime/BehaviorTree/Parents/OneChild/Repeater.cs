@@ -15,6 +15,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public int loopCount = 2;
 
         int cur = 0;
+
+        protected override void OnEnter()
+        {
+            cur = 0;
+        }
+
         protected override Status OnTick(BTNode from)
         {
             if (loopCount == 0)
@@ -39,11 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            if (State == Status.Running)
-            {
-                return $"Count: {cur} / {loopCount}";
-            }
-            return $"Count : {loopCount}";
+            return $"Count: {cur} / {loopCount}";
         }
     }
 }
