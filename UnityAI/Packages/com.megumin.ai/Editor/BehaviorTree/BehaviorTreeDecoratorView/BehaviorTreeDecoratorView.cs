@@ -95,16 +95,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public BehaviorTreeNodeView NodeView { get; internal set; }
-        public ITreeElement Decorator { get; private set; }
+        public IDecorator Decorator { get; private set; }
         public DecoratorWrapper SODecorator;
 
-        internal void SetDecorator(ITreeElement decorator)
+        internal void SetDecorator(IDecorator decorator)
         {
             this.Decorator = decorator;
             ReloadView();
         }
 
-        public DecoratorWrapper CreateSOWrapperIfNull(ITreeElement decorator, bool forceRecreate = false)
+        public DecoratorWrapper CreateSOWrapperIfNull(IDecorator decorator, bool forceRecreate = false)
         {
             if (decorator == null)
             {

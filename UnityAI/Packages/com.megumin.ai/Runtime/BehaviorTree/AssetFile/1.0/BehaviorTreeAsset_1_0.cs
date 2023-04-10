@@ -145,7 +145,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             public List<CollectionSerializationData> MemberData = new();
             public List<CollectionSerializationData> CallbackMemberData = new();
 
-            public ITreeElement Instantiate(BehaviorTree tree, bool instanceMeta = true)
+            public IDecorator Instantiate(BehaviorTree tree, bool instanceMeta = true)
             {
                 var nodeType = Type.GetType(this.TypeName);
                 var decorator = Activator.CreateInstance(nodeType) as BTDecorator;

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator
+    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
     {
         public int loopCount = -1;
 
@@ -28,6 +28,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public void OnNodeAbort(BTNode bTNode)
         {
             cur = 0;
+        }
+
+        public string GetDetail()
+        {
+            return $"loopcount : {loopCount}";
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Megumin.Reflection;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -34,7 +35,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 前置装饰器，没必要分前后，总共也没几个，通过接口判断一下得了
         /// </summary>
         [SerializeReference]
-        public List<ITreeElement> Decorators = new();
+        [SetMemberBy("SetDecorators")]
+        public List<IDecorator> Decorators = new();
+
+        protected bool SetDecorators(object value)
+        {
+            if (value is List<IDecorator> ds)
+            {
+                Decorators = ds;
+                return true;
+            }
+            else if (value is List<ITreeElement> old)
+            {
+                Debug.Log($"Use MyTest");
+                foreach (ITreeElement e in old)
+                {
+                    if (e is IDecorator decorator)
+                    {
+                        AddDecorator(decorator);
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
 
         public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
@@ -45,21 +71,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Space(20)]
         public string InstanceID;
 
-
-
-
-        public ITreeElement AddDecorator(ITreeElement decorator)
+        public IDecorator AddDecorator(IDecorator decorator)
         {
             if (!Decorators.Contains(decorator))
             {
                 Decorators.Add(decorator);
+                decorator.Owner = this;
             }
 
             return decorator;
         }
 
-        public ITreeElement AddDecorator<T>()
-            where T : ITreeElement, new()
+        public void RemoveDecorator(IDecorator decorator)
+        {
+            Decorators.Remove(decorator);
+            if (decorator.Owner == this)
+            {
+                decorator.Owner = null;
+            }
+        }
+
+        public IDecorator AddDecorator<T>()
+            where T : IDecorator, new()
         {
             var decorator = new T();
             if (decorator is BTDecorator bTDecorator)
@@ -69,19 +102,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return AddDecorator(decorator);
         }
 
-        public ITreeElement AddDecorator(Type type)
+        public IDecorator AddDecorator(Type type)
         {
-            var decorator = Activator.CreateInstance(type) as ITreeElement;
+            var decorator = Activator.CreateInstance(type) as IDecorator;
             if (decorator is BTDecorator bTDecorator)
             {
                 bTDecorator.GUID = Guid.NewGuid().ToString();
             }
             return AddDecorator(decorator);
-        }
-
-        internal void RemoveDecorator(ITreeElement decorator)
-        {
-            Decorators.Remove(decorator);
         }
 
 

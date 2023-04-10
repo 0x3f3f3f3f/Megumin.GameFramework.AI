@@ -10,6 +10,24 @@ using UnityEngine;
 namespace Megumin.Reflection
 {
     /// <summary>
+    /// 反射赋值是会查找这个特性，如果设置了回调函数，则使用回调函数对成员赋值。
+    /// <para>
+    /// 回调方法不可以是private和static的，必须在子类中仍可以被调用，否则无法在子类型中通过反射找到该方法。
+    /// </para>
+    /// </summary>
+    public class SetMemberByAttribute : Attribute
+    {
+        /// <summary>
+        /// 回调函数应该返回一个bool，如果为true，则跳过默认的反射赋值过程。
+        /// </summary>
+        public string FuncName { get; set; }
+        public SetMemberByAttribute(string funcName)
+        {
+            FuncName = funcName;
+        }
+    }
+
+    /// <summary>
     /// 序列化哪些成员委托
     /// </summary>
     /// <param backingFieldName="value"></param>
@@ -30,7 +48,32 @@ namespace Megumin.Reflection
         public static bool TrySetMemberValue<T>(this T instance, string memberName, object value)
         {
             const BindingFlags BindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var members = instance?.GetType().GetMembers(BindingAttr);
+            const BindingFlags callbackflag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            var instanceType = instance?.GetType();
+
+            //类型设置了Callback 函数
+            var instanceTypeMemberCallbacAttribute = instanceType?.GetCustomAttribute<SetMemberByAttribute>();
+            if (string.IsNullOrEmpty(instanceTypeMemberCallbacAttribute?.FuncName) == false)
+            {
+                var methond = instanceType.GetMethod(instanceTypeMemberCallbacAttribute.FuncName, callbackflag);
+                if (methond != null)
+                {
+                    //此时value如果是复杂类型，可能只创建好了实例，还没有反序列化成员值
+                    var success = methond.Invoke(instance, new object[] { memberName, value });
+                    if (success is bool s && s == true)
+                    {
+                        //返回true时不再使用反射设置成员。
+                        return true;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"{instanceTypeMemberCallbacAttribute.FuncName} can not found.");
+                }
+            }
+
+            //通过反射对成员赋值
+            var members = instanceType?.GetMembers(BindingAttr);
             var member = members?.FirstOrDefault(elem => elem.Name == memberName);
 
             if (member == null)
@@ -63,6 +106,28 @@ namespace Megumin.Reflection
             try
             {
                 Type valueType = value?.GetType();
+
+                var perMemberCallbacAttribute = member?.GetCustomAttribute<SetMemberByAttribute>();
+                if (string.IsNullOrEmpty(perMemberCallbacAttribute?.FuncName) == false)
+                {
+                    //针对某个成员，设置了callback
+                    var methond = instanceType.GetMethod(perMemberCallbacAttribute.FuncName, callbackflag);
+                    if (methond != null)
+                    {
+                        //此时value如果是复杂类型，可能只创建好了实例，还没有反序列化成员值
+
+                        var success = methond.Invoke(instance, new object[] { value });
+                        if (success is bool s && s == true)
+                        {
+                            //返回true时不再使用反射设置成员。
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"{instanceTypeMemberCallbacAttribute.FuncName} can not found.");
+                    }
+                }
 
                 if (member is FieldInfo fieldInfo)
                 {

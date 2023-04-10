@@ -10,9 +10,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 装饰器
     /// </summary>
-    public interface IDecorator
+    public interface IDecorator : ITreeElement
     {
-
+        BTNode Owner { get; set; }
     }
 
     /// <summary>

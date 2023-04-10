@@ -239,7 +239,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
 
             //创建节点实例
-            Dictionary<ObjectData, object> treeObjCache = new();
+            Dictionary<ObjectData, object> nodeObjCache = new();
             if (nodes != null)
             {
                 foreach (var item in nodes)
@@ -265,10 +265,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
 
                     finder.RefDic.Add(item.Name, instance);
-                    treeObjCache.Add(item, instance);
+                    nodeObjCache.Add(item, instance);
                 }
             }
 
+            //创建装饰器实例
+            Dictionary<ObjectData, object> decoratorObjCache = new();
             if (decorators != null)
             {
                 foreach (var item in decorators)
@@ -294,10 +296,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
 
                     finder.RefDic.Add(item.Name, instance);
-                    treeObjCache.Add(item, instance);
+                    decoratorObjCache.Add(item, instance);
                 }
             }
 
+            //创建引用对象实例
+            Dictionary<ObjectData, object> treeObjCache = new();
             if (refObjs != null)
             {
                 foreach (var item in refObjs)
@@ -355,44 +359,53 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            //反序列化树节点 节点父子关系和装饰器关系自动关联
-            foreach (var item in treeObjCache)
+            void DeserializeObj(Dictionary<ObjectData, object> cache)
             {
-                if (item.Key.TryDeserialize(item.Value, finder))
+                foreach (var item in cache)
                 {
-                    if (item.Value is BTNode node)
+                    if (item.Key.TryDeserialize(item.Value, finder))
                     {
-                        tree.AddNode(node);
-                        if (node.GUID == StartNodeGUID)
+                        if (item.Value is BTNode node)
                         {
-                            tree.StartNode = node;
+                            tree.AddNode(node);
+                            if (node.GUID == StartNodeGUID)
+                            {
+                                tree.StartNode = node;
+                            }
                         }
-                    }
 
-                    if (item.Value is BehaviorTreeElement element)
-                    {
-                        element.Tree = tree;
-                    }
-
-                    if (item.Value is IAIMeta meta)
-                    {
-                        if (SharedMeta.ContainsKey(item.Key.Name) == false)
+                        if (item.Value is BehaviorTreeElement element)
                         {
-                            SharedMeta[item.Key.Name] = meta;
+                            element.Tree = tree;
                         }
-                    }
 
-                    if (item.Value is IBindingParseable parseable)
-                    {
-                        tree.AllBindingParseable.Add(parseable);
-                    }
+                        if (item.Value is IAIMeta meta)
+                        {
+                            if (SharedMeta.ContainsKey(item.Key.Name) == false)
+                            {
+                                SharedMeta[item.Key.Name] = meta;
+                            }
+                        }
 
-                    if (item.Value is IBindAgentable bindAgentable)
-                    {
-                        tree.AllBindAgentable.Add(bindAgentable);
+                        if (item.Value is IBindingParseable parseable)
+                        {
+                            tree.AllBindingParseable.Add(parseable);
+                        }
+
+                        if (item.Value is IBindAgentable bindAgentable)
+                        {
+                            tree.AllBindAgentable.Add(bindAgentable);
+                        }
                     }
                 }
             }
+
+            //反序列化树节点 节点父子关系和装饰器关系自动关联
+            //先反序列化引用对象，在反序列化装饰，最后反序列化节点。
+            //这样可以尽量保证SetMemberByAttribute调用时，引用对象已经反序列化完毕。
+            DeserializeObj(treeObjCache);
+            DeserializeObj(decoratorObjCache);
+            DeserializeObj(nodeObjCache);
 
             tree.Asset = this;
             tree.UpdateNodeIndexDepth();

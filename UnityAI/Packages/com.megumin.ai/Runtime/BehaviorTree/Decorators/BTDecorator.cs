@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class BTDecorator : BehaviorTreeElement, IDecorator
     {
-
+        public BTNode Owner { get; set; }
     }
 
     public class BTDecorator<T> : BTDecorator
