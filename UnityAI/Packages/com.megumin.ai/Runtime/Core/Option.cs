@@ -68,5 +68,9 @@ namespace Megumin.GameFramework.AI
         /// 延迟实例化子树，推迟到子树节点运行时实例化。
         /// </summary>
         public bool LazyInitSubtree = false;
+        /// <summary>
+        /// 使用生成的代码
+        /// </summary>
+        public bool UseGenerateCode = false;
     }
 }

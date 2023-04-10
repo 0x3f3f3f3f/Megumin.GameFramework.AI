@@ -27,6 +27,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [FormerlySerializedAs("treeElements")]
         public List<ObjectData> refObjs;
 
+        public string TreeName { get; protected set; }
+
+        private void OnEnable()
+        {
+            //name只能在OnEnable被调用
+            TreeName = name;
+        }
 
         public bool SaveTree(BehaviorTree tree)
         {
@@ -179,6 +186,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             if (initOption == null)
             {
                 return null;
+            }
+
+            if (initOption.UseGenerateCode)
+            {
+                //使用生成的代码实例化行为树。
+                BehaviorTreeCreator creator = BehaviorTreeCreator.GetCreator(TreeName, GUID, null);
+                if (creator == null)
+                {
+                    Debug.LogWarning($"{TreeName} Code Creator can not found.");
+                }
+                else
+                {
+                    return creator.Instantiate(initOption, refFinder);
+                }
             }
 
             BehaviorTree tree = new();
