@@ -12,20 +12,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void GenerateCode()
         {
             BehaviorTreeAsset_1_1 behaviorTree = CurrentAsset.AssetObject as BehaviorTreeAsset_1_1;
-            CSCodeGenerator codeGenerator = new();
+            CSCodeGenerator generator = new();
+
+
+            generator.Push($"using System;");
+            generator.PushBlankLines();
+
+            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+            using (generator.NewScope)
+            {
+                generator.Push($"public partial class $(ClassName)");
+                using (generator.NewScope)
+                {
+
+                }
+            }
 
 
 
+            var className = $"BT_{behaviorTree.name}_{behaviorTree.GUID}";
+            className = className.Replace('-', '_');
 
-
-
-
-
-
+            generator.Macro["$(ClassName)"] = className;
 
 
             string filePath = $"Assets/{behaviorTree.name}_Gene.cs";
-            codeGenerator.Generate(filePath);
+            generator.Generate(filePath);
 
             //Open
             AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
