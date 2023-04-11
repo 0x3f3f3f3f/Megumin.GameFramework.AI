@@ -126,16 +126,4 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <param name="delta"></param>
         void MoveNext(float delta);
     }
-
-    public class Timer
-    {
-        public Timer parent;
-        double Origin = 0;
-        double realtime = Time.realtimeSinceStartupAsDouble;
-        double Now => (realtime - Origin) * GlobalScale;
-        double localScale;
-        double GlobalScale => localScale * (parent?.GlobalScale ?? 1);
-    }
-
-
 }
