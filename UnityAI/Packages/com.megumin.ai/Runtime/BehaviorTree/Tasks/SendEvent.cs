@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class SendEvent : BTActionNode, IDetailable
     {
-        public RefVar<string> EventName;
+        public RefVar_String EventName;
         protected override Status OnTick(BTNode from)
         {
             Tree.SendEvent(EventName, this);

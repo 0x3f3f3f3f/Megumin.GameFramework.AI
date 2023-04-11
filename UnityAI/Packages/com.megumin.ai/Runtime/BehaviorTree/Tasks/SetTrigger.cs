@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class SetTrigger : BTActionNode, IDetailable
     {
-        public RefVar<string> TriggerName;
+        public RefVar_String TriggerName;
         protected override Status OnTick(BTNode from)
         {
             Tree.SetTrigger(TriggerName, this);

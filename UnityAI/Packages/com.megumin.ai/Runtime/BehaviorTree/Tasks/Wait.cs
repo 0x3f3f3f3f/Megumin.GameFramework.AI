@@ -6,7 +6,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Icon("d_unityeditor.animationwindow@2x")]
     public class Wait : BTActionNode, IDetailable
     {
-        public RefVar<float> waitTime = 5.0f;
+        public RefVar_Float WaitTime = new() { value = 5.0f };
 
         float entertime;
         private float left;
@@ -14,13 +14,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         protected override void OnEnter()
         {
             entertime = Time.time;
-            left = waitTime.Value;
+            left = WaitTime;
         }
 
         protected override Status OnTick(BTNode from)
         {
             //Debug.Log($"Wait Time :{Time.time - entertime}");
-            left = waitTime.Value - (Time.time - entertime);
+            left = WaitTime - (Time.time - entertime);
             if (left <= 0)
             {
                 return Status.Succeeded;
@@ -37,11 +37,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (State == Status.Running)
             {
-                return $"Wait: {waitTime.Value:0.000}  Left:{left:0.000}";
+                return $"Wait: {(float)WaitTime:0.000}  Left:{left:0.000}";
             }
             else
             {
-                return $"Wait: {waitTime.Value:0.000}";
+                return $"Wait: {(float)WaitTime:0.000}";
             }
         }
     }
