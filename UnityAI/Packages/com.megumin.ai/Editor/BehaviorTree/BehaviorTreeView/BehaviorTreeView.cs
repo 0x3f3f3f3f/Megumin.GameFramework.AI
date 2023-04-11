@@ -365,7 +365,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (node is BTParentNode parentNode)
                 {
                     var view = GetNodeByGuid(node.GUID) as BehaviorTreeNodeView;
-                    foreach (var child in parentNode.children)
+                    foreach (var child in parentNode.Children)
                     {
                         var childview = GetNodeByGuid(child.GUID) as BehaviorTreeNodeView;
                         childview.ConnectParentNodeView(view);

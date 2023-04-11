@@ -90,7 +90,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             version++;
-            parentNode.children.Add(child);
+            parentNode.Children.Add(child);
             AddNode(child);
             return true;
         }
@@ -100,7 +100,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             if (parentNode.ContainsChild(child))
             {
                 version++;
-                parentNode.children.RemoveAll(elem => elem.GUID == child.GUID);
+                parentNode.Children.RemoveAll(elem => elem.GUID == child.GUID);
                 return true;
             }
 

@@ -30,7 +30,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void SortChild(BTParentNode parentNode)
         {
-            parentNode.children.Sort((lhs, rhs) =>
+            parentNode.Children.Sort((lhs, rhs) =>
             {
                 var lhsView = GetElementByGuid(lhs.GUID);
                 var rhsView = GetElementByGuid(rhs.GUID);
@@ -52,7 +52,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             UndoRecord($"ConnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
-            parentNode.children.Add(childNode);
+            parentNode.Children.Add(childNode);
             //重新排序
             SortChild(parentNode);
             UpdateNodeIndex();
@@ -72,7 +72,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             this.LogMethodName();
             UndoRecord($"DisconnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
-            parentNode.children.RemoveAll(elem => elem.GUID == childNode.GUID);
+            parentNode.Children.RemoveAll(elem => elem.GUID == childNode.GUID);
 
             //重新排序
             SortChild(parentNode);

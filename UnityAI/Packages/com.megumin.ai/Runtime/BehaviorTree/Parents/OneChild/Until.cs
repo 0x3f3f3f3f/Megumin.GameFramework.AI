@@ -8,7 +8,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class Until : OneChildNode, IDetailable
     {
-        public Status DesState = Status.Succeeded;
+        public Status Result = Status.Succeeded;
         protected override Status OnTick(BTNode from)
         {
             if (Child0 == null)
@@ -18,7 +18,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             var res = Child0.Tick(this);
 
-            if (res == DesState)
+            if (res == Result)
             {
                 return res;
             }
@@ -28,7 +28,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return DesState.ToString();
+            return Result.ToString();
         }
     }
 }

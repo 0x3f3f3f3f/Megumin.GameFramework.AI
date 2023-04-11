@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -14,7 +15,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         [HideInInspector]
         [SerializeReference]
-        public List<BTNode> children = new();
+        [FormerlySerializedAs("children")]
+        public List<BTNode> Children = new();
 
         /// <summary>
         /// 条件终止 动态模式
@@ -24,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public bool ContainsChild(BTNode node)
         {
-            foreach (BTNode child in children)
+            foreach (BTNode child in Children)
             {
                 if (child.GUID == node.GUID)
                 {
@@ -47,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return false;
             }
 
-            foreach (BTNode child in children)
+            foreach (BTNode child in Children)
             {
                 if (child.GUID == node.GUID)
                 {
@@ -72,17 +74,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public abstract class CompositeNode : BTParentNode
     {
-        public int current { get; protected set; } = -1;
+        public int CurrentIndex { get; protected set; } = -1;
 
         protected override void OnEnter()
         {
-            base.OnEnter();
-            current = 0;
+            CurrentIndex = 0;
         }
 
         protected override void OnAbort()
         {
-            foreach (var item in children)
+            foreach (var item in Children)
             {
                 if (item.State == Status.Running)
                 {
@@ -98,24 +99,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             get
             {
-                if (children.Count > 0)
+                if (Children.Count > 0)
                 {
-                    return children[0];
+                    return Children[0];
                 }
                 else
                 {
                     return null;
-                }
-            }
-            set
-            {
-                if (children.Count > 0)
-                {
-                    children[0] = value;
-                }
-                else
-                {
-                    children.Add(value);
                 }
             }
         }
@@ -132,24 +122,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             get
             {
-                if (children.Count > 0)
+                if (Children.Count > 0)
                 {
-                    return children[0];
+                    return Children[0];
                 }
                 else
                 {
                     return null;
-                }
-            }
-            set
-            {
-                if (children.Count > 0)
-                {
-                    children[0] = value;
-                }
-                else
-                {
-                    children.Add(value);
                 }
             }
         }
@@ -158,24 +137,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             get
             {
-                if (children.Count > 1)
+                if (Children.Count > 1)
                 {
-                    return children[1];
+                    return Children[1];
                 }
                 else
                 {
                     return null;
-                }
-            }
-            set
-            {
-                if (children.Count > 1)
-                {
-                    children[1] = value;
-                }
-                else
-                {
-                    children.Insert(1, value);
                 }
             }
         }

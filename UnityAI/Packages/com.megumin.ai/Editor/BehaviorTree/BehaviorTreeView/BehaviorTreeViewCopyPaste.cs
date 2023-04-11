@@ -227,7 +227,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     if (node is BTParentNode parentNode)
                     {
-                        foreach (var item in parentNode.children)
+                        foreach (var item in parentNode.Children)
                         {
                             ChangeTree(item);
                         }

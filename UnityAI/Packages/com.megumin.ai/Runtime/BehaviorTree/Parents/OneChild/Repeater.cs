@@ -14,11 +14,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public int loopCount = 2;
 
-        int cur = 0;
+        int completeCount = 0;
 
         protected override void OnEnter()
         {
-            cur = 0;
+            completeCount = 0;
         }
 
         protected override Status OnTick(BTNode from)
@@ -32,9 +32,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (res == Status.Succeeded || res == Status.Failed)
             {
-                cur++;
-                Log($"Repeater: complete {cur}");
-                if (loopCount >= 0 && cur >= loopCount)
+                completeCount++;
+                Log($"Repeater: complete {completeCount}");
+                if (loopCount >= 0 && completeCount >= loopCount)
                 {
                     return res;
                 }
@@ -45,7 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return $"Count: {cur} / {loopCount}";
+            return $"Count: {completeCount} / {loopCount}";
         }
     }
 }

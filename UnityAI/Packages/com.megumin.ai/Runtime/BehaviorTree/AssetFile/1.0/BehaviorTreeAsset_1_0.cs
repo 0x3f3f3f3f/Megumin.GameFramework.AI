@@ -35,7 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             nameof(BTNode.Meta),
             nameof(BTNode.InstanceID),
             nameof(BTNode.GUID),
-            nameof(BTParentNode.children),
+            nameof(BTParentNode.Children),
             nameof(OneChildNode.Child0),
             nameof(TwoChildNode.Child0),
             nameof(TwoChildNode.Child1),
@@ -113,7 +113,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 if (node is BTParentNode parentNode)
                 {
-                    foreach (var child in parentNode.children)
+                    foreach (var child in parentNode.Children)
                     {
                         asset.ChildNodes.Add(child.GUID);
                     }
@@ -290,7 +290,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     {
                         if (tree.TryGetNodeByGuid(childNodeAsset, out var childNode))
                         {
-                            parentNode.children.Add(childNode);
+                            parentNode.Children.Add(childNode);
                         }
                     }
                 }

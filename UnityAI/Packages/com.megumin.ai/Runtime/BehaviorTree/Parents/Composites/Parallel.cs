@@ -44,9 +44,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override Status OnTick(BTNode from)
         {
-            for (int i = 0; i < children.Count; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
-                var child = children[i];
+                var child = Children[i];
                 if (firstTick == false && child.IsCompleted)
                 {
                     //第一次Tick每个子节点都要执行，子节点的状态值是上一次执行的结果。
@@ -74,7 +74,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 case FinishMode.AnyFailed:
                     {
                         var hasflag = false;
-                        foreach (var child in children)
+                        foreach (var child in Children)
                         {
                             if (child.State == Status.Failed)
                             {
@@ -92,7 +92,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 case FinishMode.AnySucceeded:
                     {
                         var hasflag = false;
-                        foreach (var child in children)
+                        foreach (var child in Children)
                         {
                             if (child.State == Status.Succeeded)
                             {
@@ -109,7 +109,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                 case FinishMode.AnyCompleted:
                     {
-                        foreach (var child in children)
+                        foreach (var child in Children)
                         {
                             if (child.IsCompleted)
                             {
@@ -122,7 +122,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 case FinishMode.AnySucceededWaitAll:
                     {
                         var hasflag = false;
-                        foreach (var child in children)
+                        foreach (var child in Children)
                         {
                             if (child.State == Status.Running)
                             {
@@ -140,7 +140,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 case FinishMode.AnyFailedWaitAll:
                     {
                         var hasflag = false;
-                        foreach (var child in children)
+                        foreach (var child in Children)
                         {
                             if (child.State == Status.Running)
                             {
@@ -162,9 +162,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void AbortRunningChild()
         {
-            for (int i = 0; i < children.Count; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
-                var child = children[i];
+                var child = Children[i];
                 if (child.IsCompleted)
                 {
                     continue;

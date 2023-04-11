@@ -11,12 +11,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         protected override Status OnTick(BTNode from)
         {
-            for (int i = 0; i < children.Count; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
                 BTNode target = null;
 
-                var child = children[i];
-                if (i >= current)
+                var child = Children[i];
+                if (i >= CurrentIndex)
                 {
                     target = child;
                 }
@@ -30,10 +30,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 void TryAbortLastRunning()
                 {
-                    if (i < current)
+                    if (i < CurrentIndex)
                     {
                         //终止成功
-                        var lastRunning = children[current];
+                        var lastRunning = Children[CurrentIndex];
                         Log($"{child} AbortLowerPriority {lastRunning}");
                         lastRunning.Abort(this);
                     }
@@ -45,18 +45,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (result == Status.Running)
                     {
                         TryAbortLastRunning();
-                        current = i;
+                        CurrentIndex = i;
                         return Status.Running;
                     }
                     else if (result == Status.Succeeded)
                     {
                         TryAbortLastRunning();
-                        current = i;
+                        CurrentIndex = i;
                         return Status.Succeeded;
                     }
 
                     //指针只能向右移动
-                    current = Math.Max(current, i);
+                    CurrentIndex = Math.Max(CurrentIndex, i);
                 }
             }
 

@@ -40,7 +40,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 if (node is BTParentNode parentNode)
                 {
                     var nextDepth = depth + 1;
-                    foreach (var child in parentNode.children)
+                    foreach (var child in parentNode.Children)
                     {
                         SetNodeIndex(child, nextDepth);
                     }

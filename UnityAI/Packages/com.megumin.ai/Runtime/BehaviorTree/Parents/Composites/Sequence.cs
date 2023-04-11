@@ -13,12 +13,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         protected override Status OnTick(BTNode from)
         {
-            for (int i = 0; i < children.Count; i++)
+            for (int i = 0; i < Children.Count; i++)
             {
                 BTNode target = null;
-                var child = children[i];
+                var child = Children[i];
 
-                if (i >= current)
+                if (i >= CurrentIndex)
                 {
                     target = child;
                 }
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         {
                             //终止低优先级标记求解值失败，不需要继续检查节点本身，等于节点结果失败。直接终止。
                             TryAbortLastRunning();
-                            current = i;
+                            CurrentIndex = i;
                             return Status.Failed;
                         }
                     }
@@ -70,10 +70,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
                 void TryAbortLastRunning()
                 {
-                    if (i < current)
+                    if (i < CurrentIndex)
                     {
                         //终止成功
-                        var lastRunning = children[current];
+                        var lastRunning = Children[CurrentIndex];
                         Log($"{child} AbortLowerPriority {lastRunning}");
                         lastRunning.Abort(this);
                     }
@@ -85,18 +85,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (result == Status.Running)
                     {
                         TryAbortLastRunning();
-                        current = i;
+                        CurrentIndex = i;
                         return Status.Running;
                     }
                     else if (result == Status.Failed)
                     {
                         TryAbortLastRunning();
-                        current = i;
+                        CurrentIndex = i;
                         return Status.Failed;
                     }
 
                     //指针只能向右移动
-                    current = Math.Max(current, i);
+                    CurrentIndex = Math.Max(CurrentIndex, i);
                 }
             }
 

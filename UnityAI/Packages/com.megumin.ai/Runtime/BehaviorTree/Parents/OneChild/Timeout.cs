@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </remarks>
     public class Timeout : OneChildNode
     {
-        public float duration = 1.0f;
+        public RefVar_Float Duration = new() { value = 30f };
         float startTime;
 
         protected override void OnEnter()
@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected override Status OnTick(BTNode from)
         {
-            if (Time.time - startTime > duration)
+            if (Time.time - startTime > Duration)
             {
                 Child0.Abort(this);
                 return Status.Failed;
