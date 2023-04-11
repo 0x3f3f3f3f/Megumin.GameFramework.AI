@@ -7,26 +7,48 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    /// <summary>
-    /// 成功执行后进入CD.
-    /// </summary>
-    public class Cooldown : ConditionDecorator, IPostDecorator, IConditionDecorator
+    public enum CooldownMode
     {
-        public double cooldownTime = 5;
-        public double nextCanEnterTime;
+        OnEnter,
+        OnSucceeded,
+        OnFailed,
+    }
+
+    /// <summary>
+    /// CD
+    /// </summary>
+    public class Cooldown : ConditionDecorator, IPreDecorator, IPostDecorator, IConditionDecorator
+    {
+        public RefVar_Double CooldownTime = new RefVar_Double() { value = 5 };
+        public CooldownMode Mode = CooldownMode.OnEnter;
+
+        protected double nextCanEnterTime = -1;
+
+        protected override bool OnCheckCondition(BTNode container)
+        {
+            return Time.time > nextCanEnterTime;
+        }
+
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            if (result == Status.Succeeded)
+            if (Mode == CooldownMode.OnSucceeded && result == Status.Succeeded)
             {
-                nextCanEnterTime = Time.time + cooldownTime;
+                nextCanEnterTime = Time.time + CooldownTime;
+            }
+            else if (Mode == CooldownMode.OnFailed && result == Status.Failed)
+            {
+                nextCanEnterTime = Time.time + CooldownTime;
             }
 
             return result;
         }
 
-        protected override bool OnCheckCondition(BTNode container)
+        public void BeforeNodeEnter(BTNode container)
         {
-            return Time.time > nextCanEnterTime;
+            if (Mode == CooldownMode.OnEnter)
+            {
+                nextCanEnterTime = Time.time + CooldownTime;
+            }
         }
     }
 }
