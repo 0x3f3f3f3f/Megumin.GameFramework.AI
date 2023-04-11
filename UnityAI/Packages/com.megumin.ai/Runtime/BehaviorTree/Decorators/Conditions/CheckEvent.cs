@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class CheckEvent : ConditionDecorator, IDetailable
     {
-        public RefVar<string> EventName;
+        public RefVar_String EventName;
 
         protected override bool OnCheckCondition(BTNode container)
         {
@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return @$"Evt: ""{EventName?.Value}""";
+            return @$"Evt: ""{(string)EventName}""";
         }
     }
 }

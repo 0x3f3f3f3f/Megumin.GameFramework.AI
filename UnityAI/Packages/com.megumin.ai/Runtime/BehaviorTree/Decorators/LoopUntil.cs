@@ -11,10 +11,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// </summary>
     internal class LoopUntil : BTDecorator, IPostDecorator
     {
-        public Status DesState = Status.Succeeded;
+        public Status Result = Status.Succeeded;
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            if (result == DesState)
+            if (result == Result)
             {
                 return result;
             }

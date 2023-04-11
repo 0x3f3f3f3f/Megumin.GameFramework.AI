@@ -8,14 +8,39 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [Icon("console.infoicon@2x")]
     [Category("Debug")]
-    internal class DecoratorLog : BTDecorator, IPreDecorator
+    internal class DecoratorLog : BTDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
-        public string LogStr = "Hello world!";
+        public bool PreLog = false;
+        public bool PostLog = false;
+        public bool AbortLog = false;
 
-        public void BeforeNodeEnter(BTNode bTNode)
+        public RefVar_String LogStr = new() { value = "Hello world!" };
+
+        public void BeforeNodeEnter(BTNode container)
         {
-            Debug.Log(bTNode.GetType().Name);
+            if (PreLog)
+            {
+                Debug.Log($"PreDeco: {container}  {(string)LogStr}");
+            }
+        }
+
+        public Status AfterNodeExit(Status result, BTNode container)
+        {
+            if (PostLog)
+            {
+                Debug.Log($"PostDeco: {container}  {result}  {(string)LogStr}");
+            }
+            return result;
+        }
+
+        public void OnNodeAbort(BTNode container)
+        {
+            if (AbortLog)
+            {
+                Debug.Log($"AbortDeco: {container}  {(string)LogStr}");
+            }
         }
     }
 }

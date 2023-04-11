@@ -62,14 +62,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return false;
         }
 
-        public bool IsStarted { get; internal set; }
         public Status State { get; set; } = Status.Init;
 
         /// <summary>
         /// 节点实例唯一ID
         /// </summary>
-        [Space(20)]
-        public string InstanceID;
+        public string InstanceID { get; set; }
 
         public IDecorator AddDecorator(IDecorator decorator)
         {

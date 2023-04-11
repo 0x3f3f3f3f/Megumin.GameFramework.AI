@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public class CheckTrigger : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator
     {
-        public RefVar<string> TriggerName;
+        public RefVar_String TriggerName;
         public WhenResetTrigger Reset = WhenResetTrigger.Immediate;
 
         protected override bool OnCheckCondition(BTNode container)
@@ -34,7 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return @$"Trg: ""{TriggerName?.Value}""";
+            return @$"Trg: ""{(string)TriggerName}""";
         }
 
         public void BeforeNodeEnter(BTNode container)

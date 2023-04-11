@@ -8,18 +8,18 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
+    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable, IPreDecorator
     {
         public int loopCount = -1;
 
-        int cur = 0;
+        int completeCount = 0;
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            cur++;
-            Log($"loop: complete {cur}.    loopCount:{loopCount}");
-            if (cur >= loopCount && loopCount > 0)
+            completeCount++;
+            Log($"loop: complete {completeCount}.    loopCount:{loopCount}");
+            if (completeCount >= loopCount && loopCount > 0)
             {
-                cur = 0;
+                completeCount = 0;
                 return result;
             }
             return Status.Running;
@@ -27,12 +27,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void OnNodeAbort(BTNode bTNode)
         {
-            cur = 0;
+            completeCount = 0;
         }
 
         public string GetDetail()
         {
-            return $"Count: {cur} / {loopCount}";
+            return $"Count: {completeCount} / {loopCount}";
+        }
+
+        public void BeforeNodeEnter(BTNode container)
+        {
+            completeCount = 0;
         }
     }
 }
