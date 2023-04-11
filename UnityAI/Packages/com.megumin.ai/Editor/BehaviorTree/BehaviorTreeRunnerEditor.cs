@@ -42,9 +42,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            if (GUILayout.Button("ResetTree"))
+            if (GUILayout.Button("ReStart"))
             {
-                behaviorTreeRunner.ResetTree();
+                behaviorTreeRunner.ReStart();
             }
 
             if (GUILayout.Button("ReParseBinding"))

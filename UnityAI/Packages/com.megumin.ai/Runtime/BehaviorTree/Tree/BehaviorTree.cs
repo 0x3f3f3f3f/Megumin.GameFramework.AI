@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Space]
         public VariableTable Variable = new();
 
-        public readonly Dictionary<string, object> lockDic = new Dictionary<string, object>();
+        public Dictionary<string, object> LockDic { get; } = new();
         public BTNode StartNode { get; set; }
         public IBehaviorTreeAsset Asset { get; internal set; }
 
@@ -27,36 +27,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void Reset()
         {
+            foreach (var item in AllNodes)
+            {
+                item.Reset();
+            }
             treestate = Status.Init;
         }
 
-        internal void Init(object agent)
+        public void ReStart()
         {
-            //SetAgent(agent);
-
-            //foreach (var item in AllNodes)
-            //{
-            //    item.Awake();
-            //}
-
-
-
-            //foreach (var item in AllNodes)
-            //{
-            //    if (item.Enabled)
-            //    {
-            //        item.Enable();
-            //    }
-            //}
-
-            // Start在第一次Tick时调用一次
-            //foreach (var item in AllNodes)
-            //{
-            //    if (item.Enabled && item.IsStarted)
-            //    {
-            //        item.Start();
-            //    }
-            //}
+            if (StartNode != null && StartNode.State == Status.Running)
+            {
+                StartNode.Abort(StartNode);
+            }
+            treestate = Status.Init;
         }
 
         static readonly Unity.Profiling.ProfilerMarker parseAllBindableMarker = new("ParseAllBindable");

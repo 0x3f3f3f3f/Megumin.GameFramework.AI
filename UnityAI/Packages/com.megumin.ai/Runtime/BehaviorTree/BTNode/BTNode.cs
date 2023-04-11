@@ -126,6 +126,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         //}
 
+        public void Reset()
+        {
+            OnReset();
+        }
         /// <summary>
         /// 不要再函数内修改State值，会导致流程错误
         /// </summary>
@@ -144,7 +148,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return Status.Succeeded;
         }
 
-
+        protected virtual void OnReset() { }
 
         /// <summary>
         /// 根据调用节点返回不同的结果值，使调用节点忽略当前节点。

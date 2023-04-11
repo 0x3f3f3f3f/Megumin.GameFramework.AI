@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar<string> lockName;
         public Status AfterNodeExit(Status result, BTNode bTNode)
         {
-            Tree.lockDic.Remove(lockName);
+            Tree.LockDic.Remove(lockName);
             return result;
         }
 
@@ -26,12 +26,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 lockName = bTNode.InstanceID;
             }
 
-            Tree.lockDic.Add(lockName, this);
+            Tree.LockDic.Add(lockName, this);
         }
 
         protected override bool OnCheckCondition(BTNode container)
         {
-            Tree.lockDic.TryGetValue(lockName, out var result);
+            Tree.LockDic.TryGetValue(lockName, out var result);
             return result == this;
         }
     }

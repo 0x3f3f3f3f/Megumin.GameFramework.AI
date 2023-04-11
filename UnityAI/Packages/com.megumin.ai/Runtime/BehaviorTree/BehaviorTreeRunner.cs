@@ -124,9 +124,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void ResetTree()
+        public void ReStart()
         {
-            BehaviourTree.Reset();
+            BehaviourTree.ReStart();
         }
 
         public void ReParseBinding()
