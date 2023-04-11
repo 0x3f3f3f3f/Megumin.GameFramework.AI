@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// 序列化架构设计缺陷，不能实现序列化 <![CDATA[List<RefVar<T>>]]> 类型
     /// </summary>
     [Obsolete]
-    public partial class BehaviorTreeAsset_1_0 : ScriptableObject, IBehaviorTreeAsset
+    public partial class BehaviorTreeAsset_1_0 : ScriptableObject
     {
         public string Version = new Version(1, 0, 0).ToString();
         [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
@@ -296,7 +296,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            tree.Asset = this;
+            //tree.Asset = this;
             tree.UpdateNodeIndexDepth();
             return tree;
         }

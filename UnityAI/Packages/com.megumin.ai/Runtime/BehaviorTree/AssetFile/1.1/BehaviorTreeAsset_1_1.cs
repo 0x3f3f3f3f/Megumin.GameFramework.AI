@@ -51,6 +51,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             GUID = tree.GUID;
             StartNodeGUID = tree.StartNode?.GUID;
 
+            //回调
+            foreach (var node in tree.AllNodes)
+            {
+                if (node is ISerializationCallbackReceiver nodeCallback)
+                {
+                    nodeCallback.OnBeforeSerialize();
+                }
+
+                foreach (var decorator in node.Decorators)
+                {
+                    if (decorator is ISerializationCallbackReceiver decoratorCallback)
+                    {
+                        decoratorCallback.OnBeforeSerialize();
+                    }
+                }
+            }
+
             Dictionary<object, string> cacheRef = new();
             Stack<(string name, object value)> needSerialization = new();
             List<UnityObjectData> objRefs = new();
@@ -210,6 +227,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 tree.GUID = Guid.NewGuid().ToString();
             }
 
+            tree.Asset = this;
             tree.RootTree = tree;
             tree.InitOption = initOption;
 
@@ -437,7 +455,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
             }
 
-            tree.Asset = this;
             tree.UpdateNodeIndexDepth();
 
             if (initOption.LazyInitSubtree)
@@ -451,6 +468,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     if (item is SubTree subtreeNode)
                     {
                         subtreeNode.InstantiateSubTree();
+                    }
+                }
+            }
+
+            //回调
+            foreach (var node in tree.AllNodes)
+            {
+                if (node is ISerializationCallbackReceiver nodeCallback)
+                {
+                    nodeCallback.OnAfterDeserialize();
+                }
+
+                foreach (var decorator in node.Decorators)
+                {
+                    if (decorator is ISerializationCallbackReceiver decoratorCallback)
+                    {
+                        decoratorCallback.OnAfterDeserialize();
                     }
                 }
             }
