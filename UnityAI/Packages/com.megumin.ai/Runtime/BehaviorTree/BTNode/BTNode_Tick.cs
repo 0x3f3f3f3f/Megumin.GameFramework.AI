@@ -218,7 +218,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             var hasAbort = Decorators.Any(static elem =>
             {
                 return elem is IConditionDecorator conditionable
-                        && conditionable.AbortType.HasFlag(AbortType.LowerPriority);
+                        && (conditionable.AbortType & AbortType.LowerPriority) != 0;
             });
             return hasAbort;
         }

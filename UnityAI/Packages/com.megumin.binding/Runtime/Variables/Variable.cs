@@ -107,7 +107,7 @@ namespace Megumin.Binding
             {
                 if (ParseResult.HasValue)
                 {
-                    if (ParseResult.Value.HasFlag(ParseBindingResult.Get))
+                    if ((ParseResult.Value & ParseBindingResult.Get) != 0)
                     {
                         //解析成功
                         return Getter();
@@ -115,7 +115,7 @@ namespace Megumin.Binding
                     else
                     {
                         //解析失败
-                        if (GetMode.HasFlag(ParseMode.Log))
+                        if ((GetMode & ParseMode.Log) != 0)
                         {
                             DebugLogInValue();
                         }
@@ -124,18 +124,18 @@ namespace Megumin.Binding
                 else
                 {
                     //还未解析
-                    if (GetMode.HasFlag(ParseMode.Log))
+                    if ((GetMode & ParseMode.Log) != 0)
                     {
                         DebugLogInValue();
                     }
                 }
 
-                if (GetMode.HasFlag(ParseMode.FallbackValue))
+                if ((GetMode & ParseMode.FallbackValue) != 0)
                 {
                     return base.value;
                 }
 
-                if (GetMode.HasFlag(ParseMode.FallbackTypeDefault))
+                if ((GetMode & ParseMode.FallbackTypeDefault) != 0)
                 {
                     return default;
                 }
@@ -147,7 +147,7 @@ namespace Megumin.Binding
             {
                 if (ParseResult.HasValue)
                 {
-                    if (ParseResult.Value.HasFlag(ParseBindingResult.Set))
+                    if ((ParseResult.Value & ParseBindingResult.Set) != 0)
                     {
                         //解析成功
                         Setter(value);
@@ -155,7 +155,7 @@ namespace Megumin.Binding
                     else
                     {
                         //解析失败
-                        if (SetMode.HasFlag(ParseMode.Log))
+                        if ((SetMode & ParseMode.Log) != 0)
                         {
                             DebugLogInValue();
                         }
@@ -164,19 +164,19 @@ namespace Megumin.Binding
                 else
                 {
                     //还未解析
-                    if (SetMode.HasFlag(ParseMode.Log))
+                    if ((SetMode & ParseMode.Log) != 0)
                     {
                         DebugLogInValue();
                     }
                 }
 
-                if (SetMode.HasFlag(ParseMode.FallbackValue))
+                if ((SetMode & ParseMode.FallbackValue) != 0)
                 {
                     base.value = value;
                     return;
                 }
 
-                if (SetMode.HasFlag(ParseMode.FallbackTypeDefault))
+                if ((SetMode & ParseMode.FallbackTypeDefault) != 0)
                 {
                     return;
                 }

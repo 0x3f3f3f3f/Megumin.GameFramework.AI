@@ -161,8 +161,8 @@ namespace Megumin.Serialization
 
         public bool TryDeserialize(out object value)
         {
-            if (DataType.HasFlag(SerializationDataType.IsNull)
-                && DataType.HasFlag(SerializationDataType.IsClass))
+            if ((DataType & SerializationDataType.IsNull) != 0
+                && (DataType & SerializationDataType.IsClass) != 0)
             {
                 value = null;
                 return true;
@@ -175,7 +175,7 @@ namespace Megumin.Serialization
         {
             //用户回调和框架默认模式只能二选一
             //如果用户回调都都失败，框架默认模式也大概率失败，没有调用的意义。
-            if (DataType.HasFlag(SerializationDataType.IsUserCallbackFormatter))
+            if ((DataType & SerializationDataType.IsUserCallbackFormatter) != 0)
             {
                 if (TryCreateInstance<ICallbackFormatter<BasicTypeSerializationData>>(out var formatter))
                 {
@@ -188,7 +188,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                if (DataType.HasFlag(SerializationDataType.IsUnityObject))
+                if ((DataType & SerializationDataType.IsUnityObject) != 0)
                 {
                     if (RefObject)
                     {
@@ -216,7 +216,7 @@ namespace Megumin.Serialization
                     }
                 }
 
-                if (DataType.HasFlag(SerializationDataType.IsString))
+                if ((DataType & SerializationDataType.IsString) != 0)
                 {
                     value = Data;
                     return true;
@@ -331,7 +331,7 @@ namespace Megumin.Serialization
 
         public override bool TryDeserializeNotNull(out object value)
         {
-            if (DataType.HasFlag(SerializationDataType.IsList))
+            if ((DataType & SerializationDataType.IsList) != 0)
             {
                 if (Collection == null)
                 {
@@ -360,7 +360,7 @@ namespace Megumin.Serialization
                 }
             }
 
-            if (DataType.HasFlag(SerializationDataType.IsArray))
+            if ((DataType & SerializationDataType.IsArray) != 0)
             {
                 if (Collection == null)
                 {

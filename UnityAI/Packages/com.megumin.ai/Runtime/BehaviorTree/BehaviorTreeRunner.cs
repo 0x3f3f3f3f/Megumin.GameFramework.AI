@@ -26,8 +26,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (BehaviourTree != null)
             {
-                if (OnEnabled.HasFlag(OperationTree.Enable)
-                    || OnEnabled.HasFlag(OperationTree.Resume))
+                if ((OnEnabled & OperationTree.Enable) != 0
+                    || (OnEnabled & OperationTree.Resume) != 0)
                 {
                     DisableTree();
                 }
@@ -43,8 +43,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (BehaviourTree != null)
             {
-                if (OnDisabled.HasFlag(OperationTree.Disable)
-                    || OnDisabled.HasFlag(OperationTree.Pause))
+                if ((OnDisabled & OperationTree.Disable) != 0
+                    || (OnDisabled & OperationTree.Pause) != 0)
                 {
                     DisableTree();
                 }

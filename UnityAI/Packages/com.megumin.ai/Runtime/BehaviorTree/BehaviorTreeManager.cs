@@ -97,7 +97,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
 
-            if (tickMode.HasFlag(TickMode.Update))
+            if ((tickMode & TickMode.Update) != 0)
             {
                 if (UpdateTree.Contains(tree) == false)
                 {
@@ -109,7 +109,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 UpdateTree.Remove(tree);
             }
 
-            if (tickMode.HasFlag(TickMode.FixedUpdate))
+            if ((tickMode & TickMode.FixedUpdate) != 0)
             {
                 if (FixedUpdateTree.Contains(tree) == false)
                 {
@@ -121,7 +121,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 FixedUpdateTree.Remove(tree);
             }
 
-            if (tickMode.HasFlag(TickMode.LateUpdate))
+            if ((tickMode & TickMode.LateUpdate) != 0)
             {
                 if (LateUpdateTree.Contains(tree) == false)
                 {

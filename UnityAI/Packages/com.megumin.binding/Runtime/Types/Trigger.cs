@@ -9,7 +9,7 @@ namespace Megumin.Binding
     /// <summary>
     /// TODO
     /// </summary>
-    public struct Trigger
+    public class Trigger
     {
         public bool Value;
     }

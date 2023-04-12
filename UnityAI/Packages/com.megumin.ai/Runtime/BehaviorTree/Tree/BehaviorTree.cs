@@ -76,7 +76,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (treestate == Status.Succeeded)
             {
-                if (RunOption != null && RunOption.OnSucceeded.HasFlag(OperationTree.ReStart))
+                if (RunOption != null && (RunOption.OnSucceeded & OperationTree.ReStart) != 0)
                 {
                     treestate = Status.Init;
                 }
@@ -88,7 +88,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (treestate == Status.Failed)
             {
-                if (RunOption != null && RunOption.OnFailed.HasFlag(OperationTree.ReStart))
+                if (RunOption != null && (RunOption.OnFailed & OperationTree.ReStart) != 0)
                 {
                     treestate = Status.Init;
                 }

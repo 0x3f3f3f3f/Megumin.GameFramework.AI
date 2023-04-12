@@ -37,7 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.AbortType.HasFlag(AbortType.Self))
+                    if ((conditionable.AbortType & AbortType.Self) != 0)
                     {
                         if (conditionable.CheckCondition(this) == false)
                         {
@@ -60,7 +60,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.AbortType.HasFlag(AbortType.LowerPriority))
+                    if ((conditionable.AbortType & AbortType.LowerPriority) != 0)
                     {
                         if (conditionable.CheckCondition(this) == false)
                         {
