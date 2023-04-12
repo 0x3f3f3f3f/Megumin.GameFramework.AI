@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12780fe94a1f0d14299c7e2bd872fc65, type: 3}
   m_Name: ParamDataGenerator
   m_EditorClassIdentifier: 
-  Folder: {fileID: 102900000, guid: 4e3da36d93f731e47b4711b34a36e3ef, type: 3}
+  Folder: {fileID: 102900000, guid: 9047cb04d2ac8214e8da03d4ac095db8, type: 3}
