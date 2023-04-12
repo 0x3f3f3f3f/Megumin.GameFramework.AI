@@ -24,6 +24,7 @@ namespace Megumin.GameFramework.AI
         [field: NonSerialized]
         public T Tree { get; set; }
 
+        [HideInCallstack]
         public virtual void Log(object message)
         {
             Tree?.Log(message);

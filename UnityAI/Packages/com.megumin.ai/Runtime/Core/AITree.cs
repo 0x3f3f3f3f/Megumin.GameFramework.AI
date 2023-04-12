@@ -27,6 +27,7 @@ namespace Megumin.GameFramework.AI
         /// </summary>
         public HashSet<IBindingParseable> AllBindingParseable { get; } = new();
 
+        [HideInCallstack]
         public virtual void Log(object message)
         {
             if (RunOption?.Log == true)

@@ -96,22 +96,3 @@ namespace Megumin.GameFramework.AI
     }
 }
 
-#if UNITY_2022_2_OR_NEWER
-    //Unity 内置
-#else
-
-namespace UnityEngine
-{
-    //
-    // 摘要:
-    //     Marks the methods you want to hide from the Console window callstack. When you
-    //     hide these methods they are removed from the detail area of the selected message
-    //     in the Console window.
-    [AttributeUsage(AttributeTargets.Method)]
-    public sealed class HideInCallstackAttribute : Attribute
-    {
-    }
-}
-
-#endif
-
