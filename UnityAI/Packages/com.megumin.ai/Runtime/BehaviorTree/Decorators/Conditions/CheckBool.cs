@@ -1,4 +1,5 @@
 ﻿using System;
+using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEngine.Serialization;
 

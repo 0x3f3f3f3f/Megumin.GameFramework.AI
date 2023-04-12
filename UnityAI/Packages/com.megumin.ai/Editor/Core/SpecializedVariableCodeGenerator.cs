@@ -97,11 +97,10 @@ public class VariableCreator_$(Type)_Array : VariableCreator
             CSCodeGenerator generator = new();
             generator.Push($"using System;");
             generator.Push($"using System.Collections.Generic;");
-            generator.Push($"using Megumin.Binding;");
             generator.Push($"using UnityEngine;");
             generator.PushBlankLines();
 
-            generator.Push($"namespace Megumin.GameFramework.AI");
+            generator.Push($"namespace Megumin.Binding");
             using (generator.NewScope)
             {
                 generator.Push($"public partial class VariableCreator");

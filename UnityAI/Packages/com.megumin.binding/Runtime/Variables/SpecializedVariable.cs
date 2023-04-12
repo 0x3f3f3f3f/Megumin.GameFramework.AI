@@ -6,10 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Megumin.Binding;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.Binding
 {
     public partial class VariableCreator
     {
