@@ -4,7 +4,8 @@
     "references": [
         "Megumin.Binding",
         "Megumin.Serialization",
-        "Megumin.Serialization.Editor"
+        "Megumin.Serialization.Editor",
+        "Megumin.Common"
     ],
     "includePlatforms": [
         "Editor"

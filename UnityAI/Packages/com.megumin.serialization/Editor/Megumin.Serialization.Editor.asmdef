@@ -2,7 +2,8 @@
     "name": "Megumin.Serialization.Editor",
     "rootNamespace": "Megumin.Serialization.Editor",
     "references": [
-        "Megumin.Serialization"
+        "Megumin.Serialization",
+        "Megumin.Common"
     ],
     "includePlatforms": [
         "Editor"

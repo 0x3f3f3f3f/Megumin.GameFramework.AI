@@ -22,6 +22,9 @@
         "name": "云却",
         "email": "479813005@qq.com",
         "url": "https://github.com/KumoKyaku"
+    },
+    "dependencies": {
+      "com.megumin.common": "0.0.1"
     }
 }
 

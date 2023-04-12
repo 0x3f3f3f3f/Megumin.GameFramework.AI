@@ -19,6 +19,7 @@
     "url": "https://github.com/KumoKyaku"
   },
   "dependencies": {
+    "com.megumin.common": "0.0.1",
     "com.megumin.serialization": "0.0.1"
   }
 }

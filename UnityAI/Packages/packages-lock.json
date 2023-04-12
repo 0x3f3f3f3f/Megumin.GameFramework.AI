@@ -16,6 +16,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
+        "com.megumin.common": "0.0.1",
         "com.megumin.serialization": "0.0.1"
       }
     },
@@ -57,7 +58,9 @@
       "version": "file:com.megumin.serialization",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.megumin.common": "0.0.1"
+      }
     },
     "com.unity.ai.navigation": {
       "version": "1.1.1",

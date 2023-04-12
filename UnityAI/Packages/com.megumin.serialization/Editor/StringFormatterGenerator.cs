@@ -30,8 +30,6 @@ namespace Megumin.GameFramework.AI
             //"string",
         };
 
-#if MEGUMIN_EXPLOSION4UNITY
-
         const string template =
 @"
 public sealed class $(Type)Formatter : IFormatter<string, $(type)>
@@ -124,7 +122,5 @@ public sealed class $(Type)Formatter : IFormatter<string, $(type)>
             var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
             AssetDatabase.OpenAsset(script);
         }
-
-#endif
     }
 }

@@ -47,8 +47,6 @@ namespace Megumin.GameFramework.AI
             "Material",
         };
 
-#if MEGUMIN_EXPLOSION4UNITY
-
         const string template =
 @"
 [Serializable]
@@ -182,7 +180,5 @@ public class VariableCreator_$(Type)_Array : VariableCreator
             var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
             AssetDatabase.OpenAsset(script);
         }
-
-#endif
     }
 }
