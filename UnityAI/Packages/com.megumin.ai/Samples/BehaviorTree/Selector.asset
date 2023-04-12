@@ -28,9 +28,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.Decorators
-    - Name: children
+    - Name: Children
       Type: $ref
-      Value: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.children
+      Value: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.Children
     - Name: GUID
       Type: System.String
       Value: 0e2c3966-8fb4-47a0-86f6-bac7cb107708
@@ -43,9 +43,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.Decorators
-    - Name: waitTime
+    - Name: WaitTime
       Type: $ref
-      Value: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.waitTime
+      Value: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.WaitTime
     - Name: GUID
       Type: System.String
       Value: 4631cdc9-5c22-4564-80a0-f59c0d1dff76
@@ -58,9 +58,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 5c064b40-a690-4d48-a816-7f5341398cd1.Decorators
-    - Name: waitTime
+    - Name: WaitTime
       Type: $ref
-      Value: 5c064b40-a690-4d48-a816-7f5341398cd1.waitTime
+      Value: 5c064b40-a690-4d48-a816-7f5341398cd1.WaitTime
     - Name: GUID
       Type: System.String
       Value: 5c064b40-a690-4d48-a816-7f5341398cd1
@@ -92,8 +92,8 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 9ad753a5-6686-4787-a2e2-5144094acb52
-  treeElements:
-  - Name: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.children
+  refObjs:
+  - Name: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.Children
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
       Megumin.GameFramework.AI]]
     Member:
@@ -107,7 +107,7 @@ MonoBehaviour:
       Type: $ref
       Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3
   - Name: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member:
     - Name: 0
@@ -122,14 +122,8 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 279.7917
-    - Name: index
-      Type: System.Int32
-      Value: 0
-    - Name: depth
-      Type: System.Int32
-      Value: 0
   - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member: []
   - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.Meta
@@ -141,20 +135,14 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 493
-    - Name: index
-      Type: System.Int32
-      Value: 2
-    - Name: depth
-      Type: System.Int32
-      Value: 1
-  - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.waitTime
-    Type: Megumin.Binding.RefVar`1[[System.Single]]
+  - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.WaitTime
+    Type: Megumin.Binding.RefVar_Float
     Member:
     - Name: value
       Type: System.Single
       Value: 5
   - Name: 5c064b40-a690-4d48-a816-7f5341398cd1.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member:
     - Name: 0
@@ -169,20 +157,14 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 493
-    - Name: index
-      Type: System.Int32
-      Value: 1
-    - Name: depth
-      Type: System.Int32
-      Value: 1
-  - Name: 5c064b40-a690-4d48-a816-7f5341398cd1.waitTime
-    Type: Megumin.Binding.RefVar`1[[System.Single]]
+  - Name: 5c064b40-a690-4d48-a816-7f5341398cd1.WaitTime
+    Type: Megumin.Binding.RefVar_Float
     Member:
     - Name: value
       Type: System.Single
       Value: 5
   - Name: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member: []
   - Name: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.LogStr2
@@ -197,9 +179,3 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 493
-    - Name: index
-      Type: System.Int32
-      Value: 3
-    - Name: depth
-      Type: System.Int32
-      Value: 1

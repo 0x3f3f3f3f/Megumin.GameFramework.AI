@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: BTtree2
   m_EditorClassIdentifier: 
-  GUID: 0cf2beb0-b275-4b81-b421-ec7cd9f446a7
+  Version: 1.1.0
+  <GUID>k__BackingField: 15a6da1d-0645-4ad8-a405-ab0e645cdafd
   <StartNodeGUID>k__BackingField: 
   UseSerializeReferenceGeneric: 0
   UnityObjectRef: []
   variables: []
-  treeElements:
+  nodes:
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744
     Type: Megumin.GameFramework.AI.BehaviorTree.TestActionNode
     Member:
@@ -30,13 +31,12 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 08be3641-cb40-42af-a069-f3a7f3051744
+  decorators: []
+  refObjs:
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
-    Member:
-    - Name: 0
-      Type: $ref
-      Value: 7664444a-6d65-4c28-b2f7-1f1dd69d11dc
+    Member: []
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -46,9 +46,3 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 193
-  - Name: 7664444a-6d65-4c28-b2f7-1f1dd69d11dc
-    Type: Megumin.GameFramework.AI.BehaviorTree.TestBTDecorator
-    Member:
-    - Name: GUID
-      Type: System.String
-      Value: 7664444a-6d65-4c28-b2f7-1f1dd69d11dc

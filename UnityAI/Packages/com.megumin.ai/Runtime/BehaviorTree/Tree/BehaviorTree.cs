@@ -328,6 +328,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void SendEvent(string eventName, BTNode sendNode = null)
         {
+            if (string.IsNullOrEmpty(eventName))
+            {
+                return;
+            }
+
             EventData eventData = new();
             eventData.SendTick = TotalTickCount;
             eventData.SendNode = sendNode;
@@ -336,6 +341,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public bool TryGetEvent(string eventName, BTNode checkNode, out object eventData)
         {
+            if (string.IsNullOrEmpty(eventName))
+            {
+                eventData = null;
+                return false;
+            }
+
             if (eventCache.TryGetValue(eventName, out var evtData))
             {
                 eventData = evtData;
@@ -407,6 +418,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void SetTrigger(string triggerName, BTNode sendNode = null)
         {
+            if (string.IsNullOrEmpty(triggerName))
+            {
+                return;
+            }
+
             TriggerData eventData = new();
             eventData.SendTick = TotalTickCount;
             eventData.SendNode = sendNode;
@@ -415,6 +431,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public bool TryGetTrigger(string triggerName, out TriggerData triggerData)
         {
+            if (string.IsNullOrEmpty(triggerName))
+            {
+                triggerData = null;
+                return false;
+            }
+
             if (triggerCache.TryGetValue(triggerName, out triggerData))
             {
                 return true;
