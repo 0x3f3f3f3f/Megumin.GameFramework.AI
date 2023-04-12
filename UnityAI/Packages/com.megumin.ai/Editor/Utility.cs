@@ -132,42 +132,6 @@ namespace Megumin.GameFramework.AI.Editor
             Utility.RepaintWindows("Inspector");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="visualElement"></param>
-        /// <param name="className"></param>
-        /// <param name="enable"></param>
-        /// <returns>ClassList 是否发生变化</returns>
-        public static bool SetToClassList(this VisualElement visualElement, string className, bool enable = true)
-        {
-            bool hasClass = visualElement.ClassListContains(className);
-            if (enable)
-            {
-                if (hasClass)
-                {
-                    return false;
-                }
-                else
-                {
-                    visualElement.AddToClassList(className);
-                    return true;
-                }
-            }
-            else
-            {
-                if (hasClass)
-                {
-                    visualElement.RemoveFromClassList(className);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
         public static bool WasHitByMouse<T>(this VisualElement target, MouseEventBase<T> evt)
             where T : MouseEventBase<T>, new()
         {
@@ -234,13 +198,6 @@ namespace Megumin.GameFramework.AI.Editor
             }
         }
 
-        public static Task Delay(this VisualElement visualElement, long delayMs)
-        {
-            TaskCompletionSource<bool> taskCompletionSource = new();
-            visualElement.schedule.Execute(() => { taskCompletionSource.TrySetResult(true); }).ExecuteLater(delayMs);
-            return taskCompletionSource.Task;
-        }
-
         static Dictionary<string, Texture2D> iconCache = new();
         public static bool TryLoadIcon(string path, out Texture2D texture2D)
         {
@@ -292,31 +249,6 @@ namespace Megumin.GameFramework.AI.Editor
                 }
             }
             return null;
-        }
-
-        public static string GetTitle<T>(this T obj)
-        {
-            var title = "Unknown";
-
-            if (obj is ITitleable titleable)
-            {
-                title = titleable.Title;
-            }
-            else
-            {
-                var type = obj?.GetType();
-                if (type != null)
-                {
-                    title = type.Name;
-                    var attribute = type.GetCustomAttribute<DisplayNameAttribute>(false);
-                    if (attribute != null)
-                    {
-                        title = attribute.DisplayName;
-                    }
-                }
-            }
-
-            return title;
-        }
+        }  
     }
 }
