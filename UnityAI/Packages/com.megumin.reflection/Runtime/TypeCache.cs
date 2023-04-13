@@ -124,7 +124,8 @@ namespace Megumin.Reflection
                 //   缺点是 allType.TryGetValue需要写2次。
                 //结论：放在后面，allType.TryGetValue找不到类型只有第一次和错误类型名，是极小概率事件
 
-                if (allType.TryGetValue(typeFullName, out type))
+                //这里加入CacheTypeInit判断能一定程度减少多线程冲突
+                if (CacheTypeInit && allType.TryGetValue(typeFullName, out type))
                 {
                     hotType[typeFullName] = type;
                     return true;
@@ -132,13 +133,18 @@ namespace Megumin.Reflection
                 else
                 {
                     //没有找到类型时，看看是不是还没有初始化
-                    if (CacheAllTypes())
+                    CacheAllTypes();
+
+                    //总是 double check 防止多线程错误。
+                    //不使用CacheAllTypes返回值决定是否 double check。
+                    //CacheAllTypes返回值在多线程下并不是完全准确。
+
+                    //真实环境遇到的问题是，两个线程同时获取一个类型，一个线程开始执行缓存，
+                    //另一个线程因为锁而阻塞，最终结果是被阻塞的线程CacheAllTypes返回值fasle。
+                    if (allType.TryGetValue(typeFullName, out type))
                     {
-                        if (allType.TryGetValue(typeFullName, out type))
-                        {
-                            hotType[typeFullName] = type;
-                            return true;
-                        }
+                        hotType[typeFullName] = type;
+                        return true;
                     }
 
                     //现有类型不存在，尝试制作泛型类型
@@ -285,11 +291,16 @@ namespace Megumin.Reflection
         /// </returns>
         public static bool CacheAllTypes(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
         {
+            bool hasChange = false;
+            if (CacheTypeInit == false || forceRecache)
+            {
+                hasChange |= true;
+            }
+
             lock (cachelock)
             {
                 //using ProgressBarScope sope = new("CacheAllTypes");
 
-                bool hasChange = false;
                 if (forceRecache)
                 {
                     CachedAssemblyName.Clear();
@@ -337,8 +348,8 @@ namespace Megumin.Reflection
                 }
             }
 
-            //var debug = assembly.GetTypes();
-            foreach (var extype in assembly.GetTypes())
+            var assemblyAllType = assembly.GetTypes();
+            foreach (var extype in assemblyAllType)
             {
                 AddToDic(allType, extype);
 
