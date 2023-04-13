@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using Megumin.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -39,8 +40,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             if (initOption.AsyncInit)
             {
-                return Task.Run(() =>
+                return Task.Run(async () =>
                 {
+                    //先触发CacheAllTypes
+                    await TypeCache.CacheAllTypesAsync().ConfigureAwait(false);
                     var tree = treeAsset.Instantiate(initOption, refFinder);
                     return tree;
                 });
