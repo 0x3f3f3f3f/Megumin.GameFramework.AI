@@ -1,7 +1,7 @@
 {
   "name": "com.megumin.ai",
   "displayName": "Megumin AI",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "unity": "2021.3",
   "description": "Wizard Fast Created.",
   "category": "PackageWizard",
@@ -19,9 +19,9 @@
     "url": "https://github.com/KumoKyaku"
   },
   "dependencies": {
-    "com.megumin.common": "0.0.1",
-    "com.unity.settings-manager": "1.0.3",
-    "com.megumin.serialization": "0.0.1",
-    "com.megumin.binding": "0.0.1"
+    "com.megumin.common": "1.0.0",
+    "com.megumin.binding": "1.0.0",
+    "com.megumin.serialization": "1.0.0",
+    "com.unity.settings-manager": "1.0.3"
   }
 }

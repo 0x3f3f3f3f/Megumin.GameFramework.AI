@@ -1,33 +1,24 @@
 {
-    "name": "com.megumin.serialization",
-    "displayName": "Megumin Serialization",
-    
-    "version": "0.0.1",
-    "unity": "2021.3",
-    "description": "Wizard Fast Created.",
-    "category": "PackageWizard",
-    
-    "documentationUrl": "https://example.com/",
-    "changelogUrl": "https://example.com/changelog.html",
-    "licensesUrl": "https://example.com/licensing.html",
-    
-    "hideInEditor" : false,
-    
-    "keywords": [
-        "PackageWizard",
-        "Serialization"
-    ],
-
-    "author": {
-        "name": "云却",
-        "email": "479813005@qq.com",
-        "url": "https://github.com/KumoKyaku"
-    },
-    "dependencies": {
-      "com.megumin.common": "0.0.1"
-    }
+  "name": "com.megumin.serialization",
+  "displayName": "Megumin Serialization",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "description": "Wizard Fast Created.",
+  "category": "PackageWizard",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "hideInEditor": false,
+  "keywords": [
+    "PackageWizard",
+    "Serialization"
+  ],
+  "author": {
+    "name": "\u4e91\u5374",
+    "email": "479813005@qq.com",
+    "url": "https://github.com/KumoKyaku"
+  },
+  "dependencies": {
+    "com.megumin.common": "1.0.0"
+  }
 }
-
-
-
-
