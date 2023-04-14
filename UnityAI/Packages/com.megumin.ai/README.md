@@ -1,3 +1,4 @@
 # AI
-PackageWizard Fast Created.
+
+[Behavior Tree Doc](Runtime\BehaviorTree\README.md)
 
