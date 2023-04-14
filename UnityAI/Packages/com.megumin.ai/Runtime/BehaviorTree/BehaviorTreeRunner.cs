@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -67,10 +69,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 RefFinder refFinder = null;
 
-                if (Override != null)
+                if (OverrideVariables != null)
                 {
                     refFinder = new RefFinder();
-                    foreach (var item in Override.Table)
+                    if (OverrideUnityObjectRef != null)
+                    {
+                        foreach (var item in OverrideUnityObjectRef)
+                        {
+                            if (string.IsNullOrEmpty(item?.Name))
+                            {
+                                continue;
+                            }
+                            refFinder.RefDic[item.Name] = item;
+                        }
+                    }
+
+                    foreach (var item in OverrideVariables.Table)
                     {
                         if (string.IsNullOrEmpty(item?.RefName))
                         {
@@ -92,7 +106,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.InstanceName = gameObject.name;
                 BehaviourTree.BindAgent(agent);
-                Override?.ParseBinding(agent, true);
+                OverrideVariables?.ParseBinding(agent, true);
                 BehaviourTree.ParseAllBindable(agent);
             }
 
@@ -121,15 +135,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public void ReParseBinding()
         {
-            Override?.ParseBinding(gameObject, true);
+            OverrideVariables?.ParseBinding(gameObject, true);
             BehaviourTree?.ParseAllBindable(gameObject, true);
         }
 
         public void LogVariables()
         {
-            if (Override != null)
+            if (OverrideVariables != null)
             {
-                foreach (var item in Override.Table)
+                foreach (var item in OverrideVariables.Table)
                 {
                     if (item is IBindingParseable parseable)
                     {
@@ -158,7 +172,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public VariableTable Override = new();
+        public List<UnityObjectData> OverrideUnityObjectRef = new();
+        [FormerlySerializedAs("Override")]
+        public VariableTable OverrideVariables = new();
 
         private void OnValidate()
         {

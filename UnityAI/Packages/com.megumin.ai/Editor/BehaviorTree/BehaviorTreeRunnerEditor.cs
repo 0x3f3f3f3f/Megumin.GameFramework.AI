@@ -64,7 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     GenericMenu bindMenu = new GenericMenu();
                     foreach (var item in behaviorTreeRunner.BehaviorTreeAsset.variables)
                     {
-                        var isalreadOverride = behaviorTreeRunner.Override.Table.Any(elem => elem.RefName == item.Name);
+                        var isalreadOverride = behaviorTreeRunner.OverrideVariables.Table.Any(elem => elem.RefName == item.Name);
                         if (isalreadOverride)
                         {
                             bindMenu.AddDisabledItem(new GUIContent(item.Name));
@@ -76,12 +76,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 Debug.Log(item.Name);
                                 if (item.TryInstantiate<IRefable>(out var value))
                                 {
-                                    behaviorTreeRunner.Override.Table.Add(value);
+                                    behaviorTreeRunner.OverrideVariables.Table.Add(value);
                                 }
                             });
                         }
 
                     }
+
+                    foreach (var item in behaviorTreeRunner.BehaviorTreeAsset.UnityObjectRef)
+                    {
+                        var isalreadOverride = behaviorTreeRunner.OverrideUnityObjectRef.Any(elem => elem.Name == item.Name);
+                        if (isalreadOverride)
+                        {
+                            bindMenu.AddDisabledItem(new GUIContent(item.Name));
+                        }
+                        else
+                        {
+                            bindMenu.AddItem(new GUIContent(item.Name), false, () =>
+                            {
+                                Debug.Log(item.Name);
+                                behaviorTreeRunner.OverrideUnityObjectRef.Add(item);
+                            });
+                        }
+                    }
+
                     bindMenu.ShowAsContext();
                 }
             }
