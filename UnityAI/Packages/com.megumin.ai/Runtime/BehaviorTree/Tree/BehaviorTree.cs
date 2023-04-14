@@ -50,16 +50,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <param name="agent"></param>
         /// <param name="force"></param>
-        public void ParseAllBindable(object agent, bool force = false)
+        public void ParseAllBindable(object agent, bool force = false, object options = null)
         {
             using var profiler = parseAllBindableMarker.Auto();
-            Variable.ParseBinding(agent, force);
+            Variable.ParseBinding(agent, force, options);
 
             foreach (var item in AllBindingParseable)
             {
                 if (item is IBindingParseable parseable)
                 {
-                    parseable.ParseBinding(agent, force);
+                    parseable.ParseBinding(agent, force, options);
                 }
             }
         }

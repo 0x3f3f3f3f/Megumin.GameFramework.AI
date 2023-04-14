@@ -36,13 +36,8 @@ namespace Megumin.Binding
             //}
         }
 
-        /// <summary>
-        /// 委托链模式还是实例链模式
-        /// </summary>
-        public bool DeepParseMode = true;
-
         public override (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
-            ParseBinding<T>(string bindingString, object bindingInstance)
+            ParseBinding<T>(string bindingString, object bindingInstance, object options = null)
         {
             ParseBindingResult ParseResult = ParseBindingResult.None;
             Func<T> Getter = null;
@@ -84,7 +79,7 @@ namespace Megumin.Binding
                     }
                     else
                     {
-                        if (DeepParseMode)
+                        if (options is IParseBindingInstanceMode mode && mode.UseInstaneceDelegate)
                         {
                             //使用委托链的方式处理多级层级绑定
                             //https://zhuanlan.zhihu.com/p/105292546

@@ -193,7 +193,7 @@ namespace Megumin.Binding
         protected Func<T> Getter;
         protected Action<T> Setter;
         static readonly object parseLock = new object();
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
             lock (parseLock)
             {
@@ -202,7 +202,7 @@ namespace Megumin.Binding
                     object instance = bindInstance;
 
                     (ParseResult, Getter, Setter) =
-                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance);
+                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance, options);
                 }
 
                 return ParseResult ?? ParseBindingResult.None;

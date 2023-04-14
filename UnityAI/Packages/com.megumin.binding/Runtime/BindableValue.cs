@@ -77,7 +77,7 @@ namespace Megumin.Binding
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
         static readonly object parseLock = new object();
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
             lock (parseLock)
             {
@@ -91,7 +91,7 @@ namespace Megumin.Binding
                     }
 
                     (ParseResult, Getter, Setter) =
-                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance);
+                        BindingParser.Instance.ParseBinding<T>(BindingPath, instance, options);
                 }
 
                 return ParseResult ?? ParseBindingResult.None;

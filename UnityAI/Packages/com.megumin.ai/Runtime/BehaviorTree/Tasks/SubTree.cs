@@ -74,9 +74,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             BehaviourTree?.BindAgent(agent);
         }
 
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false)
+        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
-            BehaviourTree?.ParseAllBindable(Agent);
+            BehaviourTree?.ParseAllBindable(Agent, force, options);
             return ParseBindingResult.Both;
         }
 

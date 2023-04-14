@@ -54,8 +54,21 @@ namespace Megumin.Binding
 
     public interface IBindingParseable
     {
-        ParseBindingResult ParseBinding(object bindInstance, bool force = false);
+        ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null);
         string DebugParseResult();
+    }
+
+    public interface IParseBindingInstanceMode
+    {
+        /// <summary>
+        /// 仅对绑定层级大于2层级时有影响。
+        /// <para/> true 委托链模式。多级绑定时，中间实例发生改变，自动切换到新实例
+        /// <para/> false 实例链模式。多级绑定时，中间实例发生改变，绑定的成员不改变
+        /// </summary>
+        /// <remarks>
+        /// 默认是false，性能更好。
+        /// </remarks>
+        bool UseInstaneceDelegate { get; }
     }
 
     [Flags]

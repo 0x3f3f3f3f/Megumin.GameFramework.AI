@@ -72,13 +72,13 @@ namespace Megumin.Binding
             return name;
         }
 
-        public void ParseBinding(object agent, bool force)
+        public void ParseBinding(object agent, bool force, object options = null)
         {
             foreach (var item in Table)
             {
                 if (item is IBindingParseable parseable)
                 {
-                    parseable.ParseBinding(agent, force);
+                    parseable.ParseBinding(agent, force, options);
                 }
             }
         }
