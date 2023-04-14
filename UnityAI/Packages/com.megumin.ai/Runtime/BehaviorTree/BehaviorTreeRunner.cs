@@ -92,18 +92,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.InstanceName = gameObject.name;
                 BehaviourTree.BindAgent(agent);
-
-                //Override?.ParseBinding(gameObject, true);
-                if (InitOption.AsyncParseBinding)
-                {
-                    await Task.Run(() => Override?.ParseBinding(agent, true));
-                    await BehaviourTree.ParseAllBindableAsync(agent);
-                }
-                else
-                {
-                    Override?.ParseBinding(agent, true);
-                    BehaviourTree.ParseAllBindable(agent);
-                }
+                Override?.ParseBinding(agent, true);
+                BehaviourTree.ParseAllBindable(agent);
             }
 
             if (BehaviourTree != null)

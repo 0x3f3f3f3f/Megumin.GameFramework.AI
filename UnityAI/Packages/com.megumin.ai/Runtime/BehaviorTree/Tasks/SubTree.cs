@@ -20,23 +20,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (BehaviourTree == null)
             {
-                InstantiateSubTree();
+                BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
                 BehaviourTree.BindAgent(Tree.Agent);
                 BehaviourTree.ParseAllBindable(Tree.Agent);
             }
 
             return BehaviourTree.TickSubTree(from);
-        }
-
-        public BehaviorTree InstantiateSubTree()
-        {
-            BehaviourTree = Tree.InstantiateSubTree(BehaviorTreeAsset, this);
-            BehaviourTree.RunOption = Tree.RunOption;
-            if (GameObject)
-            {
-                BehaviourTree.InstanceName = GameObject.name;
-            }
-            return BehaviourTree;
         }
 
         public string GetDetail()
@@ -93,7 +82,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string DebugParseResult()
         {
-            return null;
+            return "";
         }
     }
 }

@@ -468,7 +468,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if (item is SubTree subtreeNode)
                     {
-                        subtreeNode.InstantiateSubTree();
+                        subtreeNode.BehaviourTree
+                            = tree.InstantiateSubTree(subtreeNode.BehaviorTreeAsset, subtreeNode);
                     }
                 }
             }

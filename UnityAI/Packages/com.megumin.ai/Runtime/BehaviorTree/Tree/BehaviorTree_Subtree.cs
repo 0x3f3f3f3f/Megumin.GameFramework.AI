@@ -21,7 +21,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             subtree.ParentTree = this;
             subtree.RootTree = RootTree;
             subtree.ParentTreeHostNode = hostNode;
-
+            subtree.RunOption = RunOption;
+            subtree.InstanceName = InstanceName;
             return subtree;
         }
     }
