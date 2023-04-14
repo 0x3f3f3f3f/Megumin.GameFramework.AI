@@ -214,6 +214,10 @@ BehaviorTreeDecoratorView {
     display: none;
 }
 
+.disable_DecoratorDetail #decoratorBody .decoratorDetailContainer {
+    display: none;
+}
+
 #decoratorBody .decoratorDetailContainer .decoratorDetail {
     width: 110px;
     flex-grow: 1;

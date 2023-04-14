@@ -45,6 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             new MySetting<bool>("NodeDetail", true, SettingsScope.User),
             new MySetting<bool>("DecoratorIcon", true, SettingsScope.User),
             new MySetting<bool>("DecoratorMarker", true, SettingsScope.User),
+            new MySetting<bool>("DecoratorDetail", true, SettingsScope.User),
             //new MySetting<bool>("RingGraph", false, SettingsScope.User),
             //new MySetting<bool>("DiamondGraph", false, SettingsScope.User),
         };
