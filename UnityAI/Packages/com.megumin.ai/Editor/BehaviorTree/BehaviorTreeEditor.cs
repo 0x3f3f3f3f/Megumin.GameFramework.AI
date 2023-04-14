@@ -117,7 +117,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public IBehaviorTreeAsset CurrentAsset { get; private set; }
         public UnityObjectView DebugInstanceGameObject { get; private set; }
 
-        [MenuItem("Megumin/BehaviorTreeEditor")]
+        [MenuItem("Tools/Megumin/BehaviorTreeEditor")]
         public static void ShowExample()
         {
             var wnd = GetWindow();
@@ -345,12 +345,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             showInProject.clicked += ShowInProject;
 
             var file = root.Q<ToolbarMenu>("file");
-            file.menu.AppendAction("Default is never shown", a => { }, a => DropdownMenuAction.Status.None);
-            file.menu.AppendAction("Normal file", a => { }, a => DropdownMenuAction.Status.Normal);
-            file.menu.AppendAction("Hidden is never shown", a => { }, a => DropdownMenuAction.Status.Hidden);
-            file.menu.AppendAction("Checked file", a => { }, a => DropdownMenuAction.Status.Checked);
-            file.menu.AppendAction("Disabled file", a => { }, a => DropdownMenuAction.Status.Disabled);
-            file.menu.AppendAction("Disabled and checked file", a => { }, a => DropdownMenuAction.Status.Disabled | DropdownMenuAction.Status.Checked);
+            file.menu.AppendAction("ShowTreeWapper", a => TreeView?.InspectorShowWapper(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendActionTODO("GenerateCode", a => GenerateCode(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Change GUID", a =>
                                                 {
@@ -417,18 +412,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             help.menu.AppendAction("Samples",
                 a =>
                 {
-
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples");
                 }, a => DropdownMenuAction.Status.Normal);
-            help.menu.AppendAction("GitHub",
+            help.menu.AppendAction("Wiki",
                 a =>
                 {
-                    System.Diagnostics.Process.Start("https://github.com/0x3f3f3f3f/Megumin.GameFramework.AI");
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki");
                 }, a => DropdownMenuAction.Status.Normal);
-            help.menu.AppendAction("Feedback",
+            help.menu.AppendAction("Issues",
                 a =>
                 {
-
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues");
                 }, a => DropdownMenuAction.Status.Normal);
+            help.menu.AppendAction("Forum",
+                a =>
+                {
+                    //System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues");
+                }, a => DropdownMenuAction.Status.Disabled);
         }
 
 

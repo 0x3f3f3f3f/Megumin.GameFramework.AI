@@ -155,7 +155,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
 
-        [MenuItem("Megumin/Log All Active BehaviorTreeEditor")]
+        [MenuItem("Tools/Megumin/Log All Active BehaviorTreeEditor")]
         public static void TestButton()
         {
             foreach (var item in BehaviorTreeEditor.AllActiveEditor)

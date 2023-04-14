@@ -1,5 +1,21 @@
 # BehaviorTree
 
+# 介绍
+## Summary
+
+## Description
+
+[ [示例](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [反馈](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) ]
+
+## Technical details
+- 使用UIElement构建的编辑器
+- 完整的编辑器代码，所有代码都是可见的，没有dll
+- 针对接口设计的架构，完全与业务逻辑解耦，更好的扩展性
+- 充分的性能优化，满足绝大多数游戏需求
+- 清晰的代码架构，完全模块化代码
+
+---
+---
 # 依赖
 - "com.unity.settings-manager": "1.0.3"
 
@@ -13,12 +29,13 @@
 
 * [x] 基础节点库实现
   * [ ] 为Unity默认组件生成节点
-  * [ ] 视觉听觉感知组件和节点
+  * [x] 视觉听觉感知组件
 
 + [x] 公开参数绑定
 + [x] List Array ~~Dictionary~~
 + [x] 最多2层的嵌套泛型
 + [x] TreeElement循环引用。Task引用其他Task。
++ [x] 预制体可重写参数。
 
 - [ ] 笔记节点StickyNote
 - [ ] 组合Group

@@ -14,8 +14,8 @@
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Edit" name="edit" />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Prefs" name="prefs" />
         <uie:ToolbarSpacer />
-        <uie:ToolbarButton text="ShowTree" display-tooltip-when-elided="true" name="showTreeWapper" class="topbar-button" />
-        <uie:ToolbarSpacer />
+        <uie:ToolbarButton text="ShowTree" display-tooltip-when-elided="true" name="showTreeWapper" class="topbar-button" style="display: none;" />
+        <uie:ToolbarSpacer style="display: none;" />
         <uie:ToolbarButton text="ReloadView" display-tooltip-when-elided="true" name="reloadView" class="topbar-button" />
         <uie:ToolbarSpacer />
         <Megumin.GameFramework.AI.BehaviorTree.Editor.UnityObjectView name="debugInstanceGameObject" />

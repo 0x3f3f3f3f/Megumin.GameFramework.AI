@@ -11,6 +11,7 @@ using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [CreateAssetMenu(fileName = "BehaviorTree", menuName = "Megumin/AI/BehaviorTreeAsset")]
     public partial class BehaviorTreeAsset_1_1 : ScriptableObject, IBehaviorTreeAsset
     {
         public string Version = new Version(1, 1, 0).ToString();
