@@ -38,7 +38,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             if (TreeView?.SOTree?.ChangeVersion == SaveVersion && !force)
             {
-                Debug.Log($"没有需要保存的改动。");
+                if (BehaviorTreeEditor.EditorLog)
+                {
+                    Debug.Log($"Asset file no unsavedChanges.");
+                    //Debug.Log($"没有需要保存的改动。");
+                }
+
                 return;
             }
 
