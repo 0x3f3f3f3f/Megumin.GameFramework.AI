@@ -34,7 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return @$"Trg: ""{(string)TriggerName}""";
+            return @$"Name: ""{(string)TriggerName}""";
         }
 
         public void BeforeNodeEnter(BTNode container)

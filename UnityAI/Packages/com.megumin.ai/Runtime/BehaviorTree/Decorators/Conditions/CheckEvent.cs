@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return @$"Evt: ""{(string)EventName}""";
+            return @$"Name: ""{(string)EventName}""";
         }
     }
 }
