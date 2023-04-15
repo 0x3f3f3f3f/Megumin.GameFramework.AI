@@ -49,7 +49,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             if (CurrentAsset == null)
             {
-                Debug.Log($"保存资源失败，没有找到Asset文件");
+                Debug.LogError($"Save Asset Error! Asset file not found.");
+                //Debug.Log($"保存资源失败，没有找到Asset文件");
                 return;
             }
 
@@ -60,13 +61,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 AssetDatabase.SaveAssetIfDirty(CurrentAsset.AssetObject);
                 AssetDatabase.Refresh();
 
-                Debug.Log($"保存资源成功");
+                Debug.Log($"Save Asset Success.");
+                //Debug.Log($"保存资源成功");
                 SaveVersion = TreeView.SOTree.ChangeVersion;
                 UpdateHasUnsavedChanges();
             }
             else
             {
-                Debug.Log($"保存资源失败");
+                Debug.LogError($"Save Asset Error!");
+                //Debug.Log($"保存资源失败");
             }
 
             CheckGUID();

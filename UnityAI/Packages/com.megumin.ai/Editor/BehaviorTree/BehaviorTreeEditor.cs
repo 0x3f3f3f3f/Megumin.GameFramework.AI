@@ -258,7 +258,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void CreateGUI()
         {
-            this.LogMethodName(CurrentAsset, TreeView?.SOTree);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(CurrentAsset, TreeView?.SOTree);
+            }
+
             VisualElement root = rootVisualElement;
             root.AddToClassList("behaviorTreeEditor");
 
@@ -303,14 +307,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         /// </summary>
         private void EditorReloading()
         {
-            if (Application.isPlaying)
+            if (BehaviorTreeEditor.EditorLog)
             {
-                Debug.Log("编辑器运行 导致窗口重载");
-
-            }
-            else
-            {
-                Debug.Log("脚本重新编译 导致窗口重载");
+                if (Application.isPlaying)
+                {
+                    Debug.Log("Editor isPlaying.  ReloadWindow.");
+                    //Debug.Log("编辑器运行 导致窗口重载");
+                }
+                else
+                {
+                    Debug.Log("Script recompilation. ReloadWindow.");
+                    //Debug.Log("脚本重新编译 导致窗口重载");
+                }
             }
 
             if (CurrentAsset == null)
@@ -468,7 +476,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void OnEnable()
         {
-            this.LogMethodName(TreeView);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
 
             if (BehaviorTreeManager.TreeDebugger == null)
             {
@@ -478,31 +489,48 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void OnDestroy()
         {
-            this.LogMethodName(TreeView);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
+
             AllActiveEditor.Remove(this);
             TreeView?.Dispose();
         }
 
         private void Reset()
         {
-            this.LogMethodName(TreeView);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
         }
 
         private void OnDisable()
         {
-            this.LogMethodName(TreeView);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
+
             TreeView?.Dispose();
         }
 
         private void OnProjectChange()
         {
-            this.LogMethodName(TreeView);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
         }
 
         static bool HotTypeAlias = false;
         public void SelectTree(IBehaviorTreeAsset behaviorTreeAsset)
         {
-            this.LogMethodName();
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
 
             if (HotTypeAlias == false && behaviorTreeAsset != null)
             {
@@ -563,19 +591,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public override void DiscardChanges()
         {
             base.DiscardChanges();
-            this.LogMethodName();
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
         }
 
         public override void SaveChanges()
         {
             base.SaveChanges();
-            this.LogMethodName();
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
         }
 
         protected override void OnBackingScaleFactorChanged()
         {
             base.OnBackingScaleFactorChanged();
-            this.LogMethodName();
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(TreeView);
+            }
         }
     }
 }

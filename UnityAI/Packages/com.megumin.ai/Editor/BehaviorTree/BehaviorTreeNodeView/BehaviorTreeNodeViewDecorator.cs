@@ -40,7 +40,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         internal object AddDecorator(Type type)
         {
             TreeView.UndoRecord($"AddDecorator  [{type.Name}]");
-            this.LogMethodName();
+
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName();
+            }
+
             var decorator = SONode.Node.AddDecorator(type);
             //去重添加
             nearDType.Remove(type);
@@ -107,12 +112,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         private void DecoretorListView_onItemsChosen(IEnumerable<object> obj)
         {
-            this.LogMethodName(obj.FirstOrDefault());
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(obj.FirstOrDefault());
+            }
         }
 
         internal void DecoretorListView_itemIndexChanged(int currrent, int des)
         {
-            this.LogMethodName(currrent, des);
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName(currrent, des);
+            }
+
             var list = SONode.Node.Decorators;
             if (list != null && currrent >= 0 && currrent < list.Count && des >= 0 && des < list.Count)
             {

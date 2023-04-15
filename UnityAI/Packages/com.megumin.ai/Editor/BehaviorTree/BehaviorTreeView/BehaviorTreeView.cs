@@ -51,7 +51,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
 
-            Debug.Log("BehaviorTreeView += ReloadView | OnGraphViewChanged...");
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                Debug.Log("BehaviorTreeView += ReloadView | OnGraphViewChanged...");
+            }
+
             Undo.undoRedoPerformed += ReloadView;
             graphViewChanged += OnGraphViewChanged;
             serializeGraphElements += OnSerializeGraphElements;
@@ -62,7 +66,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void Dispose()
         {
-            Debug.Log("BehaviorTreeView -= ReloadView | OnGraphViewChanged...");
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                Debug.Log("BehaviorTreeView -= ReloadView | OnGraphViewChanged...");
+            }
+
             Undo.undoRedoPerformed -= ReloadView;
             graphViewChanged -= OnGraphViewChanged;
             serializeGraphElements -= OnSerializeGraphElements;
@@ -347,7 +355,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             SOTree.name = Tree.Asset?.name;
 
-            this.LogMethodName();
+            if (BehaviorTreeEditor.EditorLog)
+            {
+                this.LogMethodName();
+            }
+
             DeleteElements(graphElements.ToList().Where(elem => elem is BehaviorTreeNodeView || elem is Edge));
 
             //赋值viewDataKey 后会自动保存布局和缩放。
