@@ -8,7 +8,7 @@
 - 符合人类直觉的行为树架构，更加易于学习。  
   增加装饰器设计。条件装饰器使行为树用户界面更直观、更易读。  
 - 非常易于扩展，仅需几行代码就可以自定义节点和UI样式。  
-- 解决了许多传统行为树的使用痛点，值得对传统行为树不满的用户尝试。  
+- 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
 [ [示例](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [反馈](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) ]
 
@@ -16,7 +16,7 @@
 - 使用UIElement构建的编辑器。
 - 完整的C#代码，所有代码都是可见的，没有dll。
 - 针对接口设计的架构，完全与业务逻辑解耦，更好的扩展性。
-- 一键拆分内联子树，更好的分解和复用AI逻辑。
+- 快速拆分内联子树，更好的分解和复用AI逻辑。
 - 充分的性能优化，满足绝大多数游戏需求。
 - 清晰的代码架构，完全模块化代码。
 - 灵活的参数绑定，允许手动修改绑定路径。
