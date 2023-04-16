@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public interface IConditionDecorator : IDecorator, IAbortable
     {
-        bool CheckCondition();
+        bool CheckCondition(object options = null);
         bool LastCheckResult { get; }
     }
 
@@ -35,7 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 在Node Enter 之前被调用。
         /// </summary>
         /// <param name="container"></param>
-        void BeforeNodeEnter();
+        void BeforeNodeEnter(object options = null);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Obsolete("Use OneChild instead.", true)]
     public interface IPreTickDecorator : IDecorator
     {
-        void OnPreNodeTick();
+        void OnPreNodeTick(object options = null);
     }
 
     internal interface IPostDecorator : IDecorator
@@ -55,12 +55,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <param name="result"></param>
         /// 
         /// <returns></returns>
-        Status AfterNodeExit(Status result);
+        /// <param name="options"></param>
+        Status AfterNodeExit(Status result, object options = null);
     }
 
     internal interface IAbortDecorator : IDecorator
     {
-        void OnNodeAbort();
+        void OnNodeAbort(object options = null);
     }
 
 

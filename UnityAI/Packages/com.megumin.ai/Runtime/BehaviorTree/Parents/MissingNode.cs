@@ -17,7 +17,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public string MissType { get; set; }
         public ObjectData OrignalData { get; set; }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             return GetIgnoreResult(from);
         }

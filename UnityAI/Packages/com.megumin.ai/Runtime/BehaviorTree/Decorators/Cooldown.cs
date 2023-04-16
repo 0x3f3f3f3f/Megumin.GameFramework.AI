@@ -25,12 +25,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         protected double nextCanEnterTime = -1;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(object options = null)
         {
             return Time.time > nextCanEnterTime;
         }
 
-        public Status AfterNodeExit(Status result)
+        public Status AfterNodeExit(Status result, object options = null)
         {
             if (Mode == CooldownMode.OnSucceeded && result == Status.Succeeded)
             {
@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public void BeforeNodeEnter()
+        public void BeforeNodeEnter(object options = null)
         {
             if (Mode == CooldownMode.OnEnter)
             {

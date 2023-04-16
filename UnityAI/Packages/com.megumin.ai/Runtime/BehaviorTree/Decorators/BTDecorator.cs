@@ -49,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         //public int LastCheckTickCount { get; protected set; } = -1;
         //public bool CalOnceOnTick = false;
 
-        public bool CheckCondition()
+        public virtual bool CheckCondition(object options = null)
         {
             //if (CalOnceOnTick)
             //{
@@ -60,7 +60,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //}
             //LastCheckTickCount = Tree.TotalTickCount;
 
-            LastCheckResult = OnCheckCondition();
+            LastCheckResult = OnCheckCondition(options);
 
             if (Invert)
             {
@@ -70,7 +70,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return LastCheckResult;
         }
 
-        protected virtual bool OnCheckCondition()
+        protected virtual bool OnCheckCondition(object options = null)
         {
             return false;
         }
@@ -94,6 +94,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     MyAgent = GameObject.GetComponentInChildren<T>();
                 }
             }
+        }
+
+        public override bool CheckCondition(object options = null)
+        {
+            if (MyAgent == null)
+            {
+                return false;
+            }
+
+            if (MyAgent is UnityEngine.Object obj && !obj)
+            {
+                return false;
+            }
+
+            return base.CheckCondition(options);
         }
     }
 }

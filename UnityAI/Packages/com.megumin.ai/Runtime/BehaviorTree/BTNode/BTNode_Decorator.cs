@@ -9,13 +9,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public partial class BTNode
     {
-        private bool ExecuteConditionDecorator()
+        private bool ExecuteConditionDecorator(object options = null)
         {
             foreach (var pre in Decorators)
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.CheckCondition() == false)
+                    if (conditionable.CheckCondition(options) == false)
                     {
                         return false;
                     }
@@ -31,7 +31,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <see langword="true"/>可以继续执行
         /// <see langword="false"/>不能继续执行，应该终止自身
         /// </returns>
-        protected bool ExecuteConditionDecoratorCheckAbortSelf()
+        protected bool ExecuteConditionDecoratorCheckAbortSelf(object options = null)
         {
             foreach (var pre in Decorators)
             {
@@ -39,7 +39,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if ((conditionable.AbortType & AbortType.Self) != 0)
                     {
-                        if (conditionable.CheckCondition() == false)
+                        if (conditionable.CheckCondition(options) == false)
                         {
                             return false;
                         }
@@ -54,7 +54,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 检查含有终止低优先级标记的条件装饰器，能否继续执行
         /// </summary>
         /// <returns></returns>
-        protected bool ExecuteConditionDecoratorCheckAbortLowerPriority()
+        protected bool ExecuteConditionDecoratorCheckAbortLowerPriority(object options = null)
         {
             foreach (var pre in Decorators)
             {
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if ((conditionable.AbortType & AbortType.LowerPriority) != 0)
                     {
-                        if (conditionable.CheckCondition() == false)
+                        if (conditionable.CheckCondition(options) == false)
                         {
                             return false;
                         }
@@ -77,7 +77,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 调用前置装饰器
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private Status ExecutePreDecorator()
+        private Status ExecutePreDecorator(object options = null)
         {
             var res = Status.Running;
 
@@ -85,14 +85,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IPreDecorator decirator)
                 {
-                    decirator.BeforeNodeEnter();
+                    decirator.BeforeNodeEnter(options);
                 }
             }
 
             return res;
         }
 
-        private Status ExecutePostDecorator()
+        private Status ExecutePostDecorator(object options = null)
         {
             var res = State;
             //倒序遍历
@@ -108,7 +108,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return res;
         }
 
-        private Status ExecuteAbortDecorator()
+        private Status ExecuteAbortDecorator(object options = null)
         {
             //倒序遍历
             for (int i = Decorators.Count - 1; i >= 0; i--)
@@ -116,7 +116,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var pre = Decorators[i];
                 if (pre is IAbortDecorator decirator)
                 {
-                    decirator.OnNodeAbort();
+                    decirator.OnNodeAbort(options);
                 }
             }
 

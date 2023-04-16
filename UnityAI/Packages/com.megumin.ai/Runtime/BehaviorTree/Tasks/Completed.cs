@@ -11,7 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public sealed class Completed : BTActionNode
     {
         public bool Success = true;
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             return Success ? Status.Succeeded : Status.Failed;
         }

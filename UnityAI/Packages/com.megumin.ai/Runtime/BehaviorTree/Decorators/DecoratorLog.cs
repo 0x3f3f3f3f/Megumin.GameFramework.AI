@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public RefVar_String LogStr = new() { value = "Hello world!" };
 
-        public void BeforeNodeEnter()
+        public void BeforeNodeEnter(object options = null)
         {
             if (PreLog)
             {
@@ -27,7 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public Status AfterNodeExit(Status result)
+        public Status AfterNodeExit(Status result, object options = null)
         {
             if (PostLog)
             {
@@ -36,7 +36,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public void OnNodeAbort()
+        public void OnNodeAbort(object options = null)
         {
             if (AbortLog)
             {

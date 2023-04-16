@@ -37,12 +37,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public FinishMode FinishMode = FinishMode.AnyFailed;
 
         bool firstTick = false;
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             firstTick = true;
         }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             for (int i = 0; i < Children.Count; i++)
             {
@@ -53,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     continue;
                 }
 
-                child.Tick(this);
+                child.Tick(this, options);
             }
 
             firstTick = false;

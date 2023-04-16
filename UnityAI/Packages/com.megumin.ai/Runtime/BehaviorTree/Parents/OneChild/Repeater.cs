@@ -16,12 +16,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         int completeCount = 0;
 
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             completeCount = 0;
         }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             if (loopCount == 0)
             {

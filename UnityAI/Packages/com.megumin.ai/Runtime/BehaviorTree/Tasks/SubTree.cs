@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [field: NonSerialized]
         public BehaviorTree BehaviourTree { get; set; }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             if (BehaviourTree == null)
             {

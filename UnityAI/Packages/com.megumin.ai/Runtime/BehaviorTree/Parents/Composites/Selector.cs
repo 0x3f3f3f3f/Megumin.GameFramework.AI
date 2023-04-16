@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     public class Selector : CompositeNode
     {
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             for (int i = 0; i < Children.Count; i++)
             {
@@ -35,13 +35,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                         //终止成功
                         var lastRunning = Children[CurrentIndex];
                         Log($"{child} AbortLowerPriority {lastRunning}");
-                        lastRunning.Abort(this);
+                        lastRunning.Abort(this, options);
                     }
                 }
 
                 if (target != null)
                 {
-                    var result = target.Tick(this);
+                    var result = target.Tick(this, options);
                     if (result == Status.Running)
                     {
                         TryAbortLastRunning();

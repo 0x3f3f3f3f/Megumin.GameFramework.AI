@@ -18,12 +18,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar_Float Duration = new() { value = 30f };
         float enterTime;
 
-        public void BeforeNodeEnter()
+        public void BeforeNodeEnter(object options = null)
         {
             enterTime = Time.time;
         }
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(object options = null)
         {
             if (Owner.State == Status.Running)
             {

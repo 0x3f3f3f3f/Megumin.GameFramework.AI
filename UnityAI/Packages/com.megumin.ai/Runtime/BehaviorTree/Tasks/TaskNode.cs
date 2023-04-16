@@ -26,7 +26,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public T MyAgent { get; set; }
 
-        public override bool CanExecute()
+        public override bool CanExecute(object options = null)
         {
             if (MyAgent == null)
             {
@@ -38,7 +38,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return false;
             }
 
-            return base.CanExecute();
+            return base.CanExecute(options);
         }
 
         public override void BindAgent(object agent)
@@ -64,7 +64,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Serializable]
     public class BTConditionNode : BTTaskNode
     {
-        protected sealed override Status OnTick(BTNode from)
+        protected sealed override Status OnTick(BTNode from, object options = null)
         {
             return CheckCondition(from) ? Status.Succeeded : Status.Failed;
         }

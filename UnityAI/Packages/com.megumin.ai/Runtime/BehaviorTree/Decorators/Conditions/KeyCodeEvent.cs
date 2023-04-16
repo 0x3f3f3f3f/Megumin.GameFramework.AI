@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public KeyCode KeyCode = KeyCode.Space;
         public InputType InputType = InputType.Default;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(object options = null)
         {
             if (InputType == InputType.Default)
             {

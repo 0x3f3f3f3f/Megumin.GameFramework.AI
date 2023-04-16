@@ -12,7 +12,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public RefVar_Bool Value;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(object options = null)
         {
             return Value;
         }

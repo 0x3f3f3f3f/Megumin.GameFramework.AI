@@ -126,29 +126,29 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         //}
 
-        public void Reset()
+        public void Reset(object options = null)
         {
-            OnReset();
+            OnReset(options);
         }
         /// <summary>
         /// 不要再函数内修改State值，会导致流程错误
         /// </summary>
-        protected virtual void OnEnter() { }
+        protected virtual void OnEnter(object options = null) { }
 
         /// <summary>
         /// 不要再函数内修改State值，会导致流程错误
         /// </summary>
         /// <param name="result"></param>
-        protected virtual void OnExit(Status result) { }
+        protected virtual void OnExit(Status result, object options = null) { }
 
-        protected virtual void OnAbort() { }
+        protected virtual void OnAbort(object options = null) { }
 
-        protected virtual Status OnTick(BTNode from)
+        protected virtual Status OnTick(BTNode from, object options = null)
         {
             return Status.Succeeded;
         }
 
-        protected virtual void OnReset() { }
+        protected virtual void OnReset(object options = null) { }
 
         /// <summary>
         /// 根据调用节点返回不同的结果值，使调用节点忽略当前节点。

@@ -11,7 +11,7 @@ public interface IAnimal
 
 public class AnimalWow : BTActionNode<IAnimal>
 {
-    protected override Status OnTick(BTNode from)
+    protected override Status OnTick(BTNode from, object options = null)
     {
         MyAgent.Wow();
         return Status.Succeeded;

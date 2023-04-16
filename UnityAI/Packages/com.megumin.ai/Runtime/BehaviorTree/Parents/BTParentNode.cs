@@ -76,18 +76,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public int CurrentIndex { get; protected set; } = -1;
 
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             CurrentIndex = 0;
         }
 
-        protected override void OnAbort()
+        protected override void OnAbort(object options = null)
         {
             foreach (var item in Children)
             {
                 if (item.State == Status.Running)
                 {
-                    item.Abort(this);
+                    item.Abort(this, options);
                 }
             }
         }
@@ -110,9 +110,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        protected override void OnAbort()
+        protected override void OnAbort(object options = null)
         {
-            Child0.Abort(this);
+            Child0.Abort(this, options);
         }
     }
 
@@ -148,9 +148,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        protected override void OnAbort()
+        protected override void OnAbort(object options = null)
         {
-            Child0.Abort(this);
+            Child0.Abort(this, options);
         }
     }
 }

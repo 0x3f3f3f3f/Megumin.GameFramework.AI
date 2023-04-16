@@ -11,13 +11,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         float entertime;
         private float left;
 
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             entertime = Time.time;
             left = WaitTime;
         }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             //Debug.Log($"Wait Time :{Time.time - entertime}");
             left = WaitTime - (Time.time - entertime);

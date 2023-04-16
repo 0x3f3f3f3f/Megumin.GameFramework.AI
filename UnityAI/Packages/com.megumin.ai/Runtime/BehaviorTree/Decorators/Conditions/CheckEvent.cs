@@ -11,7 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public RefVar_String EventName;
 
-        protected override bool OnCheckCondition()
+        protected override bool OnCheckCondition(object options = null)
         {
             if (Tree.TryGetEvent(EventName, Owner, out var eventData))
             {

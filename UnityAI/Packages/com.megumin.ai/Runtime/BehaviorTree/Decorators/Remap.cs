@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Status FailedTo = Status.Failed;
         public Status RunningTo = Status.Running;
 
-        public Status AfterNodeExit(Status result)
+        public Status AfterNodeExit(Status result, object options = null)
         {
             var newResult = result;
             if (result == Status.Succeeded)

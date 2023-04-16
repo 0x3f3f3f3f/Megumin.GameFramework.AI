@@ -11,7 +11,7 @@ public class GetDestination : BTActionNode
     public RefVar_Transform_List DestinationList;
 
     int index = 0;
-    protected override void OnEnter()
+    protected override void OnEnter(object options = null)
     {
         var list = DestinationList?.Value;
         if (list == null || list.Count == 0)
@@ -32,7 +32,7 @@ public class TryGetNewDestination : ConditionDecorator
     public RefVar_Transform_List DestinationList;
 
     int index = 0;
-    protected override bool OnCheckCondition()
+    protected override bool OnCheckCondition(object options = null)
     {
         var list = DestinationList?.Value;
         if (list == null || list.Count == 0)

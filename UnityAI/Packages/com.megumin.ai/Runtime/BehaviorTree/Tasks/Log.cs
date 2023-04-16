@@ -20,13 +20,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar<string> LogStr2;
         float entertime;
 
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             entertime = Time.time;
             count++;
         }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             if (Time.time - entertime >= waitTime)
             {

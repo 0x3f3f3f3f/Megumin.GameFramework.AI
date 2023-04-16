@@ -38,13 +38,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 
         /// </summary>
         /// <param name="from">当前调用的父节点</param>
+        /// <param name="options">预留设计，用于传递可能的Context上下文等参数</param>
         /// <returns></returns>
         /// <remarks>
         /// 使用参数获得父节点，而不是从节点连接关系取得父节点。
         /// 如果行为树文件拓扑结构允许菱形或者环形，可能有多个父节点。
         /// 但是运行时同一时刻只可能有一个调用父节点。
         /// </remarks>
-        public Status Tick(BTNode from)
+        public Status Tick(BTNode from, object options = null)
         {
             Tree.LastTickNodeIndex = Index;
             Tree.LastTick = this;
@@ -56,12 +57,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (IsInnerRunning)
                 {
-                    AbortSelf();
+                    AbortSelf(options);
                 }
                 else
                 {
                     State = GetIgnoreResult(from);
-                    ResetFlag();
+                    ResetFlag(options);
                 }
 
                 return State;
@@ -69,36 +70,36 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             FailedCode = FailedCode.None;
             //条件阶段
-            if (Condition() == false)
+            if (Condition(options) == false)
             {
                 //离开节点
                 State = Status.Failed;
                 if (IsInnerRunning)
                 {
-                    State = AbortSelf();
+                    State = AbortSelf(options);
                 }
                 else
                 {
-                    ResetFlag();
+                    ResetFlag(options);
                 }
                 return State;
             }
 
-            Execute(from);
+            Execute(from, options);
 
             return State;
         }
 
-        protected virtual bool Condition()
+        protected virtual bool Condition(object options = null)
         {
             if (IsCheckedCanExecute)
             {
-                return ExecuteConditionDecoratorCheckAbortSelf();
+                return ExecuteConditionDecoratorCheckAbortSelf(options);
             }
             else
             {
                 IsCheckedCanExecute = true;
-                return CanExecute();
+                return CanExecute(options);
             }
         }
 
@@ -107,30 +108,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         public bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
-        protected virtual void Execute(BTNode from)
+        protected virtual void Execute(BTNode from, object options = null)
         {
             //前置阶段
             if (IsExecutedPreDecorator == false)
             {
                 IsExecutedPreDecorator = true;
-                State = ExecutePreDecorator();
+                State = ExecutePreDecorator(options);
             }
 
             if (IsCompleted == false)
             {
-                Running(from);
+                Running(from, options);
             }
 
             //后置阶段 当前已经完成
             if (IsCompleted)
             {
                 State = ExecutePostDecorator();
-                ResetFlag();
+                ResetFlag(options);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Running(BTNode from)
+        private void Running(BTNode from, object options = null)
         {
             //Enter Exit函数不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
@@ -140,11 +141,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             if (IsExecutedEnter == false)
             {
                 IsExecutedEnter = true;
-                Enter();
+                Enter(options);
             }
 
             //OnTick 阶段
-            State = OnTick(from);
+            State = OnTick(from, options);
 
             if (IsCompleted)
             {
@@ -152,22 +153,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     //与enter互斥对应
                     //如果没有调用Enter，那么应不应该调用Exit？
-                    Exit();
+                    Exit(options);
                 }
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Enter()
+        private void Enter(object options = null)
         {
             Log($"[{Time.time:0.00}] Enter Node {this}");
-            OnEnter();
+            OnEnter(options);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Exit()
+        private void Exit(object options = null)
         {
-            OnExit(State);
+            OnExit(State, options);
             Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this}");
         }
 
@@ -175,7 +176,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 离开节点，重置flag
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void ResetFlag()
+        protected void ResetFlag(object options = null)
         {
             IsCheckedCanExecute = false;
             IsExecutedPreDecorator = false;
@@ -187,9 +188,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 当前节点能否被执行
         /// </summary>
         /// <returns></returns>
-        public virtual bool CanExecute()
+        public virtual bool CanExecute(object options = null)
         {
-            return ExecuteConditionDecorator();
+            return ExecuteConditionDecorator(options);
         }
 
         /// <summary>
@@ -199,9 +200,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <remarks>
         /// 终止低优先级可能不仅仅受装饰器影响，用户可能会扩展其他功能，所以这里用虚函数包装。
         /// </remarks>
-        public virtual bool CanAbortLowerPriority()
+        public virtual bool CanAbortLowerPriority(object options = null)
         {
-            return ExecuteConditionDecoratorCheckAbortLowerPriority();
+            return ExecuteConditionDecoratorCheckAbortLowerPriority(options);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 为节点本身也可以需要终止低优先级节点标记预留，用户可以自行扩展。
         /// 实现<see cref="IAbortable"/>接口编辑器UI会自动显示标记。
         /// </remarks>
-        public virtual bool HasAbortLowerPriorityFlag()
+        public virtual bool HasAbortLowerPriorityFlag(object options = null)
         {
             //TODO 增加version 缓存结果值？
             var hasAbort = Decorators.Any(static elem =>
@@ -223,9 +224,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return hasAbort;
         }
 
-        Status AbortSelf()
+        Status AbortSelf(object options = null)
         {
-            return Abort(this);
+            return Abort(this, options);
         }
 
         /// <summary>
@@ -235,22 +236,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <remarks>
         /// 几乎所有情况都应该返回<see cref="Status.Failed"/>,但是保留返回其他值的可能。
         /// </remarks>
-        public Status Abort(BTNode from)
+        public Status Abort(BTNode from, object options = null)
         {
             State = Status.Failed;
             FailedCode = FailedCode.Abort;
 
-            OnAbort();
+            OnAbort(options);
 
             if (IsExecutedEnter)
             {
                 //与enter互斥对应
                 //如果没有调用Enter，那么应不应该调用Exit？
-                Exit();
+                Exit(options);
             }
 
-            State = ExecuteAbortDecorator();
-            ResetFlag();
+            State = ExecuteAbortDecorator(options);
+            ResetFlag(options);
             return State;
         }
     }

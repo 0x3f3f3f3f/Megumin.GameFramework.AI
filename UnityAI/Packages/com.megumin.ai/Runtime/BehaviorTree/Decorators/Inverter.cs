@@ -8,7 +8,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     internal class Inverter : BTDecorator, IPostDecorator
     {
-        public Status AfterNodeExit(Status result)
+        public Status AfterNodeExit(Status result, object options = null)
         {
             //可能会出现结果是Running的情况，比如有LoopUntil在此之前执行，将结果改成了Running。
             //所以只处理成功和失败两种。

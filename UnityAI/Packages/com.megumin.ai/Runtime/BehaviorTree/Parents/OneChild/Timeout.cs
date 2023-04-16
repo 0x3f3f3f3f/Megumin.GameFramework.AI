@@ -19,12 +19,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar_Float Duration = new() { value = 30f };
         float startTime;
 
-        protected override void OnEnter()
+        protected override void OnEnter(object options = null)
         {
             startTime = Time.time;
         }
 
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             if (Time.time - startTime > Duration)
             {

@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public class Until : OneChildNode, IDetailable
     {
         public Status Result = Status.Succeeded;
-        protected override Status OnTick(BTNode from)
+        protected override Status OnTick(BTNode from, object options = null)
         {
             if (Child0 == null)
             {

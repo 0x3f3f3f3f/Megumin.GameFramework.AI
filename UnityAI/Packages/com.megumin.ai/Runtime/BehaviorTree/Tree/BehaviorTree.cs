@@ -70,7 +70,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// Todo 抽象出runner ，分别 root - leaf 驱动，last leaf， 异步。三种方式根调用不一样。但是都需要Tick。
         /// </summary>
         /// <returns></returns>
-        public Status Tick()
+        public Status Tick(object options = null)
         {
             using var profiler = tickProfilerMarker.Auto();
 
@@ -100,12 +100,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
             RemoveLifeEndEventData();
 
-            return TickSubTree();
+            return TickSubTree(null, options);
         }
 
-        public Status TickSubTree(BTNode from = null)
+        public Status TickSubTree(BTNode from = null, object options = null)
         {
-            treestate = TickStartNode(from);
+            treestate = TickStartNode(from, options);
             TotalTickCount++;
 
             if (treestate == Status.Succeeded)
@@ -128,7 +128,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// </summary>
         /// <param name="from">如果是子树时存在父节点</param>
         /// <returns></returns>
-        protected Status TickStartNode(BTNode from)
+        protected Status TickStartNode(BTNode from, object options = null)
         {
             if (StartNode == null)
             {
@@ -140,7 +140,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 Debug.Log($"StartNode is not Enabled!");
                 return Status.Failed;
             }
-            return StartNode.Tick(from);
+            return StartNode.Tick(from, options);
         }
 
         public BTNode GetNodeByGuid(string guid)
