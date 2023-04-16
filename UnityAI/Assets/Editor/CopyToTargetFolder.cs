@@ -15,6 +15,11 @@ public class CopyToTargetFolder : ScriptableObject
     [Path]
     public List<string> targets = new();
 
+    [Path]
+    public string SamplesPath = "Assets/Samples/BehaviorTree";
+    [Path]
+    public string SamplesTargetFolder = "../../Megumin.GameFramework.AI.Samples/AISamples/Assets/Samples/BehaviorTree";
+
     [Editor]
     public void Copy()
     {
@@ -26,6 +31,10 @@ public class CopyToTargetFolder : ScriptableObject
                 Copy(item);
             }
         }
+
+        var samplePath = Path.Combine(MeguminUtility4Unity.ProjectPath, SamplesPath);
+        var sampleTarget = Path.Combine(MeguminUtility4Unity.ProjectPath, SamplesTargetFolder);
+        CopyFolder(samplePath, sampleTarget, true);
     }
 
     [Editor]
@@ -65,7 +74,7 @@ public class CopyToTargetFolder : ScriptableObject
     /// <param name="sourceFolder">原文件路径</param>
     /// <param name="destFolder">目标文件路径</param>
     /// <returns></returns>
-    public int CopyFolder(string sourceFolder, string destFolder)
+    public int CopyFolder(string sourceFolder, string destFolder, bool overwrite = false)
     {
         try
         {
@@ -80,7 +89,7 @@ public class CopyToTargetFolder : ScriptableObject
             {
                 string name = System.IO.Path.GetFileName(file);
                 string dest = System.IO.Path.Combine(destFolder, name);
-                System.IO.File.Copy(file, dest);//复制文件
+                System.IO.File.Copy(file, dest, overwrite);//复制文件
             }
             //得到原文件根目录下的所有文件夹
             string[] folders = System.IO.Directory.GetDirectories(sourceFolder);
@@ -94,7 +103,7 @@ public class CopyToTargetFolder : ScriptableObject
                     continue;
                 }
 
-                CopyFolder(folder, dest);//构建目标路径,递归复制文件
+                CopyFolder(folder, dest, overwrite);//构建目标路径,递归复制文件
             }
             return 1;
         }
