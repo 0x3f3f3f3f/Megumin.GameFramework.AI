@@ -9,6 +9,7 @@
   增加装饰器设计。条件装饰器使行为树用户界面更直观、更易读。  
 - 非常易于扩展，仅需几行代码就可以自定义节点和UI样式。  
 - 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
+- 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。
 
 [ [示例](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [反馈](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) ]
 
@@ -198,9 +199,7 @@ ResetFlag --> Return
 
 ## 装饰器
 
-在UE中装饰器并没有保存在Task内部，而是保存在父节点中。在父组合节点的子成员是一个新类，包含了装饰器和Task。  
-
-而本库采用方式是装饰器放在Task内部，并认为装饰器是Task的一部分。  
+本库采用方式是装饰器放在Task内部，并认为装饰器是Task的一部分。  
 依据是：在状态机中，条件节点从来就不是一个状态，而是一个过渡，过渡不是一等成员，不能独立存在与状态机中，只能依附于节点。  
 
 ~~我认为行为树将条件节点作为执行节点放在树中是一个失败设计。~~
@@ -273,7 +272,7 @@ ResetFlag --> Return
 ## AutoConvert
 自动类型转换存在2个部分。
 - 参数实例Path可以绑定到与参数声明类型不同的Agent的某个组件的成员。  
-- 节点成员值可以引用参数表中与成员声明类型不同的参数实例。  
+- TODO: 节点成员值可以引用参数表中与成员声明类型不同的参数实例。  
 
 显而易见的是，转换次数越多，性能越低。
 
