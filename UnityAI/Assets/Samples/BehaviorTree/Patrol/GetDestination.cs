@@ -32,7 +32,7 @@ public class TryGetNewDestination : ConditionDecorator
     public RefVar_Transform_List DestinationList;
 
     int index = 0;
-    protected override bool OnCheckCondition(BTNode container)
+    protected override bool OnCheckCondition()
     {
         var list = DestinationList?.Value;
         if (list == null || list.Count == 0)

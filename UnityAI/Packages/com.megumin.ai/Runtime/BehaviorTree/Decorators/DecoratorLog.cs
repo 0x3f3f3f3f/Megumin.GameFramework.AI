@@ -19,28 +19,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public RefVar_String LogStr = new() { value = "Hello world!" };
 
-        public void BeforeNodeEnter(BTNode container)
+        public void BeforeNodeEnter()
         {
             if (PreLog)
             {
-                Debug.Log($"PreDeco: {container}  {(string)LogStr}");
+                Debug.Log($"PreDeco: {Owner}  {(string)LogStr}");
             }
         }
 
-        public Status AfterNodeExit(Status result, BTNode container)
+        public Status AfterNodeExit(Status result)
         {
             if (PostLog)
             {
-                Debug.Log($"PostDeco: {container}  {result}  {(string)LogStr}");
+                Debug.Log($"PostDeco: {Owner}  {result}  {(string)LogStr}");
             }
             return result;
         }
 
-        public void OnNodeAbort(BTNode container)
+        public void OnNodeAbort()
         {
             if (AbortLog)
             {
-                Debug.Log($"AbortDeco: {container}  {(string)LogStr}");
+                Debug.Log($"AbortDeco: {Owner}  {(string)LogStr}");
             }
         }
     }

@@ -18,14 +18,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar_Float Duration = new() { value = 30f };
         float enterTime;
 
-        public void BeforeNodeEnter(BTNode container)
+        public void BeforeNodeEnter()
         {
             enterTime = Time.time;
         }
 
-        protected override bool OnCheckCondition(BTNode container)
+        protected override bool OnCheckCondition()
         {
-            if (container.State == Status.Running)
+            if (Owner.State == Status.Running)
             {
                 return Time.time - enterTime <= Duration;
             }

@@ -13,23 +13,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     internal class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
         public RefVar<string> lockName;
-        public Status AfterNodeExit(Status result, BTNode bTNode)
+        public Status AfterNodeExit(Status result)
         {
             Tree.LockDic.Remove(lockName);
             return result;
         }
 
-        public void BeforeNodeEnter(BTNode bTNode)
+        public void BeforeNodeEnter()
         {
             if (string.IsNullOrEmpty(lockName))
             {
-                lockName = bTNode.InstanceID;
+                lockName = Owner.InstanceID;
             }
 
             Tree.LockDic.Add(lockName, this);
         }
 
-        protected override bool OnCheckCondition(BTNode container)
+        protected override bool OnCheckCondition()
         {
             Tree.LockDic.TryGetValue(lockName, out var result);
             return result == this;

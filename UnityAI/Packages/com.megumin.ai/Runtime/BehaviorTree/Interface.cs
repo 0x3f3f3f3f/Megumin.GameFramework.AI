@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public interface IConditionDecorator : IDecorator, IAbortable
     {
-        bool CheckCondition(BTNode container);
+        bool CheckCondition();
         bool LastCheckResult { get; }
     }
 
@@ -35,7 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 在Node Enter 之前被调用。
         /// </summary>
         /// <param name="container"></param>
-        void BeforeNodeEnter(BTNode container);
+        void BeforeNodeEnter();
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Obsolete("Use OneChild instead.", true)]
     public interface IPreTickDecorator : IDecorator
     {
-        void OnPreNodeTick(BTNode container);
+        void OnPreNodeTick();
     }
 
     internal interface IPostDecorator : IDecorator
@@ -53,14 +53,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// 在 Node Exit 之后被调用。只有这样才能实现Loop装饰器。
         /// </summary>
         /// <param name="result"></param>
-        /// <param name="container"></param>
+        /// 
         /// <returns></returns>
-        Status AfterNodeExit(Status result, BTNode container);
+        Status AfterNodeExit(Status result);
     }
 
     internal interface IAbortDecorator : IDecorator
     {
-        void OnNodeAbort(BTNode container);
+        void OnNodeAbort();
     }
 
 

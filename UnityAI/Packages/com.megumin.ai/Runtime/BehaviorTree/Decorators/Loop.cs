@@ -13,7 +13,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public int loopCount = -1;
 
         int completeCount = 0;
-        public Status AfterNodeExit(Status result, BTNode bTNode)
+        public Status AfterNodeExit(Status result)
         {
             completeCount++;
             Log($"loop: complete {completeCount}.    loopCount:{loopCount}");
@@ -25,7 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return Status.Running;
         }
 
-        public void OnNodeAbort(BTNode bTNode)
+        public void OnNodeAbort()
         {
             completeCount = 0;
         }

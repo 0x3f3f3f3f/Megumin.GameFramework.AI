@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IConditionDecorator conditionable)
                 {
-                    if (conditionable.CheckCondition(this) == false)
+                    if (conditionable.CheckCondition() == false)
                     {
                         return false;
                     }
@@ -39,7 +39,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if ((conditionable.AbortType & AbortType.Self) != 0)
                     {
-                        if (conditionable.CheckCondition(this) == false)
+                        if (conditionable.CheckCondition() == false)
                         {
                             return false;
                         }
@@ -62,7 +62,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 {
                     if ((conditionable.AbortType & AbortType.LowerPriority) != 0)
                     {
-                        if (conditionable.CheckCondition(this) == false)
+                        if (conditionable.CheckCondition() == false)
                         {
                             return false;
                         }
@@ -85,7 +85,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 if (pre is IPreDecorator decirator)
                 {
-                    decirator.BeforeNodeEnter(this);
+                    decirator.BeforeNodeEnter();
                 }
             }
 
@@ -101,7 +101,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var post = Decorators[i];
                 if (post is IPostDecorator decirator)
                 {
-                    res = decirator.AfterNodeExit(res, this);
+                    res = decirator.AfterNodeExit(res);
                 }
             }
 
@@ -116,7 +116,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 var pre = Decorators[i];
                 if (pre is IAbortDecorator decirator)
                 {
-                    decirator.OnNodeAbort(this);
+                    decirator.OnNodeAbort();
                 }
             }
 

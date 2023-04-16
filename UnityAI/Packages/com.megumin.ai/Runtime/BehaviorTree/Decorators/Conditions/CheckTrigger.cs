@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public RefVar_String TriggerName;
         public WhenResetTrigger Reset = WhenResetTrigger.Immediate;
 
-        protected override bool OnCheckCondition(BTNode container)
+        protected override bool OnCheckCondition()
         {
             if (Tree.TryGetTrigger(TriggerName, out var eventData))
             {
@@ -37,7 +37,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return @$"Name: ""{(string)TriggerName}""";
         }
 
-        public void BeforeNodeEnter(BTNode container)
+        public void BeforeNodeEnter()
         {
             if (Reset == WhenResetTrigger.EnterNode)
             {
@@ -45,7 +45,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public Status AfterNodeExit(Status result, BTNode container)
+        public Status AfterNodeExit(Status result)
         {
             if (Reset == WhenResetTrigger.LeaveNode)
             {
@@ -54,7 +54,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public void OnNodeAbort(BTNode container)
+        public void OnNodeAbort()
         {
             if (Reset == WhenResetTrigger.LeaveNode)
             {

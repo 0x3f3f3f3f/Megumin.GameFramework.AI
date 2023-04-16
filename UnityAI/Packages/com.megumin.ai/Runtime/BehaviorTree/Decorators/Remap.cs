@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Status FailedTo = Status.Failed;
         public Status RunningTo = Status.Running;
 
-        public Status AfterNodeExit(Status result, BTNode bTNode)
+        public Status AfterNodeExit(Status result)
         {
             var newResult = result;
             if (result == Status.Succeeded)
@@ -32,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 newResult = RunningTo;
             }
 
-            Debug.LogError($"{result}--{bTNode}--{newResult}");
+            Debug.LogError($"{result}--{Owner}--{newResult}");
             return newResult;
         }
     }

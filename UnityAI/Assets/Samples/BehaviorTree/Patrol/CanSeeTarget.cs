@@ -9,7 +9,7 @@ using UnityEngine;
 public class CanSeeTarget : ConditionDecorator<TransformPerception>
 {
     public RefVar_Transform Target;
-    protected override bool OnCheckCondition(BTNode container)
+    protected override bool OnCheckCondition()
     {
         return Target.Value == MyAgent.AutoTarget;
     }
