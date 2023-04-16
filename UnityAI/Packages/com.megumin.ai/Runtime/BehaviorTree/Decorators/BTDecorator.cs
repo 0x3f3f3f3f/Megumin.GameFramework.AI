@@ -96,16 +96,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
+        /// <summary>
+        /// 验证MyAgent有效性，防止Tick过程中空引用异常
+        /// </summary>
+        public bool CheckMyAgent = true;
+
         public override bool CheckCondition(object options = null)
         {
-            if (MyAgent == null)
+            if (CheckMyAgent)
             {
-                return false;
-            }
+                if (MyAgent == null)
+                {
+                    return false;
+                }
 
-            if (MyAgent is UnityEngine.Object obj && !obj)
-            {
-                return false;
+                if (MyAgent is UnityEngine.Object obj && !obj)
+                {
+                    return false;
+                }
             }
 
             return base.CheckCondition(options);
