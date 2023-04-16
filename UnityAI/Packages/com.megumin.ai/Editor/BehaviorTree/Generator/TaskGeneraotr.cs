@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Unity.VisualScripting.YamlDotNet.Serialization;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -36,7 +32,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             foreach (var m in methods)
             {
-                Debug.Log(m.ToStringReflection());
+                //Debug.Log(m.ToStringReflection());
 
                 if (m.DeclaringType != type)
                 {
