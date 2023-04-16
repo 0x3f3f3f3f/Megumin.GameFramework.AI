@@ -20,7 +20,7 @@
         <uie:ToolbarSpacer />
         <Megumin.GameFramework.AI.BehaviorTree.Editor.UnityObjectView name="debugInstanceGameObject" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />
-        <uie:ToolbarToggle label="Blackboard" name="blackboard" class="topbar-button" />
+        <uie:ToolbarToggle label="Variables" name="blackboard" class="topbar-button" />
         <uie:ToolbarSpacer />
         <uie:ToolbarToggle label="Graph Inspector" name="graphInspector" class="topbar-button" style="display: none;" />
         <uie:ToolbarSpacer style="display: none;" />

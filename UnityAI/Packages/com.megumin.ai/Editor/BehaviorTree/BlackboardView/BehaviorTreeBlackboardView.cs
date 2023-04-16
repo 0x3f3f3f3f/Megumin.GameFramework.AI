@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             TreeView = associatedGraphView as BehaviorTreeView;
             LookupTable = TreeView?.Tree?.Variable;
 
-            title = "Variable";
+            title = "Variables";
             //subTitle = "测试subTitle";
 
             addItemRequested += OnAddClicked;
