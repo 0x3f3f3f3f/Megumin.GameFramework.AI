@@ -6,19 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Debug")]
     [Icon("console.infoicon@2x")]
-    [HelpURL("www.baidu.com")]
+    [HelpURL("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/Log")]
     public class Log : BTActionNode, IDetailable
     {
-        int count = 0;
+
+        public bool LogCount = false;
         public float waitTime = 0.15f;
-        public string LogStr = "Hello world!";
-        public RefVar<string> LogStr2;
+        public RefVar_String Text = new() { value = "Hello world!" };
+
         float entertime;
+        int count = 0;
 
         protected override void OnEnter(object options = null)
         {
@@ -30,7 +33,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         {
             if (Time.time - entertime >= waitTime)
             {
-                Debug.Log($"LogStr:{LogStr} ---- LogStr2:{LogStr2?.Value} ---- {count}");
+                if (LogCount)
+                {
+                    Debug.Log($"{(string)Text} ---- {count}");
+                }
+                else
+                {
+                    Debug.Log((string)Text);
+                }
+
                 return Status.Succeeded;
             }
             return Status.Running;
@@ -38,7 +49,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public string GetDetail()
         {
-            return $"LogStr:{LogStr} ---- LogStr2:{LogStr2?.Value}";
+            return Text;
         }
     }
 }

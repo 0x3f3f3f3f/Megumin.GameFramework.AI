@@ -28,9 +28,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 03270700-32a3-4ac2-bbaa-9436f1cf908f.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
-      Value: 03270700-32a3-4ac2-bbaa-9436f1cf908f.LogStr2
+      Value: 03270700-32a3-4ac2-bbaa-9436f1cf908f.Text
     - Name: GUID
       Type: System.String
       Value: 03270700-32a3-4ac2-bbaa-9436f1cf908f
@@ -103,9 +103,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: a94ad9ef-a098-45f8-8e02-917c16392a11.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
-      Value: a94ad9ef-a098-45f8-8e02-917c16392a11.LogStr2
+      Value: a94ad9ef-a098-45f8-8e02-917c16392a11.Text
     - Name: GUID
       Type: System.String
       Value: a94ad9ef-a098-45f8-8e02-917c16392a11
@@ -217,18 +217,6 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member: []
-  - Name: 03270700-32a3-4ac2-bbaa-9436f1cf908f.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: value
-      Type: System.String
-      Value: 
-    - Name: bindingPath
-      Type: System.String
-      Value: 
   - Name: 03270700-32a3-4ac2-bbaa-9436f1cf908f.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -253,6 +241,12 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: 03270700-32a3-4ac2-bbaa-9436f1cf908f.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: value
+      Type: System.String
+      Value: Hello world!
   - Name: 2bc1fdb2-c96b-4fe7-b469-4930df527a86.Children
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
       Megumin.GameFramework.AI]]
@@ -387,18 +381,6 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member: []
-  - Name: a94ad9ef-a098-45f8-8e02-917c16392a11.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: value
-      Type: System.String
-      Value: 
-    - Name: bindingPath
-      Type: System.String
-      Value: 
   - Name: a94ad9ef-a098-45f8-8e02-917c16392a11.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -423,6 +405,12 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: a94ad9ef-a098-45f8-8e02-917c16392a11.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: value
+      Type: System.String
+      Value: Hello world!
   - Name: c91f7df5-ed0e-4434-a8b2-f1b68224bba7.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]

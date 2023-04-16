@@ -160,7 +160,7 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: bf57250d-2963-4183-9710-98428f31ed5c.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
       Value: TriggerName
     - Name: GUID
@@ -220,7 +220,7 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: ede33707-5505-423c-a77a-3dc0de89d6dd.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
       Value: TriggerName
     - Name: GUID

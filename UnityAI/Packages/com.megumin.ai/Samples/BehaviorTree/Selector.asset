@@ -73,9 +73,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
-      Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.LogStr2
+      Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.Text
     - Name: GUID
       Type: System.String
       Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3
@@ -167,9 +167,6 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
     Member: []
-  - Name: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member: []
   - Name: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -179,3 +176,9 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 493
+  - Name: 74eadc13-0bb8-47df-8f79-2388f3e38ee3.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: value
+      Type: System.String
+      Value: Hello world!

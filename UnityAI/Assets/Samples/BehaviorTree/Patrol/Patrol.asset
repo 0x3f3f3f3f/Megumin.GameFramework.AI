@@ -142,8 +142,8 @@ MonoBehaviour:
       Value: ef8668be-8284-4ea8-835e-fdd1cd354483
   refObjs:
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Children
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+      Megumin.GameFramework.AI]]
     Member:
     - Name: 0
       Type: $ref
@@ -152,8 +152,8 @@ MonoBehaviour:
       Type: $ref
       Value: 806a9c87-3e38-4c37-803a-d8675184030a
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Decorators
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
     Member:
     - Name: 0
       Type: $ref
@@ -168,8 +168,8 @@ MonoBehaviour:
       Type: System.Single
       Value: 119
   - Name: 806a9c87-3e38-4c37-803a-d8675184030a.Decorators
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
     Member: []
   - Name: 806a9c87-3e38-4c37-803a-d8675184030a.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
@@ -181,15 +181,15 @@ MonoBehaviour:
       Type: System.Single
       Value: 288
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Children
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.BTNode,
+      Megumin.GameFramework.AI]]
     Member:
     - Name: 0
       Type: $ref
       Value: db004176-e2df-4ed9-9258-c903f0d358e9
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Decorators
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
     Member: []
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
@@ -216,14 +216,14 @@ MonoBehaviour:
       Type: System.String
       Value: 
   - Name: db004176-e2df-4ed9-9258-c903f0d358e9.Decorators
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
     Member:
     - Name: 0
       Type: $ref
       Value: ef8668be-8284-4ea8-835e-fdd1cd354483
   - Name: db004176-e2df-4ed9-9258-c903f0d358e9.Des
-    Type: 'Megumin.Binding.RefVar`1[[UnityEngine.Transform]]'
+    Type: Megumin.Binding.RefVar`1[[UnityEngine.Transform]]
     Member: []
   - Name: db004176-e2df-4ed9-9258-c903f0d358e9.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
@@ -250,7 +250,7 @@ MonoBehaviour:
       Type: System.String
       Value: 
   - Name: DesList.value
-    Type: 'System.Collections.Generic.List`1[[UnityEngine.Transform]]'
+    Type: System.Collections.Generic.List`1[[UnityEngine.Transform]]
     Member: []
   - Name: ef8668be-8284-4ea8-835e-fdd1cd354483.Destination
     Type: Megumin.Binding.RefVar_Transform
@@ -259,8 +259,8 @@ MonoBehaviour:
     Type: Megumin.Binding.RefVar_Transform_List
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Decorators
-    Type: 'System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]'
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta

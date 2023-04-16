@@ -115,9 +115,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
-      Value: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.LogStr2
+      Value: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.Text
     - Name: GUID
       Type: System.String
       Value: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f
@@ -443,9 +443,6 @@ MonoBehaviour:
     - Name: 1
       Type: $ref
       Value: 1f96aa06-162f-4228-a8a4-7391365278a8
-  - Name: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member: []
   - Name: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.Meta
     Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
     Member:
@@ -455,3 +452,9 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 253
+  - Name: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: value
+      Type: System.String
+      Value: Hello world!

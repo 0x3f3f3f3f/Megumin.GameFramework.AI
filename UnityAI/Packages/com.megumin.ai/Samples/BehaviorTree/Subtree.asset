@@ -70,7 +70,7 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 9934bbdc-fb10-4d47-87d9-d673822a3970.Decorators
-    - Name: LogStr2
+    - Name: Text
       Type: $ref
       Value: TestStr
     - Name: GUID
