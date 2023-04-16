@@ -26,6 +26,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public T MyAgent { get; set; }
 
+        public override bool CanExecute()
+        {
+            if (MyAgent == null)
+            {
+                return false;
+            }
+
+            if (MyAgent is UnityEngine.Object obj && !obj)
+            {
+                return false;
+            }
+
+            return base.CanExecute();
+        }
+
         public override void BindAgent(object agent)
         {
             base.BindAgent(agent);
