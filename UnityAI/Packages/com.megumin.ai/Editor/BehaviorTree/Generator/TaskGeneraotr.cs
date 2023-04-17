@@ -75,7 +75,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 if (m.IsGenericMethod)
                 {
-                    if (m.ContainsGenericParameters == false  || m.ReturnType.IsGenericParameter)
+                    if (m.ContainsGenericParameters == false || m.ReturnType.IsGenericParameter)
                     {
                         //忽略泛型方法
                         continue;
@@ -149,19 +149,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public bool GenerateConditionDecorator(Type type, MethodInfo method, CSCodeGenerator generator)
         {
-            generator.Push($"using System.Collections;");
-            generator.Push($"using System.Collections.Generic;");
-            generator.Push($"using System.ComponentModel;");
-            generator.Push($"using UnityEngine;");
-            generator.PushBlankLines();
+            GenerateUsing(generator);
 
             generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
             using (generator.NewScope)
             {
-                generator.Push($"[Category(\"Unity/{type.Name}\")]");
+                GenerateAttribute(type, generator);
                 generator.Push($"public class $(ClassName) : ConditionDecorator<$(ComponentName)>");
                 using (generator.NewScope)
                 {
+                    //generator.Push($"public string Title => \"$(Title)\";");
+
                     //声明参数
                     var @params = method.GetParameters();
                     foreach (var param in @params)
@@ -208,28 +206,48 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             generator.PushBlankLines(4);
-
-            var className = $"{type.Name}_{method.Name}";
-            generator.Macro["$(ClassName)"] = className;
-            generator.Macro["$(ComponentName)"] = type.FullName;
+            AddMacro(type, method, generator);
             return true;
         }
 
-        public bool GeneraoteBTActionNode(Type type, MethodInfo method, CSCodeGenerator generator)
+        public void GenerateAttribute(Type type, CSCodeGenerator generator)
+        {
+            generator.Push($"[DisplayName(\"$(DisplayName)\")]");
+            generator.Push($"[Category(\"Unity/{type.Name}\")]");
+            generator.Push($"[AddComponentMenu(\"$(MethodName)\")]");
+        }
+
+        public void GenerateUsing(CSCodeGenerator generator)
         {
             generator.Push($"using System.Collections;");
             generator.Push($"using System.Collections.Generic;");
             generator.Push($"using System.ComponentModel;");
             generator.Push($"using UnityEngine;");
             generator.PushBlankLines();
+        }
+
+        public void AddMacro(Type type, MethodInfo method, CSCodeGenerator generator)
+        {
+            var className = $"{type.Name}_{method.Name}";
+            generator.Macro["$(ClassName)"] = className;
+            generator.Macro["$(ComponentName)"] = type.FullName;
+            generator.Macro["$(MethodName)"] = className;
+            generator.Macro["$(DisplayName)"] = className;
+        }
+
+        public bool GeneraoteBTActionNode(Type type, MethodInfo method, CSCodeGenerator generator)
+        {
+            GenerateUsing(generator);
 
             generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
             using (generator.NewScope)
             {
-                generator.Push($"[Category(\"Unity/{type.Name}\")]");
+                GenerateAttribute(type, generator);
                 generator.Push($"public class $(ClassName) : BTActionNode<$(ComponentName)>");
                 using (generator.NewScope)
                 {
+                    //generator.Push($"public string Title => \"$(Title)\";");
+
                     //声明参数
                     var @params = method.GetParameters();
                     foreach (var param in @params)
@@ -277,10 +295,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             generator.PushBlankLines(4);
-
-            var className = $"{type.Name}_{method.Name}";
-            generator.Macro["$(ClassName)"] = className;
-            generator.Macro["$(ComponentName)"] = type.FullName;
+            AddMacro(type, method, generator);
             return true;
         }
 

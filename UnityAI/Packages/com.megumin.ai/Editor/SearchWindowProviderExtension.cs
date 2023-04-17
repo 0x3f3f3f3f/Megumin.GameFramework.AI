@@ -16,7 +16,13 @@ namespace Megumin.GameFramework.AI.Editor
     {
         public static GUIContent CreateEntryGUIContent(Type type)
         {
-            return new($"      {type.Name}", image: null);
+            var name = type.Name;
+            var attribute = type.GetCustomAttribute<AddComponentMenu>(false);
+            if (attribute != null)
+            {
+                name = attribute.componentMenu;
+            }
+            return new($"      {name}", image: null);
         }
 
         public static void AddTypesDerivedFrom<T>(this List<SearchTreeEntry> tree,
