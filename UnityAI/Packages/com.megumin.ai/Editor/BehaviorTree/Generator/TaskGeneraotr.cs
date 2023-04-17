@@ -193,6 +193,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return className;
         }
 
+        public string GetMenuName(Type type, MethodInfo method)
+        {
+            var result = method.Name;
+            var @params = method.GetParameters();
+            if (@params.Count() > 0)
+            {
+                result += "(";
+                for (int i = 0; i < @params.Length; i++)
+                {
+                    if (i != 0)
+                    {
+                        result += ", ";
+                    }
+                    result += $"{@params[i].ParameterType.Name}";
+                }
+                result += ")";
+                //Debug.LogError(className);
+            }
+
+            return result;
+        }
+
         public void GenerateCode(Type type, MethodInfo method, string path)
         {
             CSCodeGenerator codeGenerator = new CSCodeGenerator();
@@ -301,7 +323,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
             generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MenuName)"] = $"{method}";
+            generator.Macro["$(MenuName)"] = GetMenuName(type, method);
             generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
         }
 
