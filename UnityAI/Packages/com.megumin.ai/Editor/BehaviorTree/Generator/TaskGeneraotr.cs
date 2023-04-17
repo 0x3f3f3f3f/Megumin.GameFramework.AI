@@ -8,12 +8,19 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Megumin.GameFramework.AI.Editor;
+using System.ComponentModel;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public class TaskGeneraotr : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
+
+        [Editor]
+        public void Test()
+        {
+            CodeGeneratorExtension_B2F1FF890B2949E1B0431530F1D90322.Test();
+        }
 
         [ContextMenu("Generate")]
         public void Generate()
@@ -29,9 +36,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 variableTemplate.Add(v);
             }
 
+            List<Type> types = new()
+            {
+                typeof(NavMeshAgent),
+                typeof(Animator),
+            };
 
-            Type type = typeof(NavMeshAgent);
-            GenerateType(type);
+            foreach (var item in types)
+            {
+                GenerateType(item);
+            }
 
             AssetDatabase.Refresh();
         }
@@ -57,6 +71,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (m.IsSpecialName)
                 {
                     continue;
+                }
+
+                if (m.IsGenericMethod)
+                {
+                    if (m.ContainsGenericParameters == false  || m.ReturnType.IsGenericParameter)
+                    {
+                        //忽略泛型方法
+                        continue;
+                    }
                 }
 
                 var ob = m.GetCustomAttribute<ObsoleteAttribute>();
@@ -145,7 +168,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     {
                         if (TryGetParamType(param, out var paramType))
                         {
-                            generator.Push($"public {paramType.FullName} {param.Name};");
+                            generator.Push($"public {paramType.ToCodeString()} {param.Name};");
                         }
                         else
                         {
@@ -213,7 +236,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     {
                         if (TryGetParamType(param, out var paramType))
                         {
-                            generator.Push($"public {paramType.FullName} {param.Name};");
+                            generator.Push($"public {paramType.ToCodeString()} {param.Name};");
                         }
                         else
                         {
