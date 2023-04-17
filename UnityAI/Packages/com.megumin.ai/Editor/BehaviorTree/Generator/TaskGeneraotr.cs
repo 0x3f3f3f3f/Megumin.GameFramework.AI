@@ -46,6 +46,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Generate(all);
         }
 
+        Dictionary<string, int> permethodCount = new Dictionary<string, int>();
         public void ClollectMethod(Type type, List<(Type type, MethodInfo method)> all)
         {
             if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
@@ -57,35 +58,44 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             for (int i = 0; i < methods.Count; i++)
             {
-                var m = methods[i];
+                var method = methods[i];
                 //Debug.Log(m.ToStringReflection());
 
-                if (m.DeclaringType != type)
+                if (method.DeclaringType != type)
                 {
                     continue;
                 }
 
-                if (m.IsSpecialName)
+                if (method.IsSpecialName)
                 {
                     continue;
                 }
 
-                if (m.IsGenericMethod)
+                if (method.IsGenericMethod)
                 {
-                    if (m.ContainsGenericParameters == false || m.ReturnType.IsGenericParameter)
+                    if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
                     {
                         //忽略泛型方法
                         continue;
                     }
                 }
 
-                var ob = m.GetCustomAttribute<ObsoleteAttribute>();
+                var ob = method.GetCustomAttribute<ObsoleteAttribute>();
                 if (ob != null)
                 {
                     continue;
                 }
 
-                all.Add((type, m));
+                all.Add((type, method));
+                var className = $"{type.Name}_{method.Name}";
+                if (permethodCount.ContainsKey(className))
+                {
+                    permethodCount[className] += 1;
+                }
+                else
+                {
+                    permethodCount[className] = 1;
+                }
             }
         }
 
@@ -109,8 +119,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public Task GenerateMethod(Type type, MethodInfo method)
         {
-            var className = $"{type.Name}_{method.Name}";
-            var fileName = $"{type.Name}_{method.Name}.cs";
+            string className = GetClassName(type, method);
+
+            var fileName = $"{className}.cs";
             var dir = AssetDatabase.GetAssetPath(OutputFolder);
 
             dir = Path.Combine(dir, type.Name);
@@ -139,6 +150,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             return Task.Run(() => { GenerateCode(type, method, path); });
+        }
+
+        public string GetClassName(Type type, MethodInfo method)
+        {
+            var className = $"{type.Name}_{method.Name}";
+            var count = permethodCount[className];
+            if (count > 1)
+            {
+                var @params = method.GetParameters();
+                for (int i = 0; i < @params.Length; i++)
+                {
+                    className += $"_{@params[i].ParameterType.Name}";
+                }
+
+                Debug.LogError(className);
+            }
+
+            return className;
         }
 
         public void GenerateCode(Type type, MethodInfo method, string path)
@@ -229,7 +258,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             generator.Push($"[DisplayName(\"$(DisplayName)\")]");
             generator.Push($"[Category(\"Unity/{type.Name}\")]");
-            generator.Push($"[AddComponentMenu(\"$(MethodName)\")]");
+            generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
         }
 
         public void GenerateUsing(CSCodeGenerator generator)
@@ -243,11 +272,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void AddMacro(Type type, MethodInfo method, CSCodeGenerator generator)
         {
-            var className = $"{type.Name}_{method.Name}";
-            generator.Macro["$(ClassName)"] = className;
+            generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
             generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MethodName)"] = className;
-            generator.Macro["$(DisplayName)"] = className;
+            generator.Macro["$(MenuName)"] = $"{type.Name}_{method.ToString()}";
+            generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
         }
 
         public bool GeneraoteBTActionNode(Type type, MethodInfo method, CSCodeGenerator generator)
