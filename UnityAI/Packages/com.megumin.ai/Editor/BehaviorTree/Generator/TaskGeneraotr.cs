@@ -372,8 +372,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     generator.Push($"protected override Status OnTick(BTNode from, object options = null)");
                     using (generator.NewScope)
                     {
+                        var callString = "";
+                        if (saveResult)
+                        {
+                            callString += "var result = ";
+                        }
+
                         //MyAgent.CalculatePath(targetPosition, path);
-                        var callString = $"MyAgent.{method.Name}(";
+                        callString += $"MyAgent.{method.Name}(";
                         for (int i = 0; i < @params.Length; i++)
                         {
                             if (i != 0)
@@ -394,6 +400,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         callString += ");";
 
                         generator.Push(callString);
+
+                        if (saveResult)
+                        {
+                            generator.PushBlankLines();
+                            generator.Push($"if (Result != null)");
+                            using (generator.NewScope)
+                            {
+                                generator.Push($"Result.Value = result;");
+                            }
+                            generator.PushBlankLines();
+                        }
+
                         generator.Push($"return Status.Succeeded;");
                     }
                 }
