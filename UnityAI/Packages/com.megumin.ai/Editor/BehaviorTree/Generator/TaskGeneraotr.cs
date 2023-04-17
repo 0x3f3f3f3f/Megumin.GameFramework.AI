@@ -73,11 +73,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 if (method.IsGenericMethod)
                 {
-                    if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
-                    {
-                        //忽略泛型方法
-                        continue;
-                    }
+                    //忽略泛型方法
+                    continue;
+                    //if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
+                    //{
+                        
+                    //}
                 }
 
                 var ob = method.GetCustomAttribute<ObsoleteAttribute>();

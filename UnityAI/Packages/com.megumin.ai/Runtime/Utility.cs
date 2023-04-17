@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI
 
     }
 
-    internal static class Extension
+    internal static class Extension_DF244A1F18D4424F8B4CB0DFC9EFC825
     {
         [HideInCallstack]
         [DebuggerHidden]
@@ -160,6 +160,26 @@ namespace Megumin.GameFramework.AI
             }
 
             return title;
+        }
+
+
+        public static bool TryGetIconPath(this Type type, out string path)
+        {
+            if (type != null && Attribute.IsDefined(type, typeof(IconAttribute)))
+            {
+                var attributes = type.GetCustomAttributes(typeof(IconAttribute), true);
+                for (int i = 0, c = attributes.Length; i < c; i++)
+                {
+                    if (attributes[i] is IconAttribute)
+                    {
+                        path = ((IconAttribute)attributes[i]).path;
+                        return true;
+                    }
+                }
+            }
+
+            path = null;
+            return false;
         }
     }
 }

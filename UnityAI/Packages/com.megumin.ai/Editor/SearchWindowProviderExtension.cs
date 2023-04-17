@@ -22,7 +22,21 @@ namespace Megumin.GameFramework.AI.Editor
             {
                 name = attribute.componentMenu;
             }
-            return new($"      {name}", image: null);
+            var icon = AssetPreview.GetMiniTypeThumbnail(type);
+
+            if (!icon)
+            {
+                type.TryGetIcon(out icon);
+            }
+
+            if (icon)
+            {
+                return new($"{name}", image: icon);
+            }
+            else
+            {
+                return new($"      {name}", image: icon);
+            }
         }
 
         public static void AddTypesDerivedFrom<T>(this List<SearchTreeEntry> tree,

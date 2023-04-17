@@ -191,11 +191,21 @@ namespace Megumin.GameFramework.AI.Editor
 
         public static void TrySetIconFromAttribute(this VisualElement iconElement, Type type)
         {
-            string path = GetIconPathFromAttribute(type);
-            if (TryLoadIcon(path, out var icon))
+            if (type.TryGetIcon(out var icon))
             {
                 iconElement.style.backgroundImage = icon;
             }
+        }
+
+        public static bool TryGetIcon(this Type type, out Texture2D texture2D)
+        {
+            if (type.TryGetIconPath(out var path))
+            {
+                return TryLoadIcon(path, out texture2D);
+            }
+
+            texture2D = null;
+            return false;
         }
 
         static Dictionary<string, Texture2D> iconCache = new();
@@ -234,21 +244,5 @@ namespace Megumin.GameFramework.AI.Editor
 
             return texture2D;
         }
-
-        public static string GetIconPathFromAttribute(Type type)
-        {
-            if (Attribute.IsDefined(type, typeof(IconAttribute)))
-            {
-                var attributes = type.GetCustomAttributes(typeof(IconAttribute), true);
-                for (int i = 0, c = attributes.Length; i < c; i++)
-                {
-                    if (attributes[i] is IconAttribute)
-                    {
-                        return ((IconAttribute)attributes[i]).path;
-                    }
-                }
-            }
-            return null;
-        }  
     }
 }
