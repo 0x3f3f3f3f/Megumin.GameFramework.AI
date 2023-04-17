@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Megumin.GameFramework.AI.Editor;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -42,15 +43,29 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 typeof(Animator),
             };
 
+            List<(Type type, MethodInfo method)> all = new();
             foreach (var item in types)
             {
-                GenerateType(item);
+                GenerateType(item, all);
             }
 
+            List<Task> alltask = new();
+            int index = 0;
+            foreach (var (type, method) in all)
+            {
+                var task = GenerateMethod(type, method);
+                EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
+                alltask.Add(task);
+                index++;
+            }
+
+            Task.WaitAll(alltask.ToArray());
+
+            EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
         }
 
-        public void GenerateType(Type type)
+        public void GenerateType(Type type, List<(Type type, MethodInfo method)> all)
         {
             if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
             {
@@ -59,8 +74,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var methods = type.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).ToList();
 
-            foreach (var m in methods)
+            for (int i = 0; i < methods.Count; i++)
             {
+                var m = methods[i];
                 //Debug.Log(m.ToStringReflection());
 
                 if (m.DeclaringType != type)
@@ -88,11 +104,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     continue;
                 }
 
-                GenerateMethod(type, m);
+                all.Add((type, m));
             }
         }
 
-        public void GenerateMethod(Type type, MethodInfo method)
+        public Task GenerateMethod(Type type, MethodInfo method)
         {
             var className = $"{type.Name}_{method.Name}";
             var fileName = $"{type.Name}_{method.Name}.cs";
@@ -118,32 +134,32 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     if (oldPath != path)
                     {
                         Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
-                        return;
+                        return Task.CompletedTask;
                     }
                 }
             }
 
-
-            CSCodeGenerator codeGenerator = new CSCodeGenerator();
-            var success = GenerateCode(type, method, codeGenerator);
-
-            if (success)
-            {
-
-                codeGenerator.Generate(path);
-            }
+            return Task.Run(() => { GenerateCode(type, method, path); });
         }
 
-        public bool GenerateCode(Type type, MethodInfo method, CSCodeGenerator generator)
+        public void GenerateCode(Type type, MethodInfo method, string path)
         {
+            CSCodeGenerator codeGenerator = new CSCodeGenerator();
+            var success = false;
+
             if (method.ReturnType == typeof(bool))
             {
                 //返回值是bool，生成条件装饰器节点。
-                return GenerateConditionDecorator(type, method, generator);
+                success = GenerateConditionDecorator(type, method, codeGenerator);
             }
             else
             {
-                return GeneraoteBTActionNode(type, method, generator);
+                success = GeneraoteBTActionNode(type, method, codeGenerator);
+            }
+
+            if (success)
+            {
+                codeGenerator.Generate(path);
             }
         }
 
