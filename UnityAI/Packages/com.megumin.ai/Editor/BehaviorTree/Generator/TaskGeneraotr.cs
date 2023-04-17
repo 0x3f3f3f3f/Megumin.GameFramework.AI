@@ -110,10 +110,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             int index = 0;
             foreach (var (type, method) in all)
             {
-                await GenerateMethod(type, method);
-                EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
-                //alltask.Add(task);
-                index++;
+                if (MultiThreading)
+                {
+                    var task = GenerateMethod(type, method);
+                    EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
+                    alltask.Add(task);
+                    index++;
+                }
+                else
+                {
+                    await GenerateMethod(type, method);
+                    EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
+                    //alltask.Add(task);
+                    index++;
+                }
             }
 
             Task.WaitAll(alltask.ToArray());
@@ -177,7 +187,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     className += $"_{@params[i].ParameterType.Name}";
                 }
 
-                Debug.LogError(className);
+                //Debug.LogError(className);
             }
 
             return className;
@@ -291,7 +301,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
             generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MenuName)"] = $"{type.Name}_{method.ToString()}";
+            generator.Macro["$(MenuName)"] = $"{method}";
             generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
         }
 
