@@ -17,12 +17,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     {
         public UnityEngine.Object OutputFolder;
 
-        [Editor]
-        public void Test()
-        {
-            CodeGeneratorExtension_B2F1FF890B2949E1B0431530F1D90322.Test();
-        }
-
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -46,26 +40,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             List<(Type type, MethodInfo method)> all = new();
             foreach (var item in types)
             {
-                GenerateType(item, all);
+                ClollectMethod(item, all);
             }
 
-            List<Task> alltask = new();
-            int index = 0;
-            foreach (var (type, method) in all)
-            {
-                var task = GenerateMethod(type, method);
-                EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
-                alltask.Add(task);
-                index++;
-            }
-
-            Task.WaitAll(alltask.ToArray());
-
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
+            Generate(all);
         }
 
-        public void GenerateType(Type type, List<(Type type, MethodInfo method)> all)
+        public void ClollectMethod(Type type, List<(Type type, MethodInfo method)> all)
         {
             if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
             {
@@ -106,6 +87,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 all.Add((type, m));
             }
+        }
+
+        public async void Generate(List<(Type type, MethodInfo method)> all)
+        {
+            List<Task> alltask = new();
+            int index = 0;
+            foreach (var (type, method) in all)
+            {
+                await GenerateMethod(type, method);
+                EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
+                //alltask.Add(task);
+                index++;
+            }
+
+            Task.WaitAll(alltask.ToArray());
+
+            EditorUtility.ClearProgressBar();
+            AssetDatabase.Refresh();
         }
 
         public Task GenerateMethod(Type type, MethodInfo method)
