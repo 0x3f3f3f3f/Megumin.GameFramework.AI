@@ -16,6 +16,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
     public class TaskGeneraotr : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
+        [Space]
+        public bool MultiThreading = true;
 
         [ContextMenu("Generate")]
         public void Generate()
@@ -40,13 +42,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             List<(Type type, MethodInfo method)> all = new();
             foreach (var item in types)
             {
+                typeIcon[item] = AssetPreview.GetMiniTypeThumbnail(item).name;
                 ClollectMethod(item, all);
             }
 
             Generate(all);
         }
 
-        Dictionary<string, int> permethodCount = new Dictionary<string, int>();
+        Dictionary<Type, string> typeIcon = new();
+        Dictionary<string, int> permethodCount = new();
         public void ClollectMethod(Type type, List<(Type type, MethodInfo method)> all)
         {
             if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
@@ -77,7 +81,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     continue;
                     //if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
                     //{
-                        
+
                     //}
                 }
 
@@ -150,7 +154,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            return Task.Run(() => { GenerateCode(type, method, path); });
+            if (MultiThreading)
+            {
+                return Task.Run(() => { GenerateCode(type, method, path); });
+            }
+            else
+            {
+                GenerateCode(type, method, path);
+                return Task.CompletedTask;
+            }
         }
 
         public string GetClassName(Type type, MethodInfo method)
@@ -257,6 +269,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void GenerateAttribute(Type type, CSCodeGenerator generator)
         {
+            if (typeIcon.TryGetValue(type, out var iconName))
+            {
+                generator.Push($"[Icon(\"{iconName}\")]");
+            }
             generator.Push($"[DisplayName(\"$(DisplayName)\")]");
             generator.Push($"[Category(\"Unity/{type.Name}\")]");
             generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
