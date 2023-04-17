@@ -356,6 +356,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         }
                     }
 
+                    bool saveResult = false;
+                    if (method.ReturnType != null && method.ReturnType != typeof(void))
+                    {
+                        //存在返回值 。储存返回值
+                        if (TryGetParamType(method.ReturnType, out var returnType))
+                        {
+                            saveResult = true;
+                            generator.PushBlankLines();
+                            generator.Push($"public {returnType.ToCodeString()} Result;");
+                        }
+                    }
+
                     generator.PushBlankLines();
                     generator.Push($"protected override Status OnTick(BTNode from, object options = null)");
                     using (generator.NewScope)
@@ -395,13 +407,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         List<object> variableTemplate = new();
         public bool TryGetParamType(ParameterInfo param, out Type type)
         {
-            type = param.ParameterType;
+            Type parameterType = param.ParameterType;
+            return TryGetParamType(parameterType, out type);
+        }
+
+        public bool TryGetParamType(Type parameterType, out Type type)
+        {
+            type = parameterType;
 
             foreach (var item in variableTemplate)
             {
                 if (item is IVariableSpecializedType variableSpecialized)
                 {
-                    if (variableSpecialized.SpecializedType == param.ParameterType)
+                    if (variableSpecialized.SpecializedType == parameterType)
                     {
                         type = item.GetType();
                         return true;
@@ -409,13 +427,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            if (param.ParameterType.IsEnum || param.ParameterType.IsValueType)
+            if (parameterType.IsEnum || parameterType.IsValueType)
             {
-                type = typeof(RefVar<>).MakeGenericType(param.ParameterType);
+                type = typeof(RefVar<>).MakeGenericType(parameterType);
                 return true;
             }
 
-            Debug.Log($"{param.Member.Name} 不支持参数 {param.Name} {param.ParameterType}");
+            Debug.Log($"不支持参数类型  {parameterType}");
             return false;
         }
     }
