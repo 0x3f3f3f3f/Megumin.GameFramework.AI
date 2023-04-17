@@ -50,7 +50,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         Dictionary<Type, string> typeIcon = new();
-        Dictionary<string, int> permethodCount = new();
+        ///// <summary>
+        ///// 重载函数个数
+        ///// </summary>
+        //Dictionary<string, int> permethodCount = new();
         public void ClollectMethod(Type type, List<(Type type, MethodInfo method)> all)
         {
             if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
@@ -92,15 +95,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
 
                 all.Add((type, method));
-                var className = $"{type.Name}_{method.Name}";
-                if (permethodCount.ContainsKey(className))
-                {
-                    permethodCount[className] += 1;
-                }
-                else
-                {
-                    permethodCount[className] = 1;
-                }
+                //var className = $"{type.Name}_{method.Name}";
+                //if (permethodCount.ContainsKey(className))
+                //{
+                //    permethodCount[className] += 1;
+                //}
+                //else
+                //{
+                //    permethodCount[className] = 1;
+                //}
             }
         }
 
@@ -178,15 +181,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public string GetClassName(Type type, MethodInfo method)
         {
             var className = $"{type.Name}_{method.Name}";
-            var count = permethodCount[className];
-            if (count > 1)
+            var @params = method.GetParameters();
+            if (@params.Length > 0)
             {
-                var @params = method.GetParameters();
                 for (int i = 0; i < @params.Length; i++)
                 {
                     className += $"_{@params[i].ParameterType.Name}";
                 }
-
                 //Debug.LogError(className);
             }
 
