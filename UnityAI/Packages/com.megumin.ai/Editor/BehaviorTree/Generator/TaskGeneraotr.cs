@@ -7,6 +7,7 @@ using Megumin.Binding;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using Megumin.GameFramework.AI.Editor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -64,28 +65,53 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     continue;
                 }
 
-                CSCodeGenerator codeGenerator = new CSCodeGenerator();
-                var success = GenerateCode(type, m, codeGenerator);
-
-                if (success)
-                {
-                    var fileName = $"{type.Name}_{m.Name}.cs";
-                    var dir = AssetDatabase.GetAssetPath(OutputFolder);
-
-                    dir = Path.Combine(dir, type.Name);
-                    if (!Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-
-                    string filePath = Path.Combine(dir, fileName);
-                    var path = Path.GetFullPath(filePath);
-                    codeGenerator.Generate(path);
-                }
+                GenerateMethod(type, m);
             }
         }
 
-        private bool GenerateCode(Type type, MethodInfo method, CSCodeGenerator generator)
+        public void GenerateMethod(Type type, MethodInfo method)
+        {
+            var className = $"{type.Name}_{method.Name}";
+            var fileName = $"{type.Name}_{method.Name}.cs";
+            var dir = AssetDatabase.GetAssetPath(OutputFolder);
+
+            dir = Path.Combine(dir, type.Name);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            string filePath = Path.Combine(dir, fileName);
+            var path = Path.GetFullPath(filePath);
+
+            //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
+            if (Megumin.Reflection.TypeCache.TryGetType($"Megumin.GameFramework.AI.BehaviorTree.{className}", out var oldType))
+            {
+                var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                if (script != null)
+                {
+                    var oldPath = AssetDatabase.GetAssetPath(script);
+                    oldPath = Path.GetFullPath(oldPath);
+                    if (oldPath != path)
+                    {
+                        Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
+                        return;
+                    }
+                }
+            }
+
+
+            CSCodeGenerator codeGenerator = new CSCodeGenerator();
+            var success = GenerateCode(type, method, codeGenerator);
+
+            if (success)
+            {
+
+                codeGenerator.Generate(path);
+            }
+        }
+
+        public bool GenerateCode(Type type, MethodInfo method, CSCodeGenerator generator)
         {
             if (method.ReturnType == typeof(bool))
             {
@@ -236,7 +262,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         List<object> variableTemplate = new();
-        private bool TryGetParamType(ParameterInfo param, out Type type)
+        public bool TryGetParamType(ParameterInfo param, out Type type)
         {
             type = param.ParameterType;
 
