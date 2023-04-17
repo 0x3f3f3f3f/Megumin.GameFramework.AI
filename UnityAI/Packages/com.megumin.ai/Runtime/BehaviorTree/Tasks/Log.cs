@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug")]
+    [Category("Action")]
     [Icon("console.infoicon@2x")]
     [HelpURL("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/Log")]
     public class Log : BTActionNode, IDetailable

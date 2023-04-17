@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [Category("Action")]
     public class SetTrigger : BTActionNode, IDetailable
     {
         public RefVar_String TriggerName;

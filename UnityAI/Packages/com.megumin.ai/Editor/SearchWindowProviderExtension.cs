@@ -47,7 +47,8 @@ namespace Megumin.GameFramework.AI.Editor
 
         public static void AddTypesDerivedFrom<T>(this List<SearchTreeEntry> tree,
                                                   string groupEntryName,
-                                                  int levelOffset = 1)
+                                                  int levelOffset = 1,
+                                                  bool checkAlreadyHas = false)
         {
             var types = TypeCache.GetTypesDerivedFrom<T>();
             tree.Add(new SearchTreeGroupEntry(new GUIContent(groupEntryName)) { level = levelOffset });
@@ -60,6 +61,12 @@ namespace Megumin.GameFramework.AI.Editor
 
                 if (type.IsGenericTypeDefinition)
                 {
+                    continue;
+                }
+
+                if (checkAlreadyHas && tree.Any(elem => (Type)elem.userData == type))
+                {
+                    //检查去重
                     continue;
                 }
 

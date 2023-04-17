@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Category("Debug")]
+    [Category("Action")]
     public sealed class Succeeded : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

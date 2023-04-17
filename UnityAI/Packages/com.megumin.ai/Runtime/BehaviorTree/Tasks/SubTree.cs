@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
+    [Category("Action")]
     public class SubTree : BTActionNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement, IBindingParseable
     {
         public BehaviorTreeAsset_1_1 BehaviorTreeAsset;
