@@ -94,6 +94,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     continue;
                 }
 
+                //检查参数是否支持转化为节点
+                var @params = method.GetParameters();
+                bool supportParams = true;
+                if (method.ReturnType != typeof(void) && TryGetParamType(method.ReturnType, out var _) == false)
+                {
+                    supportParams &= false;
+                }
+
+                foreach (var item in @params)
+                {
+                    if (TryGetParamType(item, out var _) == false)
+                    {
+                        supportParams &= false;
+                        break;
+                    }
+                }
+
+                if (supportParams == false)
+                {
+                    continue;
+                }
+
                 all.Add((type, method));
                 //var className = $"{type.Name}_{method.Name}";
                 //if (permethodCount.ContainsKey(className))
@@ -186,7 +208,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 for (int i = 0; i < @params.Length; i++)
                 {
-                    className += $"_{@params[i].ParameterType.Name}";
+                    string ptypeName = @params[i].ParameterType.Name;
+                    ptypeName = ptypeName.TrimEnd('&');
+                    className += $"_{ptypeName}";
                 }
                 //Debug.LogError(className);
             }
@@ -214,6 +238,65 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             return result;
+        }
+
+        public void GenerateAttribute(Type type, CSCodeGenerator generator)
+        {
+            if (typeIcon.TryGetValue(type, out var iconName))
+            {
+                generator.Push($"[Icon(\"{iconName}\")]");
+            }
+            generator.Push($"[DisplayName(\"$(DisplayName)\")]");
+            generator.Push($"[Category(\"Unity/{type.Name}\")]");
+            generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
+        }
+
+        public void GenerateUsing(CSCodeGenerator generator)
+        {
+            generator.Push($"using System.Collections;");
+            generator.Push($"using System.Collections.Generic;");
+            generator.Push($"using System.ComponentModel;");
+            generator.Push($"using UnityEngine;");
+            generator.PushBlankLines();
+        }
+
+        public void AddMacro(Type type, MethodInfo method, CSCodeGenerator generator)
+        {
+            generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
+            generator.Macro["$(ComponentName)"] = type.FullName;
+            generator.Macro["$(MenuName)"] = GetMenuName(type, method);
+            generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
+        }
+
+        public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
+        {
+            //声明参数
+            var @params = method.GetParameters();
+            foreach (var param in @params)
+            {
+                if (TryGetParamType(param, out var paramType))
+                {
+                    generator.Push($"public {paramType.ToCodeString()} {param.Name};");
+                }
+                else
+                {
+                    generator.Push($"public {param.ParameterType.ToCodeString()} {param.Name};");
+                }
+            }
+
+            bool saveResult = false;
+            if (method.ReturnType != null && method.ReturnType != typeof(void))
+            {
+                //存在返回值 。储存返回值
+                if (TryGetParamType(method.ReturnType, out var returnType))
+                {
+                    saveResult = true;
+                    generator.PushBlankLines();
+                    generator.Push($"public {returnType.ToCodeString()} Result;");
+                }
+            }
+
+            return saveResult;
         }
 
         public void GenerateCode(Type type, MethodInfo method, string path)
@@ -249,28 +332,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
-
-                    //声明参数
-                    var @params = method.GetParameters();
-                    foreach (var param in @params)
-                    {
-                        if (TryGetParamType(param, out var paramType))
-                        {
-                            generator.Push($"public {paramType.ToCodeString()} {param.Name};");
-                        }
-                        else
-                        {
-                            //参数类型不支持这个方法，不能生成节点。
-                            return false;
-                        }
-                    }
+                    bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
                     generator.Push($"public override bool CheckCondition(object options = null)");
                     using (generator.NewScope)
                     {
                         //MyAgent.CalculatePath(targetPosition, path);
-                        var callString = $"return MyAgent.{method.Name}(";
+                        var callString = "";
+                        callString += "var result = ";
+                        callString += $"MyAgent.{method.Name}(";
+
+                        var @params = method.GetParameters();
                         for (int i = 0; i < @params.Length; i++)
                         {
                             if (i != 0)
@@ -291,6 +364,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         callString += ");";
 
                         generator.Push(callString);
+
+                        if (saveResult)
+                        {
+                            generator.PushBlankLines();
+                            generator.Push($"if (Result != null)");
+                            using (generator.NewScope)
+                            {
+                                generator.Push($"Result.Value = result;");
+                            }
+                            generator.PushBlankLines();
+                        }
+
+                        generator.Push($"return result;");
                     }
                 }
             }
@@ -298,34 +384,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.PushBlankLines(4);
             AddMacro(type, method, generator);
             return true;
-        }
-
-        public void GenerateAttribute(Type type, CSCodeGenerator generator)
-        {
-            if (typeIcon.TryGetValue(type, out var iconName))
-            {
-                generator.Push($"[Icon(\"{iconName}\")]");
-            }
-            generator.Push($"[DisplayName(\"$(DisplayName)\")]");
-            generator.Push($"[Category(\"Unity/{type.Name}\")]");
-            generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
-        }
-
-        public void GenerateUsing(CSCodeGenerator generator)
-        {
-            generator.Push($"using System.Collections;");
-            generator.Push($"using System.Collections.Generic;");
-            generator.Push($"using System.ComponentModel;");
-            generator.Push($"using UnityEngine;");
-            generator.PushBlankLines();
-        }
-
-        public void AddMacro(Type type, MethodInfo method, CSCodeGenerator generator)
-        {
-            generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
-            generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MenuName)"] = GetMenuName(type, method);
-            generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
         }
 
         public bool GeneraoteBTActionNode(Type type, MethodInfo method, CSCodeGenerator generator)
@@ -340,46 +398,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
-
-                    //声明参数
-                    var @params = method.GetParameters();
-                    foreach (var param in @params)
-                    {
-                        if (TryGetParamType(param, out var paramType))
-                        {
-                            generator.Push($"public {paramType.ToCodeString()} {param.Name};");
-                        }
-                        else
-                        {
-                            //参数类型不支持这个方法，不能生成节点。
-                            return false;
-                        }
-                    }
-
-                    bool saveResult = false;
-                    if (method.ReturnType != null && method.ReturnType != typeof(void))
-                    {
-                        //存在返回值 。储存返回值
-                        if (TryGetParamType(method.ReturnType, out var returnType))
-                        {
-                            saveResult = true;
-                            generator.PushBlankLines();
-                            generator.Push($"public {returnType.ToCodeString()} Result;");
-                        }
-                    }
+                    bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
                     generator.Push($"protected override Status OnTick(BTNode from, object options = null)");
                     using (generator.NewScope)
                     {
+                        //MyAgent.CalculatePath(targetPosition, path);
                         var callString = "";
                         if (saveResult)
                         {
                             callString += "var result = ";
                         }
-
-                        //MyAgent.CalculatePath(targetPosition, path);
                         callString += $"MyAgent.{method.Name}(";
+
+                        var @params = method.GetParameters();
                         for (int i = 0; i < @params.Length; i++)
                         {
                             if (i != 0)
@@ -432,6 +465,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public bool TryGetParamType(Type parameterType, out Type type)
         {
             type = parameterType;
+
+            if (type == typeof(void))
+            {
+                return true;
+            }
 
             foreach (var item in variableTemplate)
             {
