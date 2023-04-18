@@ -272,6 +272,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             //声明参数
             var @params = method.GetParameters();
+            if (@params.Length > 0)
+            {
+                generator.Push($"[Space]");
+            }
+
             foreach (var param in @params)
             {
                 if (TryGetParamType(param, out var paramType))
@@ -328,7 +333,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             using (generator.NewScope)
             {
                 GenerateAttribute(type, generator);
-                generator.Push($"public class $(ClassName) : ConditionDecorator<$(ComponentName)>");
+                generator.Push($"public sealed class $(ClassName) : ConditionDecorator<$(ComponentName)>");
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
@@ -394,7 +399,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             using (generator.NewScope)
             {
                 GenerateAttribute(type, generator);
-                generator.Push($"public class $(ClassName) : BTActionNode<$(ComponentName)>");
+                generator.Push($"public sealed class $(ClassName) : BTActionNode<$(ComponentName)>");
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
