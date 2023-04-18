@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
@@ -117,6 +113,75 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
 
             return base.CheckCondition(options);
+        }
+    }
+
+
+    public abstract class CompareDecorator<V> : ConditionDecorator
+        where V : IComparable<V>
+    {
+        public CompareToMode Mode = CompareToMode.Equals;
+
+        public abstract V GetResult();
+
+        public abstract V GetCompareTo();
+
+        protected override bool OnCheckCondition(object options = null)
+        {
+            var compareResult = GetResult().CompareTo(GetCompareTo());
+            switch (Mode)
+            {
+                case CompareToMode.Equals:
+                    return compareResult == 0;
+                case CompareToMode.Less:
+                    return compareResult < 0;
+                case CompareToMode.Greater:
+                    return compareResult > 0;
+                case CompareToMode.LessEquals:
+                    return compareResult <= 0;
+                case CompareToMode.GreaterEquals:
+                    return compareResult >= 0;
+                case CompareToMode.NotEqual:
+                    return compareResult != 0;
+                default:
+                    break;
+            }
+
+            return base.OnCheckCondition(options);
+        }
+    }
+
+    public abstract class CompareDecorator<T, V> : ConditionDecorator<T>
+         where V : IComparable<V>
+    {
+        public CompareToMode Mode = CompareToMode.Equals;
+
+        public abstract V GetResult();
+
+        public abstract V GetCompareTo();
+
+        protected override bool OnCheckCondition(object options = null)
+        {
+            var compareResult = GetResult().CompareTo(GetCompareTo());
+            switch (Mode)
+            {
+                case CompareToMode.Equals:
+                    return compareResult == 0;
+                case CompareToMode.Less:
+                    return compareResult < 0;
+                case CompareToMode.Greater:
+                    return compareResult > 0;
+                case CompareToMode.LessEquals:
+                    return compareResult <= 0;
+                case CompareToMode.GreaterEquals:
+                    return compareResult >= 0;
+                case CompareToMode.NotEqual:
+                    return compareResult != 0;
+                default:
+                    break;
+            }
+
+            return base.OnCheckCondition(options);
         }
     }
 }

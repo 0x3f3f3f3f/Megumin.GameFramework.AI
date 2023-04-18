@@ -108,6 +108,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         Ignore,
     }
 
+    public enum CompareToMode
+    {
+        Equals = 0,
+        Less = 1,
+        Greater = 2,
+        LessEquals = 3,
+        GreaterEquals = 4,
+        NotEqual = 5,
+    }
+
     /// <summary>
     /// 可层层桥套的计时器，更改父计时器，子计时器也受到影响。
     /// </summary>
