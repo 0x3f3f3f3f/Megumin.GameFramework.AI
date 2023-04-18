@@ -7,7 +7,7 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    public class CheckInt : CompareDecorator<int>
+    public sealed class CheckInt : CompareDecorator<int>
     {
         public RefVar_Int Left;
         public RefVar_Int Right;
@@ -23,7 +23,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
     }
 
-    public class CheckFloat : CompareDecorator<float>
+    public sealed class CheckFloat : CompareDecorator<float>
     {
         public RefVar_Float Left;
         public RefVar_Float Right;

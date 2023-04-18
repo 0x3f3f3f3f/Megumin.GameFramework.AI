@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -29,11 +30,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <summary>
         /// 验证MyAgent有效性，防止Tick过程中空引用异常
         /// </summary>
-        public bool CheckMyAgent = true;
+        [Tooltip("Verify MyAgent validity to prevent hollow reference exceptions in Tick process")]
+        public bool SafeMyAgent = true;
 
         public override bool CanExecute(object options = null)
         {
-            if (CheckMyAgent)
+            if (SafeMyAgent)
             {
                 if (MyAgent == null)
                 {
