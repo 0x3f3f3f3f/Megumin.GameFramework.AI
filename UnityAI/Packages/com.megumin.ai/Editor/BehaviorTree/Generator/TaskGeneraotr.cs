@@ -21,6 +21,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public Enableable<string> Define;
         public List<Enableable<string>> Types = new();
 
+        public List<string> IgnoreMethods = new();
+
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -121,6 +123,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
 
                 if (supportParams == false)
+                {
+                    continue;
+                }
+
+                //忽略指定方法
+                var className = GetClassName(type, method);
+                if (IgnoreMethods.Contains(className))
                 {
                     continue;
                 }
