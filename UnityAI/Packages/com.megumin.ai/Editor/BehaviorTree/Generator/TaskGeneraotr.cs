@@ -378,7 +378,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
-                    if (UseMyAgent == false)
+                    if (method.IsStatic == false && UseMyAgent == false)
                     {
                         generator.Push($"[Space]");
                         if (TryGetParamType(type, out var paramType))
@@ -485,7 +485,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
-                    if (UseMyAgent == false)
+                    if (method.IsStatic == false && UseMyAgent == false)
                     {
                         generator.Push($"[Space]");
                         if (TryGetParamType(type, out var paramType))
