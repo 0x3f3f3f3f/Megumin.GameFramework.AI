@@ -13,3 +13,10 @@ MonoBehaviour:
   m_Name: TaskGeneraotr
   m_EditorClassIdentifier: 
   OutputFolder: {fileID: 102900000, guid: 35de0703654dd0144955ac937e1eb5ad, type: 3}
+  MultiThreading: 1
+  Define:
+    Enabled: 0
+    Value: 
+  Types:
+  - Enabled: 1
+    Value: UnityEngine.Animator

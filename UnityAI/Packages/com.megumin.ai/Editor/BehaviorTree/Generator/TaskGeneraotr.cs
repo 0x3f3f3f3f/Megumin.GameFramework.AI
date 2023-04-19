@@ -18,6 +18,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public UnityEngine.Object OutputFolder;
         [Space]
         public bool MultiThreading = true;
+        public Enableable<string> Define;
+        public List<Enableable<string>> Types = new();
 
         [ContextMenu("Generate")]
         public void Generate()
@@ -33,11 +35,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 variableTemplate.Add(v);
             }
 
-            List<Type> types = new()
+            HashSet<Type> types = new();
+
+            foreach (var item in Types)
             {
-                typeof(NavMeshAgent),
-                typeof(Animator),
-            };
+                if (item.Enabled)
+                {
+                    if (Megumin.Reflection.TypeCache.TryGetType(item, out var type))
+                    {
+                        types.Add(type);
+                    }
+                }
+            }
 
             List<(Type type, MethodInfo method)> all = new();
             foreach (var item in types)
