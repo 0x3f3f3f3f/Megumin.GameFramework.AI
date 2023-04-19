@@ -379,7 +379,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
-                    generator.Push($"public override bool CheckCondition(object options = null)");
+
+                    var @params = method.GetParameters();
+
+                    string ObjectOptions = "options";
+                    if (@params.Any(elem => elem.Name == ObjectOptions))
+                    {
+                        ObjectOptions += "1";
+                    }
+
+                    generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
+
                     using (generator.NewScope)
                     {
                         //MyAgent.CalculatePath(targetPosition, path);
@@ -395,7 +405,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             callString += $"MyAgent.{method.Name}(";
                         }
 
-                        var @params = method.GetParameters();
                         for (int i = 0; i < @params.Length; i++)
                         {
                             if (i != 0)
@@ -461,7 +470,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
-                    generator.Push($"protected override Status OnTick(BTNode from, object options = null)");
+
+                    var @params = method.GetParameters();
+
+                    string BTNodeFrom = "from";
+                    if (@params.Any(elem => elem.Name == BTNodeFrom))
+                    {
+                        BTNodeFrom += "1";
+                    }
+
+                    string ObjectOptions = "options";
+                    if (@params.Any(elem => elem.Name == ObjectOptions))
+                    {
+                        ObjectOptions += "1";
+                    }
+
+                    generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+
                     using (generator.NewScope)
                     {
                         //MyAgent.CalculatePath(targetPosition, path);
@@ -480,7 +505,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             callString += $"MyAgent.{method.Name}(";
                         }
 
-                        var @params = method.GetParameters();
+
                         for (int i = 0; i < @params.Length; i++)
                         {
                             if (i != 0)
