@@ -364,7 +364,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 GenerateAttribute(type, generator);
 
-                if (method.IsStatic)
+                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+
+                if (method.IsStatic || UseMyAgent == false)
                 {
                     generator.Push($"public sealed class $(ClassName) : ConditionDecorator");
                 }
@@ -376,6 +378,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
+                    if (UseMyAgent == false)
+                    {
+                        generator.Push($"[Space]");
+                        if (TryGetParamType(type, out var paramType))
+                        {
+                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                        }
+                        else
+                        {
+                            generator.Push($"public {type.ToCodeString()} MyAgent;");
+                        }
+                        generator.PushBlankLines();
+                    }
+
                     bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
@@ -402,7 +418,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         }
                         else
                         {
-                            callString += $"MyAgent.{method.Name}(";
+                            callString += $"(({type.FullName})MyAgent).{method.Name}(";
                         }
 
                         for (int i = 0; i < @params.Length; i++)
@@ -455,7 +471,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 GenerateAttribute(type, generator);
 
-                if (method.IsStatic)
+                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+
+                if (method.IsStatic || UseMyAgent == false)
                 {
                     generator.Push($"public sealed class $(ClassName) : BTActionNode");
                 }
@@ -467,6 +485,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
+                    if (UseMyAgent == false)
+                    {
+                        generator.Push($"[Space]");
+                        if (TryGetParamType(type, out var paramType))
+                        {
+                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                        }
+                        else
+                        {
+                            generator.Push($"public {type.ToCodeString()} MyAgent;");
+                        }
+                        generator.PushBlankLines();
+                    }
+
                     bool saveResult = GenerateDeclaringMember(method, generator);
 
                     generator.PushBlankLines();
@@ -502,7 +534,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         }
                         else
                         {
-                            callString += $"MyAgent.{method.Name}(";
+                            callString += $"(({type.FullName})MyAgent).{method.Name}(";
                         }
 
 
