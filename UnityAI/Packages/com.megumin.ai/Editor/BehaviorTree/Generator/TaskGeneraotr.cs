@@ -53,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             List<(Type type, MethodInfo method)> all = new();
             foreach (var item in types)
             {
-                typeIcon[item] = AssetPreview.GetMiniTypeThumbnail(item).name;
+                typeIcon[item] = AssetPreview.GetMiniTypeThumbnail(item)?.name;
                 ClollectMethod(item, all);
             }
 
@@ -67,12 +67,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         //Dictionary<string, int> permethodCount = new();
         public void ClollectMethod(Type type, List<(Type type, MethodInfo method)> all)
         {
-            if (!type.IsSubclassOf(typeof(UnityEngine.Component)))
-            {
-                return;
-            }
-
-            var methods = type.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).ToList();
+            //TODO Static。
+            var methods = type.GetMethods(
+                System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.Instance
+                | BindingFlags.Static).ToList();
 
             for (int i = 0; i < methods.Count; i++)
             {
@@ -364,7 +363,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             using (generator.NewScope)
             {
                 GenerateAttribute(type, generator);
-                generator.Push($"public sealed class $(ClassName) : ConditionDecorator<$(ComponentName)>");
+
+                if (method.IsStatic)
+                {
+                    generator.Push($"public sealed class $(ClassName) : ConditionDecorator");
+                }
+                else
+                {
+                    generator.Push($"public sealed class $(ClassName) : ConditionDecorator<$(ComponentName)>");
+                }
+
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
@@ -377,7 +385,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         //MyAgent.CalculatePath(targetPosition, path);
                         var callString = "";
                         callString += "var result = ";
-                        callString += $"MyAgent.{method.Name}(";
+
+                        if (method.IsStatic)
+                        {
+                            callString += $"{type.FullName}.{method.Name}(";
+                        }
+                        else
+                        {
+                            callString += $"MyAgent.{method.Name}(";
+                        }
 
                         var @params = method.GetParameters();
                         for (int i = 0; i < @params.Length; i++)
@@ -429,7 +445,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             using (generator.NewScope)
             {
                 GenerateAttribute(type, generator);
-                generator.Push($"public sealed class $(ClassName) : BTActionNode<$(ComponentName)>");
+
+                if (method.IsStatic)
+                {
+                    generator.Push($"public sealed class $(ClassName) : BTActionNode");
+                }
+                else
+                {
+                    generator.Push($"public sealed class $(ClassName) : BTActionNode<$(ComponentName)>");
+                }
+
                 using (generator.NewScope)
                 {
                     //generator.Push($"public string Title => \"$(Title)\";");
@@ -445,7 +470,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         {
                             callString += "var result = ";
                         }
-                        callString += $"MyAgent.{method.Name}(";
+
+                        if (method.IsStatic)
+                        {
+                            callString += $"{type.FullName}.{method.Name}(";
+                        }
+                        else
+                        {
+                            callString += $"MyAgent.{method.Name}(";
+                        }
 
                         var @params = method.GetParameters();
                         for (int i = 0; i < @params.Length; i++)
