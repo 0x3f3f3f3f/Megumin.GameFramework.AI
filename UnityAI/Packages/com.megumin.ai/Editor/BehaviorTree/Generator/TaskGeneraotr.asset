@@ -16,7 +16,72 @@ MonoBehaviour:
   MultiThreading: 1
   Define:
     Enabled: 0
-    Value: 
+    Value: Test
   Types:
-  - Enabled: 1
+  - Enabled: 0
+    Value: UnityEngine.Animation
+  - Enabled: 0
     Value: UnityEngine.Animator
+  - Enabled: 0
+    Value: UnityEngine.AudioSource
+  - Enabled: 0
+    Value: UnityEngine.BoxCollider
+  - Enabled: 0
+    Value: UnityEngine.BoxCollider2D
+  - Enabled: 0
+    Value: UnityEngine.Camera
+  - Enabled: 0
+    Value: UnityEngine.CapsuleCollider
+  - Enabled: 0
+    Value: UnityEngine.CharacterController
+  - Enabled: 0
+    Value: UnityEngine.CircleCollider2D
+  - Enabled: 0
+    Value: UnityEngine.Collider
+  - Enabled: 0
+    Value: UnityEngine.GameObject
+  - Enabled: 0
+    Value: UnityEngine.Input
+  - Enabled: 0
+    Value: UnityEngine.Light
+  - Enabled: 0
+    Value: UnityEngine.Mathf
+  - Enabled: 0
+    Value: UnityEngine.AI.NavMeshAgent
+  - Enabled: 0
+    Value: UnityEngine.ParticleSystem
+  - Enabled: 0
+    Value: UnityEngine.Physics
+  - Enabled: 0
+    Value: UnityEngine.Physics2D
+  - Enabled: 0
+    Value: UnityEngine.PlayerPrefs
+  - Enabled: 0
+    Value: UnityEngine.Quaternion
+  - Enabled: 0
+    Value: UnityEngine.Renderer
+  - Enabled: 0
+    Value: UnityEngine.Rigidbody
+  - Enabled: 0
+    Value: UnityEngine.Rigidbody2D
+  - Enabled: 0
+    Value: UnityEngine.SphereCollider
+  - Enabled: 0
+    Value: UnityEngine.Time
+  - Enabled: 0
+    Value: UnityEngine.Playables.PlayableDirector
+  - Enabled: 0
+    Value: UnityEngine.Transform
+  - Enabled: 0
+    Value: UnityEngine.Vector2
+  - Enabled: 0
+    Value: UnityEngine.Vector2Int
+  - Enabled: 0
+    Value: UnityEngine.Vector3
+  - Enabled: 0
+    Value: UnityEngine.Vector3Int
+  - Enabled: 0
+    Value: UnityEngine.Vector4
+  - Enabled: 0
+    Value: UnityEngine.SceneManagement.SceneManager
+  IgnoreMethods: []
