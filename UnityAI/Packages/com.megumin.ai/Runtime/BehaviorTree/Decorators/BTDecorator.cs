@@ -12,18 +12,41 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public T MyAgent { get; set; }
 
+        public bool HasMyAgent()
+        {
+            if (MyAgent == null)
+            {
+                return false;
+            }
+
+            if (MyAgent is UnityEngine.Object obj && !obj)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public override void BindAgent(object agent)
         {
             base.BindAgent(agent);
-            if (agent is T tAgent)
+
+            BindMyAgent(true);
+        }
+
+        protected virtual void BindMyAgent(bool force = false)
+        {
+            if (force || HasMyAgent() == false)
             {
-                MyAgent = tAgent;
-            }
-            else
-            {
-                if (GameObject)
+                if (Agent is T tAgent)
                 {
-                    MyAgent = GameObject.GetComponentInChildren<T>();
+                    MyAgent = tAgent;
+                }
+                else
+                {
+                    if (GameObject)
+                    {
+                        MyAgent = GameObject.GetComponentInChildren<T>();
+                    }
                 }
             }
         }
@@ -76,21 +99,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         public T MyAgent { get; set; }
 
-        public override void BindAgent(object agent)
-        {
-            base.BindAgent(agent);
-            if (agent is T tAgent)
-            {
-                MyAgent = tAgent;
-            }
-            else
-            {
-                if (GameObject)
-                {
-                    MyAgent = GameObject.GetComponentInChildren<T>();
-                }
-            }
-        }
+        /// <summary>
+        /// 有时候MyAgent初始化晚于行为树，可能导致MyAgent组件无法获得。
+        /// 这个开关用于在节点执行时重新BindMyAgent。
+        /// </summary>
+        [Space]
+        public bool RebindMyAgentBeforeCanExecute = false;
 
         /// <summary>
         /// 验证MyAgent有效性，防止Tick过程中空引用异常
@@ -98,16 +112,55 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         [Tooltip("Verify MyAgent validity to prevent hollow reference exceptions in Tick process")]
         public bool SafeMyAgent = true;
 
+        public bool HasMyAgent()
+        {
+            if (MyAgent == null)
+            {
+                return false;
+            }
+
+            if (MyAgent is UnityEngine.Object obj && !obj)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override void BindAgent(object agent)
+        {
+            base.BindAgent(agent);
+
+            BindMyAgent(true);
+        }
+
+        protected virtual void BindMyAgent(bool force = false)
+        {
+            if (force || HasMyAgent() == false)
+            {
+                if (Agent is T tAgent)
+                {
+                    MyAgent = tAgent;
+                }
+                else
+                {
+                    if (GameObject)
+                    {
+                        MyAgent = GameObject.GetComponentInChildren<T>();
+                    }
+                }
+            }
+        }
+
         public override bool CheckCondition(object options = null)
         {
+            if (RebindMyAgentBeforeCanExecute)
+            {
+                BindMyAgent();
+            }
+
             if (SafeMyAgent)
             {
-                if (MyAgent == null)
-                {
-                    return false;
-                }
-
-                if (MyAgent is UnityEngine.Object obj && !obj)
+                if (HasMyAgent() == false)
                 {
                     return false;
                 }
