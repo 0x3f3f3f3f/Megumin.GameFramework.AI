@@ -217,9 +217,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 for (int i = 0; i < @params.Length; i++)
                 {
-                    string ptypeName = @params[i].ParameterType.Name;
-                    ptypeName = ptypeName.TrimEnd('&');
-                    className += $"_{ptypeName}";
+                    Type parameterType = @params[i].ParameterType;
+                    className += $"_{parameterType.ToValidVariableName()}";
                 }
                 //Debug.LogError(className);
             }
