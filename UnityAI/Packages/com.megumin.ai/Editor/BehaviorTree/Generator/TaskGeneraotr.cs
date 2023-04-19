@@ -223,7 +223,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 //Debug.LogError(className);
             }
-
+            className = className.Replace("[]", "Array");
             return className;
         }
 
@@ -316,6 +316,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void GenerateCode(Type type, MethodInfo method, string path)
         {
             CSCodeGenerator codeGenerator = new CSCodeGenerator();
+
+            if (Define.Enabled)
+            {
+                codeGenerator.Push($"#if {Define.Value}");
+                codeGenerator.PushBlankLines();
+            }
             var success = false;
 
             if (method.ReturnType == typeof(bool))
@@ -327,6 +333,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 success = GeneraoteBTActionNode(type, method, codeGenerator);
             }
+
+            if (Define.Enabled)
+            {
+                codeGenerator.PushBlankLines();
+                codeGenerator.Push($"#endif");
+            }
+
+            codeGenerator.PushBlankLines(4);
 
             if (success)
             {
@@ -395,7 +409,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            generator.PushBlankLines(4);
             AddMacro(type, method, generator);
             return true;
         }
@@ -464,7 +477,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            generator.PushBlankLines(4);
             AddMacro(type, method, generator);
             return true;
         }
