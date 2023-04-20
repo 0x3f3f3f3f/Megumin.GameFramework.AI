@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 222ab640ecb54be459294968cc1449eb, type: 3}
-  m_Name: TaskGeneraotr
+  m_Name: NodeGeneraotr
   m_EditorClassIdentifier: 
   OutputFolder: {fileID: 102900000, guid: 35de0703654dd0144955ac937e1eb5ad, type: 3}
   MultiThreading: 1

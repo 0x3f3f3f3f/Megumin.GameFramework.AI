@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class TaskGeneraotr : ScriptableObject
+    public class NodeGeneraotr : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
         [Space]
