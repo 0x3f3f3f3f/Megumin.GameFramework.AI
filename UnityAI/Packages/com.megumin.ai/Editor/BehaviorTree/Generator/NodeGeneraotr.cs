@@ -332,163 +332,41 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public void GenerateCode(Type type, MethodInfo method, string path)
         {
             CSCodeGenerator codeGenerator = new CSCodeGenerator();
-
-            if (Define.Enabled)
-            {
-                codeGenerator.Push($"#if {Define.Value}");
-                codeGenerator.PushBlankLines();
-            }
-            var success = false;
-
-            if (method.ReturnType == typeof(bool))
-            {
-                //返回值是bool，生成条件装饰器节点。
-                success = GenerateConditionDecorator(type, method, codeGenerator);
-            }
-            else
-            {
-                success = GeneraoteBTActionNode(type, method, codeGenerator);
-            }
-
-            if (Define.Enabled)
-            {
-                codeGenerator.PushBlankLines();
-                codeGenerator.Push($"#endif");
-            }
-
-            codeGenerator.PushBlankLines(4);
-
+            var success = GeneraoteNodeClass(type, method, codeGenerator);
             if (success)
             {
                 codeGenerator.Generate(path);
             }
         }
 
-        public bool GenerateConditionDecorator(Type type, MethodInfo method, CSCodeGenerator generator)
+        public bool GeneraoteNodeClass(Type type, MethodInfo method, CSCodeGenerator generator)
         {
-            GenerateUsing(generator);
-
-            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
-            using (generator.NewScope)
+            if (Define.Enabled)
             {
-                GenerateAttribute(type, generator);
-
-                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
-
-                if (method.IsStatic || UseMyAgent == false)
-                {
-                    generator.Push($"public sealed class $(ClassName) : ConditionDecorator");
-                }
-                else
-                {
-                    generator.Push($"public sealed class $(ClassName) : ConditionDecorator<$(ComponentName)>");
-                }
-
-                using (generator.NewScope)
-                {
-                    //generator.Push($"public string Title => \"$(Title)\";");
-                    if (method.IsStatic == false && UseMyAgent == false)
-                    {
-                        generator.Push($"[Space]");
-                        if (TryGetParamType(type, out var paramType))
-                        {
-                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
-                        }
-                        else
-                        {
-                            generator.Push($"public {type.ToCodeString()} MyAgent;");
-                        }
-                        generator.PushBlankLines();
-                    }
-
-                    bool saveResult = GenerateDeclaringMember(method, generator);
-
-                    generator.PushBlankLines();
-
-                    var @params = method.GetParameters();
-
-                    string ObjectOptions = "options";
-                    if (@params.Any(elem => elem.Name == ObjectOptions))
-                    {
-                        ObjectOptions += "1";
-                    }
-
-                    generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
-
-                    using (generator.NewScope)
-                    {
-                        //MyAgent.CalculatePath(targetPosition, path);
-                        var callString = "";
-                        callString += "var result = ";
-
-                        if (method.IsStatic)
-                        {
-                            callString += $"{type.FullName}.{method.Name}(";
-                        }
-                        else
-                        {
-                            callString += $"(({type.FullName})MyAgent).{method.Name}(";
-                        }
-
-                        for (int i = 0; i < @params.Length; i++)
-                        {
-                            if (i != 0)
-                            {
-                                callString += ", ";
-                            }
-
-                            var param = @params[i];
-                            if (param.IsOut)
-                            {
-                                callString += $"out var {param.Name}";
-                            }
-                            else
-                            {
-                                callString += $"{param.Name}";
-                            }
-                        }
-                        callString += ");";
-
-                        generator.Push(callString);
-
-                        if (saveResult)
-                        {
-                            generator.PushBlankLines();
-                            generator.Push($"if (Result != null)");
-                            using (generator.NewScope)
-                            {
-                                generator.Push($"Result.Value = result;");
-                            }
-                            generator.PushBlankLines();
-                        }
-
-                        generator.Push($"return result;");
-                    }
-                }
+                generator.Push($"#if {Define.Value}");
+                generator.PushBlankLines();
             }
 
-            AddMacro(type, method, generator);
-            return true;
-        }
-
-        public bool GeneraoteBTActionNode(Type type, MethodInfo method, CSCodeGenerator generator)
-        {
             GenerateUsing(generator);
 
             generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
             using (generator.NewScope)
             {
+                var isConditionDecorator = method.ReturnType == typeof(bool);
+
                 GenerateAttribute(type, generator);
 
                 var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
 
+                var BaseType = isConditionDecorator ? "ConditionDecorator" : "BTActionNode";
+
                 if (method.IsStatic || UseMyAgent == false)
                 {
-                    generator.Push($"public sealed class $(ClassName) : BTActionNode");
+                    generator.Push($"public sealed class $(ClassName) : {BaseType}");
                 }
                 else
                 {
-                    generator.Push($"public sealed class $(ClassName) : BTActionNode<$(ComponentName)>");
+                    generator.Push($"public sealed class $(ClassName) : {BaseType}<$(ComponentName)>");
                 }
 
                 using (generator.NewScope)
@@ -526,7 +404,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         ObjectOptions += "1";
                     }
 
-                    generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+                    if (isConditionDecorator)
+                    {
+                        generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
+                    }
+                    else
+                    {
+                        generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+                    }
 
                     using (generator.NewScope)
                     {
@@ -579,12 +464,28 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             generator.PushBlankLines();
                         }
 
-                        generator.Push($"return Status.Succeeded;");
+                        if (isConditionDecorator)
+                        {
+                            generator.Push($"return result;");
+                        }
+                        else
+                        {
+                            generator.Push($"return Status.Succeeded;");
+                        }
                     }
                 }
             }
 
+            if (Define.Enabled)
+            {
+                generator.PushBlankLines();
+                generator.Push($"#endif");
+            }
+
+            generator.PushBlankLines(4);
+
             AddMacro(type, method, generator);
+
             return true;
         }
 
