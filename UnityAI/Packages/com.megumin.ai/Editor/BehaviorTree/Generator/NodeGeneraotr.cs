@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public class NodeGeneraotr : ScriptableObject
+    public partial class NodeGeneraotr : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
         [Space]
@@ -58,6 +58,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             Generate(all);
+
+            GenerateFeildProp(types);
         }
 
         Dictionary<Type, string> typeIcon = new();
@@ -226,19 +228,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public string GetClassName(Type type, MethodInfo method)
+        public string GetClassName(Type type, MemberInfo member)
         {
-            var className = $"{type.Name}_{method.Name}";
-            var @params = method.GetParameters();
-            if (@params.Length > 0)
+            var className = $"{type.Name}_{member.Name}";
+
+            if (member is MethodInfo method)
             {
-                for (int i = 0; i < @params.Length; i++)
+                var @params = method.GetParameters();
+                if (@params.Length > 0)
                 {
-                    Type parameterType = @params[i].ParameterType;
-                    className += $"_{parameterType.ToValidVariableName()}";
+                    for (int i = 0; i < @params.Length; i++)
+                    {
+                        Type parameterType = @params[i].ParameterType;
+                        className += $"_{parameterType.ToValidVariableName()}";
+                    }
+                    //Debug.LogError(className);
                 }
-                //Debug.LogError(className);
             }
+
             className = className.Replace("[]", "Array");
             return className;
         }
@@ -525,6 +532,57 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             Debug.Log($"不支持参数类型  {parameterType}");
             return false;
+        }
+    }
+
+    public partial class NodeGeneraotr
+    {
+        public void GenerateFeildProp(HashSet<Type> types)
+        {
+            foreach (var type in types)
+            {
+                GenerateFeildProp(type);
+            }
+        }
+
+        public void GenerateFeildProp(Type type)
+        {
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
+
+            foreach (var method in props)
+            {
+                if (method.DeclaringType != type)
+                {
+                    continue;
+                }
+
+                if (method.IsSpecialName)
+                {
+                    continue;
+                }
+
+                //忽略过时API
+                var ob = method.GetCustomAttribute<ObsoleteAttribute>();
+                if (ob != null)
+                {
+                    continue;
+                }
+
+                //忽略平台不一致API
+                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
+                var nc = method.GetCustomAttribute(NativeConditionalAttributeType);
+                if (nc != null)
+                {
+                    continue;
+                }
+
+                //忽略指定方法
+                var className = GetClassName(type, method);
+                if (IgnoreMethods.Contains(className))
+                {
+                    continue;
+                }
+            }
         }
     }
 }
