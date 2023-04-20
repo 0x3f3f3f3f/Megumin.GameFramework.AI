@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222ab640ecb54be459294968cc1449eb, type: 3}
+  m_Name: InputSystem
+  m_EditorClassIdentifier: 
+  OutputFolder: {fileID: 102900000, guid: 35de0703654dd0144955ac937e1eb5ad, type: 3}
+  MultiThreading: 1
+  Define:
+    Enabled: 1
+    Value: ENABLE_INPUT_SYSTEM
+  Types:
+  - Enabled: 1
+    Value: UnityEngine.InputSystem.InputSystem
+  - Enabled: 1
+    Value: UnityEngine.InputSystem.InputActionAsset
+  IgnoreMethods: []
