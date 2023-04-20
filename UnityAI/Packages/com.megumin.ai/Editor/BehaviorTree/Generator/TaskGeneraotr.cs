@@ -98,8 +98,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     //}
                 }
 
+                //忽略过时API
                 var ob = method.GetCustomAttribute<ObsoleteAttribute>();
                 if (ob != null)
+                {
+                    continue;
+                }
+
+                //忽略平台不一致API
+                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
+                var nc = method.GetCustomAttribute(NativeConditionalAttributeType);
+                if (nc != null)
                 {
                     continue;
                 }
