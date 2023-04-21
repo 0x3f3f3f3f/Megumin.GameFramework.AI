@@ -48,7 +48,7 @@ MonoBehaviour:
     Value: UnityEngine.Mathf
   - Enabled: 1
     Value: UnityEngine.AI.NavMeshAgent
-  - Enabled: 0
+  - Enabled: 1
     Value: UnityEngine.ParticleSystem
   - Enabled: 1
     Value: UnityEngine.Physics
@@ -87,6 +87,8 @@ MonoBehaviour:
   IgnoreMethods:
   - Input_IsJoystickPreconfigured_String
   - Light_SetLightDirty
+  - Light_shadowAngle
+  - Light_shadowRadius
   - Quaternion_Item
   - Vector2_Item
   - Vector2Int_Item
@@ -94,7 +96,22 @@ MonoBehaviour:
   - Vector3Int_Item
   - Vector4_Item
   - Vector4Int_Item
-  ReplaceIcon: []
-  GMethods: 0
-  GFields: 0
+  - ParticleSystem_GetParticles_NativeArray_1_Particle
+  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Int32
+  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32
+  - ParticleSystem_SetParticles_NativeArray_1_Particle
+  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32
+  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32
+  ReplaceIcon:
+  - Type: UnityEngine.Input
+    IconPath: standaloneinputmodule icon
+    Icon: {fileID: 0}
+  - Type: UnityEngine.Mathf
+    IconPath: d_collabcreate icon
+    Icon: {fileID: 0}
+  - Type: UnityEngine.Time
+    IconPath: d_unityeditor.animationwindow@2x
+    Icon: {fileID: 0}
+  GMethods: 1
+  GFields: 1
   GProperties: 1

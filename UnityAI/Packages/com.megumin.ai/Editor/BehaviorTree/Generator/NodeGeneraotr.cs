@@ -39,6 +39,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public bool GFields = true;
         public bool GProperties = true;
 
+        List<Task> alltask = new();
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -88,14 +89,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            if (GMethods)
-            {
-                GenerateMethod(all);
-            }
+            alltask.Clear();
 
             if (GFields)
             {
-                GenerateFeild(types);
+                GenerateField(types);
             }
 
             if (GProperties)
@@ -103,6 +101,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 GenerateProp(types);
             }
 
+            if (GMethods)
+            {
+                GenerateMethod(all);
+            }
+
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var count = alltask.Count(elem => elem.IsCompleted);
+                    if (count >= alltask.Count)
+                    {
+                        break;
+                    }
+
+                    EditorUtility.DisplayProgressBar("GenerateCode", $"Write files to disk...", (float)count / alltask.Count);
+                    await Task.Delay(500);
+                }
+            });
+
+            Task.WaitAll(alltask.ToArray());
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
         }
@@ -203,32 +222,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public async void GenerateMethod(List<(Type type, MethodInfo method)> all)
+        public void GenerateMethod(List<(Type type, MethodInfo method)> all)
         {
-            List<Task> alltask = new();
             int index = 0;
             foreach (var (type, method) in all)
             {
-                if (MultiThreading)
-                {
-                    var task = GenerateMethod(type, method);
-                    EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
-                    alltask.Add(task);
-                    index++;
-                }
-                else
-                {
-                    await GenerateMethod(type, method);
-                    EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
-                    //alltask.Add(task);
-                    index++;
-                }
+                EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {method.Name}", (float)index / all.Count);
+                GenerateMethod(type, method);
+                index++;
             }
-
-            Task.WaitAll(alltask.ToArray());
         }
 
-        public Task GenerateMethod(Type type, MethodInfo method)
+        public void GenerateMethod(Type type, MethodInfo method)
         {
             string className = GetClassName(type, method);
 
@@ -255,19 +260,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     if (oldPath != path)
                     {
                         Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
-                        return Task.CompletedTask;
                     }
                 }
             }
 
             if (MultiThreading)
             {
-                return Task.Run(() => { GenerateCode(type, method, path); });
+                var task = Task.Run(() => { GenerateMethod(type, method, path); });
+                alltask.Add(task);
             }
             else
             {
-                GenerateCode(type, method, path);
-                return Task.CompletedTask;
+                GenerateMethod(type, method, path);
             }
         }
 
@@ -384,24 +388,24 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     saveResult = true;
                     generator.PushBlankLines();
                     generator.Push($"[Space]");
-                    generator.Push($"public {returnType.ToCodeString()} Result;");
+                    generator.Push($"public {returnType.ToCodeString()} SaveValueTo;");
                 }
             }
 
             return saveResult;
         }
 
-        public void GenerateCode(Type type, MethodInfo method, string path)
+        public void GenerateMethod(Type type, MethodInfo method, string path)
         {
             CSCodeGenerator codeGenerator = new CSCodeGenerator();
-            var success = GeneraoteNodeClass(type, method, codeGenerator);
+            var success = GenerateMethod(type, method, codeGenerator);
             if (success)
             {
                 codeGenerator.Generate(path);
             }
         }
 
-        public bool GeneraoteNodeClass(Type type, MethodInfo method, CSCodeGenerator generator)
+        public bool GenerateMethod(Type type, MethodInfo method, CSCodeGenerator generator)
         {
             if (Define.Enabled)
             {
@@ -504,12 +508,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             var param = @params[i];
                             if (param.IsOut)
                             {
-                                callString += $"out var {param.Name}";
+                                callString += $"out var ";
                             }
-                            else
-                            {
-                                callString += $"{param.Name}";
-                            }
+
+                            callString += $"{param.Name}";
                         }
                         callString += ");";
 
@@ -518,10 +520,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         if (saveResult)
                         {
                             generator.PushBlankLines();
-                            generator.Push($"if (Result != null)");
+                            generator.Push($"if (SaveValueTo != null)");
                             using (generator.NewScope)
                             {
-                                generator.Push($"Result.Value = result;");
+                                generator.Push($"SaveValueTo.Value = result;");
                             }
                             generator.PushBlankLines();
                         }
@@ -739,15 +741,15 @@ public override bool CheckCondition(object options = null)
             }
         }
 
-        public void GenerateFeild(HashSet<Type> types)
+        public void GenerateField(HashSet<Type> types)
         {
             foreach (var type in types)
             {
-                GenerateFeild(type);
+                GenerateField(type);
             }
         }
 
-        public void GenerateFeild(Type type)
+        public void GenerateField(Type type)
         {
             var props = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
 
@@ -789,6 +791,7 @@ public override bool CheckCondition(object options = null)
             }
         }
 
+        System.Random random = new();
         public void GenerateMember(Type type, MemberInfo prop)
         {
             string className = GetClassName(type, prop);
@@ -820,8 +823,21 @@ public override bool CheckCondition(object options = null)
                 }
             }
 
-            EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {prop.Name}", 0.5f);
+            EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {prop.Name}", random.Next(100) / 100f);
 
+            if (MultiThreading)
+            {
+                var task = Task.Run(() => { GenerateMemberRead(type, prop, path); });
+                alltask.Add(task);
+            }
+            else
+            {
+                GenerateMemberRead(type, prop, path);
+            }
+        }
+
+        public void GenerateMemberRead(Type type, MemberInfo prop, string path)
+        {
             CSCodeGenerator generator = new();
             var success = GenerateMemberRead(type, prop, generator);
             if (success)
