@@ -335,22 +335,52 @@ namespace Megumin.Serialization
                 }
                 else if (value is Array array)
                 {
+                    Type memberType = array.GetType().GetElementType();
+
+                    if (memberType == null)
+                    {
+                        Debug.LogError($"找不到特化类型");
+                        return false;
+                    }
+
                     for (int i = 0; i < Member.Count; i++)
                     {
                         var memberData = Member[i];
                         if (TryDeserializeMember(memberData, out var memberValue))
                         {
+                            if (memberValue is UnityEngine.Object uobj && !uobj && memberType != memberValue.GetType())
+                            {
+                                //空的UnityEngine.Object 反序列化后丢失真实类型。
+                                //需要改为null，否则SetValue时会导致类型不匹配异常
+                                memberValue = null;
+                            }
+
                             array.SetValue(memberValue, i);
                         }
                     }
                 }
                 else if (value is IList list)
                 {
+                    Type memberType = list.GetType().GetGenericArguments()?[0];
+
+                    if (memberType == null)
+                    {
+                        Debug.LogError($"找不到特化类型");
+                        return false;
+                    }
+
                     for (int i = 0; i < Member.Count; i++)
                     {
                         var memberData = Member[i];
                         if (TryDeserializeMember(memberData, out var memberValue))
                         {
+                            if (memberValue is UnityEngine.Object uobj && !uobj && memberType != memberValue.GetType())
+                            {
+                                //空的UnityEngine.Object 反序列化后丢失真实类型。
+                                //需要改为null，否则SetValue时会导致类型不匹配异常
+                                memberValue = null;
+                            }
+
                             //Todo? 这里会不会导致乱序？
                             list.Insert(i, memberValue);
                         }
