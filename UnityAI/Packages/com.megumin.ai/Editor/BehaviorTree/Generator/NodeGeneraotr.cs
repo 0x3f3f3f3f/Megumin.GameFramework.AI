@@ -740,49 +740,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             generator.PushBlankLines();
                         }
 
-                        if (prop.PropertyType == typeof(float))
+                        if (prop.PropertyType == typeof(bool))
                         {
-                            generator.PushTemplate(CompareDecoratorBodyTemplate);
+                            generator.PushTemplate(BoolDecoratorBodyTemplate);
                             TryGetParamType(prop.PropertyType, out var returnType);
                             generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
                         }
                         else
                         {
-                            GenerateDeclaringResult(prop.PropertyType, generator);
-                            generator.PushBlankLines();
-
-                            string ObjectOptions = "options";
-                            if (prop.Name == ObjectOptions)
-                            {
-                                ObjectOptions += "1";
-                            }
-                            generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
-
-                            using (generator.NewScope)
-                            {
-                                var callString = "";
-                                callString += "var result = ";
-                                if (prop.GetMethod.IsStatic)
-                                {
-                                    callString += $"{type.FullName}.{prop.Name};";
-                                }
-                                else
-                                {
-                                    callString += $"(({type.FullName})MyAgent).{prop.Name};";
-                                }
-
-                                generator.Push(callString);
-
-                                generator.PushBlankLines();
-                                generator.Push($"if (Result != null)");
-                                using (generator.NewScope)
-                                {
-                                    generator.Push($"Result.Value = result;");
-                                }
-                                generator.PushBlankLines();
-
-                                generator.Push($"return result;");
-                            }
+                            generator.PushTemplate(CompareDecoratorBodyTemplate);
+                            TryGetParamType(prop.PropertyType, out var returnType);
+                            generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
                         }
                     }
                 }
@@ -827,5 +795,21 @@ public override float GetCompareTo()
 }
 ";
 
+        public const string BoolDecoratorBodyTemplate =
+@"[Space]
+public $(RefVarType) SaveValueTo;
+
+public override bool CheckCondition(object options = null)
+{
+    var result = ((UnityEngine.CharacterController)MyAgent).isGrounded;
+
+    if (SaveValueTo != null)
+    {
+        SaveValueTo.Value = result;
+    }
+
+    return result;
+}
+";
     }
 }

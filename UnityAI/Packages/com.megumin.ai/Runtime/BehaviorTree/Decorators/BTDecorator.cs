@@ -174,6 +174,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public abstract class CompareDecorator<V> : ConditionDecorator
         where V : IComparable<V>
     {
+        [Space]
         public CompareToMode Mode = CompareToMode.Equals;
 
         public abstract V GetResult();
@@ -208,6 +209,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public abstract class CompareDecorator<T, V> : ConditionDecorator<T>
          where V : IComparable<V>
     {
+        [Space]
         public CompareToMode Mode = CompareToMode.Equals;
 
         public abstract V GetResult();
