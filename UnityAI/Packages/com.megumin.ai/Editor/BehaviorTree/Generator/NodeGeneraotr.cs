@@ -752,6 +752,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             TryGetParamType(prop.PropertyType, out var returnType);
                             generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
                         }
+
+                        generator.Macro["$(MemberTyoe)"] = prop.PropertyType.ToCodeString();
+                        if (us)
+                        {
+                            generator.Macro["$(MyAgent)"] = "$(ComponentName)";
+                        }
+                        else
+                        {
+                            generator.Macro["$(MyAgent)"] = "(($(ComponentName))MyAgent)";
+                        }
                     }
                 }
             }
@@ -777,9 +787,9 @@ public $(RefVarType) CompareTo;
 [Space]
 public $(RefVarType) SaveValueTo;
 
-public override float GetResult()
+public override $(MemberTyoe) GetResult()
 {
-    var result = (($(ComponentName))MyAgent).$(MemberName);
+    var result = $(MyAgent).$(MemberName);
 
     if (SaveValueTo != null)
     {
@@ -789,7 +799,7 @@ public override float GetResult()
     return result;
 }
 
-public override float GetCompareTo()
+public override $(MemberTyoe) GetCompareTo()
 {
     return CompareTo;
 }
@@ -801,7 +811,7 @@ public $(RefVarType) SaveValueTo;
 
 public override bool CheckCondition(object options = null)
 {
-    var result = ((UnityEngine.CharacterController)MyAgent).isGrounded;
+    var result = $(MyAgent).$(MemberName);
 
     if (SaveValueTo != null)
     {
