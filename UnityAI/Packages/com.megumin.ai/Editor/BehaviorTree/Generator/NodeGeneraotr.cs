@@ -23,6 +23,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public List<string> IgnoreMethods = new();
 
+        [Serializable]
+        public class IconReplace
+        {
+            public string Type;
+            public string IconPath;
+            public Texture2D Icon;
+        }
+
+        public List<IconReplace> ReplaceIcon = new();
+
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -57,6 +67,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 ClollectMethod(item, all);
             }
 
+            foreach (var item in ReplaceIcon)
+            {
+                if (Megumin.Reflection.TypeCache.TryGetType(item.Type, out var type))
+                {
+                    if (item.Icon)
+                    {
+                        typeIcon[type] = AssetDatabase.GetAssetPath(item.Icon);
+                    }
+                    else
+                    {
+                        typeIcon[type] = item.IconPath;
+                    }
+                }
+            }
+
             Generate(all);
 
             GenerateFeildProp(types);
@@ -67,6 +92,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         Dictionary<Type, string> typeIcon = new();
+
         ///// <summary>
         ///// 重载函数个数
         ///// </summary>
