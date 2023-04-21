@@ -48,7 +48,7 @@ MonoBehaviour:
     Value: UnityEngine.Mathf
   - Enabled: 1
     Value: UnityEngine.AI.NavMeshAgent
-  - Enabled: 1
+  - Enabled: 0
     Value: UnityEngine.ParticleSystem
   - Enabled: 1
     Value: UnityEngine.Physics
@@ -87,3 +87,14 @@ MonoBehaviour:
   IgnoreMethods:
   - Input_IsJoystickPreconfigured_String
   - Light_SetLightDirty
+  - Quaternion_Item
+  - Vector2_Item
+  - Vector2Int_Item
+  - Vector3_Item
+  - Vector3Int_Item
+  - Vector4_Item
+  - Vector4Int_Item
+  ReplaceIcon: []
+  GMethods: 0
+  GFields: 0
+  GProperties: 1

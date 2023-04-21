@@ -34,6 +34,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public List<IconReplace> ReplaceIcon = new();
 
+        [Space]
+        public bool GMethods = true;
+        public bool GFields = true;
+        public bool GProperties = true;
+
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -83,10 +88,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            Generate(all);
+            if (GMethods)
+            {
+                GenerateMethod(all);
+            }
 
-            GenerateProp(types);
-            GenerateFeild(types);
+            if (GFields)
+            {
+                GenerateFeild(types);
+            }
+
+            if (GProperties)
+            {
+                GenerateProp(types);
+            }
 
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
@@ -188,7 +203,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public async void Generate(List<(Type type, MethodInfo method)> all)
+        public async void GenerateMethod(List<(Type type, MethodInfo method)> all)
         {
             List<Task> alltask = new();
             int index = 0;
@@ -306,10 +321,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public void GenerateAttribute(Type type, CSCodeGenerator generator)
         {
-            if (typeIcon.TryGetValue(type, out var iconName))
+            if (typeIcon.TryGetValue(type, out var iconName) && string.IsNullOrEmpty(iconName) == false)
             {
                 generator.Push($"[Icon(\"{iconName}\")]");
             }
+
             generator.Push($"[DisplayName(\"$(DisplayName)\")]");
             generator.Push($"[Category(\"Unity/{type.Name}\")]");
             generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
@@ -833,9 +849,8 @@ public override bool CheckCondition(object options = null)
 
                 var isStatic = member.IsStaticMember();
 
-                var us = isStatic || UseMyAgent == false;
                 var memberType = member.GetMemberType();
-                if (GetBaseTypeString(type, memberType, !us, out var baseTypeSting))
+                if (GetBaseTypeString(type, memberType, !isStatic && UseMyAgent, out var baseTypeSting))
                 {
                     generator.Push($"public sealed class $(ClassName) : {baseTypeSting}");
                 }
@@ -874,7 +889,8 @@ public override bool CheckCondition(object options = null)
                     generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
 
                     generator.Macro["$(MemberTyoe)"] = memberType.ToCodeString();
-                    if (us)
+
+                    if (isStatic)
                     {
                         generator.Macro["$(MyAgent)"] = "$(ComponentName)";
                     }
