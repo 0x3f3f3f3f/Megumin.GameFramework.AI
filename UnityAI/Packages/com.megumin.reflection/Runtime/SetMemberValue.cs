@@ -282,5 +282,54 @@ namespace Megumin.Reflection
 
             return field.IsPublic;
         }
+
+
+        public static bool IsStaticMember(this MemberInfo member)
+        {
+            if (member is MethodInfo method)
+            {
+                return method.IsStatic;
+            }
+            else if (member is FieldInfo field)
+            {
+                return field.IsStatic;
+            }
+            else if (member is PropertyInfo property)
+            {
+                if (property.CanRead)
+                {
+                    return property.GetMethod.IsStatic;
+                }
+
+                if (property.CanWrite)
+                {
+                    return property.SetMethod.IsStatic;
+                }
+            }
+
+            return false;
+        }
+
+        public static Type GetMemberType(this MemberInfo member)
+        {
+            if (member is MethodInfo method)
+            {
+                return method.ReturnType;
+            }
+            else if (member is FieldInfo field)
+            {
+                return field.FieldType;
+            }
+            else if (member is PropertyInfo property)
+            {
+                return property.PropertyType;
+            }
+
+            return null;
+        }
     }
 }
+
+
+
+

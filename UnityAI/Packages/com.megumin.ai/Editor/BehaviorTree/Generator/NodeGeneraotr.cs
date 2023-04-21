@@ -10,6 +10,7 @@ using UnityEngine.AI;
 using Megumin.GameFramework.AI.Editor;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -84,8 +85,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             Generate(all);
 
-            GenerateFeildProp(types);
-
+            GenerateProp(types);
+            GenerateFeild(types);
 
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
@@ -575,94 +576,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
     public partial class NodeGeneraotr
     {
-        public void GenerateFeildProp(HashSet<Type> types)
-        {
-            foreach (var type in types)
-            {
-                GenerateFeildProp(type);
-            }
-        }
-
-        public void GenerateFeildProp(Type type)
-        {
-            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
-
-            foreach (var prop in props)
-            {
-                if (prop.DeclaringType != type)
-                {
-                    continue;
-                }
-
-                if (prop.IsSpecialName)
-                {
-                    continue;
-                }
-
-                //忽略过时API
-                var ob = prop.GetCustomAttribute<ObsoleteAttribute>();
-                if (ob != null)
-                {
-                    continue;
-                }
-
-                //忽略平台不一致API
-                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
-                var nc = prop.GetCustomAttribute(NativeConditionalAttributeType);
-                if (nc != null)
-                {
-                    continue;
-                }
-
-                //忽略指定方法
-                var className = GetClassName(type, prop);
-                if (IgnoreMethods.Contains(className))
-                {
-                    continue;
-                }
-
-                GenerateProp(type, prop);
-            }
-        }
-
-        public void GenerateProp(Type type, PropertyInfo prop)
-        {
-            string className = GetClassName(type, prop);
-
-            var fileName = $"{className}.cs";
-            var dir = AssetDatabase.GetAssetPath(OutputFolder);
-
-            dir = Path.Combine(dir, type.Name);
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            string filePath = Path.Combine(dir, fileName);
-            var path = Path.GetFullPath(filePath);
-
-            //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
-            if (Megumin.Reflection.TypeCache.TryGetType($"Megumin.GameFramework.AI.BehaviorTree.{className}", out var oldType))
-            {
-                var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
-                if (script != null)
-                {
-                    var oldPath = AssetDatabase.GetAssetPath(script);
-                    oldPath = Path.GetFullPath(oldPath);
-                    if (oldPath != path)
-                    {
-                        Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
-                    }
-                }
-            }
-
-            CSCodeGenerator generator = new();
-            var success = GenerateProp2(type, prop, generator);
-            if (success)
-            {
-                generator.Generate(path);
-            }
-        }
 
         public bool GetBaseTypeString(Type compType, Type memberType, bool useMyAgent, out string baseTypeSting)
         {
@@ -719,93 +632,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return true;
         }
 
-        private bool GenerateProp2(Type type, PropertyInfo prop, CSCodeGenerator generator)
-        {
-            if (Define.Enabled)
-            {
-                generator.Push($"#if {Define.Value}");
-                generator.PushBlankLines();
-            }
-
-            GenerateUsing(generator);
-
-            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
-            using (generator.NewScope)
-            {
-                if (prop.CanRead)
-                {
-                    GenerateAttribute(type, generator);
-
-                    var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
-
-                    var us = prop.GetMethod.IsStatic || UseMyAgent == false;
-
-                    if (GetBaseTypeString(type, prop.PropertyType, !us, out var baseTypeSting))
-                    {
-                        generator.Push($"public sealed class $(ClassName) : {baseTypeSting}");
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-                    using (generator.NewScope)
-                    {
-                        if (prop.GetMethod.IsStatic == false && UseMyAgent == false)
-                        {
-                            generator.Push($"[Space]");
-                            if (TryGetParamType(type, out var paramType))
-                            {
-                                generator.Push($"public {paramType.ToCodeString()} MyAgent;");
-                            }
-                            else
-                            {
-                                generator.Push($"public {type.ToCodeString()} MyAgent;");
-                            }
-
-                            generator.PushBlankLines();
-                        }
-
-                        if (prop.PropertyType == typeof(bool))
-                        {
-                            generator.PushTemplate(BoolDecoratorBodyTemplate);
-                            TryGetParamType(prop.PropertyType, out var returnType);
-                            generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
-                        }
-                        else
-                        {
-                            generator.PushTemplate(CompareDecoratorBodyTemplate);
-                            TryGetParamType(prop.PropertyType, out var returnType);
-                            generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
-                        }
-
-                        generator.Macro["$(MemberTyoe)"] = prop.PropertyType.ToCodeString();
-                        if (us)
-                        {
-                            generator.Macro["$(MyAgent)"] = "$(ComponentName)";
-                        }
-                        else
-                        {
-                            generator.Macro["$(MyAgent)"] = "(($(ComponentName))MyAgent)";
-                        }
-                    }
-                }
-            }
-
-
-            if (Define.Enabled)
-            {
-                generator.PushBlankLines();
-                generator.Push($"#endif");
-            }
-
-            generator.PushBlankLines(4);
-
-            AddMacro(type, prop, generator);
-
-            return true;
-        }
-
         public const string CompareDecoratorBodyTemplate =
 @"[Space]
 public $(RefVarType) CompareTo;
@@ -847,5 +673,231 @@ public override bool CheckCondition(object options = null)
     return result;
 }
 ";
+        public void GenerateProp(HashSet<Type> types)
+        {
+            foreach (var type in types)
+            {
+                GenerateProp(type);
+            }
+        }
+
+        public void GenerateProp(Type type)
+        {
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
+
+            foreach (var prop in props)
+            {
+                if (prop.DeclaringType != type)
+                {
+                    continue;
+                }
+
+                if (prop.IsSpecialName)
+                {
+                    continue;
+                }
+
+                //忽略过时API
+                var ob = prop.GetCustomAttribute<ObsoleteAttribute>();
+                if (ob != null)
+                {
+                    continue;
+                }
+
+                //忽略平台不一致API
+                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
+                var nc = prop.GetCustomAttribute(NativeConditionalAttributeType);
+                if (nc != null)
+                {
+                    continue;
+                }
+
+                //忽略指定方法
+                var className = GetClassName(type, prop);
+                if (IgnoreMethods.Contains(className))
+                {
+                    continue;
+                }
+
+                GenerateMember(type, prop);
+            }
+        }
+
+        public void GenerateFeild(HashSet<Type> types)
+        {
+            foreach (var type in types)
+            {
+                GenerateFeild(type);
+            }
+        }
+
+        public void GenerateFeild(Type type)
+        {
+            var props = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
+
+            foreach (var prop in props)
+            {
+                if (prop.DeclaringType != type)
+                {
+                    continue;
+                }
+
+                if (prop.IsSpecialName)
+                {
+                    continue;
+                }
+
+                //忽略过时API
+                var ob = prop.GetCustomAttribute<ObsoleteAttribute>();
+                if (ob != null)
+                {
+                    continue;
+                }
+
+                //忽略平台不一致API
+                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
+                var nc = prop.GetCustomAttribute(NativeConditionalAttributeType);
+                if (nc != null)
+                {
+                    continue;
+                }
+
+                //忽略指定方法
+                var className = GetClassName(type, prop);
+                if (IgnoreMethods.Contains(className))
+                {
+                    continue;
+                }
+
+                GenerateMember(type, prop);
+            }
+        }
+
+        public void GenerateMember(Type type, MemberInfo prop)
+        {
+            string className = GetClassName(type, prop);
+
+            var fileName = $"{className}.cs";
+            var dir = AssetDatabase.GetAssetPath(OutputFolder);
+
+            dir = Path.Combine(dir, type.Name);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            string filePath = Path.Combine(dir, fileName);
+            var path = Path.GetFullPath(filePath);
+
+            //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
+            if (Megumin.Reflection.TypeCache.TryGetType($"Megumin.GameFramework.AI.BehaviorTree.{className}", out var oldType))
+            {
+                var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                if (script != null)
+                {
+                    var oldPath = AssetDatabase.GetAssetPath(script);
+                    oldPath = Path.GetFullPath(oldPath);
+                    if (oldPath != path)
+                    {
+                        Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
+                    }
+                }
+            }
+
+            EditorUtility.DisplayProgressBar("GenerateCode", $"{type.FullName} {prop.Name}", 0.5f);
+
+            CSCodeGenerator generator = new();
+            var success = GenerateMemberRead(type, prop, generator);
+            if (success)
+            {
+                generator.Generate(path);
+            }
+        }
+
+        public bool GenerateMemberRead(Type type, MemberInfo member, CSCodeGenerator generator)
+        {
+            if (Define.Enabled)
+            {
+                generator.Push($"#if {Define.Value}");
+                generator.PushBlankLines();
+            }
+
+            GenerateUsing(generator);
+
+            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+            using (generator.NewScope)
+            {
+                GenerateAttribute(type, generator);
+
+                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+
+                var isStatic = member.IsStaticMember();
+
+                var us = isStatic || UseMyAgent == false;
+                var memberType = member.GetMemberType();
+                if (GetBaseTypeString(type, memberType, !us, out var baseTypeSting))
+                {
+                    generator.Push($"public sealed class $(ClassName) : {baseTypeSting}");
+                }
+                else
+                {
+                    return false;
+                }
+
+                using (generator.NewScope)
+                {
+                    if (isStatic == false && UseMyAgent == false)
+                    {
+                        generator.Push($"[Space]");
+                        if (TryGetParamType(type, out var paramType))
+                        {
+                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                        }
+                        else
+                        {
+                            generator.Push($"public {type.ToCodeString()} MyAgent;");
+                        }
+
+                        generator.PushBlankLines();
+                    }
+
+                    if (memberType == typeof(bool))
+                    {
+                        generator.PushTemplate(BoolDecoratorBodyTemplate);
+                    }
+                    else
+                    {
+                        generator.PushTemplate(CompareDecoratorBodyTemplate);
+                    }
+
+                    TryGetParamType(memberType, out var returnType);
+                    generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
+
+                    generator.Macro["$(MemberTyoe)"] = memberType.ToCodeString();
+                    if (us)
+                    {
+                        generator.Macro["$(MyAgent)"] = "$(ComponentName)";
+                    }
+                    else
+                    {
+                        generator.Macro["$(MyAgent)"] = "(($(ComponentName))MyAgent)";
+                    }
+                }
+            }
+
+
+            if (Define.Enabled)
+            {
+                generator.PushBlankLines();
+                generator.Push($"#endif");
+            }
+
+            generator.PushBlankLines(4);
+
+            AddMacro(type, member, generator);
+
+            return true;
+        }
+
     }
 }
