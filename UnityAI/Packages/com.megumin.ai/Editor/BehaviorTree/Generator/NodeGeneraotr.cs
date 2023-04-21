@@ -351,6 +351,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Macro["$(MenuName)"] = GetMenuName(type, member);
             generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
             generator.Macro["$(MemberName)"] = member.Name;
+            generator.Macro["$(CodeGenericType)"] = typeof(NodeGeneraotr).FullName;
         }
 
         public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
