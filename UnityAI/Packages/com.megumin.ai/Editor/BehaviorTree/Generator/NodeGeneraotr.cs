@@ -60,6 +60,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             Generate(all);
 
             GenerateFeildProp(types);
+
+
+            EditorUtility.ClearProgressBar();
+            AssetDatabase.Refresh();
         }
 
         Dictionary<Type, string> typeIcon = new();
@@ -180,9 +184,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             Task.WaitAll(alltask.ToArray());
-
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
         }
 
         public Task GenerateMethod(Type type, MethodInfo method)
@@ -296,12 +297,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.PushBlankLines();
         }
 
-        public void AddMacro(Type type, MethodInfo method, CSCodeGenerator generator)
+        public void AddMacro(Type type, MemberInfo member, CSCodeGenerator generator)
         {
-            generator.Macro["$(ClassName)"] = GetClassName(type, method); ;
+            generator.Macro["$(ClassName)"] = GetClassName(type, member); ;
             generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MenuName)"] = GetMenuName(type, method);
-            generator.Macro["$(DisplayName)"] = $"{type.Name}_{method.Name}";
+            generator.Macro["$(MenuName)"] = GetMenuName(type, member);
+            generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
+            generator.Macro["$(MemberName)"] = member.Name;
         }
 
         public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
@@ -636,10 +638,63 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        public bool GetBaseTypeString(Type compType, Type memberType, bool useMyAgent, out string baseTypeSting)
+        {
+            baseTypeSting = "BTActionNode";
+            if (memberType == typeof(bool))
+            {
+                if (useMyAgent)
+                {
+                    baseTypeSting = "ConditionDecorator<$(ComponentName)>";
+                }
+                else
+                {
+                    baseTypeSting = "ConditionDecorator";
+                }
+            }
+            else if (memberType == typeof(string))
+            {
+                if (useMyAgent)
+                {
+                    baseTypeSting = "CompareDecorator<$(ComponentName), string>";
+                }
+                else
+                {
+                    baseTypeSting = "CompareDecorator<string>";
+                }
+            }
+            else if (memberType == typeof(int))
+            {
+                if (useMyAgent)
+                {
+                    baseTypeSting = "CompareDecorator<$(ComponentName), int>";
+                }
+                else
+                {
+                    baseTypeSting = "CompareDecorator<int>";
+                }
+            }
+            else if (memberType == typeof(float))
+            {
+                if (useMyAgent)
+                {
+                    baseTypeSting = "CompareDecorator<$(ComponentName), float>";
+                }
+                else
+                {
+                    baseTypeSting = "CompareDecorator<float>";
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private bool GenerateProp2(Type type, PropertyInfo prop, CSCodeGenerator generator)
         {
-
-
             if (Define.Enabled)
             {
                 generator.Push($"#if {Define.Value}");
@@ -657,31 +712,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
 
-                    var BaseType = "ConditionDecorator";
-                    if (prop.PropertyType == typeof(bool))
-                    {
-                        BaseType = "ConditionDecorator";
-                    }
-                    else if (prop.PropertyType == typeof(string))
-                    {
-                        return false;
-                    }
-                    else if (prop.PropertyType == typeof(int))
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    var us = prop.GetMethod.IsStatic || UseMyAgent == false;
 
-                    if (prop.GetMethod.IsStatic || UseMyAgent == false)
+                    if (GetBaseTypeString(type, prop.PropertyType, !us, out var baseTypeSting))
                     {
-                        generator.Push($"public sealed class $(ClassName) : {BaseType}");
+                        generator.Push($"public sealed class $(ClassName) : {baseTypeSting}");
                     }
                     else
                     {
-                        generator.Push($"public sealed class $(ClassName) : {BaseType}<$(ComponentName)>");
+                        return false;
                     }
 
                     using (generator.NewScope)
@@ -701,40 +740,49 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             generator.PushBlankLines();
                         }
 
-                        GenerateDeclaringResult(prop.PropertyType, generator);
-                        generator.PushBlankLines();
-
-                        string ObjectOptions = "options";
-                        if (prop.Name == ObjectOptions)
+                        if (prop.PropertyType == typeof(float))
                         {
-                            ObjectOptions += "1";
+                            generator.PushTemplate(CompareDecoratorBodyTemplate);
+                            TryGetParamType(prop.PropertyType, out var returnType);
+                            generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
                         }
-                        generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
-
-                        using (generator.NewScope)
+                        else
                         {
-                            var callString = "";
-                            callString += "var result = ";
-                            if (prop.GetMethod.IsStatic)
-                            {
-                                callString += $"{type.FullName}.{prop.Name};";
-                            }
-                            else
-                            {
-                                callString += $"(({type.FullName})MyAgent).{prop.Name};";
-                            }
-
-                            generator.Push(callString);
-
+                            GenerateDeclaringResult(prop.PropertyType, generator);
                             generator.PushBlankLines();
-                            generator.Push($"if (Result != null)");
+
+                            string ObjectOptions = "options";
+                            if (prop.Name == ObjectOptions)
+                            {
+                                ObjectOptions += "1";
+                            }
+                            generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
+
                             using (generator.NewScope)
                             {
-                                generator.Push($"Result.Value = result;");
-                            }
-                            generator.PushBlankLines();
+                                var callString = "";
+                                callString += "var result = ";
+                                if (prop.GetMethod.IsStatic)
+                                {
+                                    callString += $"{type.FullName}.{prop.Name};";
+                                }
+                                else
+                                {
+                                    callString += $"(({type.FullName})MyAgent).{prop.Name};";
+                                }
 
-                            generator.Push($"return result;");
+                                generator.Push(callString);
+
+                                generator.PushBlankLines();
+                                generator.Push($"if (Result != null)");
+                                using (generator.NewScope)
+                                {
+                                    generator.Push($"Result.Value = result;");
+                                }
+                                generator.PushBlankLines();
+
+                                generator.Push($"return result;");
+                            }
                         }
                     }
                 }
@@ -749,12 +797,35 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             generator.PushBlankLines(4);
 
-            generator.Macro["$(ClassName)"] = GetClassName(type, prop); ;
-            generator.Macro["$(ComponentName)"] = type.FullName;
-            generator.Macro["$(MenuName)"] = GetMenuName(type, prop);
-            generator.Macro["$(DisplayName)"] = $"{prop.Name.UpperStartChar()}";
+            AddMacro(type, prop, generator);
 
             return true;
         }
+
+        public const string CompareDecoratorBodyTemplate =
+@"[Space]
+public $(RefVarType) CompareTo;
+
+[Space]
+public $(RefVarType) SaveValueTo;
+
+public override float GetResult()
+{
+    var result = (($(ComponentName))MyAgent).$(MemberName);
+
+    if (SaveValueTo != null)
+    {
+        SaveValueTo.Value = result;
+    }
+
+    return result;
+}
+
+public override float GetCompareTo()
+{
+    return CompareTo;
+}
+";
+
     }
 }
