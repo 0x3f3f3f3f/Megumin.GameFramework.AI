@@ -250,23 +250,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return className;
         }
 
-        public string GetMenuName(Type type, MethodInfo method)
+        public string GetMenuName(Type type, MemberInfo member)
         {
-            var result = method.Name;
-            var @params = method.GetParameters();
-            if (@params.Count() > 0)
+            var result = member.Name;
+
+            if (member is MethodInfo method)
             {
-                result += "(";
-                for (int i = 0; i < @params.Length; i++)
+                var @params = method.GetParameters();
+                if (@params.Count() > 0)
                 {
-                    if (i != 0)
+                    result += "(";
+                    for (int i = 0; i < @params.Length; i++)
                     {
-                        result += ", ";
+                        if (i != 0)
+                        {
+                            result += ", ";
+                        }
+                        result += $"{@params[i].ParameterType.Name}";
                     }
-                    result += $"{@params[i].ParameterType.Name}";
+                    result += ")";
+                    //Debug.LogError(className);
                 }
-                result += ")";
-                //Debug.LogError(className);
             }
 
             return result;
@@ -321,14 +325,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            return GenerateDeclaringResult(method.ReturnType, generator);
+        }
+
+        public bool GenerateDeclaringResult(Type type, CSCodeGenerator generator)
+        {
             bool saveResult = false;
-            if (method.ReturnType != null && method.ReturnType != typeof(void))
+            if (type != null && type != typeof(void))
             {
                 //存在返回值 。储存返回值
-                if (TryGetParamType(method.ReturnType, out var returnType))
+                if (TryGetParamType(type, out var returnType))
                 {
                     saveResult = true;
                     generator.PushBlankLines();
+                    generator.Push($"[Space]");
                     generator.Push($"public {returnType.ToCodeString()} Result;");
                 }
             }
@@ -549,20 +559,20 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         {
             var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance).ToList();
 
-            foreach (var method in props)
+            foreach (var prop in props)
             {
-                if (method.DeclaringType != type)
+                if (prop.DeclaringType != type)
                 {
                     continue;
                 }
 
-                if (method.IsSpecialName)
+                if (prop.IsSpecialName)
                 {
                     continue;
                 }
 
                 //忽略过时API
-                var ob = method.GetCustomAttribute<ObsoleteAttribute>();
+                var ob = prop.GetCustomAttribute<ObsoleteAttribute>();
                 if (ob != null)
                 {
                     continue;
@@ -570,19 +580,181 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 //忽略平台不一致API
                 var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
-                var nc = method.GetCustomAttribute(NativeConditionalAttributeType);
+                var nc = prop.GetCustomAttribute(NativeConditionalAttributeType);
                 if (nc != null)
                 {
                     continue;
                 }
 
                 //忽略指定方法
-                var className = GetClassName(type, method);
+                var className = GetClassName(type, prop);
                 if (IgnoreMethods.Contains(className))
                 {
                     continue;
                 }
+
+                GenerateProp(type, prop);
             }
+        }
+
+        public void GenerateProp(Type type, PropertyInfo prop)
+        {
+            string className = GetClassName(type, prop);
+
+            var fileName = $"{className}.cs";
+            var dir = AssetDatabase.GetAssetPath(OutputFolder);
+
+            dir = Path.Combine(dir, type.Name);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            string filePath = Path.Combine(dir, fileName);
+            var path = Path.GetFullPath(filePath);
+
+            //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
+            if (Megumin.Reflection.TypeCache.TryGetType($"Megumin.GameFramework.AI.BehaviorTree.{className}", out var oldType))
+            {
+                var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                if (script != null)
+                {
+                    var oldPath = AssetDatabase.GetAssetPath(script);
+                    oldPath = Path.GetFullPath(oldPath);
+                    if (oldPath != path)
+                    {
+                        Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
+                    }
+                }
+            }
+
+            CSCodeGenerator generator = new();
+            var success = GenerateProp2(type, prop, generator);
+            if (success)
+            {
+                generator.Generate(path);
+            }
+        }
+
+        private bool GenerateProp2(Type type, PropertyInfo prop, CSCodeGenerator generator)
+        {
+
+
+            if (Define.Enabled)
+            {
+                generator.Push($"#if {Define.Value}");
+                generator.PushBlankLines();
+            }
+
+            GenerateUsing(generator);
+
+            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+            using (generator.NewScope)
+            {
+                if (prop.CanRead)
+                {
+                    GenerateAttribute(type, generator);
+
+                    var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+
+                    var BaseType = "ConditionDecorator";
+                    if (prop.PropertyType == typeof(bool))
+                    {
+                        BaseType = "ConditionDecorator";
+                    }
+                    else if (prop.PropertyType == typeof(string))
+                    {
+                        return false;
+                    }
+                    else if (prop.PropertyType == typeof(int))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    if (prop.GetMethod.IsStatic || UseMyAgent == false)
+                    {
+                        generator.Push($"public sealed class $(ClassName) : {BaseType}");
+                    }
+                    else
+                    {
+                        generator.Push($"public sealed class $(ClassName) : {BaseType}<$(ComponentName)>");
+                    }
+
+                    using (generator.NewScope)
+                    {
+                        if (prop.GetMethod.IsStatic == false && UseMyAgent == false)
+                        {
+                            generator.Push($"[Space]");
+                            if (TryGetParamType(type, out var paramType))
+                            {
+                                generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                            }
+                            else
+                            {
+                                generator.Push($"public {type.ToCodeString()} MyAgent;");
+                            }
+
+                            generator.PushBlankLines();
+                        }
+
+                        GenerateDeclaringResult(prop.PropertyType, generator);
+                        generator.PushBlankLines();
+
+                        string ObjectOptions = "options";
+                        if (prop.Name == ObjectOptions)
+                        {
+                            ObjectOptions += "1";
+                        }
+                        generator.Push($"public override bool CheckCondition(object {ObjectOptions} = null)");
+
+                        using (generator.NewScope)
+                        {
+                            var callString = "";
+                            callString += "var result = ";
+                            if (prop.GetMethod.IsStatic)
+                            {
+                                callString += $"{type.FullName}.{prop.Name};";
+                            }
+                            else
+                            {
+                                callString += $"(({type.FullName})MyAgent).{prop.Name};";
+                            }
+
+                            generator.Push(callString);
+
+                            generator.PushBlankLines();
+                            generator.Push($"if (Result != null)");
+                            using (generator.NewScope)
+                            {
+                                generator.Push($"Result.Value = result;");
+                            }
+                            generator.PushBlankLines();
+
+                            generator.Push($"return result;");
+                        }
+                    }
+                }
+            }
+
+
+            if (Define.Enabled)
+            {
+                generator.PushBlankLines();
+                generator.Push($"#endif");
+            }
+
+            generator.PushBlankLines(4);
+
+            generator.Macro["$(ClassName)"] = GetClassName(type, prop); ;
+            generator.Macro["$(ComponentName)"] = type.FullName;
+            generator.Macro["$(MenuName)"] = GetMenuName(type, prop);
+            generator.Macro["$(DisplayName)"] = $"{prop.Name.UpperStartChar()}";
+
+            return true;
         }
     }
 }
