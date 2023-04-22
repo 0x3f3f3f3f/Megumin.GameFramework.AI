@@ -73,6 +73,21 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 51e78e0b-9329-4f1e-b420-42a990d5e177
+  - Name: b44ba5d6-1c66-4f45-afa9-058048fa0e5c
+    Type: Megumin.GameFramework.AI.BehaviorTree.Log
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Decorators
+    - Name: Text
+      Type: $ref
+      Value: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Text
+    - Name: GUID
+      Type: System.String
+      Value: b44ba5d6-1c66-4f45-afa9-058048fa0e5c
   decorators:
   - Name: 54c47bbe-2278-4434-b827-83057684b76d
     Type: Megumin.GameFramework.AI.BehaviorTree.Loop
@@ -91,6 +106,9 @@ MonoBehaviour:
     - Name: 1
       Type: $ref
       Value: 4a4299c6-07d6-4cd8-b06c-7de170fd8918
+    - Name: 2
+      Type: $ref
+      Value: b44ba5d6-1c66-4f45-afa9-058048fa0e5c
   - Name: 07585099-76be-483b-973b-30026b856089.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
@@ -116,10 +134,10 @@ MonoBehaviour:
     Member:
     - Name: x
       Type: System.Single
-      Value: 478.3376
+      Value: 364
     - Name: y
       Type: System.Single
-      Value: 259.0001
+      Value: 259
   - Name: 51e78e0b-9329-4f1e-b420-42a990d5e177.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
       Megumin.GameFramework.AI]]
@@ -129,7 +147,7 @@ MonoBehaviour:
     Member:
     - Name: x
       Type: System.Single
-      Value: 232
+      Value: 165
     - Name: y
       Type: System.Single
       Value: 259
@@ -148,3 +166,43 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
+      Megumin.GameFramework.AI]]
+    Member: []
+  - Name: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Meta
+    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 557
+    - Name: y
+      Type: System.Single
+      Value: 259
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
+  - Name: b44ba5d6-1c66-4f45-afa9-058048fa0e5c.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: System.String
+      Value: Log Age.
+    - Name: bindingPath
+      Type: System.String
+      Value: IAnimal/Age

@@ -6,6 +6,8 @@ using Megumin.GameFramework.AI;
 
 public interface IAnimal
 {
+    string Name { get; }
+    int Age { get; }
     void Wow();
 }
 
