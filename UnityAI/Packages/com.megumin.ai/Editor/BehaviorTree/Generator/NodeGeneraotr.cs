@@ -24,6 +24,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public List<string> IgnoreMethods = new();
 
+        public List<string> ObsoleteAPIInFuture = new();
+
         [Serializable]
         public class IconReplace
         {
@@ -323,7 +325,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return result;
         }
 
-        public void GenerateAttribute(Type type, CSCodeGenerator generator)
+        public void GenerateAttribute(Type type, MemberInfo member, string className, CSCodeGenerator generator)
         {
             if (typeIcon.TryGetValue(type, out var iconName) && string.IsNullOrEmpty(iconName) == false)
             {
@@ -333,6 +335,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Push($"[DisplayName(\"$(DisplayName)\")]");
             generator.Push($"[Category(\"Unity/{type.Name}\")]");
             generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
+
         }
 
         public void GenerateUsing(CSCodeGenerator generator)
@@ -344,9 +347,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.PushBlankLines();
         }
 
-        public void AddMacro(Type type, MemberInfo member, CSCodeGenerator generator)
+        public void AddMacro(Type type, MemberInfo member, string className, CSCodeGenerator generator)
         {
-            generator.Macro["$(ClassName)"] = GetClassName(type, member); ;
+            generator.Macro["$(ClassName)"] = className;
             generator.Macro["$(ComponentName)"] = type.FullName;
             generator.Macro["$(MenuName)"] = GetMenuName(type, member);
             generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
@@ -408,6 +411,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public bool GenerateMethod(Type type, MethodInfo method, CSCodeGenerator generator)
         {
+            string className = GetClassName(type, method);
+
             if (Define.Enabled)
             {
                 generator.Push($"#if {Define.Value}");
@@ -421,7 +426,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 var isConditionDecorator = method.ReturnType == typeof(bool);
 
-                GenerateAttribute(type, generator);
+                GenerateAttribute(type, method, className, generator);
 
                 var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
 
@@ -549,7 +554,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             generator.PushBlankLines(4);
 
-            AddMacro(type, method, generator);
+            AddMacro(type, method, className, generator);
 
             return true;
         }
@@ -849,6 +854,8 @@ public override bool CheckCondition(object options = null)
 
         public bool GenerateMemberRead(Type type, MemberInfo member, CSCodeGenerator generator)
         {
+            string className = GetClassName(type, member);
+
             if (Define.Enabled)
             {
                 generator.Push($"#if {Define.Value}");
@@ -860,7 +867,7 @@ public override bool CheckCondition(object options = null)
             generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
             using (generator.NewScope)
             {
-                GenerateAttribute(type, generator);
+                GenerateAttribute(type, member, className, generator);
 
                 var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
 
@@ -927,7 +934,7 @@ public override bool CheckCondition(object options = null)
 
             generator.PushBlankLines(4);
 
-            AddMacro(type, member, generator);
+            AddMacro(type, member, className, generator);
 
             return true;
         }
