@@ -385,7 +385,7 @@ namespace Megumin.Binding
 
         static Dictionary<Type, List<MyItem>> cache = new();
         static readonly Unity.Profiling.ProfilerMarker GetAllItemMarker = new("GetAllItem");
-        public static List<MyItem> GetAllItem(Type targetType)
+        public static List<MyItem> GetAllItem(Type targetType, bool autoConvert)
         {
             using var profiler = GetAllItemMarker.Auto();
             if (cache.TryGetValue(targetType, out var myItems))
@@ -394,13 +394,13 @@ namespace Megumin.Binding
             }
             else
             {
-                myItems = GetMyItems(targetType);
+                myItems = GetMyItems(targetType, autoConvert);
                 cache[targetType] = myItems;
                 return myItems;
             }
         }
 
-        public static List<MyItem> GetMyItems(Type targetType)
+        public static List<MyItem> GetMyItems(Type targetType, bool autoConvert)
         {
             var result = new List<MyItem>();
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
@@ -408,12 +408,25 @@ namespace Megumin.Binding
                 //.Where(t => typeof(Component).IsAssignableFrom(t))
                 .Where(t => t.IsPublic).ToList();
 
+            var canConvertTypes = new HashSet<Type>();
+
+            if (autoConvert)
+            {
+                foreach (var item in TypeAdpter.Adpters)
+                {
+                    if (item.Key.Item2 == targetType)
+                    {
+                        canConvertTypes.Add(item.Key.Item1);
+                    }
+                }
+            }
+
             List<Task> tasks = new();
             for (int i = 0; i < allTypes.Count; i++)
             {
                 Type type = allTypes[i];
                 //EditorUtility.DisplayProgressBar("CacheMenuItem", type.FullName, (float)i / allTypes.Count);
-                var task = Task.Run(() => { GetTypeItems(targetType, result, type); });
+                var task = Task.Run(() => { GetTypeItems(targetType, canConvertTypes, result, type); });
                 tasks.Add(task);
             }
 
@@ -424,7 +437,7 @@ namespace Megumin.Binding
             return result;
         }
 
-        public static void GetTypeItems(Type targetType, List<MyItem> result, Type type)
+        public static void GetTypeItems(Type targetType, HashSet<Type> canConvertTypes, List<MyItem> result, Type type)
         {
             var FirstC = type.Name[0].ToString().ToUpper();
 
@@ -433,6 +446,11 @@ namespace Megumin.Binding
                 if (f.IsStaticMember() == false && IsUnityComp(type) == false)
                 {
                     return false;
+                }
+
+                if (canConvertTypes.Contains(f.FieldType))
+                {
+                    return true;
                 }
 
                 if (targetType == null)
@@ -462,6 +480,11 @@ namespace Megumin.Binding
                     return false;
                 }
 
+                if (canConvertTypes.Contains(f.PropertyType))
+                {
+                    return true;
+                }
+
                 if (targetType == null)
                 {
                     return true;
@@ -486,7 +509,9 @@ namespace Megumin.Binding
 
         static Dictionary<Type, Menu> cacheMenu = new();
         static readonly Unity.Profiling.ProfilerMarker GetMenu2Marker = new("GetMenu2");
-        public static GenericMenu GetMenu2(Type matchType, GenericMenu.MenuFunction2 func = default, bool autoConvert = true)
+        public static GenericMenu GetMenu2(Type matchType,
+                                           GenericMenu.MenuFunction2 func = default,
+                                           bool autoConvert = true)
         {
             using var profiler = GetMenu2Marker.Auto();
             if (cacheMenu.TryGetValue(matchType, out var menu))
@@ -495,7 +520,7 @@ namespace Megumin.Binding
             }
             else
             {
-                menu = new Menu(matchType);
+                menu = new Menu(matchType, autoConvert);
                 cacheMenu[matchType] = menu;
             }
 
@@ -508,11 +533,12 @@ namespace Megumin.Binding
             public GenericMenu BindMenu { get; private set; }
             public List<MyItem> ItemList { get; private set; }
 
-            public Menu(Type matchType)
+            public Menu(Type matchType, bool autoConvert)
             {
                 MatchType = matchType;
+                AutoConvert = autoConvert;
                 BindMenu = new GenericMenu();
-                ItemList = GetAllItem(matchType);
+                ItemList = GetAllItem(matchType, autoConvert);
                 foreach (var item in ItemList)
                 {
                     if (item != null)
@@ -529,6 +555,7 @@ namespace Megumin.Binding
 
             public Type MatchType { get; }
             public GenericMenu.MenuFunction2 Callback { get; internal set; }
+            public bool AutoConvert { get; }
         }
 
     }
