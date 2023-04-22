@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Physics_autoSimulation")]
     [Category("Unity/Physics")]
     [AddComponentMenu("autoSimulation")]
+    [System.Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics_autoSimulation : ConditionDecorator
     {
         [Space]

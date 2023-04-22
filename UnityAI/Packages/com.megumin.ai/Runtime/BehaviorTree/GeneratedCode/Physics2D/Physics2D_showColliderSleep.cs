@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Physics2D_showColliderSleep")]
     [Category("Unity/Physics2D")]
     [AddComponentMenu("showColliderSleep")]
+    [System.Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderSleep : ConditionDecorator
     {
         [Space]

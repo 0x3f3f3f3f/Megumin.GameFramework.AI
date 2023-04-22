@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Physics2D_velocityThreshold")]
     [Category("Unity/Physics2D")]
     [AddComponentMenu("velocityThreshold")]
+    [System.Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_velocityThreshold : CompareDecorator<float>
     {
         [Space]

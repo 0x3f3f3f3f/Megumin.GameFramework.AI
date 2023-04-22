@@ -102,6 +102,15 @@ MonoBehaviour:
   - ParticleSystem_SetParticles_NativeArray_1_Particle
   - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32
   - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32
+  ObsoleteAPIInFuture:
+  - Physics2D_alwaysShowColliders
+  - Physics2D_contactArrowScale
+  - Physics2D_showColliderAABB
+  - Physics2D_showColliderContacts
+  - Physics2D_showColliderSleep
+  - Physics2D_velocityThreshold
+  - Physics_autoSimulation
+  - Physics_RebuildBroadphaseRegions_Bounds_Int32
   ReplaceIcon:
   - Type: UnityEngine.Input
     IconPath: standaloneinputmodule icon

@@ -14,6 +14,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Physics2D_showColliderContacts")]
     [Category("Unity/Physics2D")]
     [AddComponentMenu("showColliderContacts")]
+    [System.Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderContacts : ConditionDecorator
     {
         [Space]

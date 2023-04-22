@@ -336,10 +336,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Push($"[Category(\"Unity/{type.Name}\")]");
             generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
 
+            if (ObsoleteAPIInFuture.Contains(className))
+            {
+                generator.Push($"[Obsolete(\"Obsolete API in a future version of Unity\", true)]");
+            }
         }
 
         public void GenerateUsing(CSCodeGenerator generator)
         {
+            generator.Push($"using System;");
             generator.Push($"using System.Collections;");
             generator.Push($"using System.Collections.Generic;");
             generator.Push($"using System.ComponentModel;");
