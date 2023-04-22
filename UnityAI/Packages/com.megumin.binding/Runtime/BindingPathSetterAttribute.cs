@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Reflection;
 using UnityEngine.UIElements;
 using Megumin.Reflection;
+using UnityEngine.Profiling;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -383,8 +384,10 @@ namespace Megumin.Binding
         }
 
         static Dictionary<Type, List<MyItem>> cache = new();
+        static readonly Unity.Profiling.ProfilerMarker GetAllItemMarker = new("GetAllItem");
         public static List<MyItem> GetAllItem(Type targetType)
         {
+            using var profiler = GetAllItemMarker.Auto();
             if (cache.TryGetValue(targetType, out var myItems))
             {
                 return myItems;
@@ -405,80 +408,129 @@ namespace Megumin.Binding
                 //.Where(t => typeof(Component).IsAssignableFrom(t))
                 .Where(t => t.IsPublic).ToList();
 
-
-            foreach (var type in allTypes)
+            List<Task> tasks = new();
+            for (int i = 0; i < allTypes.Count; i++)
             {
-                var FirstC = type.Name[0].ToString().ToUpper();
-
-                var fields = type.GetFields(BindingAttr).Where(f =>
-                {
-                    if (f.IsStaticMember() == false && IsUnityComp(type) == false)
-                    {
-                        return false;
-                    }
-
-                    if (targetType == null)
-                    {
-                        return true;
-                    }
-                    return targetType.IsAssignableFrom(f.FieldType);
-                }).ToList();
-
-                foreach (var member in fields)
-                {
-                    MyItem item = new();
-                    item.Type = type;
-                    item.BindPath = $"{type.FullName}/{member.Name}";
-                    item.ValueType = member.FieldType;
-                    item.Member = member;
-                    item.IsInert = member.DeclaringType != type;
-                    item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                    item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                    result.Add(item);
-                }
-
-                var props = type.GetProperties(BindingAttr).Where(f =>
-                {
-                    if (f.IsStaticMember() == false && IsUnityComp(type) == false)
-                    {
-                        return false;
-                    }
-
-                    if (targetType == null)
-                    {
-                        return true;
-                    }
-                    return targetType.IsAssignableFrom(f.PropertyType);
-                }).ToList();
-
-                foreach (var member in props)
-                {
-                    MyItem item = new();
-                    item.Type = type;
-                    item.BindPath = $"{type.FullName}/{member.Name}";
-                    item.ValueType = member.PropertyType;
-                    item.Member = member;
-                    item.IsInert = member.DeclaringType != type;
-                    item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                    item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                    result.Add(item);
-                }
+                Type type = allTypes[i];
+                //EditorUtility.DisplayProgressBar("CacheMenuItem", type.FullName, (float)i / allTypes.Count);
+                var task = Task.Run(() => { GetTypeItems(targetType, result, type); });
+                tasks.Add(task);
             }
+
+            Task.WaitAll(tasks.ToArray());
+            //EditorUtility.ClearProgressBar();
+
             result.Sort();
             return result;
         }
 
-        public static GenericMenu GetMenu2(Type matchType, GenericMenu.MenuFunction2 func = default, bool autoConvert = true)
+        public static void GetTypeItems(Type targetType, List<MyItem> result, Type type)
         {
-            GenericMenu bindMenu = new GenericMenu();
-            var list = GetAllItem(matchType);
-            foreach (var item in list)
+            var FirstC = type.Name[0].ToString().ToUpper();
+
+            var fields = type.GetFields(BindingAttr).Where(f =>
             {
-                bindMenu.AddItem(item.MainGUIContent, false, func, item.BindPath);
+                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                {
+                    return false;
+                }
+
+                if (targetType == null)
+                {
+                    return true;
+                }
+                return targetType.IsAssignableFrom(f.FieldType);
+            }).ToList();
+
+            foreach (var member in fields)
+            {
+                MyItem item = new();
+                item.Type = type;
+                item.BindPath = $"{type.FullName}/{member.Name}";
+                item.ValueType = member.FieldType;
+                item.Member = member;
+                item.IsInert = member.DeclaringType != type;
+                item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                result.Add(item);
             }
 
-            return bindMenu;
+            var props = type.GetProperties(BindingAttr).Where(f =>
+            {
+                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                {
+                    return false;
+                }
+
+                if (targetType == null)
+                {
+                    return true;
+                }
+                return targetType.IsAssignableFrom(f.PropertyType);
+            }).ToList();
+
+            foreach (var member in props)
+            {
+                MyItem item = new();
+                item.Type = type;
+                item.BindPath = $"{type.FullName}/{member.Name}";
+                item.ValueType = member.PropertyType;
+                item.Member = member;
+                item.IsInert = member.DeclaringType != type;
+                item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                result.Add(item);
+            }
         }
+
+
+        static Dictionary<Type, Menu> cacheMenu = new();
+        static readonly Unity.Profiling.ProfilerMarker GetMenu2Marker = new("GetMenu2");
+        public static GenericMenu GetMenu2(Type matchType, GenericMenu.MenuFunction2 func = default, bool autoConvert = true)
+        {
+            using var profiler = GetMenu2Marker.Auto();
+            if (cacheMenu.TryGetValue(matchType, out var menu))
+            {
+
+            }
+            else
+            {
+                menu = new Menu(matchType);
+                cacheMenu[matchType] = menu;
+            }
+
+            menu.Callback = func;
+            return menu.BindMenu;
+        }
+
+        public class Menu
+        {
+            public GenericMenu BindMenu { get; private set; }
+            public List<MyItem> ItemList { get; private set; }
+
+            public Menu(Type matchType)
+            {
+                MatchType = matchType;
+                BindMenu = new GenericMenu();
+                ItemList = GetAllItem(matchType);
+                foreach (var item in ItemList)
+                {
+                    if (item != null)
+                    {
+                        BindMenu.AddItem(item.MainGUIContent, false, func, item.BindPath);
+                    }
+                }
+            }
+
+            private void func(object userData)
+            {
+                Callback?.Invoke(userData);
+            }
+
+            public Type MatchType { get; }
+            public GenericMenu.MenuFunction2 Callback { get; internal set; }
+        }
+
     }
 
 #endif
