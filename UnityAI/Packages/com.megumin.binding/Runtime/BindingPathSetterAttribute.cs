@@ -428,6 +428,7 @@ namespace Megumin.Binding
                 //EditorUtility.DisplayProgressBar("CacheMenuItem", type.FullName, (float)i / allTypes.Count);
                 var task = Task.Run(() => { GetTypeItems(targetType, canConvertTypes, result, type); });
                 tasks.Add(task);
+                //task.Wait(); //测试时单线程，方便断点
             }
 
             Task.WaitAll(tasks.ToArray());
@@ -443,7 +444,9 @@ namespace Megumin.Binding
 
             var fields = type.GetFields(BindingAttr).Where(f =>
             {
-                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                if (f.IsStaticMember() == false
+                    && IsUnityComp(type) == false
+                    /*&& type.IsInterface == false*/)//暂时不提供接口菜单，菜单已经太多了
                 {
                     return false;
                 }
@@ -475,7 +478,9 @@ namespace Megumin.Binding
 
             var props = type.GetProperties(BindingAttr).Where(f =>
             {
-                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                if (f.IsStaticMember() == false
+                    && IsUnityComp(type) == false
+                    /*&& type.IsInterface == false*/)//暂时不提供接口菜单，菜单已经太多了
                 {
                     return false;
                 }
