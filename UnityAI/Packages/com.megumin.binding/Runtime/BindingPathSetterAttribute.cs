@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Reflection;
 using UnityEngine.UIElements;
+using Megumin.Reflection;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -195,6 +196,7 @@ namespace Megumin.Binding
             return false;
         }
 
+        private const BindingFlags BindingAttr = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
         public static Dictionary<string, string> cacheResult = new Dictionary<string, string>();
         public static async void GetBindStr(string propertyPath)
         {
@@ -217,37 +219,12 @@ namespace Megumin.Binding
         public static Task<string> GetBindStr(Type matchType, bool autoConvert = true)
         {
             TaskCompletionSource<string> source = new TaskCompletionSource<string>();
-            GenericMenu.MenuFunction2 func = ms =>
+            GenericMenu.MenuFunction2 func = path =>
             {
-                if (ms is List<MemberInfo> members)
-                {
-                    string str = "";
-
-
-                    for (int i = 0; i < members.Count; i++)
-                    {
-                        var item = members[i];
-                        if (item is TypeInfo typeInfo)
-                        {
-                            str += $"{typeInfo.FullName}/";
-                        }
-                        else
-                        {
-                            if (i == members.Count - 1)
-                            {
-                                str += $"{item.Name}";
-                            }
-                            else
-                            {
-                                str += $"{item.Name}/";
-                            }
-                        }
-                    }
-                    source.SetResult(str);
-                }
+                source.SetResult((string)path);
             };
 
-            GenericMenu bindMenu = GetMenu(matchType, func, autoConvert);
+            GenericMenu bindMenu = GetMenu2(matchType, func, autoConvert);
             bindMenu.ShowAsContext();
             return source.Task;
         }
@@ -268,7 +245,7 @@ namespace Megumin.Binding
 
             var componentTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
-                .Where(t => typeof(Component).IsAssignableFrom(t))
+                //.Where(t => typeof(Component).IsAssignableFrom(t))
                 .Where(t => t.IsPublic).ToList();
 
             componentTypes.Add(typeof(GameObject));
@@ -279,19 +256,24 @@ namespace Megumin.Binding
                 var ms = GetMembers(type, matchType);
                 foreach (var member in ms)
                 {
-                    List<MemberInfo> members = new List<MemberInfo>();
-                    members.Add(type);
-                    members.Add(member.Member);
+                    var resultPath = $"{type.FullName}/{member.Name}";
 
                     var FirstC = type.Name[0].ToString().ToUpper();
+
                     //类型名放前面 自动转换时会导致 类型名长度不一样
                     if (true || member.Member.DeclaringType == type) //暂时不显示[Inherited]
                     {
-                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{member.ValueType.Name}]"), false, func, members);
+                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{member.ValueType.Name}]"),
+                                         false,
+                                         func,
+                                         resultPath);
                     }
                     else
                     {
-                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{member.ValueType.Name}]"), false, func, members);
+                        bindMenu.AddItem(new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{member.ValueType.Name}]"),
+                                         false,
+                                         func,
+                                         resultPath);
                     }
                 }
             }
@@ -311,10 +293,25 @@ namespace Megumin.Binding
             public Type ValueType { get; internal set; }
         }
 
+        public static bool IsUnityComp(Type type)
+        {
+            if (type == typeof(GameObject))
+            {
+                return true;
+            }
+
+            return typeof(Component).IsAssignableFrom(type);
+        }
+
         public static IOrderedEnumerable<MyMember> GetMembers(Type type, Type matchType)
         {
-            var fields = type.GetFields().Where(f =>
+            var fields = type.GetFields(BindingAttr).Where(f =>
             {
+                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                {
+                    return false;
+                }
+
                 if (matchType == null)
                 {
                     return true;
@@ -325,8 +322,13 @@ namespace Megumin.Binding
             var allf = from f in fields
                        select new MyMember() { Name = f.Name, Member = f, ValueType = f.FieldType };
 
-            var propertie = type.GetProperties().Where(f =>
+            var propertie = type.GetProperties(BindingAttr).Where(f =>
             {
+                if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                {
+                    return false;
+                }
+
                 if (matchType == null)
                 {
                     return true;
@@ -359,6 +361,123 @@ namespace Megumin.Binding
             }
 
             return true;
+        }
+
+
+
+        public class MyItem : IComparable<MyItem>
+        {
+            public GUIContent InhertGUIContent;
+            public GUIContent MainGUIContent;
+            public string BindPath;
+
+            public Type Type { get; internal set; }
+            public Type ValueType { get; internal set; }
+            public MemberInfo Member { get; internal set; }
+            public bool IsInert { get; internal set; }
+
+            public int CompareTo(MyItem other)
+            {
+                return MainGUIContent.text.CompareTo(other.MainGUIContent.text);
+            }
+        }
+
+        static Dictionary<Type, List<MyItem>> cache = new();
+        public static List<MyItem> GetAllItem(Type targetType)
+        {
+            if (cache.TryGetValue(targetType, out var myItems))
+            {
+                return myItems;
+            }
+            else
+            {
+                myItems = GetMyItems(targetType);
+                cache[targetType] = myItems;
+                return myItems;
+            }
+        }
+
+        public static List<MyItem> GetMyItems(Type targetType)
+        {
+            var result = new List<MyItem>();
+            var allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                //.Where(t => typeof(Component).IsAssignableFrom(t))
+                .Where(t => t.IsPublic).ToList();
+
+
+            foreach (var type in allTypes)
+            {
+                var FirstC = type.Name[0].ToString().ToUpper();
+
+                var fields = type.GetFields(BindingAttr).Where(f =>
+                {
+                    if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                    {
+                        return false;
+                    }
+
+                    if (targetType == null)
+                    {
+                        return true;
+                    }
+                    return targetType.IsAssignableFrom(f.FieldType);
+                }).ToList();
+
+                foreach (var member in fields)
+                {
+                    MyItem item = new();
+                    item.Type = type;
+                    item.BindPath = $"{type.FullName}/{member.Name}";
+                    item.ValueType = member.FieldType;
+                    item.Member = member;
+                    item.IsInert = member.DeclaringType != type;
+                    item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                    item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                    result.Add(item);
+                }
+
+                var props = type.GetProperties(BindingAttr).Where(f =>
+                {
+                    if (f.IsStaticMember() == false && IsUnityComp(type) == false)
+                    {
+                        return false;
+                    }
+
+                    if (targetType == null)
+                    {
+                        return true;
+                    }
+                    return targetType.IsAssignableFrom(f.PropertyType);
+                }).ToList();
+
+                foreach (var member in props)
+                {
+                    MyItem item = new();
+                    item.Type = type;
+                    item.BindPath = $"{type.FullName}/{member.Name}";
+                    item.ValueType = member.PropertyType;
+                    item.Member = member;
+                    item.IsInert = member.DeclaringType != type;
+                    item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                    item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                    result.Add(item);
+                }
+            }
+            result.Sort();
+            return result;
+        }
+
+        public static GenericMenu GetMenu2(Type matchType, GenericMenu.MenuFunction2 func = default, bool autoConvert = true)
+        {
+            GenericMenu bindMenu = new GenericMenu();
+            var list = GetAllItem(matchType);
+            foreach (var item in list)
+            {
+                bindMenu.AddItem(item.MainGUIContent, false, func, item.BindPath);
+            }
+
+            return bindMenu;
         }
     }
 
