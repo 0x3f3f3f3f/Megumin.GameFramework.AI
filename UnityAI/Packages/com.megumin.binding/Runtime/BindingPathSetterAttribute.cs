@@ -381,18 +381,26 @@ namespace Megumin.Binding
 
         public class MyItem : IComparable<MyItem>
         {
+            public string BindPath;
+
             //MainGUIContent 和 InhertGUIContent 是多线程生成的。
             //这里是使用空间换时间，所以没有使用延迟初始化。
             public GUIContent InhertGUIContent;
             public GUIContent MainGUIContent;
+            public GUIContent NoFirstCGUIContent;
 
-            public string BindPath;
-
+            /// <summary>
+            /// 所属类型
+            /// </summary>
             public Type Type { get; internal set; }
+            /// <summary>
+            /// 目标值类型
+            /// </summary>
             public Type ValueType { get; internal set; }
             public MemberInfo Member { get; internal set; }
             public bool IsInherit { get; internal set; }
             public string FirstC { get; internal set; }
+            public bool IsStatic { get; internal set; }
 
             public int CompareTo(MyItem other)
             {
@@ -503,8 +511,10 @@ namespace Megumin.Binding
                 item.Member = member;
                 item.IsInherit = member.DeclaringType != type;
                 item.FirstC = FirstC;
-                item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                item.IsStatic = member.IsStaticMember();
+                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]");
 
                 if (item.ValueType == target)
                 {
@@ -546,8 +556,10 @@ namespace Megumin.Binding
                 item.Member = member;
                 item.IsInherit = member.DeclaringType != type;
                 item.FirstC = FirstC;
-                item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                item.IsStatic = member.IsStaticMember();
+                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
+                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]");
 
                 if (item.ValueType == target)
                 {
@@ -581,7 +593,7 @@ namespace Megumin.Binding
             menu.Callback = func;
 
             BindingOptions options = new();
-            var result = menu.CreateMenu(options, func);
+            var result = menu.CreateMenu(Selection.activeGameObject, func);
             return result;
         }
 
@@ -638,6 +650,43 @@ namespace Megumin.Binding
                     if (item != null)
                     {
                         result.AddItem(item.MainGUIContent, false, func, item.BindPath);
+                    }
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// 仅go含有的组件和静态成员
+            /// </summary>
+            /// <param name="go"></param>
+            /// <param name="func"></param>
+            /// <returns></returns>
+            public GenericMenu CreateMenu(GameObject go, GenericMenu.MenuFunction2 func)
+            {
+                var result = new GenericMenu();
+
+                var list = ItemList;
+
+
+                HashSet<Type> hasCompType = new() { typeof(GameObject) };
+                if (go)
+                {
+                    var copms = go.GetComponents<Component>();
+                    foreach (var item in copms)
+                    {
+                        hasCompType.Add(item.GetType());
+                    }
+                }
+
+                foreach (var item in list)
+                {
+                    if (item != null)
+                    {
+                        if (hasCompType.Contains(item.Type) /*|| item.IsStatic*/)
+                        {
+                            result.AddItem(item.NoFirstCGUIContent, false, func, item.BindPath);
+                        }
                     }
                 }
 
