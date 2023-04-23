@@ -19,6 +19,7 @@ namespace Megumin.Reflection
     /// 再使用<see cref="CacheAllTypesAsync(bool, Func{Assembly, bool})"/>异步缓存所有类型。
     /// <para/> 因为特化的泛型在程序集中不存在，
     /// 所以特化泛型肯定会触发<see cref="CacheAllTypes(bool, Func{Assembly, bool})"/>
+    /// <para/> 不要使用 RegexOptions.Compiled，可能造成严重的初始化卡顿。https://stackoverflow.com/a/7707369
     /// </remarks>
     public static partial class TypeCache
     {
