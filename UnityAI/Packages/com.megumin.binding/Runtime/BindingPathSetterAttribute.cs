@@ -60,23 +60,35 @@ namespace Megumin.Binding
             var settingButton = new Button();
             settingButton.AddToClassList("settingButton");
             //settingButton.style.width = settingButtonWidth;
-            settingButton.tooltip = "Set BindingPath";
+            //settingButton.tooltip = "Set BindingPath";
             //settingButton.style.backgroundImage = settingIcon.image as Texture2D;
 
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
+            var targetObj = property.serializedObject.targetObject;
 
-            settingButton.clicked += async () =>
+            settingButton.clickable.activators.Add(new ManipulatorActivationFilter
             {
-                var path = await BindingEditor.GetBindStr(gType, true);
+                button = MouseButton.RightMouse
+            });
 
-                //TODO, Editor hasunsavechange
-                //Undo.RecordObject(property.serializedObject.targetObject, $"Set BindingPath {property.propertyPath}");
-                //Debug.Log(path + "-----------------");
-                //property.SetValue(path);
+            settingButton.clickable.clickedWithEventInfo += async (evt) =>
+            {
+                if (evt is IMouseEvent mouseEvent)
+                {
+                    bindingOptions.Button = mouseEvent.button;
+                    SetOptionGO(targetObj);
 
-                //此时已经无法给property赋值了。改为给TextField赋值。
-                var textField = field.Q<TextField>();
-                textField.value = path;
+                    var path = await BindingEditor.GetBindStr(gType, bindingOptions);
+
+                    //TODO, Editor hasunsavechange
+                    //Undo.RecordObject(property.serializedObject.targetObject, $"Set BindingPath {property.propertyPath}");
+                    //Debug.Log(path + "-----------------");
+                    //property.SetValue(path);
+
+                    //此时已经无法给property赋值了。改为给TextField赋值。
+                    var textField = field.Q<TextField>();
+                    textField.value = path;
+                }
             };
 
             container.Add(field);
@@ -96,6 +108,7 @@ namespace Megumin.Binding
         const int settingButtonWidth = 26;
         const int testButtonWidth = 36;
 
+        public static readonly BindingOptions bindingOptions = new();
         Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
@@ -108,7 +121,16 @@ namespace Megumin.Binding
 
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
-            if (property.GetBindintString(GUI.Button(buttonPosition, settingIcon), out var str, gType))
+
+            bool click = GUI.Button(buttonPosition, settingIcon);
+
+            if (click)
+            {
+                bindingOptions.Button = Event.current.button;
+                SetOptionGO(property.serializedObject.targetObject);
+            }
+
+            if (property.GetBindintString(click, out var str, gType, bindingOptions))
             {
                 property.stringValue = str;
             }
@@ -173,6 +195,26 @@ namespace Megumin.Binding
                 //}
             }
         }
+
+        protected static void SetOptionGO(UnityEngine.Object @object)
+        {
+            if (@object is GameObject go && go)
+            {
+                bindingOptions.GameObject = go;
+            }
+            else if (@object is Component component && component)
+            {
+                bindingOptions.GameObject = component.gameObject;
+            }
+            else if (Selection.activeGameObject)
+            {
+                bindingOptions.GameObject = Selection.activeGameObject;
+            }
+            else
+            {
+                bindingOptions.GameObject = null;
+            }
+        }
     }
 
     public class BindingOptions
@@ -185,6 +227,7 @@ namespace Megumin.Binding
         public bool CompmentTypeMember { get; set; } = true;
         public bool CustomTypeMember { get; set; } = false;
         public bool InheritMember { get; set; } = true;
+        public int Button { get; set; } = 0;
     }
 
 
@@ -194,11 +237,11 @@ namespace Megumin.Binding
                                             bool click,
                                             out string str,
                                             Type matchType = null,
-                                            bool autoConvert = true)
+                                            BindingOptions options = null)
         {
             if (click)
             {
-                BindingEditor.GetBindStr(property.propertyPath, matchType, autoConvert);
+                BindingEditor.GetBindStr(property.propertyPath, matchType, options);
             }
 
             if (BindingEditor.cacheResult.TryGetValue(property.propertyPath, out str))
@@ -218,9 +261,9 @@ namespace Megumin.Binding
             cacheResult[propertyPath] = str;
         }
 
-        public static async void GetBindStr(string propertyPath, Type matchType, bool autoConvert = true)
+        public static async void GetBindStr(string propertyPath, Type matchType, BindingOptions options = null)
         {
-            var str = await BindingEditor.GetBindStr(matchType, autoConvert);
+            var str = await BindingEditor.GetBindStr(matchType, options);
             cacheResult[propertyPath] = str;
         }
 
@@ -230,7 +273,7 @@ namespace Megumin.Binding
             return GetBindStr(typeof(T));
         }
 
-        public static Task<string> GetBindStr(Type matchType, bool autoConvert = true)
+        public static Task<string> GetBindStr(Type matchType, BindingOptions options = null)
         {
             TaskCompletionSource<string> source = new TaskCompletionSource<string>();
             GenericMenu.MenuFunction2 func = path =>
@@ -238,7 +281,7 @@ namespace Megumin.Binding
                 source.SetResult((string)path);
             };
 
-            GenericMenu bindMenu = GetMenu2(matchType, func, autoConvert);
+            GenericMenu bindMenu = GetMenu2(matchType, func, options);
             bindMenu.ShowAsContext();
             return source.Task;
         }
@@ -577,7 +620,7 @@ namespace Megumin.Binding
         static readonly Unity.Profiling.ProfilerMarker GetMenu2Marker = new("GetMenu2");
         public static GenericMenu GetMenu2(Type target,
                                            GenericMenu.MenuFunction2 func = default,
-                                           bool autoConvert = true)
+                                           BindingOptions options = null)
         {
             using var profiler = GetMenu2Marker.Auto();
             if (cacheMenu.TryGetValue(target, out var menu))
@@ -590,10 +633,7 @@ namespace Megumin.Binding
                 cacheMenu[target] = menu;
             }
 
-            menu.Callback = func;
-
-            BindingOptions options = new();
-            var result = menu.CreateMenu(Selection.activeGameObject, func);
+            var result = menu.CreateMenu(options, func);
             return result;
         }
 
@@ -608,7 +648,7 @@ namespace Megumin.Binding
             public Menu(Type target)
             {
                 MatchType = target;
-                BindMenu = new GenericMenu();
+
                 ItemList = new List<MyItem>();
 
                 GetAllItem(target, out var targetResult, out var adpterResult);
@@ -619,78 +659,72 @@ namespace Megumin.Binding
                 ItemList.AddRange(targetResult);
                 ItemList.AddRange(adpterResult);
                 ItemList.Sort();
-
-                foreach (var item in ItemList)
-                {
-                    if (item != null)
-                    {
-                        BindMenu.AddItem(item.MainGUIContent, false, func, item.BindPath);
-                    }
-                }
             }
 
-            private void func(object userData)
+            private void Func(object userData)
             {
                 Callback?.Invoke(userData);
             }
 
-
             public GenericMenu CreateMenu(BindingOptions options, GenericMenu.MenuFunction2 func)
             {
-                var result = new GenericMenu();
-
-                var list = TargetResult;
-                if (options.UseAdpter)
+                if (options != null && options.Button == 0)
                 {
-                    list = ItemList;
-                }
+                    var result = new GenericMenu();
 
-                foreach (var item in list)
-                {
-                    if (item != null)
+                    var list = TargetResult;
+                    if (options.UseAdpter)
                     {
-                        result.AddItem(item.MainGUIContent, false, func, item.BindPath);
+                        list = ItemList;
                     }
-                }
 
-                return result;
-            }
-
-            /// <summary>
-            /// 仅go含有的组件和静态成员
-            /// </summary>
-            /// <param name="go"></param>
-            /// <param name="func"></param>
-            /// <returns></returns>
-            public GenericMenu CreateMenu(GameObject go, GenericMenu.MenuFunction2 func)
-            {
-                var result = new GenericMenu();
-
-                var list = ItemList;
-
-
-                HashSet<Type> hasCompType = new() { typeof(GameObject) };
-                if (go)
-                {
-                    var copms = go.GetComponents<Component>();
-                    foreach (var item in copms)
+                    HashSet<Type> hasCompType = new()
                     {
-                        hasCompType.Add(item.GetType());
-                    }
-                }
+                        typeof(GameObject),
+                        typeof(Transform),
+                    };
 
-                foreach (var item in list)
-                {
-                    if (item != null)
+                    var go = options.GameObject;
+                    if (go)
                     {
-                        if (hasCompType.Contains(item.Type) /*|| item.IsStatic*/)
+                        var copms = go.GetComponents<Component>();
+                        foreach (var item in copms)
                         {
-                            result.AddItem(item.NoFirstCGUIContent, false, func, item.BindPath);
+                            hasCompType.Add(item.GetType());
                         }
                     }
-                }
 
-                return result;
+                    // 仅go含有的组件和静态成员
+                    foreach (var item in list)
+                    {
+                        if (item != null)
+                        {
+                            if (hasCompType.Contains(item.Type) /*|| item.IsStatic*/)
+                            {
+                                result.AddItem(item.NoFirstCGUIContent, false, func, item.BindPath);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    if (BindMenu == null)
+                    {
+                        BindMenu = new GenericMenu();
+                        foreach (var item in ItemList)
+                        {
+                            if (item != null)
+                            {
+                                BindMenu.AddItem(item.MainGUIContent, false, Func, item.BindPath);
+                            }
+                        }
+                    }
+
+                    Callback = func;
+                    return BindMenu;
+                }
             }
 
             public Type MatchType { get; }
