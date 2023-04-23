@@ -178,7 +178,7 @@ namespace Megumin.Binding
     public class BindingOptions
     {
         public GameObject GameObject { get; set; }
-        public bool AutoConvertMatchType { get; set; } = true;
+        public bool UseAdpter { get; set; } = true;
         public bool StaticMember { get; set; } = true;
         public bool InterfaceMember { get; set; } = true;
         public bool GameObjectTypeMember { get; set; } = true;
@@ -381,8 +381,11 @@ namespace Megumin.Binding
 
         public class MyItem : IComparable<MyItem>
         {
+            //MainGUIContent 和 InhertGUIContent 是多线程生成的。
+            //这里是使用空间换时间，所以没有使用延迟初始化。
             public GUIContent InhertGUIContent;
             public GUIContent MainGUIContent;
+
             public string BindPath;
 
             public Type Type { get; internal set; }
@@ -575,6 +578,8 @@ namespace Megumin.Binding
                 cacheMenu[target] = menu;
             }
 
+            menu.Callback = func;
+
             BindingOptions options = new();
             var result = menu.CreateMenu(options, func);
             return result;
@@ -623,7 +628,7 @@ namespace Megumin.Binding
                 var result = new GenericMenu();
 
                 var list = TargetResult;
-                if (options.AutoConvertMatchType)
+                if (options.UseAdpter)
                 {
                     list = ItemList;
                 }
