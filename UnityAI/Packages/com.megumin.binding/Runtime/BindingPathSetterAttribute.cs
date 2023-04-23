@@ -555,9 +555,12 @@ namespace Megumin.Binding
                 item.IsInherit = member.DeclaringType != type;
                 item.FirstC = FirstC;
                 item.IsStatic = member.IsStaticMember();
-                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+
+                var staticTag = item.IsStatic ? " [S]" : "";
+
+                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]{staticTag}");
+                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]{staticTag}");
+                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]{staticTag}");
 
                 if (item.ValueType == target)
                 {
@@ -600,9 +603,12 @@ namespace Megumin.Binding
                 item.IsInherit = member.DeclaringType != type;
                 item.FirstC = FirstC;
                 item.IsStatic = member.IsStaticMember();
-                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
-                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]");
+
+                var staticTag = item.IsStatic ? " [S]" : "";
+
+                item.MainGUIContent = new($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]{staticTag}");
+                item.InhertGUIContent = new($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]{staticTag}");
+                item.NoFirstCGUIContent = new($"{type.Name}/{member.Name} : [{item.ValueType.Name}]{staticTag}");
 
                 if (item.ValueType == target)
                 {
