@@ -175,6 +175,19 @@ namespace Megumin.Binding
         }
     }
 
+    public class BindingOptions
+    {
+        public GameObject GameObject { get; set; }
+        public bool AutoConvertMatchType { get; set; } = true;
+        public bool StaticMember { get; set; } = true;
+        public bool InterfaceMember { get; set; } = true;
+        public bool GameObjectTypeMember { get; set; } = true;
+        public bool CompmentTypeMember { get; set; } = true;
+        public bool CustomTypeMember { get; set; } = false;
+        public bool InheritMember { get; set; } = true;
+    }
+
+
     public static class BindingEditor
     {
         public static bool GetBindintString(this SerializedProperty property,
@@ -375,7 +388,8 @@ namespace Megumin.Binding
             public Type Type { get; internal set; }
             public Type ValueType { get; internal set; }
             public MemberInfo Member { get; internal set; }
-            public bool IsInert { get; internal set; }
+            public bool IsInherit { get; internal set; }
+            public string FirstC { get; internal set; }
 
             public int CompareTo(MyItem other)
             {
@@ -383,41 +397,48 @@ namespace Megumin.Binding
             }
         }
 
-        static Dictionary<Type, List<MyItem>> cache = new();
+        static readonly Dictionary<Type, (List<MyItem> matchTypeResult, List<MyItem> typeAdpterResult)> cache = new();
         static readonly Unity.Profiling.ProfilerMarker GetAllItemMarker = new("GetAllItem");
-        public static List<MyItem> GetAllItem(Type targetType, bool autoConvert)
+
+        public static void GetAllItem(Type target,
+                                      out List<MyItem> targetResult,
+                                      out List<MyItem> adpterResult)
         {
             using var profiler = GetAllItemMarker.Auto();
-            if (cache.TryGetValue(targetType, out var myItems))
+
+            if (cache.TryGetValue(target, out var result))
             {
-                return myItems;
+                targetResult = result.matchTypeResult;
+                adpterResult = result.typeAdpterResult;
             }
             else
             {
-                myItems = GetMyItems(targetType, autoConvert);
-                cache[targetType] = myItems;
-                return myItems;
+                GetMyItems(target, out targetResult, out adpterResult);
+                cache[target] = (targetResult, adpterResult);
             }
         }
 
-        public static List<MyItem> GetMyItems(Type targetType, bool autoConvert)
+        public static void GetMyItems(Type target,
+                                      out List<MyItem> targetResult,
+                                      out List<MyItem> adpterResult)
         {
-            var result = new List<MyItem>();
+            EditorUtility.DisplayProgressBar("CacheMenuItem", target.FullName, 0.75f);
+
+            var matchTypeResult1 = new List<MyItem>();
+            var typeAdpterResult1 = new List<MyItem>();
+
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
                 //.Where(t => typeof(Component).IsAssignableFrom(t))
                 .Where(t => t.IsPublic).ToList();
 
-            var canConvertTypes = new HashSet<Type>();
+            var adpterTypes = new HashSet<Type>();
 
-            if (autoConvert)
+            foreach (var item in TypeAdpter.Adpters)
             {
-                foreach (var item in TypeAdpter.Adpters)
+                if (item.Key.Item2 == target)
                 {
-                    if (item.Key.Item2 == targetType)
-                    {
-                        canConvertTypes.Add(item.Key.Item1);
-                    }
+                    adpterTypes.Add(item.Key.Item1);
                 }
             }
 
@@ -426,19 +447,26 @@ namespace Megumin.Binding
             {
                 Type type = allTypes[i];
                 //EditorUtility.DisplayProgressBar("CacheMenuItem", type.FullName, (float)i / allTypes.Count);
-                var task = Task.Run(() => { GetTypeItems(targetType, canConvertTypes, result, type); });
+                var task = Task.Run(() => { GetTypeItems(target, adpterTypes, matchTypeResult1, typeAdpterResult1, type); });
                 tasks.Add(task);
                 //task.Wait(); //测试时单线程，方便断点
             }
 
             Task.WaitAll(tasks.ToArray());
-            //EditorUtility.ClearProgressBar();
+            EditorUtility.ClearProgressBar();
 
-            result.Sort();
-            return result;
+            matchTypeResult1.Sort();
+            typeAdpterResult1.Sort();
+
+            targetResult = matchTypeResult1;
+            adpterResult = typeAdpterResult1;
         }
 
-        public static void GetTypeItems(Type targetType, HashSet<Type> canConvertTypes, List<MyItem> result, Type type)
+        public static void GetTypeItems(Type target,
+                                        HashSet<Type> adpterTypes,
+                                        List<MyItem> targetResult,
+                                        List<MyItem> adpterResult,
+                                        Type type)
         {
             var FirstC = type.Name[0].ToString().ToUpper();
 
@@ -446,21 +474,21 @@ namespace Megumin.Binding
             {
                 if (f.IsStaticMember() == false
                     && IsUnityComp(type) == false
-                    /*&& type.IsInterface == false*/)//暂时不提供接口菜单，菜单已经太多了
+                    && type.IsInterface == false)
                 {
                     return false;
                 }
 
-                if (canConvertTypes.Contains(f.FieldType))
+                if (adpterTypes.Contains(f.FieldType))
                 {
                     return true;
                 }
 
-                if (targetType == null)
+                if (target == null)
                 {
                     return true;
                 }
-                return targetType.IsAssignableFrom(f.FieldType);
+                return target.IsAssignableFrom(f.FieldType);
             }).ToList();
 
             foreach (var member in fields)
@@ -468,33 +496,42 @@ namespace Megumin.Binding
                 MyItem item = new();
                 item.Type = type;
                 item.BindPath = $"{type.FullName}/{member.Name}";
-                item.ValueType = member.FieldType;
+                item.ValueType = member.GetMemberType();
                 item.Member = member;
-                item.IsInert = member.DeclaringType != type;
+                item.IsInherit = member.DeclaringType != type;
+                item.FirstC = FirstC;
                 item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
                 item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                result.Add(item);
+
+                if (item.ValueType == target)
+                {
+                    targetResult.Add(item);
+                }
+                else
+                {
+                    adpterResult.Add(item);
+                }
             }
 
             var props = type.GetProperties(BindingAttr).Where(f =>
             {
                 if (f.IsStaticMember() == false
                     && IsUnityComp(type) == false
-                    /*&& type.IsInterface == false*/)//暂时不提供接口菜单，菜单已经太多了
+                    && type.IsInterface == false)
                 {
                     return false;
                 }
 
-                if (canConvertTypes.Contains(f.PropertyType))
+                if (adpterTypes.Contains(f.PropertyType))
                 {
                     return true;
                 }
 
-                if (targetType == null)
+                if (target == null)
                 {
                     return true;
                 }
-                return targetType.IsAssignableFrom(f.PropertyType);
+                return target.IsAssignableFrom(f.PropertyType);
             }).ToList();
 
             foreach (var member in props)
@@ -502,48 +539,70 @@ namespace Megumin.Binding
                 MyItem item = new();
                 item.Type = type;
                 item.BindPath = $"{type.FullName}/{member.Name}";
-                item.ValueType = member.PropertyType;
+                item.ValueType = member.GetMemberType();
                 item.Member = member;
-                item.IsInert = member.DeclaringType != type;
+                item.IsInherit = member.DeclaringType != type;
+                item.FirstC = FirstC;
                 item.MainGUIContent = new GUIContent($"{FirstC}/{type.Name}/{member.Name} : [{item.ValueType.Name}]");
                 item.InhertGUIContent = new GUIContent($"{FirstC}/{type.Name}/[Inherited]: {member.Name} : [{item.ValueType.Name}]");
-                result.Add(item);
+
+                if (item.ValueType == target)
+                {
+                    targetResult.Add(item);
+                }
+                else
+                {
+                    adpterResult.Add(item);
+                }
             }
         }
 
 
         static Dictionary<Type, Menu> cacheMenu = new();
         static readonly Unity.Profiling.ProfilerMarker GetMenu2Marker = new("GetMenu2");
-        public static GenericMenu GetMenu2(Type matchType,
+        public static GenericMenu GetMenu2(Type target,
                                            GenericMenu.MenuFunction2 func = default,
                                            bool autoConvert = true)
         {
             using var profiler = GetMenu2Marker.Auto();
-            if (cacheMenu.TryGetValue(matchType, out var menu))
+            if (cacheMenu.TryGetValue(target, out var menu))
             {
 
             }
             else
             {
-                menu = new Menu(matchType, autoConvert);
-                cacheMenu[matchType] = menu;
+                menu = new Menu(target);
+                cacheMenu[target] = menu;
             }
 
-            menu.Callback = func;
-            return menu.BindMenu;
+            BindingOptions options = new();
+            var result = menu.CreateMenu(options, func);
+            return result;
         }
 
         public class Menu
         {
             public GenericMenu BindMenu { get; private set; }
-            public List<MyItem> ItemList { get; private set; }
 
-            public Menu(Type matchType, bool autoConvert)
+            public List<MyItem> ItemList { get; private set; }
+            public List<MyItem> TargetResult { get; private set; }
+            public List<MyItem> AdpterResult { get; private set; }
+
+            public Menu(Type target)
             {
-                MatchType = matchType;
-                AutoConvert = autoConvert;
+                MatchType = target;
                 BindMenu = new GenericMenu();
-                ItemList = GetAllItem(matchType, autoConvert);
+                ItemList = new List<MyItem>();
+
+                GetAllItem(target, out var targetResult, out var adpterResult);
+
+                TargetResult = targetResult;
+                AdpterResult = adpterResult;
+
+                ItemList.AddRange(targetResult);
+                ItemList.AddRange(adpterResult);
+                ItemList.Sort();
+
                 foreach (var item in ItemList)
                 {
                     if (item != null)
@@ -558,9 +617,30 @@ namespace Megumin.Binding
                 Callback?.Invoke(userData);
             }
 
+
+            public GenericMenu CreateMenu(BindingOptions options, GenericMenu.MenuFunction2 func)
+            {
+                var result = new GenericMenu();
+
+                var list = TargetResult;
+                if (options.AutoConvertMatchType)
+                {
+                    list = ItemList;
+                }
+
+                foreach (var item in list)
+                {
+                    if (item != null)
+                    {
+                        result.AddItem(item.MainGUIContent, false, func, item.BindPath);
+                    }
+                }
+
+                return result;
+            }
+
             public Type MatchType { get; }
             public GenericMenu.MenuFunction2 Callback { get; internal set; }
-            public bool AutoConvert { get; }
         }
 
     }

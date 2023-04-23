@@ -19,6 +19,12 @@ namespace Megumin.Binding.Test
         /// <summary>
         /// 属性绑定 ✅
         /// </summary>
+        public BindableValue<int> TestInt
+            = new BindableValue<int>() { BindingPath = "UnityEngine.GameObject/layer" };
+
+        /// <summary>
+        /// 属性绑定 ✅
+        /// </summary>
         public BindableValue<string> GameObjectTag
             = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/tag" };
 
