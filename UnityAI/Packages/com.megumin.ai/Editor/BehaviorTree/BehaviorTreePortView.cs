@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,10 +51,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             var treeView = edge.GetFirstAncestorOfType<BehaviorTreeView>();
             if (treeView != null)
             {
+                var screenPoint = position + treeView.EditorWindow.position.position;
+
                 var parent = (edge?.output?.node as BehaviorTreeNodeView)?.Node as BTParentNode;
                 var child = (edge?.input?.node as BehaviorTreeNodeView)?.Node;
 
-                var (type, pos) = await treeView.SelectCreateNodeType(position, edge);
+                var (type, pos) = await treeView.SelectCreateNodeType(screenPoint, edge);
 
                 var newNode = treeView.AddNewNode(type, pos);
                 treeView.IncrementChangeVersion("OnDropOutsidePort");
