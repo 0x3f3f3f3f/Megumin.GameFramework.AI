@@ -124,6 +124,13 @@ MonoBehaviour:
   - Type: UnityEngine.Time
     IconPath: d_unityeditor.animationwindow@2x
     Icon: {fileID: 0}
+  ReplaceCategory:
+  - oldValue: UnityEngine/AI
+    newValue: UnityEngine
+  - oldValue: UnityEngine/Playables
+    newValue: UnityEngine
+  - oldValue: UnityEngine/SceneManagement
+    newValue: UnityEngine
   GMethods: 1
   GFields: 1
   GProperties: 1

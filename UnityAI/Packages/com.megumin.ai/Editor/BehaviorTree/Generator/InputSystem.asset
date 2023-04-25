@@ -17,9 +17,20 @@ MonoBehaviour:
   Define:
     Enabled: 1
     Value: ENABLE_INPUT_SYSTEM
+  Assemblys:
+  - Enabled: 0
+    Value: Assembly-CSharp
   Types:
   - Enabled: 1
     Value: UnityEngine.InputSystem.InputSystem
   - Enabled: 1
     Value: UnityEngine.InputSystem.InputActionAsset
   IgnoreMethods: []
+  ObsoleteAPIInFuture: []
+  ReplaceIcon: []
+  ReplaceCategory:
+  - oldValue: UnityEngine/InputSystem
+    newValue: UnityEngine
+  GMethods: 1
+  GFields: 1
+  GProperties: 1

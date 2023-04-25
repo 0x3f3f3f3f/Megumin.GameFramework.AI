@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI
 {
     [Icon("GameObject Icon")]
     [DisplayName("SetTargetActive")]
-    [Category("Unity/GameObject")]
+    [Category("UnityEngine/GameObject")]
     [AddComponentMenu("SetTargetActive(Boolean)")]
     public class GameObject_SetTargetActive : BTActionNode
     {
