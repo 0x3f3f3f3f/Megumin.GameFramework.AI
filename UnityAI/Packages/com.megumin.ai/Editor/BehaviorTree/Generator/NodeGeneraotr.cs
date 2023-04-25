@@ -20,6 +20,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [Space]
         public bool MultiThreading = true;
         public Enableable<string> Define;
+
+        public List<Enableable<string>> Assemblys = new()
+        {
+            new Enableable<string>() { Value = "Assembly-CSharp", Enabled = false },
+        };
+
         public List<Enableable<string>> Types = new();
 
         public List<string> IgnoreMethods = new();
@@ -57,6 +63,22 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             HashSet<Type> types = new();
+
+            foreach (var item in Assemblys)
+            {
+                if (item.Enabled)
+                {
+                    Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                    var assm = assemblies.FirstOrDefault(elem => elem.GetName().Name == item.Value);
+                    if (assm != null)
+                    {
+                        foreach (var type in assm.GetTypes())
+                        {
+                            types.Add(type);
+                        }
+                    }
+                }
+            }
 
             foreach (var item in Types)
             {

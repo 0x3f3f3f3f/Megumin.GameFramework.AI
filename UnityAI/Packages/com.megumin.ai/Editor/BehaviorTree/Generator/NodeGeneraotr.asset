@@ -17,6 +17,9 @@ MonoBehaviour:
   Define:
     Enabled: 0
     Value: Test
+  Assemblys:
+  - Enabled: 0
+    Value: Assembly-CSharp
   Types:
   - Enabled: 1
     Value: UnityEngine.Animation

@@ -21,6 +21,9 @@ public class Test : MonoBehaviour
     public string code3;
     public string code4;
     public string code5;
+
+    [TypeSetter]
+    public string TestType;
     // Start is called before the first frame update
     void Start()
     {
