@@ -420,6 +420,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     generator.PushBlankLines();
                     generator.Push($"[Space]");
                     generator.Push($"public {returnType.ToCodeString()} SaveValueTo;");
+                    generator.PushBlankLines();
                 }
             }
 
@@ -455,7 +456,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 GenerateAttribute(type, method, className, generator);
 
-                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject) || type.IsInterface;
 
                 var BaseType = isConditionDecorator ? "ConditionDecorator" : "BTActionNode";
 
@@ -486,8 +487,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
 
                     bool saveResult = GenerateDeclaringMember(method, generator);
-
-                    generator.PushBlankLines();
 
                     var @params = method.GetParameters();
 
@@ -896,7 +895,7 @@ public override bool CheckCondition(object options = null)
             {
                 GenerateAttribute(type, member, className, generator);
 
-                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject);
+                var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject) || type.IsInterface;
 
                 var isStatic = member.IsStaticMember();
 

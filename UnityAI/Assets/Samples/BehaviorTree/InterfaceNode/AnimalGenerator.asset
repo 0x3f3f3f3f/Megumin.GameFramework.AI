@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222ab640ecb54be459294968cc1449eb, type: 3}
+  m_Name: AnimalGenerator
+  m_EditorClassIdentifier: 
+  OutputFolder: {fileID: 102900000, guid: 2a3b08943689fd8419241312d02f29b3, type: 3}
+  MultiThreading: 1
+  Define:
+    Enabled: 0
+    Value: 
+  Assemblys:
+  - Enabled: 0
+    Value: Assembly-CSharp
+  Types:
+  - Enabled: 1
+    Value: IAnimal
+  IgnoreMethods: []
+  ObsoleteAPIInFuture: []
+  ReplaceIcon: []
+  GMethods: 1
+  GFields: 1
+  GProperties: 1
