@@ -49,7 +49,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             m_GraphViewChange.edgesToCreate = m_EdgesToCreate;
         }
 
-        public void OnDropOutsidePort(Edge edge, Vector2 position) { }
+        public async void OnDropOutsidePort(Edge edge, Vector2 position)
+        {
+            var treeView = edge.GetFirstAncestorOfType<BehaviorTreeView>();
+            var (type, pos) = await treeView.SelectCreateNodeType(position, edge);
+            Debug.Log($"{type}--{pos}--{edge}  {position} {treeView}");
+
+        }
+
         public void OnDrop(GraphView graphView, Edge edge)
         {
             m_EdgesToCreate.Clear();

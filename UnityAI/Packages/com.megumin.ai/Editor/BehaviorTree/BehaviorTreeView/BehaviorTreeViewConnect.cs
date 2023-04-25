@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
-using System;
-using UnityEditor;
-using Megumin.GameFramework.AI.Editor;
-using System.Linq;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -77,6 +71,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             //重新排序
             SortChild(parentNode);
             UpdateNodeIndex();
+        }
+
+        public Task<(Type Type, Vector2 GraphPosition)> SelectCreateNodeType(Vector2 position, Edge edge = null)
+        {
+            TaskCompletionSource<(Type Type, Vector2 GraphPosition)> taskCompletion = new();
+            createNodeMenu.NextTaskSource = taskCompletion;
+            createNodeMenu.NextEdge = edge;
+            SearchWindow.Open(new SearchWindowContext(position), createNodeMenu);
+            return taskCompletion.Task;
         }
     }
 }

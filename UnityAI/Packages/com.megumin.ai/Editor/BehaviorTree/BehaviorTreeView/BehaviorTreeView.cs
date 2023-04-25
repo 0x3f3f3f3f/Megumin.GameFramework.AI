@@ -49,7 +49,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             createNodeMenu = ScriptableObject.CreateInstance<CreateNodeSearchWindowProvider>();
             createNodeMenu.Initialize(this);
 
-            nodeCreationRequest = (c) => SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
+            nodeCreationRequest = (c) =>
+            {
+                createNodeMenu.NextTaskSource = null;
+                createNodeMenu.NextEdge = null;
+                SearchWindow.Open(new SearchWindowContext(c.screenMousePosition), createNodeMenu);
+            };
 
             if (BehaviorTreeEditor.EditorLog)
             {

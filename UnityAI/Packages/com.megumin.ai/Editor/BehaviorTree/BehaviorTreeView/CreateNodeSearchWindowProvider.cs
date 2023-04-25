@@ -15,8 +15,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     internal class CreateNodeSearchWindowProvider : ScriptableObject, ISearchWindowProvider
     {
-        Edge edgeFilter;
         BehaviorTreeView behaviorTreeView;
+
+        public TaskCompletionSource<(Type Type, Vector2 GraphPosition)> NextTaskSource { get; internal set; }
+        public Edge NextEdge { get; internal set; }
+
         internal void Initialize(BehaviorTreeView behaviorTreeView)
         {
             this.behaviorTreeView = behaviorTreeView;
@@ -29,29 +32,27 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 new SearchTreeGroupEntry(new GUIContent("Create Node"), 0),
             };
 
-            if (edgeFilter == null)
-                CreateStandardNodeMenu(tree);
-            else
-                CreateEdgeNodeMenu(tree);
+            var canAddActionNode = true;
+            if (NextEdge != null)
+            {
+                canAddActionNode = NextEdge.output != null;
+            }
 
-            return tree;
-        }
-
-        private void CreateEdgeNodeMenu(List<SearchTreeEntry> tree)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CreateStandardNodeMenu(List<SearchTreeEntry> tree)
-        {
             tree.AddTypesDerivedFrom<CompositeNode>("Composite");
             tree.AddTypesDerivedFrom<OneChildNode>("OneChildNode");
             tree.AddTypesDerivedFrom<TwoChildNode>("TwoChildNode");
-            tree.AddCateGory2<BTNode>();
-            tree.AddTypesDerivedFrom<BTActionNode>("Others", checkAlreadyHas: true);
-            tree.AddTypesDerivedFrom<BTActionNode>("AllAction");
+
+            if (canAddActionNode)
+            {
+                tree.AddCateGory2<BTNode>();
+                tree.AddTypesDerivedFrom<BTActionNode>("Others", checkAlreadyHas: true);
+                tree.AddTypesDerivedFrom<BTActionNode>("AllAction");
+            }
+
             //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));
             //Tree.Add(new SearchTreeEntry(new GUIContent("test")) {  level = 1});
+
+            return tree;
         }
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
@@ -60,7 +61,16 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                                 - behaviorTreeView.EditorWindow.position.position;
             var graphMousePosition = behaviorTreeView.contentViewContainer.WorldToLocal(editorwindowMousePosition);
 
-            behaviorTreeView.AddNodeAndView(searchTreeEntry.userData as Type, graphMousePosition);
+            if (NextTaskSource == null)
+            {
+                behaviorTreeView.AddNodeAndView(searchTreeEntry.userData as Type, graphMousePosition);
+            }
+            else
+            {
+                var source = NextTaskSource;
+                NextTaskSource = null;
+                source.TrySetResult((searchTreeEntry.userData as Type, graphMousePosition));
+            }
 
             return true;
         }
