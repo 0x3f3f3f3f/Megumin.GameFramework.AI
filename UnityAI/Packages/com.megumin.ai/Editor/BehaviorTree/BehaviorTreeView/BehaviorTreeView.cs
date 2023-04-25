@@ -484,6 +484,18 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public BehaviorTreeNodeView AddNodeAndView(Type type, Vector2 graphMousePosition)
         {
+            BTNode node = AddNewNode(type, graphMousePosition);
+            var nodeView = CreateNodeView(node);
+            this.AddElement(nodeView);
+
+            nearAddNodeType.Remove(type);
+            nearAddNodeType.Add(type);
+
+            return nodeView;
+        }
+
+        public BTNode AddNewNode(Type type, Vector2 graphMousePosition)
+        {
             UndoRecord($"AddNode  [{type.Name}]");
             var node = Tree.AddNewNode(type);
             if (node.Meta == null)
@@ -492,13 +504,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 node.Meta.x = graphMousePosition.x;
                 node.Meta.y = graphMousePosition.y;
             }
-            var nodeView = CreateNodeView(node);
-            this.AddElement(nodeView);
 
-            nearAddNodeType.Remove(type);
-            nearAddNodeType.Add(type);
-
-            return nodeView;
+            return node;
         }
 
         public bool RemoveNodeAndView(BehaviorTreeNodeView nodeView)

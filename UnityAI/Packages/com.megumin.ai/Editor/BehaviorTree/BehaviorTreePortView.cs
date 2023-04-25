@@ -52,9 +52,36 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public async void OnDropOutsidePort(Edge edge, Vector2 position)
         {
             var treeView = edge.GetFirstAncestorOfType<BehaviorTreeView>();
-            var (type, pos) = await treeView.SelectCreateNodeType(position, edge);
-            Debug.Log($"{type}--{pos}--{edge}  {position} {treeView}");
+            if (treeView != null)
+            {
+                var parent = (edge?.output?.node as BehaviorTreeNodeView)?.Node as BTParentNode;
+                var child = (edge?.input?.node as BehaviorTreeNodeView)?.Node;
 
+                var (type, pos) = await treeView.SelectCreateNodeType(position, edge);
+
+                var newNode = treeView.AddNewNode(type, pos);
+                treeView.IncrementChangeVersion("OnDropOutsidePort");
+
+                if (parent != null)
+                {
+                    if (parent is OneChildNode oneChildNode && oneChildNode.Child0 != null)
+                    {
+                        treeView.Tree.Disconnect(oneChildNode, oneChildNode.Child0);
+                    }
+                    treeView.Tree.Connect(parent, newNode);
+                }
+
+                if (child != null && newNode is BTParentNode newParent)
+                {
+                    if (child.TryGetFirstParent(out var oldParent))
+                    {
+                        treeView.Tree.Disconnect(oldParent, child);
+                    }
+                    treeView.Tree.Connect(newParent, child);
+                }
+
+                treeView.ReloadView();
+            }
         }
 
         public void OnDrop(GraphView graphView, Edge edge)
