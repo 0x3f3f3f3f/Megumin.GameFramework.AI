@@ -14,7 +14,7 @@ using Megumin.Reflection;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
-    public partial class NodeGeneraotr : ScriptableObject
+    public partial class NodeGenerator : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
         [Space]
@@ -381,7 +381,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Macro["$(MenuName)"] = GetMenuName(type, member);
             generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
             generator.Macro["$(MemberName)"] = member.Name;
-            generator.Macro["$(CodeGenericType)"] = typeof(NodeGeneraotr).FullName;
+            generator.Macro["$(CodeGenericType)"] = typeof(NodeGenerator).FullName;
         }
 
         public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
@@ -624,7 +624,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
     }
 
-    public partial class NodeGeneraotr
+    public partial class NodeGenerator
     {
 
         public bool GetBaseTypeString(Type compType, Type memberType, bool useMyAgent, out string baseTypeSting)
