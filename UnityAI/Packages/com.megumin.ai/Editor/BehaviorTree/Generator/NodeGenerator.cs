@@ -40,7 +40,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             public Texture2D Icon;
         }
 
+        [Serializable]
+        public class CategoryReplace
+        {
+            public string oldValue;
+            public string newValue;
+        }
+
         public List<IconReplace> ReplaceIcon = new();
+        public List<CategoryReplace> ReplaceCategory = new();
 
         [Space]
         public bool GMethods = true;
@@ -355,7 +363,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
 
             generator.Push($"[DisplayName(\"$(DisplayName)\")]");
-            generator.Push($"[Category(\"Unity/{type.Name}\")]");
+
+            var category = $"{type.FullName.Replace('.', '/')}";
+            foreach (var item in ReplaceCategory)
+            {
+                if (string.IsNullOrEmpty(item?.oldValue) == false)
+                {
+                    category = category.Replace(item.oldValue, item.newValue);
+                }
+            }
+
+            generator.Push($"[Category(\"{category}\")]");
             generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
 
             if (ObsoleteAPIInFuture.Contains(className))
@@ -405,6 +423,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
+            if (@params.Length > 0)
+            {
+                generator.PushBlankLines();
+            }
+
             return GenerateDeclaringResult(method.ReturnType, generator);
         }
 
@@ -417,7 +440,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 if (TryGetParamType(type, out var returnType))
                 {
                     saveResult = true;
-                    generator.PushBlankLines();
                     generator.Push($"[Space]");
                     generator.Push($"public {returnType.ToCodeString()} SaveValueTo;");
                     generator.PushBlankLines();
