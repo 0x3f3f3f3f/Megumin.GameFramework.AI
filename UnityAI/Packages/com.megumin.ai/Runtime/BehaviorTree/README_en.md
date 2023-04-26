@@ -1,87 +1,87 @@
 # BehaviorTree
 
-# 介绍
+# Introduction
 ## Summary
-为AAA和独立游戏设计的行为树插件。可以快速创建复杂的AI。
+A behaviour tree plugin designed for AAA and indie games. Allows quick creation of complex AI.
 
 ## Description
-- 符合人类直觉的行为树架构，更加易于学习。  
-  增加装饰器设计。条件装饰器使行为树用户界面更直观、更易读。  
-- 非常易于扩展，仅需几行代码就可以自定义节点和UI样式。  
-- 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
-- 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。
+- Human intuitive behaviour tree architecture, easier to learn.  
+  Adds decorator design. Conditional decorators make the behaviour tree user interface more intuitive and easier to read.  
+- Very easy to extend, customise nodes and UI styles with just a few lines of code. 
+- Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time. 
+- Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
 
-[ [示例](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [反馈](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) ]
+[Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) ]
 
 ## Technical details
-- 使用UIElement构建的编辑器。
-- 完整的C#代码，所有代码都是可见的，没有dll。
-- 针对接口设计的架构，完全与业务逻辑解耦，更好的扩展性。
-- 快速拆分内联子树，更好的分解和复用AI逻辑。
-- 充分的性能优化，满足绝大多数游戏需求。
-- 清晰的代码架构，完全模块化代码。
-- 灵活的参数绑定，允许手动修改绑定路径。
+- Editor built with UIElement.
+- Complete C# code, all code is visible, no dlls.
+- Architecture designed for interfaces, fully decoupled from business logic, better extensibility.
+- Fast splitting of inline subtrees for better decomposition and reuse of AI logic.
+- Full performance optimisation for most game requirements.
+- Clear code architecture, fully modular code.
+- Flexible parameter binding, allowing manual modification of binding paths.
 
 ---
 ---
-# 依赖
+# Dependencies
 - "com.unity.settings-manager": "1.0.3"
 
-1. 在Unity中打开Window -> Package Manager。
-2. 点击左上角的“+”并选择“Add package by name”。
-3. 输入UPM包的名字，版本可选填。
-4. 点击“Add”按钮，等待Unity下载和安装UPM包。
+1. Open Window -> Package Manager in Unity.
+2. Click on the "+" in the top left corner and select "Add package by name".
+3. Enter the name of the UPM package, the version is optional.
+4. Click the "Add" button and wait for Unity to download and install the UPM package.
 
-# 快速入门
-## 基础功能
+# Quick start
+# # Basic functions
 
-* [x] 基础节点库实现
-  * [ ] 为Unity默认组件生成节点
-  * [x] 视觉听觉感知组件
+* [x] Base node library implementation
+  * [x] Node generation for Unity default components
+  * [x] Visual-auditory-aware components
 
-+ [x] 公开参数绑定
++ [x] Public parameter binding
 + [x] List Array ~~Dictionary~~
-+ [x] 最多2层的嵌套泛型
-+ [x] TreeElement循环引用。Task引用其他Task。
-+ [x] 预制体可重写参数。
++ [x] Nested generics of up to 2 levels
++ [x] TreeElement circular reference. task references other tasks.
++ [x] Prefabricated body override parameters.
 
-- [ ] 笔记节点StickyNote
-- [ ] 组合Group
-- [x] 子树
-- [ ] 文件变体
+- [ ] StickyNote
+- [ ] Group
+- [x] Subtree
+- [ ] File variants
 
-+ [x] 增加/删除节点
-+ [x] 连接/断开节点
-+ [x] 复制/粘贴节点
-+ [x] 移动子节点时重新排序子节点
++ [x] add/remove nodes
++ [x] Connect/Disconnect nodes
++ [x] Copy/paste nodes
++ [x] Reorder child nodes when moving them
 
-* [x] 有未保存改动时关闭编辑器进行提示
+* [x] Close editor to prompt for unsaved changes
 * [x] Undo/Redo 
-* [x] 通过节点打开cs文件
-* [ ] 通过节点打开节点View文件
-* [x] 节点序号
+* [x] Open cs file by node
+* [ ] Open node View file by node
+* [x] Node index number
 
-+ [ ] 选中节点时，提示条件终止可影响的节点
++ [ ] Prompt to terminate affectable nodes when a node is selected
 
-* [ ] TwoChild节点创建特有的节点View
+* [ ] TwoChild node creates a unique nodeView
 
-- [x] 保存为ScriptObject文件
-- [ ] 保存为Json文件
-- [x] 自动使用编辑器打开文件
-- [ ] 生成行为树代码，消除反射，消除绑定
-- [ ] 扫描所有行为树用到的类型，生成TypeCache.Hot静态方法代码。
+- [x] Save as ScriptObject file
+- [ ] Save as Json file
+- [x] Automatically open file with editor
+- [ ] Generate Behaviour Tree code, eliminate reflections, eliminate bindings
+- [ ] Scan all types used by the behavior tree, generate TypeCache.Hot static method code
 
-+ [x] 保存编辑器用户偏好设置
-+ [ ] 编辑器Log可选设置
-+ [ ] 多语言Log
++ [x] Save Editor User Preferences
++ [x] Editor Log optional settings
++ [ ] Multi-language Log
 
-- [x] 每个行为树文件和实例独立编辑器窗口
-- [x] 调试
-- [x] 支持多个实例同时调试
-- [ ] 远程调试
-- [ ] 游戏内实时编辑器/行为树查看器。（目前GraphView只支持编辑器，等unity realtime支持时迁移）
+- [x] Separate editor windows for each behaviour tree file and instance
+- [x] Debugging
+- [x] Support for simultaneous debugging of multiple instances
+- [ ] Remote debugging
+- [ ] In-game live editor/behavior tree viewer. (Currently GraphView only supports editors, migrating when unity realtime is supported)
 
-## 支持的Attribute
+## Supported Attribute
 - [x] Category
 - [x] DisplayName
 - [x] Icon
@@ -91,38 +91,38 @@
 - [x] Color
 - [x] SerializationAlias
 
-## 参数设置
-实例化参数 InitOption：  
+## Parameter setting
+Instantiated parameters InitOption:  
 - AsyncInit  
-  使用多线程异步实例化行为树。  
-  缺点是不会在当前帧立刻完成并执行行为树。  
-  并且初始化过程不能调用unity方法。  
-- SharedMeta
-  同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  
+  Instantiates the behaviour tree asynchronously using multiple threads.  
+  The disadvantage is that the behaviour tree is not immediately completed and executed at the current frame.  
+  And the initialization process cannot call unity methods.  
+- SharedMeta  
+  Instances created from the same behaviour tree file, sharing meta information, mainly node descriptions, node coordinates and other runtime irrelevant information.  
 - LazyInitSubtree
-  延迟实例化子树，推迟到子树节点运行时实例化。  
-  默认是false。
+  Delays the instantiation of a subtree until the subtree node is instantiated at runtime.  
+  Default is false.
 - UseGenerateCode  
-  使用生成的代码实例化行为树。
+  Instantiates the behaviour tree using the generated code.
 
-如果主行为树使用多线程初始化，那么应该同时初始化子树，因为不会阻塞主线程。  
-如果主行为树使用Unity主线程初始化，那么应该延迟初始化子树，尽量不要让大量计算发生在同一帧。  
+If the main behaviour tree is initialised using multiple threads, then the subtree should be initialised at the same time, as it will not block the main thread.  
+If the main behaviour tree is initialised using the main Unity thread, then the initialisation of the subtrees should be delayed to try not to have a large number of calculations occur on the same frame.  
 
-运行参数 RunOption：  
+Run parameters RunOption:  
 - Log  
-  打印节点切换等关键位置日志
+  Prints a log of key positions such as node switches
 - Order  
-  预留
-- OnSucceeded
-  当行为树执行成功时应该做出的操作，要不要重启整个树。
-- OnFailed
-  当行为树执行失败时应该做出的操作，要不要重启整个树。
+  Set aside
+- OnSucceeded  
+  The action that should be taken when the behaviour tree is successfully executed, whether to restart the whole tree or not.
+- OnFailed  
+  The action that should be taken when the execution of the behavior tree fails, whether to restart the whole tree or not.
 
 ---
 ---
-# 实现细节
+# Architecture details
 
-## 架构图
+## Architecture diagram
 
 ```mermaid
 graph BT
@@ -141,8 +141,8 @@ Inverter ----> BTDecorator
 Loop ----> BTDecorator
 ```
 
-## 节点函数的执行顺序
-Tick函数内部大致调用过程，具体细节请阅读源码。
+## Order of execution of node functions
+The general process of calling the Tick function internally, read the source code for details.
 
 ```mermaid
 graph TB
@@ -197,258 +197,272 @@ AbortSelf --> ResetFlag
 ResetFlag --> Return
 ```
 
-## 装饰器
+## Decorator
 
-本库采用方式是装饰器放在Task内部，并认为装饰器是Task的一部分。  
-依据是：在状态机中，条件节点从来就不是一个状态，而是一个过渡，过渡不是一等成员，不能独立存在与状态机中，只能依附于节点。  
+This library uses a design where the decorator is placed inside the Task and considers the decorator to be part of the Task.  
+The basis for this is that in a state machine, a condition node is never a state, but a transition, and transitions are not first class members and cannot exist independently of the state machine, but can only depend on the state node.  
 
-~~我认为行为树将条件节点作为执行节点放在树中是一个失败设计。~~
+~~I think it is a design failure to put conditional nodes as execution nodes in a behavioural tree.~~
 
-采用了装饰器放在Task内部的设计，那么：  
-1. 先判断后进入Task （依据是：装饰器等价于其他行为树中的条件节点，只有经过了条件节点，才能到达Action节点）
-2. 先进入Task后判断 （依据是：如果不进入Task，那么不应该访问Task内部内容）   
+Using a design where the decorator is placed inside the Task, then there are 2 designs as follows:  
+1. first judge the condition and then enter the Task (on the basis that the decorator is equivalent to the condition node in the rest of the behaviour tree, and only after the condition node can the Action node be reached)
+2. enter the Task first and then judge the condition (the rationale is that if you don't enter the Task, then you shouldn't access the internal content of the Task)   
 
-哪种更合理？
+Which design makes more sense?  
 
-目前才用第一种。
+The first design option is currently used.
 
-于此同时，装饰器等价于其他行为树中的 条件节点/控制节点。所以装饰器成员结构上与Note相似，同样含有GUID等成员。
+At the same time, decorators are equivalent to conditional/control nodes in other behaviour trees. So decorator members are similar in structure to Note, and also contain members such as GUIDs.
 
-- [x] `条件装饰器` 用C↓表示，从上到下执行 用于判断节点能否进入  
-- [x] `前置装饰器` 用F↓表示，从上到下执行 在进入节点前调用  
-- [x] `后置装饰器` 用B↑表示，从下到上执行 在退出节点后调用  
-- [x] `终止装饰器` 用A↑表示，从下到上执行 在终止节点发生时退出节点后调用  
+- [x] `conditional decorator` denoted by C↓, executed from top to bottom to determine if a node is accessible  
+- [x] `pre decessor` denoted by F↓, executed from top to bottom Called before entering a node  
+- [x] `post decorator` denoted by B↑, executed from bottom to top Called after exiting a node  
+- [x] `abort decorator` denoted by A↑, executed from bottom to top Called after exiting a node when termination occurs  
 
-+ 如果`条件装饰器`没有通过，则不会执行节点。前置装饰器，后置装饰器，终止装饰器都不会被执行。  
-+ `后置装饰器`和`终止装饰器` 不会被同时执行。  
-  但是节点本身的OnAbort OnExit都会被执行。  
-  Abort时调用顺序 OnAbort --> (如果执行过Enter)Exit --> `终止装饰器`  
++ If the `conditional decorator` does not pass, the node will not be executed. Pre decorators, post decorators, and abort decorators are not executed.  
++ `post decorator` and `abort decorator` will not be executed at the same time.  
+  However, OnAbort OnExit of the node itself is executed.  
+  Order of calls on Abort OnAbort --> (if Enter was executed) Exit --> `abort Decorator`
 
-## 子树
-使用Subtree节点，可以引用另一个行为树文件，作为子树使用。  
-- 内联  
-  将子树节点的行为树节点内联到当前树中，并使用子树的开始节点，取代子树节点。  
-  内联是所有子树节点的GUID都会更新为新值，防止GUID冲突。  
-- 导出  
-  选中一个节点，将该节点和它的子节点导出为一个新的行为树。  
-  所有导出的节点GUID都会更新为新值，防止GUID冲突。  
-  主要是防止用户导出后又进行Undo操作，会导致出现相同GUID的节点。  
-  由于架构设计原因，无法分析参数表与节点的引用关系，引用的参数表参数不会跟随导出到新树中。  
+## Subtree
+Using a Subtree node, another behavioural tree file can be referenced for use as a subtree.  
+- Inline  
+  Inline the behaviour tree node of a subtree node into the current tree and use the start node of the subtree, replacing the subtree node.  
+  The GUIDs of all subtree nodes are updated to new values when inlining to prevent GUID conflicts.  
+- Exporting  
+  Select a node to export that node and its children into a new behaviour tree.  
+  The GUIDs of all exported nodes are updated to the new values, preventing GUID conflicts.  
+  The main purpose is to prevent the user from exporting and then performing an Undo operation, which would result in nodes with the same GUID.  
+  Due to the architectural design, it is not possible to analyse the reference relationship between the parameter table and the node, and the referenced parameter table parameters will not follow the export into the new tree.  
 
-`注意：内联和导出都是高危操作，非常容易对行为树文件造成不可逆更改。强烈建议在操作前使用版本管理工具。`
+`Note: Both inlining and exporting are high-risk operations that can very easily cause irreversible changes to the behaviour tree file. It is strongly recommended to use a version management tool before operating. `
 
-## 平行节点Parallel
-根据FinishMode有不同的行为
+## Parallel
+Different behavior depending on FinishMode
 - AnyFailed  
-  任意一个子节点失败，返回失败。
+  Any child node fails, return failed.
 - AnySucceeded  
-  任意一个子节点成功，返回成功。
+  Any child node succeeded, success is returned.
 - AnyCompleted  
-  任意一个子节点完成，返回完成节点的结果。
+  Returns the result of any completed child node.
 - AnySucceededWaitAll  
-  等待所有子节点都完成，任意一个子节点成功，返回成功。
+  Wait for all child nodes to complete, any child node succeeds, return success.
 - AnyFailedWaitAll  
-  等待所有子节点都完成，任意一个子节点失败，返回失败。
+  Wait for all child nodes to complete, any child node failed, return failed.
 
-## 多态序列化和泛型序列化
+## Polymorphic serialization and generic serialization
 
-- 多态序列化可以使用，但是如果注意，如果直接清除序列化对象，重新赋值新对象时，rid会改变。  
-  直接修改原对象时rid不会改变。
-- 泛型序列化unity2023才开始支持。插件主要支持版本还是2021，现阶段不能依赖于这个功能。所以还是要泛型特化。
+- Polymorphic serialization can be used, but if you pay attention, if the serialized object is cleared directly, the rid will change when the new object is reassigned.  
+   The rid will not change when the original object is directly modified.
+- Generic serialization is only supported in unity2023. The main supported version of the plug-in is still 2021, and this function cannot be relied on at this stage. So it still needs generic specialization.
 
-## 参数绑定
-参数绑定涉及到的4个功能是`正交`的。  
+## Parameter binding
+The 4 functions involved in parameter binding are `orthogonal`.
 
-1. 包含一个基础值，作为普通成员来使用。
-2. 包含一个Path，纪录绑定到Agent的某个组件的成员。  
-   包含一个ParseMode，用于在解析绑定失败时的行为，包括Log，抛出异常，回退到基础值，回退到类型默认值。
-3. 包含一个RefName，可以存放到参数表集合中，也可以在多个节点上共享。也可以看作这个成员值引用了一个参数表中的值。
-4. AutoConvert，存放一个参数引用，引用的参数类型可以和声明类型不一致，使用自动转换器来匹配。
+1. Contains a base value to be used as a common member.
+2. Contains a Path, which records the members of a component bound to the Agent.  
+    Contains a ParseMode for the behavior when the parsing binding fails, including Log, throwing an exception, falling back to the basic value, and falling back to the default value of the type.
+3. Contains a RefName, which can be stored in the parameter list collection or shared on multiple nodes. You can also think of this member value as referencing a value in a parameter table.
+4. AutoConvert, store a parameter reference, the parameter type of the reference can be inconsistent with the declaration type, use the automatic converter to match.
 
-本库通过继承逐步递进实现了4种功能参数。节点的成员值可以声明为这4种。  
-如果使用1和2的类型，序列化是直接序列化到节点本身的，等同于内嵌到节点的，不与节点外界发生关系。  
-如果使用3和4的类型，参数是序列化到树的参数表中的，在节点本身只序列为引用Name，实例化时通过搜索参数表中的参数，赋值给成员。
+This library realizes 4 kinds of functional parameters step by step through inheritance. The member values of nodes can be declared as these 4 types.  
+If the types 1 and 2 are used, the serialization is directly serialized to the node itself, which is equivalent to being embedded in the node, and does not have a relationship with the outside of the node.  
+If the types 3 and 4 are used, the parameters are serialized into the parameter table of the tree, and only the reference Name is serialized in the node itself. When instantiating, the parameters in the parameter table are searched and assigned to the members.
 
 ## AutoConvert
-自动类型转换存在2个部分。
-- 参数实例Path可以绑定到与参数声明类型不同的Agent的某个组件的成员。  
-- TODO: 节点成员值可以引用参数表中与成员声明类型不同的参数实例。  
+There are 2 parts to automatic type conversion.
+- The parameter instance Path can be bound to a member of a component of Agent that is different from the declared type of the parameter.
+- TODO: A node member value may refer to a parameter instance in the parameter table of a different type than the member declaration.
 
-显而易见的是，转换次数越多，性能越低。
+It is obvious that the more conversions, the lower the performance.
 
-## 类名变更
-- 序列化成员更改命名。保证仍能反序列化成功。 
-    - 支持FormerlySerializedAsAttribute特性
-    - 支持SerializationAliasAttribute特性
-- 节点更换类名   
-    - 使用SerializationAliasAttribute特性标记在类型上，注意别名一定是旧的类型全名，包含命名空间。  
-    编辑器会自动查找SerializationAlias保证旧的文件仍能反序列化成功。重新保存后变更为新名字。  
-    - 或者手动写一个静态函数，在反序列化前使用TypeCache.HotType设置别名。   
+## Class name change
+- Serialized member renaming. Guaranteed to still deserialize successfully.
+     - Support FormerlySerializedAsAttribute  
+     - Support SerializationAliasAttribute  
+- Node replacement class name
+     - Use the SerializationAliasAttribute attribute to mark the type. Note that the alias must be the full name of the old type, including the namespace.  
+     The editor will automatically look for SerializationAlias to ensure that old files can still be deserialized successfully. Change to a new name after saving again.  
+     - Or write a static function manually and use TypeCache.HotType to set an alias before deserialization.
 
-查找特性比较耗时，推荐更换命名后，重新保存下已有的行为树文件，将名字更新。  
-如果需要运行时解析旧名字，同理，在游戏开始时，反序列化之前使用TypeCache.HotType设置别名。
+It is time-consuming to find Attribute. It is recommended to re-save the existing behavior tree file and update the name after changing the name.  
+If you need to resolve the old name at runtime, in the same way, use TypeCache.HotType to set the alias at the start of the game before deserialization.  
 
-## 类型变更
-节点序列化成员类型变更时，由于类型不匹配，会导致原有行为树文件反序列失败。  
-在成员或者节点类型上使用SetMemberByAttribute，指定一个反射赋值时的回调方法。  
-成员回调方法签名是 bool FuncName(object memberValue);   
-类型回调方法签名是 bool FuncName(string memberName,object memberValue);  
-方法不能是私有的或者静态的。  
+## Type change
+Node serialization member type change can cause the original behavior tree file deserialization to fail due to type mismatch.  
+Use SetMemberByAttribute on a member or node type to specify a callback method on a reflection assignment.  
+The member callback method signature is bool FuncName(object memberValue).   
+The type callback method signature is bool FuncName(string memberName,object memberValue).  
+The method cannot be private or static.
 
-## 节点引用
-可以在节点中声明引用含有Serializable特性的节点。
-使用BindingPathSetterAttribute，则可以在Inspector中选择树种的节点引用。
+## Node references
+You can declare references to nodes containing the Serializable feature in the node.
+Using BindingPathSetterAttribute, then you can select the node references of tree species in Inspector.
 
-## 概率与冷却
+## Ring topology and diamond topology
+- The ring topology is essentially very close to a hierarchical state machine, where each combinatorial node can be seen as a layer of the state machine.
+- The diamond topology prevents common logic from being replicated multiple times in the graph.  
 
-## 环形拓扑和菱形拓扑
-- 环形拓扑本质上已经非常接近分层状态机了，每个组合节点都可以看作一个状态机的层。
-- 菱形拓扑可以避免常用逻辑在图中多次复制。  
+**Runtime trees are not structurally constrained. **  
+Editor restrictions do not allow ring topology and diamond topology.  
+However, users can write behavior tree files manually.  
+Exceeding the tree topology will result in spider web like diagrams that lose readability. The user is at liberty to make his own trade-offs.
 
-运行时的树是没用结构限制的。能否环形拓扑和菱形拓扑是编辑器的限制。用户可以手动编写文件。
-超出树形拓扑会造成蜘蛛网一样的图，失去可读性。用户自行取舍。
-
-## 驱动方式
-- 事件驱动(event-driven)
-- 轮询驱动(tick-driven)
+## Driving method
+- event-driven
+- Polling-driven (tick-driven)
     - root-leaf  
-      从root节点tick到末端leaf节点。优点是实现简单，容易理解。
+      Tick from root node to end-leaf node. The advantage is simple implementation and easy to understand.
     - last leaf  
-      记录最后执行的leaf节点，每次tick最后的节点。优点是性能更好一点。  
+      Record the last executed leaf node and tick the last node each time. The advantage is that the performance is a bit better.  
     - active stack  
-      使用执行栈的方式记录下次要执行的节点。  
+      Use the execution stack to record the next node to be executed.  
 
-本库使用`轮询驱动root-leaf`模式执行行为树。
+This library uses `polling-driven root-leaf` mode to execute the behavior tree.
 
-Q：为什么不采用事件驱动(event-driven)行为树？  
-A：实现起来太过于复杂，涉及到参数绑定值变化时没有办法处理。    
+Q: Why not use event-driven behavior tree?  
+A: It is too complicated to implement and there is no way to handle the change of parameter binding values.    
 
-事件驱动实现基础是存在Blackboard，并且Blackboard SetValue触发更新。  
-本库不存在Blackboard，绑定后没有SetValue，类似与Lazy模式，每次取值时才计算值，无法触发事件，优点是不用手动SetValue。  
-事件驱动优点是性能更高，缺点是因为没有tick所以需要service节点。  
-轮询驱动优点是实现简单。  
+Event-driven implementation is based on the existence of Blackboard and Blackboard SetValue triggering update.  
+This library does not exist Blackboard, bound without SetValue, similar to the Lazy mode, each time the value is calculated, can not trigger the event, the advantage is not manually SetValue.  
+The advantage of event-driven is higher performance, the disadvantage is that there is no tick so the service node is required.  
+Polling-driven has the advantage of simple implementation.
 
-## 状态切换
-Q：节点完成后应该`立刻进入下一个节点`还是`下一次tick才进入下一个节点`？  
-A：采用`立刻进入下一个节点`的方案。
-- 必须保证有一个叶子节点为running状态。  
-  如果下一个tick才切换，会导致当前tick，当前节点完成，下一个节点未开始运行。不符合直觉。
-- 类比状态机，状态机中不允许某一时刻处于2个状态夹缝状态，总是立刻进入下一个状态。
-- 装饰器等同于常规行为树的叶子节点。而且装饰器很难实现下一次tick才进入下一个装饰器。  
-  为了保证装饰器和叶子节点的一致性，统一为立刻进入下一个节点。
+## State switching
+Q: Should I `go to the next node immediately` after node completion or `next tick go to the next node`?  
+A: The `go to next node immediately` design scheme is used.
 
-## 终止
-Abort 在节点已经开始执行，并且没有完成时主动结束。  
-当Abort发生时，递归调用子节点，Abort执行OnAbort Exit AbortDerators。
-最终由子到父，依次退出。
+- You must ensure that one leaf node is running.  
+  If the next tick before switching, it will result in the current tick, the current node finished, the next node has not started running. Not intuitive.
+- Analogous to a state machine, a state machine does not allow a moment to be in a 2-state sandwich state, always immediately going to the next state.
+- A decorator is equivalent to a leaf node of a regular behavior tree. And it is difficult to implement decorators to move to the next decorator only after the next tick.  
+  To ensure the consistency of decorators and leaf nodes, it is unified to go to the next node immediately.
 
-## 条件终止
+## Abort
+Proactively ends a node when it has started execution and has not completed.  
+When Abort occurs, the child node is called recursively and Abort executes OnAbort Exit AbortDerators.
+Eventually exits sequentially from child to parent.
+
+## Conditional Abort
 
 ```cs
 [Flags]
 public enum AbortType
 {
-    None = 0,
-    Self = 1 << 0,
-    LowerPriority = 1 << 1,
+    None = 0.
+    Self = 1 << 0.
+    LowerPriority = 1 << 1.
     Both = Self | LowerPriority
 }
 ```
-两种终止类型：  
-- Self：当自身处于`Running`时，每次Tick都对含有AbortType.Self的条件装饰器重新求值。如果结果由true变为false，则终止自身节点，节点向父节点返回Failed。
-- LowerPriority：当`右侧节点`处于`Running`时，父节点每次Tick会额外对`HasAbortLowerPriorityFlag`的节点重新求值。  
-  如果节点的执行结果`发生改变`，则终止处于`Running`的节点。  
-  如果节点的执行结果`没有改变`，则继续执行`Running`的节点。  
 
-不要被终止类型的名词误导，不同的行为树实现条件终止的处理方式略有差异。  
-但总的来说是都是符合直觉的。可以笼统的理解为，已经处理过的节点条件改变时，允许反悔，重新执行，并结束正在允许的节点。
+Two termination types:  
+- Self: When Self is in `Running`, each Tick re-values the conditional decorator containing AbortType. If the result changes from true to false, the Self node is terminated and the node returns Failed to its parent.
+- LowerPriority: When the `right node` is in `Running`, the parent node additionally re-values the node with `HasAbortLowerPriorityFlag` each Tick.  
+  If the execution result of the node `changes`, the node in `Running` is terminated.  
+  If the result of the node's execution `does not change`, continue the execution of the node in `Running`.  
 
-### 不同的父节点对LowerPriority的处理方式不同。 
-Sequence对`每个子节点`的`含有AbortType.LowerPriority的条件装饰器`重新求值：  
-- 如果重新求值结果为true，跳过节点本身再次求值，继续执行处于`Running`的节点。  
-- 如果重新求值结果为false，则终止处于`Running`的节点，Sequence直接返回Failed。
+Don't be misled by the termination type terminology, different behavior trees implement conditional termination in slightly different ways.  
+But in general it is all intuitive. It can be generally understood that when the condition of an already processed node changes, it is allowed to reverse itself, re-execute, and end the node being allowed.
+
+### LowerPriority is handled differently by different parent nodes. 
+- Selector  
+  Re-value the children of `HasAbortLowerPriorityFlag`.  
+- Sequence  
+  Re-values only the `conditional decorator containing AbortType.LowerPriority` of the children of `HasAbortLowerPriorityFlag`:  
+  - If the revaluation result is true, the node itself is skipped and the execution of the node in `Running` continues.  
+  - If the re-valuation result is false, the node in `Running` is terminated and Sequence returns Failed directly.
 
 ### Dynamic
-- Dynamic是另一种条件终止的实现方式。  
-- Dynamic仅可以标记在父节点上。  
-- Dynamic比AbortType性能开销更高，也更不容易理解。  
-- **强烈建议使用AbortType，而不是Dynamic。** 但是仍然尊重用户的选择。  
+- Dynamic is another implementation of conditional abort.  
+- Dynamic can only be marked on the parent node.  
+- Dynamic has a higher performance overhead than AbortType and is less understandable.  
+- **AbortType is strongly recommended over Dynamic.** But still respects the user's choice.  
 
-不同的父节点对Dynamic的处理方式不同。  
-Sequence标记为Dynamic：与`LowerPriority`不同，每次tick重新执行所有子节点：
-- 如果这个节点Succeeded，则继续执行处于`Running`的节点。  
-- 如果这个节点Running，则终止处于`Running`的节点，改为执行这个节点。  
-- 如果这个节点Failed，则终止处于`Running`的节点，Sequence直接返回Failed。  
-- `特别注意`：如果Sequence含有多个非条件子节点，第一个非条件节点总是会终止后面的非条件节点，并重新运行。会造成死循环。所以如果没有特别需要，不要对Sequence标记Dynamic。  
+Dynamic is handled differently by different parent nodes.  
+- Selector marked as Dynamic  
+  Each Tick re-values all child nodes.  
+- Sequence is marked as Dynamic  
+  Different from `AbortType.LowerPriority`.  
+  Re-values all child nodes every Tick:
+  - If this node Succeeded, the execution of the node in `Running` continues.  
+  - If this node is Running, the node in `Running` is terminated and this node is executed instead.  
+  - If the node Failed, the node in `Running` is terminated and Sequence returns Failed directly.  
+  - `Special Note`: If the Sequence contains multiple non-conditional child nodes, the first non-conditional node will always terminate the later non-conditional nodes and re-run. This can cause a dead loop. So don't mark Dynamic for Sequence if you don't need it in particular.
 
 ## Event Trigger
-Event和Trigger都是记录在树中的标记。  
+Event and Trigger are both tokens recorded in the tree.  
 
-- Event生命周期为1个Tick，1个Tick后自动消除。  
-  有效期内，任何时刻任何节点检查Event结果都为true。
-- Trigger生命周期为永久，直到ResetTrigger。  
-  有效期内，任何时刻任何节点检查Event结果都为true。
+- Event has a lifetime of 1 Tick and is automatically eliminated after 1 Tick.  
+  During the validity period, the result of checking Event at any node at any time is true.
+- Trigger life cycle is permanent until ResetTrigger.  
+  During the validity period, any node checking Event result is true at any time.
 
-通常CheckTrigger装饰器可以选择何时ResetTrigger
-- Immediate 检测成功后立刻ResetTrigger
-- EnterNode 检测成功后如果能成功进入所属节点，ResetTrigger
-- LeaveNode 检测成功后如果能成功进入所属节点，离开节点时ResetTrigger
+Normally the CheckTrigger decorator can choose when to ResetTrigger
+- Immediate ResetTrigger immediately after a successful detection
+- EnterNode ResetTrigger if it succeeds in entering the node it belongs to after a successful detection.
+- LeaveNode ResetsTrigger if it successfully enters the node it belongs to and leaves the node after a successful detection.
 
-默认是Immediate。  
-某些用例，节点上可能有多个条件节点，如果不是所有条件节点都成功，则节点不会进入执行。  
-这种情况下可能不希望消耗掉Trigger，则可以设置为EnterNode。  
+The default is Immediate.  
+For some use cases, there may be multiple conditional nodes on the node, and if not all of them succeed, the node will not enter execution.  
+In this case it may not be desirable to consume the Trigger, so it can be set to EnterNode.
 
-## 性能
-初始化行为树实例可能会消耗大量时间。  
-尤其是初始化第一个行为树实例，可能需要初始化很多静态成员，消耗时间可能在100~1000ms，甚至更多。  
-建议多线程初始化。  
+## Performance
+Initializing a behavior tree instance may consume a lot of time.  
+In particular, initializing the first behavior tree instance may require initializing many static members, which may consume 100~1000ms or even more.  
+Multi-threaded initialization is recommended.  
 
-简单树实例(20个节点以内)，每次Tick大约0.002ms ~ 0.02ms。  
-- 行为树越复杂消耗性能越多。  
-- 行为树深度对性能影响比较大。
-- 出现异常会影响性能。  
-- 打印Log会严重影响性能。  
+For simple tree instances (within 20 nodes), each Tick is about 0.002ms ~ 0.02ms.  
+- The more complex the behavior tree is, the more performance is consumed.  
+- Behavior tree depth has a relatively large impact on performance.
+- Exceptions can affect performance.  
+- Printing Log can seriously affect performance.  
 
-尖峰帧卡顿，个别帧可能消耗10倍以上性能，单个行为树实例执行时间可能超过1ms。可能是绑定参数深度太深。绑定参数过多。条件终止过多。  
+Spiked frames lag, individual frames may consume more than 10x performance, and individual behavior tree instances may take more than 1ms to execute.  
+Possible causes:  
+- Binding parameter depth is too deep.
+- Too many binding parameters.
+- Too many conditional abort.  
 
-*性能与Animator相差太多。Animator保守估计性能也是插件的10倍以上。*  
+*Performance is too different from Animator, which is also conservatively estimated to be 10x more powerful than the plugin.*  
 
-结论是：  
-超出场景范围的对象行为树应该关闭。关闭的行为树不会执行，只会占用内存。  
-不应该同时存在过多的行为树实例，建议不超过100个。  
+Conclusion:  
+Object behavior trees that are beyond the scope of the scene should be turned off. Closed behavior trees do not execute, they just take up memory.  
+Too many instances of behavior trees should not exist at the same time, no more than 100 is recommended.  
 
-优化：  
-- 如果明确行为树不会调用主线程函数，可以考虑手动使用多线程执行。  
-- 降低行为树执行频率，每隔固定时间执行一次，将行为树平均分配到多个帧执行。  
-- 使用自定义节点，代替通用节点和参数绑定。这对复杂行为树性能至关重要。 
-- 生成行为树代码，代替行为树资源文件。  
+Optimization:  
+- Consider manually using multi-threaded execution if it is clear that the behavior tree will not call the main threaded function.  
+- Reduce the frequency of behavior tree execution by executing it at fixed intervals and distributing it evenly over multiple frames.  
+- Use custom nodes instead of generic nodes and parameter bindings. This is critical for complex behavior tree performance. 
+- Generate behavior tree code instead of behavior tree resource files.  
 
-服务器：  
-如果想在服务器使用大量行为树实例，应该生成行为树代码。  
-即使如此，想要在服务器同时执行数千数万的实例，也是难以实现的。  
+Using behavior trees in the server:  
+Behavior tree code should be generated if you want to use a large number of behavior tree instances in the server.  
+Even then, trying to execute thousands and thousands of instances at the same time in the server is difficult to achieve.
 
-## 扩展节点
-默认节点和默认节点的默认行为参数可能无法满足用户的所有需求。  
-由用户根据项目需要扩展节点是非常常见的。  
+## Extended Nodes
+The default node and the default behavior parameters of the default node may not meet all the needs of the user.  
+It is very common for users to extend nodes according to their project needs.  
 
-应当首选从框架提供的基类接口继承。  
-如果基类不符合需求，可以考虑通过接口继承。相当一部分功能编辑器是直接通过接口支持。  
-如果运气好的话，即使扩展节点缺失了某些接口，框架仍能正常工作。  
-随着架构重构，功能总是从基类向接口拆分，耦合越来越低。  
+Inheritance from the base class interface provided by the framework should be preferred.  
+If the base class does not meet the requirements, consider inheritance through the interface. A significant portion of the functional editor is supported directly through the interface.  
+With any luck, the framework will still work even if the extension node is missing some interfaces.  
+As the architecture is refactored, the functionality is always split from the base class to the interface, and the coupling gets lower and lower.
 
-# 最终未采用的设计
-## 异步
-使用异步API，比如父节点调用子节点等待结果，使用异步代替事件。Running可以使用异步代替。  
-实际实现时发现，使用异步就不应该tick驱动，只有事件驱动才能完全发挥异步的效果。   
-这与参数绑定是相互冲突的设计。如果强行使用异步，就要增加一个绑定参数求解器，然后不停的Tick，当参数值发生改变时，发送事件到行为树，模拟事件驱动。
-使用异步实现起来更加繁琐。开销更大。所以暂时不采用这种方式。  
+## Final unadopted design
+## Asynchronous
+Using asynchronous API, for example, parent node calls child node to wait for result, using asynchronous instead of event. running can use asynchronous instead.  
+
+The actual implementation found that using asynchronous should not be Tick driven, only event driven to fully exploit the effect of asynchronous.   
+This is a conflicting design with parameter binding. If you force the use of asynchronous, you have to add a binding parameter solver, then keep Tick, and when the parameter value changes, send an event to the behavior tree to simulate event-driven.
+It is more tedious to implement using asynchronous. The overhead is much higher. So for the time being, this approach is not used.
 
 ---
 ---
-# 参考连接
+# Reference links
 - https://robohub.org/introduction-to-behavior-trees/
 
-# 特别鸣谢
-- [叶月葵](https://github.com/Hazukiaoi)
+# Special thanks
+- [Hazukiaoi](https://github.com/Hazukiaoi)
 
 
