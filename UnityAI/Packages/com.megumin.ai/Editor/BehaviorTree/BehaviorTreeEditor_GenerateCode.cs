@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+using Megumin;
+using Megumin.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -69,11 +71,74 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push("//生成节点");
                 foreach (var item in behaviorTree.nodes)
                 {
-                    var varName = SafeVarName(item.Name);
-                    generator.Push($"var {varName} = new {item.Type}();");
+                    DeclareObj(generator, item);
                 }
 
+                generator.PushBlankLines();
+
+                generator.Push("//生成装饰器");
+                foreach (var item in behaviorTree.decorators)
+                {
+                    DeclareObj(generator, item);
+                }
+                generator.PushBlankLines();
+
+                generator.Push("//生成ref obj");
+                foreach (var item in behaviorTree.refObjs)
+                {
+                    DeclareObj(generator, item);
+                }
+                generator.PushBlankLines();
+
+                generator.Push("//反序列化 nodes");
+                foreach (var item in behaviorTree.nodes)
+                {
+                    var varName = SafeVarName(item.Name);
+                    if (item.Member != null)
+                    {
+                        foreach (var memberData in item.Member)
+                        {
+                            using (generator.NewScope)
+                            {
+                                generator.Push($"//SetMember {memberData.Name}");
+                                if (memberData.Type == ObjectData.NullType)
+                                {
+                                    generator.Push($"{varName}.{memberData.Name} = null;");
+                                }
+                                else if (memberData.Type == ObjectData.RefType)
+                                {
+                                    var memberVarName = SafeVarName(memberData.Value);
+                                    generator.Push($"{varName}.{memberData.Name} = {memberVarName};");
+                                }
+                                else
+                                {
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                generator.PushBlankLines();
+
                 generator.Push($"return tree;");
+            }
+        }
+
+        /// <summary>
+        /// 声明对象
+        /// </summary>
+        /// <param name="generator"></param>
+        /// <param name="item"></param>
+        public void DeclareObj(CSCodeGenerator generator, ObjectData item)
+        {
+            var varName = SafeVarName(item.Name);
+            if (Megumin.Reflection.TypeCache.TryGetType(item.Type, out var type))
+            {
+                generator.Push($"var {varName} = new {type.ToCodeString()}();");
+            }
+            else
+            {
+                generator.Push($"//{item.Type} can not parse!");
             }
         }
 

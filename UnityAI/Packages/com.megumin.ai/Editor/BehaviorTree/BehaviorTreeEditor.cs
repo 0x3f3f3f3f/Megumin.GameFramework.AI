@@ -355,7 +355,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             var file = root.Q<ToolbarMenu>("file");
             file.menu.AppendAction("ShowTreeWapper", a => TreeView?.InspectorShowWapper(), a => DropdownMenuAction.Status.Normal);
-            file.menu.AppendActionTODO("GenerateCode", a => GenerateCode(), a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("GenerateCode", a => GenerateCode(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Change GUID", a =>
                                                 {
                                                     if (CurrentAsset != null)
