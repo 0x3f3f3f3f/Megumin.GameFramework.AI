@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using Megumin;
 using Megumin.Serialization;
+using static Megumin.Reflection.TypeCache;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
@@ -93,27 +94,45 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push("//反序列化 nodes");
                 foreach (var item in behaviorTree.nodes)
                 {
-                    var varName = SafeVarName(item.Name);
-                    if (item.Member != null)
+                    using (generator.GetRegionScope(item.Name))
                     {
-                        foreach (var memberData in item.Member)
+                        var varName = SafeVarName(item.Name);
+                        if (item.Member != null)
                         {
-                            using (generator.NewScope)
+                            foreach (var memberData in item.Member)
                             {
-                                generator.Push($"//SetMember {memberData.Name}");
-                                if (memberData.Type == ObjectData.NullType)
+                                using (generator.NewScope)
                                 {
-                                    generator.Push($"{varName}.{memberData.Name} = null;");
+                                    generator.Push($"//SetMember {memberData.Name}");
+                                    if (memberData.Type == ObjectData.NullType)
+                                    {
+                                        generator.Push($"{varName}.{memberData.Name} = null;");
+                                    }
+                                    else if (memberData.Type == ObjectData.RefType)
+                                    {
+                                        var memberVarName = SafeVarName(memberData.Value);
+                                        generator.Push($"{varName}.{memberData.Name} = {memberVarName};");
+                                    }
+                                    else
+                                    {
+                                        if (StringFormatter.TryDeserialize(memberData.Type, memberData.Value, out var value))
+                                        {
+                                            if (value is string)
+                                            {
+                                                generator.Push($"{varName}.{memberData.Name} = \"{value}\";");
+                                            }
+                                            else
+                                            {
+                                                generator.Push($"{varName}.{memberData.Name} = {value};");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            generator.Push($"//{memberData.Type} can not parse!");
+                                        }
+                                    }
                                 }
-                                else if (memberData.Type == ObjectData.RefType)
-                                {
-                                    var memberVarName = SafeVarName(memberData.Value);
-                                    generator.Push($"{varName}.{memberData.Name} = {memberVarName};");
-                                }
-                                else
-                                {
-                                    
-                                }
+                                generator.PushBlankLines();
                             }
                         }
                     }
