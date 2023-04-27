@@ -188,7 +188,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         generator.PushBlankLines();
                         generator.Push($"var {varName} = new {obj.GetType().ToCodeString()}();");
                         generator.Push($"finder.RefDic.Add({refName.ToCodeString()}, {varName});");
-                        generator.PushBlankLines();
+                        //generator.PushBlankLines();
 
                         declaredObjs.Add(obj, dclaredObject);
                         needSetMember.Enqueue((obj, varName));
@@ -214,13 +214,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
 
-                generator.Push("//声明复杂对象");
+                generator.Push("//声明参数表对象");
                 foreach (var variable in tree.Variable.Table)
                 {
                     DeclareObj(variable.RefName, variable);
                     generator.PushBlankLines();
                 }
 
+                generator.Push("//声明节点对象");
                 foreach (var node in tree.AllNodes)
                 {
                     DeclareObj(node.GUID, node);

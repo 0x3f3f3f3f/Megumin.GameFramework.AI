@@ -403,9 +403,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             {
                 foreach (var item in cache)
                 {
-                    if (item.Key.TryDeserialize(item.Value, finder))
+                    object value = item.Value;
+                    if (item.Key.TryDeserialize(value, finder))
                     {
-                        if (item.Value is BTNode node)
+                        if (value is BTNode node)
                         {
                             tree.AddNode(node);
                             if (node.GUID == StartNodeGUID)
@@ -414,12 +415,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             }
                         }
 
-                        if (item.Value is BehaviorTreeElement element)
+                        if (value is BehaviorTreeElement element)
                         {
                             element.Tree = tree;
                         }
 
-                        if (item.Value is IAIMeta meta)
+                        if (value is IAIMeta meta)
                         {
                             if (SharedMeta.ContainsKey(item.Key.Name) == false)
                             {
@@ -427,12 +428,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             }
                         }
 
-                        if (item.Value is IBindingParseable parseable)
+                        if (value is IBindingParseable parseable)
                         {
                             tree.AllBindingParseable.Add(parseable);
                         }
 
-                        if (item.Value is IBindAgentable bindAgentable)
+                        if (value is IBindAgentable bindAgentable)
                         {
                             tree.AllBindAgentable.Add(bindAgentable);
                         }
