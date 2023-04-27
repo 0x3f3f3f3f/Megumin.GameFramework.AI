@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEditor;
@@ -165,6 +167,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                         needSetMember.Enqueue((obj, varName));
                     }
+
+                    DeclareObjMember(varName, obj);
                 }
 
                 void DeclareObjMember(string varName, object obj)
@@ -189,7 +193,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     string varName = SafeVarName(variable.RefName);
                     DeclareObj(varName, variable);
-                    DeclareObjMember(varName, variable);
                     generator.PushBlankLines();
                 }
 
@@ -197,13 +200,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     string varName = SafeVarName(node.GUID);
                     DeclareObj(varName, node);
-                    DeclareObjMember(varName, node);
 
                     foreach (var decorator in node.Decorators)
                     {
                         string varName1 = SafeVarName(decorator.GUID);
                         DeclareObj(varName1, decorator);
-                        DeclareObjMember(varName1, decorator);
                     }
 
                     generator.PushBlankLines();
@@ -223,22 +224,40 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         continue;
                     }
 
-                    foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
+                    if (item is IList list)
                     {
-                        if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                        if (item is Array)
                         {
-                            generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
+
                         }
                         else
                         {
-                            //引用对象声明
-                            if (declaredObj.TryGetValue(memberValue, out var dName))
+                            for (int i = 0; i < list.Count; i++)
                             {
-                                generator.Push($"{varName}.{memberName} = {dName};");
+                                object elem = list[i];
+                                generator.Push($"//TODO :{varName} list {i}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
+                        {
+                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                            {
+                                generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
                             }
                             else
                             {
-                                generator.Push($"//TODO : {memberName}");
+                                //引用对象声明
+                                if (declaredObj.TryGetValue(memberValue, out var dName))
+                                {
+                                    generator.Push($"{varName}.{memberName} = {dName};");
+                                }
+                                else
+                                {
+                                    generator.Push($"//TODO : {memberName}");
+                                }
                             }
                         }
                     }
