@@ -38,6 +38,11 @@ namespace Megumin.Serialization
             return Lut.TryGetValue(typeFullName, out formatter);
         }
 
+        public static bool TryGet<T>(out IFormatter<string> formatter)
+        {
+            return Lut.TryGetValue(typeof(T).FullName, out formatter);
+        }
+
         [Obsolete("", true)]
         public static string Serialize(object instance)
         {
@@ -85,6 +90,25 @@ namespace Megumin.Serialization
             else
             {
                 if (TypeCache.TryGetType(typeFullName, out var type)
+                    && type.IsEnum)
+                {
+                    return EnumFormatter.Instance.TryDeserialize(source, out value);
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        public static bool TryDeserialize<T>(string source, out T value)
+        {
+            if (TryGet<T>(out var formatter))
+            {
+                return formatter.TryDeserialize<T>(source, out value);
+            }
+            else
+            {
+                if (TypeCache.TryGetType(typeof(T).FullName, out var type)
                     && type.IsEnum)
                 {
                     return EnumFormatter.Instance.TryDeserialize(source, out value);
@@ -454,6 +478,22 @@ namespace Megumin.Serialization
                 if (sp.Length == 2 && TypeCache.TryGetType(sp[0], out var type))
                 {
                     if (Enum.TryParse(type, sp[1], out var result) && result is Enum @enum)
+                    {
+                        value = @enum;
+                        return true;
+                    }
+                }
+
+                value = default;
+                return false;
+            }
+
+            public bool TryDeserialize<T>(string source, out T value)
+            {
+                var sp = source.Split(":");
+                if (sp.Length == 2 && TypeCache.TryGetType(sp[0], out var type))
+                {
+                    if (Enum.TryParse(type, sp[1], out var result) && result is T @enum)
                     {
                         value = @enum;
                         return true;

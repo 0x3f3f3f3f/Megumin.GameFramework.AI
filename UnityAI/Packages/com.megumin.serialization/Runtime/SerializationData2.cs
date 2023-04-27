@@ -74,8 +74,8 @@ namespace Megumin.Serialization
         public string Type;
         public List<BasicData> Member;
 
-        const string NullType = "$null";
-        const string RefType = "$ref";
+        public const string NullType = "$null";
+        public const string RefType = "$ref";
 
         public bool TrySerialize(string objectRefName,
                                  object value,

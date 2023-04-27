@@ -25,10 +25,37 @@ namespace Megumin.Serialization
     /// <typeparam name="T"></typeparam>
     public interface IFormatter<T>
     {
-        [Obsolete("",true)]
+        [Obsolete("", true)]
         T Serialize(object value);
         bool TrySerialize(object value, out T destination);
         bool TryDeserialize(T source, out object value);
+
+        public bool TrySerialize<V>(V value, out string destination)
+        {
+            if (this is IFormatter<T, V> gFormator)
+            {
+                return gFormator.TrySerialize(value, out destination);
+            }
+
+            return TrySerialize(value, out destination);
+        }
+
+        public bool TryDeserialize<V>(T source, out V value)
+        {
+            if (this is IFormatter<T, V> gFormator)
+            {
+                return gFormator.TryDeserialize(source, out value);
+            }
+
+            if (TryDeserialize(source, out var objV) && objV is V gValue)
+            {
+                value = gValue;
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
     }
 
     /// <summary>
@@ -68,5 +95,20 @@ namespace Megumin.Serialization
     public interface IRefFinder
     {
         bool TryGetRefValue(string refName, out object refValue);
+    }
+
+    public static class Extension_E8CF5A3913CC4D2984636F23EAFC8A33
+    {
+        public static bool TryGetRefValue<T>(this IRefFinder refFinder, string refName, out T refValue)
+        {
+            if (refFinder.TryGetRefValue(refName, out var objValue) && objValue is T tValue)
+            {
+                refValue = tValue;
+                return true;
+            }
+
+            refValue = default;
+            return false;
+        }
     }
 }
