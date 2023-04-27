@@ -120,6 +120,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
+        class DeclaredObject
+        {
+            public object Instance { get; set; }
+            public string VarName { get; set; }
+            public string RefName { get; set; }
+        }
+
         public void GenerateInitMethod(CSCodeGenerator generator, BehaviorTree tree)
         {
             generator.Push($"static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new(\"$(TreeName)_Init\");");
@@ -142,36 +149,55 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push($"tree.InitOption = initOption;");
                 generator.PushBlankLines();
 
-                Dictionary<object, string> declaredObj = new();
+                generator.Push($"RefFinder finder = new();");
+                generator.Push($"finder.Parent = refFinder;");
+                generator.PushBlankLines();
+
+                generator.Push($"tree.RefFinder = finder;");
+                generator.PushBlankLines();
+
+                //Dictionary<object, string> declaredObj = new();
+                Dictionary<object, DeclaredObject> declaredObjs = new();
+
                 Queue<(object, string)> needSetMember = new();
 
                 //缓存所有已知引用对象
-                declaredObj.Add(tree, SafeVarName(tree.GUID));
+                DeclaredObject treeObj = new();
+                treeObj.Instance = tree;
+                treeObj.VarName = SafeVarName(tree.GUID);
+                treeObj.RefName = tree.GUID;
+                declaredObjs.Add(tree, treeObj);
 
+                generator.Push($"finder.RefDic.Add({tree.GUID.ToCodeString()}, tree);");
+                generator.PushBlankLines();
 
-
-                void DeclareObj(string varName, object obj)
+                void DeclareObj(string refName, object obj)
                 {
-                    if (declaredObj.TryGetValue(obj, out var variableName))
+                    string varName = SafeVarName(refName);
+                    if (declaredObjs.TryGetValue(obj, out var variableName))
                     {
-                        if (varName != variableName)
-                        {
-                            generator.Push($"var {varName} = {variableName};");
-                            declaredObj.Add(obj, varName);
-                        }
+                        //generator.Push($"var {varName} = {variableName};");
                     }
                     else
                     {
+                        DeclaredObject dclaredObject = new();
+                        dclaredObject.Instance = obj;
+                        dclaredObject.VarName = varName;
+                        dclaredObject.RefName = refName;
+
+                        generator.PushBlankLines();
                         generator.Push($"var {varName} = new {obj.GetType().ToCodeString()}();");
-                        declaredObj.Add(obj, varName);
+                        generator.Push($"finder.RefDic.Add({refName.ToCodeString()}, {varName});");
+                        generator.PushBlankLines();
 
+                        declaredObjs.Add(obj, dclaredObject);
                         needSetMember.Enqueue((obj, varName));
-                    }
 
-                    DeclareObjMember(varName, obj);
+                        DeclareObjMember(refName, obj);
+                    }
                 }
 
-                void DeclareObjMember(string varName, object obj)
+                void DeclareObjMember(string refName, object obj)
                 {
                     foreach (var (memberName, memberValue, memberType) in obj.GetSerializeMembers())
                     {
@@ -182,8 +208,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         else
                         {
                             //引用对象声明
-                            var varMemberName = SafeVarName($"{varName}.{memberName}");
-                            DeclareObj(varMemberName, memberValue);
+                            var refMemberName = $"{refName}.{memberName}";
+                            DeclareObj(refMemberName, memberValue);
                         }
                     }
                 }
@@ -191,28 +217,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push("//声明复杂对象");
                 foreach (var variable in tree.Variable.Table)
                 {
-                    string varName = SafeVarName(variable.RefName);
-                    DeclareObj(varName, variable);
+                    DeclareObj(variable.RefName, variable);
                     generator.PushBlankLines();
                 }
 
                 foreach (var node in tree.AllNodes)
                 {
-                    string varName = SafeVarName(node.GUID);
-                    DeclareObj(varName, node);
+                    DeclareObj(node.GUID, node);
 
                     foreach (var decorator in node.Decorators)
                     {
-                        string varName1 = SafeVarName(decorator.GUID);
-                        DeclareObj(varName1, decorator);
+                        DeclareObj(decorator.GUID, decorator);
                     }
 
                     generator.PushBlankLines();
                 }
 
-                HashSet<object> alrendySetMember = new();
-                generator.Push("//生成member代码");
 
+                generator.Push("//生成member代码");
+                HashSet<object> alrendySetMember = new();
                 while (needSetMember.Count > 0)
                 {
                     var v = needSetMember.Dequeue();
@@ -224,24 +247,40 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         continue;
                     }
 
-                    if (item is IList list)
+                    foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
                     {
-                        if (item is Array)
+                        if (item is IList)
                         {
-
-                        }
-                        else
-                        {
-                            for (int i = 0; i < list.Count; i++)
+                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                             {
-                                object elem = list[i];
-                                generator.Push($"//TODO :{varName} list {i}");
+                                generator.Push($"{varName}.Insert({memberName}, {memberValue.ToCodeString()});");
+                            }
+                            else
+                            {
+                                //引用对象声明
+                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                                {
+                                    var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
+                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                    generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
+                                    generator.Push($"out var {refObjName}))", 1);
+
+                                    generator.BeginScope();
+                                    generator.Push($"{varName}.Insert({memberName}, {refObjName});");
+                                    generator.EndScope();
+                                    //generator.Push($"else");
+                                    //generator.BeginScope();
+                                    //generator.Push($"{varName}.Insert({memberName}, {declaredObject.VarName});");
+                                    //generator.EndScope();
+                                    generator.PushBlankLines();
+                                }
+                                else
+                                {
+                                    generator.Push($"//TODO : {memberName}");
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
+                        else
                         {
                             if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                             {
@@ -250,9 +289,21 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             else
                             {
                                 //引用对象声明
-                                if (declaredObj.TryGetValue(memberValue, out var dName))
+                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
                                 {
-                                    generator.Push($"{varName}.{memberName} = {dName};");
+                                    var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
+                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                    generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
+                                    generator.Push($"out var {refObjName}))", 1);
+
+                                    generator.BeginScope();
+                                    generator.Push($"{varName}.{memberName} = {refObjName};");
+                                    generator.EndScope();
+                                    //generator.Push($"else");
+                                    //generator.BeginScope();
+                                    //generator.Push($"{varName}.{memberName} = {declaredObject.VarName};");
+                                    //generator.EndScope();
+                                    generator.PushBlankLines();
                                 }
                                 else
                                 {
