@@ -187,76 +187,115 @@ namespace Megumin.Reflection
             }
 
             var instanceType = instance.GetType();
-            var p = from m in instanceType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    where m is FieldInfo || m is PropertyInfo
-                    orderby m.MetadataToken
-                    select m;
-            var members = p.ToList();
 
-            ///用于忽略默认值参数
-            var defualtValueInstance = Activator.CreateInstance(instanceType);
-
-            foreach (var member in members)
+            if (instance is IDictionary dictionary)
             {
-                object memberValue = null;
-                object defaultMemberValue = null;
-                Type memberCodeType = null;
-
-                if (member is FieldInfo field)
+                Debug.LogError($"不支持字典");
+                yield break;
+            }
+            else if (instance is IList list)
+            {
+                Type memberType = null;
+                if (instanceType.IsArray)
                 {
-                    if (field.CanSerializable() == false)
+                    memberType = instanceType.GetElementType();
+                }
+                else
+                {
+                    memberType = instanceType.GetGenericArguments()?[0];
+                }
+
+                if (memberType == null)
+                {
+                    Debug.LogError($"找不到特化类型");
+                    yield break;
+                }
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    object item = list[i];
+                    var memberInstanceType = memberType;
+                    if (item != null)
                     {
+                        //集合中可能是多态对象。
+                        memberInstanceType = item.GetType();
+                    }
+                    yield return (i.ToString(), item, memberInstanceType);
+                }
+            }
+            else
+            {
+                var p = from m in instanceType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                        where m is FieldInfo || m is PropertyInfo
+                        orderby m.MetadataToken
+                        select m;
+                var members = p.ToList();
+
+                ///用于忽略默认值参数
+                var defualtValueInstance = Activator.CreateInstance(instanceType);
+
+                foreach (var member in members)
+                {
+                    object memberValue = null;
+                    object defaultMemberValue = null;
+                    Type memberCodeType = null;
+
+                    if (member is FieldInfo field)
+                    {
+                        if (field.CanSerializable() == false)
+                        {
+                            continue;
+                        }
+
+                        memberCodeType = field.FieldType;
+                        memberValue = field.GetValue(instance);
+                        defaultMemberValue = field.GetValue(defualtValueInstance);
+                    }
+                    else if (member is PropertyInfo property)
+                    {
+                        //https://stackoverflow.com/questions/8817070/is-it-possible-to-access-backing-fields-behind-auto-implemented-properties
+                        string backingFieldName = $"<{property.Name}>k__BackingField";
+                        //这里一定要用property.DeclaringTyp，否则继承的类型无法获取后备字段
+                        var backingField = property.DeclaringType.GetField(backingFieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        if (backingField == null)
+                        {
+                            continue;
+                        }
+
+                        if (members.Contains(backingField))
+                        {
+                            //能正常获取后背字段的时候，不序列化属性，以后背字段为准
+                            continue;
+                        }
+
+                        if (backingField.CanSerializable() == false)
+                        {
+                            continue;
+                        }
+
+                        memberCodeType = property.PropertyType;
+                        memberValue = property.GetValue(instance);
+                        defaultMemberValue = property.GetValue(defualtValueInstance);
+                    }
+
+                    //注意：这里不能因为memberValue == null,就跳过序列化。
+                    //一个可能的用例是，字段声明是默认不是null，后期用户赋值为null。
+                    //如果跳过序列化会导致反射构建实例是null的字段初始化为默认值。
+                    if (memberValue == defaultMemberValue
+                        || (memberValue?.Equals(defaultMemberValue) ?? false))
+                    {
+                        //Debug.Log($"值为初始值或者默认值没必要保存");
                         continue;
                     }
 
-                    memberCodeType = field.FieldType;
-                    memberValue = field.GetValue(instance);
-                    defaultMemberValue = field.GetValue(defualtValueInstance);
-                }
-                else if (member is PropertyInfo property)
-                {
-                    //https://stackoverflow.com/questions/8817070/is-it-possible-to-access-backing-fields-behind-auto-implemented-properties
-                    string backingFieldName = $"<{property.Name}>k__BackingField";
-                    //这里一定要用property.DeclaringTyp，否则继承的类型无法获取后备字段
-                    var backingField = property.DeclaringType.GetField(backingFieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                    if (backingField == null)
+                    if (memberValue is IDictionary)
                     {
+                        //暂时不支持字典
                         continue;
                     }
 
-                    if (members.Contains(backingField))
-                    {
-                        //能正常获取后背字段的时候，不序列化属性，以后背字段为准
-                        continue;
-                    }
-
-                    if (backingField.CanSerializable() == false)
-                    {
-                        continue;
-                    }
-
-                    memberCodeType = property.PropertyType;
-                    memberValue = property.GetValue(instance);
-                    defaultMemberValue = property.GetValue(defualtValueInstance);
+                    yield return (member.Name, memberValue, memberCodeType);
                 }
-
-                //注意：这里不能因为memberValue == null,就跳过序列化。
-                //一个可能的用例是，字段声明是默认不是null，后期用户赋值为null。
-                //如果跳过序列化会导致反射构建实例是null的字段初始化为默认值。
-                if (memberValue == defaultMemberValue
-                    || (memberValue?.Equals(defaultMemberValue) ?? false))
-                {
-                    //Debug.Log($"值为初始值或者默认值没必要保存");
-                    continue;
-                }
-
-                if (memberValue is IDictionary)
-                {
-                    //暂时不支持字典
-                    continue;
-                }
-
-                yield return (member.Name, memberValue, memberCodeType);
             }
         }
 

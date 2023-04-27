@@ -156,64 +156,24 @@ namespace Megumin.Serialization
             }
 
             List<BasicData> ms = new();
-            if (value is IDictionary dictionary)
-            {
-                Debug.LogError($"不支持字典");
-                return false;
-            }
-            else if (value is IList list)
-            {
-                var index = 0;
-                Type memberType = null;
-                if (type.IsArray)
-                {
-                    memberType = type.GetElementType();
-                }
-                else
-                {
-                    memberType = type.GetGenericArguments()?[0];
-                }
 
-                if (memberType == null)
+            if (getSerializeMembers != null)
+            {
+                foreach (var (memberName, memberValue, memberType) in getSerializeMembers.Invoke(value))
                 {
-                    Debug.LogError($"找不到特化类型");
-                    return false;
-                }
-
-                foreach (var item in list)
-                {
-                    if (TrySerializeMember($"{index}", item, memberType, out var basic))
+                    if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
                     {
                         ms.Add(basic);
                     }
-                    else
-                    {
-                        //无论如何也要保证元素对齐
-                        ms.Add(new BasicData() { Name = $"{index}", Type = NullType });
-                    }
-                    index++;
                 }
             }
             else
             {
-                if (getSerializeMembers != null)
+                foreach (var (memberName, memberValue, memberType) in value.GetSerializeMembers())
                 {
-                    foreach (var (memberName, memberValue, memberType) in getSerializeMembers.Invoke(value))
+                    if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
                     {
-                        if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
-                        {
-                            ms.Add(basic);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var (memberName, memberValue, memberType) in value.GetSerializeMembers())
-                    {
-                        if (TrySerializeMember(memberName, memberValue, memberType, out var basic))
-                        {
-                            ms.Add(basic);
-                        }
+                        ms.Add(basic);
                     }
                 }
             }
