@@ -1,7 +1,13 @@
 ﻿# Binding
 绑定功能。  
-通过BindingPath绑定到一个目标成员。  
-BindingPath格式:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
+- BindingPath 是一个可解析的字符串路径。  
+- BindingPath 绑定到一个类成员(属性，字段，方法)。  
+- BindingPath 语法:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
+- BindingPath 区分大小写。  
+
++ 常用类型是 `RefVar<T>`
++ 解析方法是 `ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null);`
++ 解析器类是 `BindingParser` , `UnityBindingParser`
 
 ```cs
 [Flags]
@@ -37,8 +43,9 @@ public enum ParseBindingResult
 + [x] Mono打包验证
 + [x] IL2CPP打包验证
 + [x] 手动填写BindingPath
-+ [x] 快速绑定工具Unity编辑器
++ [x] 快速绑定菜单
 
+可绑定成员比快速绑定菜单中的选项更多，用户可以尝试手动编写绑定字符串，并测试解析。  
 
 ## 性能
 - 最好只绑定一个级别成员，深度越大，性能越低。
