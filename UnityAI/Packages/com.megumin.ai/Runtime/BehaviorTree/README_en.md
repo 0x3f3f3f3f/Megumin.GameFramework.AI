@@ -104,11 +104,20 @@ Instantiated parameters InitOption:
   Default is false.
 - UseGenerateCode  
   Instantiates the behaviour tree using the generated code.
++ DelayRandomFrame  
+  Delay the number of random frames after instantiation, before starting the execution of the tree.  
+  When a large number of behavior trees are instantiated at the same time and the execution interval is set, the instances can be spread out over multiple frames for execution, which is used to prevent spike frame jams.  
 
 If the main behaviour tree is initialised using multiple threads, then the subtree should be initialised at the same time, as it will not block the main thread.  
 If the main behaviour tree is initialised using the main Unity thread, then the initialisation of the subtrees should be delayed to try not to have a large number of calculations occur on the same frame.  
 
 Run parameters RunOption:  
++ FrameInterval  
+  Frames interval of Tick  
++ TimeInterval  
+  Game time interval of Tick  
++ RealtimeInterval  
+  Realtime interval of Tick  
 - Log  
   Prints a log of key positions such as node switches
 - Order  
