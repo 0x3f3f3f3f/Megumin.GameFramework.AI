@@ -17,7 +17,9 @@ namespace Megumin.Serialization
         public IRefFinder Fallback { get; set; }
         //public IRefFinder BubbleFallback { get; set; }
 
-        public static IRefFinder GlobalFallback { get; set; }
+        //手动GlobalFallback 赋值给 Fallback，否则会逻辑错误。
+        //存在父时，父查找失败会直接查找GlobalFallback，而是先查找子再查找global。
+        //public static IRefFinder GlobalFallback { get; set; }
 
         public bool TryGetRefValue(string refName, out object refValue)
         {
@@ -41,10 +43,10 @@ namespace Megumin.Serialization
             //    return true;
             //}
 
-            if (GlobalFallback != null && GlobalFallback.TryGetRefValue(refName, out refValue))
-            {
-                return true;
-            }
+            //if (GlobalFallback != null && GlobalFallback.TryGetRefValue(refName, out refValue))
+            //{
+            //    return true;
+            //}
 
             refValue = null;
             return false;
