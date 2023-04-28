@@ -11,9 +11,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     {
         static readonly Unity.Profiling.ProfilerMarker tickProfilerMarker = new("Tick");
 
-        public long LastTickFrame { get; protected set; } = -1000;
-        public double LastTickTime { get; protected set; } = -1000;
-        public double LastTickRealTime { get; protected set; } = -1000;
+        public long LastTickFrame { get; protected set; } = -10000000;
+        public double LastTickTime { get; protected set; } = -10000000;
+        public double LastTickRealTime { get; protected set; } = -10000000;
 
         /// <summary>
         /// Todo 抽象出runner ，分别 root - leaf 驱动，last leaf， 异步。三种方式根调用不一样。但是都需要Tick。
@@ -55,6 +55,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             var currentframeCount = Time.frameCount;
             var currentTime = Time.timeAsDouble;
             var currentRealTime = Time.realtimeSinceStartupAsDouble;
+
             if (IsRootTree && RunOption != null)
             {
                 //根树检查RunOption
