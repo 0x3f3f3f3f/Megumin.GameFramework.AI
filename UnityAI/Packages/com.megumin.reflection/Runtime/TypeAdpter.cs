@@ -39,7 +39,7 @@ namespace Megumin.Reflection
         /// <summary>
         /// 与DelegateConnector不同，类型适配器时运行其他用户扩展的，每个泛型都要手动实现，不能反射构造<see cref="DelegateConnector.Get(Type, Type)"/>
         /// </summary>
-        public readonly static Dictionary<(Type, Type), object> Adpters = new Dictionary<(Type, Type), object>()
+        public readonly static Dictionary<(Type, Type), object> Adpters = new()
         {
             { (typeof(object),typeof(string)) , new TypeAdpter_anyType_to_string<object>() },
 
@@ -70,7 +70,7 @@ namespace Megumin.Reflection
         /// <summary>
         /// 没有明确指定，通过协变记录的适配器
         /// </summary>
-        public readonly static Dictionary<(Type, Type), object> AdptersMapped = new Dictionary<(Type, Type), object>();
+        public readonly static Dictionary<(Type, Type), object> AdptersMapped = new();
 
         public static bool TryFindAdpter(Type from, Type to, out object adpter)
         {

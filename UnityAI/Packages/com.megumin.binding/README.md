@@ -27,7 +27,7 @@ public enum ParseBindingResult
 - [x] Set绑定带有返回值的方法时，尝试忽略返回值
 - [ ] 区分方法重载
 - [x] 类型自动适配
-- [x] 类型自动适配时自动查找基类，协变和逆变(仅From侧)
+- [ ] 类型自动适配时自动查找基类，协变和逆变(仅From侧)
 - [x] 静态类型和成员支持
 - [x] 接口支持
 - [x] 非可序列化类型支持(目前为有限的支持)
@@ -37,32 +37,31 @@ public enum ParseBindingResult
 + [x] Mono打包验证
 + [x] IL2CPP打包验证
 + [x] 手动填写BindingPath
-+ [ ] 快速绑定工具Unity编辑器
++ [x] 快速绑定工具Unity编辑器
 
 
 ## 性能
 - 最好只绑定一个级别成员，深度越大，性能越低。
 - 绑定过程使用的特性越多，性能越低。
-- 属性 > 方法 > 字段 > 泛型方法 > 类型适配
-- 性能消耗分为3部分
+- 开销由低到高：属性 > 方法 > 字段 > 泛型方法 > 类型适配
+- 性能开销分为3部分
   - 初始化时缓存所有类型部分。
   - 绑定时创建委托部分。
   - 获取值或设置值时调用委托部分。
 
-在使用第一个绑定值时，极有可能会有巨大卡顿。建议在第一次调用前，使用异步初始化类型缓存。在获取值之前，使用异步解析。
+在使用第一个绑定值时，极有可能会有巨大卡顿。  
+建议在第一次调用前，使用异步初始化类型缓存。在获取值之前，使用异步解析。
 
 ## 注意
 - 成员很可能被IL2CPP剪裁掉导致无法绑定，尤其是静态成员和泛型。
 - BindingPath的第一个string(类型：组件类|静态类|接口)，在unity中用于识别组件，不一定包含后面的成员。
 
-## 类型自动适配
-NodeCanvas是[AutoConvert](https://nodecanvas.paradoxnotion.com/documentation/?section=bbparameters)    Graph的参数BBParameter可以关联到不同类型的Variable，通过TypeConverter生成新的委托。  
-Variable本身不支持绑定到不同类型成员。  
-
-与NodeCanvas不同，为了通用性，本库将类型适配防止绑定部分，BindingPath可以自动适配成员类型和目标类型。
+## 自动适配
+- 支持绑定与目标类型不同的成员，支持规则是向上转型。  
+- 可以向Megumin.Reflection.TypeAdpter中添加适配器，增加自定义类型转换。  
 
 ## 示例
-参考 BindTestBehaviour.cs
+参考 TestBinding.unity
 
 
 
