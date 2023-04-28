@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Serialization;
@@ -108,6 +110,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviourTree.BindAgent(agent);
                 OverrideVariables?.ParseBinding(agent, true);
                 BehaviourTree.ParseAllBindable(agent);
+
+                if (InitOption.DelayRandomFrame.Enabled)
+                {
+                    var wait = UnityEngine.Random.Range(0, InitOption.DelayRandomFrame);
+                    await WaitFrames(wait);
+                }
             }
 
             if (BehaviourTree != null)
@@ -183,6 +191,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 //调试时tickmode改变
                 EnableTree();
             }
+        }
+
+        public Task WaitFrames(int framesToWait)
+        {
+            TaskCompletionSource<int> source = new();
+            StartCoroutine(WaitFrames(framesToWait, source));
+            return source.Task;
+        }
+
+        public IEnumerator WaitFrames(int framesToWait, TaskCompletionSource<int> source)
+        {
+            int frameCount = 0;
+            while (frameCount < framesToWait)
+            {
+                yield return new WaitForEndOfFrame();
+                frameCount++;
+            }
+
+            source?.TrySetResult(frameCount);
         }
     }
 }

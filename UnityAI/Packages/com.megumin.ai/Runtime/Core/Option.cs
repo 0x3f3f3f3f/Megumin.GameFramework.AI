@@ -83,5 +83,9 @@ namespace Megumin.GameFramework.AI
         /// 使用生成的代码
         /// </summary>
         public bool UseGenerateCode = false;
+        /// <summary>
+        /// 开始执行树之前，延迟随机帧数
+        /// </summary>
+        public Enableable<int> DelayRandomFrame = new(false, 30);
     }
 }
