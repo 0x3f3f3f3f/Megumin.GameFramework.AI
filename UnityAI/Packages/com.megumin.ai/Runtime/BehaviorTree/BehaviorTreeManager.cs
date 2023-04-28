@@ -7,16 +7,6 @@ using UnityEngine.Profiling;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Flags]
-    public enum TickMode
-    {
-        None = 0,
-        Update = 1 << 0,
-        LateUpdate = 1 << 1,
-        FixedUpdate = 1 << 2,
-        Manual = 1 << 3,
-    }
-
     [DefaultExecutionOrder(-99)]
     public partial class BehaviorTreeManager : MonoBehaviour
     {

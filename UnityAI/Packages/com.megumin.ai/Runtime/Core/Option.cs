@@ -15,9 +15,25 @@ namespace Megumin.GameFramework.AI
         OperationTree OnFailed { get; }
     }
 
-    [Serializable]
-    public class RunOption : IRunOption
+    [Flags]
+    public enum TickMode
     {
+        None = 0,
+        Update = 1 << 0,
+        LateUpdate = 1 << 1,
+        FixedUpdate = 1 << 2,
+        Manual = 1 << 3,
+    }
+
+    [Serializable]
+    public class RunOption
+    {
+        //public TickMode TickMode = TickMode.Update;
+        public Enableable<int> FrameInterval = new(false, 1);
+        public Enableable<double> TimeInterval = new(false, 0.1);
+        public Enableable<double> RealtimeInterval = new(false, 0.1);
+
+        [field: Space]
         [field: SerializeField]
         public bool Log { get; set; }
 

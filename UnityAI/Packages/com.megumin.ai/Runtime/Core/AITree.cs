@@ -20,7 +20,7 @@ namespace Megumin.GameFramework.AI
 
         [field: NonSerialized]
         public TraceListener TraceListener { get; set; } = new UnityTraceListener();
-        public IRunOption RunOption { get; set; }
+        public RunOption RunOption { get; set; }
 
         /// <summary>
         /// 参数表中的一些值也在里面，没没有做过滤

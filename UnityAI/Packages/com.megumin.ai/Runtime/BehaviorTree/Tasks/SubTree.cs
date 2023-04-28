@@ -27,7 +27,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviourTree.ParseAllBindable(Tree.Agent);
             }
 
-            return BehaviourTree.TickSubTree(from);
+            return BehaviourTree.Tick(from);
         }
 
         public string GetDetail()
