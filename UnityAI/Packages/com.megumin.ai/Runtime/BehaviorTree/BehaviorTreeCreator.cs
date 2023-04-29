@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Reflection;
 using Megumin.Serialization;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -42,6 +43,42 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             creatorTypeName = creatorTypeName.Replace('-', '_');
             creatorTypeName = creatorTypeName.Replace('.', '_');
             return creatorTypeName;
+        }
+
+        public void PostInit(InitOption initOption, BehaviorTree tree)
+        {
+            if (initOption.LazyInitSubtree)
+            {
+
+            }
+            else
+            {
+                foreach (var item in tree.AllNodes)
+                {
+                    if (item is SubTree subtreeNode)
+                    {
+                        subtreeNode.BehaviourTree
+                            = tree.InstantiateSubTree(subtreeNode.BehaviorTreeAsset, subtreeNode);
+                    }
+                }
+            }
+
+            //回调
+            foreach (var node in tree.AllNodes)
+            {
+                if (node is ISerializationCallbackReceiver nodeCallback)
+                {
+                    nodeCallback.OnAfterDeserialize();
+                }
+
+                foreach (var decorator in node.Decorators)
+                {
+                    if (decorator is ISerializationCallbackReceiver decoratorCallback)
+                    {
+                        decoratorCallback.OnAfterDeserialize();
+                    }
+                }
+            }
         }
     }
 }

@@ -159,7 +159,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 //Dictionary<object, string> declaredObj = new();
                 Dictionary<object, DeclaredObject> declaredObjs = new();
 
-                Queue<(object, string)> needSetMember = new();
+                Dictionary<object, DeclaredObject> variableTable = new();
+                Dictionary<object, DeclaredObject> nodes = new();
+                Dictionary<object, DeclaredObject> decos = new();
+
+                Queue<DeclaredObject> needSetMember = new();
 
                 //缓存所有已知引用对象
                 DeclaredObject treeObj = new();
@@ -191,7 +195,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         //generator.PushBlankLines();
 
                         declaredObjs.Add(obj, dclaredObject);
-                        needSetMember.Enqueue((obj, varName));
+                        needSetMember.Enqueue(dclaredObject);
 
                         DeclareObjMember(refName, obj);
                     }
@@ -214,34 +218,37 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
 
-                generator.Push("//声明参数表对象");
+                generator.Push($"//声明参数表对象");
                 foreach (var variable in tree.Variable.Table)
                 {
                     DeclareObj(variable.RefName, variable);
+                    variableTable.Add(variable, declaredObjs[variable]);
                     generator.PushBlankLines();
                 }
 
-                generator.Push("//声明节点对象");
+                generator.Push($"//声明节点对象");
                 foreach (var node in tree.AllNodes)
                 {
                     DeclareObj(node.GUID, node);
+                    nodes.Add(node, declaredObjs[node]);
 
                     foreach (var decorator in node.Decorators)
                     {
                         DeclareObj(decorator.GUID, decorator);
+                        decos.Add(decorator, declaredObjs[decorator]);
                     }
 
                     generator.PushBlankLines();
                 }
 
 
-                generator.Push("//生成member代码");
+                generator.Push($"//生成member代码");
                 HashSet<object> alrendySetMember = new();
                 while (needSetMember.Count > 0)
                 {
                     var v = needSetMember.Dequeue();
-                    var item = v.Item1;
-                    var varName = v.Item2;
+                    var item = v.Instance;
+                    var varName = v.VarName;
 
                     if (alrendySetMember.Contains(item))
                     {
@@ -318,6 +325,78 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     generator.PushBlankLines();
                 }
+
+
+                using (generator.GetRegionScope("添加到集合"))
+                {
+                    //generator.Push($"//添加到集合");
+                    //generator.PushBlankLines();
+
+                    generator.Push($"//处理参数");
+                    foreach (var item in variableTable)
+                    {
+                        generator.Push($"tree.InitAddVariable({item.Value.VarName});");
+                    }
+                    generator.Push($"//以上初始化树参数 {variableTable.Count}");
+                    generator.PushBlankLines();
+
+                    generator.Push($"//处理树引用对象");
+                    //先处理非节点装饰器对象
+                    int objCount = 0;
+                    foreach (var item in alrendySetMember)
+                    {
+                        if (variableTable.ContainsKey(item))
+                        {
+                            continue;
+                        }
+
+                        if (nodes.ContainsKey(item))
+                        {
+                            continue;
+                        }
+
+                        if (decos.ContainsKey(item))
+                        {
+                            continue;
+                        }
+
+                        generator.Push($"tree.InitAddTreeRefObj({declaredObjs[item].VarName});");
+                        objCount++;
+                    }
+                    generator.Push($"//以上初始化树常规引用对象 {objCount}");
+                    generator.PushBlankLines();
+
+                    generator.Push($"//处理装饰器");
+                    foreach (var item in decos)
+                    {
+                        generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
+                    }
+                    generator.Push($"//以上初始化树装饰器 {decos.Count}");
+                    generator.PushBlankLines();
+
+                    generator.Push($"//处理节点");
+                    foreach (var item in nodes)
+                    {
+                        generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
+                    }
+                    generator.Push($"//以上初始化树节点 {nodes.Count}");
+                    generator.PushBlankLines();
+
+                }
+
+                using (generator.GetRegionScope($"设置开始节点 和 装饰器Owner"))
+                {
+                    generator.Push($"tree.StartNode = {declaredObjs[tree.StartNode].VarName};");
+
+                    foreach (var item in decos)
+                    {
+                        generator.Push($"{item.Value.VarName}.Owner = {declaredObjs[(item.Key as IDecorator).Owner].VarName};");
+                    }
+                }
+
+                generator.Push($"tree.UpdateNodeIndexDepth();");
+
+                generator.PushWrapBlankLines($"PostInit(initOption, tree);");
 
                 generator.Push($"return tree;");
             }
