@@ -380,22 +380,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             //反序列化参数表
             foreach (var item in variableCache)
             {
-                if (item.Key.TryDeserialize(item.Value, finder))
+                object value = item.Value;
+                if (item.Key.TryDeserialize(value, finder))
                 {
-                    if (item.Value is IRefable variable)
-                    {
-                        tree.Variable.Table.Add(variable);
-                    }
-
-                    if (item.Value is IBindingParseable parseable)
-                    {
-                        tree.AllBindingParseable.Add(parseable);
-                    }
-
-                    if (item.Value is IBindAgentable bindAgentable)
-                    {
-                        tree.AllBindAgentable.Add(bindAgentable);
-                    }
+                    tree.InitAddVariable(value);
                 }
             }
 
@@ -406,20 +394,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     object value = item.Value;
                     if (item.Key.TryDeserialize(value, finder))
                     {
-                        if (value is BTNode node)
-                        {
-                            tree.AddNode(node);
-                            if (node.GUID == StartNodeGUID)
-                            {
-                                tree.StartNode = node;
-                            }
-                        }
-
-                        if (value is BehaviorTreeElement element)
-                        {
-                            element.Tree = tree;
-                        }
-
                         if (value is IAIMeta meta)
                         {
                             if (SharedMeta.ContainsKey(item.Key.Name) == false)
@@ -428,15 +402,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                             }
                         }
 
-                        if (value is IBindingParseable parseable)
-                        {
-                            tree.AllBindingParseable.Add(parseable);
-                        }
-
-                        if (value is IBindAgentable bindAgentable)
-                        {
-                            tree.AllBindAgentable.Add(bindAgentable);
-                        }
+                        tree.InitAddTreeRefObj(value);
                     }
                 }
             }
@@ -448,12 +414,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             DeserializeObj(decoratorObjCache);
             DeserializeObj(nodeObjCache);
 
-            //设置装饰器Owner
-            foreach (var item in tree.AllNodes)
+            //设置开始节点 装饰器Owner
+            foreach (var node in tree.AllNodes)
             {
-                foreach (var decorator in item.Decorators)
+                if (node.GUID == StartNodeGUID)
                 {
-                    decorator.Owner = item;
+                    tree.StartNode = node;
+                }
+
+                foreach (var decorator in node.Decorators)
+                {
+                    decorator.Owner = node;
                 }
             }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
@@ -50,6 +51,49 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             SetNodeIndex(StartNode);
             nodeIndexVersion = version;
         }
+
+
+        public void InitAddTreeRefObj(object value)
+        {
+            if (value is BTNode node)
+            {
+                AddNode(node);
+            }
+
+            if (value is BehaviorTreeElement element)
+            {
+                element.Tree = this;
+            }
+
+            if (value is IBindingParseable parseable)
+            {
+                AllBindingParseable.Add(parseable);
+            }
+
+            if (value is IBindAgentable bindAgentable)
+            {
+                AllBindAgentable.Add(bindAgentable);
+            }
+        }
+
+        public void InitAddVariable(object value)
+        {
+            if (value is IRefable variable)
+            {
+                Variable.Table.Add(variable);
+            }
+
+            if (value is IBindingParseable parseable)
+            {
+                AllBindingParseable.Add(parseable);
+            }
+
+            if (value is IBindAgentable bindAgentable)
+            {
+                AllBindAgentable.Add(bindAgentable);
+            }
+        }
+
     }
 }
 
