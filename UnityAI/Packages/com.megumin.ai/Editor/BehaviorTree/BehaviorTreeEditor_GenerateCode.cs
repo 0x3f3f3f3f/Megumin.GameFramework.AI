@@ -143,17 +143,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 generator.PushBlankLines();
 
+                generator.Push($"//创建 引用查找器");
+                generator.Push($"RefFinder finder = new();");
+                generator.Push($"finder.Parent = refFinder;");
+                generator.PushBlankLines();
+
+                DeclaredObject treeObj = new();
+                treeObj.Instance = tree;
+                treeObj.VarName = SafeVarName(tree.GUID);
+                treeObj.RefName = tree.GUID;
+
                 generator.Push($"//创建 树实例");
                 generator.Push($"BehaviorTree tree = new();");
                 generator.Push($"tree.GUID = \"{tree.GUID}\";");
                 generator.Push($"tree.RootTree = tree;");
                 generator.Push($"tree.InitOption = initOption;");
+                generator.Push($"tree.RefFinder = finder;");
                 generator.PushBlankLines();
 
-                generator.Push($"//创建 引用查找器");
-                generator.Push($"RefFinder finder = new();");
-                generator.Push($"finder.Parent = refFinder;");
-                generator.Push($"tree.RefFinder = finder;");
+                generator.Push($"var {treeObj.VarName} = tree;");
                 generator.PushBlankLines();
 
                 //Dictionary<object, string> declaredObj = new();
@@ -164,18 +172,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Dictionary<object, DeclaredObject> decos = new();
 
                 Queue<DeclaredObject> needSetMember = new();
-
-                //缓存所有已知引用对象
-                DeclaredObject treeObj = new();
-                treeObj.Instance = tree;
-                treeObj.VarName = SafeVarName(tree.GUID);
-                treeObj.RefName = tree.GUID;
-                declaredObjs.Add(tree, treeObj);
-
-                generator.Push($"//添加树实例到引用查找器");
-                generator.Push($"finder.RefDic.Add({tree.GUID.ToCodeString()}, tree);");
-                generator.PushBlankLines();
-
 
                 void DeclareObj(string refName, object obj)
                 {
@@ -191,10 +187,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         dclaredObject.VarName = varName;
                         dclaredObject.RefName = refName;
 
-                        generator.PushBlankLines();
                         generator.Push($"var {varName} = new {obj.GetType().ToCodeString()}();");
-                        generator.Push($"finder.RefDic.Add({refName.ToCodeString()}, {varName});");
-                        //generator.PushBlankLines();
 
                         declaredObjs.Add(obj, dclaredObject);
                         needSetMember.Enqueue(dclaredObject);
@@ -244,8 +237,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 generator.Push($"//以上创建 {nodes.Count} 节点");
                 generator.Push($"//以上创建 {decos.Count} 装饰器");
-                generator.Push($"//以上创建 {declaredObjs.Count - nodes.Count - decos.Count - varis.Count - 1} 普通对象");
+                generator.Push($"//以上创建 {declaredObjs.Count - nodes.Count - decos.Count - varis.Count} 普通对象");
+                generator.Push($"//以上创建 {declaredObjs.Count} 所有对象");
                 generator.PushBlankLines();
+
+                generator.Push($"//添加实例到引用查找器 {declaredObjs.Count}");
+                foreach (var item in declaredObjs)
+                {
+                    generator.Push($"finder.RefDic.Add({item.Value.RefName.ToCodeString()}, {item.Value.VarName});");
+                }
+                generator.PushBlankLines();
+
+
+
+
+                declaredObjs.Add(tree, treeObj);
+                generator.Push($"//添加树实例到引用查找器");
+                generator.Push($"finder.RefDic.Add({tree.GUID.ToCodeString()}, tree);");
+                generator.PushBlankLines();
+
 
 
                 HashSet<object> alrendySetMember = new();
