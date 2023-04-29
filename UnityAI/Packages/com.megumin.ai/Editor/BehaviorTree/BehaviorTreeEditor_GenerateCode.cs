@@ -143,23 +143,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 generator.PushBlankLines();
 
+                generator.Push($"//创建 树实例");
                 generator.Push($"BehaviorTree tree = new();");
                 generator.Push($"tree.GUID = \"{tree.GUID}\";");
                 generator.Push($"tree.RootTree = tree;");
                 generator.Push($"tree.InitOption = initOption;");
                 generator.PushBlankLines();
 
+                generator.Push($"//创建 引用查找器");
                 generator.Push($"RefFinder finder = new();");
                 generator.Push($"finder.Parent = refFinder;");
-                generator.PushBlankLines();
-
                 generator.Push($"tree.RefFinder = finder;");
                 generator.PushBlankLines();
 
                 //Dictionary<object, string> declaredObj = new();
                 Dictionary<object, DeclaredObject> declaredObjs = new();
 
-                Dictionary<object, DeclaredObject> variableTable = new();
+                Dictionary<object, DeclaredObject> varis = new();
                 Dictionary<object, DeclaredObject> nodes = new();
                 Dictionary<object, DeclaredObject> decos = new();
 
@@ -172,8 +172,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 treeObj.RefName = tree.GUID;
                 declaredObjs.Add(tree, treeObj);
 
+                generator.Push($"//添加树实例到引用查找器");
                 generator.Push($"finder.RefDic.Add({tree.GUID.ToCodeString()}, tree);");
                 generator.PushBlankLines();
+
 
                 void DeclareObj(string refName, object obj)
                 {
@@ -218,15 +220,15 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
 
-                generator.Push($"//声明参数表对象");
+                generator.Push($"//创建 参数表参数实例");
                 foreach (var variable in tree.Variable.Table)
                 {
                     DeclareObj(variable.RefName, variable);
-                    variableTable.Add(variable, declaredObjs[variable]);
-                    generator.PushBlankLines();
+                    varis.Add(variable, declaredObjs[variable]);
                 }
+                generator.PushBlankLines();
 
-                generator.Push($"//声明节点对象");
+                generator.Push($"//创建 节点，装饰器，普通对象");
                 foreach (var node in tree.AllNodes)
                 {
                     DeclareObj(node.GUID, node);
@@ -240,112 +242,118 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     generator.PushBlankLines();
                 }
+                generator.Push($"//以上创建 {nodes.Count} 节点");
+                generator.Push($"//以上创建 {decos.Count} 装饰器");
+                generator.Push($"//以上创建 {declaredObjs.Count - nodes.Count - decos.Count - varis.Count - 1} 普通对象");
+                generator.PushBlankLines();
 
 
-                generator.Push($"//生成member代码");
                 HashSet<object> alrendySetMember = new();
-                while (needSetMember.Count > 0)
+                using (generator.GetRegionScope($"初始化成员值"))
                 {
-                    var v = needSetMember.Dequeue();
-                    var item = v.Instance;
-                    var varName = v.VarName;
-
-                    if (alrendySetMember.Contains(item))
+                    generator.Push($"//初始化成员值");
+                    while (needSetMember.Count > 0)
                     {
-                        continue;
-                    }
+                        var v = needSetMember.Dequeue();
+                        var item = v.Instance;
+                        var varName = v.VarName;
 
-                    foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
-                    {
-                        if (item is IList)
+                        if (alrendySetMember.Contains(item))
                         {
-                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
-                            {
-                                generator.Push($"{varName}.Insert({memberName}, {memberValue.ToCodeString()});");
-                            }
-                            else
-                            {
-                                //引用对象声明
-                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
-                                {
-                                    var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
-                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                    generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
-                                    generator.Push($"out var {refObjName}))", 1);
+                            continue;
+                        }
 
-                                    generator.BeginScope();
-                                    generator.Push($"{varName}.Insert({memberName}, {refObjName});");
-                                    generator.EndScope();
-                                    //generator.Push($"else");
-                                    //generator.BeginScope();
-                                    //generator.Push($"{varName}.Insert({memberName}, {declaredObject.VarName});");
-                                    //generator.EndScope();
-                                    generator.PushBlankLines();
+                        foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
+                        {
+                            if (item is IList)
+                            {
+                                if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                                {
+                                    generator.Push($"{varName}.Insert({memberName}, {memberValue.ToCodeString()});");
                                 }
                                 else
                                 {
-                                    generator.Push($"//TODO : {memberName}");
+                                    //引用对象声明
+                                    if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                                    {
+                                        var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
+                                        generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                        generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
+                                        generator.Push($"out var {refObjName}))", 1);
+
+                                        generator.BeginScope();
+                                        generator.Push($"{varName}.Insert({memberName}, {refObjName});");
+                                        generator.EndScope();
+                                        //generator.Push($"else");
+                                        //generator.BeginScope();
+                                        //generator.Push($"{varName}.Insert({memberName}, {declaredObject.VarName});");
+                                        //generator.EndScope();
+                                        generator.PushBlankLines();
+                                    }
+                                    else
+                                    {
+                                        generator.Push($"//TODO : {memberName}");
+                                    }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
-                            {
-                                generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
                             }
                             else
                             {
-                                //引用对象声明
-                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                                if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                                 {
-                                    var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
-                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                    generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
-                                    generator.Push($"out var {refObjName}))", 1);
-
-                                    generator.BeginScope();
-                                    generator.Push($"{varName}.{memberName} = {refObjName};");
-                                    generator.EndScope();
-                                    //generator.Push($"else");
-                                    //generator.BeginScope();
-                                    //generator.Push($"{varName}.{memberName} = {declaredObject.VarName};");
-                                    //generator.EndScope();
-                                    generator.PushBlankLines();
+                                    generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
                                 }
                                 else
                                 {
-                                    generator.Push($"//TODO : {memberName}");
+                                    //引用对象声明
+                                    if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                                    {
+                                        var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
+                                        generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                        generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
+                                        generator.Push($"out var {refObjName}))", 1);
+
+                                        generator.BeginScope();
+                                        generator.Push($"{varName}.{memberName} = {refObjName};");
+                                        generator.EndScope();
+                                        //generator.Push($"else");
+                                        //generator.BeginScope();
+                                        //generator.Push($"{varName}.{memberName} = {declaredObject.VarName};");
+                                        //generator.EndScope();
+                                        generator.PushBlankLines();
+                                    }
+                                    else
+                                    {
+                                        generator.Push($"//TODO : {memberName}");
+                                    }
                                 }
                             }
                         }
+
+                        alrendySetMember.Add(item);
+
+                        generator.PushBlankLines();
                     }
-
-                    alrendySetMember.Add(item);
-
-                    generator.PushBlankLines();
                 }
 
-
-                using (generator.GetRegionScope("添加到集合"))
+                using (generator.GetRegionScope("添加实例到树"))
                 {
                     //generator.Push($"//添加到集合");
                     //generator.PushBlankLines();
 
-                    generator.Push($"//处理参数");
-                    foreach (var item in variableTable)
+                    generator.Push($"//添加参数");
+                    foreach (var item in varis)
                     {
                         generator.Push($"tree.InitAddVariable({item.Value.VarName});");
                     }
-                    generator.Push($"//以上初始化树参数 {variableTable.Count}");
+                    generator.Push($"//以上添加到树 {varis.Count} 参数实例");
                     generator.PushBlankLines();
 
-                    generator.Push($"//处理树引用对象");
+                    generator.Push($"//添加普通对象");
                     //先处理非节点装饰器对象
                     int objCount = 0;
                     foreach (var item in alrendySetMember)
                     {
-                        if (variableTable.ContainsKey(item))
+                        if (varis.ContainsKey(item))
                         {
                             continue;
                         }
@@ -363,23 +371,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         generator.Push($"tree.InitAddTreeRefObj({declaredObjs[item].VarName});");
                         objCount++;
                     }
-                    generator.Push($"//以上初始化树常规引用对象 {objCount}");
+                    generator.Push($"//以上添加到树 {objCount} 普通对象");
                     generator.PushBlankLines();
 
-                    generator.Push($"//处理装饰器");
+                    generator.Push($"//添加装饰器");
                     foreach (var item in decos)
                     {
                         generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
                     }
-                    generator.Push($"//以上初始化树装饰器 {decos.Count}");
+                    generator.Push($"//以上添加到树 {decos.Count} 装饰器");
                     generator.PushBlankLines();
 
-                    generator.Push($"//处理节点");
+                    generator.Push($"//添加节点");
                     foreach (var item in nodes)
                     {
                         generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
                     }
-                    generator.Push($"//以上初始化树节点 {nodes.Count}");
+                    generator.Push($"//以上添加到树 {nodes.Count} 节点");
                     generator.PushBlankLines();
 
                 }
