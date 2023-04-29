@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -99,6 +100,7 @@ namespace Megumin.Serialization
 
     public static class Extension_E8CF5A3913CC4D2984636F23EAFC8A33
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetRefValue<T>(this IRefFinder refFinder, string refName, out T refValue)
         {
             if (refFinder.TryGetRefValue(refName, out var objValue) && objValue is T tValue)

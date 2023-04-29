@@ -37,87 +37,17 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
             }
 
-            generator.Macro["$(ClassName)"] =
-                BehaviorTreeCreator.GetCreatorTypeName(tree.Asset.name, tree.GUID);
+            string className = BehaviorTreeCreator.GetCreatorTypeName(tree.Asset.name, tree.GUID);
+            generator.Macro["$(ClassName)"] = className;
             generator.Macro["$(TreeName)"] = tree.Asset.name;
 
-            string filePath = $"Assets/{tree.Asset.name}_Gene.cs";
+            string filePath = $"Assets/{className}.cs";
             generator.Generate(filePath);
 
             //Open
             AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
             var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
             AssetDatabase.OpenAsset(script);
-        }
-
-        public void GenerateInitMethod(CSCodeGenerator generator, BehaviorTreeAsset_1_1 behaviorTree)
-        {
-            generator.Push($"static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new(\"$(TreeName)_Init\");");
-            generator.Push($"public override BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)");
-            using (generator.NewScope)
-            {
-                generator.Push($"using var profiler = instantiateMarker.Auto();");
-                generator.PushBlankLines();
-
-                generator.Push($"if (initOption == null)");
-                using (generator.NewScope)
-                {
-                    generator.Push($"return null;");
-                }
-                generator.PushBlankLines();
-
-                generator.Push($"BehaviorTree tree = new();");
-                generator.Push($"tree.GUID = \"{behaviorTree.GUID}\";");
-                generator.Push($"tree.RootTree = tree;");
-                generator.Push($"tree.InitOption = initOption;");
-                generator.PushBlankLines();
-
-
-                generator.Push("//生成节点");
-                foreach (var item in behaviorTree.nodes)
-                {
-                    DeclareObj(generator, item);
-                }
-
-                generator.PushBlankLines();
-
-                generator.Push("//生成装饰器");
-                foreach (var item in behaviorTree.decorators)
-                {
-                    DeclareObj(generator, item);
-                }
-                generator.PushBlankLines();
-
-                generator.Push("//生成ref obj");
-                foreach (var item in behaviorTree.refObjs)
-                {
-                    DeclareObj(generator, item);
-                }
-                generator.PushBlankLines();
-
-                generator.Push("//反序列化 nodes");
-                foreach (var item in behaviorTree.nodes)
-                {
-                    Deserialize(generator, item);
-                }
-                generator.PushBlankLines();
-
-                generator.Push("//反序列化 decorators");
-                foreach (var item in behaviorTree.decorators)
-                {
-                    Deserialize(generator, item);
-                }
-                generator.PushBlankLines();
-
-                //generator.Push("//反序列化 ref obj");
-                //foreach (var item in behaviorTree.refObjs)
-                //{
-                //    Deserialize(generator, item);
-                //}
-                //generator.PushBlankLines();
-
-                generator.Push($"return tree;");
-            }
         }
 
         class DeclaredObject
@@ -150,7 +80,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 DeclaredObject treeObj = new();
                 treeObj.Instance = tree;
-                treeObj.VarName = SafeVarName(tree.GUID);
+                treeObj.VarName = SafeVarName(tree.GUID, tree);
                 treeObj.RefName = tree.GUID;
 
                 generator.Push($"//创建 树实例");
@@ -175,7 +105,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 void DeclareObj(string refName, object obj)
                 {
-                    string varName = SafeVarName(refName);
+                    string varName = SafeVarName(refName, obj);
                     if (declaredObjs.TryGetValue(obj, out var variableName))
                     {
                         //generator.Push($"var {varName} = {variableName};");
@@ -420,68 +350,26 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             }
         }
 
-        public void Deserialize(CSCodeGenerator generator, ObjectData item)
-        {
-            using (generator.GetRegionScope(item.Name))
-            {
-                var varName = SafeVarName(item.Name);
-                if (item.Member != null)
-                {
-                    foreach (var memberData in item.Member)
-                    {
-                        using (generator.NewScope)
-                        {
-                            generator.Push($"//SetMember {memberData.Name}");
-
-                            var resultString = $"//{memberData.Type} can not parse!";
-
-                            if (memberData.Type == ObjectData.NullType)
-                            {
-                                resultString = "null";
-                            }
-                            else if (memberData.Type == ObjectData.RefType)
-                            {
-                                resultString = SafeVarName(memberData.Value);
-                            }
-                            else
-                            {
-                                if (StringFormatter.TryDeserialize(memberData.Type, memberData.Value, out var value))
-                                {
-                                    resultString = value.ToCodeString();
-                                }
-                            }
-
-                            generator.Push($"{varName}.{memberData.Name} = {resultString};");
-                        }
-
-                        generator.PushBlankLines();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 声明对象
-        /// </summary>
-        /// <param name="generator"></param>
-        /// <param name="item"></param>
-        public void DeclareObj(CSCodeGenerator generator, ObjectData item)
-        {
-            var varName = SafeVarName(item.Name);
-            if (Megumin.Reflection.TypeCache.TryGetType(item.Type, out var type))
-            {
-                generator.Push($"var {varName} = new {type.ToCodeString()}();");
-            }
-            else
-            {
-                generator.Push($"//{item.Type} can not parse!");
-            }
-        }
-
-        public string SafeVarName(string refName)
+        public string SafeVarName(string refName, object obj = null)
         {
             var name = refName;
-            if (name.StartsWith("temp_") == false)
+            if (obj is BehaviorTree tree)
+            {
+                name = $"tree_{refName}";
+            }
+            else if (obj is BTNode node)
+            {
+                name = $"node_{refName}";
+            }
+            else if (obj is IDecorator deco)
+            {
+                name = $"deco_{refName}";
+            }
+            else if (obj is ITreeElement elem)
+            {
+                name = $"elem_{refName}";
+            }
+            else if (name.StartsWith("temp_") == false)
             {
                 name = $"temp_{refName}";
             }
