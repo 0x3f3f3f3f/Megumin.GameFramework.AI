@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Megumin.Binding;
 using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEditor;
@@ -24,6 +25,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
 
             generator.Push($"using System;");
+            generator.Push($"using Megumin.Reflection;");
             generator.Push($"using Megumin.Serialization;");
             generator.PushBlankLines();
 
@@ -209,7 +211,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             continue;
                         }
 
-                        foreach (var (memberName, memberValue, memberType) in item.GetSerializeMembers())
+                        foreach (var (memberName, memberValue, memberType, isGetPublic, isSetPublic)
+                            in item.GetSerializeMembers())
                         {
                             if (item is IList)
                             {
@@ -246,7 +249,25 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             {
                                 if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                                 {
-                                    generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
+                                    if (isSetPublic)
+                                    {
+                                        generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
+                                    }
+                                    else
+                                    {
+                                        if (typeof(IRefable).IsAssignableFrom(item.GetType()) && memberName == "refName")
+                                        {
+                                            generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValue.ToCodeString()};");
+                                        }
+                                        else if (typeof(IBindable).IsAssignableFrom(item.GetType()) && memberName == "bindingPath")
+                                        {
+                                            generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValue.ToCodeString()};");
+                                        }
+                                        else
+                                        {
+                                            generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValue.ToCodeString()});");
+                                        }
+                                    }
                                 }
                                 else
                                 {
