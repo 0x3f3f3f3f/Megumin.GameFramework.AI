@@ -105,6 +105,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 void DeclareObj(string refName, object obj)
                 {
+                    if (obj is UnityEngine.Object unityObj)
+                    {
+                        generator.Push($"//生成代码无法处理unity对象 {refName}，请将对象添加到预制体重写");
+                        return;
+                    }
+
                     string varName = SafeVarName(refName, obj);
                     if (declaredObjs.TryGetValue(obj, out var variableName))
                     {

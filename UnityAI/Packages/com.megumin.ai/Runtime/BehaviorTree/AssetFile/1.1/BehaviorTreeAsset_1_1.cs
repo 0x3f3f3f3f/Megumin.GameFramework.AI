@@ -176,14 +176,14 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
+        public IEnumerable<InstanceMemberInfo>
             GetSerializeMembers<T>(T instance)
         {
             foreach (var item in instance.GetSerializeMembers())
             {
                 if (instance is BehaviorTreeElement treeElement)
                 {
-                    if (item.MemberValue == treeElement.Tree)
+                    if (item.Value == treeElement.Tree)
                     {
                         continue;
                     }

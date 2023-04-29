@@ -32,8 +32,38 @@ namespace Megumin.Reflection
     /// </summary>
     /// <param backingFieldName="value"></param>
     /// <returns></returns>
-    public delegate IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
+    public delegate IEnumerable<InstanceMemberInfo>
         GetSerializeMembers<in T>(T value);
+
+    public struct InstanceMemberInfo
+    {
+        public string Name { get; internal set; }
+        public object Value { get; internal set; }
+        public Type CodeType { get; internal set; }
+        public MemberInfo Member { get; internal set; }
+        public object Instance { get; internal set; }
+        public bool IsStatic { get; internal set; }
+        public bool IsGetPublic { get; internal set; }
+        public bool IsSetPublic { get; internal set; }
+
+        public void Deconstruct(out string memberName, out object memberValue, out Type memberType)
+        {
+            memberName = Name;
+            memberValue = Value;
+            memberType = CodeType;
+        }
+
+        public void Deconstruct(out string memberName, out object memberValue, out Type memberType,
+            out bool isGetPublic,
+            out bool isSetPublic)
+        {
+            memberName = Name;
+            memberValue = Value;
+            memberType = CodeType;
+            isGetPublic = IsGetPublic;
+            isSetPublic = IsSetPublic;
+        }
+    }
 
     public static class Extension_9E4697883E4048E9B612E58CDAB01B77
     {
@@ -178,8 +208,7 @@ namespace Megumin.Reflection
         /// <typeparam backingFieldName="T"></typeparam>
         /// <param backingFieldName="instance"></param>
         /// <returns></returns>
-        public static IEnumerable<(string MemberName, object MemberValue, Type MemberType)>
-            GetSerializeMembers<T>(this T instance)
+        public static IEnumerable<InstanceMemberInfo> GetSerializeMembers<T>(this T instance, bool fullInfo = false)
         {
             if (instance == null)
             {
@@ -220,7 +249,17 @@ namespace Megumin.Reflection
                         //集合中可能是多态对象。
                         memberInstanceType = item.GetType();
                     }
-                    yield return (i.ToString(), item, memberInstanceType);
+
+                    InstanceMemberInfo info = new();
+                    info.Name = i.ToString();
+                    info.Value = item;
+                    info.CodeType = memberInstanceType;
+                    info.Member = null;
+                    info.Instance = instance;
+                    info.IsStatic = false;
+                    info.IsGetPublic = true;
+                    info.IsSetPublic = true;
+                    yield return info;
                 }
             }
             else
@@ -239,6 +278,8 @@ namespace Megumin.Reflection
                     object memberValue = null;
                     object defaultMemberValue = null;
                     Type memberCodeType = null;
+                    var isGetPublic = false;
+                    var isSetPublic = false;
 
                     if (member is FieldInfo field)
                     {
@@ -250,6 +291,8 @@ namespace Megumin.Reflection
                         memberCodeType = field.FieldType;
                         memberValue = field.GetValue(instance);
                         defaultMemberValue = field.GetValue(defualtValueInstance);
+                        isGetPublic = field.IsPublic;
+                        isSetPublic = field.IsPublic;
                     }
                     else if (member is PropertyInfo property)
                     {
@@ -276,6 +319,8 @@ namespace Megumin.Reflection
                         memberCodeType = property.PropertyType;
                         memberValue = property.GetValue(instance);
                         defaultMemberValue = property.GetValue(defualtValueInstance);
+                        isGetPublic = property.CanRead ? property.GetMethod.IsPublic : false;
+                        isSetPublic = property.CanWrite ? property.SetMethod.IsPublic : false;
                     }
 
                     //注意：这里不能因为memberValue == null,就跳过序列化。
@@ -294,7 +339,25 @@ namespace Megumin.Reflection
                         continue;
                     }
 
-                    yield return (member.Name, memberValue, memberCodeType);
+                    InstanceMemberInfo info = new();
+                    info.Name = member.Name;
+                    info.Value = memberValue;
+                    info.CodeType = memberCodeType;
+                    info.Member = member;
+                    info.IsStatic = member.IsStaticMember();
+                    info.IsGetPublic = isGetPublic;
+                    info.IsSetPublic = isSetPublic;
+
+                    if (fullInfo == false && instanceType.IsValueType)
+                    {
+                        //减少装箱。
+                    }
+                    else
+                    {
+                        info.Instance = instance;
+                    }
+
+                    yield return info;
                 }
             }
         }
@@ -343,6 +406,48 @@ namespace Megumin.Reflection
                 if (property.CanWrite)
                 {
                     return property.SetMethod.IsStatic;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsGetPublic(this MemberInfo member)
+        {
+            if (member is MethodInfo method)
+            {
+                return method.IsPublic;
+            }
+            else if (member is FieldInfo field)
+            {
+                return field.IsPublic;
+            }
+            else if (member is PropertyInfo property)
+            {
+                if (property.CanRead)
+                {
+                    return property.GetMethod.IsPublic;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsSetPublic(this MemberInfo member)
+        {
+            if (member is MethodInfo method)
+            {
+                return method.IsPublic;
+            }
+            else if (member is FieldInfo field)
+            {
+                return field.IsPublic;
+            }
+            else if (member is PropertyInfo property)
+            {
+                if (property.CanWrite)
+                {
+                    return property.SetMethod.IsPublic;
                 }
             }
 
