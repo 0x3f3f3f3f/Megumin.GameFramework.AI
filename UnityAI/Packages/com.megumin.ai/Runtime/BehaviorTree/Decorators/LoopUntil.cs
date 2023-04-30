@@ -9,7 +9,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 持续循环知道返回想要的结果。
     /// </summary>
-    internal class LoopUntil : BTDecorator, IPostDecorator
+    public class LoopUntil : BTDecorator, IPostDecorator
     {
         public Status Result = Status.Succeeded;
         public Status AfterNodeExit(Status result, object options = null)

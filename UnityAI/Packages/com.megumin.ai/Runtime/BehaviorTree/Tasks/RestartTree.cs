@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Action")]
-    internal class RestartTree
+    public class RestartTree
     {
     }
 }

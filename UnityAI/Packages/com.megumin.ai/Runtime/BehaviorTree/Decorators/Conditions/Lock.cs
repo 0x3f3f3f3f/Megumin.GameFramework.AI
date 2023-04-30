@@ -10,7 +10,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     /// <summary>
     /// 保证同名锁同一时间只能有一个Task执行
     /// </summary>
-    internal class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
+    public class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
         public RefVar<string> lockName;
         public Status AfterNodeExit(Status result, object options = null)

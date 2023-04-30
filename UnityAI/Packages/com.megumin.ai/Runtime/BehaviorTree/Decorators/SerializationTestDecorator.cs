@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
-    internal class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>
+    public class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>
     {
         public float TestFloat = 3f;
         public GameObject TestRef;

@@ -65,6 +65,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             public string RefName { get; set; }
         }
 
+        //TODO sharedmeta。
         public void GenerateInitMethod(CSCodeGenerator generator, BehaviorTree tree)
         {
             generator.Push($"static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new(\"$(TreeName)_Init\");");
@@ -329,6 +330,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     generator.Push($"//因为引用类型会使用值类型。所以优先初始化值类型，后生成引用类型。");
                     generator.Push($"//优先初始化内层实例，然后初始化外层实例。");
+                    generator.PushBlankLines();
 
                     var n = from elem in needSetMember
                             orderby

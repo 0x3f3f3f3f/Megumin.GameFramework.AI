@@ -7,7 +7,7 @@ using Megumin.Binding;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class InvokeMethod
+    public class InvokeMethod
     {
         public string path;
         public void Test()

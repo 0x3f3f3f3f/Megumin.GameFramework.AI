@@ -16,7 +16,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Tooltip("在控制台打印日志")]
     [Description("TestActionNode")]
     [Color(0.82f, 0.58f, 0.23f, 0.75f)]
-    internal class TestActionNode : BTActionNode, IAbortable, IBuildContextualMenuable
+    public class TestActionNode : BTActionNode, IAbortable, IBuildContextualMenuable
     {
         [field: SerializeField]
         public AbortType AbortType { get; set; } = AbortType.LowerPriority;
@@ -34,7 +34,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [Description("TestDescription")]
     [Tooltip("在控制台打印日志")]
     [Color(0.72f, 0.25f, 0.27f)]
-    internal class TestBTDecorator : BTDecorator, ITitleable
+    public class TestBTDecorator : BTDecorator, ITitleable
     {
         public string Title => "ITitleable_MyTitle";
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    internal class Inverter : BTDecorator, IPostDecorator
+    public class Inverter : BTDecorator, IPostDecorator
     {
         public Status AfterNodeExit(Status result, object options = null)
         {

@@ -11,7 +11,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 {
     [Icon("console.infoicon@2x")]
     [Category("Debug")]
-    internal class DecoratorLog : BTDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
+    public class DecoratorLog : BTDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         public bool PreLog = false;
         public bool PostLog = false;
