@@ -111,7 +111,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 Dictionary<object, DeclaredObject> nodes = new();
                 Dictionary<object, DeclaredObject> decos = new();
 
-                Queue<DeclaredObject> needSetMember = new();
+                List<DeclaredObject> needSetMember = new();
 
                 void DeclareObj(string refName, object obj)
                 {
@@ -146,7 +146,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         declaredObjs.Add(obj, dclaredObject);
                         declaredObjs2.Add(dclaredObject.RefName, dclaredObject);
 
-                        needSetMember.Enqueue(dclaredObject);
+                        needSetMember.Add(dclaredObject);
 
                         DeclareObjMember(refName, obj);
                     }
@@ -242,6 +242,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     var (memberName, memberValue, memberType, isGetPublic, isSetPublic) = info;
                     string memberRefName = $"{obj.RefName}.{memberName}";
 
+                    generator.Push($"//{memberRefName}");
+
                     if (memberType.IsPrimitive || memberValue is string || memberValue == null
                         || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))
                     {
@@ -321,9 +323,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 using (generator.GetRegionScope($"初始化成员值"))
                 {
                     generator.Push($"//初始化成员值");
-                    while (needSetMember.Count > 0)
+                    generator.PushBlankLines();
+
+                    generator.Push($"//因为引用类型会使用值类型。所以优先初始化值类型，后生成引用类型。");
+                    generator.Push($"//优先初始化内层实例，然后初始化外层实例。");
+
+                    var n = from elem in needSetMember
+                            orderby
+                            elem.Instance.GetType().IsValueType descending,
+                            elem.RefName.Count(c => c == '.') descending
+                            select elem;
+
+                    foreach (var v in n)
                     {
-                        var v = needSetMember.Dequeue();
                         var item = v.Instance;
                         var varName = v.VarName;
 
@@ -334,7 +346,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                         var infos = item.GetSerializeMembers().ToList();
 
-                        //先生成值类型，后生成引用类型。 引用类型会使用值类型。
+
                         foreach (var info in infos)
                         {
                             GenerateInitMemberCode(v, info);
