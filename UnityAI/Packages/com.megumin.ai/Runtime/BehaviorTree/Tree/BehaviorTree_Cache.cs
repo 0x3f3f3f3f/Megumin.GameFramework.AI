@@ -53,7 +53,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         }
 
 
-        public void InitAddTreeRefObj(object value)
+        public void InitAddTreeRefObj<T>(T value)
         {
             if (value is BTNode node)
             {
@@ -76,7 +76,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             }
         }
 
-        public void InitAddVariable(object value)
+        public void InitAddVariable<T>(T value)
         {
             if (value is IRefable variable)
             {
