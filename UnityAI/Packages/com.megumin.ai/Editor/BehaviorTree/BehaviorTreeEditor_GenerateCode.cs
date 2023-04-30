@@ -55,7 +55,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         class DeclaredObject
         {
             public object Instance { get; set; }
+            /// <summary>
+            /// 代码声明名字，标识符
+            /// </summary>
             public string VarName { get; set; }
+            /// <summary>
+            /// 引用名，序列化路径
+            /// </summary>
             public string RefName { get; set; }
         }
 
@@ -225,10 +231,90 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push($"finder.RefDic.Add({tree.GUID.ToCode()}, tree);");
                 generator.PushBlankLines();
 
-
-                void GenerateInitMemberCode()
+                /// <summary>
+                /// 生成初始化代码，序列化的值直接生成代码常量值
+                /// </summary>
+                void GenerateInitMemberCode(DeclaredObject obj, InstanceMemberInfo info)
                 {
+                    var instance = obj.Instance;
+                    var varName = obj.VarName;
 
+                    var (memberName, memberValue, memberType, isGetPublic, isSetPublic) = info;
+                    string memberRefName = $"{obj.RefName}.{memberName}";
+
+                    if (memberType.IsPrimitive || memberValue is string || memberValue == null
+                        || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))
+                    {
+                        //不要使用reffinder
+                        string memberValueCode = memberValue.ToCode();
+                        if (declaredObjs2.TryGetValue(memberRefName, out var declaredObject))
+                        {
+                            memberValueCode = declaredObject.VarName;
+                        }
+
+                        if (instance is Array array)
+                        {
+                            generator.Push($"{varName}[{memberName}] = {memberValueCode};");
+                        }
+                        else if (instance is IList)
+                        {
+                            generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
+                        }
+                        else if (isSetPublic)
+                        {
+                            generator.Push($"{varName}.{memberName} = {memberValueCode};");
+                        }
+                        else
+                        {
+                            if (typeof(IRefable).IsAssignableFrom(instance.GetType()) && memberName == "refName")
+                            {
+                                generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValueCode};");
+                            }
+                            else if (typeof(IBindable).IsAssignableFrom(instance.GetType()) && memberName == "bindingPath")
+                            {
+                                generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValueCode};");
+                            }
+                            else
+                            {
+                                generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //使用reffinder
+                        string memberValueCode = SafeVarName($"ref_{memberRefName}");
+                        if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                        {
+                            memberRefName = declaredObject.RefName;
+                        }
+
+                        generator.Push($"if (finder.TryGetRefValue<{memberType.ToCode()}>(");
+                        generator.Push($"{memberRefName.ToCode()},", 1);
+                        generator.Push($"out var {memberValueCode}))", 1);
+
+                        generator.BeginScope();
+
+                        if (instance is Array array)
+                        {
+                            generator.Push($"{varName}[{memberName}] = {memberValueCode};");
+                        }
+                        else if (instance is IList)
+                        {
+                            generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
+                        }
+                        else if (isSetPublic)
+                        {
+                            generator.Push($"{varName}.{memberName} = {memberValueCode};");
+                        }
+                        else
+                        {
+                            generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
+                        }
+
+                        generator.EndScope();
+                        generator.PushBlankLines();
+                    }
                 }
 
                 HashSet<object> alrendySetMember = new();
@@ -246,84 +332,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             continue;
                         }
 
-                        foreach (var (memberName, memberValue, memberType, isGetPublic, isSetPublic)
-                            in item.GetSerializeMembers())
+                        var infos = item.GetSerializeMembers().ToList();
+
+                        //先生成值类型，后生成引用类型。 引用类型会使用值类型。
+                        foreach (var info in infos)
                         {
-                            string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
-
-                            if (memberType.IsPrimitive || memberValue is string || memberValue == null
-                                || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))
-                            {
-                                //不要使用reffinder
-                                string memberValueCode = memberValue.ToCode();
-                                if (declaredObjs2.TryGetValue(memberRefName, out var declaredObject))
-                                {
-                                    memberValueCode = declaredObject.VarName;
-                                }
-
-                                if (item is Array array)
-                                {
-                                    generator.Push($"{varName}[{memberName}] = {memberValueCode};");
-                                }
-                                else if (item is IList)
-                                {
-                                    generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
-                                }
-                                else if (isSetPublic)
-                                {
-                                    generator.Push($"{varName}.{memberName} = {memberValueCode};");
-                                }
-                                else
-                                {
-                                    if (typeof(IRefable).IsAssignableFrom(item.GetType()) && memberName == "refName")
-                                    {
-                                        generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValueCode};");
-                                    }
-                                    else if (typeof(IBindable).IsAssignableFrom(item.GetType()) && memberName == "bindingPath")
-                                    {
-                                        generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValueCode};");
-                                    }
-                                    else
-                                    {
-                                        generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //使用reffinder
-                                string memberValueCode = SafeVarName($"ref_{memberRefName}");
-                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
-                                {
-                                    memberRefName = declaredObject.RefName;
-                                }
-
-                                generator.Push($"if (finder.TryGetRefValue<{memberType.ToCode()}>(");
-                                generator.Push($"{memberRefName.ToCode()},", 1);
-                                generator.Push($"out var {memberValueCode}))", 1);
-
-                                generator.BeginScope();
-
-                                if (item is Array array)
-                                {
-                                    generator.Push($"{varName}[{memberName}] = {memberValueCode};");
-                                }
-                                else if (item is IList)
-                                {
-                                    generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
-                                }
-                                else if (isSetPublic)
-                                {
-                                    generator.Push($"{varName}.{memberName} = {memberValueCode};");
-                                }
-                                else
-                                {
-                                    generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
-                                }
-
-                                generator.EndScope();
-                                generator.PushBlankLines();
-                            }
+                            GenerateInitMemberCode(v, info);
                         }
 
                         alrendySetMember.Add(item);
