@@ -39,10 +39,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
         public static string GetCreatorTypeName(string treeName, string guid)
         {
-            var creatorTypeName = $"BT_{treeName}_{guid}_Creator";
-            creatorTypeName = creatorTypeName.Replace('-', '_');
-            creatorTypeName = creatorTypeName.Replace('.', '_');
-            return creatorTypeName;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("BT_");
+            sb.Append(treeName);
+            sb.Append("_");
+            sb.Append(guid);
+            sb.Append("_Creator");
+            return sb.ToIdentifier();
         }
 
         public void PostInit(InitOption initOption, BehaviorTree tree)

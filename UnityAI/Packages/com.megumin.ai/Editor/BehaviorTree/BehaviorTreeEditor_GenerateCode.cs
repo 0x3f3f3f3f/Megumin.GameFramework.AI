@@ -387,9 +387,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 name = $"temp_{refName}";
             }
 
-            name = name.Replace('-', '_');
-            name = name.Replace('.', '_');
-            return name;
+            return name.ToIdentifier();
         }
     }
 }
