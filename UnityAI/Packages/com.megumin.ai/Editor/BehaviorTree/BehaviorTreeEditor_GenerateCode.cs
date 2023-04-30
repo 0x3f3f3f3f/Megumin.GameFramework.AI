@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEditor;
@@ -96,6 +98,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 //Dictionary<object, string> declaredObj = new();
                 Dictionary<object, DeclaredObject> declaredObjs = new();
+                //refName作为ID。
+                Dictionary<string, DeclaredObject> declaredObjs2 = new();
 
                 Dictionary<object, DeclaredObject> varis = new();
                 Dictionary<object, DeclaredObject> nodes = new();
@@ -123,9 +127,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         dclaredObject.VarName = varName;
                         dclaredObject.RefName = refName;
 
-                        generator.Push($"var {varName} = new {obj.GetType().ToCode()}();");
+                        Type objType = obj.GetType();
+                        if (obj is Array array)
+                        {
+                            generator.Push($"var {varName} = new {objType.ToCode().Replace("[]", $"[{array.Length}]")};");
+                        }
+                        else
+                        {
+                            generator.Push($"var {varName} = new {objType.ToCode()}();");
+                        }
 
                         declaredObjs.Add(obj, dclaredObject);
+                        declaredObjs2.Add(dclaredObject.RefName, dclaredObject);
+
                         needSetMember.Enqueue(dclaredObject);
 
                         DeclareObjMember(refName, obj);
@@ -134,7 +148,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 void DeclareObjMember(string refName, object obj)
                 {
-                    foreach (var (memberName, memberValue, memberType) in obj.GetSerializeMembers())
+                    var allMember = obj.GetSerializeMembers().ToList();
+                    foreach (var (memberName, memberValue, memberType) in allMember)
                     {
                         if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                         {
@@ -146,7 +161,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             if (memberValue is BTNode || memberValue is IDecorator)
                             {
                                 //节点和装饰器统一声明。不在成员处声明
-                                return;
+                                continue;
                             }
 
                             //引用对象声明
@@ -186,14 +201,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push($"//以上创建 {declaredObjs.Count} 所有对象");
                 generator.PushBlankLines();
 
-                generator.Push($"//添加实例到引用查找器 {declaredObjs.Count}");
-                foreach (var item in declaredObjs)
                 {
-                    generator.Push($"finder.RefDic.Add({item.Value.RefName.ToCode()}, {item.Value.VarName});");
+                    var count = 0;
+                    foreach (var item in declaredObjs)
+                    {
+                        if (item.Value.Instance.GetType().IsValueType)
+                        {
+                            generator.Push($"//{item.Value.VarName} 是值类型，不加入引用查找器，防止装箱");
+                        }
+                        else
+                        {
+                            generator.Push($"finder.RefDic.Add({item.Value.RefName.ToCode()}, {item.Value.VarName});");
+                            count++;
+                        }
+                    }
+                    generator.Push($"//添加实例到引用查找器 {count}");
+                    generator.PushBlankLines();
                 }
-                generator.PushBlankLines();
-
-
 
 
                 declaredObjs.Add(tree, treeObj);
@@ -202,6 +226,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.PushBlankLines();
 
 
+                void GenerateInitMemberCode()
+                {
+
+                }
 
                 HashSet<object> alrendySetMember = new();
                 using (generator.GetRegionScope($"初始化成员值"))
@@ -221,10 +249,23 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         foreach (var (memberName, memberValue, memberType, isGetPublic, isSetPublic)
                             in item.GetSerializeMembers())
                         {
-                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                            string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
+
+                            if (memberType.IsPrimitive || memberValue is string || memberValue == null
+                                || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))
                             {
+                                //不要使用reffinder
                                 string memberValueCode = memberValue.ToCode();
-                                if (item is IList)
+                                if (declaredObjs2.TryGetValue(memberRefName, out var declaredObject))
+                                {
+                                    memberValueCode = declaredObject.VarName;
+                                }
+
+                                if (item is Array array)
+                                {
+                                    generator.Push($"{varName}[{memberName}] = {memberValueCode};");
+                                }
+                                else if (item is IList)
                                 {
                                     generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
                                 }
@@ -250,9 +291,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                             }
                             else
                             {
-                                string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
+                                //使用reffinder
                                 string memberValueCode = SafeVarName($"ref_{memberRefName}");
-
                                 if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
                                 {
                                     memberRefName = declaredObject.RefName;
@@ -264,7 +304,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                                 generator.BeginScope();
 
-                                if (item is IList)
+                                if (item is Array array)
+                                {
+                                    generator.Push($"{varName}[{memberName}] = {memberValueCode};");
+                                }
+                                else if (item is IList)
                                 {
                                     generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
                                 }
