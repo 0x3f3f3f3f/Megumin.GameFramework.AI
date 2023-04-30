@@ -157,7 +157,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     var allMember = obj.GetSerializeMembers().ToList();
                     foreach (var (memberName, memberValue, memberType) in allMember)
                     {
-                        if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                        if (memberType.IsPrimitive || memberValue is string || memberValue == null
+                            || memberType.IsEnum)
                         {
                             //generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
                         }
@@ -245,6 +246,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     generator.Push($"//{memberRefName}");
 
                     if (memberType.IsPrimitive || memberValue is string || memberValue == null
+                        || memberType.IsEnum
                         || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))
                     {
                         //不要使用reffinder
