@@ -415,11 +415,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             {
                 if (TryGetParamType(param, out var paramType))
                 {
-                    generator.Push($"public {paramType.ToCodeString()} {param.Name};");
+                    generator.Push($"public {paramType.ToCode()} {param.Name};");
                 }
                 else
                 {
-                    generator.Push($"public {param.ParameterType.ToCodeString()} {param.Name};");
+                    generator.Push($"public {param.ParameterType.ToCode()} {param.Name};");
                 }
             }
 
@@ -441,7 +441,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     saveResult = true;
                     generator.Push($"[Space]");
-                    generator.Push($"public {returnType.ToCodeString()} SaveValueTo;");
+                    generator.Push($"public {returnType.ToCode()} SaveValueTo;");
                     generator.PushBlankLines();
                 }
             }
@@ -499,11 +499,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         generator.Push($"[Space]");
                         if (TryGetParamType(type, out var paramType))
                         {
-                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                            generator.Push($"public {paramType.ToCode()} MyAgent;");
                         }
                         else
                         {
-                            generator.Push($"public {type.ToCodeString()} MyAgent;");
+                            generator.Push($"public {type.ToCode()} MyAgent;");
                         }
                         generator.PushBlankLines();
                     }
@@ -938,11 +938,11 @@ public override bool CheckCondition(object options = null)
                         generator.Push($"[Space]");
                         if (TryGetParamType(type, out var paramType))
                         {
-                            generator.Push($"public {paramType.ToCodeString()} MyAgent;");
+                            generator.Push($"public {paramType.ToCode()} MyAgent;");
                         }
                         else
                         {
-                            generator.Push($"public {type.ToCodeString()} MyAgent;");
+                            generator.Push($"public {type.ToCode()} MyAgent;");
                         }
 
                         generator.PushBlankLines();
@@ -958,9 +958,9 @@ public override bool CheckCondition(object options = null)
                     }
 
                     TryGetParamType(memberType, out var returnType);
-                    generator.Macro["$(RefVarType)"] = returnType.ToCodeString();
+                    generator.Macro["$(RefVarType)"] = returnType.ToCode();
 
-                    generator.Macro["$(MemberTyoe)"] = memberType.ToCodeString();
+                    generator.Macro["$(MemberTyoe)"] = memberType.ToCode();
 
                     if (isStatic)
                     {

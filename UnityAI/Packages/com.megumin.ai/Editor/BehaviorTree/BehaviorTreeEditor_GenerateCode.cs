@@ -123,7 +123,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         dclaredObject.VarName = varName;
                         dclaredObject.RefName = refName;
 
-                        generator.Push($"var {varName} = new {obj.GetType().ToCodeString()}();");
+                        generator.Push($"var {varName} = new {obj.GetType().ToCode()}();");
 
                         declaredObjs.Add(obj, dclaredObject);
                         needSetMember.Enqueue(dclaredObject);
@@ -189,7 +189,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 generator.Push($"//添加实例到引用查找器 {declaredObjs.Count}");
                 foreach (var item in declaredObjs)
                 {
-                    generator.Push($"finder.RefDic.Add({item.Value.RefName.ToCodeString()}, {item.Value.VarName});");
+                    generator.Push($"finder.RefDic.Add({item.Value.RefName.ToCode()}, {item.Value.VarName});");
                 }
                 generator.PushBlankLines();
 
@@ -198,7 +198,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 declaredObjs.Add(tree, treeObj);
                 generator.Push($"//添加树实例到引用查找器");
-                generator.Push($"finder.RefDic.Add({tree.GUID.ToCodeString()}, tree);");
+                generator.Push($"finder.RefDic.Add({tree.GUID.ToCode()}, tree);");
                 generator.PushBlankLines();
 
 
@@ -223,7 +223,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         {
                             if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                             {
-                                string memberValueCode = memberValue.ToCodeString();
+                                string memberValueCode = memberValue.ToCode();
                                 if (item is IList)
                                 {
                                     generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
@@ -244,7 +244,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                     }
                                     else
                                     {
-                                        generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
+                                        generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
                                     }
                                 }
                             }
@@ -258,8 +258,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                     memberRefName = declaredObject.RefName;
                                 }
 
-                                generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                generator.Push($"{memberRefName.ToCodeString()},", 1);
+                                generator.Push($"if (finder.TryGetRefValue<{memberType.ToCode()}>(");
+                                generator.Push($"{memberRefName.ToCode()},", 1);
                                 generator.Push($"out var {memberValueCode}))", 1);
 
                                 generator.BeginScope();
@@ -274,7 +274,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 }
                                 else
                                 {
-                                    generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
+                                    generator.Push($"{varName}.TrySetMemberValue({memberName.ToCode()}, {memberValueCode});");
                                 }
 
                                 generator.EndScope();
