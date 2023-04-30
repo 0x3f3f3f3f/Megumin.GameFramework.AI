@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Megumin.Binding;
 using Megumin.Reflection;
-using Megumin.Serialization;
 using UnityEditor;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
@@ -144,6 +142,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         }
                         else
                         {
+
+                            if (memberValue is BTNode || memberValue is IDecorator)
+                            {
+                                //节点和装饰器统一声明。不在成员处声明
+                                return;
+                            }
+
                             //引用对象声明
                             var refMemberName = $"{refName}.{memberName}";
                             DeclareObj(refMemberName, memberValue);
@@ -214,75 +219,59 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                         foreach (var (memberName, memberValue, memberType, isGetPublic, isSetPublic)
                             in item.GetSerializeMembers())
                         {
-                            if (item is IList)
+                            if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                             {
-                                if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                                string memberValueCode = memberValue.ToCodeString();
+                                if (item is IList)
                                 {
-                                    generator.Push($"{varName}.Insert({memberName}, {memberValue.ToCodeString()});");
-                                }
-                                else
-                                {
-                                    string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
-                                    string memberValueCode = SafeVarName($"ref_{memberRefName}");
-
-                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                    generator.Push($"{memberRefName.ToCodeString()},", 1);
-                                    generator.Push($"out var {memberValueCode}))", 1);
-
-                                    generator.BeginScope();
                                     generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
-                                    generator.EndScope();
-                                    generator.PushBlankLines();
                                 }
-                            }
-                            else
-                            {
-                                if (memberType.IsPrimitive || memberValue is string || memberValue == null)
+                                else if (isSetPublic)
                                 {
-                                    string memberValueCode = memberValue.ToCodeString();
-
-                                    if (isSetPublic)
-                                    {
-                                        generator.Push($"{varName}.{memberName} = {memberValueCode};");
-                                    }
-                                    else
-                                    {
-                                        if (typeof(IRefable).IsAssignableFrom(item.GetType()) && memberName == "refName")
-                                        {
-                                            generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValueCode};");
-                                        }
-                                        else if (typeof(IBindable).IsAssignableFrom(item.GetType()) && memberName == "bindingPath")
-                                        {
-                                            generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValueCode};");
-                                        }
-                                        else
-                                        {
-                                            generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
-                                        }
-                                    }
+                                    generator.Push($"{varName}.{memberName} = {memberValueCode};");
                                 }
                                 else
                                 {
-                                    string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
-                                    string memberValueCode = SafeVarName($"ref_{memberRefName}");
-
-                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                    generator.Push($"{memberRefName.ToCodeString()},", 1);
-                                    generator.Push($"out var {memberValueCode}))", 1);
-
-                                    generator.BeginScope();
-                                    if (isSetPublic)
+                                    if (typeof(IRefable).IsAssignableFrom(item.GetType()) && memberName == "refName")
                                     {
-                                        generator.Push($"{varName}.{memberName} = {memberValueCode};");
+                                        generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValueCode};");
+                                    }
+                                    else if (typeof(IBindable).IsAssignableFrom(item.GetType()) && memberName == "bindingPath")
+                                    {
+                                        generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValueCode};");
                                     }
                                     else
                                     {
                                         generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
                                     }
-
-                                    generator.EndScope();
-                                    generator.PushBlankLines();
                                 }
+                            }
+                            else
+                            {
+                                string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
+                                string memberValueCode = SafeVarName($"ref_{memberRefName}");
+
+                                generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                generator.Push($"{memberRefName.ToCodeString()},", 1);
+                                generator.Push($"out var {memberValueCode}))", 1);
+
+                                generator.BeginScope();
+
+                                if (item is IList)
+                                {
+                                    generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
+                                }
+                                else if (isSetPublic)
+                                {
+                                    generator.Push($"{varName}.{memberName} = {memberValueCode};");
+                                }
+                                else
+                                {
+                                    generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
+                                }
+
+                                generator.EndScope();
+                                generator.PushBlankLines();
                             }
                         }
 
