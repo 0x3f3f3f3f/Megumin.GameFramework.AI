@@ -222,76 +222,66 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 }
                                 else
                                 {
-                                    //引用对象声明
-                                    if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
-                                    {
-                                        var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
-                                        generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                        generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
-                                        generator.Push($"out var {refObjName}))", 1);
+                                    string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
+                                    string memberValueCode = SafeVarName($"ref_{memberRefName}");
 
-                                        generator.BeginScope();
-                                        generator.Push($"{varName}.Insert({memberName}, {refObjName});");
-                                        generator.EndScope();
-                                        //generator.Push($"else");
-                                        //generator.BeginScope();
-                                        //generator.Push($"{varName}.Insert({memberName}, {declaredObject.VarName});");
-                                        //generator.EndScope();
-                                        generator.PushBlankLines();
-                                    }
-                                    else
-                                    {
-                                        generator.Push($"//TODO : {memberName}");
-                                    }
+                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                    generator.Push($"{memberRefName.ToCodeString()},", 1);
+                                    generator.Push($"out var {memberValueCode}))", 1);
+
+                                    generator.BeginScope();
+                                    generator.Push($"{varName}.Insert({memberName}, {memberValueCode});");
+                                    generator.EndScope();
+                                    generator.PushBlankLines();
                                 }
                             }
                             else
                             {
                                 if (memberType.IsPrimitive || memberValue is string || memberValue == null)
                                 {
+                                    string memberValueCode = memberValue.ToCodeString();
+
                                     if (isSetPublic)
                                     {
-                                        generator.Push($"{varName}.{memberName} = {memberValue.ToCodeString()};");
+                                        generator.Push($"{varName}.{memberName} = {memberValueCode};");
                                     }
                                     else
                                     {
                                         if (typeof(IRefable).IsAssignableFrom(item.GetType()) && memberName == "refName")
                                         {
-                                            generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValue.ToCodeString()};");
+                                            generator.Push($"{varName}.{nameof(IRefable.RefName)} = {memberValueCode};");
                                         }
                                         else if (typeof(IBindable).IsAssignableFrom(item.GetType()) && memberName == "bindingPath")
                                         {
-                                            generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValue.ToCodeString()};");
+                                            generator.Push($"{varName}.{nameof(IBindable.BindingPath)} = {memberValueCode};");
                                         }
                                         else
                                         {
-                                            generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValue.ToCodeString()});");
+                                            generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    //引用对象声明
-                                    if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
-                                    {
-                                        var refObjName = SafeVarName($"ref_{declaredObject.RefName}");
-                                        generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
-                                        generator.Push($"{declaredObject.RefName.ToCodeString()},", 1);
-                                        generator.Push($"out var {refObjName}))", 1);
+                                    string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
+                                    string memberValueCode = SafeVarName($"ref_{memberRefName}");
 
-                                        generator.BeginScope();
-                                        generator.Push($"{varName}.{memberName} = {refObjName};");
-                                        generator.EndScope();
-                                        //generator.Push($"else");
-                                        //generator.BeginScope();
-                                        //generator.Push($"{varName}.{memberName} = {declaredObject.VarName};");
-                                        //generator.EndScope();
-                                        generator.PushBlankLines();
+                                    generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
+                                    generator.Push($"{memberRefName.ToCodeString()},", 1);
+                                    generator.Push($"out var {memberValueCode}))", 1);
+
+                                    generator.BeginScope();
+                                    if (isSetPublic)
+                                    {
+                                        generator.Push($"{varName}.{memberName} = {memberValueCode};");
                                     }
                                     else
                                     {
-                                        generator.Push($"//TODO : {memberName}");
+                                        generator.Push($"{varName}.TrySetMemberValue({memberName.ToCodeString()}, {memberValueCode});");
                                     }
+
+                                    generator.EndScope();
+                                    generator.PushBlankLines();
                                 }
                             }
                         }
