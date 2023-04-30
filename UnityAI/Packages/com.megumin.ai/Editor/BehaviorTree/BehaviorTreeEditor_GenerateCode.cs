@@ -107,7 +107,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 {
                     if (obj is UnityEngine.Object unityObj)
                     {
-                        generator.Push($"//生成代码无法处理unity对象 {refName}，请将对象添加到预制体重写");
+                        generator.Push($"//生成代码跳过unity对象 {refName}，请将对象添加到预制体重写");
                         return;
                     }
 
@@ -156,7 +156,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                     }
                 }
 
-                generator.Push($"//创建 参数表参数实例");
+                generator.Push($"//创建 参数，节点，装饰器，普通对象");
                 foreach (var variable in tree.Variable.Table)
                 {
                     DeclareObj(variable.RefName, variable);
@@ -164,7 +164,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                 }
                 generator.PushBlankLines();
 
-                generator.Push($"//创建 节点，装饰器，普通对象");
                 foreach (var node in tree.AllNodes)
                 {
                     DeclareObj(node.GUID, node);
@@ -178,9 +177,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                     generator.PushBlankLines();
                 }
+                generator.Push($"//以上创建 {varis.Count} 参数");
                 generator.Push($"//以上创建 {nodes.Count} 节点");
                 generator.Push($"//以上创建 {decos.Count} 装饰器");
                 generator.Push($"//以上创建 {declaredObjs.Count - nodes.Count - decos.Count - varis.Count} 普通对象");
+                generator.PushBlankLines();
+
                 generator.Push($"//以上创建 {declaredObjs.Count} 所有对象");
                 generator.PushBlankLines();
 

@@ -206,6 +206,19 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 return null;
             }
 
+
+            RefFinder finder = new();
+            finder.Parent = refFinder;
+
+            //缓存Unity引用对象
+            if (UnityObjectRef != null)
+            {
+                foreach (var item in UnityObjectRef)
+                {
+                    finder.RefDic.Add(item.Name, item.Ref);
+                }
+            }
+
             if (initOption.UseGenerateCode)
             {
                 //使用生成的代码实例化行为树。
@@ -216,7 +229,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 }
                 else
                 {
-                    return creator.Instantiate(initOption, refFinder);
+                    return creator.Instantiate(initOption, finder);
                 }
             }
 
@@ -231,6 +244,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             tree.Asset = this;
             tree.RootTree = tree;
             tree.InitOption = initOption;
+            tree.RefFinder = finder;
 
             if (UseSerializeReferenceGeneric)
             {
@@ -238,22 +252,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 //
                 Debug.Log("至少需要unity2023");
                 return tree;
-            }
-
-            RefFinder finder = new();
-            finder.Parent = refFinder;
-
-            tree.RefFinder = finder;
-
-            finder.RefDic.Add(tree.GUID, tree);
-
-            //缓存Unity引用对象
-            if (UnityObjectRef != null)
-            {
-                foreach (var item in UnityObjectRef)
-                {
-                    finder.RefDic.Add(item.Name, item.Ref);
-                }
             }
 
             //先创建引用实例
@@ -375,6 +373,8 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                     }
                 }
             }
+
+            finder.RefDic.Add(tree.GUID, tree);
 
             //反序列化
             //反序列化参数表
