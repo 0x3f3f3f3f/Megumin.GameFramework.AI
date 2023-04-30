@@ -225,11 +225,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 BehaviorTreeCreator creator = BehaviorTreeCreator.GetCreator(TreeName, GUID, null);
                 if (creator == null)
                 {
-                    Debug.LogWarning($"{TreeName} Code Creator can not found.");
+                    Debug.LogWarning($"{TreeName} Code Creator can not found. Fallback default Instantiate.");
                 }
                 else
                 {
-                    return creator.Instantiate(initOption, finder);
+                    var codeTree = creator.Instantiate(initOption, finder);
+                    codeTree.Asset = this;
+                    return codeTree;
                 }
             }
 

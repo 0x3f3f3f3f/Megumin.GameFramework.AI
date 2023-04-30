@@ -253,6 +253,11 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
                                 string memberRefName = $"{declaredObjs[item].RefName}.{memberName}";
                                 string memberValueCode = SafeVarName($"ref_{memberRefName}");
 
+                                if (declaredObjs.TryGetValue(memberValue, out var declaredObject))
+                                {
+                                    memberRefName = declaredObject.RefName;
+                                }
+
                                 generator.Push($"if (finder.TryGetRefValue<{memberType.ToCodeString()}>(");
                                 generator.Push($"{memberRefName.ToCodeString()},", 1);
                                 generator.Push($"out var {memberValueCode}))", 1);
