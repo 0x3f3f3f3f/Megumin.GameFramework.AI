@@ -11,16 +11,19 @@ using Megumin.GameFramework.AI.Editor;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Megumin.Reflection;
+using UnityEngine.Serialization;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     public partial class NodeGenerator : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
+
         [Space]
         public bool MultiThreading = true;
         public Enableable<string> Define;
 
+        [Space]
         public List<Enableable<string>> Assemblys = new()
         {
             new Enableable<string>() { Value = "Assembly-CSharp", Enabled = false },
@@ -28,7 +31,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         public List<Enableable<string>> Types = new();
 
-        public List<string> IgnoreMethods = new();
+        [Space]
+        [FormerlySerializedAs("IgnoreMethods")]
+        public List<string> IgnoreGeneratedClass = new();
 
         public List<string> ObsoleteAPIInFuture = new();
 
@@ -47,6 +52,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             public string newValue;
         }
 
+        [Space]
         public List<IconReplace> ReplaceIcon = new();
         public List<CategoryReplace> ReplaceCategory = new();
 
@@ -55,7 +61,63 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         public bool GFields = true;
         public bool GProperties = true;
 
+        [Space]
+        public bool Field2GetNode = false;
+        public bool Field2SetNodes = true;
+        public bool Field2Deco = true;
+
+        [Space]
+        public bool Proterty2GetNode = false;
+        public bool Proterty2SetNode = true;
+        public bool Proterty2Deco = true;
+
+        [Space]
+        public bool Method2Node = true;
+        public bool Method2Deco = false;
+
         List<Task> alltask = new();
+        System.Random random = new();
+        List<object> variableTemplate = new();
+
+
+        public bool TryGetParamType(ParameterInfo param, out Type type)
+        {
+            Type parameterType = param.ParameterType;
+            return TryGetParamType(parameterType, out type);
+        }
+
+        public bool TryGetParamType(Type parameterType, out Type type)
+        {
+            type = parameterType;
+
+            if (type == typeof(void))
+            {
+                return true;
+            }
+
+            foreach (var item in variableTemplate)
+            {
+                if (item is IVariableSpecializedType variableSpecialized)
+                {
+                    if (variableSpecialized.SpecializedType == parameterType)
+                    {
+                        type = item.GetType();
+                        return true;
+                    }
+                }
+            }
+
+            if (parameterType.IsEnum || parameterType.IsValueType)
+            {
+                type = typeof(RefVar<>).MakeGenericType(parameterType);
+                return true;
+            }
+
+            Debug.Log($"不支持参数类型  {parameterType}");
+            return false;
+        }
+
+
         [ContextMenu("Generate")]
         public void Generate()
         {
@@ -236,7 +298,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
                 //忽略指定方法
                 var className = GetClassName(type, method);
-                if (IgnoreMethods.Contains(className))
+                if (IgnoreGeneratedClass.Contains(className))
                 {
                     continue;
                 }
@@ -308,6 +370,35 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         }
 
         public string GetClassName(Type type, MemberInfo member)
+        {
+            var className = $"{type.Name}_{member.Name}";
+
+            if (member is MethodInfo method)
+            {
+                var @params = method.GetParameters();
+                if (@params.Length > 0)
+                {
+                    for (int i = 0; i < @params.Length; i++)
+                    {
+                        Type parameterType = @params[i].ParameterType;
+                        className += $"_{parameterType.ToIdentifier()}";
+                    }
+                    //Debug.LogError(className);
+                }
+            }
+
+            className = className.Replace("[]", "Array");
+            return className;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="member"></param>
+        /// <param name="typeEnd">Get Set Node Deco</param>
+        /// <returns></returns>
+        public string GetClassName(Type type, MemberInfo member, string typeEnd)
         {
             var className = $"{type.Name}_{member.Name}";
 
@@ -606,44 +697,6 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             return true;
         }
-
-        List<object> variableTemplate = new();
-        public bool TryGetParamType(ParameterInfo param, out Type type)
-        {
-            Type parameterType = param.ParameterType;
-            return TryGetParamType(parameterType, out type);
-        }
-
-        public bool TryGetParamType(Type parameterType, out Type type)
-        {
-            type = parameterType;
-
-            if (type == typeof(void))
-            {
-                return true;
-            }
-
-            foreach (var item in variableTemplate)
-            {
-                if (item is IVariableSpecializedType variableSpecialized)
-                {
-                    if (variableSpecialized.SpecializedType == parameterType)
-                    {
-                        type = item.GetType();
-                        return true;
-                    }
-                }
-            }
-
-            if (parameterType.IsEnum || parameterType.IsValueType)
-            {
-                type = typeof(RefVar<>).MakeGenericType(parameterType);
-                return true;
-            }
-
-            Debug.Log($"不支持参数类型  {parameterType}");
-            return false;
-        }
     }
 
     public partial class NodeGenerator
@@ -786,7 +839,7 @@ public override bool CheckCondition(object options = null)
 
                 //忽略指定方法
                 var className = GetClassName(type, prop);
-                if (IgnoreMethods.Contains(className))
+                if (IgnoreGeneratedClass.Contains(className))
                 {
                     continue;
                 }
@@ -836,7 +889,7 @@ public override bool CheckCondition(object options = null)
 
                 //忽略指定方法
                 var className = GetClassName(type, prop);
-                if (IgnoreMethods.Contains(className))
+                if (IgnoreGeneratedClass.Contains(className))
                 {
                     continue;
                 }
@@ -845,7 +898,6 @@ public override bool CheckCondition(object options = null)
             }
         }
 
-        System.Random random = new();
         public void GenerateMember(Type type, MemberInfo prop)
         {
             string className = GetClassName(type, prop);
