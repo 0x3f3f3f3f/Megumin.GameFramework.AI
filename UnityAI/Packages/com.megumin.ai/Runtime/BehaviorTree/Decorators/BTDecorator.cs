@@ -240,6 +240,36 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return base.OnCheckCondition(options);
         }
     }
+
+    public abstract class StringEqualsDecorator : ConditionDecorator
+    {
+        [Space]
+        public StringComparison ComparisonType = StringComparison.Ordinal;
+
+        public abstract string GetResult();
+
+        public abstract string GetCompareTo();
+
+        protected override bool OnCheckCondition(object options = null)
+        {
+            return string.Equals(GetResult(), GetCompareTo(), ComparisonType);
+        }
+    }
+
+    public abstract class StringEqualsDecorator<T> : ConditionDecorator<T>
+    {
+        [Space]
+        public StringComparison ComparisonType = StringComparison.Ordinal;
+
+        public abstract string GetResult();
+
+        public abstract string GetCompareTo();
+
+        protected override bool OnCheckCondition(object options = null)
+        {
+            return string.Equals(GetResult(), GetCompareTo(), ComparisonType);
+        }
+    }
 }
 
 
