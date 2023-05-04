@@ -1089,7 +1089,12 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            var generator = new Method2NodeGenerator();
+                            if (TargetTypeCan2Deco(filed.FieldType) == false)
+                            {
+                                continue;
+                            }
+
+                            var generator = new FeildProperty2DecoGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
                             generator.MemberInfo = member;
@@ -1163,9 +1168,14 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
+                            if (TargetTypeCan2Deco(prop.PropertyType) == false)
+                            {
+                                continue;
+                            }
+
                             if (prop.CanRead)
                             {
-                                var generator = new Method2NodeGenerator();
+                                var generator = new FeildProperty2DecoGenerator();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.GetMethod.IsStatic;
                                 generator.MemberInfo = member;
@@ -1306,7 +1316,7 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            var generator = new Method2NodeGenerator();
+                            var generator = new Method2DecoGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = method.IsStatic;
                             generator.MemberInfo = member;
@@ -1709,5 +1719,88 @@ public override bool CheckCondition(object options = null)
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
             }
         }
+
+        public class FeildProperty2DecoGenerator : Generator
+        {
+            public override void Generate()
+            {
+                string className = ClassName;
+                var Define = Setting.Define;
+                var type = Type;
+                var member = MemberInfo;
+                var memberType = member.GetMemberType();
+
+                if (Define.Enabled)
+                {
+                    generator.Push($"#if {Define.Value}");
+                    generator.PushBlankLines();
+                }
+
+                GenerateUsing(generator);
+
+                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                using (generator.NewScope)
+                {
+                    GenerateAttribute(type, member, className, generator);
+
+                    generator.Push($"public sealed class $(ClassName) : $(BaseClassName)");
+
+                    using (generator.NewScope)
+                    {
+                        if (IsStatic == false && UseComponent == false)
+                        {
+                            generator.Push($"[Space]");
+                            if (Setting.TryGetParamType(type, out var paramType))
+                            {
+                                generator.Push($"public {paramType.ToCode()} MyAgent;");
+                            }
+                            else
+                            {
+                                generator.Push($"public {type.ToCode()} MyAgent;");
+                            }
+
+                            generator.PushBlankLines();
+                        }
+
+                        if (memberType == typeof(bool))
+                        {
+                            generator.PushTemplate(BoolDecoratorBodyTemplate);
+                        }
+                        else
+                        {
+                            generator.PushTemplate(CompareDecoratorBodyTemplate);
+                        }
+
+                        Setting.TryGetParamType(memberType, out var returnType);
+                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
+
+                        generator.Macro["$(MemberTyoe)"] = memberType.ToCode();
+
+                        if (IsStatic)
+                        {
+                            generator.Macro["$(MyAgent)"] = "$(ComponentName)";
+                        }
+                        else
+                        {
+                            generator.Macro["$(MyAgent)"] = "(($(ComponentName))MyAgent)";
+                        }
+                    }
+                }
+
+
+                if (Define.Enabled)
+                {
+                    generator.PushBlankLines();
+                    generator.Push($"#endif");
+                }
+
+                generator.PushBlankLines(4);
+
+                AddMacro(type, member, generator);
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, false);
+                generator.Generate(path);
+            }
+        }
+
     }
 }
