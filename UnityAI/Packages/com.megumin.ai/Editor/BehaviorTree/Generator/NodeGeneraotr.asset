@@ -87,7 +87,7 @@ MonoBehaviour:
     Value: UnityEngine.Vector4
   - Enabled: 1
     Value: UnityEngine.SceneManagement.SceneManager
-  IgnoreMethods:
+  IgnoreGeneratedClass:
   - Input_IsJoystickPreconfigured_String
   - Light_SetLightDirty
   - Light_shadowAngle
@@ -105,6 +105,12 @@ MonoBehaviour:
   - ParticleSystem_SetParticles_NativeArray_1_Particle
   - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32
   - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32
+  - ParticleSystem_GetParticles_NativeArray_1_Particle_Node
+  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Int32_Node
+  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Node
+  - ParticleSystem_SetParticles_NativeArray_1_Particle_Node
+  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32_Node
+  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Node
   ObsoleteAPIInFuture:
   - Physics2D_alwaysShowColliders
   - Physics2D_contactArrowScale
@@ -131,6 +137,14 @@ MonoBehaviour:
     newValue: UnityEngine
   - oldValue: UnityEngine/SceneManagement
     newValue: UnityEngine
-  GMethods: 1
-  GFields: 1
-  GProperties: 1
+  GMethods: 0
+  GFields: 0
+  GProperties: 0
+  Field2GetNode: 0
+  Field2SetNode: 0
+  Field2Deco: 0
+  Proterty2GetNode: 0
+  Proterty2SetNode: 0
+  Proterty2Deco: 0
+  Method2Node: 1
+  Method2Deco: 0
