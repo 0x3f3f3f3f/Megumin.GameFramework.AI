@@ -1055,7 +1055,7 @@ public override bool CheckCondition(object options = null)
                     EditorUtility.DisplayProgressBar("GenerateCode",
                                                      $"Clollect Generate Task ...  {type.Name}.{member.Name}",
                                                      progress);
-                    
+
                     //忽略过时API
                     var ob = member.GetCustomAttribute<ObsoleteAttribute>();
                     if (ob != null)
@@ -1301,8 +1301,8 @@ public override bool CheckCondition(object options = null)
 
             return generators;
         }
-       
-        
+
+
         public abstract class Generator
         {
             public string ClassName { get; internal set; }
@@ -1315,13 +1315,263 @@ public override bool CheckCondition(object options = null)
             public CSCodeGenerator generator = new();
 
             public abstract void Generate();
+
+            public void GenerateUsing(CSCodeGenerator generator)
+            {
+                generator.Push($"using System;");
+                generator.Push($"using System.Collections;");
+                generator.Push($"using System.Collections.Generic;");
+                generator.Push($"using System.ComponentModel;");
+                generator.Push($"using UnityEngine;");
+                generator.PushBlankLines();
+            }
+
+            public void GenerateAttribute(Type type, MemberInfo member, string className, CSCodeGenerator generator)
+            {
+                if (Setting.typeIcon.TryGetValue(type, out var iconName) && string.IsNullOrEmpty(iconName) == false)
+                {
+                    generator.Push($"[Icon(\"{iconName}\")]");
+                }
+
+                generator.Push($"[DisplayName(\"$(DisplayName)\")]");
+
+                var category = $"{type.FullName.Replace('.', '/')}";
+                foreach (var item in Setting.ReplaceCategory)
+                {
+                    if (string.IsNullOrEmpty(item?.oldValue) == false)
+                    {
+                        category = category.Replace(item.oldValue, item.newValue);
+                    }
+                }
+
+                generator.Push($"[Category(\"{category}\")]");
+                generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
+
+                if (Setting.ObsoleteAPIInFuture.Contains(className))
+                {
+                    generator.Push($"[Obsolete(\"Obsolete API in a future version of Unity\", true)]");
+                }
+            }
+
+            public string GetMenuName(Type type, MemberInfo member)
+            {
+                var result = member.Name;
+
+                if (member is MethodInfo method)
+                {
+                    var @params = method.GetParameters();
+                    if (@params.Count() > 0)
+                    {
+                        result += "(";
+                        for (int i = 0; i < @params.Length; i++)
+                        {
+                            if (i != 0)
+                            {
+                                result += ", ";
+                            }
+                            result += $"{@params[i].ParameterType.Name}";
+                        }
+                        result += ")";
+                        //Debug.LogError(className);
+                    }
+                }
+
+                return result;
+            }
+
+            public void AddMacro(Type type, MemberInfo member, CSCodeGenerator generator)
+            {
+                generator.Macro["$(ClassName)"] = ClassName;
+                generator.Macro["$(ComponentName)"] = type.FullName;
+                generator.Macro["$(MenuName)"] = GetMenuName(type, member);
+                generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
+                generator.Macro["$(MemberName)"] = member.Name;
+                generator.Macro["$(CodeGenericType)"] = typeof(NodeGenerator).FullName;
+            }
         }
 
         public class Method2NodeGenerator : Generator
         {
+            public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
+            {
+                //声明参数
+                var @params = method.GetParameters();
+                if (@params.Length > 0)
+                {
+                    generator.Push($"[Space]");
+                }
+
+                foreach (var param in @params)
+                {
+                    if (Setting.TryGetParamType(param, out var paramType))
+                    {
+                        generator.Push($"public {paramType.ToCode()} {param.Name};");
+                    }
+                    else
+                    {
+                        generator.Push($"public {param.ParameterType.ToCode()} {param.Name};");
+                    }
+                }
+
+                if (@params.Length > 0)
+                {
+                    generator.PushBlankLines();
+                }
+
+                return GenerateDeclaringResult(method.ReturnType, generator);
+            }
+
+            public bool GenerateDeclaringResult(Type type, CSCodeGenerator generator)
+            {
+                bool saveResult = false;
+                if (type != null && type != typeof(void))
+                {
+                    //存在返回值 。储存返回值
+                    if (Setting.TryGetParamType(type, out var returnType))
+                    {
+                        saveResult = true;
+                        generator.Push($"[Space]");
+                        generator.Push($"public {returnType.ToCode()} SaveValueTo;");
+                        generator.PushBlankLines();
+                    }
+                }
+
+                return saveResult;
+            }
+
             public override void Generate()
             {
+                string className = ClassName;
+                var Define = Setting.Define;
+                var type = Type;
+                var method = MemberInfo as MethodInfo;
 
+                if (Define.Enabled)
+                {
+                    generator.Push($"#if {Define.Value}");
+                    generator.PushBlankLines();
+                }
+
+                GenerateUsing(generator);
+
+                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                using (generator.NewScope)
+                {
+                    GenerateAttribute(type, method, className, generator);
+
+                    var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject) || type.IsInterface;
+
+                    var BaseType = "BTActionNode";
+
+                    if (IsStatic || UseMyAgent == false)
+                    {
+                        generator.Push($"public sealed class $(ClassName) : {BaseType}");
+                    }
+                    else
+                    {
+                        generator.Push($"public sealed class $(ClassName) : {BaseType}<$(ComponentName)>");
+                    }
+
+                    using (generator.NewScope)
+                    {
+                        //generator.Push($"public string Title => \"$(Title)\";");
+                        if (IsStatic == false && UseMyAgent == false)
+                        {
+                            generator.Push($"[Space]");
+                            if (Setting.TryGetParamType(type, out var paramType))
+                            {
+                                generator.Push($"public {paramType.ToCode()} MyAgent;");
+                            }
+                            else
+                            {
+                                generator.Push($"public {type.ToCode()} MyAgent;");
+                            }
+                            generator.PushBlankLines();
+                        }
+
+                        bool saveResult = GenerateDeclaringMember(method, generator);
+
+                        var @params = method.GetParameters();
+
+                        string BTNodeFrom = "from";
+                        if (@params.Any(elem => elem.Name == BTNodeFrom))
+                        {
+                            BTNodeFrom += "1";
+                        }
+
+                        string ObjectOptions = "options";
+                        if (@params.Any(elem => elem.Name == ObjectOptions))
+                        {
+                            ObjectOptions += "1";
+                        }
+
+                        generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+
+                        using (generator.NewScope)
+                        {
+                            //MyAgent.CalculatePath(targetPosition, path);
+                            var callString = "";
+                            if (saveResult)
+                            {
+                                callString += "var result = ";
+                            }
+
+                            if (method.IsStatic)
+                            {
+                                callString += $"{type.FullName}.{method.Name}(";
+                            }
+                            else
+                            {
+                                callString += $"(({type.FullName})MyAgent).{method.Name}(";
+                            }
+
+
+                            for (int i = 0; i < @params.Length; i++)
+                            {
+                                if (i != 0)
+                                {
+                                    callString += ", ";
+                                }
+
+                                var param = @params[i];
+                                if (param.IsOut)
+                                {
+                                    callString += $"out var ";
+                                }
+
+                                callString += $"{param.Name}";
+                            }
+                            callString += ");";
+
+                            generator.Push(callString);
+
+                            if (saveResult)
+                            {
+                                generator.PushBlankLines();
+                                generator.Push($"if (SaveValueTo != null)");
+                                using (generator.NewScope)
+                                {
+                                    generator.Push($"SaveValueTo.Value = result;");
+                                }
+                                generator.PushBlankLines();
+                            }
+
+                            generator.Push($"return Status.Succeeded;");
+                        }
+                    }
+                }
+
+                if (Define.Enabled)
+                {
+                    generator.PushBlankLines();
+                    generator.Push($"#endif");
+                }
+
+                generator.PushBlankLines(4);
+
+                AddMacro(type, method, generator);
+
+                generator.Generate(path);
             }
         }
 
