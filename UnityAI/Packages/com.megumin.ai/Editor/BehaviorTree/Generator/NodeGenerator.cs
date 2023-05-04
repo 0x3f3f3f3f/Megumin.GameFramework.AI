@@ -1030,34 +1030,11 @@ public override bool CheckCondition(object options = null)
 
     public partial class NodeGenerator
     {
-
-        public abstract class Generator
-        {
-            public string ClassName { get; internal set; }
-            public MemberInfo MemberInfo { get; internal set; }
-            public Type Type { get; internal set; }
-            public NodeGenerator Setting { get; internal set; }
-            public bool IsStatic { get; set; }
-
-            public string path;
-            public CSCodeGenerator generator = new();
-
-            public abstract void Generate();
-        }
-
-        public class Method2NodeGenerator : Generator
-        {
-            public override void Generate()
-            {
-
-            }
-        }
-
-
         public List<Generator> ClollectGenerateTask(HashSet<Type> types)
         {
             List<Generator> generators = new List<Generator>();
 
+            int index = 0;
             foreach (var type in types)
             {
                 var members = type.GetMembers(
@@ -1065,6 +1042,7 @@ public override bool CheckCondition(object options = null)
                 | System.Reflection.BindingFlags.Instance
                 | BindingFlags.Static).ToList();
 
+                var progress = (float)index / types.Count;
 
                 for (int i = 0; i < members.Count; i++)
                 {
@@ -1074,6 +1052,10 @@ public override bool CheckCondition(object options = null)
                         continue;
                     }
 
+                    EditorUtility.DisplayProgressBar("GenerateCode",
+                                                     $"Clollect Generate Task ...  {type.Name}.{member.Name}",
+                                                     progress);
+                    
                     //忽略过时API
                     var ob = member.GetCustomAttribute<ObsoleteAttribute>();
                     if (ob != null)
@@ -1314,10 +1296,35 @@ public override bool CheckCondition(object options = null)
                     }
                 }
 
+                index++;
             }
 
             return generators;
         }
+       
+        
+        public abstract class Generator
+        {
+            public string ClassName { get; internal set; }
+            public MemberInfo MemberInfo { get; internal set; }
+            public Type Type { get; internal set; }
+            public NodeGenerator Setting { get; internal set; }
+            public bool IsStatic { get; set; }
+
+            public string path;
+            public CSCodeGenerator generator = new();
+
+            public abstract void Generate();
+        }
+
+        public class Method2NodeGenerator : Generator
+        {
+            public override void Generate()
+            {
+
+            }
+        }
+
 
     }
 }
