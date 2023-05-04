@@ -25,12 +25,20 @@ MonoBehaviour:
     Value: UnityEngine.InputSystem.InputSystem
   - Enabled: 1
     Value: UnityEngine.InputSystem.InputActionAsset
-  IgnoreMethods: []
+  IgnoreGeneratedClass: []
   ObsoleteAPIInFuture: []
   ReplaceIcon: []
   ReplaceCategory:
   - oldValue: UnityEngine/InputSystem
     newValue: UnityEngine
-  GMethods: 1
-  GFields: 1
-  GProperties: 1
+  GMethods: 0
+  GFields: 0
+  GProperties: 0
+  Field2GetNode: 0
+  Field2SetNode: 0
+  Field2Deco: 1
+  Proterty2GetNode: 0
+  Proterty2SetNode: 0
+  Proterty2Deco: 1
+  Method2Node: 1
+  Method2Deco: 0

@@ -99,6 +99,17 @@ MonoBehaviour:
   - Vector3Int_Item
   - Vector4_Item
   - Vector4Int_Item
+  - Input_IsJoystickPreconfigured_String_Decorator
+  - Light_SetLightDirty_Decorator
+  - Light_shadowAngle_Decorator
+  - Light_shadowRadius_Decorator
+  - Quaternion_Item_Decorator
+  - Vector2_Item_Decorator
+  - Vector2Int_Item_Decorator
+  - Vector3_Item_Decorator
+  - Vector3Int_Item_Decorator
+  - Vector4_Item_Decorator
+  - Vector4Int_Item_Decorator
   - ParticleSystem_GetParticles_NativeArray_1_Particle
   - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Int32
   - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32
@@ -120,6 +131,14 @@ MonoBehaviour:
   - Physics2D_velocityThreshold
   - Physics_autoSimulation
   - Physics_RebuildBroadphaseRegions_Bounds_Int32
+  - Physics2D_alwaysShowColliders_Decorator
+  - Physics2D_contactArrowScale_Decorator
+  - Physics2D_showColliderAABB_Decorator
+  - Physics2D_showColliderContacts_Decorator
+  - Physics2D_showColliderSleep_Decorator
+  - Physics2D_velocityThreshold_Decorator
+  - Physics_autoSimulation_Decorator
+  - Physics_RebuildBroadphaseRegions_Bounds_Int32_Node
   ReplaceIcon:
   - Type: UnityEngine.Input
     IconPath: standaloneinputmodule icon
@@ -142,9 +161,9 @@ MonoBehaviour:
   GProperties: 0
   Field2GetNode: 0
   Field2SetNode: 0
-  Field2Deco: 0
+  Field2Deco: 1
   Proterty2GetNode: 0
   Proterty2SetNode: 0
-  Proterty2Deco: 0
+  Proterty2Deco: 1
   Method2Node: 1
   Method2Deco: 0

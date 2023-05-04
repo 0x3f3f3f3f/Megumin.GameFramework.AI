@@ -63,12 +63,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
         [Space]
         public bool Field2GetNode = false;
-        public bool Field2SetNode = true;
+        public bool Field2SetNode = false;
         public bool Field2Deco = true;
 
         [Space]
         public bool Proterty2GetNode = false;
-        public bool Proterty2SetNode = true;
+        public bool Proterty2SetNode = false;
         public bool Proterty2Deco = true;
 
         [Space]
@@ -1516,7 +1516,8 @@ public override bool CheckCondition(object options = null)
                         }
                     }
                     else if (memberType == typeof(int)
-                        || memberType == typeof(float))
+                        || memberType == typeof(float)
+                        || memberType == typeof(double))
                     {
                         if (useComponent)
                         {
