@@ -117,10 +117,12 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             return false;
         }
 
-
+        string OutputDir = "";
         [ContextMenu("Generate")]
         public void Generate()
         {
+            OutputDir = AssetDatabase.GetAssetPath(OutputFolder);
+
             var list = VariableCreator.AllCreator;
             foreach (var item in list)
             {
@@ -207,11 +209,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
 
 
-            List<Generator> generators = new List<Generator>();
-            foreach (var item in types)
-            {
-                generators.AddRange(ClollectGenerateTask(item));
-            }
+            List<Generator> generators = ClollectGenerateTask(types);
 
             foreach (var item in generators)
             {
@@ -1033,222 +1031,289 @@ public override bool CheckCondition(object options = null)
     public partial class NodeGenerator
     {
 
-        public class Generator
+        public abstract class Generator
         {
             public string ClassName { get; internal set; }
             public MemberInfo MemberInfo { get; internal set; }
             public Type Type { get; internal set; }
+            public NodeGenerator Setting { get; internal set; }
+            public bool IsStatic { get; set; }
 
-            public void Generate()
+            public string path;
+            public CSCodeGenerator generator = new();
+
+            public abstract void Generate();
+        }
+
+        public class Method2NodeGenerator : Generator
+        {
+            public override void Generate()
             {
 
             }
         }
 
-        public List<Generator> ClollectGenerateTask(Type type)
+
+        public List<Generator> ClollectGenerateTask(HashSet<Type> types)
         {
-            var members = type.GetMembers(
+            List<Generator> generators = new List<Generator>();
+
+            foreach (var type in types)
+            {
+                var members = type.GetMembers(
                 System.Reflection.BindingFlags.Public
                 | System.Reflection.BindingFlags.Instance
                 | BindingFlags.Static).ToList();
 
-            List<Generator> generators = new List<Generator>();
-            for (int i = 0; i < members.Count; i++)
-            {
-                MemberInfo member = members[i];
-                if (member.DeclaringType != type)
+
+                for (int i = 0; i < members.Count; i++)
                 {
-                    continue;
-                }
-
-                //忽略过时API
-                var ob = member.GetCustomAttribute<ObsoleteAttribute>();
-                if (ob != null)
-                {
-                    continue;
-                }
-
-                //忽略平台不一致API
-                var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
-                var nc = member.GetCustomAttribute(NativeConditionalAttributeType);
-                if (nc != null)
-                {
-                    continue;
-                }
-
-
-
-                Generator generator = null;
-
-
-                if (member is FieldInfo filed)
-                {
-                    if (filed.IsSpecialName)
+                    MemberInfo member = members[i];
+                    if (member.DeclaringType != type)
                     {
                         continue;
                     }
 
-                    if (Field2Deco)
-                    {
-                        //忽略指定方法
-                        var className = GetClassName(type, member);
-                        className += "_Decorator";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-
-                    if (Field2GetNode)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_GetNode";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-
-                    if (Field2SetNode)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_SetNode";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-                }
-                else if (member is PropertyInfo prop)
-                {
-                    if (prop.IsSpecialName)
+                    //忽略过时API
+                    var ob = member.GetCustomAttribute<ObsoleteAttribute>();
+                    if (ob != null)
                     {
                         continue;
                     }
 
-                    if (Proterty2Deco)
-                    {
-                        //忽略指定方法
-                        var className = GetClassName(type, member);
-                        className += "_Decorator";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-
-                    if (Proterty2GetNode)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_GetNode";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-
-                    if (Proterty2SetNode)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_SetNode";
-                        if (IgnoreGeneratedClass.Contains(className))
-                        {
-                            continue;
-                        }
-
-                        generator = new();
-                        generator.ClassName = className;
-                    }
-                }
-                else if (member is MethodInfo method)
-                {
-                    if (method.IsSpecialName)
+                    //忽略平台不一致API
+                    var NativeConditionalAttributeType = Megumin.Reflection.TypeCache.GetType("UnityEngine.Bindings.NativeConditionalAttribute");
+                    var nc = member.GetCustomAttribute(NativeConditionalAttributeType);
+                    if (nc != null)
                     {
                         continue;
                     }
 
-                    if (method.IsGenericMethod)
-                    {
-                        //忽略泛型方法
-                        continue;
-                        //if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
-                        //{
 
-                        //}
+
+                    Generator generator = null;
+
+
+                    if (member is FieldInfo filed)
+                    {
+                        if (filed.IsSpecialName)
+                        {
+                            continue;
+                        }
+
+                        if (Field2Deco)
+                        {
+                            //忽略指定方法
+                            var className = GetClassName(type, member);
+                            className += "_Decorator";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            generator = new Method2NodeGenerator();
+                            generator.ClassName = className;
+                            generator.IsStatic = filed.IsStatic;
+                        }
+
+                        if (Field2GetNode)
+                        {
+                            var className = GetClassName(type, member);
+                            className += "_GetNode";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            generator = new Method2NodeGenerator();
+                            generator.ClassName = className;
+                            generator.IsStatic = filed.IsStatic;
+                        }
+
+                        if (Field2SetNode)
+                        {
+                            var className = GetClassName(type, member);
+                            className += "_SetNode";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            generator = new Method2NodeGenerator();
+                            generator.ClassName = className;
+                            generator.IsStatic = filed.IsStatic;
+                        }
                     }
-
-
-                    //检查参数是否支持转化为节点
-                    var @params = method.GetParameters();
-                    bool supportParams = true;
-                    if (method.ReturnType != typeof(void) && TryGetParamType(method.ReturnType, out var _) == false)
+                    else if (member is PropertyInfo prop)
                     {
-                        supportParams &= false;
+                        if (prop.IsSpecialName)
+                        {
+                            continue;
+                        }
+
+                        if (Proterty2Deco)
+                        {
+                            //忽略指定方法
+                            var className = GetClassName(type, member);
+                            className += "_Decorator";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            if (prop.CanRead)
+                            {
+                                generator = new Method2NodeGenerator();
+                                generator.ClassName = className;
+                                generator.IsStatic = prop.GetMethod.IsStatic;
+                            }
+                        }
+
+                        if (Proterty2GetNode)
+                        {
+                            var className = GetClassName(type, member);
+                            className += "_GetNode";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            if (prop.CanRead)
+                            {
+                                generator = new Method2NodeGenerator();
+                                generator.ClassName = className;
+                                generator.IsStatic = prop.GetMethod.IsStatic;
+                            }
+                        }
+
+                        if (Proterty2SetNode)
+                        {
+                            var className = GetClassName(type, member);
+                            className += "_SetNode";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            if (prop.CanWrite)
+                            {
+                                generator = new Method2NodeGenerator();
+                                generator.ClassName = className;
+                                generator.IsStatic = prop.SetMethod.IsStatic;
+                            }
+                        }
                     }
-
-                    foreach (var item in @params)
+                    else if (member is MethodInfo method)
                     {
-                        if (TryGetParamType(item, out var _) == false)
+                        if (method.IsSpecialName)
+                        {
+                            continue;
+                        }
+
+                        if (method.IsGenericMethod)
+                        {
+                            //忽略泛型方法
+                            continue;
+                            //if (method.ContainsGenericParameters == false || method.ReturnType.IsGenericParameter)
+                            //{
+
+                            //}
+                        }
+
+
+                        //检查参数是否支持转化为节点
+                        var @params = method.GetParameters();
+                        bool supportParams = true;
+                        if (method.ReturnType != typeof(void) && TryGetParamType(method.ReturnType, out var _) == false)
                         {
                             supportParams &= false;
-                            break;
                         }
-                    }
 
-                    if (supportParams == false)
-                    {
-                        continue;
-                    }
+                        foreach (var item in @params)
+                        {
+                            if (TryGetParamType(item, out var _) == false)
+                            {
+                                supportParams &= false;
+                                break;
+                            }
+                        }
 
-
-                    if (Method2Node)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_Node";
-                        if (IgnoreGeneratedClass.Contains(className))
+                        if (supportParams == false)
                         {
                             continue;
                         }
 
-                        generator = new();
-                        generator.ClassName = className;
-                    }
 
-                    if (Method2Deco)
-                    {
-                        var className = GetClassName(type, member);
-                        className += "_Decorator";
-                        if (IgnoreGeneratedClass.Contains(className))
+                        if (Method2Node)
                         {
-                            continue;
+                            var className = GetClassName(type, member);
+                            className += "_Node";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            generator = new Method2NodeGenerator();
+                            generator.ClassName = className;
+                            generator.IsStatic = method.IsStatic;
                         }
 
-                        generator = new();
-                        generator.ClassName = className;
+                        if (Method2Deco)
+                        {
+                            var className = GetClassName(type, member);
+                            className += "_Decorator";
+                            if (IgnoreGeneratedClass.Contains(className))
+                            {
+                                continue;
+                            }
+
+                            generator = new Method2NodeGenerator();
+                            generator.ClassName = className;
+                            generator.IsStatic = method.IsStatic;
+                        }
+                    }
+
+                    if (generator != null)
+                    {
+                        generator.MemberInfo = member;
+                        generator.Type = type;
+                        generator.Setting = this;
+
+                        var fileName = $"{generator.ClassName}.cs";
+                        var dir = AssetDatabase.GetAssetPath(OutputFolder);
+
+                        dir = Path.Combine(dir, type.Name);
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        string filePath = Path.Combine(dir, fileName);
+
+                        generator.path = Path.GetFullPath(filePath);
+
+                        //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
+                        if (Megumin.Reflection.TypeCache.TryGetType(
+                            $"Megumin.GameFramework.AI.BehaviorTree.{generator.ClassName}",
+                            out var oldType))
+                        {
+                            var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                            if (script != null)
+                            {
+                                var oldPath = AssetDatabase.GetAssetPath(script);
+                                oldPath = Path.GetFullPath(oldPath);
+                                if (oldPath != generator.path)
+                                {
+                                    Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
+                                    continue;
+                                }
+                            }
+                        }
+
+                        generators.Add(generator);
                     }
                 }
 
-                if (generator != null)
-                {
-                    generator.MemberInfo = member;
-                    generator.Type = type;
-                    generators.Add(generator);
-                }
             }
 
             return generators;
