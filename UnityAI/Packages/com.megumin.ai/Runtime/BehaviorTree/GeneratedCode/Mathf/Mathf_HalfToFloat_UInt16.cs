@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public sealed class Mathf_HalfToFloat_UInt16 : BTActionNode
     {
         [Space]
-        public Megumin.Binding.RefVar<System.UInt16> val;
+        public Megumin.Binding.RefVar<ushort> val;
 
         [Space]
         public Megumin.Binding.RefVar_Float SaveValueTo;

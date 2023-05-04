@@ -22,7 +22,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         public Megumin.Binding.RefVar_Float val;
 
         [Space]
-        public Megumin.Binding.RefVar<System.UInt16> SaveValueTo;
+        public Megumin.Binding.RefVar<ushort> SaveValueTo;
 
         protected override Status OnTick(BTNode from, object options = null)
         {

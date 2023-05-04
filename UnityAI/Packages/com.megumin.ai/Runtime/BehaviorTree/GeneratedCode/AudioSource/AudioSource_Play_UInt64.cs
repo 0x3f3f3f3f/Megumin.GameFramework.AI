@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     public sealed class AudioSource_Play_UInt64 : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]
-        public Megumin.Binding.RefVar<System.UInt64> delay;
+        public Megumin.Binding.RefVar<ulong> delay;
 
         protected override Status OnTick(BTNode from, object options = null)
         {
