@@ -9,6 +9,7 @@ public interface IAnimal
     string Name { get; }
     int Age { get; }
     void Wow();
+    int GetAge();
 }
 
 public class AnimalWow : BTActionNode<IAnimal>

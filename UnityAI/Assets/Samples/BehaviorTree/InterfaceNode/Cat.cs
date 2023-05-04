@@ -24,4 +24,9 @@ public class Cat : MonoBehaviour, IAnimal
 
     public string Name { get; } = "Tom";
     public int Age { get; } = 5;
+
+    public int GetAge()
+    {
+        return Age;
+    }
 }

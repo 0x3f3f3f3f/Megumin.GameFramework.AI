@@ -24,4 +24,9 @@ public class Dog : MonoBehaviour, IAnimal
 
     public string Name { get; } = "Spike";
     public int Age { get; } = 8;
+
+    public int GetAge()
+    {
+        return Age;
+    }
 }

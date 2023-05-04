@@ -1072,10 +1072,6 @@ public override bool CheckCondition(object options = null)
                     }
 
 
-
-                    Generator generator = null;
-
-
                     if (member is FieldInfo filed)
                     {
                         if (filed.IsSpecialName)
@@ -1093,9 +1089,17 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            generator = new Method2NodeGenerator();
+                            var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
+                            generator.MemberInfo = member;
+                            generator.Type = type;
+                            generator.Setting = this;
+
+                            if (generator.CheckPath())
+                            {
+                                generators.Add(generator);
+                            }
                         }
 
                         if (Field2GetNode)
@@ -1107,9 +1111,17 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            generator = new Method2NodeGenerator();
+                            var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
+                            generator.MemberInfo = member;
+                            generator.Type = type;
+                            generator.Setting = this;
+
+                            if (generator.CheckPath())
+                            {
+                                generators.Add(generator);
+                            }
                         }
 
                         if (Field2SetNode)
@@ -1121,9 +1133,17 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            generator = new Method2NodeGenerator();
+                            var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
+                            generator.MemberInfo = member;
+                            generator.Type = type;
+                            generator.Setting = this;
+
+                            if (generator.CheckPath())
+                            {
+                                generators.Add(generator);
+                            }
                         }
                     }
                     else if (member is PropertyInfo prop)
@@ -1145,9 +1165,17 @@ public override bool CheckCondition(object options = null)
 
                             if (prop.CanRead)
                             {
-                                generator = new Method2NodeGenerator();
+                                var generator = new Method2NodeGenerator();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.GetMethod.IsStatic;
+                                generator.MemberInfo = member;
+                                generator.Type = type;
+                                generator.Setting = this;
+
+                                if (generator.CheckPath())
+                                {
+                                    generators.Add(generator);
+                                }
                             }
                         }
 
@@ -1162,9 +1190,17 @@ public override bool CheckCondition(object options = null)
 
                             if (prop.CanRead)
                             {
-                                generator = new Method2NodeGenerator();
+                                var generator = new Method2NodeGenerator();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.GetMethod.IsStatic;
+                                generator.MemberInfo = member;
+                                generator.Type = type;
+                                generator.Setting = this;
+
+                                if (generator.CheckPath())
+                                {
+                                    generators.Add(generator);
+                                }
                             }
                         }
 
@@ -1179,9 +1215,17 @@ public override bool CheckCondition(object options = null)
 
                             if (prop.CanWrite)
                             {
-                                generator = new Method2NodeGenerator();
+                                var generator = new Method2NodeGenerator();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.SetMethod.IsStatic;
+                                generator.MemberInfo = member;
+                                generator.Type = type;
+                                generator.Setting = this;
+
+                                if (generator.CheckPath())
+                                {
+                                    generators.Add(generator);
+                                }
                             }
                         }
                     }
@@ -1235,9 +1279,17 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            generator = new Method2NodeGenerator();
+                            var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = method.IsStatic;
+                            generator.MemberInfo = member;
+                            generator.Type = type;
+                            generator.Setting = this;
+
+                            if (generator.CheckPath())
+                            {
+                                generators.Add(generator);
+                            }
                         }
 
                         if (Method2Deco)
@@ -1249,50 +1301,23 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            generator = new Method2NodeGenerator();
+                            if (TargetTypeCan2Deco(method.ReturnType) == false)
+                            {
+                                continue;
+                            }
+
+                            var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
                             generator.IsStatic = method.IsStatic;
-                        }
-                    }
+                            generator.MemberInfo = member;
+                            generator.Type = type;
+                            generator.Setting = this;
 
-                    if (generator != null)
-                    {
-                        generator.MemberInfo = member;
-                        generator.Type = type;
-                        generator.Setting = this;
-
-                        var fileName = $"{generator.ClassName}.cs";
-                        var dir = AssetDatabase.GetAssetPath(OutputFolder);
-
-                        dir = Path.Combine(dir, type.Name);
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
-
-                        string filePath = Path.Combine(dir, fileName);
-
-                        generator.path = Path.GetFullPath(filePath);
-
-                        //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
-                        if (Megumin.Reflection.TypeCache.TryGetType(
-                            $"Megumin.GameFramework.AI.BehaviorTree.{generator.ClassName}",
-                            out var oldType))
-                        {
-                            var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
-                            if (script != null)
+                            if (generator.CheckPath())
                             {
-                                var oldPath = AssetDatabase.GetAssetPath(script);
-                                oldPath = Path.GetFullPath(oldPath);
-                                if (oldPath != generator.path)
-                                {
-                                    Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
-                                    continue;
-                                }
+                                generators.Add(generator);
                             }
                         }
-
-                        generators.Add(generator);
                     }
                 }
 
@@ -1300,6 +1325,20 @@ public override bool CheckCondition(object options = null)
             }
 
             return generators;
+        }
+
+        public bool TargetTypeCan2Deco(Type type)
+        {
+            if (type == typeof(bool)
+                || type == typeof(string)
+                || type == typeof(int)
+                || type == typeof(float)
+                || type == typeof(double))
+            {
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -1313,6 +1352,45 @@ public override bool CheckCondition(object options = null)
 
             public string path;
             public CSCodeGenerator generator = new();
+
+            public bool UseComponent => Type.IsSubclassOf(typeof(UnityEngine.Component)) || Type == typeof(GameObject) || Type.IsInterface;
+
+
+            public bool CheckPath()
+            {
+                var fileName = $"{ClassName}.cs";
+                var dir = AssetDatabase.GetAssetPath(Setting.OutputFolder);
+
+                dir = Path.Combine(dir, Type.Name);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                string filePath = Path.Combine(dir, fileName);
+
+                path = Path.GetFullPath(filePath);
+
+                //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
+                if (Megumin.Reflection.TypeCache.TryGetType(
+                    $"Megumin.GameFramework.AI.BehaviorTree.{ClassName}",
+                    out var oldType))
+                {
+                    var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                    if (script != null)
+                    {
+                        var oldPath = AssetDatabase.GetAssetPath(script);
+                        oldPath = Path.GetFullPath(oldPath);
+                        if (oldPath != path)
+                        {
+                            Debug.Log($"发现已有脚本文件，跳过生成。 {oldPath}");
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
 
             public abstract void Generate();
 
@@ -1388,6 +1466,61 @@ public override bool CheckCondition(object options = null)
                 generator.Macro["$(MemberName)"] = member.Name;
                 generator.Macro["$(CodeGenericType)"] = typeof(NodeGenerator).FullName;
             }
+
+            public string GetBaseTypeString(Type memberType, bool useComponent, bool isnode)
+            {
+                string baseTypeSting = null;
+                if (isnode)
+                {
+                    if (useComponent)
+                    {
+                        baseTypeSting = "BTActionNode<$(ComponentName)>";
+                    }
+                    else
+                    {
+                        baseTypeSting = "BTActionNode";
+                    }
+                }
+                else
+                {
+                    if (memberType == typeof(bool))
+                    {
+                        if (useComponent)
+                        {
+                            baseTypeSting = "ConditionDecorator<$(ComponentName)>";
+                        }
+                        else
+                        {
+                            baseTypeSting = "ConditionDecorator";
+                        }
+                    }
+                    else if (memberType == typeof(string))
+                    {
+                        if (useComponent)
+                        {
+                            baseTypeSting = "CompareDecorator<$(ComponentName), string>";
+                        }
+                        else
+                        {
+                            baseTypeSting = "CompareDecorator<string>";
+                        }
+                    }
+                    else if (memberType == typeof(int)
+                        || memberType == typeof(float))
+                    {
+                        if (useComponent)
+                        {
+                            baseTypeSting = $"CompareDecorator<$(ComponentName), {memberType.ToCode()}>";
+                        }
+                        else
+                        {
+                            baseTypeSting = $"CompareDecorator<{memberType.ToCode()}>";
+                        }
+                    }
+                }
+
+                return baseTypeSting;
+            }
         }
 
         public class Method2NodeGenerator : Generator
@@ -1459,23 +1592,12 @@ public override bool CheckCondition(object options = null)
                 {
                     GenerateAttribute(type, method, className, generator);
 
-                    var UseMyAgent = type.IsSubclassOf(typeof(UnityEngine.Component)) || type == typeof(GameObject) || type.IsInterface;
-
-                    var BaseType = "BTActionNode";
-
-                    if (IsStatic || UseMyAgent == false)
-                    {
-                        generator.Push($"public sealed class $(ClassName) : {BaseType}");
-                    }
-                    else
-                    {
-                        generator.Push($"public sealed class $(ClassName) : {BaseType}<$(ComponentName)>");
-                    }
+                    generator.Push($"public sealed class $(ClassName) : $(BaseClassName)");
 
                     using (generator.NewScope)
                     {
                         //generator.Push($"public string Title => \"$(Title)\";");
-                        if (IsStatic == false && UseMyAgent == false)
+                        if (IsStatic == false && UseComponent == false)
                         {
                             generator.Push($"[Space]");
                             if (Setting.TryGetParamType(type, out var paramType))
@@ -1570,11 +1692,22 @@ public override bool CheckCondition(object options = null)
                 generator.PushBlankLines(4);
 
                 AddMacro(type, method, generator);
-
+                AddBaseType(method);
                 generator.Generate(path);
+            }
+
+            public virtual void AddBaseType(MethodInfo method)
+            {
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, true);
             }
         }
 
-
+        public class Method2DecoGenerator : Method2NodeGenerator
+        {
+            public override void AddBaseType(MethodInfo method)
+            {
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
+            }
+        }
     }
 }
