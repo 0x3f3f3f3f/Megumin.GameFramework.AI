@@ -22,7 +22,7 @@ public class Dog : MonoBehaviour, IAnimal
         Debug.Log("Dog Wow!");
     }
 
-    public string Name { get; } = "Spike";
+    public string Name { get; set; } = "Spike";
     public int Age { get; } = 8;
 
     public int GetAge()
