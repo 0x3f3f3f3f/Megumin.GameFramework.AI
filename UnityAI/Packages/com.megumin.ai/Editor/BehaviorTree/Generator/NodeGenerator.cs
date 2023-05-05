@@ -360,7 +360,7 @@ public override bool CheckCondition(object options = null)
                                 continue;
                             }
 
-                            var generator = new Method2NodeGenerator();
+                            var generator = new FeildProperty2GetNode();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
                             generator.MemberInfo = member;
@@ -444,7 +444,7 @@ public override bool CheckCondition(object options = null)
 
                             if (prop.CanRead)
                             {
-                                var generator = new Method2NodeGenerator();
+                                var generator = new FeildProperty2GetNode();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.GetMethod.IsStatic;
                                 generator.MemberInfo = member;
@@ -769,10 +769,7 @@ public override bool CheckCondition(object options = null)
 
                 return baseTypeSting;
             }
-        }
 
-        public class Method2NodeGenerator : Generator
-        {
             public void DeclaringMyAgent(Type type)
             {
                 if (IsStatic == false && UseComponent == false)
@@ -790,6 +787,27 @@ public override bool CheckCondition(object options = null)
                 }
             }
 
+            public virtual bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
+            {
+                bool saveResult = false;
+                if (type != null && type != typeof(void))
+                {
+                    //存在返回值 。储存返回值
+                    if (Setting.TryGetParamType(type, out var returnType))
+                    {
+                        saveResult = true;
+                        generator.Push($"[Space]");
+                        generator.Push($"public {returnType.ToCode()} SaveValueTo;");
+                        generator.PushBlankLines();
+                    }
+                }
+
+                return saveResult;
+            }
+        }
+
+        public class Method2NodeGenerator : Generator
+        {
             public void DeclaringParams(MethodInfo method, CSCodeGenerator generator)
             {
                 //声明参数
@@ -815,24 +833,6 @@ public override bool CheckCondition(object options = null)
                 {
                     generator.PushBlankLines();
                 }
-            }
-
-            public virtual bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
-            {
-                bool saveResult = false;
-                if (type != null && type != typeof(void))
-                {
-                    //存在返回值 。储存返回值
-                    if (Setting.TryGetParamType(type, out var returnType))
-                    {
-                        saveResult = true;
-                        generator.Push($"[Space]");
-                        generator.Push($"public {returnType.ToCode()} SaveValueTo;");
-                        generator.PushBlankLines();
-                    }
-                }
-
-                return saveResult;
             }
 
             public override void Generate()
@@ -1081,5 +1081,99 @@ public override bool CheckCondition(object options = null)
             }
         }
 
+        public class FeildProperty2GetNode : Generator
+        {
+            public override void Generate()
+            {
+                string className = ClassName;
+                var Define = Setting.Define;
+                var type = Type;
+                var member = MemberInfo;
+                var memberType = member.GetMemberType();
+
+                if (Define.Enabled)
+                {
+                    generator.Push($"#if {Define.Value}");
+                    generator.PushBlankLines();
+                }
+
+                GenerateUsing(generator);
+
+                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                using (generator.NewScope)
+                {
+                    GenerateAttribute(type, MemberInfo, className, generator);
+
+                    generator.Push($"public sealed class $(ClassName) : $(BaseClassName)");
+
+                    using (generator.NewScope)
+                    {
+                        //generator.Push($"public string Title => \"$(Title)\";");
+                        DeclaringMyAgent(type);
+
+                        bool saveResult = DeclaringSavaValueTo(memberType, generator);
+
+                        GenerateMainMethod(type, saveResult);
+
+                        if (IsStatic)
+                        {
+                            generator.Macro["$(GetValueCode)"] = $"var result = $(ComponentName).$(MemberName);";
+                        }
+                        else
+                        {
+                            generator.Macro["$(GetValueCode)"] = $"var result = (($(ComponentName))MyAgent).$(MemberName);";
+                        }
+                    }
+                }
+
+                if (Define.Enabled)
+                {
+                    generator.PushBlankLines();
+                    generator.Push($"#endif");
+                }
+
+                generator.PushBlankLines(4);
+
+                AddMacro(type, MemberInfo, generator);
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
+                generator.Generate(path);
+            }
+
+            public virtual void GenerateMainMethod(Type type, bool saveResult)
+            {
+                string BTNodeFrom = "from";
+                if (MemberInfo.Name == BTNodeFrom)
+                {
+                    BTNodeFrom += "1";
+                }
+
+                string ObjectOptions = "options";
+                if (MemberInfo.Name == ObjectOptions)
+                {
+                    ObjectOptions += "1";
+                }
+
+                generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+
+                using (generator.NewScope)
+                {
+                    generator.Push("$(GetValueCode)");
+
+                    if (saveResult)
+                    {
+                        generator.PushBlankLines();
+                        generator.Push($"if (SaveValueTo != null)");
+                        using (generator.NewScope)
+                        {
+                            generator.Push($"SaveValueTo.Value = result;");
+                        }
+                        generator.PushBlankLines();
+                    }
+
+                    generator.Push($"return Status.Succeeded;");
+                }
+            }
+
+        }
     }
 }
