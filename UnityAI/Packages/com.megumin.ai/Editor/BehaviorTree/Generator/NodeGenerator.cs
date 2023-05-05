@@ -274,6 +274,16 @@ public override bool CheckCondition(object options = null)
     return result;
 }
 ";
+        public const string FieldSetValueNodeTemplate =
+@"[Space]
+public $(RefVarType) Value;
+
+protected override Status OnTick(BTNode from, object options = null)
+{
+    $(GetValueCode)
+    return Status.Succeeded;
+}
+";
         public List<Generator> ClollectGenerateTask(HashSet<Type> types)
         {
             List<Generator> generators = new List<Generator>();
@@ -354,7 +364,7 @@ public override bool CheckCondition(object options = null)
                         if (Field2GetNode)
                         {
                             var className = GetClassName(type, member);
-                            className += "_GetNode";
+                            className += "_Get_Node";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
                                 continue;
@@ -376,13 +386,13 @@ public override bool CheckCondition(object options = null)
                         if (Field2SetNode)
                         {
                             var className = GetClassName(type, member);
-                            className += "_SetNode";
+                            className += "_Set_Node";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
                                 continue;
                             }
 
-                            var generator = new Method2NodeGenerator();
+                            var generator = new FeildProperty2SetNode();
                             generator.ClassName = className;
                             generator.IsStatic = filed.IsStatic;
                             generator.MemberInfo = member;
@@ -436,7 +446,7 @@ public override bool CheckCondition(object options = null)
                         if (Proterty2GetNode)
                         {
                             var className = GetClassName(type, member);
-                            className += "_GetNode";
+                            className += "_Get_Node";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
                                 continue;
@@ -461,7 +471,7 @@ public override bool CheckCondition(object options = null)
                         if (Proterty2SetNode)
                         {
                             var className = GetClassName(type, member);
-                            className += "_SetNode";
+                            className += "_Set_Node";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
                                 continue;
@@ -469,7 +479,7 @@ public override bool CheckCondition(object options = null)
 
                             if (prop.CanWrite)
                             {
-                                var generator = new Method2NodeGenerator();
+                                var generator = new FeildProperty2SetNode();
                                 generator.ClassName = className;
                                 generator.IsStatic = prop.SetMethod.IsStatic;
                                 generator.MemberInfo = member;
@@ -1174,6 +1184,67 @@ public override bool CheckCondition(object options = null)
                 }
             }
 
+        }
+
+        public class FeildProperty2SetNode : Generator
+        {
+            public override void Generate()
+            {
+                string className = ClassName;
+                var Define = Setting.Define;
+                var type = Type;
+                var member = MemberInfo;
+                var memberType = member.GetMemberType();
+
+                if (Define.Enabled)
+                {
+                    generator.Push($"#if {Define.Value}");
+                    generator.PushBlankLines();
+                }
+
+                GenerateUsing(generator);
+
+                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                using (generator.NewScope)
+                {
+                    GenerateAttribute(type, MemberInfo, className, generator);
+
+                    generator.Push($"public sealed class $(ClassName) : $(BaseClassName)");
+
+                    using (generator.NewScope)
+                    {
+                        //generator.Push($"public string Title => \"$(Title)\";");
+                        DeclaringMyAgent(type);
+
+                        generator.PushTemplate(FieldSetValueNodeTemplate);
+
+                        Setting.TryGetParamType(memberType, out var returnType);
+
+                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
+                        generator.Macro["$(MemberType)"] = memberType.ToCode();
+                        if (IsStatic)
+                        {
+                            generator.Macro["$(GetValueCode)"] = $"$(ComponentName).$(MemberName) = Value;";
+                        }
+                        else
+                        {
+                            generator.Macro["$(GetValueCode)"] = $"(($(ComponentName))MyAgent).$(MemberName) = Value;";
+                        }
+                    }
+                }
+
+                if (Define.Enabled)
+                {
+                    generator.PushBlankLines();
+                    generator.Push($"#endif");
+                }
+
+                generator.PushBlankLines(4);
+
+                AddMacro(type, MemberInfo, generator);
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
+                generator.Generate(path);
+            }
         }
     }
 }
