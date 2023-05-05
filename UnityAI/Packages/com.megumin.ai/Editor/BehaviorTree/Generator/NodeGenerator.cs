@@ -242,7 +242,7 @@ public $(RefVarType) SaveValueTo;
 
 public override $(MemberTyoe) GetResult()
 {
-    var result = $(MyAgent).$(MemberName);
+    $(GetValueCode)
 
     if (SaveValueTo != null)
     {
@@ -264,7 +264,7 @@ public $(RefVarType) SaveValueTo;
 
 public override bool CheckCondition(object options = null)
 {
-    var result = $(MyAgent).$(MemberName);
+    $(GetValueCode)
 
     if (SaveValueTo != null)
     {
@@ -613,14 +613,7 @@ public override bool CheckCondition(object options = null)
             public bool CheckPath()
             {
                 var fileName = $"{ClassName}.cs";
-                var dir = AssetDatabase.GetAssetPath(Setting.OutputFolder);
-
-                dir = Path.Combine(dir, Type.Name);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-
+                var dir = Path.Combine(Setting.OutputDir, Type.Name);
                 string filePath = Path.Combine(dir, fileName);
 
                 path = Path.GetFullPath(filePath);
@@ -867,74 +860,7 @@ public override bool CheckCondition(object options = null)
                         }
 
                         bool saveResult = GenerateDeclaringMember(method, generator);
-
-                        var @params = method.GetParameters();
-
-                        string BTNodeFrom = "from";
-                        if (@params.Any(elem => elem.Name == BTNodeFrom))
-                        {
-                            BTNodeFrom += "1";
-                        }
-
-                        string ObjectOptions = "options";
-                        if (@params.Any(elem => elem.Name == ObjectOptions))
-                        {
-                            ObjectOptions += "1";
-                        }
-
-                        generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
-
-                        using (generator.NewScope)
-                        {
-                            //MyAgent.CalculatePath(targetPosition, path);
-                            var callString = "";
-                            if (saveResult)
-                            {
-                                callString += "var result = ";
-                            }
-
-                            if (method.IsStatic)
-                            {
-                                callString += $"{type.FullName}.{method.Name}(";
-                            }
-                            else
-                            {
-                                callString += $"(({type.FullName})MyAgent).{method.Name}(";
-                            }
-
-
-                            for (int i = 0; i < @params.Length; i++)
-                            {
-                                if (i != 0)
-                                {
-                                    callString += ", ";
-                                }
-
-                                var param = @params[i];
-                                if (param.IsOut)
-                                {
-                                    callString += $"out var ";
-                                }
-
-                                callString += $"{param.Name}";
-                            }
-                            callString += ");";
-
-                            generator.Push(callString);
-
-                            if (saveResult)
-                            {
-                                generator.PushBlankLines();
-                                generator.Push($"if (SaveValueTo != null)");
-                                using (generator.NewScope)
-                                {
-                                    generator.Push($"SaveValueTo.Value = result;");
-                                }
-                                generator.PushBlankLines();
-                            }
-
-                            generator.Push($"return Status.Succeeded;");
-                        }
+                        GenerateMainMethod(type, method, saveResult);
                     }
                 }
 
@@ -951,6 +877,84 @@ public override bool CheckCondition(object options = null)
                 generator.Generate(path);
             }
 
+            public virtual void GenerateMainMethod(Type type, MethodInfo method, bool saveResult)
+            {
+                var @params = method.GetParameters();
+
+                string BTNodeFrom = "from";
+                if (@params.Any(elem => elem.Name == BTNodeFrom))
+                {
+                    BTNodeFrom += "1";
+                }
+
+                string ObjectOptions = "options";
+                if (@params.Any(elem => elem.Name == ObjectOptions))
+                {
+                    ObjectOptions += "1";
+                }
+
+                generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
+
+                using (generator.NewScope)
+                {
+                    string callString = GetValueCode(type, method, saveResult);
+
+                    generator.Push(callString);
+
+                    if (saveResult)
+                    {
+                        generator.PushBlankLines();
+                        generator.Push($"if (SaveValueTo != null)");
+                        using (generator.NewScope)
+                        {
+                            generator.Push($"SaveValueTo.Value = result;");
+                        }
+                        generator.PushBlankLines();
+                    }
+
+                    generator.Push($"return Status.Succeeded;");
+                }
+            }
+
+            public virtual string GetValueCode(Type type, MethodInfo method, bool saveResult)
+            {
+                var @params = method.GetParameters();
+                //MyAgent.CalculatePath(targetPosition, path);
+                var callString = "";
+                if (saveResult)
+                {
+                    callString += "var result = ";
+                }
+
+                if (method.IsStatic)
+                {
+                    callString += $"{type.FullName}.{method.Name}(";
+                }
+                else
+                {
+                    callString += $"(({type.FullName})MyAgent).{method.Name}(";
+                }
+
+
+                for (int i = 0; i < @params.Length; i++)
+                {
+                    if (i != 0)
+                    {
+                        callString += ", ";
+                    }
+
+                    var param = @params[i];
+                    if (param.IsOut)
+                    {
+                        callString += $"out var ";
+                    }
+
+                    callString += $"{param.Name}";
+                }
+                callString += ");";
+                return callString;
+            }
+
             public virtual void AddBaseType(MethodInfo method)
             {
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, true);
@@ -962,6 +966,20 @@ public override bool CheckCondition(object options = null)
             public override void AddBaseType(MethodInfo method)
             {
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
+            }
+
+            public override void GenerateMainMethod(Type type, MethodInfo method, bool saveResult)
+            {
+                if (method.ReflectedType == typeof(bool))
+                {
+                    generator.PushTemplate(BoolDecoratorBodyTemplate);
+                }
+                else
+                {
+                    generator.PushTemplate(CompareDecoratorBodyTemplate);
+                }
+
+                generator.Macro["$(GetValueCode)"] = GetValueCode(type, method, saveResult);
             }
         }
 
@@ -1023,11 +1041,11 @@ public override bool CheckCondition(object options = null)
 
                         if (IsStatic)
                         {
-                            generator.Macro["$(MyAgent)"] = "$(ComponentName)";
+                            generator.Macro["$(GetValueCode)"] = $"var result = $(ComponentName).$(MemberName);";
                         }
                         else
                         {
-                            generator.Macro["$(MyAgent)"] = "(($(ComponentName))MyAgent)";
+                            generator.Macro["$(GetValueCode)"] = $"var result = (($(ComponentName))MyAgent).$(MemberName);";
                         }
                     }
                 }
