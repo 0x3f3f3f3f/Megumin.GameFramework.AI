@@ -240,7 +240,7 @@ public $(RefVarType) CompareTo;
 [Space]
 public $(RefVarType) SaveValueTo;
 
-public override $(MemberTyoe) GetResult()
+public override $(MemberType) GetResult()
 {
     $(GetValueCode)
 
@@ -252,7 +252,7 @@ public override $(MemberTyoe) GetResult()
     return result;
 }
 
-public override $(MemberTyoe) GetCompareTo()
+public override $(MemberType) GetCompareTo()
 {
     return CompareTo;
 }
@@ -773,7 +773,24 @@ public override bool CheckCondition(object options = null)
 
         public class Method2NodeGenerator : Generator
         {
-            public bool GenerateDeclaringMember(MethodInfo method, CSCodeGenerator generator)
+            public void DeclaringMyAgent(Type type)
+            {
+                if (IsStatic == false && UseComponent == false)
+                {
+                    generator.Push($"[Space]");
+                    if (Setting.TryGetParamType(type, out var paramType))
+                    {
+                        generator.Push($"public {paramType.ToCode()} MyAgent;");
+                    }
+                    else
+                    {
+                        generator.Push($"public {type.ToCode()} MyAgent;");
+                    }
+                    generator.PushBlankLines();
+                }
+            }
+
+            public void DeclaringParams(MethodInfo method, CSCodeGenerator generator)
             {
                 //声明参数
                 var @params = method.GetParameters();
@@ -798,11 +815,9 @@ public override bool CheckCondition(object options = null)
                 {
                     generator.PushBlankLines();
                 }
-
-                return GenerateDeclaringResult(method.ReturnType, generator);
             }
 
-            public bool GenerateDeclaringResult(Type type, CSCodeGenerator generator)
+            public virtual bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
             {
                 bool saveResult = false;
                 if (type != null && type != typeof(void))
@@ -845,21 +860,11 @@ public override bool CheckCondition(object options = null)
                     using (generator.NewScope)
                     {
                         //generator.Push($"public string Title => \"$(Title)\";");
-                        if (IsStatic == false && UseComponent == false)
-                        {
-                            generator.Push($"[Space]");
-                            if (Setting.TryGetParamType(type, out var paramType))
-                            {
-                                generator.Push($"public {paramType.ToCode()} MyAgent;");
-                            }
-                            else
-                            {
-                                generator.Push($"public {type.ToCode()} MyAgent;");
-                            }
-                            generator.PushBlankLines();
-                        }
+                        DeclaringMyAgent(type);
+                        DeclaringParams(method, generator);
 
-                        bool saveResult = GenerateDeclaringMember(method, generator);
+                        bool saveResult = DeclaringSavaValueTo(method.ReturnType, generator);
+
                         GenerateMainMethod(type, method, saveResult);
                     }
                 }
@@ -968,9 +973,14 @@ public override bool CheckCondition(object options = null)
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
             }
 
+            public override bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
+            {
+                return true;
+            }
+
             public override void GenerateMainMethod(Type type, MethodInfo method, bool saveResult)
             {
-                if (method.ReflectedType == typeof(bool))
+                if (method.ReturnType == typeof(bool))
                 {
                     generator.PushTemplate(BoolDecoratorBodyTemplate);
                 }
@@ -980,6 +990,12 @@ public override bool CheckCondition(object options = null)
                 }
 
                 generator.Macro["$(GetValueCode)"] = GetValueCode(type, method, saveResult);
+
+
+                Setting.TryGetParamType(method.ReturnType, out var returnType);
+
+                generator.Macro["$(RefVarType)"] = returnType.ToCode();
+                generator.Macro["$(MemberType)"] = method.ReturnType.ToCode();
             }
         }
 
@@ -1035,9 +1051,9 @@ public override bool CheckCondition(object options = null)
                         }
 
                         Setting.TryGetParamType(memberType, out var returnType);
-                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
 
-                        generator.Macro["$(MemberTyoe)"] = memberType.ToCode();
+                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
+                        generator.Macro["$(MemberType)"] = memberType.ToCode();
 
                         if (IsStatic)
                         {
