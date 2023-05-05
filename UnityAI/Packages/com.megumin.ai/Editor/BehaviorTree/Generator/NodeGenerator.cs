@@ -385,6 +385,16 @@ protected override Status OnTick(BTNode from, object options = null)
 
                         if (Field2SetNode)
                         {
+                            if (filed.IsInitOnly)
+                            {
+                                continue;
+                            }
+
+                            if (filed.IsLiteral)
+                            {
+                                continue;
+                            }
+
                             var className = GetClassName(type, member);
                             className += "_Set_Node";
                             if (IgnoreGeneratedClass.Contains(className))
