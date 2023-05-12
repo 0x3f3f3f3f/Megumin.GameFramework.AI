@@ -61,27 +61,56 @@ namespace Megumin.GameFramework.AI.Editor
             return resultWindows;
         }
 
-        public static ValueTask<MonoScript> GetMonoScript(Type type)
-        {
-            //Todo Cache /unity background tasks
-            var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
+        private static List<MonoScript> AllMonoScript { get; set; }
 
-            foreach (var scriptGUID in scriptGUIDs)
+        public static List<MonoScript> GetAllMonoScripts(bool force = false)
+        {
+            if (AllMonoScript == null || force)
             {
-                var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
-                var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
-                var code = script.text;
-                if (code.Contains($"class {type.Name}"))
+                AllMonoScript = new();
+                var scriptGUIDs = AssetDatabase.FindAssets($"t:script");
+
+                foreach (var scriptGUID in scriptGUIDs)
                 {
-                    if (string.IsNullOrEmpty(type.Namespace))
+                    var assetPath = AssetDatabase.GUIDToAssetPath(scriptGUID);
+                    var script = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+                    AllMonoScript.Add(script);
+                }
+            }
+
+            return AllMonoScript;
+        }
+
+        private static Dictionary<Type, MonoScript> CacheMonoScript { get; set; }
+
+        public static ValueTask<MonoScript> GetMonoScript(Type type, bool force = false)
+        {
+            if (CacheMonoScript != null && CacheMonoScript.ContainsKey(type) && force == false)
+            {
+                return new ValueTask<MonoScript>(CacheMonoScript[type]);
+            }
+
+            if (CacheMonoScript == null || force)
+            {
+                CacheMonoScript = new();
+                var all = GetAllMonoScripts(force);
+                foreach (var script in all)
+                {
+                    var code = script.text;
+                    if (code.Contains($"class {type.Name}"))
                     {
-                        return new ValueTask<MonoScript>(script);
-                    }
-                    else
-                    {
-                        if (code.Contains(type.Namespace))
+                        if (string.IsNullOrEmpty(type.Namespace))
                         {
+                            CacheMonoScript[type] = script;
                             return new ValueTask<MonoScript>(script);
+                        }
+                        else
+                        {
+                            if (code.Contains(type.Namespace))
+                            {
+                                CacheMonoScript[type] = script;
+                                return new ValueTask<MonoScript>(script);
+                            }
                         }
                     }
                 }
