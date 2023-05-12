@@ -1181,6 +1181,8 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 generator.PushBlankLines(4);
 
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
+                generator.Macro["$(DisplayName)"] = $"Get_{type.Name}_{member.Name}";
+                generator.Macro["$(MenuName)"] = $"Get_{GetMenuName(type, member)}";
                 generator.Generate(path);
             }
         }
@@ -1238,6 +1240,8 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 generator.PushBlankLines(4);
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
+                generator.Macro["$(DisplayName)"] = $"Set_{type.Name}_{member.Name}";
+                generator.Macro["$(MenuName)"] = $"Set_{GetMenuName(type, member)}";
                 generator.Generate(path);
             }
         }
