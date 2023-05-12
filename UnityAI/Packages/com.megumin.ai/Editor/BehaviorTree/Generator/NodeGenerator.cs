@@ -422,6 +422,13 @@ protected override Status OnTick(BTNode from, object options = null)
                             continue;
                         }
 
+                        bool isIndexer = prop.GetIndexParameters().Length > 0;
+                        //忽略索引器属性。
+                        if (isIndexer)
+                        {
+                            continue;
+                        }
+
                         if (Proterty2Deco)
                         {
                             //忽略指定方法
