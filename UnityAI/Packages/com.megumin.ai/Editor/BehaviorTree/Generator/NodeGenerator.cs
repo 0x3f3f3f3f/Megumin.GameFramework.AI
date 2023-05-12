@@ -262,7 +262,7 @@ public override $(MemberType) GetCompareTo()
 @"[Space]
 public $(RefVarType) SaveValueTo;
 
-public override bool CheckCondition(object options = null)
+public override bool CheckCondition(object $(ObjectOptions) = null)
 {
     $(GetValueCode)
 
@@ -274,11 +274,29 @@ public override bool CheckCondition(object options = null)
     return result;
 }
 ";
+
+        public const string FieldGetValueNodeTemplate =
+@"[Space]
+public $(RefVarType) SaveValueTo;
+
+protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) = null)
+{
+    $(GetValueCode)
+
+    if (SaveValueTo != null)
+    {
+        SaveValueTo.Value = result;
+    }
+
+    return Status.Succeeded;
+}
+";
+
         public const string FieldSetValueNodeTemplate =
 @"[Space]
 public $(RefVarType) Value;
 
-protected override Status OnTick(BTNode from, object options = null)
+protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) = null)
 {
     $(GetValueCode)
     return Status.Succeeded;
@@ -500,7 +518,7 @@ protected override Status OnTick(BTNode from, object options = null)
                                 continue;
                             }
 
-                            if (type.IsValueType) 
+                            if (type.IsValueType)
                             {
                                 //值类型的成员不要Set。
                                 continue;
@@ -743,14 +761,25 @@ protected override Status OnTick(BTNode from, object options = null)
                 return result;
             }
 
-            public void AddMacro(Type type, MemberInfo member, CSCodeGenerator generator)
+            public void AddMacro()
             {
+                var type = Type;
+                var member = MemberInfo;
+
                 generator.Macro["$(ClassName)"] = ClassName;
                 generator.Macro["$(ComponentName)"] = type.FullName;
                 generator.Macro["$(MenuName)"] = GetMenuName(type, member);
                 generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
                 generator.Macro["$(MemberName)"] = member.Name;
                 generator.Macro["$(CodeGenericType)"] = typeof(NodeGenerator).FullName;
+                generator.Macro["$(BTNodeFrom)"] = "from";
+                generator.Macro["$(ObjectOptions)"] = "options";
+
+                var memberType = member.GetMemberType();
+                generator.Macro["$(MemberType)"] = memberType.ToCode();
+
+                Setting.TryGetParamType(memberType, out var returnType);
+                generator.Macro["$(RefVarType)"] = returnType.ToCode();
             }
 
             public string GetBaseTypeString(Type memberType, bool useComponent, bool isnode)
@@ -825,24 +854,6 @@ protected override Status OnTick(BTNode from, object options = null)
                     generator.PushBlankLines();
                 }
             }
-
-            public virtual bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
-            {
-                bool saveResult = false;
-                if (type != null && type != typeof(void))
-                {
-                    //存在返回值 。储存返回值
-                    if (Setting.TryGetParamType(type, out var returnType))
-                    {
-                        saveResult = true;
-                        generator.Push($"[Space]");
-                        generator.Push($"public {returnType.ToCode()} SaveValueTo;");
-                        generator.PushBlankLines();
-                    }
-                }
-
-                return saveResult;
-            }
         }
 
         public class Method2NodeGenerator : Generator
@@ -881,6 +892,7 @@ protected override Status OnTick(BTNode from, object options = null)
                 var type = Type;
                 var method = MemberInfo as MethodInfo;
 
+                AddMacro();
                 if (Define.Enabled)
                 {
                     generator.Push($"#if {Define.Value}");
@@ -902,9 +914,7 @@ protected override Status OnTick(BTNode from, object options = null)
                         DeclaringMyAgent(type);
                         DeclaringParams(method, generator);
 
-                        bool saveResult = DeclaringSavaValueTo(method.ReturnType, generator);
-
-                        GenerateMainMethod(type, method, saveResult);
+                        GenerateMainMethod(type, method);
                     }
                 }
 
@@ -916,13 +926,25 @@ protected override Status OnTick(BTNode from, object options = null)
 
                 generator.PushBlankLines(4);
 
-                AddMacro(type, method, generator);
                 AddBaseType(method);
                 generator.Generate(path);
             }
 
-            public virtual void GenerateMainMethod(Type type, MethodInfo method, bool saveResult)
+            public virtual void GenerateMainMethod(Type type, MethodInfo method)
             {
+                bool saveResult = false;
+                if (method.ReturnType != null && method.ReturnType != typeof(void))
+                {
+                    //存在返回值 。储存返回值
+                    if (Setting.TryGetParamType(method.ReturnType, out var returnType))
+                    {
+                        saveResult = true;
+                        generator.Push($"[Space]");
+                        generator.Push($"public {returnType.ToCode()} SaveValueTo;");
+                        generator.PushBlankLines();
+                    }
+                }
+
                 var @params = method.GetParameters();
 
                 string BTNodeFrom = "from";
@@ -1012,12 +1034,7 @@ protected override Status OnTick(BTNode from, object options = null)
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
             }
 
-            public override bool DeclaringSavaValueTo(Type type, CSCodeGenerator generator)
-            {
-                return true;
-            }
-
-            public override void GenerateMainMethod(Type type, MethodInfo method, bool saveResult)
+            public override void GenerateMainMethod(Type type, MethodInfo method)
             {
                 if (method.ReturnType == typeof(bool))
                 {
@@ -1028,13 +1045,7 @@ protected override Status OnTick(BTNode from, object options = null)
                     generator.PushTemplate(CompareDecoratorBodyTemplate);
                 }
 
-                generator.Macro["$(GetValueCode)"] = GetValueCode(type, method, saveResult);
-
-
-                Setting.TryGetParamType(method.ReturnType, out var returnType);
-
-                generator.Macro["$(RefVarType)"] = returnType.ToCode();
-                generator.Macro["$(MemberType)"] = method.ReturnType.ToCode();
+                generator.Macro["$(GetValueCode)"] = GetValueCode(type, method, true);
             }
         }
 
@@ -1047,6 +1058,8 @@ protected override Status OnTick(BTNode from, object options = null)
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
+
+                AddMacro();
 
                 if (Define.Enabled)
                 {
@@ -1089,11 +1102,6 @@ protected override Status OnTick(BTNode from, object options = null)
                             generator.PushTemplate(CompareDecoratorBodyTemplate);
                         }
 
-                        Setting.TryGetParamType(memberType, out var returnType);
-
-                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
-                        generator.Macro["$(MemberType)"] = memberType.ToCode();
-
                         if (IsStatic)
                         {
                             generator.Macro["$(GetValueCode)"] = $"var result = $(ComponentName).$(MemberName);";
@@ -1114,7 +1122,6 @@ protected override Status OnTick(BTNode from, object options = null)
 
                 generator.PushBlankLines(4);
 
-                AddMacro(type, member, generator);
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, false);
                 generator.Generate(path);
             }
@@ -1129,6 +1136,8 @@ protected override Status OnTick(BTNode from, object options = null)
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
+
+                AddMacro();
 
                 if (Define.Enabled)
                 {
@@ -1150,9 +1159,7 @@ protected override Status OnTick(BTNode from, object options = null)
                         //generator.Push($"public string Title => \"$(Title)\";");
                         DeclaringMyAgent(type);
 
-                        bool saveResult = DeclaringSavaValueTo(memberType, generator);
-
-                        GenerateMainMethod(type, saveResult);
+                        generator.PushTemplate(FieldGetValueNodeTemplate);
 
                         if (IsStatic)
                         {
@@ -1173,46 +1180,9 @@ protected override Status OnTick(BTNode from, object options = null)
 
                 generator.PushBlankLines(4);
 
-                AddMacro(type, MemberInfo, generator);
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
                 generator.Generate(path);
             }
-
-            public virtual void GenerateMainMethod(Type type, bool saveResult)
-            {
-                string BTNodeFrom = "from";
-                if (MemberInfo.Name == BTNodeFrom)
-                {
-                    BTNodeFrom += "1";
-                }
-
-                string ObjectOptions = "options";
-                if (MemberInfo.Name == ObjectOptions)
-                {
-                    ObjectOptions += "1";
-                }
-
-                generator.Push($"protected override Status OnTick(BTNode {BTNodeFrom}, object {ObjectOptions} = null)");
-
-                using (generator.NewScope)
-                {
-                    generator.Push("$(GetValueCode)");
-
-                    if (saveResult)
-                    {
-                        generator.PushBlankLines();
-                        generator.Push($"if (SaveValueTo != null)");
-                        using (generator.NewScope)
-                        {
-                            generator.Push($"SaveValueTo.Value = result;");
-                        }
-                        generator.PushBlankLines();
-                    }
-
-                    generator.Push($"return Status.Succeeded;");
-                }
-            }
-
         }
 
         public class FeildProperty2SetNode : Generator
@@ -1224,6 +1194,8 @@ protected override Status OnTick(BTNode from, object options = null)
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
+
+                AddMacro();
 
                 if (Define.Enabled)
                 {
@@ -1247,10 +1219,6 @@ protected override Status OnTick(BTNode from, object options = null)
 
                         generator.PushTemplate(FieldSetValueNodeTemplate);
 
-                        Setting.TryGetParamType(memberType, out var returnType);
-
-                        generator.Macro["$(RefVarType)"] = returnType.ToCode();
-                        generator.Macro["$(MemberType)"] = memberType.ToCode();
                         if (IsStatic)
                         {
                             generator.Macro["$(GetValueCode)"] = $"$(ComponentName).$(MemberName) = Value;";
@@ -1269,8 +1237,6 @@ protected override Status OnTick(BTNode from, object options = null)
                 }
 
                 generator.PushBlankLines(4);
-
-                AddMacro(type, MemberInfo, generator);
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
                 generator.Generate(path);
             }
