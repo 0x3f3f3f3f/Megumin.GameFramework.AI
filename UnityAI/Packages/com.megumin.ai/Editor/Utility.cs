@@ -93,24 +93,25 @@ namespace Megumin.GameFramework.AI.Editor
             if (CacheMonoScript == null || force)
             {
                 CacheMonoScript = new();
-                var all = GetAllMonoScripts(force);
-                foreach (var script in all)
+            }
+
+            var all = GetAllMonoScripts(force);
+            foreach (var script in all)
+            {
+                var code = script.text;
+                if (code.Contains($"class {type.Name}"))
                 {
-                    var code = script.text;
-                    if (code.Contains($"class {type.Name}"))
+                    if (string.IsNullOrEmpty(type.Namespace))
                     {
-                        if (string.IsNullOrEmpty(type.Namespace))
+                        CacheMonoScript[type] = script;
+                        return new ValueTask<MonoScript>(script);
+                    }
+                    else
+                    {
+                        if (code.Contains(type.Namespace))
                         {
                             CacheMonoScript[type] = script;
                             return new ValueTask<MonoScript>(script);
-                        }
-                        else
-                        {
-                            if (code.Contains(type.Namespace))
-                            {
-                                CacheMonoScript[type] = script;
-                                return new ValueTask<MonoScript>(script);
-                            }
                         }
                     }
                 }
