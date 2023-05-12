@@ -606,7 +606,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         if (Method2Deco)
                         {
                             var className = GetClassName(type, member);
-                            className += "_Decorator";
+                            className += "_Method_Decorator";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
                                 continue;
@@ -925,8 +925,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 }
 
                 generator.PushBlankLines(4);
-
-                AddBaseType(method);
                 generator.Generate(path);
             }
 
@@ -980,6 +978,8 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                     generator.Push($"return Status.Succeeded;");
                 }
+
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, true);
             }
 
             public virtual string GetValueCode(Type type, MethodInfo method, bool saveResult)
@@ -1020,20 +1020,10 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 callString += ");";
                 return callString;
             }
-
-            public virtual void AddBaseType(MethodInfo method)
-            {
-                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, true);
-            }
         }
 
         public class Method2DecoGenerator : Method2NodeGenerator
         {
-            public override void AddBaseType(MethodInfo method)
-            {
-                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
-            }
-
             public override void GenerateMainMethod(Type type, MethodInfo method)
             {
                 if (method.ReturnType == typeof(bool))
@@ -1046,6 +1036,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 }
 
                 generator.Macro["$(GetValueCode)"] = GetValueCode(type, method, true);
+                generator.Macro["$(BaseClassName)"] = GetBaseTypeString(method.ReturnType, UseComponent, false);
             }
         }
 
