@@ -395,6 +395,12 @@ protected override Status OnTick(BTNode from, object options = null)
                                 continue;
                             }
 
+                            if (type.IsValueType)
+                            {
+                                //值类型的成员不要Set。
+                                continue;
+                            }
+
                             var className = GetClassName(type, member);
                             className += "_Set_Node";
                             if (IgnoreGeneratedClass.Contains(className))
@@ -491,6 +497,12 @@ protected override Status OnTick(BTNode from, object options = null)
                             className += "_Set_Node";
                             if (IgnoreGeneratedClass.Contains(className))
                             {
+                                continue;
+                            }
+
+                            if (type.IsValueType) 
+                            {
+                                //值类型的成员不要Set。
                                 continue;
                             }
 
