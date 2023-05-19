@@ -10,6 +10,9 @@ using System.IO;
 
 public class CopyToTargetFolder : ScriptableObject
 {
+    public bool DeleteTargetFolderBeforeCopy = true;
+
+    [Space]
     public List<string> packageName = new();
 
     [Path]
@@ -78,6 +81,11 @@ public class CopyToTargetFolder : ScriptableObject
     {
         try
         {
+            if (DeleteTargetFolderBeforeCopy && System.IO.Directory.Exists(destFolder))
+            {
+                System.IO.Directory.Delete(destFolder, true);
+            }
+
             //如果目标路径不存在,则创建目标路径
             if (!System.IO.Directory.Exists(destFolder))
             {
