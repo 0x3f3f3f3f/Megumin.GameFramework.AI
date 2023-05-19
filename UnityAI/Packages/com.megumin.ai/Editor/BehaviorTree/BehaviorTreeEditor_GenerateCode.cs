@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEditor;
+using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
     partial class BehaviorTreeEditor
     {
-        //TODO, 重构代码，不然后面还要改
         public void GenerateCode()
         {
             //BehaviorTreeAsset_1_1 behaviorTree = CurrentAsset.AssetObject as BehaviorTreeAsset_1_1;
@@ -44,12 +45,30 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Macro["$(TreeName)"] = tree.Asset.name;
 
             string filePath = $"Assets/{className}.cs";
+
+            if (Megumin.Reflection.TypeCache.TryGetType(
+                    $"Megumin.GameFramework.AI.BehaviorTree.{className}",
+                    out var oldType))
+            {
+                var scriptObj = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                if (scriptObj != null)
+                {
+                    var oldPath = AssetDatabase.GetAssetPath(scriptObj);
+                    //oldPath = Path.GetFullPath(oldPath);
+                    filePath = oldPath;
+                }
+            }
+
             generator.Generate(filePath);
 
             //Open
             AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
-            var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
-            AssetDatabase.OpenAsset(script);
+            //var script = AssetDatabase.LoadAssetAtPath<MonoScript>(filePath);
+            //AssetDatabase.OpenAsset(script); 
+            EditorApplication.delayCall += () =>
+            {
+                Debug.Log($"Generate <a href=\"{filePath}\">{filePath}</a>");
+            };
         }
 
         class DeclaredObject
