@@ -12,18 +12,15 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [DisplayName("IAnimal_Name")]
+    [DisplayName("Get_IAnimal_Name")]
     [Category("IAnimal")]
-    [AddComponentMenu("Name")]
-    public sealed class IAnimal_Name : CompareDecorator<IAnimal, string>
+    [AddComponentMenu("Get_Name")]
+    public sealed class IAnimal_Name_Get_Node : BTActionNode<IAnimal>
     {
-        [Space]
-        public Megumin.Binding.RefVar_String CompareTo;
-
         [Space]
         public Megumin.Binding.RefVar_String SaveValueTo;
 
-        public override string GetResult()
+        protected override Status OnTick(BTNode from, object options = null)
         {
             var result = ((IAnimal)MyAgent).Name;
 
@@ -32,12 +29,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
                 SaveValueTo.Value = result;
             }
 
-            return result;
-        }
-
-        public override string GetCompareTo()
-        {
-            return CompareTo;
+            return Status.Succeeded;
         }
 
     }

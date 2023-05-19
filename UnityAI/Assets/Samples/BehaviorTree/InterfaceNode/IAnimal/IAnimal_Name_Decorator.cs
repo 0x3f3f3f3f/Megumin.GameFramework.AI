@@ -12,20 +12,20 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [DisplayName("IAnimal_Age")]
+    [DisplayName("IAnimal_Name")]
     [Category("IAnimal")]
-    [AddComponentMenu("Age")]
-    public sealed class IAnimal_Age : CompareDecorator<IAnimal, int>
+    [AddComponentMenu("Name")]
+    public sealed class IAnimal_Name_Decorator : CompareDecorator<IAnimal, string>
     {
         [Space]
-        public Megumin.Binding.RefVar_Int CompareTo;
+        public Megumin.Binding.RefVar_String CompareTo;
 
         [Space]
-        public Megumin.Binding.RefVar_Int SaveValueTo;
+        public Megumin.Binding.RefVar_String SaveValueTo;
 
-        public override int GetResult()
+        public override string GetResult()
         {
-            var result = ((IAnimal)MyAgent).Age;
+            var result = ((IAnimal)MyAgent).Name;
 
             if (SaveValueTo != null)
             {
@@ -35,7 +35,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
             return result;
         }
 
-        public override int GetCompareTo()
+        public override string GetCompareTo()
         {
             return CompareTo;
         }

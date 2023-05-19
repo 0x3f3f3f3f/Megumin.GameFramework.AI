@@ -15,7 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("IAnimal_Wow")]
     [Category("IAnimal")]
     [AddComponentMenu("Wow")]
-    public sealed class IAnimal_Wow : BTActionNode<IAnimal>
+    public sealed class IAnimal_Wow_Node : BTActionNode<IAnimal>
     {
         protected override Status OnTick(BTNode from, object options = null)
         {

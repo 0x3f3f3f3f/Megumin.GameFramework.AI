@@ -23,9 +23,15 @@ MonoBehaviour:
   Types:
   - Enabled: 1
     Value: IAnimal
-  IgnoreMethods: []
+  IgnoreGeneratedClass: []
   ObsoleteAPIInFuture: []
   ReplaceIcon: []
-  GMethods: 1
-  GFields: 1
-  GProperties: 1
+  ReplaceCategory: []
+  Field2GetNode: 1
+  Field2SetNode: 1
+  Field2Deco: 1
+  Proterty2GetNode: 1
+  Proterty2SetNode: 1
+  Proterty2Deco: 1
+  Method2Node: 1
+  Method2Deco: 1
