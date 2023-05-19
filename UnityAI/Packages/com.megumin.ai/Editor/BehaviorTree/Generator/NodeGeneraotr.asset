@@ -99,7 +99,10 @@ MonoBehaviour:
   - Vector3Int_Item
   - Vector4_Item
   - Vector4Int_Item
+  - Input_IsJoystickPreconfigured_String_Node
   - Input_IsJoystickPreconfigured_String_Decorator
+  - Input_IsJoystickPreconfigured_String_Method_Decorator
+  - Light_SetLightDirty_Node
   - Light_SetLightDirty_Decorator
   - Light_shadowAngle_Decorator
   - Light_shadowRadius_Decorator
