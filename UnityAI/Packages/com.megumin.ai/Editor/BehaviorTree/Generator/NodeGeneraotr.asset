@@ -156,14 +156,11 @@ MonoBehaviour:
     newValue: UnityEngine
   - oldValue: UnityEngine/SceneManagement
     newValue: UnityEngine
-  GMethods: 0
-  GFields: 0
-  GProperties: 0
-  Field2GetNode: 0
-  Field2SetNode: 0
+  Field2GetNode: 1
+  Field2SetNode: 1
   Field2Deco: 1
-  Proterty2GetNode: 0
-  Proterty2SetNode: 0
+  Proterty2GetNode: 1
+  Proterty2SetNode: 1
   Proterty2Deco: 1
   Method2Node: 1
-  Method2Deco: 0
+  Method2Deco: 1
