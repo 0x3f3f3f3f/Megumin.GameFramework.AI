@@ -6,7 +6,9 @@
 
 # 安装
 
-# 文件夹说明
+## 文件夹介绍
+导入插件后，可以看到如下文件夹：  
+![image-20230806163025520](BehaviorTree_Document/image-20230806163025520.png)
 - com.megumin.ai    
   行为树运行时和编辑器代码
   + Samples/BehaviorTree    
@@ -22,8 +24,34 @@
 + com.megumin.serialization    
   megumin系列插件的序列化模块代码
 
+## 编辑器窗口介绍
+在编辑器菜单Tools/Megumin/BehaviorTreeEditor，即可打开编辑器窗口。  
+![image-20230806163250612](BehaviorTree_Document/image-20230806163250612.png)
+
+编辑器窗口说明：  
+![image-20230806164903142](BehaviorTree_Document/image-20230806164903142.png)
+1. 保存行为树资产  双击按钮时强制保存
+2. 另存行为树资产
+3. 在项目窗口选择当前行为树资产
+4. 文件菜单
+5. 编辑菜单
+6. 编辑器偏好菜单
+7. 强制重新载入行为树
+8. Debug实例对象
+9. 参数表开关
+10. 帮助按钮
+11. 编辑器主界面
+12. Inpsector窗口，显示选中节点的详细信息。
+
+## 创建行为树资产
+在Project窗口，Create/Megumin/AI/BehaviorTreeAsset，创建行为树资产。双击行为树资产即可打开行为树编辑器。  
+![image-20230806164402757](BehaviorTree_Document/image-20230806164402757.png)
+
+
 # 组件
-BehaviorTreeRunner是在执行行为树资产的组件。负责初始化行为树，并将行为树示例注册到Manager。可以设置行为树的具体执行参数。
+BehaviorTreeRunner是执行行为树资产的组件。  
+负责初始化行为树实例，并将行为树实例注册到Manager。  
+可以设置行为树的具体执行参数。  
 ![image-20230806153526759](BehaviorTree_Document/image-20230806153526759.png)
 
 实例化参数 InitOption：  
@@ -57,9 +85,9 @@ BehaviorTreeRunner是在执行行为树资产的组件。负责初始化行为�
 - Order  
   暂时没有作用，预留的参数。
 - OnSucceeded  
-  当行为树执行成功时应该做出的操作，要不要重启整个树。
+  当行为树执行成功时应该执行的操作，要不要重启整个树。
 - OnFailed  
-  当行为树执行失败时应该做出的操作，要不要重启整个树。
+  当行为树执行失败时应该执行的操作，要不要重启整个树。
 
 
 # 变量绑定
@@ -130,6 +158,7 @@ BehaviorTreeRunner是在执行行为树资产的组件。负责初始化行为�
 常用的条件装饰器包括：CheckBool，CheckInt，CheckFloat，CheckString，CheckLayer，CheckTrigger，CheckEvent，CheckGameObject，MouseEvent，KeyCodeEvent。
 
 # 节点特性
+用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。
 - [x] Category
   设置编辑器中在创建节点时上下文菜单中的类别。
 - [x] DisplayName
