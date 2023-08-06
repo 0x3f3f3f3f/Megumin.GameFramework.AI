@@ -23,6 +23,44 @@
   megumin系列插件的序列化模块代码
 
 # 组件
+BehaviorTreeRunner是在执行行为树资产的组件。负责初始化行为树，并将行为树示例注册到Manager。可以设置行为树的具体执行参数。
+![image-20230806153526759](BehaviorTree_Document/image-20230806153526759.png)
+
+实例化参数 InitOption：  
+- AsyncInit  
+  使用多线程异步实例化行为树。  
+  缺点是不会在当前帧立刻完成并执行行为树。  
+  并且初始化过程不能调用unity方法。  
+- SharedMeta  
+  同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  
+- LazyInitSubtree
+  延迟实例化子树，推迟到子树节点运行时实例化。  
+  默认是false。
+- UseGenerateCode  
+  使用生成的代码实例化行为树。
++ DelayRandomFrame  
+  实例化之后，开始执行树之前，延迟随机帧数。  
+  当同时实例化大量行为树时，并设置了执行间隔时，可以将实例分散到多个帧执行，用来防止尖峰帧卡顿。  
+
+如果主行为树使用多线程初始化，那么应该同时初始化子树，因为不会阻塞主线程。  
+如果主行为树使用Unity主线程初始化，那么应该延迟初始化子树，尽量不要让大量计算发生在同一帧。  
+
+运行参数 RunOption：  
++ FrameInterval  
+  执行的帧间隔  
++ TimeInterval  
+  执行的游戏时间间隔  
++ RealtimeInterval  
+  执行的实时时间间隔  
+- Log  
+  打印节点切换等关键位置日志
+- Order  
+  暂时没有作用，预留的参数。
+- OnSucceeded  
+  当行为树执行成功时应该做出的操作，要不要重启整个树。
+- OnFailed  
+  当行为树执行失败时应该做出的操作，要不要重启整个树。
+
 
 # 变量绑定
 在行为树中的变量，可以绑定到与行为树存在于同一GameObject上的任何组件的属性或字段，也可以绑定到静态属性/字段。数据绑定可以是只读的，也可以是读写的。  
@@ -110,11 +148,13 @@
   设置编辑器中节点的序列化别名。当自定义节点类名重名时，这个特性非常有用。
 
 # 调试
+运行时选择Gameobject，并点击EditorTree打开编辑器，会自动进入调试模式。  
+调试模式的所有改动，都不会改变行为树资产，停止Play模式时，改动也会消失。  
+![image-20230806155937657](BehaviorTree_Document/image-20230806155937657.png)
 
 # 注意事项
 
 # 联系方式
-
 - 邮箱：479813005@qq.com
 - 反馈：[Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
 
