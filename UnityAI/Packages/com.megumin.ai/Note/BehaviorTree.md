@@ -470,8 +470,3 @@ Event和Trigger都是记录在树中的标记。
 ---
 # 参考连接
 - https://robohub.org/introduction-to-behavior-trees/
-
-# 特别鸣谢
-- [叶月葵](https://github.com/Hazukiaoi)
-
-

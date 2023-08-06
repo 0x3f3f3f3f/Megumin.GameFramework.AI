@@ -470,8 +470,3 @@ It is more tedious to implement using asynchronous. The overhead is much higher.
 ---
 # Reference links
 - https://robohub.org/introduction-to-behavior-trees/
-
-# Special thanks
-- [Hazukiaoi](https://github.com/Hazukiaoi)
-
-
