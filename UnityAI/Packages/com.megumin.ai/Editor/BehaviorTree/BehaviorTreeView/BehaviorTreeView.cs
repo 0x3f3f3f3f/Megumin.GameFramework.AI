@@ -1,14 +1,11 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Megumin.GameFramework.AI.Editor;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
-using System;
-using UnityEditor;
-using Megumin.GameFramework.AI.Editor;
-using System.Linq;
-using PlasticPipe.PlasticProtocol.Server.Stubs;
 
 namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 {
