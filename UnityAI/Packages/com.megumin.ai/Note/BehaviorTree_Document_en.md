@@ -95,20 +95,22 @@ RunOption：
 
 
 # Variable Binding
-在行为树中的变量，可以绑定到与行为树存在于同一GameObject上的任何组件的属性或字段，也可以绑定到静态属性/字段。数据绑定可以是只读的，也可以是读写的。  
-将变量绑定到一个成员时，任何时刻访问成员值，都是成员的最新值。  
-这非常强大，它实现了行为树直接访问业务逻辑的属性，可以将对象的某个成员直接作为行为树的执行条件，而不需额外编码。
+The variables in the behavior tree can be bound to any component that exists on the same GameObject as BehaviorTreeRunner.  
+You can bind a property or field, or you can bind to a static property/field. The data binding can be read-only or read-write.  
 
-所有可绑定变量在Inspector上，都会有一个齿轮按钮。
-左键点击绑定按钮，会弹出同一GameObject上的含有的组件可绑定菜单。  
+When you bind a variable to a member, the member's value is accessed at any time and is the latest value of the member.  
+This is very powerful because it implements the behavior tree to directly access the properties of the game logic, and can make a member of an object directly a condition for the execution of the behavior tree without additional coding.  
+
+All bindable variables on the Inspector will have a gear button.  
+Left-click the bind button to bring up the bindable menu of components contained on the same GameObject.  
 ![image-20230806102729207](BehaviorTree_Document/image-20230806102729207.png)
 
-右键点击绑定按钮，会弹出当前项目所有的组件可绑定菜单，项目组件比较多时可能会卡顿。
+Right-click the bind button, the bindable menu of all components of the current project will pop up, and the project may freeze when there are more components.  
 ![image-20230806102957493](BehaviorTree_Document/image-20230806102957493.png)
 
-注意：你可以将参数绑定到一个GameObject上不存在的组件的成员上，这在编辑器是合法的。因为这个组件可能在prefab上还不存在，需要在运行时动态添加。  
-但你必须保证行为树开始初始化绑定前添加组件，或者在添加组件后手动调用行为树的参数绑定函数。  
-即使最终绑定的组件不存在，也不会影响整个行为树执行。在访问这个变量时，可以返回类型的默认值。
+Note: You can bind parameters to members of a component that does not exist on the GameObject, which is legal in the editor. Because this component may not yet exist on prefab, it needs to be added dynamically at runtime.  
+However, you must ensure that you add components before the behavior tree starts initializing bindings, or manually call the behavior tree's parameter binding functions after adding components.  
+Even if the final bound component does not exist, it does not affect the entire behavior tree execution. When accessing this variable, you can return the default value of the type.  
 
 # 节点
 ## 开始节点
