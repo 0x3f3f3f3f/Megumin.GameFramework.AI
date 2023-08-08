@@ -222,6 +222,19 @@ public sealed class CheckMyInt : CompareDecorator<int>
 }
 ```
 
+# 条件终止
+在节点已经开始执行，并且没有完成时，如果特定条件发生改变，终止当前正在运行的节点，切换到其他节点。  
+两种终止类型：Self和LowerPriority。
+
+Self终止下侧节点。  
+![image-20230808154758940](BehaviorTree_Document/image-20230808154758940.png)  
+
+LowerPriority终止右侧节点。  
+![image-20230808154956095](BehaviorTree_Document/image-20230808154956095.png)
+
+Both同时终止右侧和下侧节点。  
+![image-20230808155047928](BehaviorTree_Document/image-20230808155047928.png)
+
 # 节点特性
 用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。
 - [x] Category
