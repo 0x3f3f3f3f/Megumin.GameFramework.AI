@@ -176,21 +176,20 @@ Decorators provide additional functionality for the owner node, or modify the co
 - Cooldown  
   After entering or completing the owner node, enter cooling. Only after cooling is complete can it enter the owner node again.  
 - Inverte  
-  反转物主节点的完成结果。
-- 循环（Loop）
-  循环指定次数执行物主节点。
-- 日志（DecoratorLog）
-  在物主节点指定行为发生时，生成日志。
+  Invert the completion result of the object owner node.  
+- Loop  
+  Loops execute the owner node a specified number of times.  
+- DecoratorLog
+  Generates logs when the owner node specifies behavior occurs.  
 
-## 条件装饰器
-条件装饰器是一种特殊的装饰器，用C↓表示，从上到下执行，用于判断节点能否进入。
-常用的条件装饰器包括：CheckBool，CheckInt，CheckFloat，CheckString，CheckLayer，CheckTrigger，CheckEvent，CheckGameObject，MouseEvent，KeyCodeEvent。
+## ConditionDecorator
+The conditional decorator is a special decorator, represented by C↓, executed from top to bottom, and used to determine whether a node can enter. Commonly used conditional decorators include: CheckBool, CheckInt, CheckFloat, CheckString, CheckLayer, CheckTrigger, CheckEvent, CheckGameObject, MouseEvent, KeyCodeEvent.
 
-## 写一个新的条件装饰器
-创建一个新的条件装饰，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+## Write a new ConditionDecorator
+To create a new ConditionDecorator, you need to using `Megumin.GameFramework.AI` and `Megumin.GameFramework.AI.BehaviorTree` namespaces.  
 
-从ConditionDecorator基类继承，并重写OnCheckCondition函数。 
-也可以从CompareDecorator基类继承，并重写GetResult和GetCompareTo函数。
+Inherits from the `ConditionDecorator` base class and overrides the `OnCheckCondition` method.   
+It is also possible to inherit from the `CompareDecorator` base class and override the `GetResult` and `GetCompareTo` method.  
 
 ```cs
 using System;
@@ -224,47 +223,47 @@ public sealed class CheckMyInt : CompareDecorator<int>
 }
 ```
 
-# 条件终止
-在节点已经开始执行，并且没有完成时，如果特定条件发生改变，终止当前正在运行的节点，切换到其他节点。  
-两种终止类型：Self和LowerPriority。
+# Conditional Aborts  
+When a node has started execution and does not complete, if specific conditions change, abort the currently running node and switch to another node.  
+Two abort types: Self and LowerPriority.  
 
-Self终止下侧节点。  
+Self abort the lower node.  
 ![image-20230808154758940](BehaviorTree_Document/image-20230808154758940.png)  
 
-LowerPriority终止右侧节点。  
-![image-20230808154956095](BehaviorTree_Document/image-20230808154956095.png)
+LowerPriority abort the right node.  
+![image-20230808154956095](BehaviorTree_Document/image-20230808154956095.png)  
 
-Both同时终止右侧和下侧节点。  
-![image-20230808155047928](BehaviorTree_Document/image-20230808155047928.png)
+Both abort both the right and lower nodes.  
+![image-20230808155047928](BehaviorTree_Document/image-20230808155047928.png)  
 
-# 节点特性
-用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。
-- [x] Category
-  设置编辑器中在创建节点时上下文菜单中的类别。
-- [x] DisplayName
-  设置编辑器中显示节点的自定义名字。
-- [x] Icon
-  设置编辑器中显示节点的自定义图标。
-- [x] Description
-  设置编辑器中显示节点的自定义描述。
-- [x] Tooltip
-  设置编辑器中显示节点的自定义提示信息。
-- [x] Color
-  设置编辑器中节点的自定义颜色。
-- [x] HelpURL
-  设置编辑器中节点的帮助文档链接。
-- [x] SerializationAlias
-  设置编辑器中节点的序列化别名。当自定义节点类名重名时，这个特性非常有用。
+# Node Attribute  
+When you customize a node, you can use the following attribute to change the default behavior of the node in the editor.  
+- [x] Category  
+  Sets the category in the editor in the context menu when creating a node.  
+- [x] DisplayName  
+  Sets the custom name of the node in the editor.  
+- [x] Icon  
+  Set a custom icon for displaying node in the editor.  
+- [x] Description  
+  Sets the custom description of the node in the editor.  
+- [x] Tooltip  
+  Set custom tooltip of the node in the editor.  
+- [x] Color  
+  Sets the custom color of the node in the editor.  
+- [x] HelpURL  
+  Sets the help documentation link of the node in the editor.  
+- [x] SerializationAlias  
+  Sets the serialization alias of the node in the editor. This attribute is useful when custom node class name renamed.  
 
-# 调试
-运行时选择Gameobject，并点击EditorTree打开编辑器，会自动进入调试模式。  
-调试模式的所有改动，都不会改变行为树资产，停止Play模式时，改动也会消失。  
+# Debugging
+Select Gameobject at playmode and click EditorTree to open the editor, which will automatically enter debugging mode.  
+All changes to debug mode will not change the BehaviorTree asset, and the changes will disappear when playmode is stopped.  
 ![image-20230806155937657](BehaviorTree_Document/image-20230806155937657.png)
 
-# 联系方式
-- 邮箱：479813005@qq.com
-- 反馈：[Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
-- QQ群：[812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
+# Contact
+- Email: 479813005@qq.com
+- Feedback: [Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
+- QQ Group: [812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
 
 
 

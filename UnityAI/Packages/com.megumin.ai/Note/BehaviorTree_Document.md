@@ -187,7 +187,7 @@ public sealed class NewActionNode : BTActionNode
 常用的条件装饰器包括：CheckBool，CheckInt，CheckFloat，CheckString，CheckLayer，CheckTrigger，CheckEvent，CheckGameObject，MouseEvent，KeyCodeEvent。
 
 ## 写一个新的条件装饰器
-创建一个新的条件装饰，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+创建一个新的条件装饰，需要使用`Megumin.GameFramework.AI`和`Megumin.GameFramework.AI.BehaviorTree`命名空间。  
 
 从`ConditionDecorator`基类继承，并重写`OnCheckCondition`方法。 
 也可以从`CompareDecorator`基类继承，并重写`GetResult`和`GetCompareTo`方法。
@@ -237,34 +237,34 @@ LowerPriority终止右侧节点。
 Both同时终止右侧和下侧节点。  
 ![image-20230808155047928](BehaviorTree_Document/image-20230808155047928.png)
 
-# 节点特性
-用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。
-- [x] Category
-  设置编辑器中在创建节点时上下文菜单中的类别。
-- [x] DisplayName
-  设置编辑器中显示节点的自定义名字。
-- [x] Icon
-  设置编辑器中显示节点的自定义图标。
-- [x] Description
-  设置编辑器中显示节点的自定义描述。
-- [x] Tooltip
-  设置编辑器中显示节点的自定义提示信息。
-- [x] Color
-  设置编辑器中节点的自定义颜色。
-- [x] HelpURL
-  设置编辑器中节点的帮助文档链接。
-- [x] SerializationAlias
-  设置编辑器中节点的序列化别名。当自定义节点类名重名时，这个特性非常有用。
+# 节点特性  
+用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。  
+- [x] Category  
+  设置编辑器中在创建节点时上下文菜单中的类别。  
+- [x] DisplayName  
+  设置编辑器中节点的自定义名字。  
+- [x] Icon  
+  设置编辑器中节点的自定义图标。  
+- [x] Description  
+  设置编辑器中节点的自定义描述。  
+- [x] Tooltip  
+  设置编辑器中节点的自定义提示信息。  
+- [x] Color  
+  设置编辑器中节点的自定义颜色。  
+- [x] HelpURL  
+  设置编辑器中节点的帮助文档链接。  
+- [x] SerializationAlias  
+  设置编辑器中节点的序列化别名。当自定义节点类名重命名时，这个特性非常有用。  
 
 # 调试
-运行时选择Gameobject，并点击EditorTree打开编辑器，会自动进入调试模式。  
-调试模式的所有改动，都不会改变行为树资产，停止Play模式时，改动也会消失。  
+PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进入调试模式。  
+调试模式的所有改动，都不会改变行为树资产，退出PlayMode时，改动也会消失。  
 ![image-20230806155937657](BehaviorTree_Document/image-20230806155937657.png)
 
 # 联系方式
-- 邮箱：479813005@qq.com
-- 反馈：[Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
-- QQ群：[812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
+- 邮箱： 479813005@qq.com
+- 反馈： [Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
+- QQ群： [812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
 
 
 
