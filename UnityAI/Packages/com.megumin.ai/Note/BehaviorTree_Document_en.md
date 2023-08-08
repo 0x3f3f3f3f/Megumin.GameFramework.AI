@@ -1,100 +1,100 @@
 [TOC]
 
-# 概述
-行为树是一种用于实现怪物、Boss等非玩家控制角色复杂行为的工具。  
-行为树是目前最常见的两种用来实现游戏角色AI的工具之一，另一种是有限状态机。  
+# Overview
+BehaviorTree is a tool used to implement complex behaviors that non-players control characters such as monsters and bosses.  
+BehaviorTree are currently one of the two most common tools used to implement game character AI, the other being finite state machines.  
 
-Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树编辑器插件。  
-提供可视化编辑器，无需编写代码即可创建行为树。可以让设计师快速创建复杂的AI。  
-解决了许多传统行为树编辑器的使用痛点，值得不满足于传统行为树编辑器的用户尝试。  
+Megumin AI BehaviorTree is a behavior tree editor plugin designed for AAA and indie games.  
+Provides a visual editor to create behavior trees without writing code. Allows designers to quickly create complex AI.  
+It solves many pain points in the use of traditional behavior trees editor, and it is worth trying for users who are not satisfied with traditional behavior trees editor.  
 
-# 安装
+# Installation
 
-## 文件夹介绍
-导入插件后，可以看到如下文件夹：  
+## Folder description
+After importing the plugin, you can see the following folders:  
 ![image-20230806163025520](BehaviorTree_Document/image-20230806163025520.png)
 - com.megumin.ai    
-  行为树运行时和编辑器代码
+  Behavior tree runtime and editor code
   + Samples/BehaviorTree    
-    行为树示例
+    Example of a behavior tree asset
 - com.megumin.perception    
-  AI感知模块代码
+  AI perception module code
 + com.megumin.binding    
-  megumin系列插件的参数绑定模块代码
+  The parameter binding module code of the Megumin-Plugins。
 + com.megumin.common    
-  megumin系列插件的公共模块代码
+  The public module code of the Megumin-Plugins。
 + com.megumin.reflection    
-  megumin系列插件的反射模块代码
+  The reflection module code of the Megumin-Plugins。
 + com.megumin.serialization    
-  megumin系列插件的序列化模块代码
+  The reflection module code of the Megumin-Plugins。
 
-## 编辑器窗口介绍
-在编辑器菜单Tools/Megumin/BehaviorTreeEditor，即可打开编辑器窗口。  
+## EditorWindow Introduction
+On the editor menu Tools/Megumin/BehaviorTreeEditor, you can open the editor window.  
 ![image-20230806163250612](BehaviorTree_Document/image-20230806163250612.png)
 
-编辑器窗口说明：  
+Editor window description:  
 ![image-20230806164903142](BehaviorTree_Document/image-20230806164903142.png)
-1. 保存行为树资产  双击按钮时强制保存
-2. 另存行为树资产
-3. 在项目窗口选择当前行为树资产
-4. 文件菜单
-5. 编辑菜单
-6. 编辑器偏好菜单
-7. 强制重新载入行为树
-8. Debug实例对象
-9. 参数表开关
-10. 帮助按钮
-11. 编辑器主界面
-12. Inspector窗口，显示选中节点的详细信息。
+1. Save BehaviorTree Asset. Force save when you double-click the button.
+2. Save As BehaviorTree Asset
+3. Select the current behavior tree asset in the Projects window
+4. File menu
+5. Edit menu
+6. Editor preferences menu
+7. Force reload the behavior tree
+8. Debug instance object
+9. Variables-table view toggle
+10. Help button
+11. Editor main view
+12. Unity Inspector window, which displays the details of the selected node.
 
-## 创建行为树资产
-在Project窗口，Create/Megumin/AI/BehaviorTreeAsset，创建行为树资产。双击行为树资产即可打开行为树编辑器。  
+## Create a BehaviorTree asset
+In the Project window, Create/Megumin/AI/BehaviorTreeAsset creates a behavior tree asset. Double-click a Behavior Tree asset to open the Behavior Tree Editor.  
 ![image-20230806164402757](BehaviorTree_Document/image-20230806164402757.png)
 
 
-# 组件
-BehaviorTreeRunner是执行行为树资产的组件。  
-负责初始化行为树实例，并将行为树实例注册到Manager。  
-可以设置行为树的具体执行参数。  
+# Component
+BehaviorTreeRunner is the component that executes the Behavior Tree asset.  
+Responsible for initializing the Behavior Tree instance and registering the Behavior Tree instance to the Manager.  
+You can set specific execution parameters for the behavior tree.  
 ![image-20230806153526759](BehaviorTree_Document/image-20230806153526759.png)
 
-实例化参数 InitOption：  
+InitOption:
 - AsyncInit  
-  使用多线程和异步实例化行为树实例。  
-  缺点是不会在当前帧立刻完成并执行行为树。  
-  并且初始化过程不能调用unity方法。  
+  Uses multi-threaded asynchronous instantiation of the behavior tree instance.  
+  The disadvantage is that the behavior tree is not completed and executed immediately at the current frame.  
+  And the initialization process cannot call the Unity method.
 - SharedMeta  
-  同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  
+  Same behavior tree file in SharedMeta share meta information, mainly node descriptions, node coordinates and other runtime-independent information.  
 - LazyInitSubtree  
-  延迟实例化子树，第一次执行到子树节点时实例化。  
-  默认值是false。
+  Delayed instantiation of the subtree, instantiated on the first execution to the subtree node.
+  The default value is false.
 - UseGenerateCode  
-  使用生成的代码实例化行为树。
+  Instantiates the behavior tree using the generated code.
 + DelayRandomFrame  
-  实例化之后，开始执行树之前，延迟随机帧数。  
-  当同时实例化大量行为树时，并设置了执行间隔时，可以将实例分散到多个帧执行，用来防止尖峰帧卡顿。  
+  Instantiation, delay random frames before starting the execution tree.  
+  When a large number of behavior trees are instantiated at the same time and the execution interval is set, the instances can be spread across multiple frame executions to prevent spike frame stuttering.  
 
-如果根行为树使用多线程初始化，那么应该同时初始化子树，因为不会阻塞主线程。  
-如果根行为树使用Unity主线程初始化，那么应该延迟初始化子树，尽量不要让大量计算发生在同一帧。  
+If the root behavior tree uses multithreaded initialization, the subtree should be initialized at the same time because the main thread is not blocked.  
+If the root behavior tree is initialized using the Unity main thread, you should lazilate initialize the subtree and try not to have a lot of computation happen in the same frame.
 
-运行参数 RunOption：  
+RunOption：  
 + FrameInterval  
-  执行的帧间隔  
+  Frame execution interval  
 + TimeInterval  
-  执行的游戏时间间隔  
+  Game-time execution interval  
 + RealtimeInterval  
-  执行的实时时间间隔  
+  Real-time execution interval  
 - Log  
-  打印节点切换等关键位置日志  
+  prints logs  
 - Order  
-  暂时没有作用，预留的参数。  
+  has no effect for the time being, reserved parameters.  
 - OnSucceeded  
-  当行为树执行成功时应该执行的操作，要不要重启行为树实例。  
+  What should be done when the behavior tree is executed successfully, whether to restart the tree.  
 - OnFailed  
-  当行为树执行失败时应该执行的操作，要不要重启行为树实例。  
+  What should be done when the behavior tree execution fails, whether to restart the tree.  
 
 
-# 变量绑定
+# Variable Binding
 在行为树中的变量，可以绑定到与行为树存在于同一GameObject上的任何组件的属性或字段，也可以绑定到静态属性/字段。数据绑定可以是只读的，也可以是读写的。  
 将变量绑定到一个成员时，任何时刻访问成员值，都是成员的最新值。  
 这非常强大，它实现了行为树直接访问业务逻辑的属性，可以将对象的某个成员直接作为行为树的执行条件，而不需额外编码。
