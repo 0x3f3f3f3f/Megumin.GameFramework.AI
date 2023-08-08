@@ -1,8 +1,12 @@
 [TOC]
 
 # 概述
+行为树是一种用于实现怪物、Boss等非玩家控制角色复杂行为的工具。  
+行为树是目前最常见的两种用来实现游戏角色AI的工具之一，另一种是有限状态机。  
 
-# 行为树简介
+Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树插件。  
+提供可视化编辑器，无需编写代码即可创建行为树。可以让设计师快速创建复杂的AI。  
+解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
 # 安装
 
@@ -140,6 +144,29 @@ BehaviorTreeRunner是执行行为树资产的组件。
 子树节点可以引用另一个行为树。从子树的开始节点执行。  
 父数的参数表重写子树的同名参数。  
 
+## 写一个新的行为节点
+创建一个新的行为节点，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+
+从BTActionNode基类继承，并重写OnTick函数。
+
+```cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Megumin.GameFramework.AI;
+using Megumin.GameFramework.AI.BehaviorTree;
+
+[Category("Action")]
+public sealed class NewActionNode : BTActionNode
+{
+    public bool Success = true;
+    protected override Status OnTick(BTNode from, object options = null)
+    {
+        return Success ? Status.Succeeded : Status.Failed;
+    }
+}
+```
+
 # 装饰器
 可以将一个或多个装饰附加到一个行为树节点上。这个节点称为装饰器的物主节点。
 装饰器为物主节点提供额外的功能，或者修改物主节点的完成结果。
@@ -156,6 +183,44 @@ BehaviorTreeRunner是执行行为树资产的组件。
 ## 条件装饰器
 条件装饰器是一种特殊的装饰器，用C↓表示，从上到下执行，用于判断节点能否进入。
 常用的条件装饰器包括：CheckBool，CheckInt，CheckFloat，CheckString，CheckLayer，CheckTrigger，CheckEvent，CheckGameObject，MouseEvent，KeyCodeEvent。
+
+## 写一个新的条件装饰器
+创建一个新的条件装饰，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+
+从ConditionDecorator基类继承，并重写OnCheckCondition函数。 
+也可以从CompareDecorator基类继承，并重写GetResult和GetCompareTo函数。
+
+```cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Megumin.GameFramework.AI;
+using Megumin.GameFramework.AI.BehaviorTree;
+
+public sealed class NewCondition : ConditionDecorator
+{
+    protected override bool OnCheckCondition(object options = null)
+    {
+        return true;
+    }
+}
+
+public sealed class CheckMyInt : CompareDecorator<int>
+{
+    public RefVar_Int Left;
+    public RefVar_Int Right;
+
+    public override int GetResult()
+    {
+        return Left;
+    }
+
+    public override int GetCompareTo()
+    {
+        return Right;
+    }
+}
+```
 
 # 节点特性
 用户自定义节点时，可以使用下列特性，改变节点在编辑器的默认行为。
@@ -181,11 +246,10 @@ BehaviorTreeRunner是执行行为树资产的组件。
 调试模式的所有改动，都不会改变行为树资产，停止Play模式时，改动也会消失。  
 ![image-20230806155937657](BehaviorTree_Document/image-20230806155937657.png)
 
-# 注意事项
-
 # 联系方式
 - 邮箱：479813005@qq.com
 - 反馈：[Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
+- QQ群：[812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
 
 
 
