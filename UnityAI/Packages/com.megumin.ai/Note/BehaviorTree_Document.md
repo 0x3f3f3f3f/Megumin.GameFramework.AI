@@ -109,7 +109,7 @@ BehaviorTreeRunner是执行行为树资产的组件。
 ![image-20230806102957493](BehaviorTree_Document/image-20230806102957493.png)
 
 注意：你可以将参数绑定到一个GameObject上不存在的组件的成员上，这在编辑器是合法的。因为这个组件可能在prefab上还不存在，需要在运行时动态添加。  
-但你必须保证行为树开始初始化绑定前添加组件，或者在添加组件后手动调用行为树的参数绑定函数。  
+但你必须保证行为树开始初始化绑定前添加组件，或者在添加组件后手动调用行为树的参数绑定方法。  
 即使最终绑定的组件不存在，也不会影响整个行为树执行。在访问这个变量时，可以返回类型的默认值。
 
 # 节点
@@ -143,13 +143,13 @@ BehaviorTreeRunner是执行行为树资产的组件。
   生成日志，然后返回成功。
 
 ## 子树节点
-子树节点可以引用另一个行为树。从子树的开始节点执行。  
-父数的参数表重写子树的同名参数。  
+子树节点可以引用另一个行为树文件。从子树的开始节点执行。  
+父树的参数表重写子树的同名参数。  
 
 ## 写一个新的行为节点
-创建一个新的行为节点，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+创建一个新的行为节点，需要使用`Megumin.GameFramework.AI`和`Megumin.GameFramework.AI.BehaviorTree`命名空间。  
 
-从BTActionNode基类继承，并重写OnTick函数。
+从`BTActionNode`基类继承，并重写`OnTick`方法。
 
 ```cs
 using System;
@@ -173,14 +173,14 @@ public sealed class NewActionNode : BTActionNode
 可以将一个或多个装饰附加到一个行为树节点上。这个节点称为装饰器的物主节点。
 装饰器为物主节点提供额外的功能，或者修改物主节点的完成结果。
 
-- 冷却（Cooldown）
-  进入或者完成物主节点后，进入冷却。只有冷却完成才能再次进入物主节点。
-- 反转（Inverter）
-  反转物主节点的完成结果。
-- 循环（Loop）
-  循环指定次数执行物主节点。
-- 日志（DecoratorLog）
-  在物主节点指定行为发生时，生成日志。
+- 冷却（Cooldown）  
+  进入或者完成物主节点后，进入冷却。只有冷却完成才能再次进入物主节点。  
+- 反转（Inverter）  
+  反转物主节点的完成结果。  
+- 循环（Loop）  
+  循环指定次数执行物主节点。  
+- 日志（DecoratorLog）  
+  在物主节点指定行为发生时，生成日志。  
 
 ## 条件装饰器
 条件装饰器是一种特殊的装饰器，用C↓表示，从上到下执行，用于判断节点能否进入。
@@ -189,8 +189,8 @@ public sealed class NewActionNode : BTActionNode
 ## 写一个新的条件装饰器
 创建一个新的条件装饰，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
 
-从ConditionDecorator基类继承，并重写OnCheckCondition函数。 
-也可以从CompareDecorator基类继承，并重写GetResult和GetCompareTo函数。
+从`ConditionDecorator`基类继承，并重写`OnCheckCondition`方法。 
+也可以从`CompareDecorator`基类继承，并重写`GetResult`和`GetCompareTo`方法。
 
 ```cs
 using System;

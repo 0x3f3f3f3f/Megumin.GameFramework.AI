@@ -112,44 +112,44 @@ Note: You can bind parameters to members of a component that does not exist on t
 However, you must ensure that you add components before the behavior tree starts initializing bindings, or manually call the behavior tree's parameter binding functions after adding components.  
 Even if the final bound component does not exist, it does not affect the entire behavior tree execution. When accessing this variable, you can return the default value of the type.  
 
-# 节点
-## 开始节点
-可以将行为树的任意一个节点标记为开始节点。  
-执行时从开始节点执行，忽略标记节点的父节点，开始节点执行完成时，视为整个行为树执行完成。
+# Node
+## Start Node
+You can mark any node of the behavior tree as the start node.  
+Execution starts from the start node, ignores the parent node of the mark node, and when the start node execution is complete, the entire behavior tree execution is considered complete.  
 
-## 组合节点
-- 顺序节点（Sequence） 
-  节点按从左到右的顺序执行其子节点。当其中一个子节点失败时，序列节点也将停止执行。如果有子节点失败，那么序列就会失败。如果该序列的所有子节点运行都成功执行，则序列节点成功。
-- 选择节点（Selector） 
-  节点按从左到右的顺序执行其子节点。当其中一个子节点执行成功时，选择器节点将停止执行。如果选择器的一个子节点成功运行，则选择器运行成功。如果选择器的所有子节点运行失败，则选择器运行失败。
-- 平行节点（Parallel）
-  同时执行其所有子项（不是多线程）。  
-  根据FinishMode有不同的行为：  
+## Composite Node
+- Sequence  
+  A node executes its children in order from left to right. When one of the child nodes fails, the sequence node also stops executing. If there are child nodes that fail, then the sequence fails. If all child node runs of the sequence execute successfully, the sequence node succeeds.  
+- Selector  
+  A node executes its children in order from left to right. When one of the child nodes executes successfully, the selector node stops executing. If one of the child nodes of the selector runs successfully, the selector runs successfully. If all child nodes of the selector fail to run, the selector fails.  
+- Parallel  
+  Execute all of its children simultaneously (not multithreaded).    
+  There are different behaviors depending on FinishMode:  
   - AnyFailed  
-    任意一个子节点失败，返回失败。
+    Any child node fails and returns failure.  
   - AnySucceeded  
-    任意一个子节点成功，返回成功。
+    Any child node succeeds and returns success.  
   - AnyCompleted  
-    任意一个子节点完成，返回完成节点的结果。
+    Completes any child node and returns the result of the completed node.  
   - AnySucceededWaitAll  
-    等待所有子节点都完成，任意一个子节点成功，返回成功。
+    Waits for all child nodes to complete, and any one child node succeeds, returning success.  
   - AnyFailedWaitAll  
-    等待所有子节点都完成，任意一个子节点失败，返回失败。
+    Waits for all child nodes to complete, and any one child node fails, returns failure.  
 
-## 行为节点
-- 等待节点（Wait）
-  等待指定时间秒数，然后返回成功。
-- 日志节点（Log）
-  生成日志，然后返回成功。
+## Action Node
+- Wait  
+  Wait for the specified number of seconds and return success.  
+- Log  
+  Generate a log and then return success.  
 
-## 子树节点
-子树节点可以引用另一个行为树。从子树的开始节点执行。  
-父数的参数表重写子树的同名参数。  
+## Subtree Node
+A subtree node can reference another behavior tree asset. Executes from the start node of the subtree.  
+The variable table of the parent tree overrides the subtree's variable with the same name.  
 
-## 写一个新的行为节点
-创建一个新的行为节点，需要引入Megumin.GameFramework.AI和Megumin.GameFramework.AI.BehaviorTree命名空间。  
+## Write a new action node
+To create a new action node, you need to using the `Megumin.GameFramework.AI` and `Megumin.GameFramework.AI.BehaviorTree` namespaces.  
 
-从BTActionNode基类继承，并重写OnTick函数。
+Inherit from the `BTActionNode` base class and override the `OnTick` method.
 
 ```cs
 using System;
@@ -169,13 +169,13 @@ public sealed class NewActionNode : BTActionNode
 }
 ```
 
-# 装饰器
-可以将一个或多个装饰附加到一个行为树节点上。这个节点称为装饰器的物主节点。
-装饰器为物主节点提供额外的功能，或者修改物主节点的完成结果。
+# Decorator
+You can attach one or more decorators to a Behavior Tree node. This node is called the owner node of the decorator.  
+Decorators provide additional functionality for the owner node, or modify the completion result of the owner node.  
 
-- 冷却（Cooldown）
-  进入或者完成物主节点后，进入冷却。只有冷却完成才能再次进入物主节点。
-- 反转（Inverter）
+- Cooldown  
+  After entering or completing the owner node, enter cooling. Only after cooling is complete can it enter the owner node again.  
+- Inverte  
   反转物主节点的完成结果。
 - 循环（Loop）
   循环指定次数执行物主节点。
