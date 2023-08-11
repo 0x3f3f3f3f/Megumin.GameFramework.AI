@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Transform Icon")]
+    [Icon("d_Transform Icon")]
     [DisplayName("Transform_RotateAround")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("RotateAround(Vector3, Vector3, Single)")]

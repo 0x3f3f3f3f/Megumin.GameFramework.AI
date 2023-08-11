@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animation Icon")]
+    [Icon("d_Animation Icon")]
     [DisplayName("Animation_Play")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Play(String, PlayMode)")]

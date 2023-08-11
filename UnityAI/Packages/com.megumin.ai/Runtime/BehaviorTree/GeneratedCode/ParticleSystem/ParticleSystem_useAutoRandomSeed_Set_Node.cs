@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("ParticleSystem Icon")]
+    [Icon("d_ParticleSystem Icon")]
     [DisplayName("Set_ParticleSystem_useAutoRandomSeed")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Set_useAutoRandomSeed")]

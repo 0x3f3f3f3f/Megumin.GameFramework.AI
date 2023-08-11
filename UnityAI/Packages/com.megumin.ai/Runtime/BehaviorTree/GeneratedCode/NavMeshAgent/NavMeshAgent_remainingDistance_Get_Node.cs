@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("NavMeshAgent Icon")]
+    [Icon("d_NavMeshAgent Icon")]
     [DisplayName("Get_NavMeshAgent_remainingDistance")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Get_remainingDistance")]

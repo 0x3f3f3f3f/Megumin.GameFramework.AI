@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Rigidbody2D Icon")]
+    [Icon("d_Rigidbody2D Icon")]
     [DisplayName("Get_Rigidbody2D_angularVelocity")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Get_angularVelocity")]

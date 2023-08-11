@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("NavMeshAgent Icon")]
+    [Icon("d_NavMeshAgent Icon")]
     [DisplayName("NavMeshAgent_speed")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("speed")]

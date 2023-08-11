@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("NavMeshAgent Icon")]
+    [Icon("d_NavMeshAgent Icon")]
     [DisplayName("NavMeshAgent_SetAreaCost")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("SetAreaCost(Int32, Single)")]

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Camera Icon")]
+    [Icon("d_Camera Icon")]
     [DisplayName("Get_Camera_targetDisplay")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_targetDisplay")]

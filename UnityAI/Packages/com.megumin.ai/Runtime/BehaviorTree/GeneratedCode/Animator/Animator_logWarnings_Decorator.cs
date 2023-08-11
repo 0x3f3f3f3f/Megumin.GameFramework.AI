@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Animator_logWarnings")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("logWarnings")]

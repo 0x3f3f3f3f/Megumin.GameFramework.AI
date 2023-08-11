@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Collider_contactOffset")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("contactOffset")]

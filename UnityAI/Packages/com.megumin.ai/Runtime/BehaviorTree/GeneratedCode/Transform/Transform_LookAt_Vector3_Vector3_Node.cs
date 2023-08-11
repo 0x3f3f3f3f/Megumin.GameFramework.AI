@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Transform Icon")]
+    [Icon("d_Transform Icon")]
     [DisplayName("Transform_LookAt")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("LookAt(Vector3, Vector3)")]

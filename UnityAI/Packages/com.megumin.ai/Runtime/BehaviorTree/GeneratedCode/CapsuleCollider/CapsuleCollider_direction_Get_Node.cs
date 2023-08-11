@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CapsuleCollider Icon")]
+    [Icon("d_CapsuleCollider Icon")]
     [DisplayName("Get_CapsuleCollider_direction")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("Get_direction")]

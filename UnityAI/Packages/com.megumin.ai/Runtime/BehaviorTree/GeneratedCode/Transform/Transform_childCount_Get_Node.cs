@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Transform Icon")]
+    [Icon("d_Transform Icon")]
     [DisplayName("Get_Transform_childCount")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Get_childCount")]

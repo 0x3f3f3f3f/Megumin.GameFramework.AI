@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Animator_GetCurrentAnimatorStateInfo")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetCurrentAnimatorStateInfo(Int32)")]

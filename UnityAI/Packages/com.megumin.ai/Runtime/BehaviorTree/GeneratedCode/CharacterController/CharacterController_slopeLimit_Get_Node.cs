@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CharacterController Icon")]
+    [Icon("d_CharacterController Icon")]
     [DisplayName("Get_CharacterController_slopeLimit")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_slopeLimit")]

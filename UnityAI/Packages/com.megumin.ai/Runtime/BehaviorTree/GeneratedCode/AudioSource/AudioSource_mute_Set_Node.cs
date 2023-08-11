@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("AudioSource Icon")]
+    [Icon("d_AudioSource Icon")]
     [DisplayName("Set_AudioSource_mute")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_mute")]

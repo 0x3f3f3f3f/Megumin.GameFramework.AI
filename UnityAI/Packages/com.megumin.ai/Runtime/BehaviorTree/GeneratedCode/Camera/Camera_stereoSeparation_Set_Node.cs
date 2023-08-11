@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Camera Icon")]
+    [Icon("d_Camera Icon")]
     [DisplayName("Set_Camera_stereoSeparation")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_stereoSeparation")]

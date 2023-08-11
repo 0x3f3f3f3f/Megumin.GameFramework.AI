@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CharacterController Icon")]
+    [Icon("d_CharacterController Icon")]
     [DisplayName("CharacterController_skinWidth")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("skinWidth")]

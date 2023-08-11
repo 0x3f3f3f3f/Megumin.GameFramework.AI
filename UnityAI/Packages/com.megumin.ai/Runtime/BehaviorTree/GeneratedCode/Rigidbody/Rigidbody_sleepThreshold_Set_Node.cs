@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Rigidbody Icon")]
+    [Icon("d_Rigidbody Icon")]
     [DisplayName("Set_Rigidbody_sleepThreshold")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_sleepThreshold")]

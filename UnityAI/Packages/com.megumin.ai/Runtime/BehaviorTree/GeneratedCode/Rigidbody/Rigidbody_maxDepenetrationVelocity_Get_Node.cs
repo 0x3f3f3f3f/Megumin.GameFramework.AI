@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Rigidbody Icon")]
+    [Icon("d_Rigidbody Icon")]
     [DisplayName("Get_Rigidbody_maxDepenetrationVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_maxDepenetrationVelocity")]

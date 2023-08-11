@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Get_Animator_applyRootMotion")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_applyRootMotion")]

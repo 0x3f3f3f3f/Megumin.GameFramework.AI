@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Set_Collider_isTrigger")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("Set_isTrigger")]

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Set_Animator_recorderStopTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_recorderStopTime")]

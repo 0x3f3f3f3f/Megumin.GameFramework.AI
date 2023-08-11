@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("PlayableDirector Icon")]
+    [Icon("d_PlayableDirector Icon")]
     [DisplayName("Set_PlayableDirector_initialTime")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Set_initialTime")]

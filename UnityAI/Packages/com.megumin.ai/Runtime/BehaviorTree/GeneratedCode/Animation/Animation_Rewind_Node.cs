@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animation Icon")]
+    [Icon("d_Animation Icon")]
     [DisplayName("Animation_Rewind")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Rewind")]

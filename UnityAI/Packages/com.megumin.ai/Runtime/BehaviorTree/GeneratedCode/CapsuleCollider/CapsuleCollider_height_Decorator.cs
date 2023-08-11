@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CapsuleCollider Icon")]
+    [Icon("d_CapsuleCollider Icon")]
     [DisplayName("CapsuleCollider_height")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("height")]

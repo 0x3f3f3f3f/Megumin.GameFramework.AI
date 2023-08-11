@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CircleCollider2D Icon")]
+    [Icon("d_CircleCollider2D Icon")]
     [DisplayName("Get_CircleCollider2D_radius")]
     [Category("UnityEngine/CircleCollider2D")]
     [AddComponentMenu("Get_radius")]

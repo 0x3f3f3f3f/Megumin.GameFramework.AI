@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("BoxCollider2D Icon")]
+    [Icon("d_BoxCollider2D Icon")]
     [DisplayName("Set_BoxCollider2D_autoTiling")]
     [Category("UnityEngine/BoxCollider2D")]
     [AddComponentMenu("Set_autoTiling")]

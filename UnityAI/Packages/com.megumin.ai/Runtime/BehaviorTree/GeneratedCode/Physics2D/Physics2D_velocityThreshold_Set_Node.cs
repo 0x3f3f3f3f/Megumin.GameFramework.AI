@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Set_Physics2D_velocityThreshold")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_velocityThreshold")]
+    [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_velocityThreshold_Set_Node : BTActionNode
     {
         [Space]

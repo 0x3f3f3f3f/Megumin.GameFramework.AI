@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("PlayableDirector Icon")]
+    [Icon("d_PlayableDirector Icon")]
     [DisplayName("PlayableDirector_Resume")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Resume")]

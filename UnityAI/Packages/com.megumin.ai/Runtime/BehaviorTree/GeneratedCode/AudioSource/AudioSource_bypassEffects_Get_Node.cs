@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("AudioSource Icon")]
+    [Icon("d_AudioSource Icon")]
     [DisplayName("Get_AudioSource_bypassEffects")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_bypassEffects")]

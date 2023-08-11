@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Get_Renderer_forceRenderingOff")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_forceRenderingOff")]

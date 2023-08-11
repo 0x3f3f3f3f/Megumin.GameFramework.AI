@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Camera Icon")]
+    [Icon("d_Camera Icon")]
     [DisplayName("Camera_scaledPixelHeight")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("scaledPixelHeight")]

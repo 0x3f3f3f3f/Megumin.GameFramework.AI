@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Get_Physics_autoSimulation")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_autoSimulation")]
+    [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics_autoSimulation_Get_Node : BTActionNode
     {
         [Space]

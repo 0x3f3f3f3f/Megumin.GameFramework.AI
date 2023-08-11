@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("PlayableDirector Icon")]
+    [Icon("d_PlayableDirector Icon")]
     [DisplayName("PlayableDirector_Stop")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Stop")]

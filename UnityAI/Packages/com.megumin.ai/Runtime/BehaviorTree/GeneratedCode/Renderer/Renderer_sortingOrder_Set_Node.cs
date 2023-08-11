@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Set_Renderer_sortingOrder")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Set_sortingOrder")]

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("ParticleSystem Icon")]
+    [Icon("d_ParticleSystem Icon")]
     [DisplayName("ParticleSystem_SetMaximumPreMappedBufferCounts")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("SetMaximumPreMappedBufferCounts(Int32, Int32)")]

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("CharacterController Icon")]
+    [Icon("d_CharacterController Icon")]
     [DisplayName("CharacterController_Move")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Move(Vector3)")]

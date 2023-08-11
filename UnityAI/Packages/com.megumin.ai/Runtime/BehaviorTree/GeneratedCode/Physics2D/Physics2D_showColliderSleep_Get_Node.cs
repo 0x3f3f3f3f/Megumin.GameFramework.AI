@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Get_Physics2D_showColliderSleep")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_showColliderSleep")]
+    [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderSleep_Get_Node : BTActionNode
     {
         [Space]

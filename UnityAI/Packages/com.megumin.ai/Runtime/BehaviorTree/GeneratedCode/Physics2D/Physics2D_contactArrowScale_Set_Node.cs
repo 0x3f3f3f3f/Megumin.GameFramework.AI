@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Set_Physics2D_contactArrowScale")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_contactArrowScale")]
+    [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_contactArrowScale_Set_Node : BTActionNode
     {
         [Space]

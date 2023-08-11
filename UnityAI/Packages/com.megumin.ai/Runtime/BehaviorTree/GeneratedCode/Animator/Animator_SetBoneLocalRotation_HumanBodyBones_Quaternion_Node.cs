@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Animator_SetBoneLocalRotation")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetBoneLocalRotation(HumanBodyBones, Quaternion)")]

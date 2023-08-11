@@ -15,6 +15,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
     [DisplayName("Set_Physics2D_alwaysShowColliders")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_alwaysShowColliders")]
+    [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_alwaysShowColliders_Set_Node : BTActionNode
     {
         [Space]

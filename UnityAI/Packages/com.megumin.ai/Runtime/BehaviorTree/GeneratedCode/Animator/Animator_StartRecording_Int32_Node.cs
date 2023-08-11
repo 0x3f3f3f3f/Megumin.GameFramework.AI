@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Animator Icon")]
+    [Icon("d_Animator Icon")]
     [DisplayName("Animator_StartRecording")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("StartRecording(Int32)")]

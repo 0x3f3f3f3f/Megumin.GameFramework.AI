@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Rigidbody Icon")]
+    [Icon("d_Rigidbody Icon")]
     [DisplayName("Rigidbody_freezeRotation")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("freezeRotation")]

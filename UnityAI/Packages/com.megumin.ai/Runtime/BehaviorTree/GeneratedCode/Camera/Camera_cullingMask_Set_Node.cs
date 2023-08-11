@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Camera Icon")]
+    [Icon("d_Camera Icon")]
     [DisplayName("Set_Camera_cullingMask")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_cullingMask")]

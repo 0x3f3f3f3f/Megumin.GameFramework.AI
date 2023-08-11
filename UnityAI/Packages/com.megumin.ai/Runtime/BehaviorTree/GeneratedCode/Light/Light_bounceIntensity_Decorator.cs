@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Light Icon")]
+    [Icon("d_Light Icon")]
     [DisplayName("Light_bounceIntensity")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("bounceIntensity")]

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Camera Icon")]
+    [Icon("d_Camera Icon")]
     [DisplayName("Camera_GetStereoNonJitteredProjectionMatrix")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("GetStereoNonJitteredProjectionMatrix(StereoscopicEye)")]

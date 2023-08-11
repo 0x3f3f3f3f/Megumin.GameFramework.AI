@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("Transform Icon")]
+    [Icon("d_Transform Icon")]
     [DisplayName("Transform_InverseTransformPoint")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("InverseTransformPoint(Vector3)")]

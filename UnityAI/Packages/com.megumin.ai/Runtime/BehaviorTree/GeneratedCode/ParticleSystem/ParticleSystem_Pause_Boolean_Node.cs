@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("ParticleSystem Icon")]
+    [Icon("d_ParticleSystem Icon")]
     [DisplayName("ParticleSystem_Pause")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Pause(Boolean)")]

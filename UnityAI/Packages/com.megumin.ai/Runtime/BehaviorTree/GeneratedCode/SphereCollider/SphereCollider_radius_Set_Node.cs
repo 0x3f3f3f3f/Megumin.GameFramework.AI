@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("SphereCollider Icon")]
+    [Icon("d_SphereCollider Icon")]
     [DisplayName("Set_SphereCollider_radius")]
     [Category("UnityEngine/SphereCollider")]
     [AddComponentMenu("Set_radius")]
