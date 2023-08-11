@@ -142,6 +142,20 @@ MonoBehaviour:
   - Physics2D_velocityThreshold_Decorator
   - Physics_autoSimulation_Decorator
   - Physics_RebuildBroadphaseRegions_Bounds_Int32_Node
+  - Physics2D_alwaysShowColliders_Get_Node
+  - Physics2D_alwaysShowColliders_Set_Node
+  - Physics2D_contactArrowScale_Get_Node
+  - Physics2D_contactArrowScale_Set_Node
+  - Physics2D_showColliderAABB_Get_Node
+  - Physics2D_showColliderAABB_Set_Node
+  - Physics2D_showColliderContacts_Get_Node
+  - Physics2D_showColliderContacts_Set_Node
+  - Physics2D_showColliderSleep_Get_Node
+  - Physics2D_showColliderSleep_Set_Node
+  - Physics2D_velocityThreshold_Get_Node
+  - Physics2D_velocityThreshold_Set_Node
+  - Physics_autoSimulation_Get_Node
+  - Physics_autoSimulation_Get_Node
   ReplaceIcon:
   - Type: UnityEngine.Input
     IconPath: standaloneinputmodule icon
