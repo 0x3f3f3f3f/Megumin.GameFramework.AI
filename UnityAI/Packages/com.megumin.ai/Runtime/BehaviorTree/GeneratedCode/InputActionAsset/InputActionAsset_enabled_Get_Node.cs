@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Get_InputActionAsset_enabled")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("Get_enabled")]

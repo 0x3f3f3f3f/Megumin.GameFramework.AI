@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace Megumin.GameFramework.AI.BehaviorTree
 {
-    [Icon("DefaultAsset Icon")]
+    [Icon("d_DefaultAsset Icon")]
     [DisplayName("Get_InputActionAsset_Extension")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("Get_Extension")]
