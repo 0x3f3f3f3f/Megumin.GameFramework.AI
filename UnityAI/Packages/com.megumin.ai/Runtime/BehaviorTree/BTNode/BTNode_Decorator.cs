@@ -9,7 +9,13 @@ namespace Megumin.GameFramework.AI.BehaviorTree
 
     public partial class BTNode
     {
-        private bool ExecuteConditionDecorator(object options = null)
+        /// <summary>
+        /// 检查所有条件装饰器，能否继续执行
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns>
+        /// </returns>
+        protected bool ExecuteConditionDecorator(object options = null)
         {
             foreach (var pre in Decorators)
             {
