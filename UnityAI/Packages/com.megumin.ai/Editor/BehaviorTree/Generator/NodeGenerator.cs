@@ -766,12 +766,12 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 var type = Type;
                 var member = MemberInfo;
 
-                generator.Macro["$(ClassName)"] = ClassName;
+                generator.Macro[CodeGenerator.ClassName] = ClassName;
                 generator.Macro["$(ComponentName)"] = type.FullName;
                 generator.Macro["$(MenuName)"] = GetMenuName(type, member);
                 generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
                 generator.Macro["$(MemberName)"] = member.Name;
-                generator.Macro["$(CodeGenericBy)"] = typeof(NodeGenerator).FullName;
+                generator.Macro[CodeGenerator.CodeGenericBy] = typeof(NodeGenerator).FullName;
                 generator.Macro["$(BTNodeFrom)"] = "from";
                 generator.Macro["$(ObjectOptions)"] = "options";
 
@@ -781,7 +781,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 Setting.TryGetParamType(memberType, out var returnType);
                 generator.Macro["$(RefVarType)"] = returnType.ToCode();
 
-                generator.Macro["$(CodeGenericSourceFilePath)"] = AssetDatabase.GetAssetPath(Setting);
+                generator.Macro[CodeGenerator.SourceFilePath] = AssetDatabase.GetAssetPath(Setting);
             }
 
             public string GetBaseTypeString(Type memberType, bool useComponent, bool isnode)
