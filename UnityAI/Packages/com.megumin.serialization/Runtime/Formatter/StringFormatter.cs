@@ -89,7 +89,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                if (TypeCache.TryGetType(typeFullName, out var type)
+                if (TypeHelper.TryGetType(typeFullName, out var type)
                     && type.IsEnum)
                 {
                     return EnumFormatter.Instance.TryDeserialize(source, out value);
@@ -108,7 +108,7 @@ namespace Megumin.Serialization
             }
             else
             {
-                if (TypeCache.TryGetType(typeof(T).FullName, out var type)
+                if (TypeHelper.TryGetType(typeof(T).FullName, out var type)
                     && type.IsEnum)
                 {
                     return EnumFormatter.Instance.TryDeserialize(source, out value);
@@ -408,7 +408,7 @@ namespace Megumin.Serialization
 
             public bool TryDeserialize(string source, out object value)
             {
-                if (TypeCache.TryGetType(source, out var type))
+                if (TypeHelper.TryGetType(source, out var type))
                 {
                     value = type;
                     return true;
@@ -425,7 +425,7 @@ namespace Megumin.Serialization
 
             public bool TryDeserialize(string source, out Type value)
             {
-                if (TypeCache.TryGetType(source, out value))
+                if (TypeHelper.TryGetType(source, out value))
                 {
                     return true;
                 }
@@ -455,7 +455,7 @@ namespace Megumin.Serialization
             public bool TryDeserialize(string source, out object value)
             {
                 var sp = source.Split(":");
-                if (sp.Length == 2 && TypeCache.TryGetType(sp[0], out var type))
+                if (sp.Length == 2 && TypeHelper.TryGetType(sp[0], out var type))
                 {
                     return Enum.TryParse(type, sp[1], out value);
                 }
@@ -475,7 +475,7 @@ namespace Megumin.Serialization
             public bool TryDeserialize(string source, out Enum value)
             {
                 var sp = source.Split(":");
-                if (sp.Length == 2 && TypeCache.TryGetType(sp[0], out var type))
+                if (sp.Length == 2 && TypeHelper.TryGetType(sp[0], out var type))
                 {
                     if (Enum.TryParse(type, sp[1], out var result) && result is Enum @enum)
                     {
@@ -491,7 +491,7 @@ namespace Megumin.Serialization
             public bool TryDeserialize<T>(string source, out T value)
             {
                 var sp = source.Split(":");
-                if (sp.Length == 2 && TypeCache.TryGetType(sp[0], out var type))
+                if (sp.Length == 2 && TypeHelper.TryGetType(sp[0], out var type))
                 {
                     if (Enum.TryParse(type, sp[1], out var result) && result is T @enum)
                     {

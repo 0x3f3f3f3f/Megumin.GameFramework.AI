@@ -198,7 +198,7 @@ namespace Megumin.Serialization
                     else
                     {
                         //unity null
-                        var dateType = TypeCache.GetType(TypeName);
+                        var dateType = TypeHelper.GetType(TypeName);
                         var refObjetType = RefObject?.GetType();
                         if (dateType.IsAssignableFrom(refObjetType))
                         {
@@ -236,7 +236,7 @@ namespace Megumin.Serialization
         {
             try
             {
-                var dateType = TypeCache.GetType(TypeName);
+                var dateType = TypeHelper.GetType(TypeName);
                 var instance = Activator.CreateInstance(dateType);
                 if (instance is T result)
                 {
@@ -378,7 +378,7 @@ namespace Megumin.Serialization
                         elementType = Type.GetType(elementTypeFullName);
                         if (elementType == null)
                         {
-                            elementType = TypeCache.GetType(elementTypeFullName);
+                            elementType = TypeHelper.GetType(elementTypeFullName);
                         }
                     }
                     else
