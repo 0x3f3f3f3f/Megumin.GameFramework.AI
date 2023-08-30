@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeNodeView
     {

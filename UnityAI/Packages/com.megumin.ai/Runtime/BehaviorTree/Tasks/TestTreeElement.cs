@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("DisplayName_TestActionNode")]
     [Category("Samples/Attribute")]

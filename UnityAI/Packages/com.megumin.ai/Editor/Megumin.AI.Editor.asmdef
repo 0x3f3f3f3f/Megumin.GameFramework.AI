@@ -1,10 +1,10 @@
 {
-    "name": "Megumin.GameFramework.AI.Editor",
-    "rootNamespace": "Megumin.GameFramework.AI.Editor",
+    "name": "Megumin.AI.Editor",
+    "rootNamespace": "Megumin.AI.Editor",
     "references": [
         "Megumin.Common",
         "Megumin.Reflection",
-        "Megumin.GameFramework.AI",
+        "Megumin.AI",
         "Unity.Settings.Editor",
         "Megumin.Explosion4Unity",
         "Megumin.Binding",

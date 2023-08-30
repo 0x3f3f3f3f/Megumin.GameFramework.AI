@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 用于反序列化失败

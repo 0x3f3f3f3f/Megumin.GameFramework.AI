@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.AI.Editor
 {
     public static class SearchWindowProviderExtension
     {

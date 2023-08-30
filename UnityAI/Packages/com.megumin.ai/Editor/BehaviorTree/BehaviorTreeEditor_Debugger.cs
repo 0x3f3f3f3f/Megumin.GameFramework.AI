@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     internal class BehaviorTreeEditorDebugger : ITreeDebugger
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.Port;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public class BehaviorTreePortView : Port
     {

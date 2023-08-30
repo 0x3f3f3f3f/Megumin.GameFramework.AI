@@ -9,7 +9,7 @@ using Megumin.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [CreateAssetMenu(fileName = "BehaviorTree", menuName = "Megumin/AI/BehaviorTreeAsset")]
     public partial class BehaviorTreeAsset_1_1 : ScriptableObject, IBehaviorTreeAsset

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
 
 

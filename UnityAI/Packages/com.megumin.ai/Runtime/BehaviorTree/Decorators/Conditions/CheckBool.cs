@@ -3,7 +3,7 @@ using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     //[FormerlySerializedAs("CheckBool")]
     [Serializable]

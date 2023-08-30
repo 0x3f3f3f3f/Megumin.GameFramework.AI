@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public class TreeWrapper : ScriptableObject, ISerializationCallbackReceiver
     {

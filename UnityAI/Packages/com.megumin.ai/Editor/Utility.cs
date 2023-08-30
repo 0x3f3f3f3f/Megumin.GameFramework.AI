@@ -12,7 +12,7 @@ using UnityEditor.SettingsManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.AI.Editor
 {
     public static class Utility
     {

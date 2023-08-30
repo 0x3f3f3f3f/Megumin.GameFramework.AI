@@ -7,7 +7,7 @@ using UnityEngine;
 using Megumin;
 using Megumin.Binding;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 

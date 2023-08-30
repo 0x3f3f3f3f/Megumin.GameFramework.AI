@@ -7,11 +7,11 @@ using UnityEditor.UIElements;
 using System;
 using UnityEditor;
 using System.ComponentModel;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using System.Linq;
 using System.Reflection;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeNodeView : Node
     {

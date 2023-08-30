@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.AI
 {
     public interface ITitleable
     {

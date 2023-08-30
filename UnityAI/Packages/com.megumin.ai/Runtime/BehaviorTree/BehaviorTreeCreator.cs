@@ -7,7 +7,7 @@ using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     public class BehaviorTreeCreator
     {
@@ -19,7 +19,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree
         static Dictionary<string, BehaviorTreeCreator> cacheCreator = new();
         public static BehaviorTreeCreator GetCreator(string treeName, string guid, string version = null)
         {
-            var creatorTypeName = $"Megumin.GameFramework.AI.BehaviorTree.{GetCreatorTypeName(treeName, guid)}";
+            var creatorTypeName = $"Megumin.AI.BehaviorTree.{GetCreatorTypeName(treeName, guid)}";
             if (cacheCreator.TryGetValue(treeName, out var cr))
             {
                 return cr;

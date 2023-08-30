@@ -7,13 +7,13 @@ using Megumin.Binding;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Megumin.Reflection;
 using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class NodeGenerator : ScriptableObject
     {
@@ -69,6 +69,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
         [Space]
         public bool Method2Node = true;
         public bool Method2Deco = false;
+
+        [Space]
+        public string OutputNamespace = "Megumin.AI.BehaviorTree";
 
         List<Task> alltask = new();
         System.Random random = new();
@@ -677,10 +680,10 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 //检查现有类型是不是在目标位置，如果不是在目标位置表示节点是手动编写的，应该跳过生成。
                 if (Megumin.Reflection.TypeCache.TryGetType(
-                    $"Megumin.GameFramework.AI.BehaviorTree.{ClassName}",
+                    $"{Setting.OutputNamespace}.{ClassName}",
                     out var oldType))
                 {
-                    var script = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                    var script = Megumin.AI.Editor.Utility.GetMonoScript(oldType).Result;
                     if (script != null)
                     {
                         var oldPath = AssetDatabase.GetAssetPath(script);
@@ -767,6 +770,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 var member = MemberInfo;
 
                 generator.Macro[CodeGenerator.ClassName] = ClassName;
+                generator.Macro[CodeGenerator.Namespace] = Setting.OutputNamespace;
                 generator.Macro["$(ComponentName)"] = type.FullName;
                 generator.Macro["$(MenuName)"] = GetMenuName(type, member);
                 generator.Macro["$(DisplayName)"] = $"{type.Name}_{member.Name}";
@@ -903,7 +907,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 GenerateUsing(generator);
 
-                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                generator.Push($"namespace {CodeGenerator.Namespace}");
                 using (generator.NewScope)
                 {
                     GenerateAttribute(type, method, className, generator);
@@ -1062,7 +1066,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 GenerateUsing(generator);
 
-                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                generator.Push($"namespace {CodeGenerator.Namespace}");
                 using (generator.NewScope)
                 {
                     GenerateAttribute(type, member, className, generator);
@@ -1140,7 +1144,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 GenerateUsing(generator);
 
-                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                generator.Push($"namespace {CodeGenerator.Namespace}");
                 using (generator.NewScope)
                 {
                     GenerateAttribute(type, MemberInfo, className, generator);
@@ -1200,7 +1204,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 GenerateUsing(generator);
 
-                generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+                generator.Push($"namespace {CodeGenerator.Namespace}");
                 using (generator.NewScope)
                 {
                     GenerateAttribute(type, MemberInfo, className, generator);

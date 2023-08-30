@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 保证同名锁同一时间只能有一个Task执行

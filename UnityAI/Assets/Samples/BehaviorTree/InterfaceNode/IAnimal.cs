@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Megumin.GameFramework.AI.BehaviorTree;
-using Megumin.GameFramework.AI;
+using Megumin.AI.BehaviorTree;
+using Megumin.AI;
 
 public interface IAnimal
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Serializable]
     public class BehaviorTreeElement : TreeElement<BehaviorTree>, IBindAgentable

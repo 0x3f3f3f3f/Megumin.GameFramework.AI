@@ -6,7 +6,7 @@ using Megumin.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
     public class SerializationTestNode : BTActionNode,

@@ -8,7 +8,7 @@ using Megumin.Binding;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Category("Action")]
     public class SubTree : BTActionNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement, IBindingParseable

@@ -8,7 +8,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Megumin.Reflection;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 换个名字，与异步task重名

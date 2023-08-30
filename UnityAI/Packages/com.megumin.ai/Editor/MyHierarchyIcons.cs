@@ -1,9 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI.BehaviorTree;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.AI.Editor
 {
 
     /// <summary>

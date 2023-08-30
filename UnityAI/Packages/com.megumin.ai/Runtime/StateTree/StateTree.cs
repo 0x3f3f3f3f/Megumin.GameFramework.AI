@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.StateTree
+namespace Megumin.AI.StateTree
 {
     public class StateTree
     {

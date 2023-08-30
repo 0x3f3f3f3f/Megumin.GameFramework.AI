@@ -4,7 +4,7 @@ using System.ComponentModel;
 using Megumin.Serialization;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Category("Samples/Serialization")]
     public class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>

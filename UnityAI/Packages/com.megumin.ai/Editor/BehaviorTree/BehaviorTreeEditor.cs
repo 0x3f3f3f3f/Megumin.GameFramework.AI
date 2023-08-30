@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
@@ -10,7 +10,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     // Usually you will only have a single Settings instance, so it is convenient to define a UserSetting<T> implementation
     // that points to your instance. In this way you avoid having to pass the Settings parameter in setting field definitions.

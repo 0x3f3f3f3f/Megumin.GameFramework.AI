@@ -6,10 +6,10 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using System;
 using UnityEditor;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using System.Linq;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     //调试相关代码
     public partial class BehaviorTreeView

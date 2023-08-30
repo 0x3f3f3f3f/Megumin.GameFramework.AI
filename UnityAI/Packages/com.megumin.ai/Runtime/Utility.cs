@@ -8,8 +8,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
-[assembly: InternalsVisibleTo("Megumin.GameFramework.AI.Editor")]
-namespace Megumin.GameFramework.AI
+[assembly: InternalsVisibleTo("Megumin.AI.Editor")]
+namespace Megumin.AI
 {
     public static class Utility
     {

@@ -6,7 +6,7 @@ using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 序列化架构设计缺陷，不能实现序列化 <![CDATA[List<RefVar<T>>]]> 类型

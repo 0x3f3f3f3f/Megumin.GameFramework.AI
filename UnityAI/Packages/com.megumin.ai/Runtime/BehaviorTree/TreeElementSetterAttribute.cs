@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.AI
 {
     public class TreeElementSetterAttribute : PropertyAttribute
     {

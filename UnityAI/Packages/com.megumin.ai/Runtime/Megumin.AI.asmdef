@@ -1,6 +1,6 @@
 {
-    "name": "Megumin.GameFramework.AI",
-    "rootNamespace": "Megumin.GameFramework.AI",
+    "name": "Megumin.AI",
+    "rootNamespace": "Megumin.AI",
     "references": [
         "GUID:293b3db1567cc8e479b4623ded498cfa",
         "GUID:e3141e3383f7d54428a008f1df9a1c9d",

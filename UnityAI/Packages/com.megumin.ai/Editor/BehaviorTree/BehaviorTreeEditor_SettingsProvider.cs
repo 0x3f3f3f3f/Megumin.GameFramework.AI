@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeEditor
     {

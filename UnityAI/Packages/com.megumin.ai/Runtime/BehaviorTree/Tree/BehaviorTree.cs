@@ -6,7 +6,7 @@ using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Serializable]
     public partial class BehaviorTree : AITree

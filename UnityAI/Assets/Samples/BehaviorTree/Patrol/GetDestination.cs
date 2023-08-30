@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Megumin.Binding;
 using Megumin.GameFramework.AI;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI.BehaviorTree;
 using UnityEngine;
 
 public class GetDestination : BTActionNode

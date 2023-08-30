@@ -7,7 +7,7 @@ using Megumin.Binding;
 using Megumin.Reflection;
 using Megumin.Serialization;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 抽象资产接口，应对不同版本和资产类型

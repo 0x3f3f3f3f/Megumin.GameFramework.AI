@@ -2,7 +2,7 @@
 using Megumin.Binding;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     [Category("Action")]
     [Icon("d_unityeditor.animationwindow@2x")]

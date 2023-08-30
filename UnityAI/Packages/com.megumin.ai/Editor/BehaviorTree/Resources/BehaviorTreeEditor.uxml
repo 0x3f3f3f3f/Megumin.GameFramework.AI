@@ -18,7 +18,7 @@
         <uie:ToolbarSpacer style="display: none;" />
         <uie:ToolbarButton text="ReloadView" display-tooltip-when-elided="true" name="reloadView" class="topbar-button" />
         <uie:ToolbarSpacer />
-        <Megumin.GameFramework.AI.BehaviorTree.Editor.UnityObjectView name="debugInstanceGameObject" />
+        <Megumin.AI.BehaviorTree.Editor.UnityObjectView name="debugInstanceGameObject" />
         <uie:ToolbarSpacer style="flex-grow: 1;" />
         <uie:ToolbarToggle label="Variables" name="blackboard" class="topbar-button" />
         <uie:ToolbarSpacer />
@@ -26,7 +26,7 @@
         <uie:ToolbarSpacer style="display: none;" />
         <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Help" name="help" />
     </uie:Toolbar>
-    <Megumin.GameFramework.AI.BehaviorTree.Editor.BehaviorTreeView name="behaviorTreeView" class="behaviorTreeView" />
+    <Megumin.AI.BehaviorTree.Editor.BehaviorTreeView name="behaviorTreeView" class="behaviorTreeView" />
     <uie:Toolbar name="bottomBar" style="background-color: rgba(60, 60, 60, 0.25); position: absolute; bottom: 0; left: 0; right: 0; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(204, 126, 26); border-right-color: rgb(204, 126, 26); border-top-color: rgb(204, 126, 26); border-bottom-color: rgb(204, 126, 26); height: 28px; display: none;">
         <ui:Label text="Label" display-tooltip-when-elided="true" name="debugInstanceName" style="flex-grow: 1; display: none;" />
         <uie:ObjectField label="Object Field" name="debugInstanceGameObject" />

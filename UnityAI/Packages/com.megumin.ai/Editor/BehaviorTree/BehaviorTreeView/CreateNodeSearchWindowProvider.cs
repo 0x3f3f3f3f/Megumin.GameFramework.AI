@@ -9,9 +9,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.ComponentModel;
-using Megumin.GameFramework.AI.Editor;
+using Megumin.AI.Editor;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     internal class CreateNodeSearchWindowProvider : ScriptableObject, ISearchWindowProvider
     {

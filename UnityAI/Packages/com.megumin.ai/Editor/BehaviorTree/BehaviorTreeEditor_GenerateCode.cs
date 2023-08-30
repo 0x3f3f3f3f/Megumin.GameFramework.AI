@@ -8,10 +8,11 @@ using Megumin.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     partial class BehaviorTreeEditor
     {
+        public string OutputNamespace = "Megumin.AI.BehaviorTree";
         public void GenerateCode()
         {
             //BehaviorTreeAsset_1_1 behaviorTree = CurrentAsset.AssetObject as BehaviorTreeAsset_1_1;
@@ -30,7 +31,7 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             generator.Push($"using Megumin.Serialization;");
             generator.PushBlankLines();
 
-            generator.Push($"namespace Megumin.GameFramework.AI.BehaviorTree");
+            generator.Push($"namespace {OutputNamespace}");
             using (generator.NewScope)
             {
                 generator.Push($"public sealed partial class $(ClassName) : BehaviorTreeCreator");
@@ -47,10 +48,10 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
             string filePath = $"Assets/{className}.cs";
 
             if (Megumin.Reflection.TypeCache.TryGetType(
-                    $"Megumin.GameFramework.AI.BehaviorTree.{className}",
+                    $"{OutputNamespace}.{className}",
                     out var oldType))
             {
-                var scriptObj = Megumin.GameFramework.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                var scriptObj = Megumin.AI.Editor.Utility.GetMonoScript(oldType).Result;
                 if (scriptObj != null)
                 {
                     var oldPath = AssetDatabase.GetAssetPath(scriptObj);

@@ -8,7 +8,7 @@ using Megumin.Binding;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.AI
 {
     public class AITree
     {

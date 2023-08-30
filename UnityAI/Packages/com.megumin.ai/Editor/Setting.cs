@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.SettingsManagement;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.AI.Editor
 {
     internal static class MySettingsManager
     {

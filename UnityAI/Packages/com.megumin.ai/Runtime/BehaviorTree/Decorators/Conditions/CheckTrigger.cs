@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     public enum WhenResetTrigger
     {

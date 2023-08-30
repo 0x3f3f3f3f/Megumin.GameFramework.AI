@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.StateMachine
+namespace Megumin.AI.StateMachine
 {
     public class StateMachine
     {

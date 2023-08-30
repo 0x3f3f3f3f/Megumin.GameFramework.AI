@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Megumin.Binding;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.BehaviorTree
+namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 超时节点

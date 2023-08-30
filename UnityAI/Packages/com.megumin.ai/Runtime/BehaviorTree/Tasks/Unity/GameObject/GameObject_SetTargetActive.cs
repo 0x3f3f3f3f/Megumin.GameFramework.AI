@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Binding;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI.BehaviorTree;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.AI
 {
     [Icon("GameObject Icon")]
     [DisplayName("SetTargetActive")]

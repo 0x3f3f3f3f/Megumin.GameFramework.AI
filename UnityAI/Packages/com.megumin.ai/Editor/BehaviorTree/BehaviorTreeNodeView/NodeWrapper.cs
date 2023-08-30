@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Megumin.Binding;
 using System;
 
-namespace Megumin.GameFramework.AI.BehaviorTree.Editor
+namespace Megumin.AI.BehaviorTree.Editor
 {
     public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
     {

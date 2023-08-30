@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Reflection;
 using System.ComponentModel;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.AI
 {
 
     [Serializable]
