@@ -11,6 +11,18 @@
         "com.unity.settings-manager": "1.0.3"
       }
     },
+    "com.megumin.ai.behaviortree": {
+      "version": "file:com.megumin.ai.behaviortree",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.megumin.common": "1.0.2",
+        "com.megumin.binding": "1.0.0",
+        "com.megumin.serialization": "1.0.0",
+        "com.unity.settings-manager": "1.0.3",
+        "com.megumin.ai": "1.2.0"
+      }
+    },
     "com.megumin.binding": {
       "version": "file:com.megumin.binding",
       "depth": 0,

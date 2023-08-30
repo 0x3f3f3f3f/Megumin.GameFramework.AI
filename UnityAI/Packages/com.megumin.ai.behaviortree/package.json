@@ -1,0 +1,29 @@
+{
+  "name": "com.megumin.ai.behaviortree",
+  "displayName": "Megumin AI BehaviorTree",
+  "version": "1.2.0",
+  "unity": "2021.3",
+  "description": "Megumin AI BehaviorTree is a behavior tree editor plugin designed for AAA and indie games.  \r\nProvides a visual editor to create behavior trees without writing code. Allows designers to quickly create complex AI.  \r\nIt solves many pain points in the use of traditional behavior trees editor, and it is worth trying for users who are not satisfied with traditional behavior trees editor.",
+  "category": "Megumin",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "hideInEditor": false,
+  "keywords": [
+    "PackageWizard",
+    "Megumin",
+    "AI.BehaviorTree"
+  ],
+  "author": {
+    "name": "\u4e91\u5374",
+    "email": "479813005@qq.com",
+    "url": "https://github.com/KumoKyaku"
+  },
+  "dependencies": {
+    "com.megumin.common": "1.0.2",
+    "com.megumin.binding": "1.0.0",
+    "com.megumin.serialization": "1.0.0",
+    "com.unity.settings-manager": "1.0.3",
+    "com.megumin.ai": "1.2.0"
+  }
+}

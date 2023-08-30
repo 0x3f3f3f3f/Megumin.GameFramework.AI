@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
 [assembly: InternalsVisibleTo("Megumin.AI.Editor")]
+[assembly: InternalsVisibleTo("Megumin.AI.BehaviorTree")]
+[assembly: InternalsVisibleTo("Megumin.AI.BehaviorTree.Editor")]
 namespace Megumin.AI
 {
     public static class Utility

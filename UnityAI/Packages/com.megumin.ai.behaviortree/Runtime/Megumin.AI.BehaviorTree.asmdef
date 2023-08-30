@@ -1,11 +1,13 @@
 {
-    "name": "Megumin.AI",
-    "rootNamespace": "Megumin.AI",
+    "name": "Megumin.AI.BehaviorTree",
+    "rootNamespace": "Megumin.AI.BehaviorTree",
     "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:293b3db1567cc8e479b4623ded498cfa",
         "GUID:e3141e3383f7d54428a008f1df9a1c9d",
         "GUID:0913ec06d78d40a48a5fb4f6abcd817c",
-        "GUID:b9e29b1e857abb4438a4cdde4aef4bee"
+        "GUID:b9e29b1e857abb4438a4cdde4aef4bee",
+        "GUID:42482d51d20075c4abff816916d3b585"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,12 +16,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [
-        {
-            "name": "com.megumin.explosion4unity",
-            "expression": "4.0.0",
-            "define": "MEGUMIN_EXPLOSION4UNITY"
-        }
-    ],
+    "versionDefines": [],
     "noEngineReferences": false
 }
