@@ -421,22 +421,22 @@ namespace Megumin.AI.BehaviorTree.Editor
             help.menu.AppendAction("Samples",
                 a =>
                 {
-                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples");
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples");
                 }, a => DropdownMenuAction.Status.Normal);
             help.menu.AppendAction("Wiki",
                 a =>
                 {
-                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki");
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/wiki");
                 }, a => DropdownMenuAction.Status.Normal);
             help.menu.AppendAction("Issues",
                 a =>
                 {
-                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues");
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/issues");
                 }, a => DropdownMenuAction.Status.Normal);
             help.menu.AppendAction("Forum",
                 a =>
                 {
-                    //System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues");
+                    //System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/issues");
                 }, a => DropdownMenuAction.Status.Disabled);
         }
 
