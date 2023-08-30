@@ -5,13 +5,13 @@ using Megumin.Binding;
 using Megumin.AI.BehaviorTree;
 using UnityEngine;
 
-namespace Megumin.AI
+namespace Megumin.AI.BehaviorTree
 {
     [Icon("GameObject Icon")]
     [DisplayName("SetTargetActive")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("SetTargetActive(Boolean)")]
-    public class GameObject_SetTargetActive : BTActionNode
+    public sealed class GameObject_SetTargetActive : BTActionNode
     {
         [Space]
         public RefVar_GameObject Target;
