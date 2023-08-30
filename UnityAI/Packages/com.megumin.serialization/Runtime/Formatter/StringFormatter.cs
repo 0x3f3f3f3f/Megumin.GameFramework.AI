@@ -152,6 +152,9 @@ namespace Megumin.Serialization
 
                 { typeof(Quaternion).FullName,new UnityJsonFormatter<Quaternion>() },
 
+                { typeof(Color).FullName,new UnityJsonFormatter<Color>() },
+                { typeof(Color32).FullName,new UnityJsonFormatter<Color32>() },
+
                 { typeof(DateTime).FullName,new DataTimeFormatter() },
                 { typeof(DateTimeOffset).FullName,new DateTimeOffsetFormatter() },
                 { typeof(TimeSpan).FullName,new TimeSpanFormatter() },
