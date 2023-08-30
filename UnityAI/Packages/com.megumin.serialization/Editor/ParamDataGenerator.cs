@@ -43,6 +43,9 @@ namespace Megumin.Serialization.Editor
                 }
             }
 
+            generator.Macro[CSCodeGenerator.CodeGenericBy] = this.GetType().FullName;
+            generator.Macro[CSCodeGenerator.SourceFilePath] = AssetDatabase.GetAssetPath(this);
+
             var fileName = "GenericSpecializationParameterData.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);
             string filePath = Path.Combine(dir, fileName);

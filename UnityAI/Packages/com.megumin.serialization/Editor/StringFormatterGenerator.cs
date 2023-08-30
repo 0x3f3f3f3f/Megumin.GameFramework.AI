@@ -108,7 +108,8 @@ public sealed class $(Type)Formatter : IFormatter<string, $(type)>
                 }
             }
 
-
+            generator.Macro[CSCodeGenerator.CodeGenericBy] = this.GetType().FullName;
+            generator.Macro[CSCodeGenerator.SourceFilePath] = AssetDatabase.GetAssetPath(this);
 
             var fileName = "StringFormatterPrimitive.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);

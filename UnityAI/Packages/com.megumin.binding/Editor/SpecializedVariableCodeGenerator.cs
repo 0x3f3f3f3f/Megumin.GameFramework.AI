@@ -166,7 +166,8 @@ public class VariableCreator_$(Type)_Array : VariableCreator
                 }
             }
 
-
+            generator.Macro[CSCodeGenerator.CodeGenericBy] = this.GetType().FullName;
+            generator.Macro[CSCodeGenerator.SourceFilePath] = AssetDatabase.GetAssetPath(this);
 
             var fileName = "SpecializedVariable.cs";
             var dir = AssetDatabase.GetAssetPath(Folder);

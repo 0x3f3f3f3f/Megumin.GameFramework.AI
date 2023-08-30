@@ -1,7 +1,7 @@
 {
   "name": "com.megumin.serialization",
   "displayName": "Megumin Serialization",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2021.3",
   "description": "Wizard Fast Created.",
   "category": "Megumin",
@@ -19,6 +19,6 @@
     "url": "https://github.com/KumoKyaku"
   },
   "dependencies": {
-    "com.megumin.common": "1.0.0"
+    "com.megumin.common": "1.0.2"
   }
 }
