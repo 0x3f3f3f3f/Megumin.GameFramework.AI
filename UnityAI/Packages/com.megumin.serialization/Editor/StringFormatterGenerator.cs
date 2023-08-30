@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.Serialization.AI
 {
     internal class StringFormatterGenerator : ScriptableObject
     {

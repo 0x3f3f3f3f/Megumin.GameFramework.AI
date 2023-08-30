@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using UnityEditor;
 
-namespace Megumin.GameFramework.AI
+namespace Megumin.Binding.Editor
 {
     internal class SpecializedVariableCodeGenerator : ScriptableObject
     {

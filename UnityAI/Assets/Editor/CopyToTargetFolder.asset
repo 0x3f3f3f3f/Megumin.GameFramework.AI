@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2fdcd0ef56a714e9d45cfca3e954ce, type: 3}
   m_Name: CopyToTargetFolder
   m_EditorClassIdentifier: 
+  DeleteTargetFolderBeforeCopy: 1
   packageName:
   - com.megumin.common
   - com.megumin.perception
@@ -19,5 +20,8 @@ MonoBehaviour:
   - com.megumin.serialization
   - com.megumin.binding
   - com.megumin.ai
+  - com.megumin.ai.behaviortree
   targets:
   - ../../Megumin.GameFramework.AI.Samples/AISamples/Assets/Megumin
+  SamplesPath: Assets/Samples/BehaviorTree
+  SamplesTargetFolder: ../../Megumin.GameFramework.AI.Samples/AISamples/Assets/Samples/BehaviorTree

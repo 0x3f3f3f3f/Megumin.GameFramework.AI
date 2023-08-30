@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Megumin.GameFramework.AI.Editor
+namespace Megumin.Serialization.Editor
 {
     public class ParamDataGenerator : ScriptableObject
     {
