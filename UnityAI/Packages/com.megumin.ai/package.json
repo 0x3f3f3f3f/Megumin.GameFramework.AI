@@ -19,7 +19,7 @@
     "url": "https://github.com/KumoKyaku"
   },
   "dependencies": {
-    "com.megumin.common": "1.0.0",
+    "com.megumin.common": "1.0.2",
     "com.megumin.binding": "1.0.0",
     "com.megumin.serialization": "1.0.0",
     "com.unity.settings-manager": "1.0.3"

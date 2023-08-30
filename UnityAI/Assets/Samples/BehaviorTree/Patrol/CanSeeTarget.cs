@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Megumin.Binding;
-using Megumin.GameFramework.AI;
+using Megumin.AI;
 using Megumin.AI.BehaviorTree;
-using Megumin.GameFramework.Perception;
+using Megumin.Perception;
 using UnityEngine;
 
 public class CanSeeTarget : ConditionDecorator<TransformPerception>
