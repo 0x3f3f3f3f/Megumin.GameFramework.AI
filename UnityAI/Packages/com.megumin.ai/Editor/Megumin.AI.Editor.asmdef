@@ -2,15 +2,15 @@
     "name": "Megumin.AI.Editor",
     "rootNamespace": "Megumin.AI.Editor",
     "references": [
-        "Megumin.Common",
-        "Megumin.Reflection",
-        "Megumin.AI",
-        "Unity.Settings.Editor",
-        "Megumin.Explosion4Unity",
-        "Megumin.Binding",
-        "Megumin.Binding.Editor",
-        "Megumin.Serialization",
-        "Megumin.Serialization.Editor"
+        "GUID:293b3db1567cc8e479b4623ded498cfa",
+        "GUID:e3141e3383f7d54428a008f1df9a1c9d",
+        "GUID:42482d51d20075c4abff816916d3b585",
+        "GUID:49818357e697641afb75d2f8acaf1861",
+        "GUID:dfb0db5c949e20746befeff7a094fa1c",
+        "GUID:0913ec06d78d40a48a5fb4f6abcd817c",
+        "GUID:d16a7c4a8c210a34da021133496db5c5",
+        "GUID:b9e29b1e857abb4438a4cdde4aef4bee",
+        "GUID:f6603a9e7673bdc48bf80f0d4c567cfe"
     ],
     "includePlatforms": [
         "Editor"
