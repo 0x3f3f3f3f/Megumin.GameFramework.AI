@@ -4,47 +4,51 @@ using Megumin.Binding;
 using Megumin.AI.BehaviorTree;
 using UnityEngine;
 
-public class GetDestination : BTActionNode
+namespace Megumin.AI.BehaviorTree
 {
-    public RefVar_Transform Destination;
-    public RefVar_Transform_List DestinationList;
-
-    int index = 0;
-    protected override void OnEnter(object options = null)
+    public class GetDestination : BTActionNode
     {
-        var list = DestinationList?.Value;
-        if (list == null || list.Count == 0)
+        public RefVar_Transform Destination;
+        public RefVar_Transform_List DestinationList;
+
+        int index = 0;
+        protected override void OnEnter(object options = null)
         {
-            Destination.value = Transform;
-        }
-        else
-        {
-            Destination.Value = list[index % list.Count].transform;
-            index++;
+            var list = DestinationList?.Value;
+            if (list == null || list.Count == 0)
+            {
+                Destination.value = Transform;
+            }
+            else
+            {
+                Destination.Value = list[index % list.Count].transform;
+                index++;
+            }
         }
     }
-}
 
-public class TryGetNewDestination : ConditionDecorator
-{
-    public RefVar_Transform Destination;
-    public RefVar_Transform_List DestinationList;
-
-    int index = 0;
-    protected override bool OnCheckCondition(object options = null)
+    public class TryGetNewDestination : ConditionDecorator
     {
-        var list = DestinationList?.Value;
-        if (list == null || list.Count == 0)
+        public RefVar_Transform Destination;
+        public RefVar_Transform_List DestinationList;
+
+        int index = 0;
+        protected override bool OnCheckCondition(object options = null)
         {
-            return false;
-        }
-        else
-        {
-            Destination.Value = list[index % list.Count].transform;
-            index++;
-            return true;
+            var list = DestinationList?.Value;
+            if (list == null || list.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                Destination.Value = list[index % list.Count].transform;
+                index++;
+                return true;
+            }
         }
     }
-}
 
+
+}
 
