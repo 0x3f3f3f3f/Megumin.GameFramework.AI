@@ -721,11 +721,23 @@ namespace Megumin.Reflection
             var fullName = type.FullName;
             if (TryGetType(fullName, out var makeType) && type == makeType)
             {
-                Debug.Log($"测试通过  {fullName}");
+                Debug.Log($"ParseType TestPass  {fullName}");
             }
             else
             {
-                Debug.LogError($"无法解析  {fullName}");
+                Debug.LogError($"ParseType TestFail  {fullName}");
+            }
+
+            //测试分离命名空间
+            var ns = type.Namespace;
+            var (sns,_) = SplitNamespace(fullName);
+            if (ns + '.' == sns)
+            {
+                Debug.Log($"SplitNamespace TestPass  {fullName} \nSplitNamespace: {sns}");
+            }
+            else
+            {
+                Debug.LogError($"SplitNamespace TestFail  {fullName} \nSplitNamespace: {sns}");
             }
         }
 
@@ -895,6 +907,35 @@ namespace Megumin.Reflection
 
             type = null;
             return false;
+        }
+    }
+
+    public static partial class TypeCache
+    {
+        /// <summary>
+        /// 用于获取FullName的命名空间。
+        /// <para/> <![CDATA[^(?<Namespace>[^\[\]`,]*\.?)]]> 匹配多个字符串和.组合
+        /// <para/> <![CDATA[(?<=\.|^)]]> 是一个零宽正向后行断言，这个位置前面必须是.或者字符串开始
+        /// <para/> <![CDATA[.+$]]> 尽可能的普配字符
+        /// </summary>
+        public static readonly Regex GetNamespace = new(@"^(?<Namespace>[^\[\]`,]*\.?)(?<=\.|^).+$");
+
+        /// <summary>
+        /// 分离命名空间
+        /// </summary>
+        /// <param name="fullName"></param>
+        /// <returns></returns>
+        public static (string Namespace, string TypeName) SplitNamespace(string fullName)
+        {
+            var @namespace = "";
+            var match = GetNamespace.Match(fullName);
+            if (match.Success)
+            {
+                @namespace = match.Groups["Namespace"].Value;
+            }
+
+            var typeName = fullName.Remove(0, @namespace.Length);
+            return (@namespace, typeName);
         }
     }
 
