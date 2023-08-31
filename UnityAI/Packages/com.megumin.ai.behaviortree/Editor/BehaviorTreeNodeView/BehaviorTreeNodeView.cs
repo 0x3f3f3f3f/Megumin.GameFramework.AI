@@ -65,7 +65,13 @@ namespace Megumin.AI.BehaviorTree.Editor
             //DecoretorListView.reorderMode = ListViewReorderMode.Animated;
             DecoretorListView.makeItem += ListViewMakeDecoratorView;
             DecoretorListView.bindItem += ListViewBindDecorator;
+
+#if UNITY_2022_3_OR_NEWER
+            DecoretorListView.itemsChosen += DecoretorListView_onItemsChosen;
+#else
             DecoretorListView.onItemsChosen += DecoretorListView_onItemsChosen;
+#endif
+
             DecoretorListView.itemIndexChanged += DecoretorListView_itemIndexChanged;
             DecoretorListView.destroyItem += DecoretorListView_destroyItem;
 

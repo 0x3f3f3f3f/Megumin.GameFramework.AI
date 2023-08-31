@@ -155,7 +155,7 @@ MonoBehaviour:
   - Physics2D_velocityThreshold_Get_Node
   - Physics2D_velocityThreshold_Set_Node
   - Physics_autoSimulation_Get_Node
-  - Physics_autoSimulation_Get_Node
+  - Physics_autoSimulation_Set_Node
   ReplaceIcon:
   - Type: UnityEngine.Input
     IconPath: standaloneinputmodule icon
@@ -181,3 +181,4 @@ MonoBehaviour:
   Proterty2Deco: 1
   Method2Node: 1
   Method2Deco: 1
+  OutputNamespace: Megumin.AI.BehaviorTree
