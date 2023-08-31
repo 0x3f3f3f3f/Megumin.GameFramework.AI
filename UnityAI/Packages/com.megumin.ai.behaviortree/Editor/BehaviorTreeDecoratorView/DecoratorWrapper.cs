@@ -31,6 +31,12 @@ namespace Megumin.AI.BehaviorTree.Editor
 
 
             var wrapper = (DecoratorWrapper)target;
+
+            if (GUILayout.Button($"Open Script"))
+            {
+                wrapper?.View?.OpenScript();
+            }
+
             //内部使用了EditorGUI.BeginChangeCheck();
             //用这种方法检测是否面板更改，触发UndoRecord
             if (DrawDefaultInspector())

@@ -5,6 +5,7 @@ using Megumin;
 using System.Collections.Generic;
 using Megumin.Binding;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
@@ -99,9 +100,14 @@ namespace Megumin.AI.BehaviorTree.Editor
         public override void OnInspectorGUI()
         {
             //this.DrawButtonBeforeDefaultInspector();
-
-
+            
             var wrapper = (NodeWrapper)target;
+
+            if (GUILayout.Button($"Open Script"))
+            {
+                wrapper?.View?.OpenScript();
+            }
+
             //内部使用了EditorGUI.BeginChangeCheck();
             //用这种方法检测是否面板更改，触发UndoRecord
             if (DrawDefaultInspector())

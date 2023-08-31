@@ -385,7 +385,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                 evt.menu.AppendSeparator();
             }
 
-            evt.menu.AppendAction("Open Node Script", a => AI.Editor.Utility.OpenScript(Node?.GetType()), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Open Node Script", a => OpenScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendActionTODO("Open Node View Script", a => { }, DropdownMenuAction.Status.Normal);
             evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
@@ -396,10 +396,10 @@ namespace Megumin.AI.BehaviorTree.Editor
             BuildContextualMenuDecorator(evt);
 
             //Subtree
-            evt.menu.AppendAction("Convert To/Subtree _⚠️",
+            evt.menu.AppendAction("Convert To/Subtree",
                 a => { TreeView.ConvertToSubtree(Node); },
                 (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Normal);
-            evt.menu.AppendAction("Convert To/Inline Node _⚠️",
+            evt.menu.AppendAction("Convert To/Inline Node",
                 a => { TreeView.InlineSubtree(Node as ISubtreeTreeElement); },
                 (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             evt.menu.AppendSeparator();
@@ -408,6 +408,11 @@ namespace Megumin.AI.BehaviorTree.Editor
             {
                 buildable.BuildContextualMenu(evt);
             }
+        }
+
+        public void OpenScript()
+        {
+            AI.Editor.Utility.OpenScript(Node?.GetType());
         }
 
         public DropdownMenuAction.Status GetSetStartStatus(DropdownMenuAction arg)
