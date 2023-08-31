@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Megumin.Binding;
 using Megumin.AI.BehaviorTree;
 using UnityEngine;
+using System.ComponentModel;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [Icon("d_networkproximitychecker icon")]
+    [DisplayName("GetDestination")]
+    [Category("Gameplay")]
+    [AddComponentMenu("GetDestination(Transform)")]
     public class GetDestination : BTActionNode
     {
         public RefVar_Transform Destination;
@@ -27,6 +32,10 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+    [Icon("d_networkproximitychecker icon")]
+    [DisplayName("TryGetNewDestination")]
+    [Category("Gameplay")]
+    [AddComponentMenu("TryGetNewDestination(Transform)")]
     public class TryGetNewDestination : ConditionDecorator
     {
         public RefVar_Transform Destination;
