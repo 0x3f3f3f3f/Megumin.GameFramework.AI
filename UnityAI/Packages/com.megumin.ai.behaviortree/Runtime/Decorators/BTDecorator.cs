@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -103,17 +104,20 @@ namespace Megumin.AI.BehaviorTree
         public T MyAgent { get; set; }
 
         /// <summary>
+        /// 验证MyAgent有效性，防止Tick过程中空引用异常
+        /// </summary>
+        [Space]
+        [Tooltip("Verify MyAgent validity to prevent NullReferenceException in Tick process")]
+        [FormerlySerializedAs("SafeMyAgent")]
+        public bool VerifyMyAgent = true;
+
+        /// <summary>
         /// 有时候MyAgent初始化晚于行为树，可能导致MyAgent组件无法获得。
         /// 这个开关用于在节点执行时重新BindMyAgent。
         /// </summary>
-        [Space]
-        public bool RebindMyAgentBeforeCanExecute = false;
-
-        /// <summary>
-        /// 验证MyAgent有效性，防止Tick过程中空引用异常
-        /// </summary>
-        [Tooltip("Verify MyAgent validity to prevent hollow reference exceptions in Tick process")]
-        public bool SafeMyAgent = true;
+        [FormerlySerializedAs("RebindMyAgentBeforeCanExecute")]
+        [Tooltip("Rebind myAgent before CanExecute. More performance overhead")]
+        public bool AutoRebind = false;
 
         public bool HasMyAgent()
         {
@@ -156,12 +160,12 @@ namespace Megumin.AI.BehaviorTree
 
         public override bool CheckCondition(object options = null)
         {
-            if (RebindMyAgentBeforeCanExecute)
+            if (AutoRebind)
             {
                 BindMyAgent();
             }
 
-            if (SafeMyAgent)
+            if (VerifyMyAgent)
             {
                 if (HasMyAgent() == false)
                 {
