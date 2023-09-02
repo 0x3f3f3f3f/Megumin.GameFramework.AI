@@ -143,6 +143,9 @@ namespace Megumin.AI.BehaviorTree.Editor
             SODecorator = CreateSOWrapperIfNull(Decorator);
             SODecorator.View = this;
             SODecorator.Decorator = Decorator;
+
+            SetNodeScript();
+
             var type = Decorator?.GetType();
             Title.text = Decorator.GetTitle();
 
@@ -169,6 +172,15 @@ namespace Megumin.AI.BehaviorTree.Editor
             if (attri != null)
             {
                 contentContainer.style.backgroundColor = attri.Color;
+            }
+        }
+
+        public async void SetNodeScript()
+        {
+            if (SODecorator != null)
+            {
+                var sc = await Megumin.AI.Editor.Utility.GetMonoScript(SODecorator.Decorator?.GetType());
+                SODecorator.NodeScript = sc;
             }
         }
 

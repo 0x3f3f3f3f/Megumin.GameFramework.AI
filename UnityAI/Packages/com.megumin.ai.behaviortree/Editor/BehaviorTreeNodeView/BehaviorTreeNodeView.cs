@@ -257,6 +257,8 @@ namespace Megumin.AI.BehaviorTree.Editor
             SONode.Node = node;
             SONode.name = typeName;
 
+            SetNodeScript();
+
             RefreshDecoratorListView();
 
             //是不是开始节点
@@ -283,6 +285,18 @@ namespace Megumin.AI.BehaviorTree.Editor
             AddToClassList(typeName);
 
             UpdateNodeType();
+        }
+
+        /// <summary>
+        /// 设置IInspector面板增加脚本字段
+        /// </summary>
+        public async void SetNodeScript()
+        {
+            if (SONode != null)
+            {
+                var sc = await Megumin.AI.Editor.Utility.GetMonoScript(SONode.Node?.GetType());
+                SONode.NodeScript = sc;
+            }
         }
 
         void UpdateNodeType()

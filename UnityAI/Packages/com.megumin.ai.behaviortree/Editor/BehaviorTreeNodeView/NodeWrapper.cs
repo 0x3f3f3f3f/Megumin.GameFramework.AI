@@ -11,6 +11,9 @@ namespace Megumin.AI.BehaviorTree.Editor
 {
     public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
     {
+        [ReadOnlyInInspector]
+        public MonoScript NodeScript;
+
         public BehaviorTree Tree => TreeView?.Tree;
         public abstract BehaviorTreeView TreeView { get; }
 
