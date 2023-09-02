@@ -438,6 +438,11 @@ namespace Megumin.AI.BehaviorTree.Editor
                 {
                     //System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/issues");
                 }, a => DropdownMenuAction.Status.Disabled);
+            help.menu.AppendAction("Roadmap",
+                a =>
+                {
+                    System.Diagnostics.Process.Start("https://github.com/users/KumoKyaku/projects/5");
+                }, a => DropdownMenuAction.Status.Normal);
         }
 
 
