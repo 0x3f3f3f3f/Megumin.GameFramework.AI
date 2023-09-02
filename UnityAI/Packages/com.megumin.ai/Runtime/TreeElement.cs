@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Reflection;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Megumin.AI
 {
 
     [Serializable]
-    public class TreeElement<T> : ITreeElement
+    public class TreeElement<T> : ITreeElement, ITraceable
         where T : AITree
     {
         /// <summary>
@@ -24,10 +25,26 @@ namespace Megumin.AI
         [field: NonSerialized]
         public T Tree { get; set; }
 
+        [field: NonSerialized]
+        public TraceListener TraceListener { get; set; } = null;
+
+        [Obsolete("use GetLogger instead")]
         [HideInCallstack]
         public virtual void Log(object message)
         {
-            Tree?.Log(message);
+            if (TraceListener == null)
+            {
+                Tree?.Log(message);
+            }
+            else
+            {
+                TraceListener.WriteLine(message);
+            }
+        }
+
+        public virtual TraceListener GetLogger()
+        {
+            return TraceListener ?? Tree?.GetLogger();
         }
 
         string tipString = null;

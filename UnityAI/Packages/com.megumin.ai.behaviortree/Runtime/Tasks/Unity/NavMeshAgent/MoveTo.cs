@@ -21,6 +21,8 @@ namespace Megumin.AI.BehaviorTree
             Last = GetDestination();
             MyAgent.SetDestination(Last);
             this.Transform.LookAt(Last);
+
+            GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }
 
 

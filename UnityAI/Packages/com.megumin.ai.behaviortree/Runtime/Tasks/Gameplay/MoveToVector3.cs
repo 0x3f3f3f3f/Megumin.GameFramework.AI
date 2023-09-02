@@ -63,6 +63,8 @@ namespace Megumin.AI.BehaviorTree
                 return Status.Running;
             }
 
+
+            GetLogger()?.WriteLine($"MoveTo Succeeded: {destination}");
             return Status.Succeeded;
         }
     }
@@ -80,6 +82,8 @@ namespace Megumin.AI.BehaviorTree
         {
             Last = GetDestination();
             MyAgent.MoveTo(Last);
+
+            GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }
 
         protected override Vector3 GetDestination()

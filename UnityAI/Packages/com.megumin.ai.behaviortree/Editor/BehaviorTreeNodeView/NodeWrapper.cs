@@ -100,12 +100,44 @@ namespace Megumin.AI.BehaviorTree.Editor
         public override void OnInspectorGUI()
         {
             //this.DrawButtonBeforeDefaultInspector();
-            
             var wrapper = (NodeWrapper)target;
 
-            if (GUILayout.Button($"Open Script"))
+            if (wrapper?.View != null)
             {
-                wrapper?.View?.OpenScript();
+                if (GUILayout.Button($"Open Script"))
+                {
+                    wrapper.View.OpenScript();
+                }
+
+                var hasLogger = wrapper.View.Node.TraceListener != null;
+
+                GUILayout.BeginHorizontal();
+
+                using (new EditorGUI.DisabledScope(hasLogger || !Application.isPlaying))
+                {
+                    if (GUILayout.Button($"Enable Logger"))
+                    {
+                        if (wrapper.View.Node != null)
+                        {
+                            wrapper.View.Node.TraceListener = new UnityTraceListener();
+                        }
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(!hasLogger))
+                {
+                    if (GUILayout.Button($"Disable Logger"))
+                    {
+                        if (wrapper.View.Node != null)
+                        {
+                            wrapper.View.Node.TraceListener = null;
+                        }
+                    }
+                }
+
+                GUILayout.EndHorizontal();
+
+                GUILayout.Space(10);
             }
 
             //内部使用了EditorGUI.BeginChangeCheck();

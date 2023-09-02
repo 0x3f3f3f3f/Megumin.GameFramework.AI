@@ -32,9 +32,42 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             var wrapper = (DecoratorWrapper)target;
 
-            if (GUILayout.Button($"Open Script"))
+            if (wrapper?.View != null)
             {
-                wrapper?.View?.OpenScript();
+                if (GUILayout.Button($"Open Script"))
+                {
+                    wrapper.View.OpenScript();
+                }
+
+                var hasLogger = (wrapper.View.Decorator as ITraceable)?.TraceListener != null;
+
+                GUILayout.BeginHorizontal();
+
+                using (new EditorGUI.DisabledScope(hasLogger || !Application.isPlaying))
+                {
+                    if (GUILayout.Button($"Enable Logger"))
+                    {
+                        if (wrapper.View.Decorator is ITraceable traceable)
+                        {
+                            traceable.TraceListener = new UnityTraceListener();
+                        }
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(!hasLogger))
+                {
+                    if (GUILayout.Button($"Disable Logger"))
+                    {
+                        if (wrapper.View.Decorator is ITraceable traceable)
+                        {
+                            traceable.TraceListener = new UnityTraceListener();
+                        }
+                    }
+                }
+
+                GUILayout.EndHorizontal();
+
+                GUILayout.Space(10);
             }
 
             //内部使用了EditorGUI.BeginChangeCheck();

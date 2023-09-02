@@ -27,6 +27,7 @@ namespace Megumin.AI
         /// </summary>
         public HashSet<IBindingParseable> AllBindingParseable { get; } = new();
 
+        [Obsolete("use GetLogger instead")]
         [HideInCallstack]
         public virtual void Log(object message)
         {
@@ -34,6 +35,16 @@ namespace Megumin.AI
             {
                 TraceListener?.WriteLine(message);
             }
+        }
+
+        public virtual TraceListener GetLogger()
+        {
+            if (RunOption?.Log == true)
+            {
+                return TraceListener;
+            }
+
+            return null;
         }
     }
 }
