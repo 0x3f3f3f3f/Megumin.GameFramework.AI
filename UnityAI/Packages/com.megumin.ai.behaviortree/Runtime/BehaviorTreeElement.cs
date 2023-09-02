@@ -12,7 +12,7 @@ namespace Megumin.AI.BehaviorTree
     {
         public object Agent { get; set; }
         public GameObject GameObject { get; set; }
-        public Transform Transform => GameObject != null ? GameObject.transform : null;
+        public Transform Transform => GameObject == null ? null : GameObject.transform;
 
         public virtual void BindAgent(object agent)
         {
