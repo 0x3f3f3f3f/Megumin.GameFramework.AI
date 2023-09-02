@@ -10,14 +10,26 @@ namespace Megumin.AI.BehaviorTree
 {
     public class Loop : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
     {
+        /// <summary>
+        /// 作为独立AI使用，根节点可能设置为无限循环。
+        /// 如果作为其他树的子树，可能会忽略循环，改为单次执行。
+        /// </summary>
+        public bool IgnoreInSubTree = false;
+
+        [Tooltip("-1: infinite loop. 0: complete once")]
         public int loopCount = -1;
 
         int completeCount = 0;
         public Status AfterNodeExit(Status result, object options = null)
         {
+            if (IgnoreInSubTree && Tree.IsSubtree)
+            {
+                return result;
+            }
+
             completeCount++;
             GetLogger()?.WriteLine($"loop: complete {completeCount}.    loopCount:{loopCount}");
-            if (completeCount >= loopCount && loopCount > 0)
+            if (completeCount >= loopCount && loopCount >= 0)
             {
                 completeCount = 0;
                 return result;

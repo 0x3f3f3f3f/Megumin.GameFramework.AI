@@ -12,7 +12,14 @@ namespace Megumin.AI.BehaviorTree
     /// </summary>
     public class Repeater : OneChildNode, IDetailable
     {
-        public int loopCount = 2;
+        /// <summary>
+        /// 作为独立AI使用，根节点可能设置为无限循环。
+        /// 如果作为其他树的子树，可能会忽略循环，改为单次执行。
+        /// </summary>
+        public bool IgnoreInSubTree = false;
+
+        [Tooltip("-1: infinite loop. 0: complete once")]
+        public int loopCount = -1;
 
         int completeCount = 0;
 
@@ -23,20 +30,21 @@ namespace Megumin.AI.BehaviorTree
 
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (loopCount == 0)
+            var result = Child0.Tick(this);
+
+            if (IgnoreInSubTree && Tree.IsSubtree)
             {
-                return base.OnTick(from);
+                return result;
             }
 
-            var res = Child0.Tick(this);
-
-            if (res == Status.Succeeded || res == Status.Failed)
+            if (result == Status.Succeeded || result == Status.Failed)
             {
                 completeCount++;
                 GetLogger()?.WriteLine($"Repeater: complete {completeCount}");
-                if (loopCount >= 0 && completeCount >= loopCount)
+                if (completeCount >= loopCount && loopCount >= 0)
                 {
-                    return res;
+                    completeCount = 0;
+                    return result;
                 }
             }
 
