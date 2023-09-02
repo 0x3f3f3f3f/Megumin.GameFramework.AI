@@ -107,7 +107,7 @@ MonoBehaviour:
       Type: System.String
       Value: db004176-e2df-4ed9-9258-c903f0d358e9
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
-    Type: Megumin.AI.BehaviorTree.GetDestination
+    Type: Megumin.AI.BehaviorTree.FindDestination
     Member:
     - Name: Meta
       Type: $ref
@@ -132,7 +132,7 @@ MonoBehaviour:
       Type: System.String
       Value: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
   - Name: ef8668be-8284-4ea8-835e-fdd1cd354483
-    Type: Megumin.AI.BehaviorTree.TryGetNewDestination
+    Type: Megumin.AI.BehaviorTree.TryFindDestination
     Member:
     - Name: Destination
       Type: $ref

@@ -4,14 +4,16 @@ using Megumin.Binding;
 using Megumin.AI.BehaviorTree;
 using UnityEngine;
 using System.ComponentModel;
+using Megumin.Reflection;
 
 namespace Megumin.AI.BehaviorTree
 {
     [Icon("d_networkproximitychecker icon")]
-    [DisplayName("GetDestination")]
+    [DisplayName("FindDestination")]
     [Category("Gameplay")]
-    [AddComponentMenu("GetDestination(Transform)")]
-    public class GetDestination : BTActionNode
+    [AddComponentMenu("FindDestination(Transform)")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.GetDestination")]
+    public class FindDestination : BTActionNode
     {
         public RefVar_Transform Destination;
         public RefVar_Transform_List DestinationList;
@@ -33,10 +35,11 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("d_networkproximitychecker icon")]
-    [DisplayName("TryGetNewDestination")]
+    [DisplayName("TryFindDestination")]
     [Category("Gameplay")]
-    [AddComponentMenu("TryGetNewDestination(Transform)")]
-    public class TryGetNewDestination : ConditionDecorator
+    [AddComponentMenu("TryFindDestination(Transform)")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.TryGetNewDestination")]
+    public class TryFindDestination : ConditionDecorator
     {
         public RefVar_Transform Destination;
         public RefVar_Transform_List DestinationList;
