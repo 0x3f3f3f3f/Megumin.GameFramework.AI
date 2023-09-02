@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Binding;
@@ -17,9 +18,12 @@ namespace Megumin.AI.BehaviorTree
         public float StopingDistance = 0.25f;
 
         public bool IgnoreYAxis = false;
+
+
         /// <summary>
         /// 移动过程中目的地改变，自动重新设置目的地
         /// </summary>
+        [Space]
         public bool KeepDestinationNew = false;
 
         protected Vector3 Last;
@@ -70,7 +74,7 @@ namespace Megumin.AI.BehaviorTree
     public sealed class MoveToVector3 : MoveToBase<IMoveToVector3able>
     {
         [Space]
-        public RefVar_Vector3 Destination;
+        public Destination destination;
 
         protected override void InternalMoveTo()
         {
@@ -80,7 +84,7 @@ namespace Megumin.AI.BehaviorTree
 
         protected override Vector3 GetDestination()
         {
-            return Destination;
+            return destination.GetDestination();
         }
     }
 }

@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Binding;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Megumin.AI.BehaviorTree
 {
     [Icon("d_navmeshdata icon")]
     [DisplayName("MoveTo")]
-    [Category("Gameplay")]
-    [AddComponentMenu("MoveTo(Transform)")]
-    public class MoveToTranform : MoveToBase<IMoveToVector3able>
+    [Category("UnityEngine/NavMeshAgent")]
+    [AddComponentMenu("MoveTo(SetDestination)")]
+    public class MoveTo_SetDestination : MoveToBase<NavMeshAgent>
     {
         [Space]
-        public RefVar_Transform Destination;
+        public Destination destination;
 
         protected override void InternalMoveTo()
         {
             Last = GetDestination();
-            MyAgent.MoveTo(Last);
+            MyAgent.SetDestination(Last);
+            this.Transform.LookAt(Last);
         }
+
 
         protected override Vector3 GetDestination()
         {
-            return Destination.Value.position;
+            return destination.GetDestination();
         }
     }
 }
-
-
-
-
