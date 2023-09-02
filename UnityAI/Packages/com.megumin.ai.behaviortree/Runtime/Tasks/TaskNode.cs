@@ -28,6 +28,11 @@ namespace Megumin.AI.BehaviorTree
     {
         public T MyAgent { get; set; }
 
+        //如果T为接口，组件不能实现接口，使用代理类型。
+        //实际使用发现，编写代理类型代码，和编写一个独立节点工作量差不多。
+        //性能也会损失，所以放弃这个实现。
+        //public string AdpterType = null;
+
         /// <summary>
         /// 验证MyAgent有效性，防止Tick过程中空引用异常
         /// </summary>
