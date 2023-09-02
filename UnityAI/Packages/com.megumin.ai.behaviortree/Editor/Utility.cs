@@ -83,8 +83,13 @@ namespace Megumin.AI.Editor
 
         private static Dictionary<Type, MonoScript> CacheMonoScript { get; set; }
 
-        public static ValueTask<MonoScript> GetMonoScript(Type type, bool force = false)
+        public static ValueTask<MonoScript> GetMonoScript(this Type type, bool force = false)
         {
+            if (type == null)
+            {
+                return new ValueTask<MonoScript>(result: null);
+            }
+
             if (CacheMonoScript != null && CacheMonoScript.ContainsKey(type) && force == false)
             {
                 return new ValueTask<MonoScript>(CacheMonoScript[type]);
