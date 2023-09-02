@@ -107,10 +107,10 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             if (wrapper?.View != null)
             {
-                if (GUILayout.Button($"Open Script"))
-                {
-                    wrapper.View.OpenScript();
-                }
+                //if (GUILayout.Button($"Open Script"))
+                //{
+                //    wrapper.View.OpenScript();
+                //}
 
                 var hasLogger = wrapper.View.Node.TraceListener != null;
 
