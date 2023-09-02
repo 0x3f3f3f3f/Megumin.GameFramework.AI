@@ -37,7 +37,7 @@ namespace Megumin.AI
             }
         }
 
-        public virtual TraceListener GetLogger()
+        public virtual TraceListener GetLogger(string key = null)
         {
             if (RunOption?.Log == true)
             {

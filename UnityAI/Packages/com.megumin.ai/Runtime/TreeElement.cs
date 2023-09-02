@@ -42,9 +42,23 @@ namespace Megumin.AI
             }
         }
 
-        public virtual TraceListener GetLogger()
+        /// <summary>
+        /// 使用空传播 <![CDATA[GetLogger()?.WriteLine($"Count: {completeCount} / {loopCount}");]]> 
+        /// <para/> 当Logger返回null时，不会调用WriteLine，可以在关闭日志时，不生成log字符串拼接。
+        /// <para/> 这样设计等价于先判断 CanLog，然后再生成日志。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public virtual TraceListener GetLogger(string key = null)
         {
-            return TraceListener ?? Tree?.GetLogger();
+            if (string.IsNullOrEmpty(key))
+            {
+                return TraceListener ?? Tree?.GetLogger(key);
+            }
+            else
+            {
+                return Tree?.GetLogger();
+            }
         }
 
         string tipString = null;

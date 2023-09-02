@@ -34,7 +34,7 @@ namespace Megumin.AI.BehaviorTree
                     {
                         //终止成功
                         var lastRunning = Children[CurrentIndex];
-                        Log($"{child} AbortLowerPriority {lastRunning}");
+                        GetLogger()?.WriteLine($"{child} AbortLowerPriority {lastRunning}");
                         lastRunning.Abort(this, options);
                     }
                 }

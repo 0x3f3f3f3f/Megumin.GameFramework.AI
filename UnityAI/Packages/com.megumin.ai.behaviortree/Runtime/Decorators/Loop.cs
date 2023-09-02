@@ -16,7 +16,7 @@ namespace Megumin.AI.BehaviorTree
         public Status AfterNodeExit(Status result, object options = null)
         {
             completeCount++;
-            Log($"loop: complete {completeCount}.    loopCount:{loopCount}");
+            GetLogger()?.WriteLine($"loop: complete {completeCount}.    loopCount:{loopCount}");
             if (completeCount >= loopCount && loopCount > 0)
             {
                 completeCount = 0;

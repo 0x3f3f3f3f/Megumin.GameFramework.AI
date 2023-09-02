@@ -161,7 +161,7 @@ namespace Megumin.AI.BehaviorTree
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Enter(object options = null)
         {
-            Log($"[{Time.time:0.00}] Enter Node {this}");
+            GetLogger(LogConst.ChangeNode)?.WriteLine($"[{Time.time:0.00}] Enter Node {this}");
             OnEnter(options);
         }
 
@@ -169,7 +169,7 @@ namespace Megumin.AI.BehaviorTree
         private void Exit(object options = null)
         {
             OnExit(State, options);
-            Log($"[{Time.time:0.00}] Exit Node [{State}]  :  {this}");
+            GetLogger(LogConst.ChangeNode)?.WriteLine($"[{Time.time:0.00}] Exit Node [{State}]  :  {this}");
         }
 
         /// <summary>

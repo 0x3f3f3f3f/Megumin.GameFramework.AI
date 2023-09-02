@@ -33,7 +33,7 @@ namespace Megumin.AI.BehaviorTree
             if (res == Status.Succeeded || res == Status.Failed)
             {
                 completeCount++;
-                Log($"Repeater: complete {completeCount}");
+                GetLogger()?.WriteLine($"Repeater: complete {completeCount}");
                 if (loopCount >= 0 && completeCount >= loopCount)
                 {
                     return res;
