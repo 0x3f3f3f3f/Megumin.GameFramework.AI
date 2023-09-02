@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Megumin;
 using Megumin.Binding;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_navmeshdata icon")]
+    [Icon("d_NavMeshAgent Icon")]
     [DisplayName("MoveTo")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("MoveTo(SetDestination)")]
@@ -22,7 +23,7 @@ namespace Megumin.AI.BehaviorTree
             MyAgent.SetDestination(Last);
             this.Transform.LookAt(Last);
 
-            GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
+            GetLogger()?.WriteLine($"MyAgent : {MyAgent}  <color=#89CFF0>MoveTo</color>  Des : {destination?.Dest_Transform?.Value.name}    {Last}");
         }
 
 
