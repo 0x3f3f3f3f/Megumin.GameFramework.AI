@@ -292,9 +292,9 @@ namespace Megumin.AI.BehaviorTree.Editor
         /// </summary>
         public async void SetNodeScript()
         {
-            if (SONode != null)
+            if (SONode?.Node != null && SONode.NodeScript == null)
             {
-                var sc = await Megumin.AI.Editor.Utility.GetMonoScript(SONode.Node?.GetType());
+                var sc = await SONode.Node.GetType().GetMonoScript();
                 SONode.NodeScript = sc;
             }
         }
@@ -399,9 +399,9 @@ namespace Megumin.AI.BehaviorTree.Editor
                 evt.menu.AppendSeparator();
             }
 
-            evt.menu.AppendAction("Open Node Script", a => OpenScript(), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Open Node Script", a => Node?.GetType().OpenScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendActionTODO("Open Node View Script", a => { }, DropdownMenuAction.Status.Normal);
-            evt.menu.AppendAction("Select Node Script", a => AI.Editor.Utility.SelectScript(Node?.GetType()), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Select Node Script", a => Node?.GetType().SelectScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
             evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
@@ -422,11 +422,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             {
                 buildable.BuildContextualMenu(evt);
             }
-        }
-
-        public void OpenScript()
-        {
-            AI.Editor.Utility.OpenScript(Node?.GetType());
         }
 
         public DropdownMenuAction.Status GetSetStartStatus(DropdownMenuAction arg)

@@ -88,15 +88,10 @@ namespace Megumin.AI.BehaviorTree.Editor
             evt.menu.AppendAction($"Move Down", a => NodeView?.MoveDownDecorator(this), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
 
-            evt.menu.AppendAction("Open Decorator Script", a => OpenScript(), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Open Decorator Script", a => Decorator?.GetType().OpenScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendActionTODO("Open Decorator View Script", a => { }, DropdownMenuAction.Status.Normal);
-            evt.menu.AppendAction("Select Decorator Script", a => AI.Editor.Utility.SelectScript(Decorator?.GetType()), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendAction("Select Decorator Script", a => Decorator?.GetType().SelectScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
-        }
-
-        public void OpenScript()
-        {
-            AI.Editor.Utility.OpenScript(Decorator?.GetType());
         }
 
         public BehaviorTreeNodeView NodeView { get; internal set; }
@@ -177,9 +172,9 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         public async void SetNodeScript()
         {
-            if (SODecorator != null)
+            if (SODecorator?.Decorator != null && SODecorator.NodeScript == null)
             {
-                var sc = await Megumin.AI.Editor.Utility.GetMonoScript(SODecorator.Decorator?.GetType());
+                var sc = await SODecorator.Decorator.GetType().GetMonoScript();
                 SODecorator.NodeScript = sc;
             }
         }

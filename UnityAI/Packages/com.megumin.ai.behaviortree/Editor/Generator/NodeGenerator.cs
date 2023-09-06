@@ -683,7 +683,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                     $"{Setting.OutputNamespace}.{ClassName}",
                     out var oldType))
                 {
-                    var script = Megumin.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                    var script = oldType.GetMonoScript().Result;
                     if (script != null)
                     {
                         var oldPath = AssetDatabase.GetAssetPath(script);

@@ -51,7 +51,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                     $"{OutputNamespace}.{className}",
                     out var oldType))
             {
-                var scriptObj = Megumin.AI.Editor.Utility.GetMonoScript(oldType).Result;
+                var scriptObj = oldType.GetMonoScript().Result;
                 if (scriptObj != null)
                 {
                     var oldPath = AssetDatabase.GetAssetPath(scriptObj);
