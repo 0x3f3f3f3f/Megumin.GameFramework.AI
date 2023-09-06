@@ -119,6 +119,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             if (SONode)
             {
                 Selection.activeObject = SONode;
+                SetNodeScript();
             }
         }
 
@@ -257,7 +258,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             SONode.Node = node;
             SONode.name = typeName;
 
-            SetNodeScript();
+            //SetNodeScript();
 
             RefreshDecoratorListView();
 

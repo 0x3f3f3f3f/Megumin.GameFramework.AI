@@ -139,7 +139,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             SODecorator.View = this;
             SODecorator.Decorator = Decorator;
 
-            SetNodeScript();
+            //SetNodeScript();
 
             var type = Decorator?.GetType();
             Title.text = Decorator.GetTitle();
@@ -211,6 +211,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             if (SODecorator)
             {
                 Selection.activeObject = SODecorator;
+                SetNodeScript();
             }
         }
 
