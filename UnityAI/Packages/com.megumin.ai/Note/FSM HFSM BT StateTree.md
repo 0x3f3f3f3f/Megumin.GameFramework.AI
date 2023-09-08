@@ -71,7 +71,7 @@ HFSM的表达能力比行为树更强。
 
 行为树可以并行2个节点，状态机则不行。状态机通过layer来解决这个问题。
 
-anystatenode提供了更强大的过渡能力。
+AnyStateNode提供了更强大的过渡能力。
 
 一个明显特征是状态机嵌套另一个状态机，其他的功能点并没有明确定义。
 
@@ -79,7 +79,7 @@ anystatenode提供了更强大的过渡能力。
 
 - 状态可以过渡到子状态机，但并不指定子状态机内的哪一个状态，由子状态机自己决定。这是一种Selector机制。
 
-> [Unity - Manual: Sub-State Machines (unity3d.com)](https://docs.unity3d.com/2023.1/Documentation/Manual/NestedStateMachines.html)As noted above, a sub-state machine is just a way of visually collapsing a group of states in the editor, so when you make a transition to a sub-state machine, you have to choose which of its states you want to connect to.  
+> [Unity - Manual: Sub-State Machines (unity3d.com)](https://docs.unity3d.com/Documentation/Manual/NestedStateMachines.html)As noted above, a sub-state machine is just a way of visually collapsing a group of states in the editor, so when you make a transition to a sub-state machine, you have to choose which of its states you want to connect to.  
 >
 >  ![MecanimSelectSubState.png (504×120) (unity3d.com)](https://docs.unity3d.com/2023.1/Documentation/uploads/Main/MecanimSelectSubState.png)
 
