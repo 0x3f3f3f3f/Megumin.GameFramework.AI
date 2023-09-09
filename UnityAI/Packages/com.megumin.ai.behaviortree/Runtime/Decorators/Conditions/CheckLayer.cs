@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [HelpURL(URL.WikiDecorator + "CheckLayer")]
     public sealed class CheckLayer : ConditionDecorator<GameObject>
     {
         [Space]

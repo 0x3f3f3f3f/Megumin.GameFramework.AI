@@ -20,6 +20,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("CanSeeTarget(Transform)")]
     [SerializationAlias("CanSeeTarget")]
+    [HelpURL(URL.WikiDecorator + "CanSeeTarget")]
     public class CanSeeTarget_Transform : ConditionDecorator<TransformPerception>
     {
         public RefVar_Transform Target;

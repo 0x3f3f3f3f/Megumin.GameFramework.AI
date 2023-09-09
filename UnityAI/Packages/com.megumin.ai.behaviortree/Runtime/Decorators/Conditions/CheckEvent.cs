@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [HelpURL(URL.WikiDecorator + "CheckEvent")]
     public class CheckEvent : ConditionDecorator, IDetailable
     {
         public RefVar_String EventName;

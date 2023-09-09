@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -14,6 +15,7 @@ namespace Megumin.AI.BehaviorTree
         LeaveNode,
     }
 
+    [HelpURL(URL.WikiDecorator + "CheckTrigger")]
     public class CheckTrigger : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         public RefVar_String TriggerName;

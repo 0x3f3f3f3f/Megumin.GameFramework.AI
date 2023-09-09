@@ -8,6 +8,8 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+
+    [HelpURL(URL.WikiDecorator + "CheckGameObject")]
     public sealed class CheckGameObject : ConditionDecorator<GameObject>
     {
         [Space]
