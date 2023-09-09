@@ -12,7 +12,7 @@ namespace Megumin.AI.BehaviorTree
 {
     [Category("Action")]
     [Icon("console.infoicon@2x")]
-    [HelpURL("https://github.com/KumoKyaku/Megumin.AI.Samples/wiki/Log")]
+    [HelpURL(URL.WikiTask + "Log")]
     public class Log : BTActionNode, IDetailable
     {
 

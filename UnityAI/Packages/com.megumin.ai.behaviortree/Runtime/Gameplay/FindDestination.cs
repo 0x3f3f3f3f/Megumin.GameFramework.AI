@@ -13,6 +13,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("FindDestination(Transform)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.GetDestination")]
+    [HelpURL(URL.WikiTask + "FindDestination")]
     public class FindDestination : BTActionNode
     {
         public RefVar_Transform Destination;
