@@ -7,9 +7,20 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public interface IMoveToVector3able
+    /// <summary>
+    /// 可移动到目的地的
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IMoveToable<in T>
     {
-        void MoveTo(Vector3 destination);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <returns>
+        /// 是否成功设置目的地
+        /// </returns>
+        bool MoveTo(T destination);
     }
 
     public abstract class MoveToBase<T> : BTActionNode<T>
@@ -74,7 +85,7 @@ namespace Megumin.AI.BehaviorTree
     [Description("IMoveToVector3able")]
     [Category("Gameplay")]
     [AddComponentMenu("MoveTo(IMoveToVector3able)")]
-    public sealed class MoveToVector3 : MoveToBase<IMoveToVector3able>
+    public sealed class MoveToVector3 : MoveToBase<IMoveToable<Vector3>>
     {
         [Space]
         public Destination destination;
