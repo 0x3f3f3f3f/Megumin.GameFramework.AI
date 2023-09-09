@@ -7,7 +7,8 @@
         "GUID:e3141e3383f7d54428a008f1df9a1c9d",
         "GUID:0913ec06d78d40a48a5fb4f6abcd817c",
         "GUID:b9e29b1e857abb4438a4cdde4aef4bee",
-        "GUID:42482d51d20075c4abff816916d3b585"
+        "GUID:42482d51d20075c4abff816916d3b585",
+        "GUID:527f7c2c27311d44b9c88d5505eb4fa3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -16,6 +17,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.megumin.perception",
+            "expression": "1.0.0",
+            "define": "MEGUMIN_PERCEPTION"
+        }
+    ],
     "noEngineReferences": false
 }
