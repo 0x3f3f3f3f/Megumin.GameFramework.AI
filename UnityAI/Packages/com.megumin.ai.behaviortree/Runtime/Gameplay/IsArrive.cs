@@ -1,0 +1,59 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEngine;
+
+namespace Megumin.AI.BehaviorTree
+{
+    [Icon("buoyancyeffector2d icon")]
+    [DisplayName("Is Arrive?")]
+    [Category("Gameplay")]
+    [AddComponentMenu("IsArrive(Transform)")]
+    [HelpURL(URL.WikiDecorator + "IsArrive")]
+    public class IsArrive : ConditionDecorator
+    {
+        [Space]
+        public Destination destination;
+
+        [Space]
+        public float StopingDistance = 0.25f;
+
+        public bool IgnoreYAxis = true;
+
+        protected override bool OnCheckCondition(object options = null)
+        {
+            return Transform.IsArrive(destination.GetDestination(), StopingDistance, IgnoreYAxis);
+        }
+    }
+
+    public static class IsArriveExtension_92E68C3DEDCB402DAA5B29E31646509D
+    {
+        public static bool IsArrive(this Transform transform,
+                                    Vector3 destination,
+                                    float stopingDistance = 0.25f,
+                                    bool ignoreYAxis = true)
+        {
+            if (transform)
+            {
+                var current = transform.position;
+
+                if (ignoreYAxis)
+                {
+                    //忽略Y轴。
+                    current.y = 0;
+                    destination.y = 0;
+                }
+
+                var distance = Vector3.Distance(current, destination);
+
+                if (distance <= stopingDistance)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+}
