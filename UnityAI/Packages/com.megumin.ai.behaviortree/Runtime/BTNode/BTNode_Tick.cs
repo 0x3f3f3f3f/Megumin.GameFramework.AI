@@ -133,8 +133,9 @@ namespace Megumin.AI.BehaviorTree
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Running(BTNode from, object options = null)
         {
-            //Enter Exit函数不允许修改State状态。
+            //Enter Exit函数理论上不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
+
             IsInnerRunning = true;
             State = Status.Running;
 
@@ -145,7 +146,13 @@ namespace Megumin.AI.BehaviorTree
             }
 
             //OnTick 阶段
-            State = OnTick(from, options);
+            //既然Enter Exit本质是OnTick的拆分，那么更改State也是合情合理？
+            //如果执行完Enter后，不想在执行OnTick了怎么办？
+            //这里额外判断Running，防止Enter过程中已经完成。
+            if (State == Status.Running) 
+            {
+                State = OnTick(from, options);
+            }
 
             if (IsCompleted)
             {

@@ -130,8 +130,9 @@ namespace Megumin.AI.BehaviorTree
         {
             OnReset(options);
         }
+
         /// <summary>
-        /// 不要再函数内修改State值，会导致流程错误
+        /// 
         /// </summary>
         protected virtual void OnEnter(object options = null) { }
 
