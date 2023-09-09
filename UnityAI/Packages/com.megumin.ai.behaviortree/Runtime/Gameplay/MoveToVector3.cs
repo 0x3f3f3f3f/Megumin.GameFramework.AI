@@ -57,26 +57,13 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
-            var current = Transform.position;
-            var destination = Last;
-
-            if (IgnoreYAxis)
+            if (Transform.IsArrive(Last, StopingDistance, IgnoreYAxis))
             {
-                //忽略Y轴。
-                current.y = 0;
-                destination.y = 0;
+                GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
+                return Status.Succeeded;
             }
 
-            var distance = Vector3.Distance(current, destination);
-
-            if (distance > StopingDistance)
-            {
-                return Status.Running;
-            }
-
-
-            GetLogger()?.WriteLine($"MoveTo Succeeded: {destination}");
-            return Status.Succeeded;
+            return Status.Running;
         }
     }
 

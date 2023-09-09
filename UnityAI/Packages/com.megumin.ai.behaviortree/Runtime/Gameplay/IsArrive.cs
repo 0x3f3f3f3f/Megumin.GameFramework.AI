@@ -35,16 +35,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if (transform)
             {
-                var current = transform.position;
-
+                var to = destination - transform.position;
                 if (ignoreYAxis)
                 {
                     //忽略Y轴。
-                    current.y = 0;
-                    destination.y = 0;
+                    to.y = 0;
                 }
 
-                var distance = Vector3.Distance(current, destination);
+                var distance = to.magnitude;
 
                 if (distance <= stopingDistance)
                 {
