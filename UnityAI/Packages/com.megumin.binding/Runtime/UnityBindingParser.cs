@@ -75,7 +75,7 @@ namespace Megumin.Binding
                     }
                     else if (path.Length == 2)
                     {
-                        return CreateDelegate<T>(instanceType, instance, path[1]);
+                        return instanceType.CreateDelegate<T>(instance, path[1]);
                     }
                     else
                     {
@@ -97,7 +97,7 @@ namespace Megumin.Binding
 
                             if (innerInStanceType != null)
                             {
-                                return CreateDelegate<T>(innerInStanceType, getInstaneceDelegate, path[path.Length - 1], true);
+                                return innerInStanceType.CreateDelegate<T>(getInstaneceDelegate, path[path.Length - 1], true);
                             }
                         }
                         else
@@ -114,7 +114,7 @@ namespace Megumin.Binding
 
                             if (innerInStanceType != null)
                             {
-                                return CreateDelegate<T>(innerInStanceType, innerIntance, path[path.Length - 1]);
+                                return innerInStanceType.CreateDelegate<T>(innerIntance, path[path.Length - 1]);
                             }
 
                         }
@@ -144,240 +144,6 @@ namespace Megumin.Binding
             }
 
             return rootInstance;
-        }
-
-        /// <summary>
-        /// 尝试绑定propertyInfo
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instanceType"></param>
-        /// <param name="instance"></param>
-        /// <param name="memberName"></param>
-        /// <param name="ParseResult"></param>
-        /// <param name="Getter"></param>
-        /// <param name="Setter"></param>
-        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
-        /// </param>
-        /// <returns>是否含有成员</returns>
-        public static bool TryCreatePropertyDelegate<T>(Type instanceType,
-                                                     object instance,
-                                                     string memberName,
-                                                     out CreateDelegateResult ParseResult,
-                                                     out Func<T> Getter,
-                                                     out Action<T> Setter,
-                                                     bool instanceIsGetDelegate = false)
-        {
-            ParseResult = CreateDelegateResult.None;
-            Getter = null;
-            Setter = null;
-            bool hasMember = false;
-
-            try
-            {
-                var propertyInfo = instanceType.GetProperty(memberName);
-                if (propertyInfo != null)
-                {
-                    hasMember = true;
-                    if (propertyInfo.TryCreateGetterUseTypeAdpter(instanceType,
-                        instance, out Getter, instanceIsGetDelegate))
-                    {
-                        ParseResult |= CreateDelegateResult.Get;
-                    }
-
-                    if (propertyInfo.TryCreateSetterUseTypeAdpter(instanceType,
-                        instance, out Setter, instanceIsGetDelegate))
-                    {
-                        ParseResult |= CreateDelegateResult.Set;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"ParseError:  {e}");
-            }
-
-            return hasMember;
-        }
-
-        /// <summary>
-        /// 尝试绑定field
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instanceType"></param>
-        /// <param name="instance"></param>
-        /// <param name="memberName"></param>
-        /// <param name="ParseResult"></param>
-        /// <param name="Getter"></param>
-        /// <param name="Setter"></param>
-        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
-        /// <returns>是否含有成员</returns>
-        public static bool TryCreateFieldDelegate<T>(Type instanceType,
-                                                     object instance,
-                                                     string memberName,
-                                                     out CreateDelegateResult ParseResult,
-                                                     out Func<T> Getter,
-                                                     out Action<T> Setter,
-                                                     bool instanceIsGetDelegate = false)
-        {
-            ParseResult = CreateDelegateResult.None;
-            Getter = null;
-            Setter = null;
-            bool hasMember = false;
-
-            try
-            {
-                var fieldInfo = instanceType.GetField(memberName);
-                if (fieldInfo != null)
-                {
-                    hasMember = true;
-                    if (fieldInfo.TryCreateGetterUseTypeAdpter(instanceType, instance, out Getter, instanceIsGetDelegate))
-                    {
-                        ParseResult |= CreateDelegateResult.Get;
-                    }
-
-                    if (fieldInfo.TryCreateSetterUseTypeAdpter(instanceType, instance, out Setter, instanceIsGetDelegate))
-                    {
-                        ParseResult |= CreateDelegateResult.Set;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"ParseError:  {e}");
-            }
-            return hasMember;
-        }
-
-        /// <summary>
-        /// 尝试绑定method
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instanceType"></param>
-        /// <param name="instance"></param>
-        /// <param name="memberName"></param>
-        /// <param name="ParseResult"></param>
-        /// <param name="Getter"></param>
-        /// <param name="Setter"></param>
-        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
-        /// <returns>是否含有成员</returns>
-        public static bool TryCreateMethodDelegate<T>(Type instanceType,
-                                                     object instance,
-                                                     string memberName,
-                                                     out CreateDelegateResult ParseResult,
-                                                     out Func<T> Getter,
-                                                     out Action<T> Setter,
-                                                     bool instanceIsGetDelegate = false)
-        {
-            ParseResult = CreateDelegateResult.None;
-            Getter = null;
-            Setter = null;
-            bool hasMember = false;
-
-            try
-            {
-                MethodInfo methodInfo = GetMethodInfo(instanceType, memberName);
-                //TODO，区分方法重载
-
-                if (methodInfo != null)
-                {
-                    hasMember = true;
-
-                    var paras = methodInfo.GetParameters();
-                    if (paras.Length < 2)
-                    {
-                        if (paras.Length == 0)
-                        {
-                            //没有参数时认为是Get绑定
-                            if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
-                                        instance, out Getter, instanceIsGetDelegate))
-                            {
-                                ParseResult |= CreateDelegateResult.Get;
-                            }
-                        }
-                        else if (paras.Length == 1)
-                        {
-                            if (false && methodInfo.ReturnType != typeof(void))
-                            {
-                                //暂时不检查返回值
-                                //返回值必须是void。
-                                Debug.LogWarning($"SetMethod must return void.");
-                            }
-                            else
-                            {
-                                //一个参数时认为是Set绑定
-                                if (methodInfo.TryCreateSetterUseTypeAdpter(instanceType,
-                                            instance, out Setter, instanceIsGetDelegate))
-                                {
-                                    ParseResult |= CreateDelegateResult.Set;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //TODO 多个参数
-                        Debug.LogWarning($"暂不支持 含有参数的方法 {methodInfo}绑定");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"ParseError:  {e}");
-            }
-            return hasMember;
-        }
-
-        public static MethodInfo GetMethodInfo(Type type, string memberName)
-        {
-            var methodName = memberName;
-            if (memberName.EndsWith("()"))
-            {
-                methodName = memberName.Replace("()", "");
-                //TODO 泛型函数
-            }
-
-            var methodInfo = type.GetMethod(methodName);
-            return methodInfo;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="instanceType"></param>
-        /// <param name="instance"></param>
-        /// <param name="memberName"></param>
-        /// <param name="instanceIsGetDelegate">instance 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate时会出现冲突。
-        /// <returns></returns>
-        public static (CreateDelegateResult ParseResult, Func<T> Getter, Action<T> Setter)
-            CreateDelegate<T>(Type instanceType,
-                              object instance,
-                              string memberName,
-                              bool instanceIsGetDelegate = false)
-        {
-            CreateDelegateResult ParseResult = CreateDelegateResult.None;
-            Func<T> Getter = null;
-            Action<T> Setter = null;
-
-            //属性 字段 方法 逐一尝试绑定。
-
-            if (TryCreatePropertyDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-            {
-                return (ParseResult, Getter, Setter);
-            }
-
-            if (TryCreateFieldDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-            {
-                return (ParseResult, Getter, Setter);
-            }
-
-            if (TryCreateMethodDelegate(instanceType, instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-            {
-                return (ParseResult, Getter, Setter);
-            }
-
-            Debug.LogWarning($"通过 {instanceType.FullName}类型 没有找到 符合标准的 成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
-            return (ParseResult, Getter, Setter);
         }
 
         /// <summary>
@@ -619,7 +385,7 @@ namespace Megumin.Binding
 
             var (instance, instanceType) = GetBindInstanceAndType2(new Span<string>(path, 0, path.Length - 1), rootInstance);
             var memberName = path[path.Length - 1];
-            MethodInfo methodInfo = GetMethodInfo(instanceType, memberName);
+            MethodInfo methodInfo = instanceType.GetMethodInfo(memberName);
             if (methodInfo != null)
             {
                 var d = methodInfo.CreateDelegate(delegateType, instance);
