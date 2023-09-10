@@ -51,8 +51,7 @@ namespace Megumin.Binding
             else
             {
                 GameObject rootInstance = GetRootInstance(bindingInstance);
-
-                var path = bindingString.Split('/');
+                string[] path = ParsePath(bindingString);
                 var (instance, instanceType) = GetBindInstanceAndType(path[0], rootInstance);
 
                 if (instanceType != null)
@@ -129,6 +128,38 @@ namespace Megumin.Binding
             }
 
             return (ParseResult, Getter, Setter);
+        }
+
+        /// <summary>
+        /// 通过分隔符分离路径，分离索引器为属性
+        /// </summary>
+        /// <param name="bindingPath"></param>
+        /// <returns></returns>
+        public static string[] ParsePath(string bindingPath)
+        {
+            if (bindingPath.Contains('['))
+            {
+                //分离索引器,索引器的本质是一个名为Item的属性。
+                var result = bindingPath.Split('/').ToList();
+                for (int i = 0; i < result.Count; i++)
+                {
+                    var cur = result[i];
+                    var index = cur.IndexOf('[');
+                    if (index > 0)
+                    {
+                        result[i] = cur.Substring(0, index);
+                        var indexer = cur.Substring(index);
+                        result.Insert(i + 1, indexer);
+                        i++;
+                    }
+                }
+
+                return result.ToArray();
+            }
+            else
+            {
+                return bindingPath.Split('/');
+            }
         }
 
         public static GameObject GetRootInstance(object bindingInstance)
