@@ -6,13 +6,9 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 可巡逻的
+    /// 巡逻节点
     /// </summary>
-    public interface IPatrolable : IMoveToable<Vector3>
-    {
-    }
-
-    public class Patrol : BTActionNode<IPatrolable>
+    public class Patrol_1 : BTActionNode<IMoveToable<Vector3>>
     {
         [Space]
         public float StopingDistance = 0.25f;
@@ -64,6 +60,54 @@ namespace Megumin.AI.BehaviorTree
                 return false;
             }
 
+            return true;
+        }
+    }
+
+    public class Patrol_2 : BTActionNode<IMoveToable<Vector3>>
+    {
+        [Space]
+        public float StopingDistance = 0.25f;
+
+        public bool IgnoreYAxis = false;
+
+        Vector3 start;
+        protected override void OnEnter(object options = null)
+        {
+            start = Transform.position;
+            TryMoveNext();
+        }
+
+
+        Vector3 lastDes;
+        protected override Status OnTick(BTNode from, object options = null)
+        {
+            if (Transform.IsArrive(lastDes, StopingDistance, IgnoreYAxis))
+            {
+                //IDEL
+                if (TryMoveNext())
+                {
+                    return Status.Running;
+                }
+                else
+                {
+                    return Status.Succeeded;
+                }
+            }
+
+            return Status.Running;
+        }
+
+        public bool TryMoveNext()
+        {
+            var random = Random.insideUnitSphere;
+            if (IgnoreYAxis)
+            {
+                random.y = 0;
+            }
+
+            var next = start + random * 2;
+            MyAgent.MoveTo(next);
             return true;
         }
     }
