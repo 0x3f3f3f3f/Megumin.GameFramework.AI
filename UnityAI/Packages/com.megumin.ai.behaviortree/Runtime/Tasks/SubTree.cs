@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -76,10 +77,10 @@ namespace Megumin.AI.BehaviorTree
             BehaviourTree?.BindAgent(agent);
         }
 
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
+        public CreateDelegateResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
             BehaviourTree?.ParseAllBindable(Agent, force, options);
-            return ParseBindingResult.Both;
+            return CreateDelegateResult.Both;
         }
 
         public string DebugParseResult()

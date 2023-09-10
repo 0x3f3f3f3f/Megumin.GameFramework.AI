@@ -1,4 +1,5 @@
 ﻿using System;
+using Megumin.Reflection;
 
 namespace Megumin.Binding
 {
@@ -54,7 +55,7 @@ namespace Megumin.Binding
 
     public interface IBindingParseable
     {
-        ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null);
+        CreateDelegateResult ParseBinding(object bindInstance, bool force = false, object options = null);
         string DebugParseResult();
     }
 
@@ -69,18 +70,5 @@ namespace Megumin.Binding
         /// 默认是false，性能更好。
         /// </remarks>
         bool UseInstaneceDelegate { get; }
-    }
-
-    [Flags]
-    public enum ParseBindingResult
-    {
-        /// <summary>
-        /// Get Set 均解析失败
-        /// </summary>
-        None = 0,
-        Get = 1 << 0,
-        Set = 1 << 1,
-        Both = Get | Set,
-        Method = 1 << 2,
     }
 }

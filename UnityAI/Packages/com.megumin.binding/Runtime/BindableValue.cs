@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -24,7 +25,7 @@ namespace Megumin.Binding
         /// <summary>
         /// null表示还没有解析绑定
         /// </summary>
-        protected ParseBindingResult? ParseResult = null;
+        protected CreateDelegateResult? ParseResult = null;
         protected Func<T> Getter;
         protected Action<T> Setter;
 
@@ -77,7 +78,7 @@ namespace Megumin.Binding
         public T DefaultValue { get => defaultValue; set => defaultValue = value; }
 
         static readonly object parseLock = new object();
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
+        public CreateDelegateResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
             lock (parseLock)
             {
@@ -94,7 +95,7 @@ namespace Megumin.Binding
                         BindingParser.Instance.ParseBinding<T>(BindingPath, instance, options);
                 }
 
-                return ParseResult ?? ParseBindingResult.None;
+                return ParseResult ?? CreateDelegateResult.None;
             }
         }
 

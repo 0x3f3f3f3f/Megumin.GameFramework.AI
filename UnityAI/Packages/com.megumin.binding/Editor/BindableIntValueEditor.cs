@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace Megumin.Binding.Editor
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
 
-        Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
+        Dictionary<string, CreateDelegateResult> parseResult = new Dictionary<string, CreateDelegateResult>();
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, property))

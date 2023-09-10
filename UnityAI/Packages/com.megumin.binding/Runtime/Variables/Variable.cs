@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 
@@ -107,7 +108,7 @@ namespace Megumin.Binding
             {
                 if (ParseResult.HasValue)
                 {
-                    if ((ParseResult.Value & ParseBindingResult.Get) != 0)
+                    if ((ParseResult.Value & CreateDelegateResult.Get) != 0)
                     {
                         //解析成功
                         return Getter();
@@ -147,7 +148,7 @@ namespace Megumin.Binding
             {
                 if (ParseResult.HasValue)
                 {
-                    if ((ParseResult.Value & ParseBindingResult.Set) != 0)
+                    if ((ParseResult.Value & CreateDelegateResult.Set) != 0)
                     {
                         //解析成功
                         Setter(value);
@@ -189,11 +190,11 @@ namespace Megumin.Binding
         /// null表示还没有解析绑定
         /// </summary>
         [NonSerialized]
-        protected ParseBindingResult? ParseResult = null;
+        protected CreateDelegateResult? ParseResult = null;
         protected Func<T> Getter;
         protected Action<T> Setter;
         static readonly object parseLock = new object();
-        public ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null)
+        public CreateDelegateResult ParseBinding(object bindInstance, bool force = false, object options = null)
         {
             lock (parseLock)
             {
@@ -205,7 +206,7 @@ namespace Megumin.Binding
                         BindingParser.Instance.ParseBinding<T>(BindingPath, instance, options);
                 }
 
-                return ParseResult ?? ParseBindingResult.None;
+                return ParseResult ?? CreateDelegateResult.None;
             }
         }
 

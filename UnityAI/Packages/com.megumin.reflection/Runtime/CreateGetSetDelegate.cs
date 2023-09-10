@@ -5,6 +5,19 @@ using UnityEngine;
 
 namespace Megumin.Reflection
 {
+    [Flags]
+    public enum CreateDelegateResult
+    {
+        /// <summary>
+        /// Get Set 均解析失败
+        /// </summary>
+        None = 0,
+        Get = 1 << 0,
+        Set = 1 << 1,
+        Both = Get | Set,
+        Method = 1 << 2,
+    }
+
     /// <summary>
     /// 重要： https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/variance-in-delegates#variance-in-generic-type-parameters-for-value-and-reference-types
     /// https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/

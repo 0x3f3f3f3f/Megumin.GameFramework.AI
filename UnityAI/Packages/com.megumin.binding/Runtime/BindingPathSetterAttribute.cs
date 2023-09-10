@@ -109,7 +109,7 @@ namespace Megumin.Binding
         const int testButtonWidth = 36;
 
         public static readonly BindingOptions bindingOptions = new();
-        Dictionary<string, ParseBindingResult> parseResult = new Dictionary<string, ParseBindingResult>();
+        Dictionary<string, CreateDelegateResult> parseResult = new Dictionary<string, CreateDelegateResult>();
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
         {
             var propertyPosition = position;

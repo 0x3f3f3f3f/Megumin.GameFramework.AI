@@ -2,10 +2,11 @@
     "name": "Megumin.Binding.Editor",
     "rootNamespace": "Megumin.Binding.Editor",
     "references": [
-        "Megumin.Binding",
-        "Megumin.Serialization",
-        "Megumin.Serialization.Editor",
-        "Megumin.Common"
+        "GUID:0913ec06d78d40a48a5fb4f6abcd817c",
+        "GUID:b9e29b1e857abb4438a4cdde4aef4bee",
+        "GUID:f6603a9e7673bdc48bf80f0d4c567cfe",
+        "GUID:293b3db1567cc8e479b4623ded498cfa",
+        "GUID:e3141e3383f7d54428a008f1df9a1c9d"
     ],
     "includePlatforms": [
         "Editor"

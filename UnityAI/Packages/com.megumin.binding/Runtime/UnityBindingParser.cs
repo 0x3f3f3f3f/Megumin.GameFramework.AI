@@ -36,10 +36,10 @@ namespace Megumin.Binding
             //}
         }
 
-        public override (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
+        public override (CreateDelegateResult ParseResult, Func<T> Getter, Action<T> Setter)
             ParseBinding<T>(string bindingString, object bindingInstance, object options = null)
         {
-            ParseBindingResult ParseResult = ParseBindingResult.None;
+            CreateDelegateResult ParseResult = CreateDelegateResult.None;
             Func<T> Getter = null;
             Action<T> Setter = null;
 
@@ -69,7 +69,7 @@ namespace Megumin.Binding
                                 {
                                     return resulttype;
                                 };
-                                ParseResult |= ParseBindingResult.Get;
+                                ParseResult |= CreateDelegateResult.Get;
                             }
                         }
                     }
@@ -162,12 +162,12 @@ namespace Megumin.Binding
         public static bool TryCreatePropertyDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
-                                                     out ParseBindingResult ParseResult,
+                                                     out CreateDelegateResult ParseResult,
                                                      out Func<T> Getter,
                                                      out Action<T> Setter,
                                                      bool instanceIsGetDelegate = false)
         {
-            ParseResult = ParseBindingResult.None;
+            ParseResult = CreateDelegateResult.None;
             Getter = null;
             Setter = null;
             bool hasMember = false;
@@ -181,13 +181,13 @@ namespace Megumin.Binding
                     if (propertyInfo.TryCreateGetterUseTypeAdpter(instanceType,
                         instance, out Getter, instanceIsGetDelegate))
                     {
-                        ParseResult |= ParseBindingResult.Get;
+                        ParseResult |= CreateDelegateResult.Get;
                     }
 
                     if (propertyInfo.TryCreateSetterUseTypeAdpter(instanceType,
                         instance, out Setter, instanceIsGetDelegate))
                     {
-                        ParseResult |= ParseBindingResult.Set;
+                        ParseResult |= CreateDelegateResult.Set;
                     }
                 }
             }
@@ -214,12 +214,12 @@ namespace Megumin.Binding
         public static bool TryCreateFieldDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
-                                                     out ParseBindingResult ParseResult,
+                                                     out CreateDelegateResult ParseResult,
                                                      out Func<T> Getter,
                                                      out Action<T> Setter,
                                                      bool instanceIsGetDelegate = false)
         {
-            ParseResult = ParseBindingResult.None;
+            ParseResult = CreateDelegateResult.None;
             Getter = null;
             Setter = null;
             bool hasMember = false;
@@ -232,12 +232,12 @@ namespace Megumin.Binding
                     hasMember = true;
                     if (fieldInfo.TryCreateGetterUseTypeAdpter(instanceType, instance, out Getter, instanceIsGetDelegate))
                     {
-                        ParseResult |= ParseBindingResult.Get;
+                        ParseResult |= CreateDelegateResult.Get;
                     }
 
                     if (fieldInfo.TryCreateSetterUseTypeAdpter(instanceType, instance, out Setter, instanceIsGetDelegate))
                     {
-                        ParseResult |= ParseBindingResult.Set;
+                        ParseResult |= CreateDelegateResult.Set;
                     }
                 }
             }
@@ -263,12 +263,12 @@ namespace Megumin.Binding
         public static bool TryCreateMethodDelegate<T>(Type instanceType,
                                                      object instance,
                                                      string memberName,
-                                                     out ParseBindingResult ParseResult,
+                                                     out CreateDelegateResult ParseResult,
                                                      out Func<T> Getter,
                                                      out Action<T> Setter,
                                                      bool instanceIsGetDelegate = false)
         {
-            ParseResult = ParseBindingResult.None;
+            ParseResult = CreateDelegateResult.None;
             Getter = null;
             Setter = null;
             bool hasMember = false;
@@ -291,7 +291,7 @@ namespace Megumin.Binding
                             if (methodInfo.TryCreateGetterUseTypeAdpter(instanceType,
                                         instance, out Getter, instanceIsGetDelegate))
                             {
-                                ParseResult |= ParseBindingResult.Get;
+                                ParseResult |= CreateDelegateResult.Get;
                             }
                         }
                         else if (paras.Length == 1)
@@ -308,7 +308,7 @@ namespace Megumin.Binding
                                 if (methodInfo.TryCreateSetterUseTypeAdpter(instanceType,
                                             instance, out Setter, instanceIsGetDelegate))
                                 {
-                                    ParseResult |= ParseBindingResult.Set;
+                                    ParseResult |= CreateDelegateResult.Set;
                                 }
                             }
                         }
@@ -349,13 +349,13 @@ namespace Megumin.Binding
         /// <param name="memberName"></param>
         /// <param name="instanceIsGetDelegate">instance 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate时会出现冲突。
         /// <returns></returns>
-        public static (ParseBindingResult ParseResult, Func<T> Getter, Action<T> Setter)
+        public static (CreateDelegateResult ParseResult, Func<T> Getter, Action<T> Setter)
             CreateDelegate<T>(Type instanceType,
                               object instance,
                               string memberName,
                               bool instanceIsGetDelegate = false)
         {
-            ParseBindingResult ParseResult = ParseBindingResult.None;
+            CreateDelegateResult ParseResult = CreateDelegateResult.None;
             Func<T> Getter = null;
             Action<T> Setter = null;
 
