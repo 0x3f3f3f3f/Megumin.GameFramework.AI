@@ -104,6 +104,11 @@ namespace Megumin.Binding.Test
             return MyIntField2;
         }
 
+        public int this[int index]
+        {
+            get { return index * 100; }
+            set { }
+        }
 
         public string MystringField1 = "TestInnerClass_HelloWorld1";
         public string MystringField2 = "TestInnerClass_HelloWorld2";

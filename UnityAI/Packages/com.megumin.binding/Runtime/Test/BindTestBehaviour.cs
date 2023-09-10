@@ -117,10 +117,17 @@ namespace Megumin.Binding.Test
             = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
+        /// 索引器绑定
+        /// </summary>
+        public BindableValue<int> MyTestIndexer
+            = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]" };
+
+        /// <summary>
         /// 多级成员绑定 ✅
         /// </summary>
         public BindableValue<string> MyTestInnerClassDeep2
             = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
+
 
         /// <summary>
         /// 静态类型绑定 ✅
