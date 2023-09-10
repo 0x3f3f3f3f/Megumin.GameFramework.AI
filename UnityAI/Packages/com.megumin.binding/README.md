@@ -11,7 +11,7 @@
 
 ```cs
 [Flags]
-public enum ParseBindingResult
+public enum CreateDelegateResult
 {
     /// <summary>
     /// Get Set 均解析失败
@@ -66,6 +66,10 @@ public enum ParseBindingResult
 ## 自动适配
 - 支持绑定与目标类型不同的成员，支持规则是向上转型。  
 - 可以向Megumin.Reflection.TypeAdpter中添加适配器，增加自定义类型转换。  
+
+## BindingPath分隔符
+没有使用`.`做分隔符，因为命名空间中包含`.`，会出现冲突。  
+BindingPath也可以理解成为路径，使用`/`也是合理的。  
 
 ## 示例
 参考 TestBinding.unity
