@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -107,6 +107,29 @@ namespace Megumin.Binding.Test
         public int this[int index]
         {
             get { return index * 100; }
+            set { }
+        }
+
+        /// <summary>
+        /// 索引器重载测试
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int this[string index]
+        {
+            get { return 9999; }
+            set { }
+        }
+
+        /// <summary>
+        /// 多个参数索引器测试
+        /// </summary>
+        /// <param name="key1"></param>
+        /// <param name="key2"></param>
+        /// <returns></returns>
+        public int this[int key1,string key2]
+        {
+            get { return 1000; }
             set { }
         }
 
