@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
+  m_Name: Npc2_Patrol
+  m_EditorClassIdentifier: 
+  Version: 1.1.0
+  <GUID>k__BackingField: 85ff483c-5109-4a41-bd74-5bc0502b60fb
+  <StartNodeGUID>k__BackingField: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4
+  UseSerializeReferenceGeneric: 0
+  UnityObjectRef: []
+  variables: []
+  nodes:
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4
+    Type: Megumin.AI.BehaviorTree.Patrol_2
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
+    - Name: IgnoreYAxis
+      Type: System.Boolean
+      Value: True
+    - Name: GUID
+      Type: System.String
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4
+  decorators: []
+  refObjs:
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
+      Megumin.AI.BehaviorTree]]
+    Member: []
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Meta
+    Type: Megumin.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 396
+    - Name: y
+      Type: System.Single
+      Value: 115
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
