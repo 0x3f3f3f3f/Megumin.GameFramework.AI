@@ -1162,7 +1162,7 @@ namespace Megumin.Reflection
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"ParseError:  {e}");
+                Debug.LogWarning($"TryCreateMethodDelegate:  {e}");
             }
             return hasMember;
         }
@@ -1186,7 +1186,7 @@ namespace Megumin.Reflection
             return methodInfo;
         }
 
-        public static readonly Regex GetIndexer = new(@"^\[(?<index>.+)\]$");
+        public static readonly Regex GetIndexRegex = new(@"^\[(?<index>.+)\]$");
 
         /// <summary>
         /// 尝试绑定索引器
@@ -1202,48 +1202,71 @@ namespace Megumin.Reflection
         /// </param>
         /// <returns>是否含有成员</returns>
         public static bool TryCreateIndexerDelegate<T>(this Type instanceType,
-                                                        object instance,
-                                                        string memberName,
-                                                        out CreateDelegateResult ParseResult,
-                                                        out Func<T> Getter,
-                                                        out Action<T> Setter,
-                                                        bool instanceIsGetDelegate = false)
+                                                       object instance,
+                                                       string memberName,
+                                                       out CreateDelegateResult ParseResult,
+                                                       out Func<T> Getter,
+                                                       out Action<T> Setter,
+                                                       bool instanceIsGetDelegate = false)
         {
             ParseResult = CreateDelegateResult.None;
             Getter = null;
             Setter = null;
             bool hasMember = false;
 
-            //为索引器创建委托
-            var props = instanceType.GetProperties();
-            var prop = props.FirstOrDefault(elem => elem.Name == "Item");
-            if (prop != null) 
+            try
             {
-                MethodInfo indexGet = prop.GetGetMethod();
-                var indexType = indexGet.GetParameters()[0].ParameterType;
-                var match = GetIndexer.Match(memberName);
-                var indexString = match.Groups["index"].Value;
+                var match = GetIndexRegex.Match(memberName);
 
-                object indexValue = null;
-                if (indexType == typeof(int))
+                //为索引器创建委托
+                var props = instanceType.GetProperties();
+
+                //TODO： 索引器重载
+                var prop = props.FirstOrDefault(elem => elem.Name == "Item");
+
+                if (match.Success && prop != null)
                 {
-                    indexValue = int.Parse(indexString);
-                    var test2 = Convert.ToInt32(indexString);
+                    var index = match.Groups["index"].Value;
+
+                    if (prop.CanRead)
+                    {
+                        MethodInfo indexGet = prop.GetGetMethod();
+                        var indexType = indexGet.GetParameters()[0].ParameterType;
+
+                        hasMember = true;
+
+                        //这里无法避免装箱,反射调用索引器时同样也需要装箱
+                        object indexValue = Convert.ChangeType(index, indexType);
+
+                        Getter = () =>
+                        {
+                            //需要转型
+                            var result = indexGet.Invoke(instance, new object[] { indexValue });
+                            //如果正确匹配，返回值强转为T是安全的。
+                            return (T)result;
+                        };
+                        ParseResult |= CreateDelegateResult.Get;
+                    }
+
+                    if (prop.CanWrite)
+                    {
+                        MethodInfo indexSet = prop.GetSetMethod();
+                        var indexType = indexSet.GetParameters()[0].ParameterType;
+
+                        //这里无法避免装箱,反射调用索引器时同样也需要装箱
+                        object indexValue = Convert.ChangeType(index, indexType);
+
+                        Setter = (T value) =>
+                        {
+                            indexSet.Invoke(instance, new object[] { indexValue, value });
+                        };
+                        ParseResult |= CreateDelegateResult.Set;
+                    }
                 }
-                else if (indexType == typeof(long))
-                {
-                    indexValue = long.Parse(indexString);
-
-                }
-
-                Getter = () =>
-                {
-                    //需要转型
-                    var result = indexGet.Invoke(instance, new object[] { indexValue });
-                    //如果正确匹配，返回值强转为T是安全的。
-                    return (T)result;
-                };
-                ParseResult |= CreateDelegateResult.Get;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"TryCreateIndexerDelegate:  {e}");
             }
 
             return hasMember;
