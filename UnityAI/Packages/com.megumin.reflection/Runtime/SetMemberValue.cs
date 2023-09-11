@@ -226,6 +226,13 @@ namespace Megumin.Reflection
 
             var instanceType = instance.GetType();
 
+            if (instanceType.IsPrimitive
+                || instanceType == typeof(string))
+            {
+                //基元类型不要反射查找成员。
+                yield break;
+            }
+
             if (instance is IDictionary dictionary)
             {
                 Debug.LogError($"不支持字典");
