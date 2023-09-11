@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Megumin.Reflection
@@ -1184,6 +1186,68 @@ namespace Megumin.Reflection
             return methodInfo;
         }
 
+        public static readonly Regex GetIndexer = new(@"^\[(?<index>.+)\]$");
+
+        /// <summary>
+        /// 尝试绑定索引器
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="memberName"></param>
+        /// <param name="ParseResult"></param>
+        /// <param name="Getter"></param>
+        /// <param name="Setter"></param>
+        /// <param name="instanceIsGetDelegate">temp 是不是 delegate要明确指定，而不能用重载。否则遇到类型恰好是delegate是会出现冲突。
+        /// </param>
+        /// <returns>是否含有成员</returns>
+        public static bool TryCreateIndexerDelegate<T>(this Type instanceType,
+                                                        object instance,
+                                                        string memberName,
+                                                        out CreateDelegateResult ParseResult,
+                                                        out Func<T> Getter,
+                                                        out Action<T> Setter,
+                                                        bool instanceIsGetDelegate = false)
+        {
+            ParseResult = CreateDelegateResult.None;
+            Getter = null;
+            Setter = null;
+            bool hasMember = false;
+
+            //为索引器创建委托
+            var props = instanceType.GetProperties();
+            var prop = props.FirstOrDefault(elem => elem.Name == "Item");
+            if (prop != null) 
+            {
+                MethodInfo indexGet = prop.GetGetMethod();
+                var indexType = indexGet.GetParameters()[0].ParameterType;
+                var match = GetIndexer.Match(memberName);
+                var indexString = match.Groups["index"].Value;
+
+                object indexValue = null;
+                if (indexType == typeof(int))
+                {
+                    indexValue = int.Parse(indexString);
+                    var test2 = Convert.ToInt32(indexString);
+                }
+                else if (indexType == typeof(long))
+                {
+                    indexValue = long.Parse(indexString);
+
+                }
+
+                Getter = () =>
+                {
+                    //需要转型
+                    var result = indexGet.Invoke(instance, new object[] { indexValue });
+                    //如果正确匹配，返回值强转为T是安全的。
+                    return (T)result;
+                };
+                ParseResult |= CreateDelegateResult.Get;
+            }
+
+            return hasMember;
+        }
 
         /// <summary>
         /// 
@@ -1204,21 +1268,31 @@ namespace Megumin.Reflection
             Func<T> Getter = null;
             Action<T> Setter = null;
 
-            //属性 字段 方法 逐一尝试绑定。
-
-            if (instanceType.TryCreatePropertyDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+            if (memberName.Contains('['))
             {
-                return (ParseResult, Getter, Setter);
+                //为索引器创建委托
+                if (instanceType.TryCreateIndexerDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+                {
+                    return (ParseResult, Getter, Setter);
+                }
             }
-
-            if (instanceType.TryCreateFieldDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+            else
             {
-                return (ParseResult, Getter, Setter);
-            }
+                //属性 字段 方法  逐一尝试绑定。
+                if (instanceType.TryCreatePropertyDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+                {
+                    return (ParseResult, Getter, Setter);
+                }
 
-            if (instanceType.TryCreateMethodDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
-            {
-                return (ParseResult, Getter, Setter);
+                if (instanceType.TryCreateFieldDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+                {
+                    return (ParseResult, Getter, Setter);
+                }
+
+                if (instanceType.TryCreateMethodDelegate(instance, memberName, out ParseResult, out Getter, out Setter, instanceIsGetDelegate))
+                {
+                    return (ParseResult, Getter, Setter);
+                }
             }
 
             Debug.LogWarning($"通过 {instanceType.FullName}类型 没有找到 符合标准的 成员 {memberName}。请确认成员是否被IL2CPP剪裁。");
