@@ -51,7 +51,7 @@ namespace Megumin.Binding
             else
             {
                 GameObject rootInstance = GetRootInstance(bindingInstance);
-                string[] path = ParsePath(bindingString);
+                string[] path = SplitPath(bindingString);
                 var (instance, instanceType) = GetBindInstanceAndType(path[0], rootInstance);
 
                 if (instanceType != null)
@@ -135,7 +135,7 @@ namespace Megumin.Binding
         /// </summary>
         /// <param name="bindingPath"></param>
         /// <returns></returns>
-        public static string[] ParsePath(string bindingPath)
+        public static string[] SplitPath(string bindingPath)
         {
             if (bindingPath.Contains('['))
             {
