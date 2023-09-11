@@ -58,8 +58,22 @@ namespace Megumin.Reflection
             { (typeof(uint),typeof(string)) , new TypeAdpter_anyType_to_string<uint>() },
             { (typeof(ulong),typeof(string)) , new TypeAdpter_anyType_to_string<ulong>() },
 
+            { (typeof(Vector2),typeof(string)) , new TypeAdpter_anyType_to_string<Vector2>() },
+            { (typeof(Vector2Int),typeof(string)) , new TypeAdpter_anyType_to_string<Vector2Int>() },
+
+            { (typeof(Vector3),typeof(string)) , new TypeAdpter_anyType_to_string<Vector3>() },
+            { (typeof(Vector3Int),typeof(string)) , new TypeAdpter_anyType_to_string<Vector3Int>() },
+
+            { (typeof(Vector4),typeof(string)) , new TypeAdpter_anyType_to_string<Vector4>() },
+
+            { (typeof(Quaternion),typeof(string)) , new TypeAdpter_anyType_to_string<Quaternion>() },
+
+            { (typeof(Color),typeof(string)) , new TypeAdpter_anyType_to_string<Color>() },
+            { (typeof(Color32),typeof(string)) , new TypeAdpter_anyType_to_string<Color32>() },
+
             { (typeof(DateTime),typeof(string)) , new TypeAdpter_anyType_to_string<DateTime>() },
             { (typeof(DateTimeOffset),typeof(string)) , new TypeAdpter_anyType_to_string<DateTimeOffset>() },
+            { (typeof(TimeSpan),typeof(string)) , new TypeAdpter_anyType_to_string<TimeSpan>() },
 
             { (typeof(bool),typeof(int)) , new TypeAdpter_bool_to_int() },
             { (typeof(int),typeof(float)) , new TypeAdpter_int_to_float() },
