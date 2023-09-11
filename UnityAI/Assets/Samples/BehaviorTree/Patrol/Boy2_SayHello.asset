@@ -138,7 +138,7 @@ MonoBehaviour:
       Value: e79e8a41-7e8b-4ca6-bad8-e57a907bb59d
   decorators:
   - Name: 157ac3ab-6f19-4e6a-a0b1-7c825238dd69
-    Type: CanSeeTarget
+    Type: Megumin.AI.BehaviorTree.CanSeeTarget_Transform
     Member:
     - Name: Target
       Type: $ref

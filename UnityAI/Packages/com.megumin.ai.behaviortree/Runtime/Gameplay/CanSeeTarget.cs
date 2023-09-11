@@ -17,7 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [Icon("d_viewtoolorbit on@2x")]
     [DisplayName("CanSeeTarget")]
     [Description("TransformPerception CanSeeTarget")]
-    [Category("Gameplay")]
+    [Category("Gameplay/Perception")]
     [AddComponentMenu("CanSeeTarget(Transform)")]
     [SerializationAlias("CanSeeTarget")]
     [HelpURL(URL.WikiDecorator + "CanSeeTarget")]
@@ -33,7 +33,7 @@ namespace Megumin.AI.BehaviorTree
     [Icon("d_viewtoolorbit on@2x")]
     [DisplayName("CanSeeTarget")]
     [Description("GameObjectPerception CanSeeTarget")]
-    [Category("Gameplay")]
+    [Category("Gameplay/Perception")]
     [AddComponentMenu("CanSeeTarget(GameObject)")]
     public class CanSeeTarget_GameObject : ConditionDecorator<GameObjectPerception>
     {
