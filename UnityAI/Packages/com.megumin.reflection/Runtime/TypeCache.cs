@@ -233,6 +233,34 @@ namespace Megumin.Reflection
         //static readonly Dictionary<string, Type> allUnityObjectType = new();
         static bool CacheTypeInit = false;
 
+        /// <summary>
+        /// 清除所有缓存类型
+        /// </summary>
+        public static void Clear()
+        {
+            lock (cachelock)
+            {
+                CachedAssemblyName.Clear();
+                CacheTypeInit = false;
+                allType.Clear();
+                ClearHotType();
+            }
+        }
+
+        /// <summary>
+        /// 清除所有热缓存
+        /// </summary>
+        public static void ClearHotType()
+        {
+            hotType.Clear();
+
+#if UNITY_5_3_OR_NEWER
+            hotComponentType.Clear();
+            hotUnityObjectType.Clear();
+#endif
+
+        }
+
         public static bool LogCacheWorning =
 
 #if UNITY_EDITOR
@@ -278,7 +306,7 @@ namespace Megumin.Reflection
         /// 防止多个线程同时缓存浪费性能。
         /// </summary>
         static readonly object cachelock = new();
-        static HashSet<string> CachedAssemblyName = new();
+        static readonly HashSet<string> CachedAssemblyName = new();
 
         /// <summary>
         /// 第一次缓存类型特别耗时，考虑使用异步，或者使用后台线程预调用。
@@ -730,7 +758,7 @@ namespace Megumin.Reflection
 
             //测试分离命名空间
             var ns = type.Namespace;
-            var (sns,_) = SplitNamespace(fullName);
+            var (sns, _) = SplitNamespace(fullName);
             if (ns + '.' == sns)
             {
                 Debug.Log($"SplitNamespace TestPass  {fullName} \nSplitNamespace: {sns}");

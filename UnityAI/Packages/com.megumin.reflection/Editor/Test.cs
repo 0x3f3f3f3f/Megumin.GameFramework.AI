@@ -12,5 +12,17 @@ namespace Megumin.Reflection.Editor
         {
             Megumin.Reflection.TypeCache.Test();
         }
+
+        [MenuItem("Tools/Megumin/Reflection/TypeCache Clear")]
+        public static void Clear()
+        {
+            Megumin.Reflection.TypeCache.Clear();
+        }
+
+        [MenuItem("Tools/Megumin/Reflection/TypeCache ClearHotType")]
+        public static void ClearHotType()
+        {
+            Megumin.Reflection.TypeCache.ClearHotType();
+        }
     }
 }
