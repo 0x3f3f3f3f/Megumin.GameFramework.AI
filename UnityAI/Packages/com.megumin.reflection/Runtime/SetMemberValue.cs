@@ -45,6 +45,10 @@ namespace Megumin.Reflection
         public bool IsStatic { get; internal set; }
         public bool IsGetPublic { get; internal set; }
         public bool IsSetPublic { get; internal set; }
+        /// <summary>
+        /// 是不是声明时的默认值
+        /// </summary>
+        public bool IsDefault { get; internal set; }
 
         public void Deconstruct(out string memberName, out object memberValue, out Type memberType)
         {
@@ -207,8 +211,13 @@ namespace Megumin.Reflection
         /// </summary>
         /// <typeparam backingFieldName="T"></typeparam>
         /// <param backingFieldName="instance"></param>
+        /// <param name="ignoreDefaultValue">忽略值为初始化值的成员。
+        /// 通常意味着实例成员值没有修改过，反序列化时不需要处理，所以不需要序列化</param>
         /// <returns></returns>
-        public static IEnumerable<InstanceMemberInfo> GetSerializeMembers<T>(this T instance, bool fullInfo = false)
+        public static IEnumerable<InstanceMemberInfo>
+            GetSerializeMembers<T>(this T instance,
+                                   bool ignoreDefaultValue = true,
+                                   bool fullInfo = false)
         {
             if (instance == null)
             {
@@ -323,16 +332,6 @@ namespace Megumin.Reflection
                         isSetPublic = property.CanWrite ? property.SetMethod.IsPublic : false;
                     }
 
-                    //注意：这里不能因为memberValue == null,就跳过序列化。
-                    //一个可能的用例是，字段声明是默认不是null，后期用户赋值为null。
-                    //如果跳过序列化会导致反射构建实例是null的字段初始化为默认值。
-                    if (memberValue == defaultMemberValue
-                        || (memberValue?.Equals(defaultMemberValue) ?? false))
-                    {
-                        //Debug.Log($"值为初始值或者默认值没必要保存");
-                        continue;
-                    }
-
                     if (memberValue is IDictionary)
                     {
                         //暂时不支持字典
@@ -340,6 +339,22 @@ namespace Megumin.Reflection
                     }
 
                     InstanceMemberInfo info = new();
+
+                    //注意：这里不能因为memberValue == null,就跳过序列化。
+                    //一个可能的用例是，字段声明是默认不是null，后期用户赋值为null。
+                    //如果跳过序列化会导致反射构建实例是null的字段初始化为默认值。
+                    if (memberValue == defaultMemberValue
+                        || (memberValue?.Equals(defaultMemberValue) ?? false))
+                    {
+                        info.IsDefault = true;
+
+                        if (ignoreDefaultValue)
+                        {
+                            //Debug.Log($"值为初始值或者默认值没必要保存");
+                            continue;
+                        }
+                    }
+
                     info.Name = member.Name;
                     info.Value = memberValue;
                     info.CodeType = memberCodeType;
