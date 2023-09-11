@@ -823,6 +823,9 @@ namespace Megumin.Reflection
             hotType[aliasName] = type;
         }
 
+        /// <summary>
+        /// 缓存所有类型别名
+        /// </summary>
         public static void HotAllTypeAlias()
         {
             foreach (var item in allType)
@@ -832,6 +835,10 @@ namespace Megumin.Reflection
             }
         }
 
+        /// <summary>
+        /// 根据SerializationAliasAttribute缓存别名
+        /// </summary>
+        /// <param name="type"></param>
         public static void HotTypeAlias(Type type)
         {
             //类型继承的别名不考虑

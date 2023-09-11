@@ -24,5 +24,11 @@ namespace Megumin.Reflection.Editor
         {
             Megumin.Reflection.TypeCache.ClearHotType();
         }
+
+        [MenuItem("Tools/Megumin/Reflection/TypeCache HotAllTypeAlias")]
+        public static void HotAllTypeAlias()
+        {
+            Megumin.Reflection.TypeCache.HotAllTypeAlias();
+        }
     }
 }
