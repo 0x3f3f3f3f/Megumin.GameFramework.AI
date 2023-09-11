@@ -4,6 +4,9 @@ using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
+using Megumin.Reflection;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -48,6 +51,7 @@ namespace Megumin.Binding
     /// RefVariable，因为很常用，所以名字尽可能短一点
     /// </remarks>
     [Serializable]
+    [DebuggerTypeProxy(typeof(RefVar<>.DebugView))]
     public class RefVar<T> : BindingVar<T>, IRefable
     {
         [field: SerializeField]
@@ -66,6 +70,24 @@ namespace Megumin.Binding
                 return default;
             }
             return var.Value;
+        }
+
+        internal protected class DebugView
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            readonly RefVar<T> owner;
+
+            public string RefName => owner.RefName;
+            public string BindPath => owner.BindingPath;
+            public CreateDelegateResult? ParseResult => owner.ParseResult;
+            public T Value => owner.Value;
+            public T value => owner.value;
+            public Type SpecializedType => owner.SpecializedType;
+
+            public DebugView(RefVar<T> owner)
+            {
+                this.owner = owner;
+            }
         }
     }
 
