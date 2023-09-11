@@ -46,7 +46,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             this.LogMethodName();
             UndoRecord($"ConnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
-            parentNode.Children.Add(childNode);
+            Tree?.Connect(parentNode, childNode);
             //重新排序
             SortChild(parentNode);
             UpdateNodeIndex();
@@ -66,8 +66,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             this.LogMethodName();
             UndoRecord($"DisconnectChild [{parentNode.GetType().Name}] -> [{childNode.GetType()}]");
 
-            parentNode.Children.RemoveAll(elem => elem.GUID == childNode.GUID);
-
+            Tree?.Disconnect(parentNode, childNode);
             //重新排序
             SortChild(parentNode);
             UpdateNodeIndex();

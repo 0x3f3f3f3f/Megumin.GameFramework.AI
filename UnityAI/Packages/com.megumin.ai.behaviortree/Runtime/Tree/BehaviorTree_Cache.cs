@@ -12,9 +12,10 @@ namespace Megumin.AI.BehaviorTree
         protected int version = 0;
 
         protected int nodeIndexVersion = -1;
-        public void UpdateNodeIndexDepth()
+
+        public void UpdateNodeIndexDepth(bool force = false)
         {
-            if (nodeIndexVersion == version)
+            if (force == false && nodeIndexVersion == version)
             {
                 return;
             }

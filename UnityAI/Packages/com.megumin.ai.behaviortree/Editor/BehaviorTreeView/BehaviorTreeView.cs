@@ -502,6 +502,12 @@ namespace Megumin.AI.BehaviorTree.Editor
                 node.Meta.y = graphMousePosition.y;
             }
 
+            if (EditorWindow.IsDebugMode && Application.isPlaying)
+            {
+                //debug 运行时模式添加装饰器，立刻BindAgent。
+                Tree.DynamicAdd(node);
+            }
+
             return node;
         }
 

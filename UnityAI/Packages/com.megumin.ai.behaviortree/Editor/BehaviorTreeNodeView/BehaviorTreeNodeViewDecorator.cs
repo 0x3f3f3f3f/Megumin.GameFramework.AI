@@ -47,6 +47,13 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
 
             var decorator = SONode.Node.AddDecorator(type);
+
+            if (TreeView.EditorWindow.IsDebugMode && Application.isPlaying)
+            {
+                //debug 运行时模式添加装饰器，立刻BindAgent。
+                TreeView.Tree.DynamicAdd(decorator);
+            }
+
             //去重添加
             nearDType.Remove(type);
             nearDType.Add(type);
