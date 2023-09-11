@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace Megumin.Binding
@@ -111,6 +112,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bool : RefVar<bool> { }
 
     public class VariableCreator_Bool : VariableCreator
@@ -124,6 +126,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bool_List : RefVar<List<bool>> { }
 
     public class VariableCreator_Bool_List : VariableCreator
@@ -137,6 +140,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bool_Array : RefVar<bool[]> { }
 
     public class VariableCreator_Bool_Array : VariableCreator
@@ -150,6 +154,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Int : RefVar<int> { }
 
     public class VariableCreator_Int : VariableCreator
@@ -163,6 +168,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Int_List : RefVar<List<int>> { }
 
     public class VariableCreator_Int_List : VariableCreator
@@ -176,6 +182,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Int_Array : RefVar<int[]> { }
 
     public class VariableCreator_Int_Array : VariableCreator
@@ -189,6 +196,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Long : RefVar<long> { }
 
     public class VariableCreator_Long : VariableCreator
@@ -202,6 +210,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Long_List : RefVar<List<long>> { }
 
     public class VariableCreator_Long_List : VariableCreator
@@ -215,6 +224,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Long_Array : RefVar<long[]> { }
 
     public class VariableCreator_Long_Array : VariableCreator
@@ -228,6 +238,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_String : RefVar<string> { }
 
     public class VariableCreator_String : VariableCreator
@@ -241,6 +252,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_String_List : RefVar<List<string>> { }
 
     public class VariableCreator_String_List : VariableCreator
@@ -254,6 +266,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_String_Array : RefVar<string[]> { }
 
     public class VariableCreator_String_Array : VariableCreator
@@ -267,6 +280,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Float : RefVar<float> { }
 
     public class VariableCreator_Float : VariableCreator
@@ -280,6 +294,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Float_List : RefVar<List<float>> { }
 
     public class VariableCreator_Float_List : VariableCreator
@@ -293,6 +308,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Float_Array : RefVar<float[]> { }
 
     public class VariableCreator_Float_Array : VariableCreator
@@ -306,6 +322,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Double : RefVar<double> { }
 
     public class VariableCreator_Double : VariableCreator
@@ -319,6 +336,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Double_List : RefVar<List<double>> { }
 
     public class VariableCreator_Double_List : VariableCreator
@@ -332,6 +350,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Double_Array : RefVar<double[]> { }
 
     public class VariableCreator_Double_Array : VariableCreator
@@ -345,6 +364,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2 : RefVar<Vector2> { }
 
     public class VariableCreator_Vector2 : VariableCreator
@@ -358,6 +378,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2_List : RefVar<List<Vector2>> { }
 
     public class VariableCreator_Vector2_List : VariableCreator
@@ -371,6 +392,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2_Array : RefVar<Vector2[]> { }
 
     public class VariableCreator_Vector2_Array : VariableCreator
@@ -384,6 +406,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2Int : RefVar<Vector2Int> { }
 
     public class VariableCreator_Vector2Int : VariableCreator
@@ -397,6 +420,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2Int_List : RefVar<List<Vector2Int>> { }
 
     public class VariableCreator_Vector2Int_List : VariableCreator
@@ -410,6 +434,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector2Int_Array : RefVar<Vector2Int[]> { }
 
     public class VariableCreator_Vector2Int_Array : VariableCreator
@@ -423,6 +448,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3 : RefVar<Vector3> { }
 
     public class VariableCreator_Vector3 : VariableCreator
@@ -436,6 +462,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3_List : RefVar<List<Vector3>> { }
 
     public class VariableCreator_Vector3_List : VariableCreator
@@ -449,6 +476,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3_Array : RefVar<Vector3[]> { }
 
     public class VariableCreator_Vector3_Array : VariableCreator
@@ -462,6 +490,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3Int : RefVar<Vector3Int> { }
 
     public class VariableCreator_Vector3Int : VariableCreator
@@ -475,6 +504,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3Int_List : RefVar<List<Vector3Int>> { }
 
     public class VariableCreator_Vector3Int_List : VariableCreator
@@ -488,6 +518,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector3Int_Array : RefVar<Vector3Int[]> { }
 
     public class VariableCreator_Vector3Int_Array : VariableCreator
@@ -501,6 +532,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector4 : RefVar<Vector4> { }
 
     public class VariableCreator_Vector4 : VariableCreator
@@ -514,6 +546,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector4_List : RefVar<List<Vector4>> { }
 
     public class VariableCreator_Vector4_List : VariableCreator
@@ -527,6 +560,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Vector4_Array : RefVar<Vector4[]> { }
 
     public class VariableCreator_Vector4_Array : VariableCreator
@@ -540,6 +574,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Rect : RefVar<Rect> { }
 
     public class VariableCreator_Rect : VariableCreator
@@ -553,6 +588,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Rect_List : RefVar<List<Rect>> { }
 
     public class VariableCreator_Rect_List : VariableCreator
@@ -566,6 +602,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Rect_Array : RefVar<Rect[]> { }
 
     public class VariableCreator_Rect_Array : VariableCreator
@@ -579,6 +616,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RectInt : RefVar<RectInt> { }
 
     public class VariableCreator_RectInt : VariableCreator
@@ -592,6 +630,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RectInt_List : RefVar<List<RectInt>> { }
 
     public class VariableCreator_RectInt_List : VariableCreator
@@ -605,6 +644,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RectInt_Array : RefVar<RectInt[]> { }
 
     public class VariableCreator_RectInt_Array : VariableCreator
@@ -618,6 +658,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bounds : RefVar<Bounds> { }
 
     public class VariableCreator_Bounds : VariableCreator
@@ -631,6 +672,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bounds_List : RefVar<List<Bounds>> { }
 
     public class VariableCreator_Bounds_List : VariableCreator
@@ -644,6 +686,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Bounds_Array : RefVar<Bounds[]> { }
 
     public class VariableCreator_Bounds_Array : VariableCreator
@@ -657,6 +700,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_BoundsInt : RefVar<BoundsInt> { }
 
     public class VariableCreator_BoundsInt : VariableCreator
@@ -670,6 +714,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_BoundsInt_List : RefVar<List<BoundsInt>> { }
 
     public class VariableCreator_BoundsInt_List : VariableCreator
@@ -683,6 +728,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_BoundsInt_Array : RefVar<BoundsInt[]> { }
 
     public class VariableCreator_BoundsInt_Array : VariableCreator
@@ -696,6 +742,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_GameObject : RefVar<GameObject> { }
 
     public class VariableCreator_GameObject : VariableCreator
@@ -709,6 +756,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_GameObject_List : RefVar<List<GameObject>> { }
 
     public class VariableCreator_GameObject_List : VariableCreator
@@ -722,6 +770,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_GameObject_Array : RefVar<GameObject[]> { }
 
     public class VariableCreator_GameObject_Array : VariableCreator
@@ -735,6 +784,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Transform : RefVar<Transform> { }
 
     public class VariableCreator_Transform : VariableCreator
@@ -748,6 +798,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Transform_List : RefVar<List<Transform>> { }
 
     public class VariableCreator_Transform_List : VariableCreator
@@ -761,6 +812,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Transform_Array : RefVar<Transform[]> { }
 
     public class VariableCreator_Transform_Array : VariableCreator
@@ -774,6 +826,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_ScriptableObject : RefVar<ScriptableObject> { }
 
     public class VariableCreator_ScriptableObject : VariableCreator
@@ -787,6 +840,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_ScriptableObject_List : RefVar<List<ScriptableObject>> { }
 
     public class VariableCreator_ScriptableObject_List : VariableCreator
@@ -800,6 +854,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_ScriptableObject_Array : RefVar<ScriptableObject[]> { }
 
     public class VariableCreator_ScriptableObject_Array : VariableCreator
@@ -813,6 +868,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Trigger : RefVar<Trigger> { }
 
     public class VariableCreator_Trigger : VariableCreator
@@ -826,6 +882,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Trigger_List : RefVar<List<Trigger>> { }
 
     public class VariableCreator_Trigger_List : VariableCreator
@@ -839,6 +896,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Trigger_Array : RefVar<Trigger[]> { }
 
     public class VariableCreator_Trigger_Array : VariableCreator
@@ -852,6 +910,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Color : RefVar<Color> { }
 
     public class VariableCreator_Color : VariableCreator
@@ -865,6 +924,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Color_List : RefVar<List<Color>> { }
 
     public class VariableCreator_Color_List : VariableCreator
@@ -878,6 +938,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Color_Array : RefVar<Color[]> { }
 
     public class VariableCreator_Color_Array : VariableCreator
@@ -891,6 +952,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Gradient : RefVar<Gradient> { }
 
     public class VariableCreator_Gradient : VariableCreator
@@ -904,6 +966,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Gradient_List : RefVar<List<Gradient>> { }
 
     public class VariableCreator_Gradient_List : VariableCreator
@@ -917,6 +980,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Gradient_Array : RefVar<Gradient[]> { }
 
     public class VariableCreator_Gradient_Array : VariableCreator
@@ -930,6 +994,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Texture2D : RefVar<Texture2D> { }
 
     public class VariableCreator_Texture2D : VariableCreator
@@ -943,6 +1008,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Texture2D_List : RefVar<List<Texture2D>> { }
 
     public class VariableCreator_Texture2D_List : VariableCreator
@@ -956,6 +1022,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Texture2D_Array : RefVar<Texture2D[]> { }
 
     public class VariableCreator_Texture2D_Array : VariableCreator
@@ -969,6 +1036,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RenderTexture : RefVar<RenderTexture> { }
 
     public class VariableCreator_RenderTexture : VariableCreator
@@ -982,6 +1050,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RenderTexture_List : RefVar<List<RenderTexture>> { }
 
     public class VariableCreator_RenderTexture_List : VariableCreator
@@ -995,6 +1064,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_RenderTexture_Array : RefVar<RenderTexture[]> { }
 
     public class VariableCreator_RenderTexture_Array : VariableCreator
@@ -1008,6 +1078,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_AnimationCurve : RefVar<AnimationCurve> { }
 
     public class VariableCreator_AnimationCurve : VariableCreator
@@ -1021,6 +1092,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_AnimationCurve_List : RefVar<List<AnimationCurve>> { }
 
     public class VariableCreator_AnimationCurve_List : VariableCreator
@@ -1034,6 +1106,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_AnimationCurve_Array : RefVar<AnimationCurve[]> { }
 
     public class VariableCreator_AnimationCurve_Array : VariableCreator
@@ -1047,6 +1120,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Mesh : RefVar<Mesh> { }
 
     public class VariableCreator_Mesh : VariableCreator
@@ -1060,6 +1134,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Mesh_List : RefVar<List<Mesh>> { }
 
     public class VariableCreator_Mesh_List : VariableCreator
@@ -1073,6 +1148,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Mesh_Array : RefVar<Mesh[]> { }
 
     public class VariableCreator_Mesh_Array : VariableCreator
@@ -1086,6 +1162,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_SkinnedMeshRenderer : RefVar<SkinnedMeshRenderer> { }
 
     public class VariableCreator_SkinnedMeshRenderer : VariableCreator
@@ -1099,6 +1176,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_SkinnedMeshRenderer_List : RefVar<List<SkinnedMeshRenderer>> { }
 
     public class VariableCreator_SkinnedMeshRenderer_List : VariableCreator
@@ -1112,6 +1190,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_SkinnedMeshRenderer_Array : RefVar<SkinnedMeshRenderer[]> { }
 
     public class VariableCreator_SkinnedMeshRenderer_Array : VariableCreator
@@ -1125,6 +1204,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Material : RefVar<Material> { }
 
     public class VariableCreator_Material : VariableCreator
@@ -1138,6 +1218,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Material_List : RefVar<List<Material>> { }
 
     public class VariableCreator_Material_List : VariableCreator
@@ -1151,6 +1232,7 @@ namespace Megumin.Binding
     }
 
     [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
     public class RefVar_Material_Array : RefVar<Material[]> { }
 
     public class VariableCreator_Material_Array : VariableCreator

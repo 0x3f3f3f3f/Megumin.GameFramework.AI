@@ -50,6 +50,7 @@ namespace Megumin.Binding.Editor
         const string template =
 @"
 [Serializable]
+[DebuggerTypeProxy(typeof(DebugView))]
 public class RefVar_$(Type) : RefVar<$(type)> { }
 
 public class VariableCreator_$(Type) : VariableCreator
@@ -63,6 +64,7 @@ public class VariableCreator_$(Type) : VariableCreator
 }
 
 [Serializable]
+[DebuggerTypeProxy(typeof(DebugView))]
 public class RefVar_$(Type)_List : RefVar<List<$(type)>> { }
 
 public class VariableCreator_$(Type)_List : VariableCreator
@@ -76,6 +78,7 @@ public class VariableCreator_$(Type)_List : VariableCreator
 }
 
 [Serializable]
+[DebuggerTypeProxy(typeof(DebugView))]
 public class RefVar_$(Type)_Array : RefVar<$(type)[]> { }
 
 public class VariableCreator_$(Type)_Array : VariableCreator
@@ -95,6 +98,7 @@ public class VariableCreator_$(Type)_Array : VariableCreator
             CSCodeGenerator generator = new();
             generator.Push($"using System;");
             generator.Push($"using System.Collections.Generic;");
+            generator.Push($"using System.Diagnostics;");
             generator.Push($"using UnityEngine;");
             generator.PushBlankLines();
 
