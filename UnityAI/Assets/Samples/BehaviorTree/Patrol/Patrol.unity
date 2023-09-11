@@ -257,6 +257,12 @@ MonoBehaviour:
   InSensor: []
   checkDelta: 0.5
   AutoTarget: {fileID: 0}
+  FindTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  LostTarget:
+    m_PersistentCalls:
+      m_Calls: []
   DebugSolid: 0
   DebugColor: {r: 1, g: 0, b: 0, a: 1}
   DebugLineThickness: 2
@@ -317,7 +323,19 @@ MonoBehaviour:
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayRandomFrame:
+      Enabled: 0
+      Value: 30
   RunOption:
+    FrameInterval:
+      Enabled: 0
+      Value: 1
+    TimeInterval:
+      Enabled: 0
+      Value: 0.1
+    RealtimeInterval:
+      Enabled: 0
+      Value: 0.1
     <Log>k__BackingField: 0
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
@@ -988,7 +1006,19 @@ MonoBehaviour:
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayRandomFrame:
+      Enabled: 0
+      Value: 30
   RunOption:
+    FrameInterval:
+      Enabled: 0
+      Value: 1
+    TimeInterval:
+      Enabled: 0
+      Value: 0.1
+    RealtimeInterval:
+      Enabled: 0
+      Value: 0.1
     <Log>k__BackingField: 0
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
