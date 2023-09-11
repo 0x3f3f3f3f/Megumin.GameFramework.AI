@@ -24,12 +24,24 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         public void SortChild(BTParentNode parentNode)
         {
+            var hasChanged = false;
             parentNode.Children.Sort((lhs, rhs) =>
             {
                 var lhsView = GetElementByGuid(lhs.GUID);
                 var rhsView = GetElementByGuid(rhs.GUID);
-                return lhsView.layout.position.x.CompareTo(rhsView.layout.position.x);
+                var result = lhsView.layout.position.x.CompareTo(rhsView.layout.position.x);
+                if (result > 0)
+                {
+                    hasChanged = true;
+                }
+                return result;
             });
+
+            if (hasChanged)
+            {
+                //Debug.LogError($"hasChanged {hasChanged}");
+                Tree?.OnChildIndexChanged(parentNode);
+            }
         }
 
         public void ConnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)

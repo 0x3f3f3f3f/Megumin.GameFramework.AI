@@ -106,6 +106,11 @@ namespace Megumin.AI.BehaviorTree
 
             return false;
         }
+
+        public void OnChildIndexChanged(BTParentNode parentNode)
+        {
+            version++;
+        }
     }
 }
 
