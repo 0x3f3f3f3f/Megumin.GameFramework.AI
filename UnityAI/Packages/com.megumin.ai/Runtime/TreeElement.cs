@@ -19,14 +19,21 @@ namespace Megumin.AI
         /// 节点唯一ID
         /// </summary>
         [field: SerializeField]
-        public string GUID { get; set; }
-        public string ShortGUID => GUID?[..13];
+        public string GUID { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public string ShortGUID
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                return GUID?[..13];
+            }
+        }
 
         [field: NonSerialized]
-        public T Tree { get; set; }
+        public T Tree { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         [field: NonSerialized]
-        public TraceListener TraceListener { get; set; } = null;
+        public TraceListener TraceListener { [DebuggerStepThrough] get; [DebuggerStepThrough] set; } = null;
 
         [Obsolete("use GetLogger instead")]
         [HideInCallstack]

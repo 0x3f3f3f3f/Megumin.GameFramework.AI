@@ -4,15 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace Megumin.AI.BehaviorTree
 {
     [Serializable]
     public class BehaviorTreeElement : TreeElement<BehaviorTree>, IBindAgentable
     {
-        public object Agent { get; set; }
-        public GameObject GameObject { get; set; }
-        public Transform Transform => GameObject == null ? null : GameObject.transform;
+        public object Agent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+
+        public GameObject GameObject { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+
+        public Transform Transform
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                return GameObject == null ? null : GameObject.transform;
+            }
+        }
 
         public virtual void BindAgent(object agent)
         {

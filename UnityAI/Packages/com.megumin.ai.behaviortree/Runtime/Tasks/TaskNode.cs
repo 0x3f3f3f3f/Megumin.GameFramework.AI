@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Megumin.AI.BehaviorTree
     /// <typeparam name="T"></typeparam>
     public class BTActionNode<T> : BTActionNode
     {
-        public T MyAgent { get; set; }
+        public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         //如果T为接口，组件不能实现接口，使用代理类型。
         //实际使用发现，编写代理类型代码，和编写一个独立节点工作量差不多。

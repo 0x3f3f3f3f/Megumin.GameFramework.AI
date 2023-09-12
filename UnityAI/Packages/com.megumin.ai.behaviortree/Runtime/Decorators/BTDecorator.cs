@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,12 +10,12 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 物主节点
         /// </summary>
-        public BTNode Owner { get; set; }
+        public BTNode Owner { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
     }
 
     public class BTDecorator<T> : BTDecorator
     {
-        public T MyAgent { get; set; }
+        public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         public bool HasMyAgent()
         {
@@ -101,7 +102,7 @@ namespace Megumin.AI.BehaviorTree
 
     public class ConditionDecorator<T> : ConditionDecorator
     {
-        public T MyAgent { get; set; }
+        public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// 验证MyAgent有效性，防止Tick过程中空引用异常
