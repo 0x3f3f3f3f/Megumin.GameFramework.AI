@@ -17,11 +17,29 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiDecorator + "HasTarget")]
     public class PerceptionHasTarget_Transform : ConditionDecorator<TransformPerception>
     {
+        [Space]
+        public GameObjectFilter Filter;
+
+        [Space]
         public RefVar_Transform SaveTo;
+
         protected override bool OnCheckCondition(object options = null)
         {
-            SaveTo.Value = MyAgent.AutoTarget;
-            return MyAgent.AutoTarget;
+            if (Filter == null)
+            {
+                SaveTo.Value = MyAgent.AutoTarget;
+                return MyAgent.AutoTarget;
+            }
+            else
+            {
+                if (Filter.Check(MyAgent.AutoTarget))
+                {
+                    SaveTo.Value = MyAgent.AutoTarget;
+                    return MyAgent.AutoTarget;
+                }
+            }
+
+            return false;
         }
     }
 
@@ -33,11 +51,29 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiDecorator + "HasTarget")]
     public class PerceptionHasTarget_GameObject : ConditionDecorator<GameObjectPerception>
     {
+        [Space]
+        public GameObjectFilter Filter;
+
+        [Space]
         public RefVar_GameObject SaveTo;
+
         protected override bool OnCheckCondition(object options = null)
         {
-            SaveTo.Value = MyAgent.AutoTarget;
-            return MyAgent.AutoTarget;
+            if (Filter == null)
+            {
+                SaveTo.Value = MyAgent.AutoTarget;
+                return MyAgent.AutoTarget;
+            }
+            else
+            {
+                if (Filter.Check(MyAgent.AutoTarget))
+                {
+                    SaveTo.Value = MyAgent.AutoTarget;
+                    return MyAgent.AutoTarget;
+                }
+            }
+
+            return false;
         }
     }
 }

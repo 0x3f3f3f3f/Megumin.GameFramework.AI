@@ -72,7 +72,9 @@ namespace Megumin.AI.BehaviorTree
         public bool IgnoreYAxis = false;
 
         [Space]
-        public float RandomRange = 5f;
+        public float MaxRange = 10f;
+        public float MinRange = 2f;
+
         Vector3 start;
 
         protected override void OnEnter(object options = null)
@@ -102,7 +104,7 @@ namespace Megumin.AI.BehaviorTree
 
         public bool TryMoveNext()
         {
-            var random = Random.insideUnitCircle * RandomRange;
+            var random = Random.insideUnitCircle * Random.Range(MinRange, MaxRange);
             var next = start + new Vector3(random.x, 0, random.y);
 
             if (MyAgent.MoveTo(next))
