@@ -1032,7 +1032,7 @@ MonoBehaviour:
   Type: Sight
   Level:
   - Name: Custom
-    Radius: 6.3
+    Radius: 10
     DebugSolid: 1
     DebugLineThickness: 2
     DebugColor: {r: 0.38, g: 0.85, b: 0.25, a: 0.07}
