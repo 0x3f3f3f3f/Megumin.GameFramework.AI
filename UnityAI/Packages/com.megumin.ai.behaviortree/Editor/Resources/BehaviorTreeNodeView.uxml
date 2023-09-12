@@ -1,8 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
+    <Style src="project://database/Packages/com.megumin.ai.behaviortree/Editor/Resources/BehaviorTreeNodeView.uss?fileID=7433441132597879392&amp;guid=2c83cb8392a86ce4fbab7c0424257963&amp;type=3#BehaviorTreeNodeView" />
     <ui:VisualElement name="node-border">
         <ui:VisualElement name="top" class="section">
-            <ui:VisualElement name="leftMarkArea" class="markArea" />
+            <ui:VisualElement name="leftMarkArea" class="markArea" style="flex-direction: row;">
+                <ui:VisualElement name="bindAgent" tooltip="BindAgent Missing!" class="bindState bindAgent" />
+                <ui:VisualElement name="bindPath" tooltip="BindPath parse error!" class="bindState bindPath" />
+            </ui:VisualElement>
             <ui:VisualElement name="input" class="portContainer" />
             <ui:VisualElement name="rightMarkArea" class="markArea">
                 <ui:VisualElement name="runningState" class="runningState" />

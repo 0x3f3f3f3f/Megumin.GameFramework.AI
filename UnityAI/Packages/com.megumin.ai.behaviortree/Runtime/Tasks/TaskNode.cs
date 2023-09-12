@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
     /// 泛型节点，方便获取泛型Agent。
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BTActionNode<T> : BTActionNode
+    public class BTActionNode<T> : BTActionNode, IHasMyAgent, IMyAgentable<T>
     {
         public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 

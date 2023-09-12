@@ -63,3 +63,7 @@
 .running.node.behaviorTreeNode #body .detail #注释{
     background-color: rgb(215, 215, 6);
 }
+
+.node.behaviorTreeNode.noAgent #top > #leftMarkArea > #bindAgent {
+    display: flex;
+}

@@ -69,6 +69,29 @@ namespace Megumin.AI
         string GUID { get; }
     }
 
+    public interface IAgentable
+    {
+        object Agent { get; set; }
+    }
+
+    /// <summary>
+    /// 泛型代理
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IMyAgentable<T>
+    {
+        T MyAgent { get; set; }
+    }
+
+    public interface IHasMyAgent
+    {
+        /// <summary>
+        /// 泛型代理是否有效
+        /// </summary>
+        /// <returns></returns>
+        bool HasMyAgent();
+    }
+
     /// <summary>
     /// 可以绑定代理的
     /// </summary>

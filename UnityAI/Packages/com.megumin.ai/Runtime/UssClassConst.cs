@@ -30,5 +30,8 @@ namespace Megumin.AI
 
         public const string isDynamic = nameof(isDynamic);
         public const string isInvert = nameof(isInvert);
+
+        public const string noAgent = nameof(noAgent);
+        public const string bindPathParseNone = nameof(bindPathParseNone);
     }
 }

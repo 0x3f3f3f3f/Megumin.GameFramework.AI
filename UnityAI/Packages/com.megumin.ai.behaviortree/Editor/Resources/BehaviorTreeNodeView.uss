@@ -37,6 +37,12 @@
     border-bottom-right-radius: 2px;
 }
 
+.bindState {
+    display: none;
+    width: 16px;
+    height: 16px;
+}
+
 .runningState {
     background-color: rgba(128, 128, 128, 0);
     width: 16px;
@@ -230,8 +236,6 @@
     height: initial;
 }
 
-
-
 #center #contents .contentLabel {
     color: rgb(137, 137, 137);
     font-size: 12px;
@@ -382,4 +386,12 @@
 }
 
 .abortType {
+}
+
+.bindAgent {
+    background-image: resource('d_winbtn_mac_min_h');
+}
+
+.bindPath {
+    background-image: resource('d_winbtn_mac_min_h');
 }

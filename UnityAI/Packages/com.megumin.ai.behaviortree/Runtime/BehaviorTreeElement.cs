@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace Megumin.AI.BehaviorTree
 {
     [Serializable]
-    public class BehaviorTreeElement : TreeElement<BehaviorTree>, IBindAgentable
+    public class BehaviorTreeElement : TreeElement<BehaviorTree>, IBindAgentable, IAgentable
     {
         public object Agent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 

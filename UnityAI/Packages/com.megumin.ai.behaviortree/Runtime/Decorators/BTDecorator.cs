@@ -13,7 +13,7 @@ namespace Megumin.AI.BehaviorTree
         public BTNode Owner { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
     }
 
-    public class BTDecorator<T> : BTDecorator
+    public class BTDecorator<T> : BTDecorator, IHasMyAgent, IMyAgentable<T>
     {
         public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
@@ -100,7 +100,7 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
-    public class ConditionDecorator<T> : ConditionDecorator
+    public class ConditionDecorator<T> : ConditionDecorator, IHasMyAgent, IMyAgentable<T>
     {
         public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 

@@ -47,6 +47,19 @@ namespace Megumin.AI.BehaviorTree.Editor
             //{
             //    item.OnPostTick();
             //}
+
+            //检测Bind状态
+            if (TreeView.EditorWindow.IsDebugMode)
+            {
+                if (Node is IHasMyAgent hasMyAgent)
+                {
+                    this.SetToClassList(UssClassConst.noAgent, hasMyAgent.HasMyAgent() == false);
+                }
+                else if (Node is IAgentable agentable)
+                {
+                    this.SetToClassList(UssClassConst.noAgent, agentable.Agent == null);
+                }
+            }
         }
 
         private void OnStateChange()
@@ -62,7 +75,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             foreach (var edge in InputPort.connections)
             {
-                bool edgeRunning = false; 
+                bool edgeRunning = false;
                 if (edge.output.node is BehaviorTreeNodeView nodeView)
                 {
                     if (nodeView.Node != null && nodeView.Node.State == Status.Running)
