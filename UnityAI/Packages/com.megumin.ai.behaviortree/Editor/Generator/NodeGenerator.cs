@@ -21,15 +21,15 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         [Space]
         public bool MultiThreading = true;
-        public Enableable<string> Define;
+        public Enable<string> Define;
 
         [Space]
-        public List<Enableable<string>> Assemblys = new()
+        public List<Enable<string>> Assemblys = new()
         {
-            new Enableable<string>() { Value = "Assembly-CSharp", Enabled = false },
+            new Enable<string>() { Value = "Assembly-CSharp", Enabled = false },
         };
 
-        public List<Enableable<string>> Types = new();
+        public List<Enable<string>> Types = new();
 
         [Space]
         [FormerlySerializedAs("IgnoreMethods")]

@@ -29,9 +29,9 @@ namespace Megumin.AI
     public class RunOption
     {
         //public TickMode TickMode = TickMode.Update;
-        public Enableable<int> FrameInterval = new(false, 1);
-        public Enableable<double> TimeInterval = new(false, 0.1);
-        public Enableable<double> RealtimeInterval = new(false, 0.1);
+        public Enable<int> FrameInterval = new(false, 1);
+        public Enable<double> TimeInterval = new(false, 0.1);
+        public Enable<double> RealtimeInterval = new(false, 0.1);
 
         [field: Space]
         [field: SerializeField]
@@ -86,6 +86,6 @@ namespace Megumin.AI
         /// <summary>
         /// 开始执行树之前，延迟随机帧数
         /// </summary>
-        public Enableable<int> DelayRandomFrame = new(false, 30);
+        public Enable<int> DelayRandomFrame = new(false, 30);
     }
 }
