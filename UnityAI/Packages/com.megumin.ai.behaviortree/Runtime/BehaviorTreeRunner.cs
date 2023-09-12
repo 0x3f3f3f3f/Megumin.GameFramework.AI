@@ -141,6 +141,11 @@ namespace Megumin.AI.BehaviorTree
             BehaviourTree.ReStart();
         }
 
+        public void ReBindAgent()
+        {
+            BehaviourTree.BindAgent(gameObject);
+        }
+
         public void ReParseBinding()
         {
             OverrideVariables?.ParseBinding(gameObject, true);

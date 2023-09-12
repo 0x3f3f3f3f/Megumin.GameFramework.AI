@@ -47,6 +47,11 @@ namespace Megumin.AI.BehaviorTree.Editor
                 behaviorTreeRunner.ReStart();
             }
 
+            if (GUILayout.Button("ReBindAgent"))
+            {
+                behaviorTreeRunner.ReBindAgent();
+            }
+
             if (GUILayout.Button("ReParseBinding"))
             {
                 behaviorTreeRunner.ReParseBinding();
