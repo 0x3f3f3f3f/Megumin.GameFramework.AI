@@ -39,6 +39,7 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
+            SaveTo.Value = null;
             return false;
         }
     }
@@ -73,6 +74,7 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
+            SaveTo.Value = null;
             return false;
         }
     }
