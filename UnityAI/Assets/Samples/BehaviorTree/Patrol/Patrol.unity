@@ -602,14 +602,26 @@ MonoBehaviour:
       Value: 0.1
     <Log>k__BackingField: 0
     <Order>k__BackingField: 0
-    <OnSucceeded>k__BackingField: 0
-    <OnFailed>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 2
+    <OnFailed>k__BackingField: 2
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
   references:
     version: 2
     RefIds: []
+--- !u!114 &459844546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459844539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32533b72a40be8842a3edbff8b92ffe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +806,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ncp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821743273639040127, guid: 6cdad11602483db47986c9583031bd87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cdad11602483db47986c9583031bd87, type: 3}
@@ -1233,6 +1250,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Actor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821743273639040127, guid: 6cdad11602483db47986c9583031bd87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cdad11602483db47986c9583031bd87, type: 3}
