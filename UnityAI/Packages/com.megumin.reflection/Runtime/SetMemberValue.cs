@@ -287,7 +287,16 @@ namespace Megumin.Reflection
                 var members = p.ToList();
 
                 ///用于忽略默认值参数
-                var defualtValueInstance = Activator.CreateInstance(instanceType);
+                object defualtValueInstance = null;
+                try
+                {
+                    defualtValueInstance = Activator.CreateInstance(instanceType);
+                }
+                catch (Exception)
+                {
+                    Debug.LogError($"{instanceType} cannot Activator.CreateInstance!");
+                    throw;
+                }
 
                 foreach (var member in members)
                 {
