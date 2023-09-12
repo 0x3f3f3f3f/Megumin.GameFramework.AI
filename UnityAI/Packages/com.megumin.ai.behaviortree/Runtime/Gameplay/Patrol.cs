@@ -71,13 +71,15 @@ namespace Megumin.AI.BehaviorTree
 
         public bool IgnoreYAxis = false;
 
+        [Space]
+        public float RandomRange = 5f;
         Vector3 start;
+
         protected override void OnEnter(object options = null)
         {
             start = Transform.position;
             TryMoveNext();
         }
-
 
         Vector3 lastDes;
         protected override Status OnTick(BTNode from, object options = null)
@@ -100,15 +102,15 @@ namespace Megumin.AI.BehaviorTree
 
         public bool TryMoveNext()
         {
-            var random = Random.insideUnitSphere;
-            if (IgnoreYAxis)
-            {
-                random.y = 0;
-            }
+            var random = Random.insideUnitCircle * RandomRange;
+            var next = start + new Vector3(random.x, 0, random.y);
 
-            var next = start + random * 2;
-            MyAgent.MoveTo(next);
-            return true;
+            if (MyAgent.MoveTo(next))
+            {
+                lastDes = next;
+                return true;
+            }
+            return false;
         }
     }
 }
