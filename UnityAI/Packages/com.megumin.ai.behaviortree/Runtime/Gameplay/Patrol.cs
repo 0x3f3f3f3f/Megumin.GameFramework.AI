@@ -13,8 +13,16 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public float StopingDistance = 0.25f;
 
-        public bool IgnoreYAxis = false;
+        public bool IgnoreYAxis = true;
         public RefVar_Transform_List DestinationList;
+
+        /// <summary>
+        /// 每次获取新的目标点时，是否随机便宜一段距离
+        /// </summary>
+        [Space]
+        public bool UseRandom = false;
+        public float MaxOffset = 2;
+        public float MinOffset = 0.5f;
 
         Vector3 startPosition;
         protected override void OnEnter(object options = null)
@@ -69,6 +77,11 @@ namespace Megumin.AI.BehaviorTree
                     if (transform)
                     {
                         next = transform.position;
+                        if (UseRandom)
+                        {
+                            var offset = Random.insideUnitCircle * Random.Range(MinOffset, MaxOffset);
+                            next += new Vector3(offset.x, 0, offset.y);
+                        }
                         return true;
                     }
                 }
@@ -83,7 +96,7 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public float StopingDistance = 0.25f;
 
-        public bool IgnoreYAxis = false;
+        public bool IgnoreYAxis = true;
 
         [Space]
         public float MaxRange = 10f;

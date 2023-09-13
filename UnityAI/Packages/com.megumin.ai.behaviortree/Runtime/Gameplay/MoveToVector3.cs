@@ -28,7 +28,7 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public float StopingDistance = 0.25f;
 
-        public bool IgnoreYAxis = false;
+        public bool IgnoreYAxis = true;
 
 
         /// <summary>
