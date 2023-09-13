@@ -20,8 +20,8 @@ namespace Megumin.AI.BehaviorTree
         public float waitTime = 0.15f;
         public RefVar_String Text = new() { value = "Hello world!" };
 
-        float entertime;
-        int count = 0;
+        protected float entertime;
+        protected int count = 0;
 
         protected override void OnEnter(object options = null)
         {
@@ -33,23 +33,67 @@ namespace Megumin.AI.BehaviorTree
         {
             if (Time.time - entertime >= waitTime)
             {
-                if (LogCount)
-                {
-                    Debug.Log($"{(string)Text} ---- {count}");
-                }
-                else
-                {
-                    Debug.Log((string)Text);
-                }
-
+                LogString();
                 return Status.Succeeded;
             }
             return Status.Running;
         }
 
-        public string GetDetail()
+        StringBuilder StringBuilder = new StringBuilder();
+        public virtual void LogString()
+        {
+            StringBuilder.Clear();
+            StringBuilder.Append(Text);
+
+            if (LogCount)
+            {
+                StringBuilder.Append("----");
+                StringBuilder.Append(count.ToString());
+            }
+
+            Debug.Log(StringBuilder.ToString());
+        }
+
+        public virtual string GetDetail()
         {
             return Text;
         }
+    }
+
+
+    [Category("Action")]
+    [Icon("console.infoicon@2x")]
+    [HelpURL(URL.WikiTask + "Log")]
+    public class Log2 : Log
+    {
+        public RefVar_Transform Ref_Transform;
+        public RefVar_GameObject Ref_GameObject;
+
+        StringBuilder StringBuilder = new StringBuilder();
+        public override void LogString()
+        {
+            StringBuilder.Clear();
+            StringBuilder.Append(Text);
+            if (Ref_Transform?.Value)
+            {
+                StringBuilder.Append("----");
+                StringBuilder.Append(Ref_Transform.Value.name);
+            }
+
+            if (Ref_GameObject?.Value)
+            {
+                StringBuilder.Append("----");
+                StringBuilder.Append(Ref_GameObject.Value.name);
+            }
+
+            if (LogCount)
+            {
+                StringBuilder.Append("----");
+                StringBuilder.Append(count.ToString());
+            }
+
+            Debug.Log(StringBuilder.ToString());
+        }
+
     }
 }
