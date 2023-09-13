@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Binding;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
