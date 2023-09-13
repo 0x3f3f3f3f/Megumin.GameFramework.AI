@@ -35,7 +35,7 @@ namespace Megumin.AI.BehaviorTree
         internal protected bool abortSelf = false;
 
         /// <summary>
-        /// 
+        /// 轮询
         /// </summary>
         /// <param name="from">当前调用的父节点</param>
         /// <param name="options">预留设计，用于传递可能的Context上下文等参数</param>
@@ -108,6 +108,11 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         public bool IsCompleted => State == Status.Succeeded || State == Status.Failed;
 
+        /// <summary>
+        /// 执行
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
         protected virtual void Execute(BTNode from, object options = null)
         {
             //前置阶段
@@ -130,6 +135,11 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
+        /// <summary>
+        /// 允许
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Running(BTNode from, object options = null)
         {
@@ -165,6 +175,10 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
+        /// <summary>
+        /// 第一次运行节点时，进入
+        /// </summary>
+        /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Enter(object options = null)
         {
@@ -172,6 +186,10 @@ namespace Megumin.AI.BehaviorTree
             OnEnter(options);
         }
 
+        /// <summary>
+        /// 节点完成，退出
+        /// </summary>
+        /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Exit(object options = null)
         {

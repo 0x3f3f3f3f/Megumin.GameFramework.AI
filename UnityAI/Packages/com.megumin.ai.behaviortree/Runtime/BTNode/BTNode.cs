@@ -144,6 +144,12 @@ namespace Megumin.AI.BehaviorTree
 
         protected virtual void OnAbort(object options = null) { }
 
+        /// <summary>
+        /// 轮询子类
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         protected virtual Status OnTick(BTNode from, object options = null)
         {
             return Status.Succeeded;
