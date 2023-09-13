@@ -10,6 +10,7 @@ namespace Megumin.AI.BehaviorTree
 {
     [Icon("d_NavMeshAgent Icon")]
     [DisplayName("MoveTo")]
+    [Description("NavMeshAgent SetDestination MoveTo Vector3")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("MoveTo(SetDestination)")]
     public class MoveTo_SetDestination : MoveToBase<NavMeshAgent>

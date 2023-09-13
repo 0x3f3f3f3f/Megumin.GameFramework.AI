@@ -69,9 +69,9 @@ namespace Megumin.AI.BehaviorTree
 
     [Icon("d_navmeshdata icon")]
     [DisplayName("MoveTo")]
-    [Description("IMoveToVector3able")]
+    [Description("IMoveToable<Vector3>")]
     [Category("Gameplay")]
-    [AddComponentMenu("MoveTo(IMoveToVector3able)")]
+    [AddComponentMenu("MoveTo(IMoveToable<Vector3>)")]
     [HelpURL(URL.WikiTask + "MoveToVector3")]
     public sealed class MoveToVector3 : MoveToBase<IMoveToable<Vector3>>
     {

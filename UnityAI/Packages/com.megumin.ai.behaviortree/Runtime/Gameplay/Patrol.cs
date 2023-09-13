@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Megumin.Binding;
 using UnityEngine;
 
@@ -8,6 +9,12 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 巡逻节点
     /// </summary>
+    [Icon("d_navmeshdata icon")]
+    [DisplayName("Patrol")]
+    [Description("Transform_List IMoveToable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Patrol Transform_List(IMoveToable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Patrol")]
     public class Patrol_1 : BTActionNode<IMoveToable<Vector3>>
     {
         [Space]
@@ -91,6 +98,12 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+    [Icon("d_navmeshdata icon")]
+    [DisplayName("Patrol")]
+    [Description("Random InsideCircle IMoveToable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Patrol Random InsideCircle(IMoveToable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Patrol")]
     public class Patrol_2 : BTActionNode<IMoveToable<Vector3>>
     {
         [Space]
