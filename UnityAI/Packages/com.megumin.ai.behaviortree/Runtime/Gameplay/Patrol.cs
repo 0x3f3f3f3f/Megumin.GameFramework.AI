@@ -16,17 +16,17 @@ namespace Megumin.AI.BehaviorTree
         public bool IgnoreYAxis = false;
         public RefVar_Transform_List DestinationList;
 
+        Vector3 startPosition;
+        protected override void OnEnter(object options = null)
+        {
+            startPosition = Transform.position;
+            TryMoveNext();
+        }
 
-        Transform lastDes;
-        int lastDesIndex = 0;
+        Vector3 lastDestination;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (lastDes == null && TryMoveNext() == false)
-            {
-                return Status.Failed;
-            }
-
-            if (Transform.IsArrive(lastDes.position, StopingDistance, IgnoreYAxis))
+            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
             {
                 if (TryMoveNext())
                 {
@@ -43,24 +43,38 @@ namespace Megumin.AI.BehaviorTree
 
         public bool TryMoveNext()
         {
-            if (!lastDes)
+            if (TryGetNext(out var next))
             {
-
-                var list = DestinationList?.Value;
-                if (list != null && list.Count != 0)
+                if (MyAgent.MoveTo(next))
                 {
-                    lastDes = list[lastDesIndex % list.Count].transform;
-                    lastDesIndex++;
-                    return MyAgent.MoveTo(lastDes.position);
+                    lastDestination = next;
+                    return true;
                 }
             }
 
-            if (!lastDes)
-            {
-                return false;
-            }
+            return false;
+        }
 
-            return true;
+        int lastDesIndex = 0;
+        public bool TryGetNext(out Vector3 next)
+        {
+            var list = DestinationList?.Value;
+            if (list != null && list.Count != 0)
+            {
+                int startIndex = lastDesIndex % list.Count;
+                for (int i = startIndex; i < list.Count; i++)
+                {
+                    lastDesIndex++;
+                    Transform transform = list[i].transform;
+                    if (transform)
+                    {
+                        next = transform.position;
+                        return true;
+                    }
+                }
+            }
+            next = default;
+            return false;
         }
     }
 
@@ -78,18 +92,18 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public float MinDistance2Current = 4f;
 
-        Vector3 start;
+        Vector3 startPosition;
 
         protected override void OnEnter(object options = null)
         {
-            start = Transform.position;
+            startPosition = Transform.position;
             TryMoveNext();
         }
 
-        Vector3 lastDes;
+        Vector3 lastDestination;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (Transform.IsArrive(lastDes, StopingDistance, IgnoreYAxis))
+            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
             {
                 //IDEL
                 if (TryMoveNext())
@@ -107,28 +121,30 @@ namespace Megumin.AI.BehaviorTree
 
         public bool TryMoveNext()
         {
-            Vector3 next = RandomNext(start);
-
-            if (MyAgent.MoveTo(next))
+            if (TryGetNext(out var next))
             {
-                lastDes = next;
-                return true;
+                if (MyAgent.MoveTo(next))
+                {
+                    lastDestination = next;
+                    return true;
+                }
             }
+
             return false;
         }
 
-        public Vector3 RandomNext(Vector3 orignal)
+        public bool TryGetNext(out Vector3 next)
         {
             int count = 0;
             while (true)
             {
                 var random = Random.insideUnitCircle * Random.Range(MinRange, MaxRange);
-                var next = orignal + new Vector3(random.x, 0, random.y);
+                next = startPosition + new Vector3(random.x, 0, random.y);
                 count++;
                 if ((Transform.position - next).magnitude > MinDistance2Current || count > 20)
                 {
                     //随机的下一个点 必须与当前位置 距离足够远
-                    return next;
+                    return true;
                 }
             }
         }
