@@ -130,6 +130,9 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: c88d864d-7234-4b54-ab4f-14beb935043b
+    - Name: Enabled
+      Type: System.Boolean
+      Value: False
   - Name: c8c77da5-d148-4257-8fec-3105abecea27
     Type: Megumin.AI.BehaviorTree.Running
     Member:
