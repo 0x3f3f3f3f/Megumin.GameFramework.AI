@@ -10,8 +10,6 @@ namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeNodeView
     {
-        bool isRunning = false;
-        Status lastTickState = Status.Init;
         internal void OnPostTick()
         {
             if (Node == null)
@@ -19,7 +17,38 @@ namespace Megumin.AI.BehaviorTree.Editor
                 return;
             }
 
+            UpdateRunningState();
+
+            //foreach (var item in AllDecoratorView)
+            //{
+            //    item.OnPostTick();
+            //}
+
+            //检测Bind状态
+            if (TreeView.EditorWindow.IsDebugMode)
+            {
+                if (Node is IHasMyAgent hasMyAgent)
+                {
+                    this.SetToClassList(UssClassConst.noAgent, hasMyAgent.HasMyAgent() == false);
+                }
+                else if (Node is IAgentable agentable)
+                {
+                    this.SetToClassList(UssClassConst.noAgent, agentable.Agent == null);
+                }
+            }
+        }
+
+        bool isRunning = false;
+        Status lastTickState = Status.Init;
+        public void UpdateRunningState()
+        {
             //this.LogMethodName();
+
+            if (Node.Enabled == false)
+            {
+                return;
+            }
+
             isRunning = Node.State == Status.Running;
             if (isRunning)
             {
@@ -42,24 +71,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
 
             lastTickState = Node.State;
-
-            //foreach (var item in AllDecoratorView)
-            //{
-            //    item.OnPostTick();
-            //}
-
-            //检测Bind状态
-            if (TreeView.EditorWindow.IsDebugMode)
-            {
-                if (Node is IHasMyAgent hasMyAgent)
-                {
-                    this.SetToClassList(UssClassConst.noAgent, hasMyAgent.HasMyAgent() == false);
-                }
-                else if (Node is IAgentable agentable)
-                {
-                    this.SetToClassList(UssClassConst.noAgent, agentable.Agent == null);
-                }
-            }
         }
 
         private void OnStateChange()
