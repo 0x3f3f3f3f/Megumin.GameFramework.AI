@@ -241,7 +241,14 @@ namespace Megumin.AI.BehaviorTree.Editor
             var type = node?.GetType();
             var typeName = type?.Name ?? "NullNode";
             name = typeName;
-            title = node.GetTitle();
+
+            var titleString = node.GetTitleFromITitleableAndDisplayNameAttribute();
+            if (node.Meta != null && node.Meta.TryGetName(out var metaName))
+            {
+                titleString += $"\n{metaName}";
+            }
+
+            title = titleString;
 
             RefreshDetail();
             RefreshNodeIndex();

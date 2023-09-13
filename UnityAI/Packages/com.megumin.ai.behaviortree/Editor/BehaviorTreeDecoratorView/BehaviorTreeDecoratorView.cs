@@ -142,7 +142,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             //SetNodeScript();
 
             var type = Decorator?.GetType();
-            Title.text = Decorator.GetTitle();
+            Title.text = Decorator.GetTitleFromITitleableAndDisplayNameAttribute();
 
             //使用自定义图标
             Icon.TrySetIconFromAttribute(type);

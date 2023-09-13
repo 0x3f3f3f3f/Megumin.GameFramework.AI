@@ -139,7 +139,7 @@ namespace Megumin.AI
             return taskCompletionSource.Task;
         }
 
-        public static string GetTitle<T>(this T obj)
+        public static string GetTitleFromITitleableAndDisplayNameAttribute<T>(this T obj)
         {
             var title = "Unknown";
 

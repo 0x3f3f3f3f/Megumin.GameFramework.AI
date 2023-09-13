@@ -27,5 +27,23 @@ namespace Megumin.AI.BehaviorTree
         {
             return this.MemberwiseClone() as NodeMeta;
         }
+
+        public bool TryGetName(out string name)
+        {
+            if (!string.IsNullOrEmpty(FriendlyName)) 
+            {
+                name = FriendlyName;
+                return true;
+            }
+
+            if (!string.IsNullOrEmpty(Name))
+            {
+                name = Name;
+                return true;
+            }
+
+            name = null;
+            return false;
+        }
     }
 }

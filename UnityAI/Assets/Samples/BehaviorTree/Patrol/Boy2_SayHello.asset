@@ -130,9 +130,6 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: c88d864d-7234-4b54-ab4f-14beb935043b
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
   - Name: c8c77da5-d148-4257-8fec-3105abecea27
     Type: Megumin.AI.BehaviorTree.Running
     Member:
@@ -457,7 +454,7 @@ MonoBehaviour:
       Value: 419
     - Name: Name
       Type: System.String
-      Value: 
+      Value: ChangeColorMoment
     - Name: FriendlyName
       Type: System.String
       Value: 
@@ -469,7 +466,7 @@ MonoBehaviour:
       Value: 
     - Name: Comment
       Type: System.String
-      Value: ChangeColor moment
+      Value: 
   - Name: c8c77da5-d148-4257-8fec-3105abecea27.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
       Megumin.AI.BehaviorTree]]
