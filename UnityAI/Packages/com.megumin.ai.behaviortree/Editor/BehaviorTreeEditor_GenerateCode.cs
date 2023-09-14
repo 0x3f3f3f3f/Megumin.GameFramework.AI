@@ -45,13 +45,18 @@ namespace Megumin.AI.BehaviorTree.Editor
             generator.Macro["$(ClassName)"] = className;
             generator.Macro["$(TreeName)"] = tree.Asset.name;
 
+            GenerateCode(generator, className);
+        }
+
+        private async void GenerateCode(CSCodeGenerator generator, string className)
+        {
             string filePath = $"Assets/{className}.cs";
 
             if (Megumin.Reflection.TypeCache.TryGetType(
                     $"{OutputNamespace}.{className}",
                     out var oldType))
             {
-                var scriptObj = oldType.GetMonoScript().Result;
+                var scriptObj = await oldType.GetMonoScript();
                 if (scriptObj != null)
                 {
                     var oldPath = AssetDatabase.GetAssetPath(scriptObj);
