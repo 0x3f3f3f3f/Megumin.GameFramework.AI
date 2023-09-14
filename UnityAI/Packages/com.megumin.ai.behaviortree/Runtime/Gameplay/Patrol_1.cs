@@ -15,7 +15,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Transform_List(IMoveToable<Vector3>)")]
     [HelpURL(URL.WikiTask + "Patrol")]
-    public class Patrol_1 : BTActionNode<IMoveToable<Vector3>>
+    public class Patrol_1 : StateChild0<IMoveToable<Vector3>>
     {
         [Space]
         public float StopingDistance = 0.25f;
@@ -34,27 +34,12 @@ namespace Megumin.AI.BehaviorTree
         Vector3 startPosition;
         protected override void OnEnter(object options = null)
         {
+            base.OnEnter(options);
             startPosition = Transform.position;
             TryMoveNext();
         }
 
         Vector3 lastDestination;
-        protected override Status OnTick(BTNode from, object options = null)
-        {
-            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
-            {
-                if (TryMoveNext())
-                {
-                    return Status.Running;
-                }
-                else
-                {
-                    return Status.Succeeded;
-                }
-            }
-
-            return Status.Running;
-        }
 
         public bool TryMoveNext()
         {
@@ -96,8 +81,30 @@ namespace Megumin.AI.BehaviorTree
             next = default;
             return false;
         }
+
+        public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
+        {
+            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
+            {
+                return (true, Status.Running);
+            }
+
+            return (false, Status.Running);
+        }
+
+        public override Status OnChildComplete(Status? childResult)
+        {
+            if (TryMoveNext())
+            {
+                return Status.Running;
+            }
+            else
+            {
+                return Status.Succeeded;
+            }
+        }
     }
 
-    
+
 }
 

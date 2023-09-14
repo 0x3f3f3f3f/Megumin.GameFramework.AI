@@ -19,6 +19,21 @@ MonoBehaviour:
   UnityObjectRef: []
   variables: []
   nodes:
+  - Name: c8c45f13-d351-4d07-b792-ab082d70cebf
+    Type: Megumin.AI.BehaviorTree.Wait
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: c8c45f13-d351-4d07-b792-ab082d70cebf.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: c8c45f13-d351-4d07-b792-ab082d70cebf.Decorators
+    - Name: WaitTime
+      Type: $ref
+      Value: c8c45f13-d351-4d07-b792-ab082d70cebf.WaitTime
+    - Name: GUID
+      Type: System.String
+      Value: c8c45f13-d351-4d07-b792-ab082d70cebf
   - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4
     Type: Megumin.AI.BehaviorTree.Patrol_2
     Member:
@@ -28,14 +43,39 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
-    - Name: IgnoreYAxis
-      Type: System.Boolean
-      Value: True
+    - Name: Children
+      Type: $ref
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Children
     - Name: GUID
       Type: System.String
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4
   decorators: []
   refObjs:
+  - Name: c8c45f13-d351-4d07-b792-ab082d70cebf.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
+      Megumin.AI.BehaviorTree]]
+    Member: []
+  - Name: c8c45f13-d351-4d07-b792-ab082d70cebf.Meta
+    Type: Megumin.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: 396
+    - Name: y
+      Type: System.Single
+      Value: 249
+  - Name: c8c45f13-d351-4d07-b792-ab082d70cebf.WaitTime
+    Type: Megumin.Binding.RefVar_Float
+    Member:
+    - Name: value
+      Type: System.Single
+      Value: 5
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Children
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: c8c45f13-d351-4d07-b792-ab082d70cebf
   - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
       Megumin.AI.BehaviorTree]]

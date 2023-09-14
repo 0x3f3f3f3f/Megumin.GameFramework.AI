@@ -11,7 +11,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Random InsideCircle(IMoveToable<Vector3>)")]
     [HelpURL(URL.WikiTask + "Patrol")]
-    public class Patrol_2 : BTActionNode<IMoveToable<Vector3>>
+    public class Patrol_2 : StateChild0<IMoveToable<Vector3>>
     {
         [Space]
         public float StopingDistance = 0.25f;
@@ -29,29 +29,12 @@ namespace Megumin.AI.BehaviorTree
 
         protected override void OnEnter(object options = null)
         {
+            base.OnEnter(options);
             startPosition = Transform.position;
             TryMoveNext();
         }
 
         Vector3 lastDestination;
-        protected override Status OnTick(BTNode from, object options = null)
-        {
-            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
-            {
-                //IDEL
-                if (TryMoveNext())
-                {
-                    return Status.Running;
-                }
-                else
-                {
-                    return Status.Succeeded;
-                }
-            }
-
-            return Status.Running;
-        }
-
         public bool TryMoveNext()
         {
             if (TryGetNext(out var next))
@@ -79,6 +62,28 @@ namespace Megumin.AI.BehaviorTree
                     //随机的下一个点 必须与当前位置 距离足够远
                     return true;
                 }
+            }
+        }
+
+        public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
+        {
+            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
+            {
+                return (true, Status.Running);
+            }
+
+            return (false, Status.Running);
+        }
+
+        public override Status OnChildComplete(Status? childResult)
+        {
+            if (TryMoveNext())
+            {
+                return Status.Running;
+            }
+            else
+            {
+                return Status.Succeeded;
             }
         }
     }
