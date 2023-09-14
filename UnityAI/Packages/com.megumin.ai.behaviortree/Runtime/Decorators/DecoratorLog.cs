@@ -9,19 +9,21 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 日志节点，不使用GetLogger机制
+    /// </summary>
     [Icon("console.infoicon@2x")]
     [Category("Debug")]
     public class DecoratorLog : BTDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
-        public bool PreLog = false;
-        public bool PostLog = false;
-        public bool AbortLog = false;
+        [Space]
+        public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
         public RefVar_String LogStr = new() { value = "Hello world!" };
 
         public void BeforeNodeEnter(object options = null)
         {
-            if (PreLog)
+            if ((DecoratorPosition & DecoratorPosition.PreEnter) != 0)
             {
                 Debug.Log($"PreDeco: {Owner}  {(string)LogStr}");
             }
@@ -29,7 +31,7 @@ namespace Megumin.AI.BehaviorTree
 
         public Status AfterNodeExit(Status result, object options = null)
         {
-            if (PostLog)
+            if ((DecoratorPosition & DecoratorPosition.PostExit) != 0)
             {
                 Debug.Log($"PostDeco: {Owner}  {result}  {(string)LogStr}");
             }
@@ -38,7 +40,7 @@ namespace Megumin.AI.BehaviorTree
 
         public void OnNodeAbort(object options = null)
         {
-            if (AbortLog)
+            if ((DecoratorPosition & DecoratorPosition.Abort) != 0)
             {
                 Debug.Log($"AbortDeco: {Owner}  {(string)LogStr}");
             }

@@ -19,6 +19,28 @@ namespace Megumin.AI.BehaviorTree
     }
 
     /// <summary>
+    /// 装饰器调用位置
+    /// </summary>
+    [Flags]
+    public enum DecoratorPosition
+    {
+        None = 0,
+        Condition = 1 << 0,
+
+        PreEnter = 1 << 10,
+
+        PreTick = 1 << 13,
+        PostTick = 1 << 17,
+
+        PostExit = 1 << 20,
+
+        Abort = 1 << 30,
+
+        //Wrap = PreEnter | PostExit,
+        //SafeWrap = Wrap | Abort,
+    }
+
+    /// <summary>
     /// 可终止的
     /// </summary>
     public interface IAbortable
@@ -64,6 +86,10 @@ namespace Megumin.AI.BehaviorTree
 
     internal interface IAbortDecorator : IDecorator
     {
+        /// <summary>
+        /// 在Abort函数中，OnAbort函数之后被调用
+        /// </summary>
+        /// <param name="options"></param>
         void OnNodeAbort(object options = null);
     }
 
