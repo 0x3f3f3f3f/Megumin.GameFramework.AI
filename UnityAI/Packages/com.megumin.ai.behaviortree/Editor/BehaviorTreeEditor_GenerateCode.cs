@@ -266,6 +266,14 @@ namespace Megumin.AI.BehaviorTree.Editor
 
                     generator.Push($"//{memberRefName}");
 
+                    if (info.ObsoleteAttribute != null && info.ObsoleteAttribute.IsError)
+                    {
+                        //生成代码时忽略过时成员
+                        generator.Push($"//Member is Obsolete. {info.ObsoleteAttribute.Message}");
+                        generator.PushBlankLines();
+                        return;
+                    }
+
                     if (memberType.IsPrimitive || memberValue is string || memberValue == null
                         || memberType.IsEnum
                         || (memberType.IsValueType && declaredObjs2.ContainsKey(memberRefName)))

@@ -49,6 +49,7 @@ namespace Megumin.Reflection
         /// 是不是声明时的默认值
         /// </summary>
         public bool IsDefault { get; internal set; }
+        public ObsoleteAttribute ObsoleteAttribute { get; internal set; }
 
         public void Deconstruct(out string memberName, out object memberValue, out Type memberType)
         {
@@ -378,6 +379,8 @@ namespace Megumin.Reflection
                     info.IsStatic = member.IsStaticMember();
                     info.IsGetPublic = isGetPublic;
                     info.IsSetPublic = isSetPublic;
+
+                    info.ObsoleteAttribute = member.GetCustomAttribute<ObsoleteAttribute>();
 
                     if (fullInfo == false && instanceType.IsValueType)
                     {
