@@ -18,7 +18,10 @@ namespace Megumin.AI.BehaviorTree
 
         public bool LogCount = false;
         public float waitTime = 0.15f;
+
+        [Obsolete("Use Info.Text instead.")]
         public RefVar_String Text = new() { value = "Hello world!" };
+        public LogInfo Info = new LogInfo();
 
         protected float entertime;
         protected int count = 0;
@@ -39,61 +42,23 @@ namespace Megumin.AI.BehaviorTree
             return Status.Running;
         }
 
-        StringBuilder StringBuilder = new StringBuilder();
+
         public virtual void LogString()
         {
-            StringBuilder.Clear();
-            StringBuilder.Append(Text);
+            var sb = Info.Rebuid();
 
             if (LogCount)
             {
-                StringBuilder.Append("----");
-                StringBuilder.Append(count.ToString());
+                sb.Append("----");
+                sb.Append(count.ToString());
             }
 
-            Debug.Log(StringBuilder.ToString());
+            Debug.Log(sb.ToString());
         }
 
         public virtual string GetDetail()
         {
-            return Text;
+            return Info.Text;
         }
-    }
-
-
-    [Category("Action")]
-    [Icon("console.infoicon@2x")]
-    [HelpURL(URL.WikiTask + "Log")]
-    public class Log2 : Log
-    {
-        public RefVar_Transform Ref_Transform;
-        public RefVar_GameObject Ref_GameObject;
-
-        StringBuilder StringBuilder = new StringBuilder();
-        public override void LogString()
-        {
-            StringBuilder.Clear();
-            StringBuilder.Append(Text);
-            if (Ref_Transform?.Value)
-            {
-                StringBuilder.Append("----");
-                StringBuilder.Append(Ref_Transform.Value.name);
-            }
-
-            if (Ref_GameObject?.Value)
-            {
-                StringBuilder.Append("----");
-                StringBuilder.Append(Ref_GameObject.Value.name);
-            }
-
-            if (LogCount)
-            {
-                StringBuilder.Append("----");
-                StringBuilder.Append(count.ToString());
-            }
-
-            Debug.Log(StringBuilder.ToString());
-        }
-
     }
 }

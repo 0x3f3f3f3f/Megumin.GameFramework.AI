@@ -59,7 +59,7 @@ MonoBehaviour:
       Type: System.String
       Value: 068fda34-c636-4ad3-8d55-4dcd5d2fc736
   - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5
-    Type: Megumin.AI.BehaviorTree.Log2
+    Type: Megumin.AI.BehaviorTree.Log
     Member:
     - Name: Meta
       Type: $ref
@@ -70,12 +70,9 @@ MonoBehaviour:
     - Name: Text
       Type: $ref
       Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Text
-    - Name: Ref_Transform
+    - Name: Info
       Type: $ref
-      Value: SeeTarget
-    - Name: Ref_GameObject
-      Type: $ref
-      Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Ref_GameObject
+      Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info
     - Name: GUID
       Type: System.String
       Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5
@@ -281,6 +278,39 @@ MonoBehaviour:
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
       Megumin.AI.BehaviorTree]]
     Member: []
+  - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info
+    Type: Megumin.AI.LogInfo
+    Member:
+    - Name: Text
+      Type: $ref
+      Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info.Text
+    - Name: Ref_Transform
+      Type: $ref
+      Value: SeeTarget
+    - Name: Ref_GameObject
+      Type: $ref
+      Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info.Ref_GameObject
+  - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info.Ref_GameObject
+    Type: Megumin.Binding.RefVar_GameObject
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: bindingPath
+      Type: System.String
+      Value: 
+  - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: refName
+      Type: System.String
+      Value: 
+    - Name: value
+      Type: System.String
+      Value: 'I  see :'
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:
@@ -303,15 +333,6 @@ MonoBehaviour:
       Type: System.String
       Value: 
     - Name: Comment
-      Type: System.String
-      Value: 
-  - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Ref_GameObject
-    Type: Megumin.Binding.RefVar_GameObject
-    Member:
-    - Name: refName
-      Type: System.String
-      Value: 
-    - Name: bindingPath
       Type: System.String
       Value: 
   - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Text
