@@ -14,12 +14,22 @@ namespace Megumin.AI.BehaviorTree
     /// </summary>
     [Icon("console.infoicon@2x")]
     [Category("Debug")]
-    public class DecoratorLog : BTDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
+    public class DecoratorLog : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         [Space]
         public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
         public RefVar_String LogStr = new() { value = "Hello world!" };
+
+        public bool LastCheckResult => true;
+        public bool CheckCondition(object options = null)
+        {
+            if ((DecoratorPosition & DecoratorPosition.Condition) != 0)
+            {
+                Debug.Log($"Condition: {Owner}  {(string)LogStr}");
+            }
+            return true;
+        }
 
         public void BeforeNodeEnter(object options = null)
         {
