@@ -48,10 +48,16 @@ namespace Megumin.AI.BehaviorTree
         AbortType AbortType { get; }
     }
 
-    public interface IConditionDecorator : IDecorator, IAbortable
+    /// <summary>
+    /// 条件装饰器
+    /// </summary>
+    /// <remarks>
+    /// 条件装饰器接口不要继承IAbortable接口，不是所有的条件装饰都支持abort，例如随机条件装饰器。
+    /// </remarks>
+    public interface IConditionDecorator : IDecorator
     {
-        bool CheckCondition(object options = null);
         bool LastCheckResult { get; }
+        bool CheckCondition(object options = null);
     }
 
     internal interface IPreDecorator : IDecorator

@@ -41,14 +41,11 @@ namespace Megumin.AI.BehaviorTree
         {
             foreach (var pre in Decorators)
             {
-                if (pre is IConditionDecorator conditionable)
+                if (pre is IAbortable abortable && (abortable.AbortType & AbortType.Self) != 0)
                 {
-                    if ((conditionable.AbortType & AbortType.Self) != 0)
+                    if (pre is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
                     {
-                        if (conditionable.CheckCondition(options) == false)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
@@ -64,14 +61,11 @@ namespace Megumin.AI.BehaviorTree
         {
             foreach (var pre in Decorators)
             {
-                if (pre is IConditionDecorator conditionable)
+                if (pre is IAbortable abortable && (abortable.AbortType & AbortType.LowerPriority) != 0)
                 {
-                    if ((conditionable.AbortType & AbortType.LowerPriority) != 0)
+                    if (pre is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
                     {
-                        if (conditionable.CheckCondition(options) == false)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
