@@ -64,12 +64,33 @@ MonoBehaviour:
     - Name: y
       Type: System.Single
       Value: 249
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
   - Name: c8c45f13-d351-4d07-b792-ab082d70cebf.WaitTime
     Type: Megumin.Binding.RefVar_Float
     Member:
+    - Name: refName
+      Type: System.String
+      Value: 
     - Name: value
       Type: System.Single
-      Value: 5
+      Value: 2.5
+    - Name: bindingPath
+      Type: System.String
+      Value: 
   - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Children
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
     Member:
