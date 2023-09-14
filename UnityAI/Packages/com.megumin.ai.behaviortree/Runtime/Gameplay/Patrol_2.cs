@@ -11,43 +11,14 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Random InsideCircle(IMoveToable<Vector3>)")]
     [HelpURL(URL.WikiTask + "Patrol")]
-    public class Patrol_2 : StateChild0<IMoveToable<Vector3>>
+    public class Patrol_2 : PatrolBase<IMoveToable<Vector3>>
     {
         [Space]
-        public float StopingDistance = 0.25f;
-
-        public bool IgnoreYAxis = true;
-
-        [Space]
-        public float MaxRange = 10f;
-        public float MinRange = 2f;
+        public float MaxRange = 12f;
+        public float MinRange = 4f;
 
         [Space]
-        public float MinDistance2Current = 4f;
-
-        Vector3 startPosition;
-
-        protected override void OnEnter(object options = null)
-        {
-            base.OnEnter(options);
-            startPosition = Transform.position;
-            TryMoveNext();
-        }
-
-        Vector3 lastDestination;
-        public bool TryMoveNext()
-        {
-            if (TryGetNext(out var next))
-            {
-                if (MyAgent.MoveTo(next))
-                {
-                    lastDestination = next;
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        public float MinDistance2Current = 6f;
 
         public bool TryGetNext(out Vector3 next)
         {
@@ -65,26 +36,18 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-        public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
+        public override bool TryMoveNext(ref Vector3 destination)
         {
-            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
+            if (TryGetNext(out var next))
             {
-                return (true, Status.Running);
+                if (MyAgent.MoveTo(next))
+                {
+                    destination = next;
+                    return true;
+                }
             }
 
-            return (false, Status.Running);
-        }
-
-        public override Status OnChildComplete(Status? childResult)
-        {
-            if (TryMoveNext())
-            {
-                return Status.Running;
-            }
-            else
-            {
-                return Status.Succeeded;
-            }
+            return false;
         }
     }
 }

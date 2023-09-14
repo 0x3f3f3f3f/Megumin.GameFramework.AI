@@ -7,21 +7,15 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 巡逻节点
+    /// 巡逻基类
     /// </summary>
-    [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol")]
-    [Description("Transform_List IMoveToable<Vector3>")]
-    [Category("Gameplay")]
-    [AddComponentMenu("Patrol Transform_List(IMoveToable<Vector3>)")]
-    [HelpURL(URL.WikiTask + "Patrol")]
-    public class Patrol_1 : StateChild0<IMoveToable<Vector3>>
+    /// <typeparam name="T"></typeparam>
+    public abstract class PatrolBase<T> : StateChild0<T>
     {
         [Space]
         public float StopingDistance = 0.25f;
 
         public bool IgnoreYAxis = true;
-        public RefVar_Transform_List DestinationList;
 
         /// <summary>
         /// 每次获取新的目标点时，是否随机便宜一段距离
@@ -31,30 +25,53 @@ namespace Megumin.AI.BehaviorTree
         public float MaxOffset = 2;
         public float MinOffset = 0.5f;
 
-        Vector3 startPosition;
+        protected Vector3 startPosition;
         protected override void OnEnter(object options = null)
         {
             base.OnEnter(options);
             startPosition = Transform.position;
-            TryMoveNext();
+            TryMoveNext(ref destination);
         }
 
-        Vector3 lastDestination;
-
-        public bool TryMoveNext()
+        protected Vector3 destination;
+        public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
         {
-            if (TryGetNext(out var next))
+            if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
             {
-                if (MyAgent.MoveTo(next))
-                {
-                    lastDestination = next;
-                    return true;
-                }
+                return (true, Status.Running);
             }
 
-            return false;
+            return (false, Status.Running);
         }
 
+        public override Status OnChildComplete(Status? childResult)
+        {
+            if (TryMoveNext(ref destination))
+            {
+                return Status.Running;
+            }
+            else
+            {
+                return Status.Succeeded;
+            }
+        }
+
+        public abstract bool TryMoveNext(ref Vector3 destination);
+    }
+
+    /// <summary>
+    /// 巡逻节点
+    /// </summary>
+    [Icon("d_navmeshdata icon")]
+    [DisplayName("Patrol")]
+    [Description("Transform_List IMoveToable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Patrol Transform_List(IMoveToable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Patrol")]
+    public class Patrol_1 : PatrolBase<IMoveToable<Vector3>>
+    {
+        [Space]
+        public RefVar_Transform_List DestinationList;
         int lastDesIndex = 0;
         public bool TryGetNext(out Vector3 next)
         {
@@ -82,26 +99,17 @@ namespace Megumin.AI.BehaviorTree
             return false;
         }
 
-        public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
+        public override bool TryMoveNext(ref Vector3 destination)
         {
-            if (Transform.IsArrive(lastDestination, StopingDistance, IgnoreYAxis))
+            if (TryGetNext(out var next))
             {
-                return (true, Status.Running);
+                if (MyAgent.MoveTo(next))
+                {
+                    destination = next;
+                    return true;
+                }
             }
-
-            return (false, Status.Running);
-        }
-
-        public override Status OnChildComplete(Status? childResult)
-        {
-            if (TryMoveNext())
-            {
-                return Status.Running;
-            }
-            else
-            {
-                return Status.Succeeded;
-            }
+            return false;
         }
     }
 
