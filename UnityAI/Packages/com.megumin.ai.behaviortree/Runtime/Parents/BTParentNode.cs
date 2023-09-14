@@ -322,6 +322,81 @@ namespace Megumin.AI.BehaviorTree
             Child0.Abort(this, options);
         }
     }
+
+    /// <summary>
+    /// 交替执行自身和子节点
+    /// </summary>
+    [Obsolete("还没设计好",true)]
+    public abstract class Iterator : OneChildNode
+    { 
+        protected bool RunChild(object options = null)
+        {
+            if (runchildMode == false || Child0 == null)
+            {
+                return false;
+            }
+            else
+            {
+                var result = Child0.Tick(this, options);
+                if (result == Status.Running)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        public bool DoMyself()
+        {
+            return false;
+        }
+
+        bool runchildMode = false;
+
+        public int CurrentIndex { get; protected set; } = -1;
+
+        protected override Status OnTick(BTNode from, object options = null)
+        {
+            if (CurrentIndex == 0)
+            {
+                if (Child0 != null)
+                {
+                    var childResult = Child0.Tick(this, options);
+                    if (true)
+                    {
+
+                    }
+                }
+
+            }
+            else
+            {
+                
+            }
+
+           
+            if (RunChild(options))
+            {
+                return Status.Running;
+            }
+            else
+            {
+                if (DoMyself())
+                {
+                    runchildMode = true;
+                    return Status.Running;
+                }
+            }
+
+
+            return base.OnTick(from, options);
+        }
+    }
+
 }
 
 
