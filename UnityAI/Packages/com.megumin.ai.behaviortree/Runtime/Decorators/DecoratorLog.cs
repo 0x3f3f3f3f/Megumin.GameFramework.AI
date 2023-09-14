@@ -19,14 +19,19 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
-        public RefVar_String LogStr = new() { value = "Hello world!" };
+        public LogInfo Info;
+
+        public string GetLogString()
+        {
+            return Info?.Rebuid()?.ToString();
+        }
 
         public bool LastCheckResult => true;
         public bool CheckCondition(object options = null)
         {
             if ((DecoratorPosition & DecoratorPosition.Condition) != 0)
             {
-                Debug.Log($"Condition: {Owner}  {(string)LogStr}");
+                Debug.Log($"Condition: {GetLogString()}");
             }
             return true;
         }
@@ -35,7 +40,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.PreEnter) != 0)
             {
-                Debug.Log($"PreDeco: {Owner}  {(string)LogStr}");
+                Debug.Log($"PreDeco: {GetLogString()}");
             }
         }
 
@@ -43,7 +48,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.PostExit) != 0)
             {
-                Debug.Log($"PostDeco: {Owner}  {result}  {(string)LogStr}");
+                Debug.Log($"PostDeco: {GetLogString()}  {result}");
             }
             return result;
         }
@@ -52,8 +57,11 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.Abort) != 0)
             {
-                Debug.Log($"AbortDeco: {Owner}  {(string)LogStr}");
+                Debug.Log($"AbortDeco: {GetLogString()}");
             }
         }
     }
+
+
+
 }

@@ -13,6 +13,11 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 装饰器
     /// </summary>
+    /// <remarks>
+    /// TODO:
+    /// 没有设计Tick阶段装饰器，Tick时每次查找装饰器感觉性能开销太高了，得不偿失。
+    /// 或者Tick装饰器需要额外的容器。
+    /// </remarks>
     public interface IDecorator : ITreeElement
     {
         BTNode Owner { get; set; }
@@ -29,7 +34,13 @@ namespace Megumin.AI.BehaviorTree
 
         PreEnter = 1 << 10,
 
+        /// <summary>
+        /// 预留
+        /// </summary>
         PreTick = 1 << 13,
+        /// <summary>
+        /// 预留
+        /// </summary>
         PostTick = 1 << 17,
 
         PostExit = 1 << 20,
