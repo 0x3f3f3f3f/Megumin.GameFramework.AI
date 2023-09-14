@@ -94,6 +94,10 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+    /// <summary>
+    /// 在其他行为树模型中，也可以称为装饰器节点。
+    /// 为了避免和附加的装饰器混淆，这里不命名为装饰器。
+    /// </summary>
     public abstract class OneChildNode : BTParentNode
     {
         public BTNode Child0
@@ -323,78 +327,184 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+
     /// <summary>
-    /// 交替执行自身和子节点
+    /// 根据特定状态执行Child0。看作一个小状态机。
+    /// <para/>
+    /// 近似装饰节点DecoratorNode，是一种特殊的OneChildNode。
+    /// 但称为装饰节点并不合适，因为不是以修饰子节点为主要目的的。
+    /// 它自身的逻辑可能不通用，并且同样十分主要，不能看作一个装饰。
     /// </summary>
-    [Obsolete("还没设计好",true)]
-    public abstract class Iterator : OneChildNode
-    { 
-        protected bool RunChild(object options = null)
+    public abstract class StateChild0 : OneChildNode
+    {
+        protected override void OnEnter(object options = null)
         {
-            if (runchildMode == false || Child0 == null)
+            base.OnEnter(options);
+            InChild = false;
+        }
+
+        protected bool InChild = false;
+        protected override Status OnTick(BTNode from, object options = null)
+        {
+            if (InChild)
             {
-                return false;
+                //执行子节点
+                var childResult = Child0?.Tick(this, options);
+                if (childResult == Status.Running)
+                {
+                    return Status.Running;
+                }
+
+                //子节点完成，由子类决定继续执行还是完成。
+                InChild = false;
+                return OnChildComplete(childResult);
             }
             else
             {
-                var result = Child0.Tick(this, options);
-                if (result == Status.Running)
+                //自身执行部分，决定是否进入子节点，还是完成自身。
+                var (ChangeTo, Result) = OnTickSelf(from, options);
+                if (ChangeTo)
                 {
-                    return true;
+                    InChild = true;
+                    return Status.Running;
                 }
                 else
                 {
-                    return false;
+                    return Result;
                 }
             }
-
         }
 
-        public bool DoMyself()
+        /// <summary>
+        /// 父节点自身的逻辑，决定是否进入子节点，还是完成自身。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public abstract (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null);
+
+        /// <summary>
+        /// 子节点为null或者完成时被调用。
+        /// 由子类决定继续执行还是完成。
+        /// </summary>
+        /// <param name="childResult"></param>
+        /// <returns></returns>
+        public abstract Status OnChildComplete(Status? childResult);
+    }
+
+    /// <summary>
+    /// 根据特定状态执行Child0。看作一个小状态机。
+    /// <para/>
+    /// 近似装饰节点DecoratorNode，是一种特殊的OneChildNode。
+    /// 但称为装饰节点并不合适，因为不是以修饰子节点为主要目的的。
+    /// 它自身的逻辑可能不通用，并且同样十分主要，不能看作一个装饰。
+    /// </summary>
+    public abstract class StateChild0<T> : OneChildNode<T>
+    {
+        protected override void OnEnter(object options = null)
         {
-            return false;
+            base.OnEnter(options);
+            InChild = false;
         }
 
-        bool runchildMode = false;
-
-        public int CurrentIndex { get; protected set; } = -1;
-
+        protected bool InChild = false;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (CurrentIndex == 0)
+            if (InChild)
             {
-                if (Child0 != null)
+                //执行子节点
+                var childResult = Child0?.Tick(this, options);
+                if (childResult == Status.Running)
                 {
-                    var childResult = Child0.Tick(this, options);
-                    if (true)
-                    {
-
-                    }
-                }
-
-            }
-            else
-            {
-                
-            }
-
-           
-            if (RunChild(options))
-            {
-                return Status.Running;
-            }
-            else
-            {
-                if (DoMyself())
-                {
-                    runchildMode = true;
                     return Status.Running;
                 }
+
+                //子节点完成，由子类决定继续执行还是完成。
+                InChild = false;
+                return OnChildComplete(childResult);
             }
-
-
-            return base.OnTick(from, options);
+            else
+            {
+                //自身执行部分，决定是否进入子节点，还是完成自身。
+                var (ChangeTo, Result) = OnTickSelf(from, options);
+                if (ChangeTo)
+                {
+                    InChild = true;
+                    return Status.Running;
+                }
+                else
+                {
+                    return Result;
+                }
+            }
         }
+
+        /// <summary>
+        /// 父节点自身的逻辑，决定是否进入子节点，还是完成自身。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public abstract (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null);
+
+        /// <summary>
+        /// 子节点为null或者完成时被调用。
+        /// 由子类决定继续执行还是完成。
+        /// </summary>
+        /// <param name="childResult"></param>
+        /// <returns></returns>
+        public abstract Status OnChildComplete(Status? childResult);
+    }
+
+    [Obsolete("失败设计，当otherNode为null时，OnChildComp无法被调用", true)]
+    public abstract class PassThrough : OneChildNode
+    {
+        protected override void OnEnter(object options = null)
+        {
+            base.OnEnter(options);
+            otherNode = null;
+        }
+
+        protected BTTaskNode otherNode = null;
+        //protected override Status OnTick(BTNode from, object options = null)
+        //{
+        //    if (otherNode != null)
+        //    {
+        //        //执行子节点
+        //        var childResult = Child0?.Tick(this, options);
+        //        if (childResult == Status.Running)
+        //        {
+        //            return Status.Running;
+        //        }
+
+        //        //子节点完成，由子类决定继续执行还是完成。
+        //        otherNode = null;
+        //        return OnChildComp(childResult);
+        //    }
+        //    else
+        //    {
+        //        //自身执行部分，决定是否进入子节点，还是完成自身。
+        //        var (ChangeTo, Result) = OnTickSelf(from, options);
+        //        if (ChangeTo != null)
+        //        {
+        //            InChild = true;
+        //            return Status.Running;
+        //        }
+        //        else
+        //        {
+        //            return Result;
+        //        }
+        //    }
+        //}
+
+        public abstract (BTTaskNode otherNode, Status Result) OnTickSelf(BTNode from, object options = null);
+        /// <summary>
+        /// 子节点为null或者完成时被调用。
+        /// 由子类决定继续执行还是完成。
+        /// </summary>
+        /// <param name="childResult"></param>
+        /// <returns></returns>
+        public abstract Status OnOtherNode(Status? childResult);
     }
 
 }

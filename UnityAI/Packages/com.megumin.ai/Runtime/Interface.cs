@@ -26,6 +26,7 @@ namespace Megumin.AI
         Failed = 1 << 1,
         Running = 1 << 2,
         //Aborted = 1 << 3, 中断是失败的一种，不应该放入枚举。在类中额外加一个字段表示失败原因。后期复杂情况失败原因可能不只一个。
+        //IsCompleted => State == Status.Succeeded || State == Status.Failed;
     }
 
     /// <summary>
