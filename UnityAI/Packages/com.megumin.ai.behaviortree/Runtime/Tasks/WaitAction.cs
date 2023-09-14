@@ -49,12 +49,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if (State == Status.Running)
             {
-                return $"Wait: {(float)WaitTime:0.000}  Left:{WaitTimeable.GetLeftTime(WaitTime):0.000}";
+                double left = WaitTimeable.GetLeftTime(WaitTime);
+                if (left >= 0)
+                {
+                    return $"Wait: {(float)WaitTime:0.000}  Left:{left:0.000}";
+                }
             }
-            else
-            {
-                return $"Wait: {(float)WaitTime:0.000}";
-            }
+
+            return $"Wait: {(float)WaitTime:0.000}";
         }
     }
 
@@ -97,12 +99,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if (State == Status.Running)
             {
-                return $"Wait: {(float)WaitTime:0.000}  Left:{WaitTimeable.GetLeftTime(WaitTime):0.000}";
+                double left = WaitTimeable.GetLeftTime(WaitTime);
+                if (left >= 0)
+                {
+                    return $"Wait: {(float)WaitTime:0.000}  Left:{left:0.000}";
+                }
             }
-            else
-            {
-                return $"Wait: {(float)WaitTime:0.000}";
-            }
+
+            return $"Wait: {(float)WaitTime:0.000}";
         }
     }
 }

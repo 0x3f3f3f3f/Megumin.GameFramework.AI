@@ -36,6 +36,11 @@ namespace Megumin.AI.BehaviorTree
 
             //创建 参数，节点，装饰器，普通对象
 
+            var node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78 = new Megumin.AI.BehaviorTree.Wait();
+            var temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta = new Megumin.AI.BehaviorTree.NodeMeta();
+            var temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>();
+            var temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime = new Megumin.Binding.RefVar_Float();
+
             var node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707 = new Megumin.AI.BehaviorTree.Log();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta = new Megumin.AI.BehaviorTree.NodeMeta();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>();
@@ -44,9 +49,10 @@ namespace Megumin.AI.BehaviorTree
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform = new Megumin.Binding.RefVar_Transform();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_GameObject = new Megumin.Binding.RefVar_GameObject();
 
-            var node_46091aac_2293_44bf_881e_5e3476886543 = new Megumin.AI.BehaviorTree.Wait();
+            var node_46091aac_2293_44bf_881e_5e3476886543 = new Megumin.AI.BehaviorTree.WaitDo();
             var temp_46091aac_2293_44bf_881e_5e3476886543_Meta = new Megumin.AI.BehaviorTree.NodeMeta();
             var temp_46091aac_2293_44bf_881e_5e3476886543_Decorators = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>();
+            var temp_46091aac_2293_44bf_881e_5e3476886543_Children = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.BTNode>();
             var temp_46091aac_2293_44bf_881e_5e3476886543_WaitTime = new Megumin.Binding.RefVar_Float();
 
             var node_62f41474_7568_45c7_946e_cdf5ad45fff4 = new Megumin.AI.BehaviorTree.Wait();
@@ -61,12 +67,16 @@ namespace Megumin.AI.BehaviorTree
             var deco_f215473e_1bd7_451b_9d38_79a052d9b203 = new Megumin.AI.BehaviorTree.Loop();
 
             //以上创建 0 参数
-            //以上创建 4 节点
+            //以上创建 5 节点
             //以上创建 1 装饰器
-            //以上创建 15 普通对象
+            //以上创建 19 普通对象
 
-            //以上创建 20 所有对象
+            //以上创建 25 所有对象
 
+            finder.RefDic.Add("2dfe0c27-6bca-4af7-ba6b-a1631d859f78", node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78);
+            finder.RefDic.Add("2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Meta", temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta);
+            finder.RefDic.Add("2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Decorators", temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators);
+            finder.RefDic.Add("2dfe0c27-6bca-4af7-ba6b-a1631d859f78.WaitTime", temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707", node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Meta", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Decorators", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
@@ -77,6 +87,7 @@ namespace Megumin.AI.BehaviorTree
             finder.RefDic.Add("46091aac-2293-44bf-881e-5e3476886543", node_46091aac_2293_44bf_881e_5e3476886543);
             finder.RefDic.Add("46091aac-2293-44bf-881e-5e3476886543.Meta", temp_46091aac_2293_44bf_881e_5e3476886543_Meta);
             finder.RefDic.Add("46091aac-2293-44bf-881e-5e3476886543.Decorators", temp_46091aac_2293_44bf_881e_5e3476886543_Decorators);
+            finder.RefDic.Add("46091aac-2293-44bf-881e-5e3476886543.Children", temp_46091aac_2293_44bf_881e_5e3476886543_Children);
             finder.RefDic.Add("46091aac-2293-44bf-881e-5e3476886543.WaitTime", temp_46091aac_2293_44bf_881e_5e3476886543_WaitTime);
             finder.RefDic.Add("62f41474-7568-45c7-946e-cdf5ad45fff4", node_62f41474_7568_45c7_946e_cdf5ad45fff4);
             finder.RefDic.Add("62f41474-7568-45c7-946e-cdf5ad45fff4.Meta", temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Meta);
@@ -87,7 +98,7 @@ namespace Megumin.AI.BehaviorTree
             finder.RefDic.Add("a734621c-96b6-4a26-898c-0e4d45f5dba2.Decorators", temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
             finder.RefDic.Add("a734621c-96b6-4a26-898c-0e4d45f5dba2.Children", temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
             finder.RefDic.Add("f215473e-1bd7-451b-9d38-79a052d9b203", deco_f215473e_1bd7_451b_9d38_79a052d9b203);
-            //添加实例到引用查找器 20
+            //添加实例到引用查找器 25
 
             //添加树实例到引用查找器
             finder.RefDic.Add("71ad0dfc-da1a-4b3c-b95d-b4276312641a", tree);
@@ -103,6 +114,15 @@ namespace Megumin.AI.BehaviorTree
             temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text.value = "Hello world!";
 
 
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Meta.x
+            temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta.x = 237.0001f;
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Meta.y
+            temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta.y = 470.7251f;
+
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.WaitTime.value
+            temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime.value = 5f;
 
             //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Meta.x
             temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta.x = 440f;
@@ -159,6 +179,15 @@ namespace Megumin.AI.BehaviorTree
             temp_46091aac_2293_44bf_881e_5e3476886543_Meta.FriendlyDescription = "";
             //46091aac-2293-44bf-881e-5e3476886543.Meta.Comment
             temp_46091aac_2293_44bf_881e_5e3476886543_Meta.Comment = "";
+
+
+            //46091aac-2293-44bf-881e-5e3476886543.Children.0
+            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.Wait>(
+                "2dfe0c27-6bca-4af7-ba6b-a1631d859f78",
+                out var temp_ref_46091aac_2293_44bf_881e_5e3476886543_Children_0))
+            {
+                temp_46091aac_2293_44bf_881e_5e3476886543_Children.Insert(0, temp_ref_46091aac_2293_44bf_881e_5e3476886543_Children_0);
+            }
 
 
             //46091aac-2293-44bf-881e-5e3476886543.WaitTime.value
@@ -218,7 +247,7 @@ namespace Megumin.AI.BehaviorTree
             }
 
             //a734621c-96b6-4a26-898c-0e4d45f5dba2.Children.1
-            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.Wait>(
+            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.WaitDo>(
                 "46091aac-2293-44bf-881e-5e3476886543",
                 out var temp_ref_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children_1))
             {
@@ -233,6 +262,33 @@ namespace Megumin.AI.BehaviorTree
                 temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children.Insert(2, temp_ref_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children_2);
             }
 
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Meta
+            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.NodeMeta>(
+                "2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Meta",
+                out var temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta))
+            {
+                node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78.Meta = temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta;
+            }
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Decorators
+            if (finder.TryGetRefValue<System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>>(
+                "2dfe0c27-6bca-4af7-ba6b-a1631d859f78.Decorators",
+                out var temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators))
+            {
+                node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78.Decorators = temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators;
+            }
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.WaitTime
+            if (finder.TryGetRefValue<Megumin.Binding.RefVar_Float>(
+                "2dfe0c27-6bca-4af7-ba6b-a1631d859f78.WaitTime",
+                out var temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime))
+            {
+                node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78.WaitTime = temp_ref_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime;
+            }
+
+            //2dfe0c27-6bca-4af7-ba6b-a1631d859f78.GUID
+            node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78.GUID = "2dfe0c27-6bca-4af7-ba6b-a1631d859f78";
 
             //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Meta
             if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.NodeMeta>(
@@ -275,6 +331,14 @@ namespace Megumin.AI.BehaviorTree
                 out var temp_ref_46091aac_2293_44bf_881e_5e3476886543_Decorators))
             {
                 node_46091aac_2293_44bf_881e_5e3476886543.Decorators = temp_ref_46091aac_2293_44bf_881e_5e3476886543_Decorators;
+            }
+
+            //46091aac-2293-44bf-881e-5e3476886543.Children
+            if (finder.TryGetRefValue<System.Collections.Generic.List<Megumin.AI.BehaviorTree.BTNode>>(
+                "46091aac-2293-44bf-881e-5e3476886543.Children",
+                out var temp_ref_46091aac_2293_44bf_881e_5e3476886543_Children))
+            {
+                node_46091aac_2293_44bf_881e_5e3476886543.Children = temp_ref_46091aac_2293_44bf_881e_5e3476886543_Children;
             }
 
             //46091aac-2293-44bf-881e-5e3476886543.WaitTime
@@ -356,11 +420,15 @@ namespace Megumin.AI.BehaviorTree
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_GameObject);
+            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta);
+            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators);
+            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info);
             tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Meta);
             tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Decorators);
+            tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Children);
             tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_WaitTime);
             tree.InitAddTreeRefObj(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Meta);
             tree.InitAddTreeRefObj(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Decorators);
@@ -368,18 +436,19 @@ namespace Megumin.AI.BehaviorTree
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta);
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
-            //以上添加到树 15 普通对象
+            //以上添加到树 19 普通对象
 
             //添加装饰器
             tree.InitAddTreeRefObj(deco_f215473e_1bd7_451b_9d38_79a052d9b203);
             //以上添加到树 1 装饰器
 
             //添加节点
+            tree.InitAddTreeRefObj(node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78);
             tree.InitAddTreeRefObj(node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707);
             tree.InitAddTreeRefObj(node_46091aac_2293_44bf_881e_5e3476886543);
             tree.InitAddTreeRefObj(node_62f41474_7568_45c7_946e_cdf5ad45fff4);
             tree.InitAddTreeRefObj(node_a734621c_96b6_4a26_898c_0e4d45f5dba2);
-            //以上添加到树 4 节点
+            //以上添加到树 5 节点
 
             #endregion
 
