@@ -62,6 +62,7 @@ namespace Megumin.AI.BehaviorTree
     /// </summary>
     public class ConditionDecorator : BTDecorator, IAbortable, IConditionDecorator
     {
+        [Space]
         public bool Invert = false;
 
         [field: SerializeField]

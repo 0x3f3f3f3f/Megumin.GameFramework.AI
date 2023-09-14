@@ -187,6 +187,15 @@ namespace Megumin.Binding
         }
 
         /// <summary>
+        /// Value = value;用于空传播
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void SetValue(T value)
+        {
+            Value = value;
+        }
+
+        /// <summary>
         /// null表示还没有解析绑定
         /// </summary>
         [NonSerialized]
