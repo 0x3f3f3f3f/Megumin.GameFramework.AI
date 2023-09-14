@@ -28,9 +28,6 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Decorators
-    - Name: Text
-      Type: $ref
-      Value: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text
     - Name: Info
       Type: $ref
       Value: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info
@@ -142,12 +139,6 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
-  - Name: 2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text
-    Type: Megumin.Binding.RefVar_String
-    Member:
-    - Name: value
-      Type: System.String
-      Value: Hello world!
   - Name: 46091aac-2293-44bf-881e-5e3476886543.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
       Megumin.AI.BehaviorTree]]

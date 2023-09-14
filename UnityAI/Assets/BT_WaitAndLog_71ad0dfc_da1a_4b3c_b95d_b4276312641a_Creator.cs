@@ -39,7 +39,6 @@ namespace Megumin.AI.BehaviorTree
             var node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707 = new Megumin.AI.BehaviorTree.Log();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta = new Megumin.AI.BehaviorTree.NodeMeta();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>();
-            var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text = new Megumin.Binding.RefVar_String();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info = new Megumin.AI.LogInfo();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text = new Megumin.Binding.RefVar_String();
             var temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform = new Megumin.Binding.RefVar_Transform();
@@ -64,14 +63,13 @@ namespace Megumin.AI.BehaviorTree
             //以上创建 0 参数
             //以上创建 4 节点
             //以上创建 1 装饰器
-            //以上创建 16 普通对象
+            //以上创建 15 普通对象
 
-            //以上创建 21 所有对象
+            //以上创建 20 所有对象
 
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707", node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Meta", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Decorators", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
-            finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info.Text", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text);
             finder.RefDic.Add("2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info.Ref_Transform", temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform);
@@ -89,7 +87,7 @@ namespace Megumin.AI.BehaviorTree
             finder.RefDic.Add("a734621c-96b6-4a26-898c-0e4d45f5dba2.Decorators", temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
             finder.RefDic.Add("a734621c-96b6-4a26-898c-0e4d45f5dba2.Children", temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
             finder.RefDic.Add("f215473e-1bd7-451b-9d38-79a052d9b203", deco_f215473e_1bd7_451b_9d38_79a052d9b203);
-            //添加实例到引用查找器 21
+            //添加实例到引用查找器 20
 
             //添加树实例到引用查找器
             finder.RefDic.Add("71ad0dfc-da1a-4b3c-b95d-b4276312641a", tree);
@@ -121,9 +119,6 @@ namespace Megumin.AI.BehaviorTree
             //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Meta.Comment
             temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta.Comment = "";
 
-
-            //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text.value
-            temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text.value = "Hello world!";
 
             //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info.Text
             if (finder.TryGetRefValue<Megumin.Binding.RefVar_String>(
@@ -255,14 +250,6 @@ namespace Megumin.AI.BehaviorTree
                 node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707.Decorators = temp_ref_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators;
             }
 
-            //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text
-            if (finder.TryGetRefValue<Megumin.Binding.RefVar_String>(
-                "2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Text",
-                out var temp_ref_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text))
-            {
-                node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707.Text = temp_ref_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text;
-            }
-
             //2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info
             if (finder.TryGetRefValue<Megumin.AI.LogInfo>(
                 "2f7d3ba7-cfbb-416a-a003-e1d3ed6f0707.Info",
@@ -371,7 +358,6 @@ namespace Megumin.AI.BehaviorTree
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_GameObject);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Text);
             tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info);
             tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Meta);
             tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Decorators);
@@ -382,7 +368,7 @@ namespace Megumin.AI.BehaviorTree
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta);
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
             tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
-            //以上添加到树 16 普通对象
+            //以上添加到树 15 普通对象
 
             //添加装饰器
             tree.InitAddTreeRefObj(deco_f215473e_1bd7_451b_9d38_79a052d9b203);

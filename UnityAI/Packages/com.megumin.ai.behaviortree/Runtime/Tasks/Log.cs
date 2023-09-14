@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Timers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,22 +20,20 @@ namespace Megumin.AI.BehaviorTree
         public bool LogCount = false;
         public float waitTime = 0.15f;
 
-        [Obsolete("Use Info.Text instead.")]
-        public RefVar_String Text = new() { value = "Hello world!" };
         public LogInfo Info = new LogInfo();
 
-        protected float entertime;
-        protected int count = 0;
+        protected IWaitTimeable<double> waitTimeable { get; } = new WaitGameTime();
 
+        protected int count = 0;
         protected override void OnEnter(object options = null)
         {
-            entertime = Time.time;
+            waitTimeable.WaitStart();
             count++;
         }
 
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (Time.time - entertime >= waitTime)
+            if (waitTimeable.WaitEnd(waitTime))
             {
                 LogString();
                 return Status.Succeeded;
