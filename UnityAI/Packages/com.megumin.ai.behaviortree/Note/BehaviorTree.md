@@ -11,7 +11,7 @@
 - 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。 
 - 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) | [QQ Group](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008) | [Discord](https://discord.gg/6VZbxZgTRU) ]
+[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
 
 ## Technical details
 - 使用UIElement构建的编辑器。

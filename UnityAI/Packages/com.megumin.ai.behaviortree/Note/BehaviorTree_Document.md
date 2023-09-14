@@ -264,7 +264,7 @@ PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进�
 # 联系方式
 - 邮箱： 479813005@qq.com
 - 反馈： [Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
-- QQ群： [812318008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=I_oDoO-b1yQs1Em-QvRPG4ZN21RuYM3G&authKey=7TZUwLSCvvCTWo2hnDUwRtlhd733Rc%2BHshrIF%2Fm7p2v7Yo5hxN3hZdWPFnIIIQlf&noverify=0&group_code=812318008)
+- QQ群： 
 - Discord: https://discord.gg/6VZbxZgTRU
 
 
