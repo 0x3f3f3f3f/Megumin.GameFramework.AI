@@ -56,6 +56,11 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
+        /// <summary>
+        /// 尝试移动到下一个检查点
+        /// </summary>
+        /// <param name="destination">使用ref 而不是out，当移动失败时，不改变destination现有值</param>
+        /// <returns></returns>
         public abstract bool TryMoveNext(ref Vector3 destination);
     }
 
