@@ -443,6 +443,11 @@ namespace Megumin.AI.BehaviorTree.Editor
                 {
                     System.Diagnostics.Process.Start("https://github.com/users/KumoKyaku/projects/5");
                 }, a => DropdownMenuAction.Status.Normal);
+            help.menu.AppendAction("Milestones",
+                a =>
+                {
+                    System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/milestones");
+                }, a => DropdownMenuAction.Status.Normal);
         }
 
 
