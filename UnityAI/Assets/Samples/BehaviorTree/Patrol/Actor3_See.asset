@@ -314,6 +314,9 @@ MonoBehaviour:
     - Name: Text
       Type: $ref
       Value: 13ace398-682b-4e92-921c-7ebaaf7d92b5.Info.Text
+    - Name: MacroRefObj
+      Type: System.Boolean
+      Value: True
     - Name: Ref_Transform
       Type: $ref
       Value: SeeTarget
@@ -337,7 +340,7 @@ MonoBehaviour:
       Value: 
     - Name: value
       Type: System.String
-      Value: 'I  see :'
+      Value: 'I  see: $(name): $(position)'
     - Name: bindingPath
       Type: System.String
       Value: 

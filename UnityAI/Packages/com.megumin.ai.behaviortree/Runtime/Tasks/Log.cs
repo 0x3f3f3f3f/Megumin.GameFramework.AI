@@ -16,8 +16,12 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "Log")]
     public class Log : BTActionNode, IDetailable
     {
-
+        [Space]
+        [Tooltip("Use my gameObject  macro replace Text.")]
+        public bool UseMacro = false;
         public bool LogCount = false;
+
+        [Space]
         public float waitTime = 0.15f;
 
         public LogInfo Info = new LogInfo();
@@ -50,6 +54,11 @@ namespace Megumin.AI.BehaviorTree
             {
                 sb.Append("----");
                 sb.Append(count.ToString());
+            }
+
+            if (UseMacro)
+            {
+                sb = sb.MacroUnityObject(GameObject);
             }
 
             Debug.Log(sb.ToString());

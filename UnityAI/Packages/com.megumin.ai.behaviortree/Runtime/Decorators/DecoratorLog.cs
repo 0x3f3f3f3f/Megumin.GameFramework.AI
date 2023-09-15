@@ -19,11 +19,26 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
+        [Space]
+        [Tooltip("Use my gameObject  macro replace Text.")]
+        public bool UseMacro = false;
         public LogInfo Info;
 
         public string GetLogString()
         {
-            return Info?.Rebuid()?.ToString();
+            if (Info == null)
+            {
+                return null;
+            }
+
+            var sb = Info.Rebuid();
+
+            if (UseMacro)
+            {
+                sb = sb.MacroUnityObject(GameObject);
+            }
+
+            return sb.ToString();
         }
 
         public bool LastCheckResult => true;
