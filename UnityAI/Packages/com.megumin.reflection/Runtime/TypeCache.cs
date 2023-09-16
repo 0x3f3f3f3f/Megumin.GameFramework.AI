@@ -858,7 +858,8 @@ namespace Megumin.Reflection
         /// <typeparam name="T"></typeparam>
         public static void HotTypeAliasDerivedFrom<T>()
         {
-            foreach (var type in GetTypesDerivedFrom<T>())
+            var list = GetTypesDerivedFrom<T>();
+            foreach (var type in list)
             {
                 HotTypeAlias(type);
             }

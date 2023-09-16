@@ -366,8 +366,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var edit = root.Q<ToolbarMenu>("edit");
-            edit.menu.AppendAction("Test1", a => { }, a => DropdownMenuAction.Status.Normal);
-            edit.menu.AppendAction("Test2", a => { }, a => DropdownMenuAction.Status.Normal);
+            edit.menu.AppendAction("HotTypeAlias", a => HotTypeAlias(true), a => DropdownMenuAction.Status.Normal);
 
             var prefs = root.Q<ToolbarMenu>("prefs");
 
@@ -534,7 +533,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
         }
 
-        static bool HotTypeAlias = false;
         public void SelectTree(IBehaviorTreeAsset behaviorTreeAsset)
         {
             if (BehaviorTreeEditor.EditorLog)
@@ -542,16 +540,9 @@ namespace Megumin.AI.BehaviorTree.Editor
                 this.LogMethodName(TreeView);
             }
 
-            if (HotTypeAlias == false && behaviorTreeAsset != null)
+            if (behaviorTreeAsset != null)
             {
-                //在没有行为树文件时不需要触发 缓存别名。防止第一次打开空编辑器卡顿。
-
-                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(int).Assembly);
-                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(GameObject).Assembly);
-                //因为要处理别名，无论如何都会触发CacheAllType.
-                //第一次反序列化之前处理一下类型别名。防止节点改名后报错。
-                Megumin.Reflection.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
-                HotTypeAlias = true;
+                HotTypeAlias();
             }
 
             bool isChangeTree = SetTreeAsset(behaviorTreeAsset);
@@ -580,6 +571,22 @@ namespace Megumin.AI.BehaviorTree.Editor
                     //新打开的行为树，剧中所有节点
                     //TreeView.DelayFrameAll();
                 }
+            }
+        }
+
+        static bool HotTypeAliased = false;
+        public static void HotTypeAlias(bool force = false)
+        {
+            if (HotTypeAliased == false || force)
+            {
+                //在没有行为树文件时不需要触发 缓存别名。防止第一次打开空编辑器卡顿。
+
+                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(int).Assembly);
+                //Megumin.Reflection.TypeCache.CacheAssembly(typeof(GameObject).Assembly);
+                //因为要处理别名，无论如何都会触发CacheAllType.
+                //第一次反序列化之前处理一下类型别名。防止节点改名后报错。
+                Megumin.Reflection.TypeCache.HotTypeAliasDerivedFrom<ITreeElement>();
+                HotTypeAliased = true;
             }
         }
 
