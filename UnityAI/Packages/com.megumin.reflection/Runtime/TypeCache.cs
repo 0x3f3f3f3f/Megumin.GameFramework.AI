@@ -871,11 +871,13 @@ namespace Megumin.Reflection
         {
             ", mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
             ", UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            ", Megumin.AI.BehaviorTree, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            ", Megumin.AI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             ", Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
         };
 
         /// <summary>
-        /// 缩短类型全名，不影响类型查找和反序列化
+        /// 剥离缩短类型全名，不影响类型查找和反序列化
         /// </summary>
         /// <param name="typeFullName"></param>
         /// <returns></returns>
