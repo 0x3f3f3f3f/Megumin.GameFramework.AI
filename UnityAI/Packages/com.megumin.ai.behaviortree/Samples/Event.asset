@@ -228,7 +228,7 @@ MonoBehaviour:
       Value: d425f7a5-0659-473c-a272-3302da48f38c
   decorators:
   - Name: 2caadf25-f0b6-4e7d-ae5a-23971ec390ba
-    Type: Megumin.AI.BehaviorTree.CheckEvent
+    Type: Megumin.AI.BehaviorTree.CheckEvent_Decorator
     Member:
     - Name: EventName
       Type: $ref

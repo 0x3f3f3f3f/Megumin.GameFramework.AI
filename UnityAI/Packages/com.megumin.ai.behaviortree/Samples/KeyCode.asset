@@ -177,7 +177,7 @@ MonoBehaviour:
       Type: System.String
       Value: 2c6266fa-d1ac-4c56-9527-df1ca6720ed5
   - Name: 50a75022-8f1d-42e8-bbd6-df41f78169d6
-    Type: Megumin.AI.BehaviorTree.KeyCodeEvent
+    Type: Megumin.AI.BehaviorTree.KeyCodeEvent_Decorator
     Member:
     - Name: InputType
       Type: Megumin.AI.BehaviorTree.InputType
@@ -201,7 +201,7 @@ MonoBehaviour:
       Type: System.String
       Value: b32dfdf1-1146-48be-8987-2e0ff12ac378
   - Name: eb4e4eac-18d8-4160-abff-e03080fff525
-    Type: Megumin.AI.BehaviorTree.MouseEvent
+    Type: Megumin.AI.BehaviorTree.MouseEvent_Decorator
     Member:
     - Name: Invert
       Type: System.Boolean

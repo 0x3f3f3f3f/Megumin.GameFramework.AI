@@ -228,7 +228,7 @@ MonoBehaviour:
       Value: ede33707-5505-423c-a77a-3dc0de89d6dd
   decorators:
   - Name: 00f024aa-83ef-422c-ae2e-4f90e3a93acf
-    Type: Megumin.AI.BehaviorTree.CheckTrigger
+    Type: Megumin.AI.BehaviorTree.CheckTrigger_Decorator
     Member:
     - Name: TriggerName
       Type: $ref
@@ -243,7 +243,7 @@ MonoBehaviour:
       Type: System.String
       Value: 2be92459-fdaf-4c1e-8df3-abb97d68c464
   - Name: 73e7faa5-747c-4650-a109-ce8687635493
-    Type: Megumin.AI.BehaviorTree.CheckTrigger
+    Type: Megumin.AI.BehaviorTree.CheckTrigger_Decorator
     Member:
     - Name: TriggerName
       Type: $ref

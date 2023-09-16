@@ -36,7 +36,7 @@ MonoBehaviour:
       Value: 896edbe0-845e-4985-8db7-3626dfcd4b03
   decorators:
   - Name: 52600aa4-538c-46bb-87b0-121c76bafcbc
-    Type: Megumin.AI.BehaviorTree.CheckBool
+    Type: Megumin.AI.BehaviorTree.CheckBool_Decorator
     Member:
     - Name: GUID
       Type: System.String

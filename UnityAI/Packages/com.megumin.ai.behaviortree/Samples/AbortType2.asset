@@ -102,7 +102,7 @@ MonoBehaviour:
       Type: System.String
       Value: 8bcba68b-7253-4354-9992-9968aafd6408
   - Name: baf87fa0-c482-4a3f-975e-2a2d25625ce1
-    Type: Megumin.AI.BehaviorTree.CheckBool
+    Type: Megumin.AI.BehaviorTree.CheckBool_Decorator
     Member:
     - Name: Value
       Type: $ref
@@ -114,7 +114,7 @@ MonoBehaviour:
       Type: Megumin.AI.BehaviorTree.AbortType
       Value: Megumin.AI.BehaviorTree.AbortType:LowerPriority
   - Name: c77c9edc-e3ae-4f42-9b0e-d274cb466a6b
-    Type: Megumin.AI.BehaviorTree.CheckBool
+    Type: Megumin.AI.BehaviorTree.CheckBool_Decorator
     Member:
     - Name: Value
       Type: $ref
@@ -123,7 +123,7 @@ MonoBehaviour:
       Type: System.String
       Value: c77c9edc-e3ae-4f42-9b0e-d274cb466a6b
   - Name: ce829d74-5665-4c8c-b5ff-3bff105335fa
-    Type: Megumin.AI.BehaviorTree.CheckBool
+    Type: Megumin.AI.BehaviorTree.CheckBool_Decorator
     Member:
     - Name: Value
       Type: $ref
