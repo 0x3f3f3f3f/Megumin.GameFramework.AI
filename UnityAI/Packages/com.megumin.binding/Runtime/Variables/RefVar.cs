@@ -313,6 +313,34 @@ namespace Megumin.Binding
         }
     }
 
+    [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
+    public class RefVar_SystemObject : RefVar<System.Object> { }
+
+    public class VariableCreator_SystemObject : VariableCreator
+    {
+        public override string Name { get; set; } = "SystemObject";
+
+        public override IRefable Create()
+        {
+            return new RefVar_SystemObject() { RefName = "SystemObject" };
+        }
+    }
+
+    [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
+    public class RefVar_UnityObject : RefVar<UnityEngine.Object> { }
+
+    public class VariableCreator_UnityObject : VariableCreator
+    {
+        public override string Name { get; set; } = "UnityObject";
+
+        public override IRefable Create()
+        {
+            return new RefVar_UnityObject() { RefName = "UnityObject" };
+        }
+    }
+
 #if UNITY_EDITOR
 
     [UnityEditor.CustomPropertyDrawer(typeof(RefVar<>), true)]
