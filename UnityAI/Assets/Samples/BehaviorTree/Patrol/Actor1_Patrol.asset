@@ -70,6 +70,9 @@ MonoBehaviour:
     - Name: DestinationList
       Type: $ref
       Value: DesList
+    - Name: Children
+      Type: $ref
+      Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Children
     - Name: GUID
       Type: System.String
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71
@@ -172,7 +175,7 @@ MonoBehaviour:
       Value: ef8668be-8284-4ea8-835e-fdd1cd354483
   refObjs:
   - Name: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb.Children
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:
     - Name: 0
       Type: $ref
@@ -181,8 +184,7 @@ MonoBehaviour:
       Type: $ref
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342
   - Name: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
@@ -208,9 +210,11 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Children
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
+    Member: []
   - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
@@ -237,8 +241,7 @@ MonoBehaviour:
       Type: System.String
       Value: 
   - Name: 5565396e-4920-46be-b6f8-e39a76f0e342.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: 5565396e-4920-46be-b6f8-e39a76f0e342.destination
     Type: Megumin.AI.Destination
@@ -283,7 +286,7 @@ MonoBehaviour:
       Type: System.String
       Value: 
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Children
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:
     - Name: 0
       Type: $ref
@@ -292,8 +295,7 @@ MonoBehaviour:
       Type: $ref
       Value: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb
   - Name: 73f56cae-a6ca-4405-871a-4863e0c2e24d.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member:
     - Name: 0
       Type: $ref
@@ -308,14 +310,13 @@ MonoBehaviour:
       Type: System.Single
       Value: 85
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Children
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:
     - Name: 0
       Type: $ref
       Value: db004176-e2df-4ed9-9258-c903f0d358e9
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: d3a0d647-828a-4305-aba5-f78d5ca2e32b.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
@@ -342,11 +343,10 @@ MonoBehaviour:
       Type: System.String
       Value: 
   - Name: db004176-e2df-4ed9-9258-c903f0d358e9.Children
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member: []
   - Name: db004176-e2df-4ed9-9258-c903f0d358e9.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member:
     - Name: 0
       Type: $ref
@@ -385,8 +385,7 @@ MonoBehaviour:
     Type: Megumin.Binding.RefVar_Transform_List
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta

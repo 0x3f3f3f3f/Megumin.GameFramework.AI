@@ -20,7 +20,7 @@ MonoBehaviour:
   variables: []
   nodes:
   - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03
-    Type: Megumin.GameFramework.AI.BehaviorTree.Log
+    Type: Megumin.AI.BehaviorTree.Log
     Member:
     - Name: Meta
       Type: $ref
@@ -28,35 +28,40 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.Decorators
-    - Name: LogStr2
+    - Name: Info
       Type: $ref
-      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.LogStr2
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.Info
     - Name: GUID
       Type: System.String
       Value: 896edbe0-845e-4985-8db7-3626dfcd4b03
   decorators:
   - Name: 52600aa4-538c-46bb-87b0-121c76bafcbc
-    Type: Megumin.GameFramework.AI.BehaviorTree.CheckBool
+    Type: Megumin.AI.BehaviorTree.CheckBool
     Member:
-    - Name: Success
-      Type: System.Boolean
-      Value: True
     - Name: GUID
       Type: System.String
       Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
-  treeElements:
+  refObjs:
   - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.ITreeElement,
-      Megumin.GameFramework.AI]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member:
     - Name: 0
       Type: $ref
       Value: 52600aa4-538c-46bb-87b0-121c76bafcbc
-  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.LogStr2
-    Type: Megumin.Binding.RefVar`1[[System.String]]
-    Member: []
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Info
+    Type: Megumin.AI.LogInfo
+    Member:
+    - Name: Text
+      Type: $ref
+      Value: 896edbe0-845e-4985-8db7-3626dfcd4b03.Info.Text
+  - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Info.Text
+    Type: Megumin.Binding.RefVar_String
+    Member:
+    - Name: value
+      Type: System.String
+      Value: 'Hello world!    Hello: $(name)! [$(position)]'
   - Name: 896edbe0-845e-4985-8db7-3626dfcd4b03.Meta
-    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:
     - Name: x
       Type: System.Single

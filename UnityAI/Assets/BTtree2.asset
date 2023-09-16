@@ -20,7 +20,7 @@ MonoBehaviour:
   variables: []
   nodes:
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744
-    Type: Megumin.GameFramework.AI.BehaviorTree.TestActionNode
+    Type: Megumin.AI.BehaviorTree.TestActionNode
     Member:
     - Name: Meta
       Type: $ref
@@ -34,11 +34,10 @@ MonoBehaviour:
   decorators: []
   refObjs:
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.GameFramework.AI.BehaviorTree.IDecorator,
-      Megumin.GameFramework.AI]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: 08be3641-cb40-42af-a069-f3a7f3051744.Meta
-    Type: Megumin.GameFramework.AI.BehaviorTree.NodeMeta
+    Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:
     - Name: x
       Type: System.Single

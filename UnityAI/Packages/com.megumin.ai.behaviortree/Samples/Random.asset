@@ -61,14 +61,13 @@ MonoBehaviour:
       Value: d6b523f7-59ea-40e4-a5f9-ca12bbae18fc
   refObjs:
   - Name: 487b8492-538b-4ac8-9b50-04bbad45ded8.Children
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode, Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:
     - Name: 0
       Type: $ref
       Value: ec24748e-3669-4c39-8286-1d5ffd8927c9
   - Name: 487b8492-538b-4ac8-9b50-04bbad45ded8.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member:
     - Name: 0
       Type: $ref
@@ -83,8 +82,7 @@ MonoBehaviour:
       Type: System.Single
       Value: 94
   - Name: ec24748e-3669-4c39-8286-1d5ffd8927c9.Decorators
-    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator,
-      Megumin.AI.BehaviorTree]]
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
   - Name: ec24748e-3669-4c39-8286-1d5ffd8927c9.Info
     Type: Megumin.AI.LogInfo
