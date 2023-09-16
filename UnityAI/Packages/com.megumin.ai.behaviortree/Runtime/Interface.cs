@@ -12,6 +12,7 @@ namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 装饰器
+    /// <para/>装饰器类型建议使用 _Decorator 后缀，防止与节点重名。
     /// </summary>
     /// <remarks>
     /// TODO:

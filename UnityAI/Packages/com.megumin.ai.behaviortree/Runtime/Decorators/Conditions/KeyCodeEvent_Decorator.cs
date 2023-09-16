@@ -1,30 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public class MouseEvent : ConditionDecorator, IConditionDecorator
+    public enum InputType
     {
-        public int MouseButton = 0;
+        Default,
+        Down,
+        Up
+    }
+
+    [DisplayName("KeyCodeEvent")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.KeyCodeEvent")]
+    public class KeyCodeEvent_Decorator : ConditionDecorator, IConditionDecorator
+    {
+        public KeyCode KeyCode = KeyCode.Space;
         public InputType InputType = InputType.Default;
 
         protected override bool OnCheckCondition(object options = null)
         {
             if (InputType == InputType.Default)
             {
-                return Input.GetMouseButton(MouseButton);
+                return Input.GetKeyDown(KeyCode);
             }
             else if (InputType == InputType.Down)
             {
-                return Input.GetMouseButtonDown(MouseButton);
+                return Input.GetKeyDown(KeyCode);
             }
             else if (InputType == InputType.Up)
             {
-                return Input.GetMouseButtonUp(MouseButton);
+                return Input.GetKeyUp(KeyCode);
             }
 
             return false;

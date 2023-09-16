@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
@@ -16,7 +18,9 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [HelpURL(URL.WikiDecorator + "CheckTrigger")]
-    public class CheckTrigger : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator
+    [DisplayName("CheckTrigger")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.CheckTrigger")]
+    public class CheckTrigger_Decorator : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         public RefVar_String TriggerName;
         public WhenResetTrigger Reset = WhenResetTrigger.Immediate;

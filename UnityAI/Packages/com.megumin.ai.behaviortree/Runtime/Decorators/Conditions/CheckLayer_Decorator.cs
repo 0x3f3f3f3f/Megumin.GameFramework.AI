@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
     [HelpURL(URL.WikiDecorator + "CheckLayer")]
-    public sealed class CheckLayer : ConditionDecorator<GameObject>
+    [DisplayName("CheckLayer")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.CheckLayer")]
+    public sealed class CheckLayer_Decorator : ConditionDecorator<GameObject>
     {
         [Space]
         [Tooltip("true Check Self. false Check Target")]

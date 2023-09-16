@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
     [HelpURL(URL.WikiDecorator + "CheckEvent")]
-    public class CheckEvent : ConditionDecorator, IDetailable
+    [DisplayName("CheckEvent")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.CheckEvent")]
+    public class CheckEvent_Decorator : ConditionDecorator, IDetailable
     {
         public RefVar_String EventName;
 

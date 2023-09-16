@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 保证同名锁同一时间只能有一个Task执行
     /// </summary>
-    public class Lock : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
+    [DisplayName("Lock")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Lock")]
+    public class Lock_Decorator : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
         public RefVar<string> lockName;
         public Status AfterNodeExit(Status result, object options = null)

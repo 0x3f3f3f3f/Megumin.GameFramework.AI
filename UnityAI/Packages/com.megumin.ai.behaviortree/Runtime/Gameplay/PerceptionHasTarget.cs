@@ -13,7 +13,7 @@ namespace Megumin.AI.BehaviorTree
     [Description("TransformPerception Has Target?")]
     [Category("Gameplay/Perception")]
     [AddComponentMenu("HasTarget(Transform)")]
-    [SerializationAlias("HasTarget")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.HasTarget")]
     [HelpURL(URL.WikiDecorator + "HasTarget")]
     public class PerceptionHasTarget_Transform : ConditionDecorator<TransformPerception>
     {
