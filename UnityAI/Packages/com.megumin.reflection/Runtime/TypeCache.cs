@@ -847,7 +847,17 @@ namespace Megumin.Reflection
             {
                 foreach (var attri in attris)
                 {
-                    hotType[attri.Alias] = type;
+                    var alias = attri.Alias;
+                    hotType[alias] = type;
+
+                    Task.Run(() =>
+                    {
+                        var res = SplitNamespace(alias);
+                        if (type.Namespace != null && string.IsNullOrEmpty(res.Namespace))
+                        {
+                            Debug.LogWarning($"Your Alias: {alias} for {type.FullName} NOT have namespace, maybe not work!");
+                        }
+                    });
                 }
             }
         }
