@@ -7,6 +7,7 @@ using Megumin.Binding;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [Obsolete("use CompareInt_Decorator instead.", true)]
     public sealed class CheckInt : CompareDecorator<int>
     {
         public RefVar_Int Left;
@@ -23,6 +24,7 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+    [Obsolete("use CompareFloat_Decorator instead.", true)]
     public sealed class CheckFloat : CompareDecorator<float>
     {
         public RefVar_Float Left;
@@ -39,6 +41,7 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
+    [Obsolete("use CompareString_Decorator instead.", true)]
     public sealed class CheckString : CompareDecorator<string>
     {
         public RefVar_String Left;
