@@ -43,6 +43,7 @@ namespace Megumin.Serialization
                         var newTypeFullName = typeFullName.Replace(item.Key, item.Value);
                         if (TypeCache.TryGetType(newTypeFullName, out type))
                         {
+                            Debug.LogWarning($"Fallback GetType {typeFullName} -> {newTypeFullName}, please resave asset, or add NoStripFullNameAttribute!");
                             return true;
                         }
                     }
@@ -59,6 +60,7 @@ namespace Megumin.Serialization
                             var newTypeFullName = item.ReplaceNamespace + TypeName;
                             if (TypeCache.TryGetType(newTypeFullName, out type))
                             {
+                                Debug.LogWarning($"Fallback GetType {typeFullName} -> {newTypeFullName}, please resave asset, or add NoStripFullNameAttribute!");
                                 return true;
                             }
                         }

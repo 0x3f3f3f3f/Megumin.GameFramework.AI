@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Megumin.Reflection;
 using UnityEngine;
 
@@ -185,7 +186,15 @@ namespace Megumin.Serialization
                 Member = ms;
             }
 
-            Type = Type.StripTypeName();
+            if (NoStripFullNameAttribute.HasAttribute(type))
+            {
+                //含有标记不要剥离名字。
+            }
+            else
+            {
+                Type = Type.StripTypeName();
+            }
+
             return true;
         }
 

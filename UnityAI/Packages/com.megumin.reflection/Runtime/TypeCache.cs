@@ -877,12 +877,14 @@ namespace Megumin.Reflection
         };
 
         /// <summary>
-        /// 剥离缩短类型全名，不影响类型查找和反序列化
+        /// 剥离缩短类型全名
+        /// <para/>牺牲了一点安全性，但可以有效的减小序列化文件。
         /// </summary>
         /// <param name="typeFullName"></param>
         /// <returns></returns>
         /// <remarks>
-        /// 不确定会不会产生类型冲突，谨慎使用
+        /// 不确定会不会产生类型冲突，谨慎使用。
+        /// 当出现类名冲突时，请禁用剥离缩短类型全名。
         /// </remarks>
         public static string StripTypeName(this string typeFullName)
         {
@@ -976,6 +978,8 @@ namespace Megumin.Reflection
         }
     }
 
+    //下面这些特性虽然时序列化相关特性，但是与TypeCache紧密相关，并且通常与TypeCache一同使用，所以防止这里。
+
     /// <summary>
     /// 别名。如果标记在类型上，要使用类型全名，带上命名空间。
     /// </summary>
@@ -990,6 +994,46 @@ namespace Megumin.Reflection
         public SerializationAliasAttribute(string alias)
         {
             Alias = alias;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.All)]
+    public class NoStripFullNameAttribute : Attribute
+    {
+        /// <summary>
+        /// 检查类型和泛型类型的特化类型是否含有特性标记
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool HasAttribute(Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+
+            var attri = type.GetCustomAttribute<NoStripFullNameAttribute>();
+            if (attri != null)
+            {
+                return true;
+            }
+
+            if (type.IsGenericType)
+            {
+                var gs = type.GetGenericArguments();
+                if (gs != null && gs.Length > 0)
+                {
+                    foreach (var g in gs)
+                    {
+                        attri = g.GetCustomAttribute<NoStripFullNameAttribute>();
+                        if (attri != null)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
