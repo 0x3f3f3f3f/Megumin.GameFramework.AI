@@ -81,8 +81,14 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-
-        public bool Connect(BTParentNode parentNode, BTNode child)
+        /// <summary>
+        /// 默认作为最后一个子节点，排序步骤在其他环节
+        /// </summary>
+        /// <param name="parentNode"></param>
+        /// <param name="child"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool Connect(BTParentNode parentNode, BTNode child, int? index = null)
         {
             if (parentNode.ContainsChild(child))
             {
@@ -90,7 +96,15 @@ namespace Megumin.AI.BehaviorTree
             }
 
             version++;
-            parentNode.Children.Add(child);
+            if (index.HasValue && index.Value >= 0)
+            {
+                parentNode.Children.Insert(index.Value, child);
+            }
+            else
+            {
+                parentNode.Children.Add(child);
+            }
+
             AddNode(child);
             return true;
         }
@@ -105,6 +119,26 @@ namespace Megumin.AI.BehaviorTree
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 获得子节点在父节点中的索引
+        /// </summary>
+        /// <param name="parentNode"></param>
+        /// <param name="child"></param>
+        /// <returns></returns>
+        public int IndexOfParentNode(BTParentNode parentNode, BTNode child)
+        {
+            var index = 0;
+            foreach (var node in parentNode.Children)
+            {
+                if (node.GUID == child.GUID)
+                {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
         }
 
         public void OnChildIndexChanged(BTParentNode parentNode)

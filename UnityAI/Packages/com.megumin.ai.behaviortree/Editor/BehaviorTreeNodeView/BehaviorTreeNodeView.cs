@@ -424,11 +424,44 @@ namespace Megumin.AI.BehaviorTree.Editor
             evt.menu.AppendAction("Convert To/Inline Node",
                 a => { TreeView.InlineSubtree(Node as ISubtreeTreeElement); },
                 (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+
+            AddConvetToMenu(evt);
+
             evt.menu.AppendSeparator();
 
             if (Node is IBuildContextualMenuable buildable)
             {
                 buildable.BuildContextualMenu(evt);
+            }
+        }
+
+        public void AddConvetToMenu(ContextualMenuPopulateEvent evt)
+        {
+            //Sequence  Selector 快速互换
+            if (Node is Sequence sequence)
+            {
+                evt.menu.AppendAction("Convert To/Selector",
+                a =>
+                {
+                    using var undo = TreeView?.UndoBeginScope("Sequence to Selector");
+                    Selector newNode = new Selector();
+                    TreeView?.Tree?.DynamicReplace(Node, newNode);
+                    TreeView?.ReloadAllNodeView();
+                },
+                DropdownMenuAction.Status.Normal);
+            }
+
+            if (Node is Selector selector)
+            {
+                evt.menu.AppendAction("Convert To/Sequence",
+                a =>
+                {
+                    using var undo = TreeView?.UndoBeginScope("Selector to Sequence");
+                    Sequence newNode = new Sequence();
+                    TreeView?.Tree?.DynamicReplace(Node, newNode);
+                    TreeView?.ReloadAllNodeView();
+                },
+                DropdownMenuAction.Status.Normal);
             }
         }
 

@@ -164,22 +164,6 @@ namespace Megumin.AI.BehaviorTree
         private Status treestate = Status.Init;
 
         public string InstanceName { get; set; } = "anonymity";
-
-        /// <summary>
-        /// 用于编辑中UndoRedo时实例对象改变。
-        /// </summary>
-        public void ReCacheDic()
-        {
-            GuidDic.Clear();
-            foreach (var node in AllNodes)
-            {
-                GuidDic.Add(node.GUID, node);
-                if (node.GUID == Asset?.StartNodeGUID)
-                {
-                    StartNode = node;
-                }
-            }
-        }
     }
 
     public partial class BehaviorTree : IRefFinder

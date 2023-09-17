@@ -65,6 +65,55 @@ namespace Megumin.AI.BehaviorTree
                 ParseAllBindable(Agent, true);
             }
         }
+
+        /// <summary>
+        /// 动态替换一个节点,保持父子节点，装饰器不变。
+        /// </summary>
+        /// <param name="oldNode"></param>
+        /// <param name="newNode"></param>
+        public void DynamicReplace(BTNode oldNode, BTNode newNode)
+        {
+            RemoveNode(oldNode);
+
+            //继承meta guid
+            newNode.Meta = oldNode.Meta;
+            newNode.Index = oldNode.Index;
+            newNode.Depth = oldNode.Depth;
+            newNode.GUID = oldNode.GUID;
+
+            //继承装饰器
+            foreach (var decorator in oldNode.Decorators)
+            {
+                newNode.AddDecorator(decorator);
+            }
+
+            DynamicAdd(newNode);
+
+            //继承子节点
+            if (oldNode is BTParentNode parentNode && newNode is BTParentNode newParent)
+            {
+                foreach (var item in parentNode.Children)
+                {
+                    Connect(newParent, item);
+                }
+            }
+
+            //继承父节点
+            if (TryGetFirstParent(oldNode, out var parent))
+            {
+                var index = IndexOfParentNode(parent, oldNode);
+                Disconnect(parent, oldNode);
+                Connect(parent, newNode, index);
+            }
+
+            //通过ReCacheDic 更新开始节点
+            ReCacheDic();
+
+
+            version++;
+            UpdateNodeIndexDepth(true);
+            DynamicReBind();
+        }
     }
 }
 

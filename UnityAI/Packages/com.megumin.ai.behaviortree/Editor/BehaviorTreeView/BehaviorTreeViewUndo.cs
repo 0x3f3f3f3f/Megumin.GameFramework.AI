@@ -15,6 +15,11 @@ namespace Megumin.AI.BehaviorTree.Editor
     public partial class BehaviorTreeView
     {
         internal HashSetScope UndoMute = new();
+
+        /// <summary>
+        /// 记录一个版本，方便Undo回来
+        /// </summary>
+        /// <param name="name"></param>
         public void UndoRecord(string name)
         {
             if (UndoMute)
@@ -55,6 +60,11 @@ namespace Megumin.AI.BehaviorTree.Editor
             EditorWindow?.UpdateHasUnsavedChanges();
         }
 
+        /// <summary>
+        /// 开启一个保存版本的作用域，在释放前的所有操作，都认为是同一个操作。
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IDisposable UndoBeginScope(string name)
         {
             UndoRecord(name);
