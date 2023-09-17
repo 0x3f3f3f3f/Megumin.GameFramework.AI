@@ -14,8 +14,9 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay/Perception")]
     [AddComponentMenu("HasTarget(Transform)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.HasTarget")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.PerceptionHasTarget_Transform")]
     [HelpURL(URL.WikiDecorator + "HasTarget")]
-    public class PerceptionHasTarget_Transform : ConditionDecorator<TransformPerception>
+    public class PerceptionHasTarget_Transform_Decorator : ConditionDecorator<TransformPerception>
     {
         [Space]
         public GameObjectFilter Filter;
@@ -50,7 +51,8 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay/Perception")]
     [AddComponentMenu("HasTarget(GameObject)")]
     [HelpURL(URL.WikiDecorator + "HasTarget")]
-    public class PerceptionHasTarget_GameObject : ConditionDecorator<GameObjectPerception>
+    [SerializationAlias("Megumin.AI.BehaviorTree.PerceptionHasTarget_GameObject")]
+    public class PerceptionHasTarget_GameObject_Decorator : ConditionDecorator<GameObjectPerception>
     {
         [Space]
         public GameObjectFilter Filter;

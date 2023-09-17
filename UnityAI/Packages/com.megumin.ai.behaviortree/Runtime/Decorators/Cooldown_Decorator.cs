@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
@@ -18,7 +20,9 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// CD
     /// </summary>
-    public class Cooldown : ConditionDecorator, IPreDecorator, IPostDecorator, IConditionDecorator
+    [DisplayName("Cooldown")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Cooldown")]
+    public class Cooldown_Decorator : ConditionDecorator, IPreDecorator, IPostDecorator, IConditionDecorator
     {
         public RefVar_Double CooldownTime = new RefVar_Double() { value = 5 };
         public CooldownMode Mode = CooldownMode.OnEnter;

@@ -39,14 +39,14 @@ public class Test : MonoBehaviour
     [Editor]
     public void TestAdd()
     {
-        Decorator[0] = new Loop();
+        Decorator[0] = new Loop_Decorator();
         Decorator[1] = new CheckBool_Decorator();
-        Decorator[2] = new Cooldown();
+        Decorator[2] = new Cooldown_Decorator();
         //Decorator.Add(new Loop());
 
-        test.AddDecorator(new Loop());
+        test.AddDecorator(new Loop_Decorator());
         test.AddDecorator(new CheckBool_Decorator());
-        test.AddDecorator(new Cooldown());
+        test.AddDecorator(new Cooldown_Decorator());
 
     }
 

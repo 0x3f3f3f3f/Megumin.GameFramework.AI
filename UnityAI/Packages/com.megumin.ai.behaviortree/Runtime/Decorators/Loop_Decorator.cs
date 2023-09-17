@@ -4,11 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public class Loop : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
+    [DisplayName("Loop")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Loop")]
+    public class Loop_Decorator : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
     {
         /// <summary>
         /// 作为独立AI使用，根节点可能设置为无限循环。

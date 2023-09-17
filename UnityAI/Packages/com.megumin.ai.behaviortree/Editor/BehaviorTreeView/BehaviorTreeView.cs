@@ -110,8 +110,8 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             var testParent = new Sequence();
             testParent.GUID = Guid.NewGuid().ToString();
-            testParent.AddDecorator<Loop>();
-            testParent.AddDecorator<Cooldown>();
+            testParent.AddDecorator<Loop_Decorator>();
+            testParent.AddDecorator<Cooldown_Decorator>();
 
             var testParentView = CreateNodeView(testParent, true);
             //在UIBuilder中显示，在BehaviorTreeEditor中不显示。

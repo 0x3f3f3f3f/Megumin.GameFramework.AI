@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
@@ -10,7 +11,8 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("IsArrive(Transform)")]
     [HelpURL(URL.WikiDecorator + "IsArrive")]
-    public class IsArrive : ConditionDecorator
+    [SerializationAlias("Megumin.AI.BehaviorTree.IsArrive")]
+    public class IsArrive_Decorator : ConditionDecorator
     {
         [Space]
         public Destination destination;

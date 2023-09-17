@@ -40,7 +40,8 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("TryFindDestination(Transform)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.TryGetNewDestination")]
-    public class TryFindDestination : ConditionDecorator
+    [SerializationAlias("Megumin.AI.BehaviorTree.TryFindDestination")]
+    public class TryFindDestination_Decorator : ConditionDecorator
     {
         public RefVar_Transform Destination;
         public RefVar_Transform_List DestinationList;

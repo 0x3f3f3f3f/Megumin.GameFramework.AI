@@ -64,7 +64,7 @@ namespace Megumin.AI.BehaviorTree
             var temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta = new Megumin.AI.BehaviorTree.NodeMeta();
             var temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.IDecorator>();
             var temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children = new System.Collections.Generic.List<Megumin.AI.BehaviorTree.BTNode>();
-            var deco_f215473e_1bd7_451b_9d38_79a052d9b203 = new Megumin.AI.BehaviorTree.Loop();
+            var deco_f215473e_1bd7_451b_9d38_79a052d9b203 = new Megumin.AI.BehaviorTree.Loop_Decorator();
 
             //以上创建 0 参数
             //以上创建 5 节点
@@ -230,7 +230,7 @@ namespace Megumin.AI.BehaviorTree
             temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta.IsStartNode = true;
 
             //a734621c-96b6-4a26-898c-0e4d45f5dba2.Decorators.0
-            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.Loop>(
+            if (finder.TryGetRefValue<Megumin.AI.BehaviorTree.Loop_Decorator>(
                 "f215473e-1bd7-451b-9d38-79a052d9b203",
                 out var temp_ref_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators_0))
             {

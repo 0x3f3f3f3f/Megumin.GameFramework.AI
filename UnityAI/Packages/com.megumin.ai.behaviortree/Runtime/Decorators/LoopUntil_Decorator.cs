@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 持续循环知道返回想要的结果。
     /// </summary>
-    public class LoopUntil : BTDecorator, IPostDecorator
+    [DisplayName("LoopUntil")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.LoopUntil")]
+    public class LoopUntil_Decorator : BTDecorator, IPostDecorator
     {
         public Status Result = Status.Succeeded;
         public Status AfterNodeExit(Status result, object options = null)

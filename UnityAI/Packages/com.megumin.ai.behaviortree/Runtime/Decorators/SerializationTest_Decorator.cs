@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [DisplayName("SerializationTest")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.SerializationTestDecorator")]
     [Category("Samples/Serialization")]
-    public class SerializationTestDecorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>
+    public class SerializationTest_Decorator : BTDecorator, ISerializationCallbackReceiver<CollectionSerializationData>
     {
         public float TestFloat = 3f;
         public GameObject TestRef;

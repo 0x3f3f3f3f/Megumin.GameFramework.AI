@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
@@ -10,7 +12,9 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 改变行为的结果。强制成功，强制失败，结果取反Inverter
     /// </summary>
-    public class Remap : BTDecorator, IPostDecorator
+    [DisplayName("Remap")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Remap")]
+    public class Remap_Decorator : BTDecorator, IPostDecorator
     {
         public Status SucceededTo = Status.Succeeded;
         public Status FailedTo = Status.Failed;

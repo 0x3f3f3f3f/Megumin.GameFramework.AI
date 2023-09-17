@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Megumin.Reflection;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public class Inverter : BTDecorator, IPostDecorator
+    [DisplayName("Inverter")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Inverter")]
+    public class Inverter_Decorator : BTDecorator, IPostDecorator
     {
         public Status AfterNodeExit(Status result, object options = null)
         {

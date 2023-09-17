@@ -1,61 +1,37 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Megumin.Binding;
+using Megumin.Reflection;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    /// <summary>
-    /// 日志节点，不使用GetLogger机制
-    /// </summary>
-    [Icon("console.infoicon@2x")]
-    [Category("Debug")]
-    public class DecoratorLog : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
+    [DisplayName("RandomFloat")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Random_Float")]
+    public class RandomFloat_Decorator : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         [Space]
         public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
-        [Space]
-        [Tooltip("Use my gameObject  macro replace Text.")]
-        public bool UseMacro = false;
-        public LogInfo Info;
-
-        public string GetLogString()
-        {
-            if (Info == null)
-            {
-                return null;
-            }
-
-            var sb = Info.Rebuid();
-
-            if (UseMacro)
-            {
-                sb = sb.MacroUnityObject(GameObject);
-            }
-
-            return sb.ToString();
-        }
+        public RefVar_Float SaveTo;
 
         public bool LastCheckResult => true;
         public bool CheckCondition(object options = null)
         {
             if ((DecoratorPosition & DecoratorPosition.Condition) != 0)
             {
-                Debug.Log($"Condition: {GetLogString()}");
+                SaveTo?.SetValue(Random.value);
             }
             return true;
         }
+
 
         public void BeforeNodeEnter(object options = null)
         {
             if ((DecoratorPosition & DecoratorPosition.PreEnter) != 0)
             {
-                Debug.Log($"PreDeco: {GetLogString()}");
+                SaveTo?.SetValue(Random.value);
             }
         }
 
@@ -63,7 +39,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.PostExit) != 0)
             {
-                Debug.Log($"PostDeco: {GetLogString()}  {result}");
+                SaveTo?.SetValue(Random.value);
             }
             return result;
         }
@@ -72,11 +48,8 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.Abort) != 0)
             {
-                Debug.Log($"AbortDeco: {GetLogString()}");
+                SaveTo?.SetValue(Random.value);
             }
         }
     }
-
-
-
 }

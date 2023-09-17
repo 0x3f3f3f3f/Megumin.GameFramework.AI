@@ -328,7 +328,7 @@ namespace Megumin.AI.BehaviorTree
                     else
                     {
                         //使用MissingDecorator代替
-                        MissingDecorator missing = new();
+                        Missing_Decorator missing = new();
                         missing.MissType = item.Type;
                         missing.GUID = item.Name;
                         missing.OrignalData = item;
