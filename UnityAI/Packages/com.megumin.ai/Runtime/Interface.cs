@@ -20,7 +20,7 @@ namespace Megumin.AI
 
     public interface IDetailAlignable
     {
-        TextAnchor TextAlign { get; }
+        TextAnchor DetailTextAlign { get; }
     }
 
     [Flags]

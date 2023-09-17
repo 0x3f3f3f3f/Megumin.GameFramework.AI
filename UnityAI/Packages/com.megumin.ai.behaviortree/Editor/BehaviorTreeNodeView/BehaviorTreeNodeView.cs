@@ -330,7 +330,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 
                     if (Node is IDetailAlignable alignable)
                     {
-                        Detail.style.unityTextAlign = alignable.TextAlign;
+                        Detail.style.unityTextAlign = alignable.DetailTextAlign;
                     }
                 }
             }
