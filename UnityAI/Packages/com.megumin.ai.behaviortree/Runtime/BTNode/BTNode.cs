@@ -163,7 +163,7 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
-        protected Status GetIgnoreResult(BTNode from)
+        protected virtual Status GetIgnoreResult(BTNode from)
         {
             if (from is Selector)
             {
