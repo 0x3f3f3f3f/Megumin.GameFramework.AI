@@ -447,6 +447,9 @@ namespace Megumin.AI.BehaviorTree.Editor
                     Selector newNode = new Selector();
                     TreeView?.Tree?.DynamicReplace(Node, newNode);
                     TreeView?.ReloadAllNodeView();
+                    //为了防止错误，多更新一次序号。
+                    TreeView?.SortAllChild();
+                    TreeView?.Tree?.UpdateNodeIndexDepth();
                 },
                 DropdownMenuAction.Status.Normal);
             }
@@ -460,6 +463,9 @@ namespace Megumin.AI.BehaviorTree.Editor
                     Sequence newNode = new Sequence();
                     TreeView?.Tree?.DynamicReplace(Node, newNode);
                     TreeView?.ReloadAllNodeView();
+                    //为了防止错误，多更新一次序号。
+                    TreeView?.SortAllChild();
+                    TreeView?.Tree?.UpdateNodeIndexDepth();
                 },
                 DropdownMenuAction.Status.Normal);
             }

@@ -22,7 +22,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
         }
 
-        public void SortChild(BTParentNode parentNode)
+        public bool SortChild(BTParentNode parentNode)
         {
             var hasChanged = false;
             parentNode.Children.Sort((lhs, rhs) =>
@@ -42,6 +42,24 @@ namespace Megumin.AI.BehaviorTree.Editor
                 //Debug.LogError($"hasChanged {hasChanged}");
                 Tree?.OnChildIndexChanged(parentNode);
             }
+
+            return hasChanged;
+        }
+
+        public bool SortAllChild()
+        {
+            var hasChanged = false;
+            if (Tree != null)
+            {
+                foreach (var item in Tree.AllNodes)
+                {
+                    if (item is BTParentNode parentNode)
+                    {
+                        hasChanged |= SortChild(parentNode);
+                    }
+                }
+            }
+            return hasChanged;
         }
 
         public void ConnectChild(BehaviorTreeNodeView parentNodeView, BehaviorTreeNodeView childNodeView)
