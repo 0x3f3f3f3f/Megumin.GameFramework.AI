@@ -94,7 +94,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (IsCheckedCanExecute)
             {
-                return ExecuteConditionDecoratorCheckAbortSelf(options);
+                return ExecuteSelfAbortable(options);
             }
             else
             {
@@ -225,9 +225,20 @@ namespace Megumin.AI.BehaviorTree
         /// <remarks>
         /// 终止低优先级可能不仅仅受装饰器影响，用户可能会扩展其他功能，所以这里用虚函数包装。
         /// </remarks>
+        [Obsolete("设计缺陷。低优先级终止的true和false，对于Selector和Sequence的含义是相反的，需要重命名", true)]
         public virtual bool CanAbortLowerPriority(object options = null)
         {
-            return ExecuteConditionDecoratorCheckAbortLowerPriority(options);
+            return ExecuteLowerPriorityAbortable(options);
+        }
+
+        public virtual bool AllLowerPriorityAbortableResultTrue(object options = null)
+        {
+            return ExecuteLowerPriorityAbortable(options);
+        }
+
+        public virtual bool AnyLowerPriorityAbortableResultFalse(object options = null)
+        {
+            return ExecuteLowerPriorityAbortable(options) == false;
         }
 
         /// <summary>

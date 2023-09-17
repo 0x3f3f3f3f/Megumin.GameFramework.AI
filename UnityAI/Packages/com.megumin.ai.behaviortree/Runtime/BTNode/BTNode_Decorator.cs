@@ -31,19 +31,19 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 检查含有终止自身标记的条件装饰器，能否继续执行
+        /// 检查所有含有终止自身标记的条件装饰器
         /// </summary>
         /// <returns>
-        /// <see langword="true"/>可以继续执行
-        /// <see langword="false"/>不能继续执行，应该终止自身
+        /// <see langword="true"/>结果值全为true
+        /// <see langword="false"/>结果值含有false
         /// </returns>
-        protected bool ExecuteConditionDecoratorCheckAbortSelf(object options = null)
+        protected bool ExecuteSelfAbortable(object options = null)
         {
-            foreach (var pre in Decorators)
+            foreach (var deco in Decorators)
             {
-                if (pre is IAbortable abortable && (abortable.AbortType & AbortType.Self) != 0)
+                if (deco is IAbortable abortable && (abortable.AbortType & AbortType.Self) != 0)
                 {
-                    if (pre is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
+                    if (deco is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
                     {
                         return false;
                     }
@@ -54,16 +54,19 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 检查含有终止低优先级标记的条件装饰器，能否继续执行
+        /// 检查所有含有终止低优先级标记的条件装饰器
         /// </summary>
-        /// <returns></returns>
-        protected bool ExecuteConditionDecoratorCheckAbortLowerPriority(object options = null)
+        /// <returns>
+        /// <see langword="true"/>结果值全为true
+        /// <see langword="false"/>结果值含有false
+        /// </returns>
+        protected bool ExecuteLowerPriorityAbortable(object options = null)
         {
-            foreach (var pre in Decorators)
+            foreach (var deco in Decorators)
             {
-                if (pre is IAbortable abortable && (abortable.AbortType & AbortType.LowerPriority) != 0)
+                if (deco is IAbortable abortable && (abortable.AbortType & AbortType.LowerPriority) != 0)
                 {
-                    if (pre is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
+                    if (deco is IConditionDecorator conditionable && conditionable.CheckCondition(options) == false)
                     {
                         return false;
                     }

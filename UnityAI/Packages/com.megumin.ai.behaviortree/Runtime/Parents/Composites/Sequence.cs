@@ -9,6 +9,10 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 为什么是Sequence不是Sequencer，因为Sequence字符串长度和Selector一样。
     /// </summary>
+    /// <remarks>
+    /// 非常不建议在Sequence的子节点使用LowerPriority低优先级终止，它是违反直觉的。
+    /// 在UE中Sequence的子节点禁用了低优先级终止，本插件还是保留可用性，防止真的有人用。
+    /// </remarks>
     public class Sequence : CompositeNode
     {
         protected override Status OnTick(BTNode from, object options = null)
@@ -42,7 +46,7 @@ namespace Megumin.AI.BehaviorTree
                         //需要保持前面的节点结果值一直是Succeeded。
 
                         //这里仅仅考虑终止低优先级标记求解值，其他的忽略因素
-                        if (child.CanAbortLowerPriority())
+                        if (child.AllLowerPriorityAbortableResultTrue())
                         {
                             //终止低优先级标记求解值成功。
                             //Q：这里到底还要不要继续检查 所有条件 和 节点本身是否成功？？？
