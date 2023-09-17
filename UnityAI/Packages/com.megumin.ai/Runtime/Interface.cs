@@ -29,6 +29,12 @@ namespace Megumin.AI
         //IsCompleted => State == Status.Succeeded || State == Status.Failed;
     }
 
+    public enum CompletedResult 
+    {
+        Succeeded = 1,
+        Failed = 2,
+    }
+
     /// <summary>
     /// 执行失败的错误码
     /// </summary>
