@@ -337,7 +337,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             var showDynamicMarker = false;
             if (DynamicMarker != null)
             {
-                if (Node is BTParentNode parentNode)
+                if (Node is IDynamicable parentNode)
                 {
                     showDynamicMarker = parentNode.Dynamic;
                 }

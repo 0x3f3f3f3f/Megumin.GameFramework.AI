@@ -53,6 +53,17 @@ namespace Megumin.AI.BehaviorTree
     }
 
     /// <summary>
+    /// 动态的，通常用于动态节点标记
+    /// </summary>
+    public interface IDynamicable
+    {
+        /// <summary>
+        /// 条件终止 动态模式
+        /// </summary>
+        bool Dynamic { get; set; }
+    }
+
+    /// <summary>
     /// 可终止的
     /// </summary>
     public interface IAbortable

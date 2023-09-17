@@ -13,7 +13,7 @@ namespace Megumin.AI.BehaviorTree
     /// 非常不建议在Sequence的子节点使用LowerPriority低优先级终止，它是违反直觉的。
     /// 在UE中Sequence的子节点禁用了低优先级终止，本插件还是保留可用性，防止真的有人用。
     /// </remarks>
-    public class Sequence : CompositeNode
+    public class Sequence : CompositeNode, IDynamicable
     {
         protected override Status OnTick(BTNode from, object options = null)
         {

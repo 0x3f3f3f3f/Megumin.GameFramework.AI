@@ -19,12 +19,6 @@ namespace Megumin.AI.BehaviorTree
         [FormerlySerializedAs("children")]
         public List<BTNode> Children = new();
 
-        /// <summary>
-        /// 条件终止 动态模式
-        /// </summary>
-        [Tooltip("It is recommended to use AbortType instead of Dynamic.")]
-        public bool Dynamic = false;
-
         public bool ContainsChild(BTNode node)
         {
             foreach (BTNode child in Children)
@@ -73,8 +67,15 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
-    public abstract class CompositeNode : BTParentNode
+    public abstract class CompositeNode : BTParentNode, IDynamicable
     {
+        /// <summary>
+        /// 条件终止 动态模式
+        /// </summary>
+        [field: Tooltip("It is recommended to use AbortType instead of Dynamic.")]
+        [field: SerializeField]
+        public bool Dynamic { get; set; } = false;
+
         public int CurrentIndex { get; protected set; } = -1;
 
         protected override void OnEnter(object options = null)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public class Selector : CompositeNode
+    public class Selector : CompositeNode, IDynamicable
     {
         protected override Status OnTick(BTNode from, object options = null)
         {
