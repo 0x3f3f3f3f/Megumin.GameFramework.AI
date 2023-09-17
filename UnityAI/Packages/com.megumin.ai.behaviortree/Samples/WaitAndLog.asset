@@ -99,7 +99,7 @@ MonoBehaviour:
       Value: a734621c-96b6-4a26-898c-0e4d45f5dba2
   decorators:
   - Name: f215473e-1bd7-451b-9d38-79a052d9b203
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String

@@ -14,6 +14,12 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public DecoratorPosition DecoratorPosition = DecoratorPosition.None;
 
+        [Space]
+        public bool UseRange = false;
+        public RefVar_Float Min;
+        public RefVar_Float Max;
+
+        [Space]
         public RefVar_Float SaveTo;
 
         public bool LastCheckResult => true;
@@ -21,7 +27,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.Condition) != 0)
             {
-                SaveTo?.SetValue(Random.value);
+                if (UseRange)
+                {
+                    SaveTo?.SetValue(Random.Range(Min, Max));
+                }
+                else
+                {
+                    SaveTo?.SetValue(Random.value);
+                }
             }
             return true;
         }
@@ -31,7 +44,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.PreEnter) != 0)
             {
-                SaveTo?.SetValue(Random.value);
+                if (UseRange)
+                {
+                    SaveTo?.SetValue(Random.Range(Min, Max));
+                }
+                else
+                {
+                    SaveTo?.SetValue(Random.value);
+                }
             }
         }
 
@@ -39,7 +59,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.PostExit) != 0)
             {
-                SaveTo?.SetValue(Random.value);
+                if (UseRange)
+                {
+                    SaveTo?.SetValue(Random.Range(Min, Max));
+                }
+                else
+                {
+                    SaveTo?.SetValue(Random.value);
+                }
             }
             return result;
         }
@@ -48,7 +75,14 @@ namespace Megumin.AI.BehaviorTree
         {
             if ((DecoratorPosition & DecoratorPosition.Abort) != 0)
             {
-                SaveTo?.SetValue(Random.value);
+                if (UseRange)
+                {
+                    SaveTo?.SetValue(Random.Range(Min, Max));
+                }
+                else
+                {
+                    SaveTo?.SetValue(Random.value);
+                }
             }
         }
     }

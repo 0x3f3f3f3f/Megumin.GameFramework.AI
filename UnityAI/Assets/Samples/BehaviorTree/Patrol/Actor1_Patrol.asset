@@ -156,13 +156,13 @@ MonoBehaviour:
       Value: f4f01a65-ea5c-4fc4-980e-07b01b8ac5a1
   decorators:
   - Name: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 266cd0ee-62eb-4252-92f3-d929d72b7a2a
   - Name: ef8668be-8284-4ea8-835e-fdd1cd354483
-    Type: Megumin.AI.BehaviorTree.TryFindDestination
+    Type: Megumin.AI.BehaviorTree.TryFindDestination_Decorator
     Member:
     - Name: Destination
       Type: $ref

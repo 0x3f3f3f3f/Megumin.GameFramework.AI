@@ -81,13 +81,13 @@ MonoBehaviour:
       Value: 74eadc13-0bb8-47df-8f79-2388f3e38ee3
   decorators:
   - Name: 6bfb6c55-5e84-4c61-ae15-96b27b126a3e
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 6bfb6c55-5e84-4c61-ae15-96b27b126a3e
   - Name: 9ad753a5-6686-4787-a2e2-5144094acb52
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String

@@ -198,13 +198,13 @@ MonoBehaviour:
       Value: dc60eea0-d509-4305-b48f-c694104617be
   decorators:
   - Name: 3fe8b055-c382-40fd-8c8c-4c6bff4e58a5
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 3fe8b055-c382-40fd-8c8c-4c6bff4e58a5
   - Name: 5de7c254-132f-42a8-aba1-2f48dfb5d4f0
-    Type: Megumin.AI.BehaviorTree.PerceptionHasTarget_Transform
+    Type: Megumin.AI.BehaviorTree.PerceptionHasTarget_Transform_Decorator
     Member:
     - Name: Filter
       Type: $ref
@@ -219,13 +219,13 @@ MonoBehaviour:
       Type: Megumin.AI.BehaviorTree.AbortType
       Value: Megumin.AI.BehaviorTree.AbortType:Self
   - Name: b54b45e5-80f9-42e3-b313-462b0bd11825
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: b54b45e5-80f9-42e3-b313-462b0bd11825
   - Name: dc7d18a5-22d3-47ea-8169-d44db3d55999
-    Type: Megumin.AI.BehaviorTree.PerceptionHasTarget_Transform
+    Type: Megumin.AI.BehaviorTree.PerceptionHasTarget_Transform_Decorator
     Member:
     - Name: Filter
       Type: $ref

@@ -123,23 +123,29 @@ MonoBehaviour:
       Value: f3866d61-dfd6-43c9-a0cc-aeac9f0f1262
   decorators:
   - Name: 6bfb6c55-5e84-4c61-ae15-96b27b126a3e
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 6bfb6c55-5e84-4c61-ae15-96b27b126a3e
   - Name: 718961ae-ae52-479c-b52a-4ec5c06549c4
-    Type: Megumin.AI.BehaviorTree.Remap
+    Type: Megumin.AI.BehaviorTree.Remap_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 718961ae-ae52-479c-b52a-4ec5c06549c4
   - Name: 9ad753a5-6686-4787-a2e2-5144094acb52
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 9ad753a5-6686-4787-a2e2-5144094acb52
+  - Name: d80604b1-320c-450d-b5a5-7d9e560afc07
+    Type: Megumin.AI.BehaviorTree.Missing_Decorator
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: d80604b1-320c-450d-b5a5-7d9e560afc07
   refObjs:
   - Name: 0e2c3966-8fb4-47a0-86f6-bac7cb107708.Children
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
@@ -194,7 +200,10 @@ MonoBehaviour:
     Member: []
   - Name: 5219f882-1b38-49e1-bfa5-f56c783408ce.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: d80604b1-320c-450d-b5a5-7d9e560afc07
   - Name: 5219f882-1b38-49e1-bfa5-f56c783408ce.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:

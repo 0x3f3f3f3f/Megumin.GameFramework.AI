@@ -141,7 +141,7 @@ MonoBehaviour:
       Value: ff70e3d3-70bf-4128-b250-6e965d47f698
   decorators:
   - Name: 725e84d9-397f-4784-9f06-8d340253def5
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: loopCount
       Type: System.Int32
@@ -150,7 +150,7 @@ MonoBehaviour:
       Type: System.String
       Value: 725e84d9-397f-4784-9f06-8d340253def5
   - Name: 8db06667-0a00-4a6d-a9df-0e654a280f96
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String

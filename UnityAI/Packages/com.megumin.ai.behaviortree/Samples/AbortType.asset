@@ -123,25 +123,25 @@ MonoBehaviour:
       Value: dfe65b40-1f7f-4ea2-83a1-f26b46ac2d4f
   decorators:
   - Name: 01f104f6-9067-4d75-afa1-09b3f1b3ee1f
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 01f104f6-9067-4d75-afa1-09b3f1b3ee1f
   - Name: 1f96aa06-162f-4228-a8a4-7391365278a8
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 1f96aa06-162f-4228-a8a4-7391365278a8
   - Name: 2dbd1b82-8ac6-45dc-ab4d-fcf3ba9839c0
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
       Value: 2dbd1b82-8ac6-45dc-ab4d-fcf3ba9839c0
   - Name: 3fbb5600-f75c-407f-a218-d248aee8cb09
-    Type: Megumin.AI.BehaviorTree.Inverter
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
     Member:
     - Name: GUID
       Type: System.String
@@ -159,7 +159,7 @@ MonoBehaviour:
       Type: Megumin.AI.BehaviorTree.AbortType
       Value: Megumin.AI.BehaviorTree.AbortType:LowerPriority
   - Name: 84546534-b1a8-4398-9fcf-6dff884fa347
-    Type: Megumin.AI.BehaviorTree.Loop
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
     - Name: GUID
       Type: System.String
