@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public class BTDecorator : BehaviorTreeElement, IDecorator
+    public abstract class BTDecorator : BehaviorTreeElement, IDecorator
     {
         /// <summary>
         /// 物主节点
@@ -13,7 +13,7 @@ namespace Megumin.AI.BehaviorTree
         public BTNode Owner { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
     }
 
-    public class BTDecorator<T> : BTDecorator, IHasMyAgent, IMyAgentable<T>
+    public abstract class BTDecorator<T> : BTDecorator, IHasMyAgent, IMyAgentable<T>
     {
         public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
@@ -60,7 +60,7 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 条件装饰器
     /// </summary>
-    public class ConditionDecorator : BTDecorator, IAbortable, IConditionDecorator
+    public abstract class ConditionDecorator : BTDecorator, IAbortable, IConditionDecorator
     {
         [Space]
         public bool Invert = false;
@@ -101,7 +101,7 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 
-    public class ConditionDecorator<T> : ConditionDecorator, IHasMyAgent, IMyAgentable<T>
+    public abstract class ConditionDecorator<T> : ConditionDecorator, IHasMyAgent, IMyAgentable<T>
     {
         public T MyAgent { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
