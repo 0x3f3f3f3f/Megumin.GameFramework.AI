@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Megumin.AI
@@ -17,6 +18,10 @@ namespace Megumin.AI
         string GetDetail();
     }
 
+    public interface IDetailAlignable
+    {
+        TextAnchor TextAlign { get; }
+    }
 
     [Flags]
     public enum Status
@@ -29,7 +34,7 @@ namespace Megumin.AI
         //IsCompleted => State == Status.Succeeded || State == Status.Failed;
     }
 
-    public enum CompletedResult 
+    public enum CompletedResult
     {
         Succeeded = 1,
         Failed = 2,

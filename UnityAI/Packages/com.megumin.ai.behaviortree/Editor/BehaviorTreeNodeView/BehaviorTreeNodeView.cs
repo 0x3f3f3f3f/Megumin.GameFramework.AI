@@ -327,6 +327,11 @@ namespace Megumin.AI.BehaviorTree.Editor
                         showDetail = true;
                     }
                     Detail.text = detail;
+
+                    if (Node is IDetailAlignable alignable)
+                    {
+                        Detail.style.unityTextAlign = alignable.TextAlign;
+                    }
                 }
             }
             DetailContainer.SetToClassList(UssClassConst.displayDetail, showDetail);
