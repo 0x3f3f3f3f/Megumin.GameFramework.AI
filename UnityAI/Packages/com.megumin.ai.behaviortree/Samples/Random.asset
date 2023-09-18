@@ -209,7 +209,7 @@ MonoBehaviour:
       Value: 
     - Name: value
       Type: System.Int32
-      Value: 5
+      Value: 7
     - Name: bindingPath
       Type: System.String
       Value: 

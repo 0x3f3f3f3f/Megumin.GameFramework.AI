@@ -108,7 +108,13 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 6565496b-6434-4c5d-9ff7-d1ec5a8b3e56
-  decorators: []
+  decorators:
+  - Name: 2c2b3e7e-5fd5-4e42-bdb9-b84babc1c53f
+    Type: Megumin.AI.BehaviorTree.Loop_Decorator
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: 2c2b3e7e-5fd5-4e42-bdb9-b84babc1c53f
   refObjs:
   - Name: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
@@ -119,6 +125,18 @@ MonoBehaviour:
     - Name: Text
       Type: $ref
       Value: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Text
+    - Name: Ref_Transform
+      Type: $ref
+      Value: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Ref_Transform
+    - Name: Ref_GameObject
+      Type: $ref
+      Value: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Ref_GameObject
+  - Name: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Ref_GameObject
+    Type: Megumin.Binding.RefVar_GameObject
+    Member: []
+  - Name: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Ref_Transform
+    Type: Megumin.Binding.RefVar_Transform
+    Member: []
   - Name: 1c4656a1-1d3f-491e-9147-a7f343fade9a.Info.Text
     Type: Megumin.Binding.RefVar_String
     Member:
@@ -199,16 +217,19 @@ MonoBehaviour:
       Value: 1c4656a1-1d3f-491e-9147-a7f343fade9a
   - Name: 25ca660d-8494-4efd-9d53-c6e3d61ae3d7.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: 2c2b3e7e-5fd5-4e42-bdb9-b84babc1c53f
   - Name: 25ca660d-8494-4efd-9d53-c6e3d61ae3d7.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:
     - Name: x
       Type: System.Single
-      Value: 374
+      Value: 382
     - Name: y
       Type: System.Single
-      Value: 66
+      Value: 25
   - Name: 541563ce-f18b-4a67-9918-f19d8a61aed8.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []

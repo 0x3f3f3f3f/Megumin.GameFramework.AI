@@ -55,12 +55,12 @@ MonoBehaviour:
     - Name: WaitTime
       Type: $ref
       Value: 068fda34-c636-4ad3-8d55-4dcd5d2fc736.WaitTime
-    - Name: GUID
-      Type: System.String
-      Value: 068fda34-c636-4ad3-8d55-4dcd5d2fc736
     - Name: Enabled
       Type: System.Boolean
       Value: False
+    - Name: GUID
+      Type: System.String
+      Value: 068fda34-c636-4ad3-8d55-4dcd5d2fc736
   - Name: 13ace398-682b-4e92-921c-7ebaaf7d92b5
     Type: Megumin.AI.BehaviorTree.Log
     Member:

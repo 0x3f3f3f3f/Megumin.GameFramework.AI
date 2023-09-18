@@ -52,12 +52,12 @@ MonoBehaviour:
     - Name: Children
       Type: $ref
       Value: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb.Children
-    - Name: GUID
-      Type: System.String
-      Value: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb
     - Name: Enabled
       Type: System.Boolean
       Value: False
+    - Name: GUID
+      Type: System.String
+      Value: 37005157-0b7d-44fc-91ff-f9afcfc3d6eb
   - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71
     Type: Megumin.AI.BehaviorTree.Patrol_1
     Member:
