@@ -94,6 +94,24 @@ MonoBehaviour:
     - Name: GUID
       Type: System.String
       Value: 7ee7b8f2-3e4d-4284-855a-bb751f85e0c1
+  - Name: 9f58b77d-f7a7-4249-aa5d-171e19cb4424
+    Type: Megumin.AI.BehaviorTree.RandomSelector
+    Member:
+    - Name: Meta
+      Type: $ref
+      Value: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Meta
+    - Name: Decorators
+      Type: $ref
+      Value: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Decorators
+    - Name: Children
+      Type: $ref
+      Value: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Children
+    - Name: priority
+      Type: $ref
+      Value: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.priority
+    - Name: GUID
+      Type: System.String
+      Value: 9f58b77d-f7a7-4249-aa5d-171e19cb4424
   - Name: ade1233d-f953-4ce4-a441-e54f6df9f9d1
     Type: Megumin.AI.BehaviorTree.Sequence
     Member:
@@ -207,6 +225,18 @@ MonoBehaviour:
     - Name: Text
       Type: $ref
       Value: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Text
+    - Name: Ref_Transform
+      Type: $ref
+      Value: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Ref_Transform
+    - Name: Ref_GameObject
+      Type: $ref
+      Value: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Ref_GameObject
+  - Name: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Ref_GameObject
+    Type: Megumin.Binding.RefVar_GameObject
+    Member: []
+  - Name: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Ref_Transform
+    Type: Megumin.Binding.RefVar_Transform
+    Member: []
   - Name: 2bfafd81-a9d4-4e96-8259-a84329d8475f.Info.Text
     Type: Megumin.Binding.RefVar_String
     Member:
@@ -246,6 +276,18 @@ MonoBehaviour:
     - Name: Text
       Type: $ref
       Value: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Text
+    - Name: Ref_Transform
+      Type: $ref
+      Value: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Ref_Transform
+    - Name: Ref_GameObject
+      Type: $ref
+      Value: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Ref_GameObject
+  - Name: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Ref_GameObject
+    Type: Megumin.Binding.RefVar_GameObject
+    Member: []
+  - Name: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Ref_Transform
+    Type: Megumin.Binding.RefVar_Transform
+    Member: []
   - Name: 62ff99bb-4463-4b4b-a5ea-142945805105.Info.Text
     Type: Megumin.Binding.RefVar_String
     Member:
@@ -294,6 +336,69 @@ MonoBehaviour:
     - Name: value
       Type: System.Single
       Value: 5
+  - Name: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Children
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
+    Member: []
+  - Name: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Decorators
+    Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
+    Member: []
+  - Name: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.Meta
+    Type: Megumin.AI.BehaviorTree.NodeMeta
+    Member:
+    - Name: x
+      Type: System.Single
+      Value: -1.603737
+    - Name: y
+      Type: System.Single
+      Value: 16.51322
+    - Name: Name
+      Type: System.String
+      Value: 
+    - Name: FriendlyName
+      Type: System.String
+      Value: 
+    - Name: Description
+      Type: System.String
+      Value: 
+    - Name: FriendlyDescription
+      Type: System.String
+      Value: 
+    - Name: Comment
+      Type: System.String
+      Value: 
+  - Name: 9f58b77d-f7a7-4249-aa5d-171e19cb4424.priority
+    Type: System.Collections.Generic.List`1[[System.Int32]]
+    Member:
+    - Name: 0
+      Type: System.Int32
+      Value: 3
+    - Name: 1
+      Type: System.Int32
+      Value: 5
+    - Name: 2
+      Type: System.Int32
+      Value: 7
+    - Name: 3
+      Type: System.Int32
+      Value: 7
+    - Name: 4
+      Type: System.Int32
+      Value: 7
+    - Name: 5
+      Type: System.Int32
+      Value: 7
+    - Name: 6
+      Type: System.Int32
+      Value: 7
+    - Name: 7
+      Type: System.Int32
+      Value: 7
+    - Name: 8
+      Type: System.Int32
+      Value: 7
+    - Name: 9
+      Type: System.Int32
+      Value: 7
   - Name: ade1233d-f953-4ce4-a441-e54f6df9f9d1.Children
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:

@@ -1,12 +1,16 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Megumin.Binding;
 using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 加权随机选出一个子节点执行
+    /// </summary>
     public class RandomOne : CompositeNode
     {
+        public List<int> priority;
         BTNode currentChild;
         protected override void OnEnter(object options = null)
         {
