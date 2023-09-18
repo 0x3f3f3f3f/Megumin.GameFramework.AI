@@ -198,7 +198,7 @@ namespace Megumin.AI.BehaviorTree
         public BTNode LastTick { get; set; } = null;
 
         /// <summary>
-        /// 事件生命周期为一个tick
+        /// 事件生命周期为一个tick，事件可以被多次响应
         /// </summary>
         Dictionary<string, EventData> eventCache = new();
 
@@ -312,7 +312,7 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 事件生命周期为一个tick
+        /// 触发器可以长久存在，直到被Reset，通常时获取触发器后，立刻Reset，也就是设计为仅被响应一次。
         /// </summary>
         Dictionary<string, TriggerData> triggerCache = new();
         public class TriggerData

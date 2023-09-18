@@ -12,6 +12,7 @@ namespace Megumin.AI.BehaviorTree
     /// 用于反序列化失败
     /// </summary>
     [Category("Debug")]
+    [DisplayName("Missing")]
     public class MissingNode : BTParentNode, IDetailable
     {
         public string MissType { get; set; }

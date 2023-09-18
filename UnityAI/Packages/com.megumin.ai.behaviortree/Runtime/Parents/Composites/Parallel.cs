@@ -32,6 +32,9 @@ namespace Megumin.AI.BehaviorTree
         AnyFailedWaitAll = 4,
     }
 
+    /// <summary>
+    /// 并行节点
+    /// </summary>
     public class Parallel : CompositeNode
     {
         public FinishMode FinishMode = FinishMode.AnyFailed;

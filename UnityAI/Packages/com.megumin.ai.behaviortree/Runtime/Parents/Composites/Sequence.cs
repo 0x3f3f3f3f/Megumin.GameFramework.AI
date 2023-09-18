@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 为什么是Sequence不是Sequencer，因为Sequence字符串长度和Selector一样。
+    /// 序列节点 <![CDATA[&&]]>
+    /// <para/> 节点按从左到右的顺序执行其子节点。当其中一个子节点失败时，序列节点也将停止执行。如果有子节点失败，那么序列就会失败。如果该序列的所有子节点运行都成功执行，则序列节点成功。
+    /// <para/> 为什么是Sequence不是Sequencer，因为Sequence字符串长度和Selector一样。
     /// </summary>
     /// <remarks>
     /// 非常不建议在Sequence的子节点使用LowerPriority低优先级终止，它是违反直觉的。
