@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &58892203
 Transform:
   m_ObjectHideFlags: 0
@@ -277,6 +277,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &677827573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 677827574}
+  - component: {fileID: 677827575}
+  m_Layer: 0
+  m_Name: RandomSelectorAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &677827574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677827573}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 2, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &677827575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677827573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BehaviorTreeAsset: {fileID: 11400000, guid: b61ff379bfb81c948aad03070f225bf1, type: 2}
+  TickMode: 1
+  AutoEnable: 1
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+    UseGenerateCode: 0
+    DelayRandomFrame:
+      Enabled: 0
+      Value: 30
+  RunOption:
+    FrameInterval:
+      Enabled: 0
+      Value: 1
+    TimeInterval:
+      Enabled: 0
+      Value: 0.1
+    RealtimeInterval:
+      Enabled: 0
+      Value: 0.1
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
+  OverrideUnityObjectRef: []
+  OverrideVariables:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1033794569
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +1047,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1707474345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1707474346}
+  - component: {fileID: 1707474347}
+  m_Layer: 0
+  m_Name: RandomOneAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1707474346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707474345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 2, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1707474347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707474345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BehaviorTreeAsset: {fileID: 11400000, guid: 72df943924ae02f4199e6d2b92c742a0, type: 2}
+  TickMode: 1
+  AutoEnable: 1
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+    UseGenerateCode: 0
+    DelayRandomFrame:
+      Enabled: 0
+      Value: 30
+  RunOption:
+    FrameInterval:
+      Enabled: 0
+      Value: 1
+    TimeInterval:
+      Enabled: 0
+      Value: 0.1
+    RealtimeInterval:
+      Enabled: 0
+      Value: 0.1
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
+  OverrideUnityObjectRef: []
+  OverrideVariables:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1773235784
 GameObject:
   m_ObjectHideFlags: 0

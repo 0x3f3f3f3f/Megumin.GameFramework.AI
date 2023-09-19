@@ -101,6 +101,7 @@ namespace Megumin.AI.BehaviorTree
                         return Status.Failed;
                     }
 
+                    //这里是条件终止测试失败的情况，当前节点指针不能回退
                     //指针只能向右移动
                     CurrentIndex = Math.Max(CurrentIndex, i);
                 }

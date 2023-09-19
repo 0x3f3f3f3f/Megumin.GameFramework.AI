@@ -1,20 +1,18 @@
-ï»¿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using System.Linq;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// åŠ æƒéšæœºæ–°çš„æ‰§è¡Œé¡ºåºï¼Œä¸æ”¯æŒä½ä¼˜å…ˆçº§ç»ˆæ­¢
+    /// ¼ÓÈ¨Ëæ»úĞÂµÄÖ´ĞĞË³Ğò£¬²»Ö§³ÖµÍÓÅÏÈ¼¶ÖÕÖ¹
     /// </summary>
-    public class RandomSelector : RandomComposite
+    public class RandomSequence : RandomComposite
     {
         protected override Status OnTick(BTNode from, object options = null)
         {
-            //æ ¹æ®Orderæ‰§è¡Œå­èŠ‚ç‚¹
+            //¸ù¾İOrderÖ´ĞĞ×Ó½Úµã
             for (int i = CurrentIndex; i < CurrentOrder.Count; i++)
             {
                 var index = CurrentOrder[i];
@@ -33,23 +31,22 @@ namespace Megumin.AI.BehaviorTree
                             CurrentIndex = i;
                             return Status.Running;
                         }
-                        else if (result == Status.Succeeded)
+                        else if (result == Status.Failed)
                         {
                             CurrentIndex = i;
-                            return Status.Succeeded;
+                            return Status.Failed;
                         }
                     }
                 }
 
-                //æŒ‡é’ˆåªèƒ½å‘å³ç§»åŠ¨
+                //Ö¸ÕëÖ»ÄÜÏòÓÒÒÆ¶¯
                 CurrentIndex = Math.Max(CurrentIndex, i);
             }
 
-            return Status.Failed;
+            return Status.Succeeded;
         }
     }
 }
-
 
 
 

@@ -52,7 +52,8 @@ Missing节点演示了，作为Selector子节点返回失败，
 在0-10之间随机一个整数，如果大于等于7，执行Wait。
 每次随机得到的值，可以在CompareRandomInt SaveTo属性处查看。  
 
-
+## RandomSelector
+演示了随机选择器，根据设定的节点权重，随机执行。
 
 
 
