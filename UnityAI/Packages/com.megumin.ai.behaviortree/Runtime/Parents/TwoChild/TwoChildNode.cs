@@ -78,7 +78,15 @@ namespace Megumin.AI.BehaviorTree
 
         protected override void OnAbort(object options = null)
         {
-            Child0.Abort(this, options);
+            if (Child0?.State == Status.Running)
+            {
+                Child0?.Abort(this, options);
+            }
+
+            if (Child1?.State == Status.Running)
+            {
+                Child1?.Abort(this, options);
+            }
         }
     }
 }
