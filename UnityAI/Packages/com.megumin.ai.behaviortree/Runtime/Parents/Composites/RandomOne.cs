@@ -11,7 +11,7 @@ namespace Megumin.AI.BehaviorTree
     /// 加权随机选出一个子节点执行
     /// TODO,抽象随机接口
     /// </summary>
-    public class RandomOne : CompositeNode, IDetailable, IDetailAlignable
+    public class RandomOne : CompositeNode, IDetailable, IDetailAlignable, IDataValidable
     {
         [Space]
         public List<int> Priority;
@@ -104,6 +104,21 @@ namespace Megumin.AI.BehaviorTree
         }
 
         public TextAnchor DetailTextAlign => TextAnchor.MiddleCenter;
+
+        public (int Result, string ToolTip) Valid()
+        {
+            if (Priority?.Count != Children.Count)
+            {
+                return (-1, "Priority.Count != Children.Count");
+            }
+
+            if (Priority?.Sum() == 0)
+            {
+                return (-2, "Total priority is 0");
+            }
+
+            return (0, null);
+        }
     }
 }
 

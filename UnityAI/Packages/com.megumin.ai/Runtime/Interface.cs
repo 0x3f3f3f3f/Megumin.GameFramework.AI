@@ -23,6 +23,19 @@ namespace Megumin.AI
         TextAnchor DetailTextAlign { get; }
     }
 
+    /// <summary>
+    /// 可验证节点数据的
+    /// </summary>
+    public interface IDataValidable
+    {
+        /// <summary>
+        /// 用于验证节点数据的合法性，当参数不合法时，编辑器UI上增加提示。
+        /// <para/> 通常0表示数据合法
+        /// </summary>
+        /// <returns></returns>
+        (int Result, string ToolTip) Valid();
+    }
+
     [Flags]
     public enum Status
     {

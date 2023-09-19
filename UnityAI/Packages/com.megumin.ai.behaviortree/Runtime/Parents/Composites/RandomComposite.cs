@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    public abstract class RandomComposite : CompositeNode, IDetailable, IDetailAlignable
+    public abstract class RandomComposite : CompositeNode, IDetailable, IDetailAlignable, IDataValidable
     {
         [Space]
         public List<int> Priority;
@@ -104,6 +104,21 @@ namespace Megumin.AI.BehaviorTree
         }
 
         public TextAnchor DetailTextAlign => TextAnchor.MiddleCenter;
+
+        public (int Result, string ToolTip) Valid()
+        {
+            if (Priority?.Count != Children.Count)
+            {
+                return (-1, "Priority.Count != Children.Count");
+            }
+
+            if (Priority?.Sum() == 0)
+            {
+                return (-2, "Total priority is 0");
+            }
+
+            return (0, null);
+        }
     }
 
 

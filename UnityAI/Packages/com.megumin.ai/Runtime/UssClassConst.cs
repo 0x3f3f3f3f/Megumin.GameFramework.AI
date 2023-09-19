@@ -33,5 +33,7 @@ namespace Megumin.AI
 
         public const string noAgent = nameof(noAgent);
         public const string bindPathParseNone = nameof(bindPathParseNone);
+
+        public const string dataWarning = nameof(dataWarning);
     }
 }

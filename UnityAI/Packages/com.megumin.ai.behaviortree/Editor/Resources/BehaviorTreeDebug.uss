@@ -60,10 +60,18 @@
 .running.node.behaviorTreeNode #body #title {
 }
 
-.running.node.behaviorTreeNode #body .detail #注释{
+.running.node.behaviorTreeNode #body .detail #注释 {
     background-color: rgb(215, 215, 6);
 }
 
 .node.behaviorTreeNode.noAgent #top > #leftMarkArea > #bindAgent {
     display: flex;
+}
+
+.dataWarning.node.behaviorTreeNode #body #title #title-label {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: rgba(180, 135, 0, 255);
 }

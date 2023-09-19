@@ -36,6 +36,8 @@ namespace Megumin.AI.BehaviorTree.Editor
                     this.SetToClassList(UssClassConst.noAgent, agentable.Agent == null);
                 }
             }
+
+            ValidNodeData();
         }
 
         bool isRunning = false;

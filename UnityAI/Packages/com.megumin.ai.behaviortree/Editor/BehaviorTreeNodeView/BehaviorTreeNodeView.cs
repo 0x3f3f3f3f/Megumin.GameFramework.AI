@@ -293,6 +293,19 @@ namespace Megumin.AI.BehaviorTree.Editor
             AddToClassList(typeName);
 
             UpdateNodeType();
+
+            ValidNodeData();
+        }
+
+        internal protected void ValidNodeData()
+        {
+            //验证节点参数
+            if (Node is IDataValidable validable)
+            {
+                var (Result, ToolTip) = validable.Valid();
+                this.SetToClassList(UssClassConst.dataWarning, Result != 0);
+                titleContainer.tooltip = ToolTip;
+            }
         }
 
         /// <summary>

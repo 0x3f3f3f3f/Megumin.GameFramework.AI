@@ -156,6 +156,12 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
 
             //this.DrawButtonAfterDefaultInspector();
+
+            if (GUILayout.Button("TestUSS"))
+            {
+                var name = UssClassConst.dataWarning;
+                wrapper.View.SetToClassList(name, !wrapper.View.ClassListContains(name));
+            }
         }
     }
 }
