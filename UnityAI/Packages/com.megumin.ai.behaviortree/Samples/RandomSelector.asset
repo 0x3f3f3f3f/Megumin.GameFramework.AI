@@ -230,10 +230,10 @@ MonoBehaviour:
     Member:
     - Name: 0
       Type: System.Int32
-      Value: 1
+      Value: 3
     - Name: 1
       Type: System.Int32
-      Value: 3
+      Value: 1
     - Name: 2
       Type: System.Int32
       Value: 5
