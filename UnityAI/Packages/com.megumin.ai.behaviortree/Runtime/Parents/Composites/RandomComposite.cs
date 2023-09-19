@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,21 +25,21 @@ namespace Megumin.AI.BehaviorTree
 
             if (Priority.Count < Children.Count)
             {
-                //È¨ÖØ¸öÊıÉÙÓÚ×Ó½Úµã¸öÊı£¬²¹³ä1
+                //æƒé‡ä¸ªæ•°å°‘äºå­èŠ‚ç‚¹ä¸ªæ•°ï¼Œè¡¥å……1
                 for (int i = Priority.Count; i < Children.Count; i++)
                 {
                     Priority[i] = 1;
                 }
             }
 
-            //È¨ÖØ¸öÊı¶àÓÚ×Ó½Úµã¸öÊı£¬²»¿¼ÂÇ
+            //æƒé‡ä¸ªæ•°å¤šäºå­èŠ‚ç‚¹ä¸ªæ•°ï¼Œä¸è€ƒè™‘
             GetRandomIndex(Priority, Children.Count, CurrentOrder);
         }
 
         protected List<int> randomList = new List<int>();
 
         /// <summary>
-        /// ¸ù¾İÈ¨ÖØÖØĞÂÅÅĞò,Ã¿¸öÔªËØ½ö¿É±»Ëæ»úµ½Ò»´Î
+        /// æ ¹æ®æƒé‡é‡æ–°æ’åº,æ¯ä¸ªå…ƒç´ ä»…å¯è¢«éšæœºåˆ°ä¸€æ¬¡
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
@@ -65,7 +65,7 @@ namespace Megumin.AI.BehaviorTree
                 int value = UnityEngine.Random.Range(0, total);
                 for (int i = 0; i < count; i++)
                 {
-                    //»ñµÃµ±Ç°È¨ÖØ
+                    //è·å¾—å½“å‰æƒé‡
                     var currentPriority = randomList[i];
 
                     value -= currentPriority;
@@ -73,10 +73,111 @@ namespace Megumin.AI.BehaviorTree
                     {
                         order.Add(i);
 
-                        //×ÜÈ¨ÖØ¼õÈ¥µ±Ç°È¨ÖØ£¬ÏÂÒ»´ÎËæ»úÊ±²»°üº¬ÕâÒ»Ïî
+                        //æ€»æƒé‡å‡å»å½“å‰æƒé‡ï¼Œä¸‹ä¸€æ¬¡éšæœºæ—¶ä¸åŒ…å«è¿™ä¸€é¡¹
                         total -= currentPriority;
 
-                        //½«Ëæ»úµ½µÄÔªËØÈ¨ÖØÖÃÎª0£¬·ÀÖ¹ÔÙ´Î±»Ëæ»úµ½
+                        //å°†éšæœºåˆ°çš„å…ƒç´ æƒé‡ç½®ä¸º0ï¼Œé˜²æ­¢å†æ¬¡è¢«éšæœºåˆ°
+                        randomList[i] = 0;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public string GetDetail()
+        {
+            if (Priority != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < Priority.Count; i++)
+                {
+                    int p = Priority[i];
+                    sb.Append(p.ToString());
+                    if (i < Priority.Count - 1)
+                    {
+                        sb.Append(" | ");
+                    }
+                }
+                return sb.ToString();
+            }
+            return null;
+        }
+
+        public TextAnchor DetailTextAlign => TextAnchor.MiddleCenter;
+    }
+
+
+    public abstract class RandomComposite<T> : CompositeNode<T>, IDetailable, IDetailAlignable
+    {
+        [Space]
+        public List<int> Priority;
+
+        [ReadOnlyInInspector]
+        public List<int> CurrentOrder = new List<int>();
+
+        protected override void OnEnter(object options = null)
+        {
+            base.OnEnter(options);
+
+            if (Priority == null)
+            {
+                Priority = new List<int>();
+            }
+
+            if (Priority.Count < Children.Count)
+            {
+                //æƒé‡ä¸ªæ•°å°‘äºå­èŠ‚ç‚¹ä¸ªæ•°ï¼Œè¡¥å……1
+                for (int i = Priority.Count; i < Children.Count; i++)
+                {
+                    Priority[i] = 1;
+                }
+            }
+
+            //æƒé‡ä¸ªæ•°å¤šäºå­èŠ‚ç‚¹ä¸ªæ•°ï¼Œä¸è€ƒè™‘
+            GetRandomIndex(Priority, Children.Count, CurrentOrder);
+        }
+
+        protected List<int> randomList = new List<int>();
+
+        /// <summary>
+        /// æ ¹æ®æƒé‡é‡æ–°æ’åº,æ¯ä¸ªå…ƒç´ ä»…å¯è¢«éšæœºåˆ°ä¸€æ¬¡
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public void GetRandomIndex(List<int> list, int count, List<int> order)
+        {
+            randomList.Clear();
+            order.Clear();
+
+            for (int i = 0; i < count; i++)
+            {
+                randomList.Add(list[i]);
+            }
+
+            var total = randomList.Sum();
+
+            while (true)
+            {
+                if (total <= 0)
+                {
+                    break;
+                }
+
+                int value = UnityEngine.Random.Range(0, total);
+                for (int i = 0; i < count; i++)
+                {
+                    //è·å¾—å½“å‰æƒé‡
+                    var currentPriority = randomList[i];
+
+                    value -= currentPriority;
+                    if (value < 0)
+                    {
+                        order.Add(i);
+
+                        //æ€»æƒé‡å‡å»å½“å‰æƒé‡ï¼Œä¸‹ä¸€æ¬¡éšæœºæ—¶ä¸åŒ…å«è¿™ä¸€é¡¹
+                        total -= currentPriority;
+
+                        //å°†éšæœºåˆ°çš„å…ƒç´ æƒé‡ç½®ä¸º0ï¼Œé˜²æ­¢å†æ¬¡è¢«éšæœºåˆ°
                         randomList[i] = 0;
                         break;
                     }
