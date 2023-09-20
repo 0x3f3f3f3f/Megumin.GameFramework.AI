@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Megumin.Reflection
+namespace Megumin
 {
     /// <summary>
     /// 反射赋值是会查找这个特性，如果设置了回调函数，则使用回调函数对成员赋值。
@@ -15,6 +15,7 @@ namespace Megumin.Reflection
     /// 回调方法不可以是private和static的，必须在子类中仍可以被调用，否则无法在子类型中通过反射找到该方法。
     /// </para>
     /// </summary>
+    [AttributeUsage(AttributeTargets.All)]
     public class SetMemberByAttribute : Attribute
     {
         /// <summary>
@@ -27,6 +28,23 @@ namespace Megumin.Reflection
         }
     }
 
+    /// <summary>
+    /// <see cref="NonSerializedAttribute"/>会导致无法在Inspector上显示，增加一个自己的接口。
+    /// 不会对unity默认序列化产生用。使用Megumin序列化时，忽略含有这个特性的成员。
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All, Inherited = true)]
+    public class NonSerializedByMeguminAttribute : Attribute
+    {
+        public string FormatterName { get; set; }
+        public NonSerializedByMeguminAttribute(string formatterName = null)
+        {
+            FormatterName = formatterName;
+        }
+    }
+}
+
+namespace Megumin.Reflection
+{
     /// <summary>
     /// 序列化哪些成员委托
     /// </summary>
@@ -412,6 +430,12 @@ namespace Megumin.Reflection
 
             var hasNonSerialized = field.IsDefined(typeof(NonSerializedAttribute), true);
             if (hasNonSerialized)
+            {
+                return false;
+            }
+
+            var hasNonSerializedByMegumin = field.IsDefined(typeof(NonSerializedByMeguminAttribute), true);
+            if (hasNonSerializedByMegumin)
             {
                 return false;
             }
