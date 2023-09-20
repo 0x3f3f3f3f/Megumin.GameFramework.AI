@@ -7,6 +7,71 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
+namespace Megumin
+{
+    //下面这些特性虽然时序列化相关特性，但是与TypeCache紧密相关，并且通常与TypeCache一同使用，所以放在这里。
+    //特性应该放在Common包里。
+    //但是为了包装文件完整性，其他人可能单独复制这个文件到其他地方，所有放在同一个文件里。
+
+    /// <summary>
+    /// 别名。如果标记在类型上，要使用类型全名，带上命名空间。
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
+    public class SerializationAliasAttribute : Attribute
+    {
+        /// <summary>
+        /// 别名
+        /// </summary>
+        public string Alias { get; set; }
+
+        public SerializationAliasAttribute(string alias)
+        {
+            Alias = alias;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.All)]
+    public class NoStripFullNameAttribute : Attribute
+    {
+        /// <summary>
+        /// 检查类型和泛型类型的特化类型是否含有特性标记
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool HasAttribute(Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+
+            var attri = type.GetCustomAttribute<NoStripFullNameAttribute>();
+            if (attri != null)
+            {
+                return true;
+            }
+
+            if (type.IsGenericType)
+            {
+                var gs = type.GetGenericArguments();
+                if (gs != null && gs.Length > 0)
+                {
+                    foreach (var g in gs)
+                    {
+                        attri = g.GetCustomAttribute<NoStripFullNameAttribute>();
+                        if (attri != null)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+}
+
 namespace Megumin.Reflection
 {
     /// <summary>
@@ -989,64 +1054,6 @@ namespace Megumin.Reflection
         }
     }
 
-    //下面这些特性虽然时序列化相关特性，但是与TypeCache紧密相关，并且通常与TypeCache一同使用，所以防止这里。
-
-    /// <summary>
-    /// 别名。如果标记在类型上，要使用类型全名，带上命名空间。
-    /// </summary>
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
-    public class SerializationAliasAttribute : Attribute
-    {
-        /// <summary>
-        /// 别名
-        /// </summary>
-        public string Alias { get; set; }
-
-        public SerializationAliasAttribute(string alias)
-        {
-            Alias = alias;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.All)]
-    public class NoStripFullNameAttribute : Attribute
-    {
-        /// <summary>
-        /// 检查类型和泛型类型的特化类型是否含有特性标记
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static bool HasAttribute(Type type)
-        {
-            if (type == null)
-            {
-                return false;
-            }
-
-            var attri = type.GetCustomAttribute<NoStripFullNameAttribute>();
-            if (attri != null)
-            {
-                return true;
-            }
-
-            if (type.IsGenericType)
-            {
-                var gs = type.GetGenericArguments();
-                if (gs != null && gs.Length > 0)
-                {
-                    foreach (var g in gs)
-                    {
-                        attri = g.GetCustomAttribute<NoStripFullNameAttribute>();
-                        if (attri != null)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-    }
 }
 
 #if UNITY_EDITOR
