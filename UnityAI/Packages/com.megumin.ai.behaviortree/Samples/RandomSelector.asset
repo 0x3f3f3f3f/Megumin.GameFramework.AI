@@ -49,9 +49,6 @@ MonoBehaviour:
     - Name: Priority
       Type: $ref
       Value: 77fe6eb8-b4a6-4aae-bf94-bb418f337dfb.Priority
-    - Name: CurrentOrder
-      Type: $ref
-      Value: 77fe6eb8-b4a6-4aae-bf94-bb418f337dfb.CurrentOrder
     - Name: GUID
       Type: System.String
       Value: 77fe6eb8-b4a6-4aae-bf94-bb418f337dfb
@@ -195,9 +192,6 @@ MonoBehaviour:
     - Name: 2
       Type: $ref
       Value: aff10aa3-b73f-49f5-9788-2c4899d1c1da
-  - Name: 77fe6eb8-b4a6-4aae-bf94-bb418f337dfb.CurrentOrder
-    Type: System.Collections.Generic.List`1[[System.Int32]]
-    Member: []
   - Name: 77fe6eb8-b4a6-4aae-bf94-bb418f337dfb.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []

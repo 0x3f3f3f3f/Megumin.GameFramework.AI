@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public List<int> Priority;
 
+        [NonSerializedByMegumin]
         [ReadOnlyInInspector]
         public List<int> CurrentOrder = new List<int>();
 

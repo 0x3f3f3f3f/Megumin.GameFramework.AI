@@ -16,8 +16,10 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public List<int> Priority;
 
+        [NonSerializedByMegumin]
         [ReadOnlyInInspector]
         public int currentRandom = -1;
+
         BTNode currentChild;
 
         protected override void OnEnter(object options = null)
