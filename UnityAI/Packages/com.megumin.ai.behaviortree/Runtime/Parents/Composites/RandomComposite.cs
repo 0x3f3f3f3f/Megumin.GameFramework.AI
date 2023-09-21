@@ -30,7 +30,7 @@ namespace Megumin.AI.BehaviorTree
                 //权重个数少于子节点个数，补充1
                 for (int i = Priority.Count; i < Children.Count; i++)
                 {
-                    Priority[i] = 1;
+                    Priority.Add(1);
                 }
             }
 
