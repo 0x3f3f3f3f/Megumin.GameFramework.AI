@@ -18,16 +18,18 @@ Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树编辑器插件
 - 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。 
 - 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
 
 # 安装
 
 ## 文件夹介绍
 导入插件后，可以看到如下文件夹：  
-![image-20230806163025520](BehaviorTree_Document/image-20230806163025520.png)
+![image-20230921202019670](BehaviorTree_Document/image-20230921202019670.png)
 - com.megumin.ai    
+  AI模块的基础代码，标准接口定义
+- com.megumin.ai.behaviortree    
   行为树运行时和编辑器代码
-  + Samples/BehaviorTree    
+  + Samples    
     行为树示例
 - com.megumin.perception    
   AI感知模块代码
@@ -130,7 +132,7 @@ BehaviorTreeRunner是执行行为树资产的组件。
 执行时从开始节点执行，忽略标记节点的父节点，开始节点执行完成时，视为整个行为树执行完成。
 
 ## 组合节点
-- 顺序节点（Sequence） 
+- 序列节点（Sequence） 
   节点按从左到右的顺序执行其子节点。当其中一个子节点失败时，序列节点也将停止执行。如果有子节点失败，那么序列就会失败。如果该序列的所有子节点运行都成功执行，则序列节点成功。
 - 选择节点（Selector） 
   节点按从左到右的顺序执行其子节点。当其中一个子节点执行成功时，选择器节点将停止执行。如果选择器的一个子节点成功运行，则选择器运行成功。如果选择器的所有子节点运行失败，则选择器运行失败。
@@ -159,7 +161,7 @@ BehaviorTreeRunner是执行行为树资产的组件。
 父树的参数表重写子树的同名参数。  
 
 ## 写一个新的行为节点
-创建一个新的行为节点，需要使用`Megumin.GameFramework.AI`和`Megumin.GameFramework.AI.BehaviorTree`命名空间。  
+创建一个新的行为节点，需要使用`Megumin.AI`和`Megumin.AI.BehaviorTree`命名空间。  
 
 从`BTActionNode`基类继承，并重写`OnTick`方法。
 
@@ -167,8 +169,8 @@ BehaviorTreeRunner是执行行为树资产的组件。
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Megumin.GameFramework.AI;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI;
+using Megumin.AI.BehaviorTree;
 
 [Category("Action")]
 public sealed class NewActionNode : BTActionNode
@@ -195,11 +197,11 @@ public sealed class NewActionNode : BTActionNode
   在物主节点指定行为发生时，生成日志。  
 
 ## 条件装饰器
-条件装饰器是一种特殊的装饰器，用C↓表示，从上到下执行，用于判断节点能否进入。
+条件装饰器是一种特殊的装饰器，用C↓表示，从上到下执行，用于判断节点能否进入。  
 常用的条件装饰器包括：CheckBool，CheckInt，CheckFloat，CheckString，CheckLayer，CheckTrigger，CheckEvent，CheckGameObject，MouseEvent，KeyCodeEvent。
 
 ## 写一个新的条件装饰器
-创建一个新的条件装饰，需要使用`Megumin.GameFramework.AI`和`Megumin.GameFramework.AI.BehaviorTree`命名空间。  
+创建一个新的条件装饰，需要使用`Megumin.AI`和`Megumin.AI.BehaviorTree`命名空间。  
 
 从`ConditionDecorator`基类继承，并重写`OnCheckCondition`方法。 
 也可以从`CompareDecorator`基类继承，并重写`GetResult`和`GetCompareTo`方法。
@@ -208,8 +210,8 @@ public sealed class NewActionNode : BTActionNode
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Megumin.GameFramework.AI;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI;
+using Megumin.AI.BehaviorTree;
 
 public sealed class NewCondition : ConditionDecorator
 {
@@ -267,6 +269,10 @@ Both同时终止右侧和下侧节点。
   设置编辑器中节点的帮助文档链接。  
 - [x] SerializationAlias  
   设置编辑器中节点的序列化别名。当自定义节点类名重命名时，这个特性非常有用。  
+- [x] SetMemberByAttribute  
+  反射赋值时查找这个特性，如果设置了回调函数，则使用回调函数对成员赋值。  
+- [x] NonSerializedByMeguminAttribute  
+  使用Megumin序列化时，忽略含有这个特性的成员。不会影响Unity默认序列化。  
 
 # 调试
 PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进入调试模式。  

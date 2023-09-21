@@ -18,16 +18,18 @@ A behaviour tree plugin designed for AAA and indie games. Allows quick creation 
 - Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time. 
 - Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
 
 # Installation
 
 ## Folder description
 After importing the plugin, you can see the following folders:  
-![image-20230806163025520](BehaviorTree_Document/image-20230806163025520.png)
+![image-20230921202019670](BehaviorTree_Document/image-20230921202019670.png)
 - com.megumin.ai    
+  AI module basic code, standard interface definition
+- com.megumin.ai.behaviortree    
   Behavior tree runtime and editor code
-  + Samples/BehaviorTree    
+  + Samples    
     Example of a behavior tree asset
 - com.megumin.perception    
   AI perception module code
@@ -159,7 +161,7 @@ A subtree node can reference another behavior tree asset. Executes from the star
 The variable table of the parent tree overrides the subtree's variable with the same name.  
 
 ## Write a new action node
-To create a new action node, you need to using the `Megumin.GameFramework.AI` and `Megumin.GameFramework.AI.BehaviorTree` namespaces.  
+To create a new action node, you need to using the `Megumin.AI` and `Megumin.AI.BehaviorTree` namespaces.  
 
 Inherit from the `BTActionNode` base class and override the `OnTick` method.
 
@@ -167,8 +169,8 @@ Inherit from the `BTActionNode` base class and override the `OnTick` method.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Megumin.GameFramework.AI;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI;
+using Megumin.AI.BehaviorTree;
 
 [Category("Action")]
 public sealed class NewActionNode : BTActionNode
@@ -195,10 +197,11 @@ Decorators provide additional functionality for the owner node, or modify the co
   Generates logs when the owner node specifies behavior occurs.  
 
 ## ConditionDecorator
-The conditional decorator is a special decorator, represented by C↓, executed from top to bottom, and used to determine whether a node can enter. Commonly used conditional decorators include: CheckBool, CheckInt, CheckFloat, CheckString, CheckLayer, CheckTrigger, CheckEvent, CheckGameObject, MouseEvent, KeyCodeEvent.
+The conditional decorator is a special decorator, represented by C↓, executed from top to bottom, and used to determine whether a node can enter.  
+Commonly used conditional decorators include: CheckBool, CheckInt, CheckFloat, CheckString, CheckLayer, CheckTrigger, CheckEvent, CheckGameObject, MouseEvent, KeyCodeEvent.
 
 ## Write a new ConditionDecorator
-To create a new ConditionDecorator, you need to using `Megumin.GameFramework.AI` and `Megumin.GameFramework.AI.BehaviorTree` namespaces.  
+To create a new ConditionDecorator, you need to using `Megumin.AI` and `Megumin.AI.BehaviorTree` namespaces.  
 
 Inherits from the `ConditionDecorator` base class and overrides the `OnCheckCondition` method.   
 It is also possible to inherit from the `CompareDecorator` base class and override the `GetResult` and `GetCompareTo` method.  
@@ -207,8 +210,8 @@ It is also possible to inherit from the `CompareDecorator` base class and overri
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Megumin.GameFramework.AI;
-using Megumin.GameFramework.AI.BehaviorTree;
+using Megumin.AI;
+using Megumin.AI.BehaviorTree;
 
 public sealed class NewCondition : ConditionDecorator
 {
@@ -266,6 +269,10 @@ When you customize a node, you can use the following attribute to change the def
   Sets the help documentation link of the node in the editor.  
 - [x] SerializationAlias  
   Sets the serialization alias of the node in the editor. This attribute is useful when custom node class name renamed.  
+- [x] SetMemberByAttribute  
+  Look for this attribute during reflective assignment. If a callback function is set, use the callback function to assign values to the members.  
+- [x] NonSerializedByMeguminAttribute  
+  When serializing using Megumin, members with this attribute are ignored. Does not affect Unity's default serialization.  
 
 # Debugging
 Select Gameobject at playmode and click EditorTree to open the editor, which will automatically enter debugging mode.  

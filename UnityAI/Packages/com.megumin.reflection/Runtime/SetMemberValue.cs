@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Megumin
 {
     /// <summary>
-    /// 反射赋值是会查找这个特性，如果设置了回调函数，则使用回调函数对成员赋值。
+    /// 反射赋值时查找这个特性，如果设置了回调函数，则使用回调函数对成员赋值。
     /// <para>
     /// 回调方法不可以是private和static的，必须在子类中仍可以被调用，否则无法在子类型中通过反射找到该方法。
     /// </para>
@@ -30,7 +30,7 @@ namespace Megumin
 
     /// <summary>
     /// <see cref="NonSerializedAttribute"/>会导致无法在Inspector上显示，增加一个自己的接口。
-    /// 不会对unity默认序列化产生用。使用Megumin序列化时，忽略含有这个特性的成员。
+    /// 使用Megumin序列化时，忽略含有这个特性的成员。不会影响Unity默认序列化。
     /// </summary>
     [AttributeUsage(AttributeTargets.All, Inherited = true)]
     public class NonSerializedByMeguminAttribute : Attribute
