@@ -31,4 +31,13 @@ MonoBehaviour:
     - ../../Megumin.AI.Samples.wiki
     IgnoreExtension:
     - .meta
+  - Source: Packages/com.megumin.binding/Note
+    DeleteTargetFolderBeforeCopy: 0
+    IncludeSourceDirSelf: 0
+    Overwrite: 1
+    Recursive: 1
+    Targets:
+    - ../../Megumin.AI.Samples.wiki
+    IgnoreExtension:
+    - .meta
   UPMCopy: []

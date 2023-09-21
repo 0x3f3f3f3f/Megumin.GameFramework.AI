@@ -8,6 +8,18 @@ Megumin AI BehaviorTree is a behavior tree editor plugin designed for AAA and in
 Provides a visual editor to create behavior trees without writing code. Allows designers to quickly create complex AI.  
 It solves many pain points in the use of traditional behavior trees editor, and it is worth trying for users who are not satisfied with traditional behavior trees editor.  
 
+## Summary
+A behaviour tree plugin designed for AAA and indie games. Allows quick creation of complex AI.
+
+## Description
+- Human intuitive behaviour tree architecture, easier to learn.  
+  Adds decorator design. Conditional decorators make the behaviour tree user interface more intuitive and easier to read.  
+- Very easy to extend, customise nodes and UI styles with just a few lines of code. 
+- Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time. 
+- Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
+
+[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki/BehaviorTree) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+
 # Installation
 
 ## Folder description
