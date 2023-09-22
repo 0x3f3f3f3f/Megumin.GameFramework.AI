@@ -26,21 +26,22 @@ A behaviour tree plugin designed for AAA and indie games. Allows quick creation 
 After importing the plugin, you can see the following folders:  
 ![image-20230921202019670](BehaviorTree_Document/image-20230921202019670.png)
 - com.megumin.ai    
-  AI module basic code, standard interface definition
+  AI module basic code, standard interface definition.
 - com.megumin.ai.behaviortree    
-  Behavior tree runtime and editor code
+  Behavior tree runtime and editor code.
   + Samples    
-    Example of a behavior tree asset
+    Example of a behavior tree asset.
 - com.megumin.perception    
-  AI perception module code
+  AI perception module code.
+
 + com.megumin.binding    
-  The parameter binding module code of the Megumin-Plugins。
+  The parameter binding module code of the Megumin-Plugins.
 + com.megumin.common    
-  The public module code of the Megumin-Plugins。
+  The common module code of the Megumin-Plugins.
 + com.megumin.reflection    
-  The reflection module code of the Megumin-Plugins。
+  The reflection module code of the Megumin-Plugins.
 + com.megumin.serialization    
-  The reflection module code of the Megumin-Plugins。
+  The reflection module code of the Megumin-Plugins.
 
 ## EditorWindow Introduction
 On the editor menu Tools/Megumin/BehaviorTreeEditor, you can open the editor window.  

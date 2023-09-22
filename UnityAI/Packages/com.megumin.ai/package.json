@@ -3,7 +3,7 @@
   "displayName": "Megumin AI",
   "version": "1.2.0",
   "unity": "2021.3",
-  "description": "AI Plugin.",
+  "description": "AI module basic code, standard interface definition.",
   "category": "Megumin",
   "documentationUrl": "https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki",
   "changelogUrl": "",

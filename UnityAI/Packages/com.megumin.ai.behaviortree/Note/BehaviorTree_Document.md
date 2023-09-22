@@ -33,6 +33,7 @@ Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树编辑器插件
     行为树示例
 - com.megumin.perception    
   AI感知模块代码
+
 + com.megumin.binding    
   megumin系列插件的参数绑定模块代码
 + com.megumin.common    
