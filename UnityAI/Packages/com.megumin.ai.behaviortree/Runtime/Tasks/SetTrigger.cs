@@ -5,10 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 设置触发器
+    /// 与<see cref="CheckTrigger_Decorator"/>组合使用
+    /// </summary>
+    /// <remarks>
+    /// 触发器生命周期为永久，但仅能被使用一次。
+    /// </remarks>
     [Category("Action")]
+    [HelpURL(URL.WikiTask + "SetTrigger")]
     public class SetTrigger : BTActionNode, IDetailable
     {
         public RefVar_String TriggerName;

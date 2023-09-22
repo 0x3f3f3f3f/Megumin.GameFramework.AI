@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 
+    /// 重复
     /// </summary>
+    [HelpURL(URL.WikiTask + "Repeater")]
     public class Repeater : OneChildNode, IDetailable
     {
         /// <summary>

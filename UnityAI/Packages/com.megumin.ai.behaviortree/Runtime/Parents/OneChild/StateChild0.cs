@@ -12,6 +12,7 @@ namespace Megumin.AI.BehaviorTree
     /// 但称为装饰节点并不合适，因为不是以修饰子节点为主要目的的。
     /// 它自身的逻辑可能不通用，并且同样十分主要，不能看作一个装饰。
     /// </summary>
+    [HelpURL(URL.WikiTask + "StateChild0")]
     public abstract class StateChild0 : OneChildNode
     {
         protected override void OnEnter(object options = null)
@@ -78,6 +79,7 @@ namespace Megumin.AI.BehaviorTree
     /// 但称为装饰节点并不合适，因为不是以修饰子节点为主要目的的。
     /// 它自身的逻辑可能不通用，并且同样十分主要，不能看作一个装饰。
     /// </summary>
+    [HelpURL(URL.WikiTask + "StateChild0")]
     public abstract class StateChild0<T> : OneChildNode<T>
     {
         protected override void OnEnter(object options = null)

@@ -10,6 +10,7 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 加权随机新的执行顺序，不支持低优先级终止
     /// </summary>
+    [HelpURL(URL.WikiTask + "RandomSelector")]
     public class RandomSelector : RandomComposite
     {
         protected override Status OnTick(BTNode from, object options = null)

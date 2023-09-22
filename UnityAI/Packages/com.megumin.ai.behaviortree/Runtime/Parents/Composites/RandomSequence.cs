@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +6,14 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// ¼ÓÈ¨Ëæ»úĞÂµÄÖ´ĞĞË³Ğò£¬²»Ö§³ÖµÍÓÅÏÈ¼¶ÖÕÖ¹
+    /// åŠ æƒéšæœºæ–°çš„æ‰§è¡Œé¡ºåºï¼Œä¸æ”¯æŒä½ä¼˜å…ˆçº§ç»ˆæ­¢
     /// </summary>
+    [HelpURL(URL.WikiTask + "RandomSequence")]
     public class RandomSequence : RandomComposite
     {
         protected override Status OnTick(BTNode from, object options = null)
         {
-            //¸ù¾İOrderÖ´ĞĞ×Ó½Úµã
+            //æ ¹æ®Orderæ‰§è¡Œå­èŠ‚ç‚¹
             for (int i = CurrentIndex; i < CurrentOrder.Count; i++)
             {
                 var index = CurrentOrder[i];
@@ -39,7 +40,7 @@ namespace Megumin.AI.BehaviorTree
                     }
                 }
 
-                //Ö¸ÕëÖ»ÄÜÏòÓÒÒÆ¶¯
+                //æŒ‡é’ˆåªèƒ½å‘å³ç§»åŠ¨
                 CurrentIndex = Math.Max(CurrentIndex, i);
             }
 

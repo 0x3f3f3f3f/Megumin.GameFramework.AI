@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Binding;
@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 随机整数
+    /// 随机一个整数，并保存到SaveTo中。
+    /// </summary>
+    [HelpURL(URL.WikiTask + "RandomInt")]
     public sealed class RandomInt : BTActionNode
     {
         [Space]

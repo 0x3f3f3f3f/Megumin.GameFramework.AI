@@ -8,9 +8,10 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 加权随机选出一个子节点执行
+    /// 加权随机选出一个子节点执行，返回子节点的结果。
     /// TODO,抽象随机接口
     /// </summary>
+    [HelpURL(URL.WikiTask + "RandomOne")]
     public class RandomOne : CompositeNode, IDetailable, IDetailAlignable, IDataValidable
     {
         [Space]

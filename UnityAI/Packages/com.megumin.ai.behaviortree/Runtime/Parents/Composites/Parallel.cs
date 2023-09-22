@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -34,7 +35,10 @@ namespace Megumin.AI.BehaviorTree
 
     /// <summary>
     /// 并行节点
+    /// <para/> 同时执行其所有子项（不是多线程）。  
+    /// <para/> 根据FinishMode有不同的行为。 
     /// </summary>
+    [HelpURL(URL.WikiTask + "Parallel")]
     public class Parallel : CompositeNode
     {
         public FinishMode FinishMode = FinishMode.AnyFailed;
