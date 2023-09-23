@@ -17,7 +17,11 @@ namespace Megumin.AI.BehaviorTree
         LeaveNode,
     }
 
-    [HelpURL(URL.WikiDecorator + "CheckTrigger")]
+    /// <summary>
+    /// 检查自定义触发器
+    /// <seealso cref="SetTrigger"/>
+    /// </summary>
+    [HelpURL(URL.WikiDecorator + "CheckTrigger_Decorator")]
     [DisplayName("CheckTrigger")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckTrigger")]
     public class CheckTrigger_Decorator : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator

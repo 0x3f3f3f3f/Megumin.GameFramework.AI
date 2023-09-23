@@ -76,7 +76,7 @@
 
 ## SendEvent
 发出事件  
-与 [CheckEvent_Decorator](./Decorator.md#checkevent_decorator) 组合使用。  
+与 [CheckEvent_Decorator](./Decorator.md#Checkevent_decorator) 组合使用。  
 发出一个事件，根据名字，触发对应的事件检查节点。  
 事件的生命周期为一个tick。  
 事件可以同时触发多个事件检查节点。  

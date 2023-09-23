@@ -41,6 +41,7 @@ namespace Megumin.AI.BehaviorTree
     [AddComponentMenu("TryFindDestination(Transform)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.TryGetNewDestination")]
     [SerializationAlias("Megumin.AI.BehaviorTree.TryFindDestination")]
+    [HelpURL(URL.WikiDecorator + "TryFindDestination_Decorator")]
     public class TryFindDestination_Decorator : ConditionDecorator
     {
         public RefVar_Transform Destination;

@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("RandomInt")]
+    [HelpURL(URL.WikiDecorator + "RandomInt_Decorator")]
     public class RandomInt_Decorator : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         [Space]

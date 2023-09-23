@@ -10,7 +10,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Is Arrive?")]
     [Category("Gameplay")]
     [AddComponentMenu("IsArrive(Transform)")]
-    [HelpURL(URL.WikiDecorator + "IsArrive")]
+    [HelpURL(URL.WikiDecorator + "IsArrive_Decorator")]
     [SerializationAlias("Megumin.AI.BehaviorTree.IsArrive")]
     public class IsArrive_Decorator : ConditionDecorator
     {

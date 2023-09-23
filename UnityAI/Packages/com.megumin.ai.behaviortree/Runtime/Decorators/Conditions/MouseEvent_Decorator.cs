@@ -9,8 +9,12 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 检查鼠标
+    /// </summary>
     [DisplayName("MouseEvent")]
     [SerializationAlias("Megumin.AI.BehaviorTree.MouseEvent")]
+    [HelpURL(URL.WikiDecorator + "MouseEvent_Decorator")]
     public class MouseEvent_Decorator : ConditionDecorator, IConditionDecorator
     {
         public int MouseButton = 0;

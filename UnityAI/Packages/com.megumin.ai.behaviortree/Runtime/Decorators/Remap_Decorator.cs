@@ -14,6 +14,7 @@ namespace Megumin.AI.BehaviorTree
     /// </summary>
     [DisplayName("Remap")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Remap")]
+    [HelpURL(URL.WikiDecorator + "Remap_Decorator")]
     public class Remap_Decorator : BTDecorator, IPostDecorator
     {
         public Status SucceededTo = Status.Succeeded;

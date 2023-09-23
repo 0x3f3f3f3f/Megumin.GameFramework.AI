@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("EqualsString")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckStringEquals")]
+    [HelpURL(URL.WikiDecorator + "EqualsString_Decorator")]
     public class EqualsString_Decorator : StringEqualsDecorator
     {
         public RefVar_String Left;

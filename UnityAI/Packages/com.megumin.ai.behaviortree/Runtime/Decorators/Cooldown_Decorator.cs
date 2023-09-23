@@ -19,12 +19,14 @@ namespace Megumin.AI.BehaviorTree
 
     /// <summary>
     /// CD
+    /// 进入或完成节点时进入冷却，冷却完成前条件装饰器返回false。  
     /// </summary>
     [DisplayName("Cooldown")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Cooldown")]
+    [HelpURL(URL.WikiDecorator + "Cooldown_Decorator")]
     public class Cooldown_Decorator : ConditionDecorator, IPreDecorator, IPostDecorator, IConditionDecorator
     {
-        public RefVar_Double CooldownTime = new RefVar_Double() { value = 5 };
+        public RefVar_Float CooldownTime = new RefVar_Float() { value = 5 };
         public CooldownMode Mode = CooldownMode.OnEnter;
 
         protected double nextCanEnterTime = -1;

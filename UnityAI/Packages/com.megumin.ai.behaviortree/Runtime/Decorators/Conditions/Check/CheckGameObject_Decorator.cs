@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
 
-    [HelpURL(URL.WikiDecorator + "CheckGameObject")]
+    [HelpURL(URL.WikiDecorator + "CheckGameObject_Decorator")]
     [DisplayName("CheckGameObject")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckGameObject")]
     public sealed class CheckGameObject_Decorator : ConditionDecorator<GameObject>

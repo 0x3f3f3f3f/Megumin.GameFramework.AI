@@ -5,11 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Megumin.Reflection;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 反转结果装饰器
+    /// </summary>
     [DisplayName("Inverter")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Inverter")]
+    [HelpURL(URL.WikiDecorator + "Inverter_Decorator")]
     public class Inverter_Decorator : BTDecorator, IPostDecorator
     {
         public Status AfterNodeExit(Status result, object options = null)

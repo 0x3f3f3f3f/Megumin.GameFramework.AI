@@ -9,6 +9,7 @@ namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("RandomFloat")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Random_Float")]
+    [HelpURL(URL.WikiDecorator + "RandomFloat_Decorator")]
     public class RandomFloat_Decorator : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         [Space]

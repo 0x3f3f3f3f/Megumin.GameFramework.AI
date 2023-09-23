@@ -20,7 +20,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay/Perception")]
     [AddComponentMenu("CanSeeTarget(Transform)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CanSeeTarget_Transform")]
-    [HelpURL(URL.WikiDecorator + "CanSeeTarget")]
+    [HelpURL(URL.WikiDecorator + "CanSeeTarget_Transform_Decorator")]
     public class CanSeeTarget_Transform_Decorator : ConditionDecorator<TransformPerception>
     {
         public RefVar_Transform Target;
@@ -36,6 +36,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay/Perception")]
     [AddComponentMenu("CanSeeTarget(GameObject)")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CanSeeTarget_GameObject")]
+    [HelpURL(URL.WikiDecorator + "CanSeeTarget_GameObject_Decorator")]
     public class CanSeeTarget_GameObject_Decorator : ConditionDecorator<GameObjectPerception>
     {
         public RefVar_GameObject Target;

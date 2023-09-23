@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -14,6 +15,7 @@ namespace Megumin.AI.BehaviorTree
     /// </summary>
     [DisplayName("Lock")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Lock")]
+    [HelpURL(URL.WikiDecorator + "Lock_Decorator")]
     public class Lock_Decorator : ConditionDecorator, IPostDecorator, IPreDecorator, IConditionDecorator
     {
         public RefVar<string> lockName;

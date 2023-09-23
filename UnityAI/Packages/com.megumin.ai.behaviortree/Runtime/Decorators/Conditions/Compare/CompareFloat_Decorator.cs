@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("CompareFloat")]
+    [HelpURL(URL.WikiDecorator + "CompareFloat_Decorator")]
     public class CompareFloat_Decorator : CompareDecorator<float>
     {
         public RefVar_Float Left;

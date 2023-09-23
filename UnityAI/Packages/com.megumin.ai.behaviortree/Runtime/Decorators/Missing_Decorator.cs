@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Megumin.Reflection;
 using Megumin.Serialization;
+using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -15,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Debug")]
     [DisplayName("Missing")]
     [SerializationAlias("Megumin.AI.BehaviorTree.MissingDecorator")]
+    [HelpURL(URL.WikiDecorator + "Missing_Decorator")]
     public class Missing_Decorator : BTDecorator, IDetailable
     {
         public string MissType { get; set; }

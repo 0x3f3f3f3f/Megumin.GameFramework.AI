@@ -11,6 +11,7 @@ namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("Loop")]
     [SerializationAlias("Megumin.AI.BehaviorTree.Loop")]
+    [HelpURL(URL.WikiDecorator + "Loop_Decorator")]
     public class Loop_Decorator : BTDecorator, IPostDecorator, IAbortDecorator, IDetailable
     {
         /// <summary>

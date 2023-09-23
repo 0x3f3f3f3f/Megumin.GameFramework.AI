@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("CompareString")]
+    [HelpURL(URL.WikiDecorator + "CompareString_Decorator")]
     public class CompareString_Decorator : CompareDecorator<string>
     {
         public RefVar_String Left;

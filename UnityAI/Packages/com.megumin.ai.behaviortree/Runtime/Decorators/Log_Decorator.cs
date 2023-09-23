@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Debug")]
     [DisplayName("Log")]
     [SerializationAlias("Megumin.AI.BehaviorTree.DecoratorLog")]
+    [HelpURL(URL.WikiDecorator + "Log_Decorator")]
     public class Log_Decorator : BTDecorator, IConditionDecorator, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         [Space]

@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("CompareRandomFloat")]
+    [HelpURL(URL.WikiDecorator + "CompareRandomFloat_Decorator")]
     public class CompareRandomFloat_Decorator : CompareDecorator<float>
     {
         [Space]

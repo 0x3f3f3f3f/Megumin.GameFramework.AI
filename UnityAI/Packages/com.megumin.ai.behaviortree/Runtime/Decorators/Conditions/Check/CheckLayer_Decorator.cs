@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [HelpURL(URL.WikiDecorator + "CheckLayer")]
+    [HelpURL(URL.WikiDecorator + "CheckLayer_Decorator")]
     [DisplayName("CheckLayer")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckLayer")]
     public sealed class CheckLayer_Decorator : ConditionDecorator<GameObject>

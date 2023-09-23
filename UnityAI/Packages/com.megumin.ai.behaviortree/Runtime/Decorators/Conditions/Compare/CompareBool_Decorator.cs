@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("CompareBool")]
+    [HelpURL(URL.WikiDecorator + "CompareBool_Decorator")]
     public class CompareBool_Decorator : CompareDecorator<bool>
     {
         public RefVar_Bool Left;

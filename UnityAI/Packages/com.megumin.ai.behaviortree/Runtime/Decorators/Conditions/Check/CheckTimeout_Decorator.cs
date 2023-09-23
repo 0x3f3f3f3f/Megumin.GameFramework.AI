@@ -10,8 +10,12 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 检查超时
+    /// </summary>
     [DisplayName("CheckTimeout")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckTimeout")]
+    [HelpURL(URL.WikiDecorator + "CheckTimeout_Decorator")]
     public class CheckTimeout_Decorator : ConditionDecorator, IPreDecorator
     {
         public CheckTimeout_Decorator()

@@ -16,8 +16,12 @@ namespace Megumin.AI.BehaviorTree
         Up
     }
 
+    /// <summary>
+    /// 检查按键
+    /// </summary>
     [DisplayName("KeyCodeEvent")]
     [SerializationAlias("Megumin.AI.BehaviorTree.KeyCodeEvent")]
+    [HelpURL(URL.WikiDecorator + "KeyCodeEvent_Decorator")]
     public class KeyCodeEvent_Decorator : ConditionDecorator, IConditionDecorator
     {
         public KeyCode KeyCode = KeyCode.Space;

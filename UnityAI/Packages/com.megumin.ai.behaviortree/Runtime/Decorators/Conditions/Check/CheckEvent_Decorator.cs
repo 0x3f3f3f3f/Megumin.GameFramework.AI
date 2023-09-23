@@ -10,7 +10,11 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [HelpURL(URL.WikiDecorator + "CheckEvent")]
+    /// <summary>
+    /// 检查自定义事件
+    /// <seealso cref="SendEvent"/>
+    /// </summary>
+    [HelpURL(URL.WikiDecorator + "CheckEvent_Decorator")]
     [DisplayName("CheckEvent")]
     [SerializationAlias("Megumin.AI.BehaviorTree.CheckEvent")]
     public class CheckEvent_Decorator : ConditionDecorator, IDetailable

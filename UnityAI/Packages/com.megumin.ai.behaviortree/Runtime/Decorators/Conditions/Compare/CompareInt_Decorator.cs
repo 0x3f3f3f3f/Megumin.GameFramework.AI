@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [DisplayName("CompareInt")]
+    [HelpURL(URL.WikiDecorator + "CompareInt_Decorator")]
     public class CompareInt_Decorator : CompareDecorator<int>
     {
         public RefVar_Int Left;
