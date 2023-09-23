@@ -18,7 +18,7 @@ A behaviour tree plugin designed for AAA and indie games. Allows quick creation 
 - Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time. 
 - Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
 
 # Installation
 
@@ -282,7 +282,7 @@ All changes to debug mode will not change the BehaviorTree asset, and the change
 
 # Contact
 - Email: 479813005@qq.com
-- Feedback: [Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
+- Feedback: [Issues · KumoKyaku/Megumin.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.AI.Samples/issues)
 - QQ Group: 
 - Discord: https://discord.gg/6VZbxZgTRU
 

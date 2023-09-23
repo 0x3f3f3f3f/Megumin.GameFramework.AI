@@ -18,7 +18,7 @@ Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树编辑器插件
 - 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。 
 - 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
 
 # 安装
 
@@ -282,7 +282,7 @@ PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进�
 
 # 联系方式
 - 邮箱： 479813005@qq.com
-- 反馈： [Issues · KumoKyaku/Megumin.GameFramework.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.GameFramework.AI.Samples/issues)
+- 反馈： [Issues · KumoKyaku/Megumin.AI.Samples (github.com)](https://github.com/KumoKyaku/Megumin.AI.Samples/issues)
 - QQ群： 
 - Discord: https://discord.gg/6VZbxZgTRU
 
