@@ -10,6 +10,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ChangeColorMoment")]
     [Category("UnityEngine/MeshRenderer")]
     [AddComponentMenu("ChangeColorMoment")]
+    [HelpURL(URL.WikiTask + "MeshRenderer_ChangeColorMoment")]
     public class MeshRenderer_ChangeColorMoment : WaitAction<MeshRenderer>
     {
         [Space]

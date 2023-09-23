@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 巡逻节点
+    /// </summary>
     [Icon("d_navmeshdata icon")]
     [DisplayName("Patrol")]
     [Description("Random InsideCircle IMoveToable<Vector3>")]

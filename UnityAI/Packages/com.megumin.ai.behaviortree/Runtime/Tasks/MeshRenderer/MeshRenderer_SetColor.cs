@@ -10,6 +10,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SetColor")]
     [Category("UnityEngine/MeshRenderer")]
     [AddComponentMenu("SetColor")]
+    [HelpURL(URL.WikiTask + "MeshRenderer_SetColor")]
     public sealed class MeshRenderer_SetColor : BTActionNode<MeshRenderer>
     {
         [Space]

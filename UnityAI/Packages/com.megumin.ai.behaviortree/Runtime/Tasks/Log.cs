@@ -11,6 +11,9 @@ using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 日志节点
+    /// </summary>
     [Category("Action")]
     [Icon("console.infoicon@2x")]
     [HelpURL(URL.WikiTask + "Log")]

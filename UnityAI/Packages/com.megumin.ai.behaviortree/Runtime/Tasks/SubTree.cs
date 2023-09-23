@@ -11,7 +11,13 @@ using UnityEngine.UIElements;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 子树节点
+    /// 引用一个外部行为树，当作子节点执行。  
+    /// 运行时右键EditorTree，即可进入子树debug功编辑器。
+    /// </summary>
     [Category("Action")]
+    [HelpURL(URL.WikiTask + "SubTree")]
     public class SubTree : BTActionNode, IDetailable, IBuildContextualMenuable, ISubtreeTreeElement, IBindingParseable
     {
         public BehaviorTreeAsset_1_1 BehaviorTreeAsset;

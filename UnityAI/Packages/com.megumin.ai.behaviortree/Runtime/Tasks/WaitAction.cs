@@ -8,8 +8,13 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 等待节点
+    /// 等待一定时间后，返回成功。
+    /// </summary>
     [Category("Action")]
     [Icon("d_unityeditor.animationwindow@2x")]
+    [HelpURL(URL.WikiTask + "Wait")]
     public class Wait : BTActionNode, IDetailable
     {
         public UntiyTimeType TimeType = UntiyTimeType.GameTime;
@@ -18,9 +23,10 @@ namespace Megumin.AI.BehaviorTree
         private IWaitTimeable<double> WaitTimeable;
 
         //不要在Wait节点增加返回值设置，默认都是返回成功。
-        //因为在UI上无法表现出Wait节点的差异性，
-        //有的Wait返回成功，有的Wait返回失败，相同的节点返回不同返回值，会给用户造成困惑。
-        //public CompletedResult Result = CompletedResult.Succeeded;
+        //没有使用public CompletedResult Result = CompletedResult.Succeeded;
+        //也没有使用GetIgnoreResult(from);
+        //如果有的Wait返回成功，有的Wait返回失败，相同的节点返回不同返回值，
+        //在UI上无法表现出Wait节点的差异性，会给用户造成困惑，非常不容理解。
 
         protected override void OnEnter(object options = null)
         {

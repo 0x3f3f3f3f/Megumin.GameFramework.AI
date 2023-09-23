@@ -86,18 +86,72 @@
 与 [CheckTrigger_Decorator](./Decorator.md#CheckTrigger_Decorator) 组合使用。  
 触发器生命周期为永久，但仅能被使用一次。  
 
+## SubTree
+子树节点
+引用一个外部行为树，当作子节点执行。  
+运行时右键EditorTree，即可进入子树debug功编辑器。  
 
+## Wait
+等待节点  
+等待一定时间后，返回成功。  
 
-
+>//不要在Wait节点增加返回值设置，默认都是返回成功。
+//没有使用public CompletedResult Result = CompletedResult.Succeeded;
+//也没有使用GetIgnoreResult(from);
+//如果有的Wait返回成功，有的Wait返回失败，相同的节点返回不同返回值，
+//在UI上无法表现出Wait节点的差异性，会给用户造成困惑，非常不容理解。
 
 ## Log
 日志节点，打印日志到控制台
+日志节点不可能满足所有的需求场景，所以建议用户实现自己的日志节点。  
 
-## MoveToVector3
-移动到Vector3目的地
+---
+---
+
+## GameObject_SetTargetActive
+游戏对象开关节点
+
+## MeshRenderer_SetColor
+设置MeshRenderer组件的材质球颜色。  
+
+## MeshRenderer_ChangeColorMoment
+临时改变MeshRenderer组件的材质球颜色，等待一定时间后改回原来的颜色。  
+
+## NavMeshAgent_MoveTo
+导航代理移动到目的地。  
+
+
+---
+---
+# Gameplay
 
 ## FindDestination
-找到一个目的地
+找到一个目的地,并保存在Destination参数中。  
+
+## MoveToVector3
+移动到Vector3目的地。  
+
+**需要GameObject含有实现`IMoveToable<Vector3>`接口的组件。**  
+
+## Patrol_1
+巡逻节点  
+在设置的检查点列表`RefVar_Transform_List`中按顺序，循环巡逻。  
+每到达一个检查点，执行一次子节点。  
+
+**需要GameObject含有实现`IMoveToable<Vector3>`接口的组件。**  
+
+## Patrol_2
+巡逻节点  
+以节点开始的位置为中心，一定半径内随机检查点巡逻。  
+每到达一个检查点，执行一次子节点。  
+
+**需要GameObject含有实现`IMoveToable<Vector3>`接口的组件。**  
+
+
+
+
+
+
 
 
 
