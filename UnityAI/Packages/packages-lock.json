@@ -5,9 +5,9 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.megumin.common": "1.0.2",
-        "com.megumin.binding": "1.0.0",
-        "com.megumin.serialization": "1.0.0",
+        "com.megumin.common": "1.0.3",
+        "com.megumin.binding": "1.1.0",
+        "com.megumin.serialization": "1.1.0",
         "com.unity.settings-manager": "1.0.3"
       }
     },
@@ -16,9 +16,9 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.megumin.common": "1.0.2",
-        "com.megumin.binding": "1.0.0",
-        "com.megumin.serialization": "1.0.0",
+        "com.megumin.common": "1.0.3",
+        "com.megumin.binding": "1.1.0",
+        "com.megumin.serialization": "1.1.0",
         "com.unity.settings-manager": "1.0.3",
         "com.megumin.ai": "1.2.0"
       }
@@ -28,8 +28,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.megumin.common": "1.0.2",
-        "com.megumin.serialization": "1.0.1"
+        "com.megumin.common": "1.0.3",
+        "com.megumin.serialization": "1.1.0"
       }
     },
     "com.megumin.common": {
@@ -51,7 +51,7 @@
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "com.megumin.common": "1.0.0"
+        "com.megumin.common": "1.0.3"
       }
     },
     "com.megumin.referenceviewer": {
@@ -71,7 +71,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.megumin.common": "1.0.2"
+        "com.megumin.common": "1.0.3"
       }
     },
     "com.unity.ai.navigation": {
