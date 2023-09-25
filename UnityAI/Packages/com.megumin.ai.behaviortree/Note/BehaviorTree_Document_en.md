@@ -14,8 +14,9 @@ A behaviour tree plugin designed for AAA and indie games. Allows quick creation 
 ## Description
 - Human intuitive behaviour tree architecture, easier to learn.  
   Adds decorator design. Conditional decorators make the behaviour tree user interface more intuitive and easier to read.  
-- Very easy to extend, customise nodes and UI styles with just a few lines of code. 
-- Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time. 
+- Very easy to extend, customise nodes and UI styles with just a few lines of code.  
+- Powerful data binding system. It can be used in BehaviorTree or independently.  
+- Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time.  
 - Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
 
 [ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
