@@ -7,22 +7,6 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    /// <summary>
-    /// 可移动到目的地的
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IMoveToable<in T>
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="destination"></param>
-        /// <returns>
-        /// 是否成功设置目的地
-        /// </returns>
-        bool MoveTo(T destination);
-    }
-
     public abstract class MoveToBase<T> : BTActionNode<T>
     {
         [Space]
