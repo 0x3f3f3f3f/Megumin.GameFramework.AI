@@ -43,6 +43,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
+    - Name: PatrolPath
+      Type: $ref
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.PatrolPath
     - Name: Children
       Type: $ref
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Children
@@ -123,3 +126,6 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.PatrolPath
+    Type: Megumin.AI.PatrolPathAroundStart
+    Member: []

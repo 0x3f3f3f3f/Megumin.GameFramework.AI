@@ -67,9 +67,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Decorators
-    - Name: DestinationList
+    - Name: PatrolPath
       Type: $ref
-      Value: DesList
+      Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.PatrolPath
     - Name: Children
       Type: $ref
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Children
@@ -77,7 +77,7 @@ MonoBehaviour:
       Type: System.String
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71
   - Name: 5565396e-4920-46be-b6f8-e39a76f0e342
-    Type: Megumin.AI.BehaviorTree.MoveTo_SetDestination
+    Type: Megumin.AI.BehaviorTree.NavMeshAgent_MoveTo
     Member:
     - Name: Meta
       Type: $ref
@@ -240,6 +240,12 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.PatrolPath
+    Type: Megumin.AI.PatrolPathTranformList
+    Member:
+    - Name: DestinationList
+      Type: $ref
+      Value: DesList
   - Name: 5565396e-4920-46be-b6f8-e39a76f0e342.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []
