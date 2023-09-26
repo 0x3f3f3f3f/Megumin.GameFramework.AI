@@ -83,6 +83,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
             scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             scrollView.contentViewport.style.overflow = Overflow.Visible;
+            scrollView.contentContainer.style.overflow = Overflow.Visible;
 
             this.RegisterCallback<TooltipEvent>(OnToolTip);
             RegisterCallback<KeyDownEvent>(OnKeyDownEvent, TrickleDown.NoTrickleDown);
