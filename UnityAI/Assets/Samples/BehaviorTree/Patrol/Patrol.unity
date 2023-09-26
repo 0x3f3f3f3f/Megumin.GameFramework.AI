@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4b91038cd0e8d42bce40a3d18c2cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverrideFilter:
+  Filter:
     Enabled: 0
     Value:
       LayerMask:
@@ -989,6 +989,7 @@ MonoBehaviour:
       Exclude:
         Enabled: 0
         Value: []
+  ExcludeSelf: 1
   InChildrenSensors:
   - {fileID: 0}
   InSensor: []

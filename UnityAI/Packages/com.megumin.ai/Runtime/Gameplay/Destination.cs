@@ -13,6 +13,7 @@ namespace Megumin.AI
         /// </summary>
         Auto,
         Vector,
+        GameObject,
         Transform,
     }
 
@@ -22,6 +23,7 @@ namespace Megumin.AI
         public DestinationType Type = DestinationType.Auto;
         [Space]
         public RefVar_Vector3 Dest_Vector;
+        public RefVar_GameObject Dest_GameObject;
         public RefVar_Transform Dest_Transform;
 
         public Vector3 GetDestination()
@@ -34,14 +36,22 @@ namespace Megumin.AI
                     return Dest_Vector;
                 case DestinationType.Transform:
                     return Dest_Transform.Value.position;
+                case DestinationType.GameObject:
+                    return Dest_GameObject.Value.transform.position;
                 default:
                     break;
+            }
+
+            if (Dest_GameObject?.Value)
+            {
+                return Dest_GameObject.Value.transform.position;
             }
 
             if (Dest_Transform?.Value)
             {
                 return Dest_Transform.Value.position;
             }
+
             return Dest_Vector;
         }
     }
