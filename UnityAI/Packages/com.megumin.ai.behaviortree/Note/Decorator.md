@@ -76,6 +76,10 @@
 冷却装饰器  
 进入或完成节点时进入冷却，冷却完成前条件装饰器返回false。  
 
+## Counter_Decorator
+计数器装饰器  
+在装饰器触发点按设定更改计数器。  
+
 ## Inverter_Decorator
 反转结果装饰器  
 
