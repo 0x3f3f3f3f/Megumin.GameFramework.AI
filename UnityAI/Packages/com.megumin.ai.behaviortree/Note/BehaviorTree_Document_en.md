@@ -19,7 +19,10 @@ A behaviour tree plugin designed for AAA and indie games. Allows quick creation 
 - Full subtree support and the editor supports multiple windows to edit and Debug both the parent and subtree at the same time.  
 - Solves many of the pain points of using traditional behaviour trees and is worth a try for those who are not satisfied with traditional behaviour trees.  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+
+[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [Upgrade Guide](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki/%E5%8D%87%E7%BA%A7%E6%8C%87%E5%AF%BC) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+
+**Note: Make sure to back up the project before upgrading!!!**
 
 # Installation
 

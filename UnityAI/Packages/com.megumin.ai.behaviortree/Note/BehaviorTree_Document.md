@@ -19,7 +19,10 @@ Megumin AI BehaviorTree是为AAA和独立游戏设计的行为树编辑器插件
 - 完整的子树支持，编辑器支持多个窗口，可以同时编辑和Debug父树和子树。  
 - 解决了许多传统行为树的使用痛点，值得不满足于传统行为树的用户尝试。  
 
-[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+
+[ [Samples](https://github.com/KumoKyaku/Megumin.AI.Samples) | [Feedback](https://github.com/KumoKyaku/Megumin.AI.Samples/issues) | [Wiki](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki) | [Upgrade Guide](https://github.com/KumoKyaku/Megumin.AI.Samples/wiki/%E5%8D%87%E7%BA%A7%E6%8C%87%E5%AF%BC) | [QQ Group]() | [Discord](https://discord.gg/6VZbxZgTRU) ]
+
+**注意：升级版本前请务必备份工程！！！**
 
 # 安装
 
