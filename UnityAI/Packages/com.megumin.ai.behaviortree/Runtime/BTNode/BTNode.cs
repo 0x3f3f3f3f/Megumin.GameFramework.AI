@@ -132,16 +132,25 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 
+        /// 第一次执行进入节点
         /// </summary>
+        /// <remarks>
+        /// 可以在方法内部修改State值，允许在不经过OnTick阶段的情况下直接完成节点。
+        /// </remarks>
         protected virtual void OnEnter(object options = null) { }
 
         /// <summary>
-        /// 不要再函数内修改State值，会导致流程错误
+        /// 退出节点时调用
         /// </summary>
-        /// <param name="result"></param>
+        /// <remarks>
+        /// 不建议在方法内部修改State值，可能会导致流程错误
+        /// </remarks>
         protected virtual void OnExit(Status result, object options = null) { }
 
+        /// <summary>
+        /// 节点被终止时调用
+        /// </summary>
+        /// <param name="options"></param>
         protected virtual void OnAbort(object options = null) { }
 
         /// <summary>

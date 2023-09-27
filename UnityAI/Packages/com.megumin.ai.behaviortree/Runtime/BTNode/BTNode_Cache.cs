@@ -26,27 +26,27 @@ namespace Megumin.AI.BehaviorTree
 
 
 
-        [Obsolete("test", true)]
-        public async ValueTask<bool> Extest()
-        {
-            var state = Status.Running;
-            while (state != Status.Running)
-            {
-                //FrontDerators();
-                Enter();
-                var res = await onticktest();
-                //var res2 = Exit(default);
-                //res2 = BackDerators(res2);
-            }
+        //[Obsolete("test", true)]
+        //public async ValueTask<bool> Extest()
+        //{
+        //    var state = Status.Running;
+        //    while (state != Status.Running)
+        //    {
+        //        //FrontDerators();
+        //        Enter();
+        //        var res = await onticktest();
+        //        //var res2 = Exit(default);
+        //        //res2 = BackDerators(res2);
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        [Obsolete("test", true)]
-        ValueTask<bool> onticktest()
-        {
-            return new ValueTask<bool>(true);
-        }
+        //[Obsolete("test", true)]
+        //ValueTask<bool> onticktest()
+        //{
+        //    return new ValueTask<bool>(true);
+        //}
     }
 }
 
