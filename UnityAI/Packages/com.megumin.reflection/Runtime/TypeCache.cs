@@ -258,19 +258,51 @@ namespace Megumin.Reflection
 
         public static bool TryGetTypesDerivedFrom<T>(List<Type> types)
         {
+            return TryGetTypesDerivedFrom(types, typeof(T));
+        }
+
+        /// <summary>
+        /// 获取从给定基类继承的类型
+        /// </summary>
+        /// <param name="results">结果容器</param>
+        /// <param name="baseType1"></param>
+        /// <param name="baseType2"></param>
+        /// <param name="baseType3"></param>
+        /// <returns></returns>
+        public static bool TryGetTypesDerivedFrom(ICollection<Type> results,
+                                                  Type baseType1,
+                                                  Type baseType2 = null,
+                                                  Type baseType3 = null)
+        {
             bool has = false;
-            if (types != null)
+            if (results != null)
             {
                 CacheAllTypes();
                 foreach (var item in allType)
                 {
-                    if (typeof(T).IsAssignableFrom(item.Value))
+                    if (baseType1?.IsAssignableFrom(item.Value) == true)
                     {
                         has = true;
-                        types.Add(item.Value);
+                        results.Add(item.Value);
+                        continue;
+                    }
+
+                    if (baseType2?.IsAssignableFrom(item.Value) == true)
+                    {
+                        has = true;
+                        results.Add(item.Value);
+                        continue;
+                    }
+
+                    if (baseType3?.IsAssignableFrom(item.Value) == true)
+                    {
+                        has = true;
+                        results.Add(item.Value);
+                        continue;
                     }
                 }
             }
+
             return has;
         }
 
