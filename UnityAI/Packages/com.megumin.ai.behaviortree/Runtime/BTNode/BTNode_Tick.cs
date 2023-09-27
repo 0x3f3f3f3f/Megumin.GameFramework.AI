@@ -273,6 +273,12 @@ namespace Megumin.AI.BehaviorTree
         /// </remarks>
         public Status Abort(BTNode from, object options = null)
         {
+            if (State != Status.Running)
+            {
+                //状态检查，只有正在运行的节点才能终止。
+                return State;
+            }
+
             State = Status.Failed;
             FailedCode = FailedCode.Abort;
 
