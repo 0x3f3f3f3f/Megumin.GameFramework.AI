@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
+    /// <summary>
+    /// 叶子节点，任务节点，行为节点
+    /// </summary>
     [Serializable]
     public class BTTaskNode : BTNode
     {

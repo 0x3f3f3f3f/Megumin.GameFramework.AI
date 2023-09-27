@@ -38,15 +38,15 @@ namespace Megumin.AI.BehaviorTree.Editor
                 canAddActionNode = NextEdge.output != null;
             }
 
-            tree.AddTypesDerivedFrom<CompositeNode>("Composite");
-            tree.AddTypesDerivedFrom<OneChildNode>("OneChildNode");
-            tree.AddTypesDerivedFrom<TwoChildNode>("TwoChildNode");
+            tree.AddTypesDerivedFrom("Composite", typeof(CompositeNode), typeof(CompositeNode<>));
+            tree.AddTypesDerivedFrom("OneChildNode", typeof(OneChildNode), typeof(OneChildNode<>));
+            tree.AddTypesDerivedFrom("TwoChildNode", typeof(TwoChildNode), typeof(TwoChildNode<>));
 
             if (canAddActionNode)
             {
                 tree.AddCateGory2<BTNode>();
-                tree.AddTypesDerivedFrom<BTActionNode>("Others", checkAlreadyHas: true);
-                tree.AddTypesDerivedFrom<BTActionNode>("AllAction");
+                tree.AddTypesDerivedFrom("Others", typeof(BTActionNode), typeof(BTActionNode<>), checkAlreadyHas: true);
+                tree.AddTypesDerivedFrom<BTTaskNode>("AllAction");
             }
 
             //Tree.Add(new SearchTreeGroupEntry(new GUIContent("Create Node2"), 0));

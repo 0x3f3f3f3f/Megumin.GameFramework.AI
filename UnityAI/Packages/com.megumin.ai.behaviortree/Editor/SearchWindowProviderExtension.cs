@@ -51,6 +51,77 @@ namespace Megumin.AI.Editor
                                                   bool checkAlreadyHas = false)
         {
             var types = TypeCache.GetTypesDerivedFrom<T>();
+            AddTypes(tree, groupEntryName, levelOffset, checkAlreadyHas, types);
+        }
+
+        /// <summary>
+        /// 多个基类支持
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="groupEntryName"></param>
+        /// <param name="levelOffset"></param>
+        /// <param name="checkAlreadyHas"></param>
+        /// <param name="baseTypes"></param>
+        public static void AddTypesDerivedFrom(this List<SearchTreeEntry> tree,
+                                               string groupEntryName,
+                                               Type baseType1,
+                                               Type baseType2,
+                                               int levelOffset = 1,
+                                               bool checkAlreadyHas = false)
+        {
+            HashSet<Type> types = new HashSet<Type>();
+            var ts1 = TypeCache.GetTypesDerivedFrom(baseType1);
+            foreach (var t in ts1)
+            {
+                types.Add(t);
+            }
+
+            var ts2 = TypeCache.GetTypesDerivedFrom(baseType2);
+            foreach (var t in ts2)
+            {
+                types.Add(t);
+            }
+
+            AddTypes(tree, groupEntryName, levelOffset, checkAlreadyHas, types);
+        }
+
+        /// <summary>
+        /// 多个基类支持
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="groupEntryName"></param>
+        /// <param name="levelOffset"></param>
+        /// <param name="checkAlreadyHas"></param>
+        /// <param name="baseTypes"></param>
+        public static void AddTypesDerivedFrom(this List<SearchTreeEntry> tree,
+                                               string groupEntryName,
+                                               int levelOffset = 1,
+                                               bool checkAlreadyHas = false,
+                                               params Type[] baseTypes)
+        {
+            HashSet<Type> types = new HashSet<Type>();
+            if (baseTypes != null)
+            {
+                foreach (var item in baseTypes)
+                {
+                    var ts = TypeCache.GetTypesDerivedFrom(item);
+                    foreach (var t in ts)
+                    {
+                        types.Add(t);
+                    }
+                }
+            }
+
+            AddTypes(tree, groupEntryName, levelOffset, checkAlreadyHas, types);
+        }
+
+        public static void AddTypes<Collection>(List<SearchTreeEntry> tree,
+                                     string groupEntryName,
+                                     int levelOffset,
+                                     bool checkAlreadyHas,
+                                     Collection types)
+            where Collection : ICollection<Type>
+        {
             tree.Add(new SearchTreeGroupEntry(new GUIContent(groupEntryName)) { level = levelOffset });
             foreach (var type in types)
             {
@@ -79,7 +150,6 @@ namespace Megumin.AI.Editor
                 tree.Add(entry);
             }
         }
-
 
         public static void AddGroupToTree(this List<SearchTreeEntry> tree,
                                           int levelOffset,
