@@ -27,6 +27,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
             {
+                PatrolPath.Arrive(destination);
                 return (true, Status.Running);
             }
 

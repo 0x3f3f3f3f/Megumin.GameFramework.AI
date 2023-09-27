@@ -34,6 +34,15 @@ namespace Megumin.AI
         {
 
         }
+
+        /// <summary>
+        /// 到达检查点
+        /// </summary>
+        /// <param name="destination"></param>
+        public virtual void Arrive(Vector3 destination)
+        {
+
+        }
     }
 
     /// <summary>
@@ -42,18 +51,32 @@ namespace Megumin.AI
     [Serializable]
     public class PatrolPathTranformList : PatrolPath<Vector3>
     {
+        /// <summary>
+        /// 当巡逻被打断后，再次回到巡逻，获取上一次的目的地
+        /// </summary>
         [Space]
+        public bool AutoContinue = true;
         public RefVar_Transform_List DestinationList;
         int lastDesIndex = 0;
+        /// <summary>
+        /// 上一次获取目的时，下标移动次数
+        /// </summary>
+        int offest = 0;
         public override bool TryGetNextDestination(Transform mover, out Vector3 next)
         {
+            offest = 0;
             var list = DestinationList?.Value;
             if (list != null && list.Count != 0)
             {
                 int startIndex = lastDesIndex % list.Count;
                 for (int i = startIndex; i < list.Count; i++)
                 {
-                    lastDesIndex++;
+                    offest++;
+                    if (AutoContinue == false)
+                    {
+                        lastDesIndex++;
+                    }
+
                     Transform transform = list[i].transform;
                     if (transform)
                     {
@@ -69,6 +92,14 @@ namespace Megumin.AI
             }
             next = default;
             return false;
+        }
+
+        public override void Arrive(Vector3 destination)
+        {
+            if (AutoContinue)
+            {
+                lastDesIndex += offest;
+            }
         }
 
         public override void Reset()
