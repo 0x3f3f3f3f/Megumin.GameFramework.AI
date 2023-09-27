@@ -13,7 +13,7 @@ namespace Megumin.AI.BehaviorTree
     [Icon("d_unityeditor.animationwindow@2x")]
     [DisplayName("WaitDo")]
     [HelpURL(URL.WikiTask + "WaitDo")]
-    public class WaitDo : TimerParent
+    public class WaitDo : TimerParent, IDetailable
     {
         protected override void OnEnter(object options = null)
         {
@@ -44,6 +44,27 @@ namespace Megumin.AI.BehaviorTree
             }
 
             return Status.Running;
+        }
+
+        public override string GetDetail()
+        {
+            if (State == Status.Running)
+            {
+                if (enterChild)
+                {
+                    return null;
+                }
+                else
+                {
+                    double left = WaitTimeable.GetLeftTime(WaitTime);
+                    if (left >= 0)
+                    {
+                        return $"Wait: {(float)WaitTime:0.000}  Left:{left:0.000}";
+                    }
+                }
+            }
+
+            return $"Wait: {(float)WaitTime:0.000}";
         }
     }
 }
