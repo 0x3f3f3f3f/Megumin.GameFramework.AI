@@ -35,6 +35,15 @@ namespace Megumin.AI.BehaviorTree
                                     float stopingDistance = 0.25f,
                                     bool ignoreYAxis = true)
         {
+            return IsArrive(transform, destination, out var _, stopingDistance, ignoreYAxis);
+        }
+
+        public static bool IsArrive(this Transform transform,
+                                    Vector3 destination,
+                                    out float distance,
+                                    float stopingDistance = 0.25f,
+                                    bool ignoreYAxis = true)
+        {
             if (transform)
             {
                 var to = destination - transform.position;
@@ -44,7 +53,7 @@ namespace Megumin.AI.BehaviorTree
                     to.y = 0;
                 }
 
-                var distance = to.magnitude;
+                distance = to.magnitude;
 
                 if (distance <= stopingDistance)
                 {
@@ -52,6 +61,7 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
+            distance = float.MaxValue;
             return false;
         }
     }
