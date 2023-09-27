@@ -37,7 +37,7 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         public float nextMoveDelta = 1.5f;
 
-        public RefVar_Transform Target;
+        public RefVar_GameObject Target;
 
         protected override void OnEnter(object options = null)
         {
@@ -46,7 +46,7 @@ namespace Megumin.AI.BehaviorTree
             LostMode = false;
             if (Target?.Value)
             {
-                Last = Target.Value.position;
+                Last = Target.Value.transform.position;
             }
             else
             {
@@ -88,7 +88,7 @@ namespace Megumin.AI.BehaviorTree
 
             if (Target?.Value)
             {
-                Last = Target.Value.position;
+                Last = Target.Value.transform.position;
                 LostMode = false;
             }
             else
