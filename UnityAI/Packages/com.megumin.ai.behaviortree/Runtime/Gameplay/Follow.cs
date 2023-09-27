@@ -17,7 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [Category("Gameplay")]
     [AddComponentMenu("Follow Transform(IMoveInputable<Vector3>)")]
     [HelpURL(URL.WikiTask + "Follow")]
-    public class Follow : OneChildNode<IMoveInputable<Vector3>>
+    public class Follow : OneChildNode<IMoveInputable<Vector3>>, IOutputPortInfoy<string>, IDetailable
     {
         public bool IgnoreYAxis = true;
 
@@ -42,6 +42,8 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnEnter(object options = null)
         {
             base.OnEnter(options);
+            InChild = false;
+            LostMode = false;
             if (Target?.Value)
             {
                 Last = Target.Value.position;
@@ -97,6 +99,10 @@ namespace Megumin.AI.BehaviorTree
                     if (LostWait.WaitEnd(5f))
                     {
                         //丢失目标一定时间，返回失败
+                        if (InChild)
+                        {
+                            Child0?.Abort(this);
+                        }
                         return Status.Failed;
                     }
                 }
@@ -150,6 +156,22 @@ namespace Megumin.AI.BehaviorTree
             }
 
             return Status.Running;
+        }
+
+        public string OutputPortInfo => "OnNearTarget";
+
+        public string GetDetail()
+        {
+            if (State == Status.Running)
+            {
+                if (InChild)
+                {
+                    return $"{CurrentDistance}--Wait:{NextMoveWait.GetLeftTime(nextMoveDelta):0.000}";
+                }
+                return $"{CurrentDistance}";
+            }
+
+            return null;
         }
     }
 }
