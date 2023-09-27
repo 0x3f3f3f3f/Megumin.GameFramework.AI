@@ -60,8 +60,11 @@ namespace Megumin.AI.BehaviorTree
                     return true;
                 }
             }
+            else
+            {
+                distance = float.MaxValue;
+            }
 
-            distance = float.MaxValue;
             return false;
         }
     }
