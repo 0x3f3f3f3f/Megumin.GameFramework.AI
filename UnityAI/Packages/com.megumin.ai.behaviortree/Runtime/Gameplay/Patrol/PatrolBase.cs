@@ -11,7 +11,7 @@ namespace Megumin.AI.BehaviorTree
     /// 每到达一个检查点，执行一次子节点。
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class PatrolBase<T, P> : StateChild0<T>
+    public abstract class PatrolBase<T, P> : StateChild0<T>, IOutputPortInfoy<string>
         where P : PatrolPath<Vector3>
     {
         [Space]
@@ -33,6 +33,8 @@ namespace Megumin.AI.BehaviorTree
         }
 
         protected Vector3 destination;
+
+        public string OutputPortInfo => "OnArrivedCheckPoint";
     }
 }
 

@@ -207,6 +207,15 @@ namespace Megumin.AI.BehaviorTree.Editor
             {
                 InputPort = new BehaviorTreePortView(Direction.Input, Port.Capacity.Single);
                 inputContainer.Add(InputPort);
+
+                if (node is IInputPortInfoy<string> infoy)
+                {
+                    string inputPortInfo = infoy.InputPortInfo;
+                    InputPort.portName = inputPortInfo;
+                    InputPort.tooltip = inputPortInfo;
+                    InputPort.SetToClassList(UssClassConst.portInfo, !string.IsNullOrEmpty(inputPortInfo));
+                    InputPort.SetToClassList(UssClassConst.inputPortName, !string.IsNullOrEmpty(inputPortInfo));
+                }
             }
 
             if (OutputPort == null)
@@ -214,6 +223,15 @@ namespace Megumin.AI.BehaviorTree.Editor
                 Port.Capacity multiOutputPort = node is OneChildNode ? Port.Capacity.Single : Port.Capacity.Multi;
                 OutputPort = new BehaviorTreePortView(Direction.Output, multiOutputPort);
                 outputContainer.Add(OutputPort);
+
+                if (node is IOutputPortInfoy<string> infoy)
+                {
+                    string outputPortInfo = infoy.OutputPortInfo;
+                    OutputPort.portName = outputPortInfo;
+                    OutputPort.tooltip = outputPortInfo;
+                    OutputPort.SetToClassList(UssClassConst.portInfo, !string.IsNullOrEmpty(outputPortInfo));
+                    OutputPort.SetToClassList(UssClassConst.outputPortName, !string.IsNullOrEmpty(outputPortInfo));
+                }
             }
 
             outputContainer.SetToClassList("unDisplay", node is BTActionNode);

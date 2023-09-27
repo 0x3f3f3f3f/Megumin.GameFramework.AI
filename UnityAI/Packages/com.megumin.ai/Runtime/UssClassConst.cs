@@ -35,5 +35,11 @@ namespace Megumin.AI
         public const string bindPathParseNone = nameof(bindPathParseNone);
 
         public const string dataWarning = nameof(dataWarning);
+
+
+        //---
+        public const string portInfo = nameof(portInfo);
+        public const string inputPortName = nameof(inputPortName);
+        public const string outputPortName = nameof(outputPortName);
     }
 }

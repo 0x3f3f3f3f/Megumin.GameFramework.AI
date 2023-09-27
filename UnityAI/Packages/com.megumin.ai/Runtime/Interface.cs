@@ -36,6 +36,30 @@ namespace Megumin.AI
         (int Result, string ToolTip) Valid();
     }
 
+    /// <summary>
+    /// 含有输入端口信息的。Info-y
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IInputPortInfoy<out T>
+    {
+        /// <summary>
+        /// 输入端口信息
+        /// </summary>
+        T InputPortInfo { get; }
+    }
+
+    /// <summary>
+    /// 含有输出端口信息的。Info-y
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IOutputPortInfoy<out T>
+    {
+        /// <summary>
+        /// 输出端口信息
+        /// </summary>
+        T OutputPortInfo { get; }
+    }
+
     [Flags]
     public enum Status
     {

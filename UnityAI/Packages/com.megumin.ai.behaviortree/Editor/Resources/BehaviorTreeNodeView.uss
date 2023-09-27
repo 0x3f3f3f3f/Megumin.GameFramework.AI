@@ -76,6 +76,7 @@
     flex-grow: 1;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     max-height: 18px;
     padding-left: 0;
     padding-right: 0;
@@ -87,10 +88,16 @@
     --port-color: rgb(73, 218, 16);
 }
 
-.port > #type {
+.node .port > #type {
     visibility: visible;
     display: none;
     position: absolute;
+}
+
+.node .port.portInfo > #type {
+    display: flex;
+    color: rgba(193, 193, 193, 0.5);
+    font-size: 10px;
 }
 
 .port #cap {
