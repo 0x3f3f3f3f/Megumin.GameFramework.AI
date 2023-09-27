@@ -79,6 +79,11 @@ namespace Megumin.Reflection
             { (typeof(int),typeof(float)) , new TypeAdpter_int_to_float() },
             { (typeof(int),typeof(double)) , new TypeAdpter_int_to_double() },
             { (typeof(float),typeof(double)) , new TypeAdpter_float_to_double() },
+
+            { (typeof(GameObject),typeof(Transform)) , new TypeAdpter_GameObject_to_Transform() },
+            { (typeof(Transform),typeof(GameObject)) , new TypeAdpter_Transform_to_GameObject() },
+            { (typeof(Component),typeof(GameObject)) , new TypeAdpter_Component_to_GameObject() },
+            { (typeof(Component),typeof(Transform)) , new TypeAdpter_Component_to_Transform() },
         };
 
         /// <summary>
@@ -305,4 +310,38 @@ namespace Megumin.Reflection
             return value;
         }
     }
+
+    public class TypeAdpter_GameObject_to_Transform : TypeAdpter<GameObject, Transform>
+    {
+        public override Transform Convert(GameObject value)
+        {
+            return value.transform;
+        }
+    }
+
+    public class TypeAdpter_Transform_to_GameObject : TypeAdpter<Transform, GameObject>
+    {
+        public override GameObject Convert(Transform value)
+        {
+            return value.gameObject;
+        }
+    }
+
+    public class TypeAdpter_Component_to_GameObject : TypeAdpter<Component, GameObject>
+    {
+        public override GameObject Convert(Component value)
+        {
+            return value.gameObject;
+        }
+    }
+
+    public class TypeAdpter_Component_to_Transform : TypeAdpter<Component, Transform>
+    {
+        public override Transform Convert(Component value)
+        {
+            return value.transform;
+        }
+    }
 }
+
+
