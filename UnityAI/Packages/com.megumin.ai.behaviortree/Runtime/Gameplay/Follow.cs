@@ -11,8 +11,12 @@ namespace Megumin.AI.BehaviorTree
     /// <summary>
     /// 简单跟随
     /// </summary>
-    //[Category("Gameplay")]
-    //[AddComponentMenu("Follow IMoveInputable<Vector3>")]
+    [Icon("buildsettings.android@2x")]
+    [DisplayName("Follow")]
+    [Description("Follow IMoveInputable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Follow Transform(IMoveInputable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Follow")]
     public class Follow : OneChildNode<IMoveInputable<Vector3>>
     {
         public bool IgnoreYAxis = true;
