@@ -164,11 +164,21 @@ namespace Megumin.AI.BehaviorTree
         {
             if (State == Status.Running)
             {
+                if (LostMode)
+                {
+                    return $"Lost:{LostWait.GetLeftTime(5):0.000}";
+                }
+
                 if (InChild)
                 {
-                    return $"{CurrentDistance}--Wait:{NextMoveWait.GetLeftTime(nextMoveDelta):0.000}";
+                    var left = NextMoveWait.GetLeftTime(nextMoveDelta);
+                    if (left > 0)
+                    {
+                        return $"{CurrentDistance:0.000}  Wait:{NextMoveWait.GetLeftTime(nextMoveDelta):0.000}";
+                    }
                 }
-                return $"{CurrentDistance}";
+
+                return $"{CurrentDistance:0.000}";
             }
 
             return null;
