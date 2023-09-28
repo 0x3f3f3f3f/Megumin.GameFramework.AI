@@ -49,7 +49,7 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 绑定之后，解析之后，第一次Tick开始时调用，不能包装所有节点的调用顺序
+        /// 绑定之后，解析之后，第一次Tick开始时调用，不能保证所有节点的调用顺序
         /// </summary>
         /// <param name="options"></param>
         protected virtual void OnAwake(object options = null)
@@ -63,7 +63,7 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 绑定之后，解析之后，第一次Tick开始时，Awake之后调用，不能包装所有节点的调用顺序
+        /// 绑定之后，解析之后，第一次Tick开始时，Awake之后调用，不能保证所有节点的调用顺序
         /// </summary>
         /// <param name="options"></param>
         protected virtual void OnStart(object options = null)
