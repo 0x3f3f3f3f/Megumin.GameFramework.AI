@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -27,13 +28,15 @@ namespace Megumin.AI.BehaviorTree
     public class CheckTrigger_Decorator : ConditionDecorator, IDetailable, IPreDecorator, IPostDecorator, IAbortDecorator
     {
         public RefVar_String TriggerName;
-        public WhenResetTrigger Reset = WhenResetTrigger.Immediate;
+
+        [FormerlySerializedAsAttribute("Reset")]
+        public WhenResetTrigger ResetTrigger = WhenResetTrigger.Immediate;
 
         protected override bool OnCheckCondition(object options = null)
         {
             if (Tree.TryGetTrigger(TriggerName, out var eventData))
             {
-                if (Reset == WhenResetTrigger.Immediate)
+                if (ResetTrigger == WhenResetTrigger.Immediate)
                 {
                     Tree.ResetTrigger(TriggerName);
                 }
@@ -49,7 +52,7 @@ namespace Megumin.AI.BehaviorTree
 
         public void BeforeNodeEnter(object options = null)
         {
-            if (Reset == WhenResetTrigger.EnterNode)
+            if (ResetTrigger == WhenResetTrigger.EnterNode)
             {
                 Tree.ResetTrigger(TriggerName);
             }
@@ -57,7 +60,7 @@ namespace Megumin.AI.BehaviorTree
 
         public Status AfterNodeExit(Status result, object options = null)
         {
-            if (Reset == WhenResetTrigger.LeaveNode)
+            if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
                 Tree.ResetTrigger(TriggerName);
             }
@@ -66,7 +69,7 @@ namespace Megumin.AI.BehaviorTree
 
         public void OnNodeAbort(object options = null)
         {
-            if (Reset == WhenResetTrigger.LeaveNode)
+            if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
                 Tree.ResetTrigger(TriggerName);
             }
