@@ -162,6 +162,50 @@ namespace Megumin.AI
     {
 
     }
+
+    public interface IAwakeable
+    {
+        /// <summary>
+        /// 绑定之后，解析之后，第一次Tick开始时调用，不能包装所有节点的调用顺序
+        /// </summary>
+        /// <param name="options"></param>
+        void Awake(object options = null);
+    }
+
+    public interface IStartable
+    {
+        /// <summary>
+        /// 绑定之后，解析之后，第一次Tick开始时，Awake之后调用，不能包装所有节点的调用顺序
+        /// </summary>
+        /// <param name="options"></param>
+        void Start(object options = null);
+    }
+
+    public interface IStopable
+    {
+        void Stop(object options = null);
+    }
+
+    public interface IResetable
+    {
+        void Reset(object options = null);
+    }
+
+    public interface IEnableable
+    {
+        bool Enabled { get; set; }
+
+        //void Enable();
+        //void Disable();
+    }
+
+    /// <summary>
+    /// 想要轮询必须支持开启和关闭。这样才能正确处理Start。
+    /// </summary>
+    public interface ITickable : IEnableable
+    {
+
+    }
 }
 
 

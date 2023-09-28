@@ -25,12 +25,9 @@ namespace Megumin.AI.BehaviorTree
         public InitOption InitOption { get; set; }
         public RefFinder RefFinder { get; set; }
 
-        public void Reset()
+        public override void Reset()
         {
-            foreach (var item in AllNodes)
-            {
-                item.Reset();
-            }
+            base.Reset();
             treestate = Status.Init;
         }
 
@@ -191,6 +188,11 @@ namespace Megumin.AI.BehaviorTree
         /// 可以用于节点区分是不是当前tick。
         /// </summary>
         public int TotalTickCount { get; protected set; } = 0;
+        /// <summary>
+        /// 是不是第一次Tick
+        /// </summary>
+        public bool IsFirstTick { get; protected set; } = false;
+
         /// <summary>
         /// 当前正在Tick的节点序号
         /// </summary>

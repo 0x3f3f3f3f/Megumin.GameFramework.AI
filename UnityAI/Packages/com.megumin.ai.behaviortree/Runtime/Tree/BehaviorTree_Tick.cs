@@ -23,6 +23,13 @@ namespace Megumin.AI.BehaviorTree
         {
             using var profiler = tickProfilerMarker.Auto();
 
+            if (IsFirstTick == false)
+            {
+                IsFirstTick = true;
+                Awake();
+                Start();
+            }
+
             //根树检查ReStart
             if (IsRootTree)
             {

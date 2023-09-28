@@ -66,6 +66,16 @@ namespace Megumin.AI.BehaviorTree
                 element.Tree = this;
             }
 
+            InitAddObjToInterfaceCollection(value);
+        }
+
+        /// <summary>
+        /// 测试是否含有接口，并缓存到指定容器中，方便同意调用。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public void InitAddObjToInterfaceCollection<T>(T value)
+        {
             if (value is IBindingParseable parseable)
             {
                 AllBindingParseable.Add(parseable);
@@ -74,6 +84,21 @@ namespace Megumin.AI.BehaviorTree
             if (value is IBindAgentable bindAgentable)
             {
                 AllBindAgentable.Add(bindAgentable);
+            }
+
+            if (value is IAwakeable awakeable)
+            {
+                AllAwakeable.Add(awakeable);
+            }
+
+            if (value is IStartable startable)
+            {
+                AllStartable.Add(startable);
+            }
+
+            if (value is IResetable resetable)
+            {
+                AllResetable.Add(resetable);
             }
         }
 
@@ -84,15 +109,7 @@ namespace Megumin.AI.BehaviorTree
                 Variable.Table.Add(variable);
             }
 
-            if (value is IBindingParseable parseable)
-            {
-                AllBindingParseable.Add(parseable);
-            }
-
-            if (value is IBindAgentable bindAgentable)
-            {
-                AllBindAgentable.Add(bindAgentable);
-            }
+            InitAddObjToInterfaceCollection(value);
         }
 
         /// <summary>

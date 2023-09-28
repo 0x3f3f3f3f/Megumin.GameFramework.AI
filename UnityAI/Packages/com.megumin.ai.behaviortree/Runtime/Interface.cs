@@ -122,30 +122,6 @@ namespace Megumin.AI.BehaviorTree
         void OnNodeAbort(object options = null);
     }
 
-
-    public interface IStartable
-    {
-        bool IsStarted { get; }
-        void Start();
-        void Stop();
-    }
-
-    public interface IEnableable
-    {
-        bool Enabled { get; set; }
-
-        //void Enable();
-        //void Disable();
-    }
-
-    /// <summary>
-    /// 想要轮询必须支持开启和关闭。这样才能正确处理Start。
-    /// </summary>
-    public interface ITickable : IEnableable
-    {
-
-    }
-
     [Flags]
     public enum AbortType
     {

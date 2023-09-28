@@ -110,27 +110,6 @@ namespace Megumin.AI.BehaviorTree
             return AddDecorator(decorator);
         }
 
-
-        //internal void Awake()
-        //{
-
-        //}
-
-        //internal void Enable()
-        //{
-
-        //}
-
-        //internal void Start()
-        //{
-
-        //}
-
-        public void Reset(object options = null)
-        {
-            OnReset(options);
-        }
-
         /// <summary>
         /// 第一次执行进入节点
         /// </summary>
@@ -163,8 +142,6 @@ namespace Megumin.AI.BehaviorTree
         {
             return Status.Succeeded;
         }
-
-        protected virtual void OnReset(object options = null) { }
 
         /// <summary>
         /// 根据调用节点返回不同的结果值，使调用节点忽略当前节点。
