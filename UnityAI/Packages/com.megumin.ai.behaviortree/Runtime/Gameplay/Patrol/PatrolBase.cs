@@ -25,9 +25,10 @@ namespace Megumin.AI.BehaviorTree
         public P PatrolPath;
 
         protected Vector3 startPosition;
-        protected override void OnEnter(object options = null)
+
+        protected override void OnAwake(object options = null)
         {
-            base.OnEnter(options);
+            base.OnAwake(options);
             startPosition = Transform.position;
             PatrolPath.StartPoint = startPosition;
         }
