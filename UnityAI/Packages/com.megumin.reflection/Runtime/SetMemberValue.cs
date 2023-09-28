@@ -127,13 +127,21 @@ namespace Megumin.Reflection
 
             //通过反射对成员赋值
             var members = instanceType?.GetMembers(BindingAttr);
-            var member = members?.FirstOrDefault(elem => elem.Name == memberName);
+            var member = members?.FirstOrDefault(elem =>
+            {
+                return !(elem is MethodInfo) && elem.Name == memberName;
+            });
 
             if (member == null)
             {
                 //支持序列化成员改名
                 foreach (var elem in members)
                 {
+                    if (elem is MethodInfo)
+                    {
+                        continue;
+                    }
+
                     var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
                     if (string.Equals(attri?.oldName, memberName))
                     {
