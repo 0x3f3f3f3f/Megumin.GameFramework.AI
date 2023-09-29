@@ -5,37 +5,39 @@ using System.ComponentModel;
 using Megumin.Binding;
 using Megumin.Timers;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 简单跟随
     /// </summary>
-    [Icon("buildsettings.android@2x")]
-    [DisplayName("Follow")]
-    [Description("Follow IMoveInputable<Vector3>")]
-    [Category("Gameplay")]
-    [AddComponentMenu("Follow Transform(IMoveInputable<Vector3>)")]
-    [HelpURL(URL.WikiTask + "Follow")]
-    public class Follow : OneChildNode<IMoveInputable<Vector3>>, IOutputPortInfoy<string>, IDetailable
-    {
-        public bool IgnoreYAxis = true;
 
+    public abstract class FollowBase<T> : OneChildNode<T>, IOutputPortInfoy<string>, IDetailable
+    {
+        [Space]
+        public bool IgnoreYAxis = true;
 
         /// <summary>
         /// 最大停止距离
         /// </summary>
-        public float nearCheck = 0.8f;
+        [Space]
+        public float StopingDistance = 0.8f;
 
         /// <summary>
         /// 触发再次跟随移动距离
         /// </summary>
-        public float farCheck = 2.5f;
+        public float RefollowDistance = 2.5f;
 
         /// <summary>
         /// 跟随停止后到再次移动的间隔时间，防止抽搐
         /// </summary>
-        public float nextMoveDelta = 1.5f;
+        public float RefollowWait = 1.5f;
+
+        /// <summary>
+        /// 丢失目标后等待时间
+        /// </summary>
+        public float LostWait = 5f;
 
         public RefVar_GameObject Target;
 
@@ -69,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 开始下一次移动的间隔计时器
         /// </summary>
-        readonly WaitGameTime NextMoveWait = new WaitGameTime();
+        protected readonly WaitGameTime RefollowWaiter = new WaitGameTime();
 
         /// <summary>
         /// 丢失目标模式
@@ -79,7 +81,7 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 丢失目标计时器
         /// </summary>
-        readonly WaitGameTime LostWait = new WaitGameTime();
+        protected readonly WaitGameTime LostWaiter = new WaitGameTime();
 
         protected override Status OnTick(BTNode from, object options = null)
         {
@@ -96,7 +98,7 @@ namespace Megumin.AI.BehaviorTree
                 //跟随目标已经丢失
                 if (LostMode)
                 {
-                    if (LostWait.WaitEnd(5f))
+                    if (LostWaiter.WaitEnd(LostWait))
                     {
                         //丢失目标一定时间，返回失败
                         if (InChild)
@@ -110,7 +112,7 @@ namespace Megumin.AI.BehaviorTree
                 {
                     //切换为丢失模式，启动计时器
                     LostMode = true;
-                    LostWait.WaitStart();
+                    LostWaiter.WaitStart();
                 }
             }
 
@@ -118,7 +120,7 @@ namespace Megumin.AI.BehaviorTree
             {
                 //执行子节点
                 CurrentDistance = (Transform.position - Last).magnitude;
-                if (NextMoveWait.WaitEnd(nextMoveDelta) && CurrentDistance > farCheck)
+                if (RefollowWaiter.WaitEnd(RefollowWait) && CurrentDistance > RefollowDistance)
                 {
                     //转为跟随模式
                     InChild = false;
@@ -138,25 +140,25 @@ namespace Megumin.AI.BehaviorTree
                 return Status.Running;
             }
 
-
-            if (Transform.IsArrive(Last, out CurrentDistance, nearCheck, IgnoreYAxis))
+            if (Transform.IsArrive(Last, out CurrentDistance, StopingDistance, IgnoreYAxis))
             {
                 //跟随足够接近目标，转为执行子节点。
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
-                MyAgent.MoveInput(Vector3.zero);
+                OnArrivedTarget();
                 InChild = true;
-                NextMoveWait.WaitStart();
-                return Status.Running;
+                RefollowWaiter.WaitStart();
             }
             else
             {
-                //跟随移动，设置移动方向
-                var dir = Last - Transform.position;
-                MyAgent.MoveInput(dir);
+                OnFollowingTarget();
             }
 
             return Status.Running;
         }
+
+        protected abstract void OnFollowingTarget();
+
+        protected abstract void OnArrivedTarget();
 
         public string OutputPortInfo => "OnNearTarget";
 
@@ -166,15 +168,15 @@ namespace Megumin.AI.BehaviorTree
             {
                 if (LostMode)
                 {
-                    return $"Lost:{LostWait.GetLeftTime(5):0.000}";
+                    return $"Lost:{LostWaiter.GetLeftTime(LostWait):0.000}";
                 }
 
                 if (InChild)
                 {
-                    var left = NextMoveWait.GetLeftTime(nextMoveDelta);
+                    var left = RefollowWaiter.GetLeftTime(RefollowWait);
                     if (left > 0)
                     {
-                        return $"{CurrentDistance:0.000}  Wait:{NextMoveWait.GetLeftTime(nextMoveDelta):0.000}";
+                        return $"{CurrentDistance:0.000}  Wait:{RefollowWaiter.GetLeftTime(RefollowWait):0.000}";
                     }
                 }
 
@@ -182,6 +184,66 @@ namespace Megumin.AI.BehaviorTree
             }
 
             return null;
+        }
+    }
+
+    [Icon("buildsettings.android@2x")]
+    [DisplayName("Follow")]
+    [Description("Follow IMoveInputable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Follow GameObject(IMoveInputable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Follow")]
+    [SerializationAlias("Megumin.AI.BehaviorTree.Follow")]
+    public class Follow_MoveInput : FollowBase<IMoveInputable<Vector3>>
+    {
+        protected override void OnFollowingTarget()
+        {
+            //跟随移动，设置移动方向
+            var dir = Last - Transform.position;
+            MyAgent.MoveInput(dir);
+        }
+
+        protected override void OnArrivedTarget()
+        {
+            MyAgent.MoveInput(Vector3.zero);
+        }
+    }
+
+    [Icon("buildsettings.android@2x")]
+    [DisplayName("Follow")]
+    [Description("Follow IMoveToable<Vector3>")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Follow GameObject(IMoveToable<Vector3>)")]
+    [HelpURL(URL.WikiTask + "Follow")]
+    public class Follow_MoveTo : FollowBase<IMoveToable<Vector3>>
+    {
+        protected override void OnFollowingTarget()
+        {
+            MyAgent.MoveTo(Last);
+        }
+
+        protected override void OnArrivedTarget()
+        {
+
+        }
+    }
+
+    [Icon("buildsettings.android@2x")]
+    [DisplayName("Follow")]
+    [Description("Follow NavMeshAgent.SetDestination")]
+    [Category("Gameplay")]
+    [AddComponentMenu("Follow GameObject(NavMeshAgent.SetDestination)")]
+    [HelpURL(URL.WikiTask + "Follow")]
+    public class Follow_NavAgent : FollowBase<NavMeshAgent>
+    {
+        protected override void OnFollowingTarget()
+        {
+            MyAgent.SetDestination(Last);
+        }
+
+        protected override void OnArrivedTarget()
+        {
+
         }
     }
 }
