@@ -24,6 +24,11 @@ namespace Megumin
         /// </summary>
         public string Alias { get; set; }
 
+        /// <summary>
+        /// 检查Alias格式，显示警告
+        /// </summary>
+        public bool Warning { get; set; } = true;
+
         public SerializationAliasAttribute(string alias)
         {
             Alias = alias;
@@ -947,14 +952,17 @@ namespace Megumin.Reflection
                     var alias = attri.Alias;
                     hotType[alias] = type;
 
-                    Task.Run(() =>
+                    if (attri.Warning)
                     {
-                        var res = SplitNamespace(alias);
-                        if (type.Namespace != null && string.IsNullOrEmpty(res.Namespace))
+                        Task.Run(() =>
                         {
-                            Debug.LogWarning($"Your Alias: {alias} for {type.FullName} NOT have namespace, maybe not work!");
-                        }
-                    });
+                            var res = SplitNamespace(alias);
+                            if (type.Namespace != null && string.IsNullOrEmpty(res.Namespace))
+                            {
+                                Debug.LogWarning($"<color=#CC397B>Your Alias:    {alias}    for     {type.FullName}    NOT have namespace, maybe not work!</color>");
+                            }
+                        });
+                    }
                 }
             }
         }
