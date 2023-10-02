@@ -70,6 +70,7 @@ namespace Megumin.AI
         /// 使用多线程异步实例化，防止阻塞主线程。
         /// 缺点是不会在当前帧立刻完成并执行行为树。
         /// </summary>
+        [Tooltip("Not valid on WebGL platform, does not support multithreading")]
         public bool AsyncInit = true;
         /// <summary>
         /// 运行时通常不会修改meta信息，也不会修改树结构。可以考虑共享meta。

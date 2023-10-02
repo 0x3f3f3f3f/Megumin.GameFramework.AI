@@ -38,8 +38,11 @@ namespace Megumin.AI.BehaviorTree
                 return Task.FromResult<BehaviorTree>(null);
             }
 
-            if (initOption.AsyncInit)
+            if (UnityEngine.Application.platform != UnityEngine.RuntimePlatform.WebGLPlayer 
+                && initOption.AsyncInit)
             {
+                //WebGL平台不支持多线程
+
                 return Task.Run(async () =>
                 {
                     //先触发CacheAllTypes

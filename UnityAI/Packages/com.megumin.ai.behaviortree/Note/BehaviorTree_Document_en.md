@@ -81,7 +81,8 @@ InitOption:
 - AsyncInit  
   Uses multi-threaded asynchronous instantiation of the behavior tree instance.  
   The disadvantage is that the behavior tree is not completed and executed immediately at the current frame.  
-  And the initialization process cannot call the Unity method.
+  And the initialization process cannot call the Unity method.  
+  (Not valid on WebGL platform, does not support multithreading)  
 - SharedMeta  
   Same behavior tree file in SharedMeta share meta information, mainly node descriptions, node coordinates and other runtime-independent information.  
 - LazyInitSubtree  
