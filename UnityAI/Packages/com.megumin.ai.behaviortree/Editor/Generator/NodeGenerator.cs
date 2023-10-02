@@ -15,6 +15,7 @@ using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
+    [CreateAssetMenu(fileName = "NodeGenerator", menuName = "Megumin/AI/NodeGenerator")]
     public partial class NodeGenerator : ScriptableObject
     {
         public UnityEngine.Object OutputFolder;
