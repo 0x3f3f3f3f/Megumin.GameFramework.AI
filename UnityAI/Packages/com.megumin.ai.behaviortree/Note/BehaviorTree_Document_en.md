@@ -89,10 +89,18 @@ InitOption:
   Delayed instantiation of the subtree, instantiated on the first execution to the subtree node.
   The default value is false.
 - UseGenerateCode  
-  Instantiates the behavior tree using the generated code.
+  Instantiates the behavior tree using the generated code.  
++ DelayMinFrame  
+  After instantiation, before the first Tick, the minimum number of frames to delay add to the Manager.
 + DelayRandomFrame  
-  Instantiation, delay random frames before starting the execution tree.  
-  When a large number of behavior trees are instantiated at the same time and the execution interval is set, the instances can be spread across multiple frame executions to prevent spike frame stuttering.  
+  After instantiation, before the first Tick, after delaying a random number of frames, add to the Manager.  
+  When a large number of behavior trees are instantiated at the same time and the execution interval is set, the instances can be spread across multiple frames for execution to prevent lag spikes.
+  - DelayFrame has nothing to do with the initialization process.  
+  - The design purpose of DelayRandomFrame is that if the behavior tree instances are not updated every frame, all instances will be randomly assigned to be updated on multiple frames to avoid lag spikes caused by updating a large number of instances in the same frame.  
+  For example: updated every 30 frames, there are 10 behavior tree instances tree0~tree9.  
+  What we expect is that these 10 behavior trees will be updated over multiple frames, instead of updating 10 behavior trees at once in Frame0, causing spike frames, while Frame1~Frame29 are in a daze.
+  After DelayRandomFrame is turned on, it will randomly delay adding behavior tree instances to the Manager. The effect achieved is approximately Frame0 updates tree0, Frame3 updates tree1, and Frame5 updates tree2. etc……
+
 
 If the root behavior tree uses multithreaded initialization, the subtree should be initialized at the same time because the main thread is not blocked.  
 If the root behavior tree is initialized using the Unity main thread, you should lazilate initialize the subtree and try not to have a lot of computation happen in the same frame.
@@ -131,6 +139,46 @@ Right-click the bind button, the bindable menu of all components of the current 
 Note: You can bind parameters to members of a component that does not exist on the GameObject, which is legal in the editor. Because this component may not yet exist on prefab, it needs to be added dynamically at runtime.  
 However, you must ensure that you add components before the behavior tree starts initializing bindings, or manually call the behavior tree's parameter binding functions after adding components.  
 Even if the final bound component does not exist, it does not affect the entire behavior tree execution. When accessing this variable, you can return the default value of the type.  
+
+## Custom Variable Type
+Can define your own variable type, which is recommended to inherit from `Megumin.Binding.RefVar<T>`.  
+Also can also create a VariableCreator, added to the `VariableCreator.AllCreator`.  
+
+In Unity2023 and later, generic variables can be used directly.  
+For example, `RefVar<MyTestVarData>`, there is no need to write an additional specialty type `RefVar_MyTestVarData`.  
+
+```cs
+[Serializable]
+public class MyTestVarData
+{
+    public int a = 0;
+}
+
+[Serializable]
+[DebuggerTypeProxy(typeof(DebugView))]
+public class RefVar_MyTestVarData : RefVar<MyTestVarData> { }
+
+public class VariableCreator_MyTestVarData : VariableCreator
+{
+    public override string Name { get; set; } = "MyTest/Date";
+
+    public override IRefable Create()
+    {
+        return new RefVar_MyTestVarData() { RefName = "MyTestVarData" };
+    }
+
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnLoadMethod]
+#endif
+    //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void AddToAllCreator()
+    {
+        VariableCreator.AllCreator.Add(new VariableCreator_MyTestVarData());
+        //Or insert.
+        //VariableCreator.AllCreator.Insert(0,new VariableCreator_MyTestVarData());
+    }
+}
+```
 
 # Node
 ## Start Node

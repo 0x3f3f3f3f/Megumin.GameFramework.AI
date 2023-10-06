@@ -89,10 +89,18 @@ BehaviorTreeRunner是执行行为树资产的组件。
   延迟实例化子树，第一次执行到子树节点时实例化。  
   默认值是false。
 - UseGenerateCode  
-  使用生成的代码实例化行为树。
+  使用生成的代码实例化行为树。  
++ DelayMinFrame  
+  实例化之后，第一次Tick之前，延迟加入Manager的最小帧数。  
 + DelayRandomFrame  
-  实例化之后，开始执行树之前，延迟随机帧数。  
+  实例化之后，第一次Tick之前，延迟随机帧数后，加入Manager。  
   当同时实例化大量行为树时，并设置了执行间隔时，可以将实例分散到多个帧执行，用来防止尖峰帧卡顿。  
+  - DelayFrame与初始化过程无关。
+  - DelayRandomFrame的设计目的是，如果行为树实例不是每帧更新，则将所有实例随机分配到多个帧上更新，避免同一帧更新大量实例导致卡顿。  
+  例如：每30帧更新一次，有10个行为树实例tree0~tree9，  
+  我们期望的是，这个10个行为树，分散在多个帧上进行更新，而是不在Frame0一次更新10个行为树，造成尖峰帧，而Frame1~Frame29在发呆。
+  DelayRandomFrame开启后，会随机延迟将行为树实例添加到Manager中，达到的效果近似是 Frame0 更新 tree0，Frame3 更新 tree1，Frame5 更新 tree2。等等……
+
 
 如果根行为树使用多线程初始化，那么应该同时初始化子树，因为不会阻塞主线程。  
 如果根行为树使用Unity主线程初始化，那么应该延迟初始化子树，尽量不要让大量计算发生在同一帧。  
@@ -131,6 +139,46 @@ BehaviorTreeRunner是执行行为树资产的组件。
 注意：你可以将参数绑定到一个GameObject上不存在的组件的成员上，这在编辑器是合法的。因为这个组件可能在prefab上还不存在，需要在运行时动态添加。  
 但你必须保证行为树开始初始化绑定前添加组件，或者在添加组件后手动调用行为树的参数绑定方法。  
 即使最终绑定的组件不存在，也不会影响整个行为树执行。在访问这个变量时，可以返回类型的默认值。
+
+## 自定义变量类型
+可以定义自己的变量类型，建议从`Megumin.Binding.RefVar<T>`继承。  
+还也可以创建一个VariableCreator，添加到`VariableCreator.AllCreator`中。  
+
+在Unity2023及以后的版本中，可以直接使用泛型变量。  
+例如`RefVar<MyTestVarData>`,不再需要额外写一个特化类型`RefVar_MyTestVarData`。  
+
+```cs
+[Serializable]
+public class MyTestVarData
+{
+    public int a = 0;
+}
+
+[Serializable]
+[DebuggerTypeProxy(typeof(DebugView))]
+public class RefVar_MyTestVarData : RefVar<MyTestVarData> { }
+
+public class VariableCreator_MyTestVarData : VariableCreator
+{
+    public override string Name { get; set; } = "MyTest/Date";
+
+    public override IRefable Create()
+    {
+        return new RefVar_MyTestVarData() { RefName = "MyTestVarData" };
+    }
+
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnLoadMethod]
+#endif
+    //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void AddToAllCreator()
+    {
+        VariableCreator.AllCreator.Add(new VariableCreator_MyTestVarData());
+        //Or insert.
+        //VariableCreator.AllCreator.Insert(0,new VariableCreator_MyTestVarData());
+    }
+}
+```
 
 # 节点
 ## 开始节点
