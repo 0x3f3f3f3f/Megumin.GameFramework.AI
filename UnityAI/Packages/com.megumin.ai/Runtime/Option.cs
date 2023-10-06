@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Megumin.AI
 {
@@ -89,4 +90,33 @@ namespace Megumin.AI
         /// </summary>
         public Enable<int> DelayRandomFrame = new(false, 30);
     }
+
+    /// <summary>
+    /// 初始化回调事件
+    /// </summary>
+    /// <typeparam name="Tree"></typeparam>
+    /// <typeparam name="Runner"></typeparam>
+    [Serializable]
+    public class InitEvent<Tree, Runner>
+    {
+        public UnityEvent<Tree, Runner> BeforeInstantiate;
+        public UnityEvent<Tree, Runner> AfterInstantiate;
+
+        public UnityEvent<Tree, Runner> BeforeBindAgent;
+        public UnityEvent<Tree, Runner> AfterBindAgent;
+
+        public UnityEvent<Tree, Runner> BeforeParseBinding;
+        public UnityEvent<Tree, Runner> AfterParseBinding;
+
+        public UnityEvent<Tree, Runner> BeforeAddToManager;
+        public UnityEvent<Tree, Runner> AfterAddToManager;
+
+        public UnityEvent<Tree, Runner> BeforeRemoveFromManager;
+        public UnityEvent<Tree, Runner> AfterRemoveFromManager;
+    }
+
 }
+
+
+
+

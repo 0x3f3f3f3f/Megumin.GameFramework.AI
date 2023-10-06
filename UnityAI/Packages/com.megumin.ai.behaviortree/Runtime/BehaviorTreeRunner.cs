@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 namespace Megumin.AI.BehaviorTree
 {
     public class BehaviorTreeRunner : MonoBehaviour
     {
         //[field: SerializeField]
-        public BehaviorTree BehaviourTree { get; protected set; }
+        public BehaviorTree BehaviourTree { [DebuggerStepThrough] get; [DebuggerStepThrough] protected set; }
         public BehaviorTreeAsset_1_1 BehaviorTreeAsset;
         public TickMode TickMode = TickMode.Update;
 
@@ -25,6 +28,8 @@ namespace Megumin.AI.BehaviorTree
         public InitOption InitOption;
         public RunOption RunOption;
 
+        [Space]
+        public InitEvent<BehaviorTree, BehaviorTreeRunner> InitEvents;
 
         private void OnEnable()
         {
@@ -104,12 +109,25 @@ namespace Megumin.AI.BehaviorTree
                 //声明一个临时变量，方式闭包捕获gameObject，造成在非主线程访问gameObject。
                 //防止 UnityException: get_gameObject can only be called from the main thread.
                 var agent = gameObject;
+
+                //实例行为树
+                InitEvents?.BeforeInstantiate?.Invoke(null, this);
                 BehaviourTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
+                InitEvents?.AfterInstantiate?.Invoke(BehaviourTree, this);
+
                 BehaviourTree.RunOption = RunOption;
                 BehaviourTree.InstanceName = gameObject.name;
+
+                //绑定代理对象
+                InitEvents?.BeforeBindAgent?.Invoke(BehaviourTree, this);
                 BehaviourTree.BindAgent(agent);
+                InitEvents?.AfterBindAgent?.Invoke(BehaviourTree, this);
+
+                //解析绑定变量
+                InitEvents?.BeforeParseBinding?.Invoke(BehaviourTree, this);
                 OverrideVariables?.ParseBinding(agent, true);
                 BehaviourTree.ParseAllBindable(agent);
+                InitEvents?.AfterParseBinding?.Invoke(BehaviourTree, this);
 
                 if (InitOption.DelayRandomFrame.Enabled)
                 {
@@ -120,8 +138,11 @@ namespace Megumin.AI.BehaviorTree
 
             if (BehaviourTree != null)
             {
+                //添加到Manager
+                InitEvents?.BeforeAddToManager?.Invoke(BehaviourTree, this);
                 BehaviorTreeManager.Instance.AddTree(BehaviourTree, TickMode);
                 BehaviourTree.IsRunning = true;
+                InitEvents?.AfterAddToManager?.Invoke(BehaviourTree, this);
             }
 
             isIniting = false;
@@ -131,8 +152,11 @@ namespace Megumin.AI.BehaviorTree
         {
             if (BehaviourTree != null)
             {
+                //从Manager中移除
+                InitEvents?.BeforeRemoveFromManager?.Invoke(BehaviourTree, this);
                 BehaviorTreeManager.Instance.RemoveTree(BehaviourTree);
                 BehaviourTree.IsRunning = false;
+                InitEvents?.AfterRemoveFromManager?.Invoke(BehaviourTree, this);
             }
         }
 
