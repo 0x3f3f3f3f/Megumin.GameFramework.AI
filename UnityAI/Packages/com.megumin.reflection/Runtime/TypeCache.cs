@@ -439,6 +439,8 @@ namespace Megumin.Reflection
 
                 if (CacheTypeInit == false || forceRecache)
                 {
+                    UnityEngine.Profiling.Profiler.BeginSample("Cache AppDomain Assemblies");
+
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
                     //var debugabs = assemblies.ToArray();
                     foreach (var assembly in assemblies)
@@ -452,6 +454,8 @@ namespace Megumin.Reflection
                     }
 
                     CacheTypeInit = true;
+
+                    UnityEngine.Profiling.Profiler.EndSample();
                 }
 
                 return hasChange;
@@ -1096,28 +1100,5 @@ namespace Megumin.Reflection
 
 }
 
-#if UNITY_EDITOR
 
-namespace Megumin
-{
-    using System.Diagnostics;
-    using UnityEditor;
-
-    //[Conditional("UnityEditor")]
-    public struct ProgressBarScope : IDisposable
-    {
-        public ProgressBarScope(string title, string info = "", float progress = 0f)
-        {
-            EditorUtility.DisplayProgressBar(title, info, progress);
-        }
-
-        public void Dispose()
-        {
-            EditorUtility.ClearProgressBar();
-        }
-    }
-
-}
-
-#endif
 

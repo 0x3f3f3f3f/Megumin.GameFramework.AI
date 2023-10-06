@@ -40,16 +40,17 @@ namespace Megumin.AI.BehaviorTree
             treestate = Status.Init;
         }
 
-        static readonly Unity.Profiling.ProfilerMarker parseAllBindableMarker = new("ParseAllBindable");
+        protected static readonly Unity.Profiling.ProfilerMarker ParseAllBindableMarker = new("ParseAllBindable");
 
         /// <summary>
         /// 内部GetCompment只能在主线程调用
         /// </summary>
         /// <param name="agent"></param>
         /// <param name="force"></param>
-        public void ParseAllBindable(object agent, bool force = false, object options = null)
+        public virtual void ParseAllBindable(object agent, bool force = false, object options = null)
         {
-            using var profiler = parseAllBindableMarker.Auto();
+            using var profiler = ParseAllBindableMarker.Auto();
+
             Variable.ParseBinding(agent, force, options);
 
             foreach (var item in AllBindingParseable)

@@ -196,7 +196,7 @@ namespace Megumin.AI.BehaviorTree
 
         public ConcurrentDictionary<string, object> SharedMeta { get; } = new();
 
-        static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new("Instantiate");
+        static readonly Unity.Profiling.ProfilerMarker instantiateMarker = new("Instantiate BehaviorTree");
         public BehaviorTree Instantiate(InitOption initOption, IRefFinder refFinder = null)
         {
             using var profiler = instantiateMarker.Auto();

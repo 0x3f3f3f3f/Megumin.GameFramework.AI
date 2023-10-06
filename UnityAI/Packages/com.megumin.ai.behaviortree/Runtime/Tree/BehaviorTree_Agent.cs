@@ -15,8 +15,12 @@ namespace Megumin.AI.BehaviorTree
 
         public HashSet<IBindAgentable> AllBindAgentable { get; } = new();
 
+        protected static readonly Unity.Profiling.ProfilerMarker BindAgentMarker = new("BindAgent");
+
         public virtual void BindAgent(object agent)
         {
+            using var profiler = BindAgentMarker.Auto();
+
             Agent = agent;
 
             if (agent is Component component)
