@@ -129,10 +129,21 @@ namespace Megumin.AI.BehaviorTree
                 BehaviourTree.ParseAllBindable(agent);
                 InitEvents?.AfterParseBinding?.Invoke(BehaviourTree, this);
 
+                var delay = 0;
+                if (InitOption.DelayMinFrame.Enabled)
+                {
+                    delay = InitOption.DelayMinFrame.Value;
+                }
+
                 if (InitOption.DelayRandomFrame.Enabled)
                 {
-                    var wait = UnityEngine.Random.Range(0, InitOption.DelayRandomFrame);
-                    await WaitFrames(wait);
+                    //下限和上限都包括在内。
+                    delay = UnityEngine.Random.Range(delay, InitOption.DelayRandomFrame);
+                }
+
+                if (delay > 0)
+                {
+                    await WaitFrames(delay);
                 }
             }
 

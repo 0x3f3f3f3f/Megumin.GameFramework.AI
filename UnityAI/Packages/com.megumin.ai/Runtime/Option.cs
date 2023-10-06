@@ -86,6 +86,10 @@ namespace Megumin.AI
         /// </summary>
         public bool UseGenerateCode = false;
         /// <summary>
+        /// 开始执行树之前，最小延迟帧数
+        /// </summary>
+        public Enable<int> DelayMinFrame = new(false, 1);
+        /// <summary>
         /// 开始执行树之前，延迟随机帧数
         /// </summary>
         public Enable<int> DelayRandomFrame = new(false, 30);
