@@ -102,10 +102,19 @@ namespace Megumin.Binding
         public ParseMode GetMode = ParseMode.FallbackValue;
         public ParseMode SetMode = ParseMode.FallbackValue;
 
+        //这里是性能敏感区域，使用条件编译调用
+        protected static readonly Unity.Profiling.ProfilerMarker GetMarker = new("BindingVar Get");
+        protected static readonly Unity.Profiling.ProfilerMarker SetMarker = new("BindingVar Set");
+
         public override T Value
         {
             get
             {
+
+#if ENABLE_PROFILER || UNITY_EDITOR || DEVELOPMENT_BUILD
+                using var profiler = GetMarker.Auto();
+#endif
+
                 if (ParseResult.HasValue)
                 {
                     if ((ParseResult.Value & CreateDelegateResult.Get) != 0)
@@ -146,6 +155,11 @@ namespace Megumin.Binding
 
             set
             {
+
+#if ENABLE_PROFILER || UNITY_EDITOR || DEVELOPMENT_BUILD
+                using var profiler = SetMarker.Auto();
+#endif
+
                 if (ParseResult.HasValue)
                 {
                     if ((ParseResult.Value & CreateDelegateResult.Set) != 0)
