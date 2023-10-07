@@ -913,6 +913,16 @@ namespace Megumin.Reflection
         }
 
         /// <summary>
+        /// 预热一个类型，可以避免在全类型中查找。
+        /// 其他模块可以将常用类型使用static代码，在调用TypeCache前预热。
+        /// </summary>
+        /// <param name="type"></param>
+        public static void HotType(Type type)
+        {
+            hotType[type.FullName] = type;
+        }
+
+        /// <summary>
         /// 在热点类型中增加别名映射。
         /// <para/> 用于因为修改类型名，已有的序列化文件无法打开的情况。
         /// <para/> 可以在反序列化之前，将旧的类名手动映射到新的类型。从而不用修改反序列化代码。
