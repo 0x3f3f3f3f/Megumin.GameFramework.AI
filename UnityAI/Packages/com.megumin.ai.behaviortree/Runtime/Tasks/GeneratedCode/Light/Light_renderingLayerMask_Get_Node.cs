@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_renderingLayerMask")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_renderingLayerMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_renderingLayerMask_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

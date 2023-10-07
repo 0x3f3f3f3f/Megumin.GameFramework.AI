@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_sleepThreshold")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_sleepThreshold")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_sleepThreshold_Set_Node : BTActionNode
     {
         [Space]

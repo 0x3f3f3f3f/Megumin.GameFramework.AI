@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody2D_inertia")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Set_inertia")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_inertia_Set_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

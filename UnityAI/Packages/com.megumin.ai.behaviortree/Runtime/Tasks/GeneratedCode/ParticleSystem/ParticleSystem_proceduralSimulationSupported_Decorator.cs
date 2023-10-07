@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_proceduralSimulationSupported")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("proceduralSimulationSupported")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_proceduralSimulationSupported_Decorator : ConditionDecorator<UnityEngine.ParticleSystem>
     {
         [Space]

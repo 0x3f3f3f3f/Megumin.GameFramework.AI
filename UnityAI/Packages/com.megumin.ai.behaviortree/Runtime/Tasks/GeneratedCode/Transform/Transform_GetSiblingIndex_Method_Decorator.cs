@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_GetSiblingIndex")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("GetSiblingIndex")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_GetSiblingIndex_Method_Decorator : CompareDecorator<UnityEngine.Transform, int>
     {
         [Space]

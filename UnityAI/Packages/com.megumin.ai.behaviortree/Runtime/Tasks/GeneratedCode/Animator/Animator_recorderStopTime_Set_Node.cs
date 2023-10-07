@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Animator_recorderStopTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_recorderStopTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_recorderStopTime_Set_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

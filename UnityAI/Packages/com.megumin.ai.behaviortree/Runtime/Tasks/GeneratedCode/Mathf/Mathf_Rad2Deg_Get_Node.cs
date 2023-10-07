@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Mathf_Rad2Deg")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Get_Rad2Deg")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Rad2Deg_Get_Node : BTActionNode
     {
         [Space]

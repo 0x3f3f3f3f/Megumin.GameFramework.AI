@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_ignoreListenerVolume")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_ignoreListenerVolume")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_ignoreListenerVolume_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

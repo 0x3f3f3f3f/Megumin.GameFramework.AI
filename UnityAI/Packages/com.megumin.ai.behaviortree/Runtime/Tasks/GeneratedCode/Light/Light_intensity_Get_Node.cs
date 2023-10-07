@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_intensity")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_intensity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_intensity_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

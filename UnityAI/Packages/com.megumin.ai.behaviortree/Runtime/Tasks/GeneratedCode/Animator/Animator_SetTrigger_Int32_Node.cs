@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetTrigger")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetTrigger(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetTrigger_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

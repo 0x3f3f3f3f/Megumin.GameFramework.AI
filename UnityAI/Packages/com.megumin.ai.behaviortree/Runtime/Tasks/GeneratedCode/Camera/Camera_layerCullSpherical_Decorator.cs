@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_layerCullSpherical")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("layerCullSpherical")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_layerCullSpherical_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

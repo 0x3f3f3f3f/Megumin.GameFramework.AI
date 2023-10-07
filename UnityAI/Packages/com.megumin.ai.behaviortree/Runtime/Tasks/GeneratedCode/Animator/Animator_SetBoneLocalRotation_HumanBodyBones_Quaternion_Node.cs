@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetBoneLocalRotation")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetBoneLocalRotation(HumanBodyBones, Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetBoneLocalRotation_HumanBodyBones_Quaternion_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

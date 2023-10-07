@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_farClipPlane")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_farClipPlane")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_farClipPlane_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

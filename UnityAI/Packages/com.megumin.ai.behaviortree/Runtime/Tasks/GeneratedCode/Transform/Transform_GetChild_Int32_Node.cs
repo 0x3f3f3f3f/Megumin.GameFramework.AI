@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_GetChild")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("GetChild(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_GetChild_Int32_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

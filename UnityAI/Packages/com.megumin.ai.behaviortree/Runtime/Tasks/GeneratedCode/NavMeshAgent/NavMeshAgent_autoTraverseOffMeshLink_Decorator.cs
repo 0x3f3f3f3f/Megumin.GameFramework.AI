@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_autoTraverseOffMeshLink")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("autoTraverseOffMeshLink")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_autoTraverseOffMeshLink_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

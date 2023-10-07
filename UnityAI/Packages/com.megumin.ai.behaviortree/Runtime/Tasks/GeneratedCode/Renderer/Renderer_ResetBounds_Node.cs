@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_ResetBounds")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("ResetBounds")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_ResetBounds_Node : BTActionNode<UnityEngine.Renderer>
     {
         protected override Status OnTick(BTNode from, object options = null)

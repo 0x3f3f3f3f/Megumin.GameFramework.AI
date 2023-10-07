@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_GetRelativeVector")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("GetRelativeVector(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_GetRelativeVector_Vector2_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

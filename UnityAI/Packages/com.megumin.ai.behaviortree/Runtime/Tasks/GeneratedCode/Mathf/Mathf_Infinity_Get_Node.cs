@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Mathf_Infinity")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Get_Infinity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Infinity_Get_Node : BTActionNode
     {
         [Space]

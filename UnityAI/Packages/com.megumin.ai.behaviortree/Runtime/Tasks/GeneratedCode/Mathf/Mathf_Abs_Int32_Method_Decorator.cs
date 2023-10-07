@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Abs")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Abs(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Abs_Int32_Method_Decorator : CompareDecorator<int>
     {
         [Space]

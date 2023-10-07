@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Lerp")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Lerp(Vector2, Vector2, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Lerp_Vector2_Vector2_Single_Node : BTActionNode
     {
         [Space]

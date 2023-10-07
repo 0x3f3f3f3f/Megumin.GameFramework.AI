@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3Int_Min")]
     [Category("UnityEngine/Vector3Int")]
     [AddComponentMenu("Min(Vector3Int, Vector3Int)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3Int_Min_Vector3Int_Vector3Int_Node : BTActionNode
     {
         [Space]

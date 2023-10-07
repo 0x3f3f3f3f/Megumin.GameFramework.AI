@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetIKHintPositionWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetIKHintPositionWeight(AvatarIKHint, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetIKHintPositionWeight_AvatarIKHint_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

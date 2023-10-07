@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_ResetInputAxes")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("ResetInputAxes")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_ResetInputAxes_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

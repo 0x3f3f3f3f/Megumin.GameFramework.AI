@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_height")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_height_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

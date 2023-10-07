@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_QueueEvent")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("QueueEvent(InputEventPtr)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_QueueEvent_InputEventPtr_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_SetAsFirstSibling")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetAsFirstSibling")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_SetAsFirstSibling_Node : BTActionNode<UnityEngine.Transform>
     {
         protected override Status OnTick(BTNode from, object options = null)

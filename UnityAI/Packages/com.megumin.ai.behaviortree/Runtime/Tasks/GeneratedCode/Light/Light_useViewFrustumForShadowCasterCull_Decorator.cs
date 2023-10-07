@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_useViewFrustumForShadowCasterCull")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("useViewFrustumForShadowCasterCull")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_useViewFrustumForShadowCasterCull_Decorator : ConditionDecorator<UnityEngine.Light>
     {
         [Space]

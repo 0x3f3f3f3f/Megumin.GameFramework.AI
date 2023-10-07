@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetIKRotation")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetIKRotation(AvatarIKGoal)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetIKRotation_AvatarIKGoal_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

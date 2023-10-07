@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_RotateTowards")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("RotateTowards(Vector3, Vector3, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_RotateTowards_Vector3_Vector3_Single_Single_Node : BTActionNode
     {
         [Space]

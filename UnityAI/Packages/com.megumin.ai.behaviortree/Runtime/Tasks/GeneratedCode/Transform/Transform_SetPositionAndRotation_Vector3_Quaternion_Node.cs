@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_SetPositionAndRotation")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetPositionAndRotation(Vector3, Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_SetPositionAndRotation_Vector3_Quaternion_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_spotAngle")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_spotAngle")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_spotAngle_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CircleCollider2D_radius")]
     [Category("UnityEngine/CircleCollider2D")]
     [AddComponentMenu("radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CircleCollider2D_radius_Decorator : CompareDecorator<UnityEngine.CircleCollider2D, float>
     {
         [Space]

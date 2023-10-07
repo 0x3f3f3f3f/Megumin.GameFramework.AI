@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_DetachChildren")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("DetachChildren")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_DetachChildren_Node : BTActionNode<UnityEngine.Transform>
     {
         protected override Status OnTick(BTNode from, object options = null)

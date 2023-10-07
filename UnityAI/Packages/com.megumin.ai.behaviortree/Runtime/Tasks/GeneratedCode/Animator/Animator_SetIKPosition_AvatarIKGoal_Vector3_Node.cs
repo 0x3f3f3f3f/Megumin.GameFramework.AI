@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetIKPosition")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetIKPosition(AvatarIKGoal, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetIKPosition_AvatarIKGoal_Vector3_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

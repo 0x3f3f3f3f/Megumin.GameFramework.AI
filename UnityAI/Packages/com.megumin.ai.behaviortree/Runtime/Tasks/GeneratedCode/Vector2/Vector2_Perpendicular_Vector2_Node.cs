@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Perpendicular")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Perpendicular(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Perpendicular_Vector2_Node : BTActionNode
     {
         [Space]

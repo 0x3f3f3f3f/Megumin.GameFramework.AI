@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Light_innerSpotAngle")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Set_innerSpotAngle")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_innerSpotAngle_Set_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

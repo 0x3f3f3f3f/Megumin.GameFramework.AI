@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_maxAngularVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_maxAngularVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_maxAngularVelocity_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

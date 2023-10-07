@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Log10")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Log10(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Log10_Single_Node : BTActionNode
     {
         [Space]

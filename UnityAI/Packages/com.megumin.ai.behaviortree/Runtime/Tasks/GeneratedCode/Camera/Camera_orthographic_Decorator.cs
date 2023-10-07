@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_orthographic")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("orthographic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_orthographic_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

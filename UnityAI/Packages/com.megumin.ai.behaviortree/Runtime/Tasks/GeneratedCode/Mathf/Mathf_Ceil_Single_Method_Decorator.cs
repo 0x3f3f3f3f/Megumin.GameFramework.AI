@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Ceil")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Ceil(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Ceil_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

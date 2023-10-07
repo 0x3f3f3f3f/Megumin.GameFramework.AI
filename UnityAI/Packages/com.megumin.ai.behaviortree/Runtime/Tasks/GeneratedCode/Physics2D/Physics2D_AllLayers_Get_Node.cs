@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_AllLayers")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_AllLayers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_AllLayers_Get_Node : BTActionNode
     {
         [Space]

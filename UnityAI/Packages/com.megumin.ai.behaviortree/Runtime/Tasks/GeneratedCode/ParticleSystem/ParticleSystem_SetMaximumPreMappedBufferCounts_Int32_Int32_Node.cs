@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_SetMaximumPreMappedBufferCounts")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("SetMaximumPreMappedBufferCounts(Int32, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_SetMaximumPreMappedBufferCounts_Int32_Int32_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

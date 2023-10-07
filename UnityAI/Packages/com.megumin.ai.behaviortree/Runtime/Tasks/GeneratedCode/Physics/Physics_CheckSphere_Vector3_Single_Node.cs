@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_CheckSphere")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("CheckSphere(Vector3, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_CheckSphere_Vector3_Single_Node : BTActionNode
     {
         [Space]

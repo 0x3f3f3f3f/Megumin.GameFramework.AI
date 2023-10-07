@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_AngleAxis")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("AngleAxis(Single, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_AngleAxis_Single_Vector3_Node : BTActionNode
     {
         [Space]

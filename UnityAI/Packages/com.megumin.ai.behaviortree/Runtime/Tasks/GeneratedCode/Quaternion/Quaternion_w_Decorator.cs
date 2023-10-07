@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_w")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("w")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_w_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_CompleteOffMeshLink")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("CompleteOffMeshLink")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_CompleteOffMeshLink_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_Equals")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("Equals(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_Equals_Vector3_Method_Decorator : ConditionDecorator
     {
         [Space]

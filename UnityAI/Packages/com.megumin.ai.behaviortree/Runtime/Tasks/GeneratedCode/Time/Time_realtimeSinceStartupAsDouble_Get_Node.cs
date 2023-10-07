@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Time_realtimeSinceStartupAsDouble")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Get_realtimeSinceStartupAsDouble")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_realtimeSinceStartupAsDouble_Get_Node : BTActionNode
     {
         [Space]

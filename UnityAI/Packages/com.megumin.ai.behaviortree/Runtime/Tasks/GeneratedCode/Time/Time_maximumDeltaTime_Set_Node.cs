@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Time_maximumDeltaTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Set_maximumDeltaTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_maximumDeltaTime_Set_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_ParticleSystem_useAutoRandomSeed")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Get_useAutoRandomSeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_useAutoRandomSeed_Get_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_interCollisionDistance")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_interCollisionDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_interCollisionDistance_Set_Node : BTActionNode
     {
         [Space]

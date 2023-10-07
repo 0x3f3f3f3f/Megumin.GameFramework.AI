@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_LookAt")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("LookAt(Transform, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_LookAt_Transform_Vector3_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

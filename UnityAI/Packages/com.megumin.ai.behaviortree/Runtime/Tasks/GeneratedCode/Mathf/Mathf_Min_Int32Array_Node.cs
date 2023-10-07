@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Min")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Min(Int32[])")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Min_Int32Array_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Vector2_y")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Get_y")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_y_Get_Node : BTActionNode
     {
         [Space]

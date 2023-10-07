@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_dopplerLevel")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_dopplerLevel")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_dopplerLevel_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

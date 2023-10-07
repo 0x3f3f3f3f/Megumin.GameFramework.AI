@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_ParticleSystem_time")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Set_time")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_time_Set_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

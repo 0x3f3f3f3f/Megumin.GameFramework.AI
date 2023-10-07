@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_ProjectOnPlane")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("ProjectOnPlane(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_ProjectOnPlane_Vector3_Vector3_Node : BTActionNode
     {
         [Space]

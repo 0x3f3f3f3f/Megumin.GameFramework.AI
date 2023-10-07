@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_leftFeetBottomHeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("leftFeetBottomHeight")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_leftFeetBottomHeight_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

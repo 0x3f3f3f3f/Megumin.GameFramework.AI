@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_stepOffset")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("stepOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_stepOffset_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

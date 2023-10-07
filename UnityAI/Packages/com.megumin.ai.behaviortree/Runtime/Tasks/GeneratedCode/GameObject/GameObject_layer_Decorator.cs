@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_layer")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("layer")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_layer_Decorator : CompareDecorator<UnityEngine.GameObject, int>
     {
         [Space]

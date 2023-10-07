@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_mute")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("mute")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_mute_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

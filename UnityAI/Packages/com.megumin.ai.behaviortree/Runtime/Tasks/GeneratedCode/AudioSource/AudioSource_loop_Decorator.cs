@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_loop")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("loop")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_loop_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

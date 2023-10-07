@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetTouch")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetTouch(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetTouch_Int32_Node : BTActionNode
     {
         [Space]

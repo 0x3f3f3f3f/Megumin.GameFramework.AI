@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_PlayInFixedTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("PlayInFixedTime(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_PlayInFixedTime_String_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_angularSpeed")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("angularSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_angularSpeed_Decorator : CompareDecorator<UnityEngine.AI.NavMeshAgent, float>
     {
         [Space]

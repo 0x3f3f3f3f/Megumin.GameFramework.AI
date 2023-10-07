@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_mass")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_mass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_mass_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

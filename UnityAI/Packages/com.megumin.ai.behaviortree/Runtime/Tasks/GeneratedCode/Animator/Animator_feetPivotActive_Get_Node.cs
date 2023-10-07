@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_feetPivotActive")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_feetPivotActive")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_feetPivotActive_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

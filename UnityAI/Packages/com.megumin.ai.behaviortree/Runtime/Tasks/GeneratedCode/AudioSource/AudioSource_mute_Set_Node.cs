@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_mute")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_mute")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_mute_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

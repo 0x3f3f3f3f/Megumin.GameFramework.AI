@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Atan")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Atan(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Atan_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

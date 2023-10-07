@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Vector2_kEpsilonNormalSqrt")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Get_kEpsilonNormalSqrt")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_kEpsilonNormalSqrt_Get_Node : BTActionNode
     {
         [Space]

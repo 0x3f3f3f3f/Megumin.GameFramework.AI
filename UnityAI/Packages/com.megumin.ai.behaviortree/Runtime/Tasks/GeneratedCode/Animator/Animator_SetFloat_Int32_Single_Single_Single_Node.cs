@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetFloat")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetFloat(Int32, Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetFloat_Int32_Single_Single_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

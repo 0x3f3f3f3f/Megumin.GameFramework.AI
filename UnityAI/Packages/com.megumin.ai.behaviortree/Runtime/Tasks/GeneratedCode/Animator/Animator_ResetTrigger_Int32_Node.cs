@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_ResetTrigger")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("ResetTrigger(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_ResetTrigger_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

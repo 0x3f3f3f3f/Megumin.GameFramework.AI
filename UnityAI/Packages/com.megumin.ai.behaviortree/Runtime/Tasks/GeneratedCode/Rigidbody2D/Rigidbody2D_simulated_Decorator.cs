@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_simulated")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("simulated")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_simulated_Decorator : ConditionDecorator<UnityEngine.Rigidbody2D>
     {
         [Space]

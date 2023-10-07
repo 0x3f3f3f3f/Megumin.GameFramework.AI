@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_fieldOfView")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("fieldOfView")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_fieldOfView_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

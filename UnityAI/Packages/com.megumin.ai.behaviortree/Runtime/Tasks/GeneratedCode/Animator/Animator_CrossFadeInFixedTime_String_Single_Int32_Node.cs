@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_CrossFadeInFixedTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("CrossFadeInFixedTime(String, Single, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_CrossFadeInFixedTime_String_Single_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

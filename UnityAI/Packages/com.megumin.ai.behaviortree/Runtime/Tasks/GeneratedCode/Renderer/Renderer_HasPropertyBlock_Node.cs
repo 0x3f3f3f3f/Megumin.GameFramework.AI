@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_HasPropertyBlock")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("HasPropertyBlock")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_HasPropertyBlock_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

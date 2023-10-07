@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetLayerWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetLayerWeight(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetLayerWeight_Int32_Method_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

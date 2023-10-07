@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_maxLinearCorrection")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("maxLinearCorrection")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxLinearCorrection_Decorator : CompareDecorator<float>
     {
         [Space]

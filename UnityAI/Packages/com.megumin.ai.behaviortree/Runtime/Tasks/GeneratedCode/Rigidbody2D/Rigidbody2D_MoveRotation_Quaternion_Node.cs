@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_MoveRotation")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("MoveRotation(Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_MoveRotation_Quaternion_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

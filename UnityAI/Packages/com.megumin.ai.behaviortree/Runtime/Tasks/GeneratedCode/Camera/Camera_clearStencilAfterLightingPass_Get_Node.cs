@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_clearStencilAfterLightingPass")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_clearStencilAfterLightingPass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_clearStencilAfterLightingPass_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_ToString")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("ToString(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_ToString_String_Method_Decorator : CompareDecorator<string>
     {
         [Space]

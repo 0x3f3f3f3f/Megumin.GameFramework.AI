@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_ScreenPointToRay")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ScreenPointToRay(Vector3, MonoOrStereoscopicEye)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_ScreenPointToRay_Vector3_MonoOrStereoscopicEye_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

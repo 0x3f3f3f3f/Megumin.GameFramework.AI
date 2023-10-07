@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Light_colorTemperature")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Set_colorTemperature")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_colorTemperature_Set_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_reverbZoneMix")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_reverbZoneMix")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_reverbZoneMix_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

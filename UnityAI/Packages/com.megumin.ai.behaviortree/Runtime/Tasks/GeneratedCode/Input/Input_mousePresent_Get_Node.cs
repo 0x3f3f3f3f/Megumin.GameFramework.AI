@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_mousePresent")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_mousePresent")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_mousePresent_Get_Node : BTActionNode
     {
         [Space]

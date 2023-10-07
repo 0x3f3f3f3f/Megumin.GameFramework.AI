@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_MoveGameObjectToScene")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("MoveGameObjectToScene(GameObject, Scene)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_MoveGameObjectToScene_GameObject_Scene_Node : BTActionNode
     {
         [Space]

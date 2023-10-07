@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Renderer_realtimeLightmapIndex")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_realtimeLightmapIndex")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_realtimeLightmapIndex_Get_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetKeyUp")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetKeyUp(KeyCode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetKeyUp_KeyCode_Method_Decorator : ConditionDecorator
     {
         [Space]

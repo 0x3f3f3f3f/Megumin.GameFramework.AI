@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_defaultMaxDepenetrationVelocity")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("defaultMaxDepenetrationVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultMaxDepenetrationVelocity_Decorator : CompareDecorator<float>
     {
         [Space]

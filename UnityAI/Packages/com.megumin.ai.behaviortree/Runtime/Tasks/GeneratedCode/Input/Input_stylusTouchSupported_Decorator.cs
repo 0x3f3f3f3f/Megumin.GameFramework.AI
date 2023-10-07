@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_stylusTouchSupported")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("stylusTouchSupported")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_stylusTouchSupported_Decorator : ConditionDecorator
     {
         [Space]

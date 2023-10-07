@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Quaternion_kEpsilon")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Get_kEpsilon")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_kEpsilon_Get_Node : BTActionNode
     {
         [Space]

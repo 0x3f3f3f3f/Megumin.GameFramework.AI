@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_GetRelativePointVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("GetRelativePointVelocity(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_GetRelativePointVelocity_Vector3_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

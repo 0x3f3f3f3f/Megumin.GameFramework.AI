@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetButton")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetButton(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetButton_String_Method_Decorator : ConditionDecorator
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_multiTouchEnabled")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_multiTouchEnabled")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_multiTouchEnabled_Get_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_IgnoreLayerCollision")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("IgnoreLayerCollision(Int32, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_IgnoreLayerCollision_Int32_Int32_Node : BTActionNode
     {
         [Space]

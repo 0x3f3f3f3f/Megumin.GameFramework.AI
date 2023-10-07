@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_DisableAllEnabledActions")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("DisableAllEnabledActions")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_DisableAllEnabledActions_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

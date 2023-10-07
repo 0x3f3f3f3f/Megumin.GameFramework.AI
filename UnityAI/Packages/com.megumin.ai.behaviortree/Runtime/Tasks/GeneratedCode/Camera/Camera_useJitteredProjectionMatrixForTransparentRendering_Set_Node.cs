@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_useJitteredProjectionMatrixForTransparentRendering")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_useJitteredProjectionMatrixForTransparentRendering")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_useJitteredProjectionMatrixForTransparentRendering_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

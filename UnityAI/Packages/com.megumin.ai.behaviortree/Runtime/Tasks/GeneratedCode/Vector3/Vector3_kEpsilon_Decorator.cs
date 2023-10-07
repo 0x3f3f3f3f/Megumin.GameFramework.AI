@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_kEpsilon")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("kEpsilon")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_kEpsilon_Decorator : CompareDecorator<float>
     {
         [Space]

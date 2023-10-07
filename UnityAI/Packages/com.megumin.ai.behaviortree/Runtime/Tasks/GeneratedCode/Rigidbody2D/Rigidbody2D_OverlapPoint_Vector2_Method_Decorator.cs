@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_OverlapPoint")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("OverlapPoint(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_OverlapPoint_Vector2_Method_Decorator : ConditionDecorator<UnityEngine.Rigidbody2D>
     {
         [Space]

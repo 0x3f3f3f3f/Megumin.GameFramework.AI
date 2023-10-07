@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_maxRotationSpeed")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("maxRotationSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxRotationSpeed_Decorator : CompareDecorator<float>
     {
         [Space]

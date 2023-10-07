@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_cullingMask")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_cullingMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_cullingMask_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

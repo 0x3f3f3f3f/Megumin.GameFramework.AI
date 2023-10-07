@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetJoystickNames")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetJoystickNames")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetJoystickNames_Node : BTActionNode
     {
         [Space]

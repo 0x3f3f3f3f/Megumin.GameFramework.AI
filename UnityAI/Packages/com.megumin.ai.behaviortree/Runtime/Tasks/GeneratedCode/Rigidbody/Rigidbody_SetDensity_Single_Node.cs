@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_SetDensity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("SetDensity(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_SetDensity_Single_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

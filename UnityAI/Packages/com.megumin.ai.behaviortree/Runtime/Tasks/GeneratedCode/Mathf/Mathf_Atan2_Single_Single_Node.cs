@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Atan2")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Atan2(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Atan2_Single_Single_Node : BTActionNode
     {
         [Space]

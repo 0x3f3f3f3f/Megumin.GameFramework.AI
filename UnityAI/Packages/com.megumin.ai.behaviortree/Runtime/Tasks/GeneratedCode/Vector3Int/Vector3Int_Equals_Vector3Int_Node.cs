@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3Int_Equals")]
     [Category("UnityEngine/Vector3Int")]
     [AddComponentMenu("Equals(Vector3Int)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3Int_Equals_Vector3Int_Node : BTActionNode
     {
         [Space]

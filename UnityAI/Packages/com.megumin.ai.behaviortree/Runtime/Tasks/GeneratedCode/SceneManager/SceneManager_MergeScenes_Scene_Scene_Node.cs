@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_MergeScenes")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("MergeScenes(Scene, Scene)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_MergeScenes_Scene_Scene_Node : BTActionNode
     {
         [Space]

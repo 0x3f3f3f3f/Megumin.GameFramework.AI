@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_interCollisionStiffness")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("interCollisionStiffness")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_interCollisionStiffness_Decorator : CompareDecorator<float>
     {
         [Space]

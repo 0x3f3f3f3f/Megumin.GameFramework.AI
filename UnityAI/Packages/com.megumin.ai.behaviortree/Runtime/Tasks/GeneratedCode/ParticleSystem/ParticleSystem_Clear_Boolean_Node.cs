@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Clear")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Clear(Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Clear_Boolean_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

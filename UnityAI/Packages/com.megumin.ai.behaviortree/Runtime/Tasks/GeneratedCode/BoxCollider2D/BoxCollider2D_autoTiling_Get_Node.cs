@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_BoxCollider2D_autoTiling")]
     [Category("UnityEngine/BoxCollider2D")]
     [AddComponentMenu("Get_autoTiling")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class BoxCollider2D_autoTiling_Get_Node : BTActionNode<UnityEngine.BoxCollider2D>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_UnPause")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("UnPause")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_UnPause_Node : BTActionNode<UnityEngine.AudioSource>
     {
         protected override Status OnTick(BTNode from, object options = null)

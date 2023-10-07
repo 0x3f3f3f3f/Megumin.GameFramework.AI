@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_autoSimulation")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_autoSimulation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics_autoSimulation_Get_Node : BTActionNode
     {

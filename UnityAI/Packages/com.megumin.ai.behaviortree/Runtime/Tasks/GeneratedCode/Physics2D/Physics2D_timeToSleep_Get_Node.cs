@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_timeToSleep")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_timeToSleep")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_timeToSleep_Get_Node : BTActionNode
     {
         [Space]

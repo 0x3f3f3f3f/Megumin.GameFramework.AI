@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_speed")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_speed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_speed_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

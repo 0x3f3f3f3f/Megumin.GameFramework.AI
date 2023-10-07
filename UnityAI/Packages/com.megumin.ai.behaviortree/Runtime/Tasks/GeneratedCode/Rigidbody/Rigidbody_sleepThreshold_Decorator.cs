@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_sleepThreshold")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("sleepThreshold")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_sleepThreshold_Decorator : CompareDecorator<UnityEngine.Rigidbody, float>
     {
         [Space]

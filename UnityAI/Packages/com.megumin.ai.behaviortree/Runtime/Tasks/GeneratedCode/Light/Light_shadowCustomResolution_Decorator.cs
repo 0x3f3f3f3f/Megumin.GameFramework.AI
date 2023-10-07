@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_shadowCustomResolution")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("shadowCustomResolution")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowCustomResolution_Decorator : CompareDecorator<UnityEngine.Light, int>
     {
         [Space]

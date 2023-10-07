@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_isStatic")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("isStatic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_isStatic_Decorator : ConditionDecorator<UnityEngine.GameObject>
     {
         [Space]

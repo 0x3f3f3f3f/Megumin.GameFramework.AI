@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_captureFramerate")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("captureFramerate")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_captureFramerate_Decorator : CompareDecorator<int>
     {
         [Space]

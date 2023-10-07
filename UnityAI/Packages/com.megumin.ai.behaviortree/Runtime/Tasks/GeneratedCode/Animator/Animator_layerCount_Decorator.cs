@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_layerCount")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("layerCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_layerCount_Decorator : CompareDecorator<UnityEngine.Animator, int>
     {
         [Space]

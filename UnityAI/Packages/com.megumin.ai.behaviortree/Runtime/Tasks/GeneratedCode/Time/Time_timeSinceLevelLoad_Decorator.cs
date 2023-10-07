@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_timeSinceLevelLoad")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("timeSinceLevelLoad")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_timeSinceLevelLoad_Decorator : CompareDecorator<float>
     {
         [Space]

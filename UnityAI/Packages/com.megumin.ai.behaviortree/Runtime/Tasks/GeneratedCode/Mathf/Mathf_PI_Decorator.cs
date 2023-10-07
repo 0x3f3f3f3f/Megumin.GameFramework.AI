@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_PI")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("PI")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_PI_Decorator : CompareDecorator<float>
     {
         [Space]

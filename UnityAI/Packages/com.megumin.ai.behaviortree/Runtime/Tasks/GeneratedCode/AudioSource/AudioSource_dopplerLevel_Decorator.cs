@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_dopplerLevel")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("dopplerLevel")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_dopplerLevel_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

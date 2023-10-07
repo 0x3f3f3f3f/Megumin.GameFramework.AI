@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_showColliderContacts")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_showColliderContacts")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderContacts_Set_Node : BTActionNode
     {

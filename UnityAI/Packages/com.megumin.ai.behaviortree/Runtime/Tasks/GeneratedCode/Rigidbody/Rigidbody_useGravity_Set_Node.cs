@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_useGravity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_useGravity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_useGravity_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

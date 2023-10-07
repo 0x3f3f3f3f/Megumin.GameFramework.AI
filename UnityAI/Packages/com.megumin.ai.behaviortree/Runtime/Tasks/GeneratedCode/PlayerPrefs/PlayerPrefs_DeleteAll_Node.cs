@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_DeleteAll")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("DeleteAll")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_DeleteAll_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

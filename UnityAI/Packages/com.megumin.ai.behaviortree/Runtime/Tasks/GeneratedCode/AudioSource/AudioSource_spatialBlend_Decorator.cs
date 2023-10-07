@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_spatialBlend")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("spatialBlend")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_spatialBlend_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

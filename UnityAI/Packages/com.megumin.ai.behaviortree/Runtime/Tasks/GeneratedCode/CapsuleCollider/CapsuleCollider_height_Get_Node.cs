@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CapsuleCollider_height")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("Get_height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CapsuleCollider_height_Get_Node : BTActionNode<UnityEngine.CapsuleCollider>
     {
         [Space]

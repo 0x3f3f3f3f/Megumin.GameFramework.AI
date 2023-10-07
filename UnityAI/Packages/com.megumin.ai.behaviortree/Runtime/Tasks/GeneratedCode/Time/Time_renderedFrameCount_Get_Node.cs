@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Time_renderedFrameCount")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Get_renderedFrameCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_renderedFrameCount_Get_Node : BTActionNode
     {
         [Space]

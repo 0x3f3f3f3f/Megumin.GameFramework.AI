@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_Save")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("Save")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_Save_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

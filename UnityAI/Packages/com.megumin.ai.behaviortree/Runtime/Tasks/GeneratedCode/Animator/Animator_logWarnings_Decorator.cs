@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_logWarnings")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("logWarnings")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_logWarnings_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

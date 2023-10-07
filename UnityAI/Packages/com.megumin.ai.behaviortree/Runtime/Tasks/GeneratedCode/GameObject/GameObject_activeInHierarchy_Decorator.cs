@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_activeInHierarchy")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("activeInHierarchy")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_activeInHierarchy_Decorator : ConditionDecorator<UnityEngine.GameObject>
     {
         [Space]

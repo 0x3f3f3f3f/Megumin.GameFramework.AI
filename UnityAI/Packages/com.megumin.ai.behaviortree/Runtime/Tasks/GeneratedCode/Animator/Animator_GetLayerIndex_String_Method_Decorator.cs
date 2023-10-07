@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetLayerIndex")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetLayerIndex(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetLayerIndex_String_Method_Decorator : CompareDecorator<UnityEngine.Animator, int>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CharacterController_radius")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_radius_Get_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

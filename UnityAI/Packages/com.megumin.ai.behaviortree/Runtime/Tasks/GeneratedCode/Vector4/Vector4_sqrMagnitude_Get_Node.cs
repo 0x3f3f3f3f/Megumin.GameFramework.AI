@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Vector4_sqrMagnitude")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Get_sqrMagnitude")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_sqrMagnitude_Get_Node : BTActionNode
     {
         [Space]

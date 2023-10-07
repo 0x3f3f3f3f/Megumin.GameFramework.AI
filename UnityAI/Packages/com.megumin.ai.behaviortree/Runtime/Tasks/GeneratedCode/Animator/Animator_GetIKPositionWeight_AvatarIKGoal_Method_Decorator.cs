@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetIKPositionWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetIKPositionWeight(AvatarIKGoal)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetIKPositionWeight_AvatarIKGoal_Method_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

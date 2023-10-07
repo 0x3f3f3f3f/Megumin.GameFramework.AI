@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Sqrt")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Sqrt(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Sqrt_Single_Node : BTActionNode
     {
         [Space]

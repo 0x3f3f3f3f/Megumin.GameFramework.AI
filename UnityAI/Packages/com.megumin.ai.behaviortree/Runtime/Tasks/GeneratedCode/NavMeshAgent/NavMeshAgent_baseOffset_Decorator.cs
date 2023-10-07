@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_baseOffset")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("baseOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_baseOffset_Decorator : CompareDecorator<UnityEngine.AI.NavMeshAgent, float>
     {
         [Space]

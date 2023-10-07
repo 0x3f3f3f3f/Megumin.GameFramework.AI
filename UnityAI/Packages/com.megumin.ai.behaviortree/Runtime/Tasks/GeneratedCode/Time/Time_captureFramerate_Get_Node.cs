@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Time_captureFramerate")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Get_captureFramerate")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_captureFramerate_Get_Node : BTActionNode
     {
         [Space]

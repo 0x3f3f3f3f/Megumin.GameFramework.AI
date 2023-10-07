@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_BakeMesh")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("BakeMesh(Int32, Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_BakeMesh_Int32_Boolean_Node : BTActionNode
     {
         [Space]

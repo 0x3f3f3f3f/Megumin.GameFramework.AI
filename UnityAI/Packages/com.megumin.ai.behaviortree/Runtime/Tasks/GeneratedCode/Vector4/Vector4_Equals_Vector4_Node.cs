@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_Equals")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Equals(Vector4)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_Equals_Vector4_Node : BTActionNode
     {
         [Space]

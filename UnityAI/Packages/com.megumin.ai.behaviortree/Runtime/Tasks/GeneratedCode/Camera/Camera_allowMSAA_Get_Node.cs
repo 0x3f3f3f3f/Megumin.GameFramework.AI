@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_allowMSAA")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_allowMSAA")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_allowMSAA_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

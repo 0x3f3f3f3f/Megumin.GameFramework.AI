@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_detectCollisions")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_detectCollisions")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_detectCollisions_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

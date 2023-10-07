@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_AllocateMeshIndexAttribute")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("AllocateMeshIndexAttribute")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_AllocateMeshIndexAttribute_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         protected override Status OnTick(BTNode from, object options = null)

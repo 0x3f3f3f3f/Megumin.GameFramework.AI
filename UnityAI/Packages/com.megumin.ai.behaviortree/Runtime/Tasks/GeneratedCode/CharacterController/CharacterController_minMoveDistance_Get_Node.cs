@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CharacterController_minMoveDistance")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_minMoveDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_minMoveDistance_Get_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

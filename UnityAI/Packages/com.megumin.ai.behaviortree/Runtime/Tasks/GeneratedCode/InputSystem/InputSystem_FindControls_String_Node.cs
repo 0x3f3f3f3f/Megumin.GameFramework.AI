@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_FindControls")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("FindControls(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_FindControls_String_Node : BTActionNode
     {
         [Space]

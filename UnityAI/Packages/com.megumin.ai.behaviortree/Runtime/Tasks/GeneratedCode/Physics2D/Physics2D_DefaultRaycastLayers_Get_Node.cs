@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_DefaultRaycastLayers")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_DefaultRaycastLayers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_DefaultRaycastLayers_Get_Node : BTActionNode
     {
         [Space]

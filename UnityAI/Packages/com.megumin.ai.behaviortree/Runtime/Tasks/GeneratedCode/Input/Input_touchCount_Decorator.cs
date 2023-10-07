@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_touchCount")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("touchCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_touchCount_Decorator : CompareDecorator<int>
     {
         [Space]

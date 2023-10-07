@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_Pause")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Pause")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_Pause_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         protected override Status OnTick(BTNode from, object options = null)

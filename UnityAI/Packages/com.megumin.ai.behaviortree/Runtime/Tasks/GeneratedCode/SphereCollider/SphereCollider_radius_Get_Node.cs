@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_SphereCollider_radius")]
     [Category("UnityEngine/SphereCollider")]
     [AddComponentMenu("Get_radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SphereCollider_radius_Get_Node : BTActionNode<UnityEngine.SphereCollider>
     {
         [Space]

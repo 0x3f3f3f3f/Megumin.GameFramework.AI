@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Rigidbody_isKinematic")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_isKinematic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_isKinematic_Get_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

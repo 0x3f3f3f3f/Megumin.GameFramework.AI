@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_allCamerasCount")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("allCamerasCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_allCamerasCount_Decorator : CompareDecorator<UnityEngine.Camera, int>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_SetString")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("SetString(String, String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_SetString_String_String_Node : BTActionNode
     {
         [Space]

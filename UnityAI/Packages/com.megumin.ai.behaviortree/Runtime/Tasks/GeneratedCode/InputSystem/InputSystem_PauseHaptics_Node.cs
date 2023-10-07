@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_PauseHaptics")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("PauseHaptics")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_PauseHaptics_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_animatePhysics")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("animatePhysics")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_animatePhysics_Decorator : ConditionDecorator<UnityEngine.Animation>
     {
         [Space]

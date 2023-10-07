@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_HorizontalToVerticalFieldOfView")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("HorizontalToVerticalFieldOfView(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_HorizontalToVerticalFieldOfView_Single_Single_Method_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

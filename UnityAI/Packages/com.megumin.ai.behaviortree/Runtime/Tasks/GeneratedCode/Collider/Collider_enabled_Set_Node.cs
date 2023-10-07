@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Collider_enabled")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("Set_enabled")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Collider_enabled_Set_Node : BTActionNode<UnityEngine.Collider>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_GetRayIntersection")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("GetRayIntersection(Ray, Single, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_GetRayIntersection_Ray_Single_Int32_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_isKinematic")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("isKinematic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_isKinematic_Decorator : ConditionDecorator<UnityEngine.Rigidbody>
     {
         [Space]

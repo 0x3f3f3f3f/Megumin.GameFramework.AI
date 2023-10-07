@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Floor")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Floor(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Floor_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

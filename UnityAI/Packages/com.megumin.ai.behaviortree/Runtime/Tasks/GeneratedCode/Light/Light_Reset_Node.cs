@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_Reset")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Reset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_Reset_Node : BTActionNode<UnityEngine.Light>
     {
         protected override Status OnTick(BTNode from, object options = null)

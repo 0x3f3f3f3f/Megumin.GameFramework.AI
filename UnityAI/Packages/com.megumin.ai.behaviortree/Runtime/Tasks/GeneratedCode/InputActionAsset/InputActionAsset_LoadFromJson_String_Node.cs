@@ -19,6 +19,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputActionAsset_LoadFromJson")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("LoadFromJson(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputActionAsset_LoadFromJson_String_Node : BTActionNode
     {
         [Space]

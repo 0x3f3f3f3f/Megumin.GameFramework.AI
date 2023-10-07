@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_sceneCount")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("sceneCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_sceneCount_Decorator : CompareDecorator<int>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_WakeUp")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("WakeUp")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_WakeUp_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetAnimatorTransitionInfo")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetAnimatorTransitionInfo(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetAnimatorTransitionInfo_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_RotateTowards")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("RotateTowards(Quaternion, Quaternion, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_RotateTowards_Quaternion_Quaternion_Single_Node : BTActionNode
     {
         [Space]

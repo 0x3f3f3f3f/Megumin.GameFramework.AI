@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Time_fixedTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Get_fixedTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_fixedTime_Get_Node : BTActionNode
     {
         [Space]

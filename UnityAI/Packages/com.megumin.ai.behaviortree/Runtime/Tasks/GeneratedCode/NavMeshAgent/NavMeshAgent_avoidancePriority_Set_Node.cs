@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_avoidancePriority")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_avoidancePriority")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_avoidancePriority_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_CapsuleCast")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("CapsuleCast(Vector2, Vector2, CapsuleDirection2D, Single, Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_CapsuleCast_Vector2_Vector2_CapsuleDirection2D_Single_Vector2_Node : BTActionNode
     {
         [Space]

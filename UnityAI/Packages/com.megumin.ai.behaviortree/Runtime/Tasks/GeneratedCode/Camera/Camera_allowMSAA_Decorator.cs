@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_allowMSAA")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("allowMSAA")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_allowMSAA_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

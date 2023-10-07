@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Pause")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Pause(Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Pause_Boolean_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

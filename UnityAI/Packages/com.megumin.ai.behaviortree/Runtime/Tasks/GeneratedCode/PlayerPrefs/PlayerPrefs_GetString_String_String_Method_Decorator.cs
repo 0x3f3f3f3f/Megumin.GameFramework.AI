@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_GetString")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("GetString(String, String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_GetString_String_String_Method_Decorator : CompareDecorator<string>
     {
         [Space]

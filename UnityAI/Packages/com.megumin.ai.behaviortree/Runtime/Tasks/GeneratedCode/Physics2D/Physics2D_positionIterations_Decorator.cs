@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_positionIterations")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("positionIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_positionIterations_Decorator : CompareDecorator<int>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_PlayDelayed")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("PlayDelayed(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_PlayDelayed_Single_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

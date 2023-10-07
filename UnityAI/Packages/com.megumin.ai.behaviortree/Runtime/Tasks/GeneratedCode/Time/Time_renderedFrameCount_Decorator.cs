@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_renderedFrameCount")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("renderedFrameCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_renderedFrameCount_Decorator : CompareDecorator<int>
     {
         [Space]

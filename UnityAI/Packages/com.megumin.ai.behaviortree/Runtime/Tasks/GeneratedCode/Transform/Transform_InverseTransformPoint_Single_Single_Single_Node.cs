@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_InverseTransformPoint")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("InverseTransformPoint(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_InverseTransformPoint_Single_Single_Single_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

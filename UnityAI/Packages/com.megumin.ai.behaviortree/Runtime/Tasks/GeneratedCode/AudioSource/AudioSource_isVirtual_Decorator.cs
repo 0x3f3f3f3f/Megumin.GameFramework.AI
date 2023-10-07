@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_isVirtual")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("isVirtual")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_isVirtual_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

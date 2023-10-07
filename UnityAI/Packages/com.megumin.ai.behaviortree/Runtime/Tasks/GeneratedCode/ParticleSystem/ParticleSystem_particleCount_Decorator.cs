@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_particleCount")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("particleCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_particleCount_Decorator : CompareDecorator<UnityEngine.ParticleSystem, int>
     {
         [Space]

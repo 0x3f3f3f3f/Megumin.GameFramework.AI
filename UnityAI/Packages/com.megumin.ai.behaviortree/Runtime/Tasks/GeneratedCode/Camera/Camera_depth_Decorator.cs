@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_depth")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("depth")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_depth_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_angularSleepTolerance")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("angularSleepTolerance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_angularSleepTolerance_Decorator : CompareDecorator<float>
     {
         [Space]

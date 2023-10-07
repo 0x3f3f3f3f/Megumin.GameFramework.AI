@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_playOnAwake")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_playOnAwake")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_playOnAwake_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

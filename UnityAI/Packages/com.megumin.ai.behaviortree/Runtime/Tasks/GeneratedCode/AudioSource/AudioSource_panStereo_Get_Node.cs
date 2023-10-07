@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_panStereo")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_panStereo")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_panStereo_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

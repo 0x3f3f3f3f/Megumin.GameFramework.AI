@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_pivotWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_pivotWeight")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_pivotWeight_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_autoSyncTransforms")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("autoSyncTransforms")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_autoSyncTransforms_Decorator : ConditionDecorator
     {
         [Space]

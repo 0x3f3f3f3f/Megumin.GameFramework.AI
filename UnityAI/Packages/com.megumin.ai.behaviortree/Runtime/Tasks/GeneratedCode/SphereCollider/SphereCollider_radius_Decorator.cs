@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SphereCollider_radius")]
     [Category("UnityEngine/SphereCollider")]
     [AddComponentMenu("radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SphereCollider_radius_Decorator : CompareDecorator<UnityEngine.SphereCollider, float>
     {
         [Space]

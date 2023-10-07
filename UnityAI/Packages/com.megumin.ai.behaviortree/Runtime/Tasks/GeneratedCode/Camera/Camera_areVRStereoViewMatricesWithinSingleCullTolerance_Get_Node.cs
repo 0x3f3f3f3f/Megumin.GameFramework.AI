@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_areVRStereoViewMatricesWithinSingleCullTolerance")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_areVRStereoViewMatricesWithinSingleCullTolerance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_areVRStereoViewMatricesWithinSingleCullTolerance_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

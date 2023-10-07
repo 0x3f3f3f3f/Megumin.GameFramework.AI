@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Scale")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Scale(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Scale_Vector2_Node : BTActionNode
     {
         [Space]

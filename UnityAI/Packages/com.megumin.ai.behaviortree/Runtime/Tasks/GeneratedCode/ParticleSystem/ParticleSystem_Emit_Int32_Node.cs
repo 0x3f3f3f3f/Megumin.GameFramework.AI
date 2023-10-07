@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Emit")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Emit(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Emit_Int32_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

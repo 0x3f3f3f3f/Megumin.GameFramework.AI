@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_Resume")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Resume")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_Resume_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         protected override Status OnTick(BTNode from, object options = null)

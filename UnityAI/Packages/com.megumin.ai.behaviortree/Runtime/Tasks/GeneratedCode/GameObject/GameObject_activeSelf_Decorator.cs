@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_activeSelf")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("activeSelf")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_activeSelf_Decorator : ConditionDecorator<UnityEngine.GameObject>
     {
         [Space]

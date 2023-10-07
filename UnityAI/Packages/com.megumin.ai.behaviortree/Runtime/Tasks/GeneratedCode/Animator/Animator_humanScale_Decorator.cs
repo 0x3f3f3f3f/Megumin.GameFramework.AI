@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_humanScale")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("humanScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_humanScale_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

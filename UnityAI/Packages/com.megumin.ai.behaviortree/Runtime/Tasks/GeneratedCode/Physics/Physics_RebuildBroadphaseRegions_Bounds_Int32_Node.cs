@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_RebuildBroadphaseRegions")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("RebuildBroadphaseRegions(Bounds, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics_RebuildBroadphaseRegions_Bounds_Int32_Node : BTActionNode
     {

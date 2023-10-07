@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody2D_gravityScale")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Set_gravityScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_gravityScale_Set_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

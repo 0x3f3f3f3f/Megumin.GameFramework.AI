@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_useBoundingSphereOverride")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_useBoundingSphereOverride")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_useBoundingSphereOverride_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

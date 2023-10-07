@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_IsFirstLayoutBasedOnSecond")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("IsFirstLayoutBasedOnSecond(String, String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_IsFirstLayoutBasedOnSecond_String_String_Method_Decorator : ConditionDecorator
     {
         [Space]

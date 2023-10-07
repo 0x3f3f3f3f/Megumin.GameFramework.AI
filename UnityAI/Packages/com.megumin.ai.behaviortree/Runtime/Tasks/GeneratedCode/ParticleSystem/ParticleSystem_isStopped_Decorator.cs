@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_isStopped")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("isStopped")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_isStopped_Decorator : ConditionDecorator<UnityEngine.ParticleSystem>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_FloorToInt")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("FloorToInt(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_FloorToInt_Vector2_Node : BTActionNode
     {
         [Space]

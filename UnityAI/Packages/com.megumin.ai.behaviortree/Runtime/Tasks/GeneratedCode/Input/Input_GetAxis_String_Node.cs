@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetAxis")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetAxis(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetAxis_String_Node : BTActionNode
     {
         [Space]

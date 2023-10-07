@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Equals")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Equals(Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Equals_Quaternion_Node : BTActionNode
     {
         [Space]

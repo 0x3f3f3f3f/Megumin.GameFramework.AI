@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_callbacksOnDisable")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("callbacksOnDisable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_callbacksOnDisable_Decorator : ConditionDecorator
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_reverbZoneMix")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("reverbZoneMix")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_reverbZoneMix_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

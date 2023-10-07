@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_volume")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_volume")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_volume_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

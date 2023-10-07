@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_stereoConvergence")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_stereoConvergence")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_stereoConvergence_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

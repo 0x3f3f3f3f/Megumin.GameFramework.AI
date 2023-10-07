@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Angle")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Angle(Quaternion, Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Angle_Quaternion_Quaternion_Node : BTActionNode
     {
         [Space]

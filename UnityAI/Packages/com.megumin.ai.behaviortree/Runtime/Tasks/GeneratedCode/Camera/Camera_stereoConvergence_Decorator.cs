@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_stereoConvergence")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("stereoConvergence")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_stereoConvergence_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

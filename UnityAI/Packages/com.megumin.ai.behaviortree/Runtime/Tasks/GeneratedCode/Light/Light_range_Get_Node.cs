@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_range")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_range")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_range_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_forceIntoRenderTexture")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_forceIntoRenderTexture")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_forceIntoRenderTexture_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

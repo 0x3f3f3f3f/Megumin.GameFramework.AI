@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CircleCollider2D_radius")]
     [Category("UnityEngine/CircleCollider2D")]
     [AddComponentMenu("Get_radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CircleCollider2D_radius_Get_Node : BTActionNode<UnityEngine.CircleCollider2D>
     {
         [Space]

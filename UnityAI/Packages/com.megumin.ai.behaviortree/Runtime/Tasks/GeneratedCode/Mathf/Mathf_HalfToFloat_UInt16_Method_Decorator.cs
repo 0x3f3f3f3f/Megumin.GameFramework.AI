@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_HalfToFloat")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("HalfToFloat(UInt16)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_HalfToFloat_UInt16_Method_Decorator : CompareDecorator<float>
     {
         [Space]

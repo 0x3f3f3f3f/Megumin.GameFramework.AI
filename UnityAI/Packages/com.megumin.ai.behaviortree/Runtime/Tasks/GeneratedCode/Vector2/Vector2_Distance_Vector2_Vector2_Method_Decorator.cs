@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Distance")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Distance(Vector2, Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Distance_Vector2_Vector2_Method_Decorator : CompareDecorator<float>
     {
         [Space]

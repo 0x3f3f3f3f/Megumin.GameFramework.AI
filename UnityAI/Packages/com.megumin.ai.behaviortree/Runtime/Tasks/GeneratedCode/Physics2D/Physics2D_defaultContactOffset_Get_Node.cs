@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_defaultContactOffset")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_defaultContactOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_defaultContactOffset_Get_Node : BTActionNode
     {
         [Space]

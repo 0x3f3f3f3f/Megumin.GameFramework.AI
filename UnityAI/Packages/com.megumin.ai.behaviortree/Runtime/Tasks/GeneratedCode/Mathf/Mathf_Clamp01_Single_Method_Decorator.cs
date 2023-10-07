@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Clamp01")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Clamp01(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Clamp01_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_eventMask")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("eventMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_eventMask_Decorator : CompareDecorator<UnityEngine.Camera, int>
     {
         [Space]

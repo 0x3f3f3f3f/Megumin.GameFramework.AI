@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_Play")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Play(UInt64)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_Play_UInt64_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

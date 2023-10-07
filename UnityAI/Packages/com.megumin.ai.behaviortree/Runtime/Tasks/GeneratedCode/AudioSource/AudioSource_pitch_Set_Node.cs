@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_pitch")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_pitch")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_pitch_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_StopPlayback")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("StopPlayback")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_StopPlayback_Node : BTActionNode<UnityEngine.Animator>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_drag")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_drag")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_drag_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

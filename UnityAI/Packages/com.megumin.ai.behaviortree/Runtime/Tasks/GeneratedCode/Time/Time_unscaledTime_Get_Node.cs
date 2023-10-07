@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Time_unscaledTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Get_unscaledTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_unscaledTime_Get_Node : BTActionNode
     {
         [Space]

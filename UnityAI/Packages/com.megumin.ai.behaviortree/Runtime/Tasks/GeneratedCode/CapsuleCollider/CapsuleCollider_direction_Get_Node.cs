@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CapsuleCollider_direction")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("Get_direction")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CapsuleCollider_direction_Get_Node : BTActionNode<UnityEngine.CapsuleCollider>
     {
         [Space]

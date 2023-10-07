@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_acceleration")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_acceleration")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_acceleration_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_RemoveClip")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("RemoveClip(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_RemoveClip_String_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

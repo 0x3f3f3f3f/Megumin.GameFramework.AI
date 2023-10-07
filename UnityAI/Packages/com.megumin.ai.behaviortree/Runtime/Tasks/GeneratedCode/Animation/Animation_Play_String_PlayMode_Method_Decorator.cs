@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Play")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Play(String, PlayMode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Play_String_PlayMode_Method_Decorator : ConditionDecorator<UnityEngine.Animation>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_unscaledTimeAsDouble")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("unscaledTimeAsDouble")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_unscaledTimeAsDouble_Decorator : CompareDecorator<double>
     {
         [Space]

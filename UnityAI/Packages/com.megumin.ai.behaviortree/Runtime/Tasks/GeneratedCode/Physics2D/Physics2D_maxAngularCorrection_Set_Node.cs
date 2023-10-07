@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_maxAngularCorrection")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_maxAngularCorrection")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxAngularCorrection_Set_Node : BTActionNode
     {
         [Space]

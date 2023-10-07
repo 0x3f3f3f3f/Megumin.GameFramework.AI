@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_pivotWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("pivotWeight")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_pivotWeight_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

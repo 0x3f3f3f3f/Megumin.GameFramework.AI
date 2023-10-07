@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_autoRepath")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_autoRepath")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_autoRepath_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

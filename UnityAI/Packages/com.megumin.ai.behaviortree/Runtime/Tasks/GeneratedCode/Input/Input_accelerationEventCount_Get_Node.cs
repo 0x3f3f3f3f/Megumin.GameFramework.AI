@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_accelerationEventCount")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_accelerationEventCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_accelerationEventCount_Get_Node : BTActionNode
     {
         [Space]

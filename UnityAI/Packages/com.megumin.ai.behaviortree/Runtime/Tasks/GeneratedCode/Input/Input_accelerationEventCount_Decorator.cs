@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_accelerationEventCount")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("accelerationEventCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_accelerationEventCount_Decorator : CompareDecorator<int>
     {
         [Space]

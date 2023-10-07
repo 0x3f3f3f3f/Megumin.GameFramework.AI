@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_GetPointVelocity")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("GetPointVelocity(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_GetPointVelocity_Vector2_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

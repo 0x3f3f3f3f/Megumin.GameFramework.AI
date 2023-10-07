@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_farClipPlane")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("farClipPlane")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_farClipPlane_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Renderer_forceRenderingOff")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Set_forceRenderingOff")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_forceRenderingOff_Set_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

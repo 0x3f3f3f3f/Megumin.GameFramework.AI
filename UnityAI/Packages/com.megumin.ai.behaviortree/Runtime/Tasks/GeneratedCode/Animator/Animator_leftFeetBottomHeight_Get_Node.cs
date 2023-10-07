@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_leftFeetBottomHeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_leftFeetBottomHeight")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_leftFeetBottomHeight_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

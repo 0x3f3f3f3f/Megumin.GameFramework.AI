@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_Move")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Move(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_Move_Vector3_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

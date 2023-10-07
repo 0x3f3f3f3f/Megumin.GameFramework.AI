@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_CircleCast")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("CircleCast(Vector2, Single, Vector2, Single, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_CircleCast_Vector2_Single_Vector2_Single_Int32_Node : BTActionNode
     {
         [Space]

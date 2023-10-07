@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_CopyStereoDeviceProjectionMatrixToNonJittered")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("CopyStereoDeviceProjectionMatrixToNonJittered(StereoscopicEye)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_CopyStereoDeviceProjectionMatrixToNonJittered_StereoscopicEye_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_PlayableDirector_playOnAwake")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Get_playOnAwake")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_playOnAwake_Get_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         [Space]

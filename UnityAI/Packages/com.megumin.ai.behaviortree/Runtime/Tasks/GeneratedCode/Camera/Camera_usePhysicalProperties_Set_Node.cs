@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_usePhysicalProperties")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_usePhysicalProperties")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_usePhysicalProperties_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

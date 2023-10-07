@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_clearStencilAfterLightingPass")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("clearStencilAfterLightingPass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_clearStencilAfterLightingPass_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

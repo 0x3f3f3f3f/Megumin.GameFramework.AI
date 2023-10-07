@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3Int_RoundToInt")]
     [Category("UnityEngine/Vector3Int")]
     [AddComponentMenu("RoundToInt(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3Int_RoundToInt_Vector3_Node : BTActionNode
     {
         [Space]

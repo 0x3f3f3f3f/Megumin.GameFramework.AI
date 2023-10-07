@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_SetAsLastSibling")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetAsLastSibling")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_SetAsLastSibling_Node : BTActionNode<UnityEngine.Transform>
     {
         protected override Status OnTick(BTNode from, object options = null)

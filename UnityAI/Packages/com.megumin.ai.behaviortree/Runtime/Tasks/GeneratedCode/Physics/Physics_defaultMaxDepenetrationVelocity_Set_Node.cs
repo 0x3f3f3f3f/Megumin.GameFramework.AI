@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_defaultMaxDepenetrationVelocity")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_defaultMaxDepenetrationVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultMaxDepenetrationVelocity_Set_Node : BTActionNode
     {
         [Space]

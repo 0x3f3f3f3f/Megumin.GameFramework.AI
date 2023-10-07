@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_solverIterations")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("solverIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_solverIterations_Decorator : CompareDecorator<UnityEngine.Rigidbody, int>
     {
         [Space]

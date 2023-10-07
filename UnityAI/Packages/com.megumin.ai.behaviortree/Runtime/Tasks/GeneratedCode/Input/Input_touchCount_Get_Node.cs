@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_touchCount")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_touchCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_touchCount_Get_Node : BTActionNode
     {
         [Space]

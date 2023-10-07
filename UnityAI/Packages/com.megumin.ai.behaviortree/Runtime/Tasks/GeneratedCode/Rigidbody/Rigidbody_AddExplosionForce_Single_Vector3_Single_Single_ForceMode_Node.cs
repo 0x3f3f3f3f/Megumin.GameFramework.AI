@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_AddExplosionForce")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("AddExplosionForce(Single, Vector3, Single, Single, ForceMode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_AddExplosionForce_Single_Vector3_Single_Single_ForceMode_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

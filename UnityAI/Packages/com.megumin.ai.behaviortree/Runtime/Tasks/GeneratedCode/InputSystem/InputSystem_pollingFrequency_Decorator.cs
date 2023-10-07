@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_pollingFrequency")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("pollingFrequency")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_pollingFrequency_Decorator : CompareDecorator<float>
     {
         [Space]

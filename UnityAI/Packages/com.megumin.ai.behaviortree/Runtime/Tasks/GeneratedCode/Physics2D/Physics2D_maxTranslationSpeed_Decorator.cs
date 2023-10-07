@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_maxTranslationSpeed")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("maxTranslationSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxTranslationSpeed_Decorator : CompareDecorator<float>
     {
         [Space]

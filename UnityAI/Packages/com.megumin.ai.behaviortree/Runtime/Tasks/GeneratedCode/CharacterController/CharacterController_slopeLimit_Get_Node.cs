@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CharacterController_slopeLimit")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_slopeLimit")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_slopeLimit_Get_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

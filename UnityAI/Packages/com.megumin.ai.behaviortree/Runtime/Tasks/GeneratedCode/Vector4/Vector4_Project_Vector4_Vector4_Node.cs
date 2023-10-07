@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_Project")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Project(Vector4, Vector4)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_Project_Vector4_Vector4_Node : BTActionNode
     {
         [Space]

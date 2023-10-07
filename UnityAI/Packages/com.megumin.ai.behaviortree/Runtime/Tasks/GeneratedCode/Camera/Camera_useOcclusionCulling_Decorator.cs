@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_useOcclusionCulling")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("useOcclusionCulling")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_useOcclusionCulling_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

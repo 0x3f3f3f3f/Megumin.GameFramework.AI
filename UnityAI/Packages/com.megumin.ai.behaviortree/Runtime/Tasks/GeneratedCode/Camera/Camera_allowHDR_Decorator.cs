@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_allowHDR")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("allowHDR")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_allowHDR_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

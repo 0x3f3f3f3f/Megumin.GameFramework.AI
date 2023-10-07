@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_bypassEffects")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("bypassEffects")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_bypassEffects_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

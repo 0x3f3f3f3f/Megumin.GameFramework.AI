@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_ResetStereoProjectionMatrices")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ResetStereoProjectionMatrices")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_ResetStereoProjectionMatrices_Node : BTActionNode<UnityEngine.Camera>
     {
         protected override Status OnTick(BTNode from, object options = null)

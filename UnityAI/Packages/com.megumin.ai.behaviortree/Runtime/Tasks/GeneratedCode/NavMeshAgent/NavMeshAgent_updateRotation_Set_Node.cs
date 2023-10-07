@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_updateRotation")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_updateRotation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_updateRotation_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

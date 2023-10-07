@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_LoadScene")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("LoadScene(Int32, LoadSceneParameters)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_LoadScene_Int32_LoadSceneParameters_Node : BTActionNode
     {
         [Space]

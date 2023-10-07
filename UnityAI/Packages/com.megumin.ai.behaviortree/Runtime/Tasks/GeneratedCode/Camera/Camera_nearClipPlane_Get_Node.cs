@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_nearClipPlane")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_nearClipPlane")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_nearClipPlane_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

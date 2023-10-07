@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_TryFindMatchingLayout")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("TryFindMatchingLayout(InputDeviceDescription)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_TryFindMatchingLayout_InputDeviceDescription_Method_Decorator : CompareDecorator<string>
     {
         [Space]

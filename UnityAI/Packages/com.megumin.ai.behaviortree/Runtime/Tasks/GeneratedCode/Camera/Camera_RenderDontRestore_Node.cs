@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_RenderDontRestore")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("RenderDontRestore")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_RenderDontRestore_Node : BTActionNode<UnityEngine.Camera>
     {
         protected override Status OnTick(BTNode from, object options = null)

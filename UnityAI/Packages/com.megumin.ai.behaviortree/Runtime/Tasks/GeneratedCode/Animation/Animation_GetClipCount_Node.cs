@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_GetClipCount")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("GetClipCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_GetClipCount_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

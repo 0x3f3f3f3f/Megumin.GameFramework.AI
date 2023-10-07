@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_Raycast")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Raycast(Ray, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_Raycast_Ray_Single_Node : BTActionNode
     {
         [Space]

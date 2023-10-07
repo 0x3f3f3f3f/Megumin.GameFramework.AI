@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_RegisterLayoutOverride")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("RegisterLayoutOverride(String, String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_RegisterLayoutOverride_String_String_Node : BTActionNode
     {
         [Space]

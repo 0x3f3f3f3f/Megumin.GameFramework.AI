@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_rotation")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("rotation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_rotation_Decorator : CompareDecorator<UnityEngine.Rigidbody2D, float>
     {
         [Space]

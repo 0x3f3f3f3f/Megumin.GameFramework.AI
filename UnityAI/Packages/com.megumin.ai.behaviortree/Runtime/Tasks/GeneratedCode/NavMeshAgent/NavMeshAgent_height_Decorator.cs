@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_height")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_height_Decorator : CompareDecorator<UnityEngine.AI.NavMeshAgent, float>
     {
         [Space]

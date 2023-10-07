@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_Simulate")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Simulate(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_Simulate_Single_Node : BTActionNode
     {
         [Space]

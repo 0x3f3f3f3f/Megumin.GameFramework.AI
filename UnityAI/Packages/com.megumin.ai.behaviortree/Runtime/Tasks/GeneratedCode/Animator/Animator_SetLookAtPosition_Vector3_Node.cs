@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetLookAtPosition")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetLookAtPosition(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetLookAtPosition_Vector3_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

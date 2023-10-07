@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_ClosestPowerOfTwo")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("ClosestPowerOfTwo(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_ClosestPowerOfTwo_Int32_Node : BTActionNode
     {
         [Space]

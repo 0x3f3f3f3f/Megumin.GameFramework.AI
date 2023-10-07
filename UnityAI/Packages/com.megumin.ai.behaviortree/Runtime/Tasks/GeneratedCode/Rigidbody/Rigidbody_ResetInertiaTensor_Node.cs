@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_ResetInertiaTensor")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("ResetInertiaTensor")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_ResetInertiaTensor_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_IgnoreRaycastLayer")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_IgnoreRaycastLayer")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_IgnoreRaycastLayer_Get_Node : BTActionNode
     {
         [Space]

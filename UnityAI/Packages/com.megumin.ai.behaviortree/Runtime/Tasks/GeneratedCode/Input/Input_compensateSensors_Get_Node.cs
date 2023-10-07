@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_compensateSensors")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_compensateSensors")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_compensateSensors_Get_Node : BTActionNode
     {
         [Space]

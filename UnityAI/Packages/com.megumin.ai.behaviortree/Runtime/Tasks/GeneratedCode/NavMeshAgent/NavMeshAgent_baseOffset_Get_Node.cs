@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_NavMeshAgent_baseOffset")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Get_baseOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_baseOffset_Get_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

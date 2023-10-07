@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetLookAtWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetLookAtWeight(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetLookAtWeight_Single_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_interCollisionSettingsToggle")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_interCollisionSettingsToggle")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_interCollisionSettingsToggle_Set_Node : BTActionNode
     {
         [Space]

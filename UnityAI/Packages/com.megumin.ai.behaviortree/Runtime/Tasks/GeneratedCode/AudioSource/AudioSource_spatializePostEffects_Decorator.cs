@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_spatializePostEffects")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("spatializePostEffects")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_spatializePostEffects_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

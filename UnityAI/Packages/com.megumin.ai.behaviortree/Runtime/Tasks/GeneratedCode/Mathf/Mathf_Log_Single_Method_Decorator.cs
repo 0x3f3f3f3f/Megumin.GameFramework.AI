@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Log")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Log(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Log_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

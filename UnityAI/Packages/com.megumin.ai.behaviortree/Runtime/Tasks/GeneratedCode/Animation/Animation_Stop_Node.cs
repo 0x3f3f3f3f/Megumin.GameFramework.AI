@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Stop")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Stop")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Stop_Node : BTActionNode<UnityEngine.Animation>
     {
         protected override Status OnTick(BTNode from, object options = null)

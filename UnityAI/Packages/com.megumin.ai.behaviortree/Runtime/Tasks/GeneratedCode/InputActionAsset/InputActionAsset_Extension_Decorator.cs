@@ -19,6 +19,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputActionAsset_Extension")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("Extension")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputActionAsset_Extension_Decorator : CompareDecorator<string>
     {
         [Space]

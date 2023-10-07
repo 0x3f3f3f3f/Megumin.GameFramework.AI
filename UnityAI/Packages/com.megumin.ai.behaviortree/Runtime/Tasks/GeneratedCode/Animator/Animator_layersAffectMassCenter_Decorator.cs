@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_layersAffectMassCenter")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("layersAffectMassCenter")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_layersAffectMassCenter_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

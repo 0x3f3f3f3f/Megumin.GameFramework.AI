@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_hasBoundPlayables")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_hasBoundPlayables")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_hasBoundPlayables_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

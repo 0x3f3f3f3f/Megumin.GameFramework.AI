@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_GetHashCode")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("GetHashCode")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_GetHashCode_Method_Decorator : CompareDecorator<int>
     {
         [Space]

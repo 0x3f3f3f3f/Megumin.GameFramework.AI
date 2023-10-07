@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_PerlinNoise")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("PerlinNoise(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_PerlinNoise_Single_Single_Node : BTActionNode
     {
         [Space]

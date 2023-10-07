@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_SendMessage")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("SendMessage(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_SendMessage_String_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

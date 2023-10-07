@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_orthographicSize")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_orthographicSize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_orthographicSize_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

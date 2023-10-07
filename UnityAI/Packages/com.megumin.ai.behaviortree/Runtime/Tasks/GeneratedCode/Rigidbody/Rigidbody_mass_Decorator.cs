@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_mass")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("mass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_mass_Decorator : CompareDecorator<UnityEngine.Rigidbody, float>
     {
         [Space]

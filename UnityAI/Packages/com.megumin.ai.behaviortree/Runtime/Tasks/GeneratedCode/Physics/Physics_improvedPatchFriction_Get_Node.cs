@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_improvedPatchFriction")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_improvedPatchFriction")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_improvedPatchFriction_Get_Node : BTActionNode
     {
         [Space]

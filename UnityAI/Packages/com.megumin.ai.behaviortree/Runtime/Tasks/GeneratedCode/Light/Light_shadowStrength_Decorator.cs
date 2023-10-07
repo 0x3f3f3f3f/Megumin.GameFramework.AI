@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_shadowStrength")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("shadowStrength")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowStrength_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

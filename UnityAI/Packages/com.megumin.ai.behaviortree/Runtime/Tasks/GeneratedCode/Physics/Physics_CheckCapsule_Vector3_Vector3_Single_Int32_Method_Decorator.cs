@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_CheckCapsule")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("CheckCapsule(Vector3, Vector3, Single, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_CheckCapsule_Vector3_Vector3_Single_Int32_Method_Decorator : ConditionDecorator
     {
         [Space]

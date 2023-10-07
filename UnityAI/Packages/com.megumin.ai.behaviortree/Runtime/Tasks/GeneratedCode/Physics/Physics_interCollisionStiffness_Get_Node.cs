@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_interCollisionStiffness")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_interCollisionStiffness")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_interCollisionStiffness_Get_Node : BTActionNode
     {
         [Space]

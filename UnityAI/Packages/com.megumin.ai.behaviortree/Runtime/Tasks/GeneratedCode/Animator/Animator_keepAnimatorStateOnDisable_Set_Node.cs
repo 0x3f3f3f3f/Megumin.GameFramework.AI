@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Animator_keepAnimatorStateOnDisable")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_keepAnimatorStateOnDisable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_keepAnimatorStateOnDisable_Set_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

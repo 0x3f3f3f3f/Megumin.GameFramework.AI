@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Collider_enabled")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("enabled")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Collider_enabled_Decorator : ConditionDecorator<UnityEngine.Collider>
     {
         [Space]

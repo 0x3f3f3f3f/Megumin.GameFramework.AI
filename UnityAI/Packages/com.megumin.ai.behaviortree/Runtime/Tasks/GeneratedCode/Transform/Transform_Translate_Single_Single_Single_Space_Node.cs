@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_Translate")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Translate(Single, Single, Single, Space)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_Translate_Single_Single_Single_Space_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

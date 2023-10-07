@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_hasRootMotion")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("hasRootMotion")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_hasRootMotion_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

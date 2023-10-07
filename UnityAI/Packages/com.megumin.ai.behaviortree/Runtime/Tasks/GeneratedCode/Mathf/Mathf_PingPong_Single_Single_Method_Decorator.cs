@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_PingPong")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("PingPong(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_PingPong_Single_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

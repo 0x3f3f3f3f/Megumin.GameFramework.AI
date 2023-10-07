@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_inputString")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_inputString")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_inputString_Get_Node : BTActionNode
     {
         [Space]

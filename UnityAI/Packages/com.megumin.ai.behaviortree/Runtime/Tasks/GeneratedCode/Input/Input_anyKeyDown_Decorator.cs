@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_anyKeyDown")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("anyKeyDown")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_anyKeyDown_Decorator : ConditionDecorator
     {
         [Space]

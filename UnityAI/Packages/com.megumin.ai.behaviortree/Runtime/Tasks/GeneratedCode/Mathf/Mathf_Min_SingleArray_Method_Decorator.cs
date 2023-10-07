@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Min")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Min(Single[])")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Min_SingleArray_Method_Decorator : CompareDecorator<float>
     {
         [Space]

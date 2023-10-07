@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_ToString")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("ToString(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_ToString_String_Node : BTActionNode
     {
         [Space]

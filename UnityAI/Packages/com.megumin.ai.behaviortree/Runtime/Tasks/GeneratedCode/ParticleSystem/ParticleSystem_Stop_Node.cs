@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Stop")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Stop")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Stop_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         protected override Status OnTick(BTNode from, object options = null)

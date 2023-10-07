@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_hasTransformHierarchy")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("hasTransformHierarchy")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_hasTransformHierarchy_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

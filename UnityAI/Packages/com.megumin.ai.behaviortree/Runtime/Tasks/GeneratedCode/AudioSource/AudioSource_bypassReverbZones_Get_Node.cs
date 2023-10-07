@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_bypassReverbZones")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_bypassReverbZones")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_bypassReverbZones_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

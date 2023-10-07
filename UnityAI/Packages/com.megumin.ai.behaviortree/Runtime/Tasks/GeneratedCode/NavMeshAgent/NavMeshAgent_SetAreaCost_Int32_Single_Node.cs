@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_SetAreaCost")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("SetAreaCost(Int32, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_SetAreaCost_Int32_Single_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

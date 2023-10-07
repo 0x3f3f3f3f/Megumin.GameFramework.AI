@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_StartRecording")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("StartRecording(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_StartRecording_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

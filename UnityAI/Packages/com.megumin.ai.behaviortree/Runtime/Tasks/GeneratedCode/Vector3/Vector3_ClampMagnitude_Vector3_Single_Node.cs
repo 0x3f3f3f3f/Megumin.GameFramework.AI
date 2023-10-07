@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_ClampMagnitude")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("ClampMagnitude(Vector3, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_ClampMagnitude_Vector3_Single_Node : BTActionNode
     {
         [Space]

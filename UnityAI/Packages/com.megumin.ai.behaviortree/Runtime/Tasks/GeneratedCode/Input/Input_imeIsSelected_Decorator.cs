@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_imeIsSelected")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("imeIsSelected")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_imeIsSelected_Decorator : ConditionDecorator
     {
         [Space]

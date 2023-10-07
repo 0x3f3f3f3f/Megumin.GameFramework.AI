@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_playOnAwake")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("playOnAwake")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_playOnAwake_Decorator : ConditionDecorator<UnityEngine.Playables.PlayableDirector>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_IsSleeping")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("IsSleeping")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_IsSleeping_Method_Decorator : ConditionDecorator<UnityEngine.Rigidbody>
     {
         [Space]

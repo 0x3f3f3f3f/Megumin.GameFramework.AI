@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_maxRotationSpeed")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_maxRotationSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxRotationSpeed_Get_Node : BTActionNode
     {
         [Space]

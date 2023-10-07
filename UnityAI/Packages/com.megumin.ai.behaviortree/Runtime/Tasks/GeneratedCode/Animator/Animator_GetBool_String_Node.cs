@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetBool")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetBool(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetBool_String_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

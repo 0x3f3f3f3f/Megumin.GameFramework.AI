@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_SyncLayer")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("SyncLayer(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_SyncLayer_Int32_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

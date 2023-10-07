@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Inverse")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Inverse(Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Inverse_Quaternion_Node : BTActionNode
     {
         [Space]

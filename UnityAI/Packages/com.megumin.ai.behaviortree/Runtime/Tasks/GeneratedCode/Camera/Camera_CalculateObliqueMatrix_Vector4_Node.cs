@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_CalculateObliqueMatrix")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("CalculateObliqueMatrix(Vector4)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_CalculateObliqueMatrix_Vector4_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

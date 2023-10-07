@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Renderer_sortingLayerName")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Set_sortingLayerName")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_sortingLayerName_Set_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

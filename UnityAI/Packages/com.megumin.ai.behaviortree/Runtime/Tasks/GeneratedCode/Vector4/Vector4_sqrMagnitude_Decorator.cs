@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_sqrMagnitude")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("sqrMagnitude")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_sqrMagnitude_Decorator : CompareDecorator<float>
     {
         [Space]

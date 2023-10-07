@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_StringToHash")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("StringToHash(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_StringToHash_String_Method_Decorator : CompareDecorator<UnityEngine.Animator, int>
     {
         [Space]

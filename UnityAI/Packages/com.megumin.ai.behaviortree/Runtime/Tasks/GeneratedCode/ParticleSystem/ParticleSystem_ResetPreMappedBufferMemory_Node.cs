@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_ResetPreMappedBufferMemory")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("ResetPreMappedBufferMemory")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_ResetPreMappedBufferMemory_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         protected override Status OnTick(BTNode from, object options = null)

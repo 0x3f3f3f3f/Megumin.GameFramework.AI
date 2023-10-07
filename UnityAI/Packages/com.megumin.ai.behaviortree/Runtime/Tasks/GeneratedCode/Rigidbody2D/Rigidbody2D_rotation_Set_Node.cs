@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody2D_rotation")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Set_rotation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_rotation_Set_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

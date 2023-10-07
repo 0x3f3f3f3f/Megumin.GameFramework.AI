@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Lerp")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Lerp(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Lerp_Single_Single_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_childCount")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("childCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_childCount_Decorator : CompareDecorator<UnityEngine.Transform, int>
     {
         [Space]

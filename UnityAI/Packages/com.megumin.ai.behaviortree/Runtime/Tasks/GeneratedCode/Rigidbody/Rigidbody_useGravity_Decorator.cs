@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_useGravity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("useGravity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_useGravity_Decorator : ConditionDecorator<UnityEngine.Rigidbody>
     {
         [Space]

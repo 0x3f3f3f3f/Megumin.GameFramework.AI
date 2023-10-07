@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_realtimeSinceStartupAsDouble")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("realtimeSinceStartupAsDouble")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_realtimeSinceStartupAsDouble_Decorator : CompareDecorator<double>
     {
         [Space]

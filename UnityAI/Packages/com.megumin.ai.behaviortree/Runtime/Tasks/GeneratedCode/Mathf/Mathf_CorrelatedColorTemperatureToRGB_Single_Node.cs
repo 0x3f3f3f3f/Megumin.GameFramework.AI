@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_CorrelatedColorTemperatureToRGB")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("CorrelatedColorTemperatureToRGB(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_CorrelatedColorTemperatureToRGB_Single_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_angularSleepTolerance")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_angularSleepTolerance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_angularSleepTolerance_Get_Node : BTActionNode
     {
         [Space]

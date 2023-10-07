@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_stereoEnabled")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_stereoEnabled")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_stereoEnabled_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

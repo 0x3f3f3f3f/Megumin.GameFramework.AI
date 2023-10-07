@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_shadowBias")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_shadowBias")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowBias_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

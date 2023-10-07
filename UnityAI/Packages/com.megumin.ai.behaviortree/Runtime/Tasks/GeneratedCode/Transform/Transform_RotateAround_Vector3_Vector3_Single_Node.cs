@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_RotateAround")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("RotateAround(Vector3, Vector3, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_RotateAround_Vector3_Vector3_Single_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

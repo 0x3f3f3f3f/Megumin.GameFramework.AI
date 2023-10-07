@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Rad2Deg")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Rad2Deg")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Rad2Deg_Decorator : CompareDecorator<float>
     {
         [Space]

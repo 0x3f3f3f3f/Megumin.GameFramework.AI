@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Renderer_rendererPriority")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_rendererPriority")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_rendererPriority_Get_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

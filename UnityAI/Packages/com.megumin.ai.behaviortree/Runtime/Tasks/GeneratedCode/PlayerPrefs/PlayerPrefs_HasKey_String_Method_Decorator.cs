@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_HasKey")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("HasKey(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_HasKey_String_Method_Decorator : ConditionDecorator
     {
         [Space]

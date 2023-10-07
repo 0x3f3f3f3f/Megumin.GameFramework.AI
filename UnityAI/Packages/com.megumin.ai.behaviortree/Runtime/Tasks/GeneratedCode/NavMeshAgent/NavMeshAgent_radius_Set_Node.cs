@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_radius")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_radius_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

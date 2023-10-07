@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_maximumParticleDeltaTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("maximumParticleDeltaTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_maximumParticleDeltaTime_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_focalLength")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("focalLength")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_focalLength_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

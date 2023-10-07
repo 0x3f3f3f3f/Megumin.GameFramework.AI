@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_isInitialized")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("isInitialized")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_isInitialized_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

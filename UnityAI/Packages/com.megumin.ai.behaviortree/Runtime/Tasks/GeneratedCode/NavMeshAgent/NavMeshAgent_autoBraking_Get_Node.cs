@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_NavMeshAgent_autoBraking")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Get_autoBraking")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_autoBraking_Get_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

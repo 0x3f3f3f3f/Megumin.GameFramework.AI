@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_ToString")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("ToString")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_ToString_Node : BTActionNode
     {
         [Space]

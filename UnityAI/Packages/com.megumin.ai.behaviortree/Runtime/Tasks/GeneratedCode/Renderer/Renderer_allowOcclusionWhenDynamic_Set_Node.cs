@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Renderer_allowOcclusionWhenDynamic")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Set_allowOcclusionWhenDynamic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_allowOcclusionWhenDynamic_Set_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

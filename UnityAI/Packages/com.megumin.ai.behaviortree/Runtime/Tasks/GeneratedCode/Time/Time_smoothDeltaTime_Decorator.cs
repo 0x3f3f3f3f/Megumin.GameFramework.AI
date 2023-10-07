@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_smoothDeltaTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("smoothDeltaTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_smoothDeltaTime_Decorator : CompareDecorator<float>
     {
         [Space]

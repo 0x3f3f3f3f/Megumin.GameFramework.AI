@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_AddForce")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("AddForce(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_AddForce_Vector2_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

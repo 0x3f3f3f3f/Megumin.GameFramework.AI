@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetButtonDown")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetButtonDown(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetButtonDown_String_Method_Decorator : ConditionDecorator
     {
         [Space]

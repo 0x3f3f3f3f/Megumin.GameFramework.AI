@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_Play")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Play")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_Play_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         protected override Status OnTick(BTNode from, object options = null)

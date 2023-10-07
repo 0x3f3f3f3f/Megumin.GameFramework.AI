@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_SetTargetBuffers")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("SetTargetBuffers(RenderBuffer, RenderBuffer)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_SetTargetBuffers_RenderBuffer_RenderBuffer_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

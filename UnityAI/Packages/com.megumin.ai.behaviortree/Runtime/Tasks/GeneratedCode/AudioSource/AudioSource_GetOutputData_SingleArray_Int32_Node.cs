@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_GetOutputData")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("GetOutputData(Single[], Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_GetOutputData_SingleArray_Int32_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

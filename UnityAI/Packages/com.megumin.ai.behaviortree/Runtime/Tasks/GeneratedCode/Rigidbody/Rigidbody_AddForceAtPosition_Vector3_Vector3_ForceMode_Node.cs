@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_AddForceAtPosition")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("AddForceAtPosition(Vector3, Vector3, ForceMode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_AddForceAtPosition_Vector3_Vector3_ForceMode_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetBoneTransform")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetBoneTransform(HumanBodyBones)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetBoneTransform_HumanBodyBones_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

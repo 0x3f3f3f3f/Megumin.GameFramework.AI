@@ -19,6 +19,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_InputActionAsset_Extension")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("Get_Extension")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputActionAsset_Extension_Get_Node : BTActionNode
     {
         [Space]

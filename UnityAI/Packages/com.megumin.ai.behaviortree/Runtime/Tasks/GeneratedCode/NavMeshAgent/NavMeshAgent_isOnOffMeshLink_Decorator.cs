@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_isOnOffMeshLink")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("isOnOffMeshLink")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_isOnOffMeshLink_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

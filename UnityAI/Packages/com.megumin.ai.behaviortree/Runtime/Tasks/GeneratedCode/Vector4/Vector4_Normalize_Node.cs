@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_Normalize")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Normalize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_Normalize_Node : BTActionNode
     {
         [Space]

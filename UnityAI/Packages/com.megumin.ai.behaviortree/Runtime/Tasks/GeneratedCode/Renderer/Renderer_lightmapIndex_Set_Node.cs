@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Renderer_lightmapIndex")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Set_lightmapIndex")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_lightmapIndex_Set_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

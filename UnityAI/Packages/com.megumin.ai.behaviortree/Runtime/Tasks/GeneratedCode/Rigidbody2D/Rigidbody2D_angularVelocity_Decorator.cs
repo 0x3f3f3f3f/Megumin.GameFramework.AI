@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_angularVelocity")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("angularVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_angularVelocity_Decorator : CompareDecorator<UnityEngine.Rigidbody2D, float>
     {
         [Space]

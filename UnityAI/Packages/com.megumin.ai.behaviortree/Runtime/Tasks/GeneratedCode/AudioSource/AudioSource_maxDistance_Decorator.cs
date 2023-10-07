@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_maxDistance")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("maxDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_maxDistance_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

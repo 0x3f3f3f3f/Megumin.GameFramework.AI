@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_Distance")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("Distance(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_Distance_Vector3_Vector3_Node : BTActionNode
     {
         [Space]

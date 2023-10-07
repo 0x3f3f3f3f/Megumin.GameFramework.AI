@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_RemoveAllCommandBuffers")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("RemoveAllCommandBuffers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_RemoveAllCommandBuffers_Node : BTActionNode<UnityEngine.Light>
     {
         protected override Status OnTick(BTNode from, object options = null)

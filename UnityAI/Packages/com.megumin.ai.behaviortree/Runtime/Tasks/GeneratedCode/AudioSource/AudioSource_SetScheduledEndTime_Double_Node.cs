@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_SetScheduledEndTime")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("SetScheduledEndTime(Double)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_SetScheduledEndTime_Double_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

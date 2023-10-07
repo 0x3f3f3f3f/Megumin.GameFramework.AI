@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_spread")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("spread")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_spread_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

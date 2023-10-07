@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_CharacterController_height")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Set_height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_height_Set_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

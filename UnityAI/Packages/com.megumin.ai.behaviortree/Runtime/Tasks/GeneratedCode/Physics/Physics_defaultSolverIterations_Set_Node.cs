@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_defaultSolverIterations")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_defaultSolverIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultSolverIterations_Set_Node : BTActionNode
     {
         [Space]

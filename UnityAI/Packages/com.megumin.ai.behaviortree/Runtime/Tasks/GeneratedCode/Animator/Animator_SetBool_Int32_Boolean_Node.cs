@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetBool")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetBool(Int32, Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetBool_Int32_Boolean_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

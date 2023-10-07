@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Dot")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Dot(Quaternion, Quaternion)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Dot_Quaternion_Quaternion_Method_Decorator : CompareDecorator<float>
     {
         [Space]

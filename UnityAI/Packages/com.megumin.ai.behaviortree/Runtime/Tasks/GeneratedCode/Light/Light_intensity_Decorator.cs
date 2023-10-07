@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_intensity")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("intensity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_intensity_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

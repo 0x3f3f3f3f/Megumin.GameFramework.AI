@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_hasBoundPlayables")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("hasBoundPlayables")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_hasBoundPlayables_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

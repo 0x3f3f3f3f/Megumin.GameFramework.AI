@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_spread")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_spread")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_spread_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

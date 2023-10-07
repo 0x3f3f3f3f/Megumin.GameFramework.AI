@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_maxDepenetrationVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_maxDepenetrationVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_maxDepenetrationVelocity_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_TransformVector")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("TransformVector(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_TransformVector_Vector3_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

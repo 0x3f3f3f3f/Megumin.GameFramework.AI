@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_HasState")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("HasState(Int32, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_HasState_Int32_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

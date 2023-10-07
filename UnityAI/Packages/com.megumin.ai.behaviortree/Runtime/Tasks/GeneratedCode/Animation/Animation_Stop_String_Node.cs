@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Stop")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Stop(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Stop_String_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_GetCustomCurve")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("GetCustomCurve(AudioSourceCurveType)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_GetCustomCurve_AudioSourceCurveType_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

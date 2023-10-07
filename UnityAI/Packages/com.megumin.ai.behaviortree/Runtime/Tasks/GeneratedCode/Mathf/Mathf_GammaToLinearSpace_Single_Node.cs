@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_GammaToLinearSpace")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("GammaToLinearSpace(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_GammaToLinearSpace_Single_Node : BTActionNode
     {
         [Space]

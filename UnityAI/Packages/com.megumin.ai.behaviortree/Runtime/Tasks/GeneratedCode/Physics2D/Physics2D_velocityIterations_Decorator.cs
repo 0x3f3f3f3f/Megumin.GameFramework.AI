@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_velocityIterations")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("velocityIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_velocityIterations_Decorator : CompareDecorator<int>
     {
         [Space]

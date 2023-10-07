@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_MaxPolygonShapeVertices")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("MaxPolygonShapeVertices")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_MaxPolygonShapeVertices_Decorator : CompareDecorator<int>
     {
         [Space]

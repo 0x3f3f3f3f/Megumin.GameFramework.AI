@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_commandBufferCount")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_commandBufferCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_commandBufferCount_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

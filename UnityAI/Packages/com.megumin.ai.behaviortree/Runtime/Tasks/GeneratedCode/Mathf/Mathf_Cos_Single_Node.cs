@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Cos")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Cos(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Cos_Single_Node : BTActionNode
     {
         [Space]

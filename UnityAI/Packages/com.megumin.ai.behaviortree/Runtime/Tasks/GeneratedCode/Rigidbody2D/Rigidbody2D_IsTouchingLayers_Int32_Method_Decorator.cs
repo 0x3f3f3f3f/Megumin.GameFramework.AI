@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_IsTouchingLayers")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("IsTouchingLayers(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_IsTouchingLayers_Int32_Method_Decorator : ConditionDecorator<UnityEngine.Rigidbody2D>
     {
         [Space]

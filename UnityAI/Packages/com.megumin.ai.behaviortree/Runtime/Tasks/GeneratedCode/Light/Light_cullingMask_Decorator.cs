@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_cullingMask")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("cullingMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_cullingMask_Decorator : CompareDecorator<UnityEngine.Light, int>
     {
         [Space]

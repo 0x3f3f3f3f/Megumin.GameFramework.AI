@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_hasRootMotion")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_hasRootMotion")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_hasRootMotion_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_maxLinearCorrection")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_maxLinearCorrection")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxLinearCorrection_Set_Node : BTActionNode
     {
         [Space]

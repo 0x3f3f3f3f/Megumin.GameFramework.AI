@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_AllocateCustomDataAttribute")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("AllocateCustomDataAttribute(ParticleSystemCustomData)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_AllocateCustomDataAttribute_ParticleSystemCustomData_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

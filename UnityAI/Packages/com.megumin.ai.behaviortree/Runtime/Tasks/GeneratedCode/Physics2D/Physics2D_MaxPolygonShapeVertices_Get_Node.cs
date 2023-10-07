@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_MaxPolygonShapeVertices")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_MaxPolygonShapeVertices")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_MaxPolygonShapeVertices_Get_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_targetDisplay")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_targetDisplay")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_targetDisplay_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_IsParameterControlledByCurve")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("IsParameterControlledByCurve(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_IsParameterControlledByCurve_String_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

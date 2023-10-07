@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_isStopped")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_isStopped")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_isStopped_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

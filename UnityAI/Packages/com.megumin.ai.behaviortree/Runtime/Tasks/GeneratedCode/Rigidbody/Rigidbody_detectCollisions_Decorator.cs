@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_detectCollisions")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("detectCollisions")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_detectCollisions_Decorator : ConditionDecorator<UnityEngine.Rigidbody>
     {
         [Space]

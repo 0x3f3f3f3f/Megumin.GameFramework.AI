@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetMouseButtonDown")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetMouseButtonDown(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetMouseButtonDown_Int32_Method_Decorator : ConditionDecorator
     {
         [Space]

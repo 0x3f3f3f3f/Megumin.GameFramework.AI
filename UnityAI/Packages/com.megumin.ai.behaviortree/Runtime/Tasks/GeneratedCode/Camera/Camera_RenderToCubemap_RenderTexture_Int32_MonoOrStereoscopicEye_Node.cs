@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_RenderToCubemap")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("RenderToCubemap(RenderTexture, Int32, MonoOrStereoscopicEye)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_RenderToCubemap_RenderTexture_Int32_MonoOrStereoscopicEye_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

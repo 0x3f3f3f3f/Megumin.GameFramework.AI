@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Max")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Max(Single[])")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Max_SingleArray_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_Dot")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("Dot(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_Dot_Vector3_Vector3_Method_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_queriesHitTriggers")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("queriesHitTriggers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_queriesHitTriggers_Decorator : ConditionDecorator
     {
         [Space]

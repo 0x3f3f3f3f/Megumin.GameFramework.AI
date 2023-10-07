@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetIKHintPosition")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetIKHintPosition(AvatarIKHint, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetIKHintPosition_AvatarIKHint_Vector3_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

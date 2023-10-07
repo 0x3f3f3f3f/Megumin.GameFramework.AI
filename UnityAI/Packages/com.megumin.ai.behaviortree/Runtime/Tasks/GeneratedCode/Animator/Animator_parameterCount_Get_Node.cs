@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_parameterCount")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_parameterCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_parameterCount_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

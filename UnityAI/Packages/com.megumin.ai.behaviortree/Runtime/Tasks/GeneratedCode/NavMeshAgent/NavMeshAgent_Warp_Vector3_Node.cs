@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_Warp")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Warp(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_Warp_Vector3_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_callbacksOnDisable")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_callbacksOnDisable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_callbacksOnDisable_Get_Node : BTActionNode
     {
         [Space]

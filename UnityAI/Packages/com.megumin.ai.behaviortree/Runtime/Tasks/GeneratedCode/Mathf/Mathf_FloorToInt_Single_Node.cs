@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_FloorToInt")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("FloorToInt(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_FloorToInt_Single_Node : BTActionNode
     {
         [Space]

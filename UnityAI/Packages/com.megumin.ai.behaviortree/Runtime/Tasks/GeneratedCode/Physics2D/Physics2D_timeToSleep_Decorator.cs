@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_timeToSleep")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("timeToSleep")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_timeToSleep_Decorator : CompareDecorator<float>
     {
         [Space]

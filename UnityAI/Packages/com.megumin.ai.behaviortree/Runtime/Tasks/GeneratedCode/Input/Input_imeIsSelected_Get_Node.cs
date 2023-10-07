@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_imeIsSelected")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_imeIsSelected")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_imeIsSelected_Get_Node : BTActionNode
     {
         [Space]

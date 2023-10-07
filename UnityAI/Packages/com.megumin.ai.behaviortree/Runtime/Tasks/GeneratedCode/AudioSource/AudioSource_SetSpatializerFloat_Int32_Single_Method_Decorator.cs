@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_SetSpatializerFloat")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("SetSpatializerFloat(Int32, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_SetSpatializerFloat_Int32_Single_Method_Decorator : ConditionDecorator<UnityEngine.AudioSource>
     {
         [Space]

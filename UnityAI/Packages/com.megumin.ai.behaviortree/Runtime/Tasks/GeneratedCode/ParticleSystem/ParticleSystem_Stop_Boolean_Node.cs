@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Stop")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Stop(Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Stop_Boolean_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody2D_useFullKinematicContacts")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Set_useFullKinematicContacts")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_useFullKinematicContacts_Set_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

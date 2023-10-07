@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_slopeLimit")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("slopeLimit")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_slopeLimit_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

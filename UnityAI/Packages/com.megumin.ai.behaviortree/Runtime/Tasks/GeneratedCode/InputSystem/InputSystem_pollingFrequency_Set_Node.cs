@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_InputSystem_pollingFrequency")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("Set_pollingFrequency")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_pollingFrequency_Set_Node : BTActionNode
     {
         [Space]

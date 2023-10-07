@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_defaultSolverIterations")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("defaultSolverIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultSolverIterations_Decorator : CompareDecorator<int>
     {
         [Space]

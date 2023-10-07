@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_CrossFade")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("CrossFade(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_CrossFade_String_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

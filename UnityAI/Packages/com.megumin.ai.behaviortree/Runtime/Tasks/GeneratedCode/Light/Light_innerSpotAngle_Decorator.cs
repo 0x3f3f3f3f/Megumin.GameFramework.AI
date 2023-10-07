@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_innerSpotAngle")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("innerSpotAngle")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_innerSpotAngle_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

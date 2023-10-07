@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_pixelWidth")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_pixelWidth")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_pixelWidth_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

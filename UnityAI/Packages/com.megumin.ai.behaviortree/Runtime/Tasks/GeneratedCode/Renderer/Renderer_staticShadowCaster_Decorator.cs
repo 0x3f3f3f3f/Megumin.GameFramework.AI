@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_staticShadowCaster")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("staticShadowCaster")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_staticShadowCaster_Decorator : ConditionDecorator<UnityEngine.Renderer>
     {
         [Space]

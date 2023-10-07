@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Blend")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Blend(String, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Blend_String_Single_Single_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

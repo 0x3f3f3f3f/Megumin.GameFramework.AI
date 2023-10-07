@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetTarget")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetTarget(AvatarTarget, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetTarget_AvatarTarget_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

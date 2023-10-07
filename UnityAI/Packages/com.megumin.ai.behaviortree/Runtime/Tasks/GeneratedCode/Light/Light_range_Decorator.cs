@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_range")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("range")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_range_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

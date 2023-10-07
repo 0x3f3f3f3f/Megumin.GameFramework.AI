@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_commandBufferCount")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("commandBufferCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_commandBufferCount_Decorator : CompareDecorator<UnityEngine.Light, int>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_baumgarteScale")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("baumgarteScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_baumgarteScale_Decorator : CompareDecorator<float>
     {
         [Space]

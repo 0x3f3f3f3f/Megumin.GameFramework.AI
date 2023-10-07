@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_spotAngle")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("spotAngle")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_spotAngle_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

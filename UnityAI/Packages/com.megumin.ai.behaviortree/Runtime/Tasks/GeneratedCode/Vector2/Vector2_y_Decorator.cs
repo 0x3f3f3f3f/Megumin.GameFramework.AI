@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_y")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("y")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_y_Decorator : CompareDecorator<float>
     {
         [Space]

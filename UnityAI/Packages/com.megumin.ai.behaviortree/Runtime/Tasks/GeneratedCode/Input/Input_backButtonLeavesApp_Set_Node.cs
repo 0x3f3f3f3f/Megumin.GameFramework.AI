@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Input_backButtonLeavesApp")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Set_backButtonLeavesApp")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_backButtonLeavesApp_Set_Node : BTActionNode
     {
         [Space]

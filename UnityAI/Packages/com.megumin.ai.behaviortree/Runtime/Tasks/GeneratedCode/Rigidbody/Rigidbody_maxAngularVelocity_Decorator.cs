@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_maxAngularVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("maxAngularVelocity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_maxAngularVelocity_Decorator : CompareDecorator<UnityEngine.Rigidbody, float>
     {
         [Space]

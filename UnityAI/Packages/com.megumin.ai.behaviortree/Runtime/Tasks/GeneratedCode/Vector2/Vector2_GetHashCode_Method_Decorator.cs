@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_GetHashCode")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("GetHashCode")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_GetHashCode_Method_Decorator : CompareDecorator<int>
     {
         [Space]

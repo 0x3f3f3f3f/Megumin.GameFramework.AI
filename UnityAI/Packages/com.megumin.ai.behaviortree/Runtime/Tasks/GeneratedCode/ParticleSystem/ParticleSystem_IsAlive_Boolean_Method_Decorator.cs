@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_IsAlive")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("IsAlive(Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_IsAlive_Boolean_Method_Decorator : ConditionDecorator<UnityEngine.ParticleSystem>
     {
         [Space]

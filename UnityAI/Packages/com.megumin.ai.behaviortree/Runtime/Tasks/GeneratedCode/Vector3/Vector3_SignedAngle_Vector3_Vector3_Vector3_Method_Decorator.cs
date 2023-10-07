@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_SignedAngle")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("SignedAngle(Vector3, Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_SignedAngle_Vector3_Vector3_Vector3_Method_Decorator : CompareDecorator<float>
     {
         [Space]

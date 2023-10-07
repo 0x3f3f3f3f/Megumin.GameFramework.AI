@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Animator_playbackTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_playbackTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_playbackTime_Set_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

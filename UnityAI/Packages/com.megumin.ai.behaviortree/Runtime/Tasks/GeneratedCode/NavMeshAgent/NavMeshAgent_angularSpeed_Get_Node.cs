@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_NavMeshAgent_angularSpeed")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Get_angularSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_angularSpeed_Get_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_compensateSensors")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("compensateSensors")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_compensateSensors_Decorator : ConditionDecorator
     {
         [Space]

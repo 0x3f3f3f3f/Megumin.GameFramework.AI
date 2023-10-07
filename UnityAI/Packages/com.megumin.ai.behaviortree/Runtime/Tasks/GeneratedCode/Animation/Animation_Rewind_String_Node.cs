@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Rewind")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Rewind(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Rewind_String_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

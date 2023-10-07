@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_time")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("time")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_time_Decorator : CompareDecorator<UnityEngine.ParticleSystem, float>
     {
         [Space]

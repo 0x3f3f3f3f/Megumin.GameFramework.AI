@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Play")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Play")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Play_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

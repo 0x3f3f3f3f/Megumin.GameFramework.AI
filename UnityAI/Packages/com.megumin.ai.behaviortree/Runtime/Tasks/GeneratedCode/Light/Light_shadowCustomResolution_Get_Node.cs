@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_shadowCustomResolution")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_shadowCustomResolution")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowCustomResolution_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Infinity")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Infinity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Infinity_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_Min")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("Min(Vector2Int, Vector2Int)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_Min_Vector2Int_Vector2Int_Node : BTActionNode
     {
         [Space]

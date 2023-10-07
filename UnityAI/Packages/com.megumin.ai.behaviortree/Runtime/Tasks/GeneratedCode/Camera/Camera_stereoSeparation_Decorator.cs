@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_stereoSeparation")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("stereoSeparation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_stereoSeparation_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

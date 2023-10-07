@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_AddRelativeForce")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("AddRelativeForce(Single, Single, Single, ForceMode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_AddRelativeForce_Single_Single_Single_ForceMode_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

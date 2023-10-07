@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_Magnitude")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Magnitude(Vector4)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_Magnitude_Vector4_Method_Decorator : CompareDecorator<float>
     {
         [Space]

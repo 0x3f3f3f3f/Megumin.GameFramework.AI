@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_BoxCast")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("BoxCast(Vector2, Vector2, Single, Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_BoxCast_Vector2_Vector2_Single_Vector2_Node : BTActionNode
     {
         [Space]

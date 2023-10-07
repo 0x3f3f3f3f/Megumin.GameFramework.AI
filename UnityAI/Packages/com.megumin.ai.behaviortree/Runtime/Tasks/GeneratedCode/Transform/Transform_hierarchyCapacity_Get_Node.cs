@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Transform_hierarchyCapacity")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Get_hierarchyCapacity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_hierarchyCapacity_Get_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

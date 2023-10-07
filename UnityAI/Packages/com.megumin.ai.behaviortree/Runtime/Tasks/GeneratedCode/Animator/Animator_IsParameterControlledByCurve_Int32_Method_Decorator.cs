@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_IsParameterControlledByCurve")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("IsParameterControlledByCurve(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_IsParameterControlledByCurve_Int32_Method_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

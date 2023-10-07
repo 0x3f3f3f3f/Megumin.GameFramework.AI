@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_isVisible")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("isVisible")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_isVisible_Decorator : ConditionDecorator<UnityEngine.Renderer>
     {
         [Space]

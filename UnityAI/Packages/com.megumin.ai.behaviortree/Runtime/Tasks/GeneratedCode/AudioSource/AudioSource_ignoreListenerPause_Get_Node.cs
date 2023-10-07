@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_ignoreListenerPause")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_ignoreListenerPause")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_ignoreListenerPause_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

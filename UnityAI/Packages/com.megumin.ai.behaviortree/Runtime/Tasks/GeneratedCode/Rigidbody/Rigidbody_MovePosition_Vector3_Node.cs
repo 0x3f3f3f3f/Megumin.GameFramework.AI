@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_MovePosition")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("MovePosition(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_MovePosition_Vector3_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

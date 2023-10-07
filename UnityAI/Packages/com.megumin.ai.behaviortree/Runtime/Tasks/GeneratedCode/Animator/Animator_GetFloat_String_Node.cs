@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetFloat")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetFloat(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetFloat_String_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

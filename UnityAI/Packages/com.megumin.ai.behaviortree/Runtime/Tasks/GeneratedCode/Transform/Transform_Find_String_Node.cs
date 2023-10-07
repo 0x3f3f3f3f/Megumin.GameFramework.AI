@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_Find")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Find(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_Find_String_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

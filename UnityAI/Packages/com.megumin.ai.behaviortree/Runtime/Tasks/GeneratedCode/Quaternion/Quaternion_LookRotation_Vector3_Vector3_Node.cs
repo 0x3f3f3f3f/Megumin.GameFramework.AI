@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_LookRotation")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("LookRotation(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_LookRotation_Vector3_Vector3_Node : BTActionNode
     {
         [Space]

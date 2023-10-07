@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_height")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_height_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_magnitude")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("magnitude")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_magnitude_Decorator : CompareDecorator<float>
     {
         [Space]

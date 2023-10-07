@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Gamma")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Gamma(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Gamma_Single_Single_Single_Node : BTActionNode
     {
         [Space]

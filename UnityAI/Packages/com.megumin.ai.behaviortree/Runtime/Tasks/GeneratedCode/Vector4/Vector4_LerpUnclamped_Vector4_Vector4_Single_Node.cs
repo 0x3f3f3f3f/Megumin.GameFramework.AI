@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_LerpUnclamped")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("LerpUnclamped(Vector4, Vector4, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_LerpUnclamped_Vector4_Vector4_Single_Node : BTActionNode
     {
         [Space]

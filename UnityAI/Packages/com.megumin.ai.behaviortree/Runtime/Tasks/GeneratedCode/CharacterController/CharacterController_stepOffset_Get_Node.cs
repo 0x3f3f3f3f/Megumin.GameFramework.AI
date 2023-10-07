@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CharacterController_stepOffset")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_stepOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_stepOffset_Get_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

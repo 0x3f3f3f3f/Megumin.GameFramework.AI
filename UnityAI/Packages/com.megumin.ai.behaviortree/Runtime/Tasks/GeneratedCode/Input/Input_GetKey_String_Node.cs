@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetKey")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetKey(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetKey_String_Node : BTActionNode
     {
         [Space]

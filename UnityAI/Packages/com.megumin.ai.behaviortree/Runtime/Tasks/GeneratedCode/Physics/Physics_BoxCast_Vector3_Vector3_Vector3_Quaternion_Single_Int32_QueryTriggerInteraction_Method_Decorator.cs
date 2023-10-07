@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_BoxCast")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("BoxCast(Vector3, Vector3, Vector3, Quaternion, Single, Int32, QueryTriggerInteraction)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_BoxCast_Vector3_Vector3_Vector3_Quaternion_Single_Int32_QueryTriggerInteraction_Method_Decorator : ConditionDecorator
     {
         [Space]

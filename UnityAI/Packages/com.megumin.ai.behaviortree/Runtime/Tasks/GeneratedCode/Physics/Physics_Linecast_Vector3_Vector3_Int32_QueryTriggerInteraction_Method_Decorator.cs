@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_Linecast")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Linecast(Vector3, Vector3, Int32, QueryTriggerInteraction)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_Linecast_Vector3_Vector3_Int32_QueryTriggerInteraction_Method_Decorator : ConditionDecorator
     {
         [Space]

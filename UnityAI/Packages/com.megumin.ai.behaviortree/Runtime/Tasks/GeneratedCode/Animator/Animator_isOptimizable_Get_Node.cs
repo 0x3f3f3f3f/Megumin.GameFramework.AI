@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_isOptimizable")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_isOptimizable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_isOptimizable_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

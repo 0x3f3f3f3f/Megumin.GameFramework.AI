@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_useJitteredProjectionMatrixForTransparentRendering")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("useJitteredProjectionMatrixForTransparentRendering")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_useJitteredProjectionMatrixForTransparentRendering_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

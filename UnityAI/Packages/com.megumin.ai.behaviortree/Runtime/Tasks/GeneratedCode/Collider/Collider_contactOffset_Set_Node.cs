@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Collider_contactOffset")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("Set_contactOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Collider_contactOffset_Set_Node : BTActionNode<UnityEngine.Collider>
     {
         [Space]

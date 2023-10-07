@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_autoBraking")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("autoBraking")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_autoBraking_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

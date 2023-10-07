@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Sin")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Sin(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Sin_Single_Node : BTActionNode
     {
         [Space]

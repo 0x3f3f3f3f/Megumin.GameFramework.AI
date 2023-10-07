@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_AudioSource_time")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Set_time")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_time_Set_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

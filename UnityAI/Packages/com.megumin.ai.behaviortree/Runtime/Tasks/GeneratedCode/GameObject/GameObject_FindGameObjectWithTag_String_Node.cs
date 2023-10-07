@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_FindGameObjectWithTag")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("FindGameObjectWithTag(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_FindGameObjectWithTag_String_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

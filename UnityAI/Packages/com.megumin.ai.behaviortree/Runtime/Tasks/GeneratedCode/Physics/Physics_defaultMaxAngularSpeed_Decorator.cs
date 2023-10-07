@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_defaultMaxAngularSpeed")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("defaultMaxAngularSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultMaxAngularSpeed_Decorator : CompareDecorator<float>
     {
         [Space]

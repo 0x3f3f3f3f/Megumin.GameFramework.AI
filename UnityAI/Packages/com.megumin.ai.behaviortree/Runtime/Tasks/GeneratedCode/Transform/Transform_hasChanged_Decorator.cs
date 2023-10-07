@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_hasChanged")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("hasChanged")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_hasChanged_Decorator : ConditionDecorator<UnityEngine.Transform>
     {
         [Space]

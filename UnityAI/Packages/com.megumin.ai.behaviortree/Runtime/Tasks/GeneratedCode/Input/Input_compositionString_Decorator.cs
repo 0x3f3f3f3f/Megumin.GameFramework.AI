@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_compositionString")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("compositionString")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_compositionString_Decorator : CompareDecorator<string>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_queriesStartInColliders")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("queriesStartInColliders")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_queriesStartInColliders_Decorator : ConditionDecorator
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_IsTouching")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("IsTouching(ContactFilter2D)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_IsTouching_ContactFilter2D_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetIKRotationWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetIKRotationWeight(AvatarIKGoal, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetIKRotationWeight_AvatarIKGoal_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

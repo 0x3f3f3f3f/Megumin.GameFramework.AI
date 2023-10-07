@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_ApplyBuiltinRootMotion")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("ApplyBuiltinRootMotion")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_ApplyBuiltinRootMotion_Node : BTActionNode<UnityEngine.Animator>
     {
         protected override Status OnTick(BTNode from, object options = null)

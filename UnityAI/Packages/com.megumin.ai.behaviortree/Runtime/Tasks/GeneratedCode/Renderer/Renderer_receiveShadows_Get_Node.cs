@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Renderer_receiveShadows")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_receiveShadows")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_receiveShadows_Get_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

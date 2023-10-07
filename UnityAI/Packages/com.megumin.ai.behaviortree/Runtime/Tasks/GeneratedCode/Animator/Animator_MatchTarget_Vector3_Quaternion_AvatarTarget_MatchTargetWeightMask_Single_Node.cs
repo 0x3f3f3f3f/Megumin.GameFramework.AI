@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_MatchTarget")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("MatchTarget(Vector3, Quaternion, AvatarTarget, MatchTargetWeightMask, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_MatchTarget_Vector3_Quaternion_AvatarTarget_MatchTargetWeightMask_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

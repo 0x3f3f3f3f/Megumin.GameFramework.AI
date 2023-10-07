@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_interCollisionDistance")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("interCollisionDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_interCollisionDistance_Decorator : CompareDecorator<float>
     {
         [Space]

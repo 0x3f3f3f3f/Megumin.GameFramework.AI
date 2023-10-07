@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_stoppingDistance")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_stoppingDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_stoppingDistance_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

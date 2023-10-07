@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_FromToRotation")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("FromToRotation(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_FromToRotation_Vector3_Vector3_Node : BTActionNode
     {
         [Space]

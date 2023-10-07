@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Set")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Set(Single, Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Set_Single_Single_Single_Single_Node : BTActionNode
     {
         [Space]

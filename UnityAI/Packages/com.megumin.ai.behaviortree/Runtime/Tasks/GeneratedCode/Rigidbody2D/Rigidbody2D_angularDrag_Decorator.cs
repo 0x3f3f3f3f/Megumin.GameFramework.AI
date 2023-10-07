@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_angularDrag")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("angularDrag")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_angularDrag_Decorator : CompareDecorator<UnityEngine.Rigidbody2D, float>
     {
         [Space]

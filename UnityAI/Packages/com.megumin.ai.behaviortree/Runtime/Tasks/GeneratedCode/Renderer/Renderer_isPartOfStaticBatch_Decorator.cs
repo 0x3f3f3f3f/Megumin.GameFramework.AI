@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_isPartOfStaticBatch")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("isPartOfStaticBatch")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_isPartOfStaticBatch_Decorator : ConditionDecorator<UnityEngine.Renderer>
     {
         [Space]

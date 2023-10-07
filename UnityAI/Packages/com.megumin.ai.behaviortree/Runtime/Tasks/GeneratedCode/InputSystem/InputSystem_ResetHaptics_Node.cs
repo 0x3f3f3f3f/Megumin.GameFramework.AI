@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_ResetHaptics")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("ResetHaptics")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_ResetHaptics_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

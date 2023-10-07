@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_useShadowMatrixOverride")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_useShadowMatrixOverride")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_useShadowMatrixOverride_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Transform_hasChanged")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Get_hasChanged")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_hasChanged_Get_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

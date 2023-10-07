@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_velocityIterations")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_velocityIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_velocityIterations_Set_Node : BTActionNode
     {
         [Space]

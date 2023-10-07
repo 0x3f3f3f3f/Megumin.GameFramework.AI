@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_TriggerSubEmitter")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("TriggerSubEmitter(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_TriggerSubEmitter_Int32_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

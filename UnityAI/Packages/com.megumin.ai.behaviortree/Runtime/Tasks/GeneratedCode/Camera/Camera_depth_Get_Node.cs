@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_depth")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_depth")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_depth_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

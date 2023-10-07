@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_hierarchyCapacity")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("hierarchyCapacity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_hierarchyCapacity_Decorator : CompareDecorator<UnityEngine.Transform, int>
     {
         [Space]

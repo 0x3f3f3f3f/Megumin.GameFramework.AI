@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Light_cookieSize")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Set_cookieSize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_cookieSize_Set_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

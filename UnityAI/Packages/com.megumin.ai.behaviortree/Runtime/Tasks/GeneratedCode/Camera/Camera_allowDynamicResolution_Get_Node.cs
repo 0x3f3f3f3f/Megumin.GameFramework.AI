@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_allowDynamicResolution")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_allowDynamicResolution")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_allowDynamicResolution_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

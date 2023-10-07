@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_isPathStale")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("isPathStale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_isPathStale_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

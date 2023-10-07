@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_SetSiblingIndex")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetSiblingIndex(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_SetSiblingIndex_Int32_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

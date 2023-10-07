@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CapsuleCollider_height")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("height")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CapsuleCollider_height_Decorator : CompareDecorator<UnityEngine.CapsuleCollider, float>
     {
         [Space]

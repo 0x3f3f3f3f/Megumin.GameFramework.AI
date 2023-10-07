@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Mathf_PI")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Get_PI")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_PI_Get_Node : BTActionNode
     {
         [Space]

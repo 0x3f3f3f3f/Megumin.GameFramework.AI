@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_GetLayerCollisionMask")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("GetLayerCollisionMask(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_GetLayerCollisionMask_Int32_Node : BTActionNode
     {
         [Space]

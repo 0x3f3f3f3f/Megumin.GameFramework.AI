@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_shadowBias")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("shadowBias")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowBias_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

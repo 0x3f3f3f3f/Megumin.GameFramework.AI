@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_CeilToInt")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("CeilToInt(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_CeilToInt_Single_Node : BTActionNode
     {
         [Space]

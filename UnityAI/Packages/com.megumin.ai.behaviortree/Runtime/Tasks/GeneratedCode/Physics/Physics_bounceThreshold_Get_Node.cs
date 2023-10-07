@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_bounceThreshold")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_bounceThreshold")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_bounceThreshold_Get_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector3_GetHashCode")]
     [Category("UnityEngine/Vector3")]
     [AddComponentMenu("GetHashCode")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector3_GetHashCode_Node : BTActionNode
     {
         [Space]

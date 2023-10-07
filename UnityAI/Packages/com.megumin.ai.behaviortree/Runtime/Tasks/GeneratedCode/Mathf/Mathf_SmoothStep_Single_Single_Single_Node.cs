@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_SmoothStep")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("SmoothStep(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_SmoothStep_Single_Single_Single_Node : BTActionNode
     {
         [Space]

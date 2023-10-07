@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_isGrounded")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("isGrounded")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_isGrounded_Decorator : ConditionDecorator<UnityEngine.CharacterController>
     {
         [Space]

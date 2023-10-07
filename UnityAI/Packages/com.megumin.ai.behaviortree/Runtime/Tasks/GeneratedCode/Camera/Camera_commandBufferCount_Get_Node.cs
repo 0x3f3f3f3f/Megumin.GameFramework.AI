@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_commandBufferCount")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_commandBufferCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_commandBufferCount_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

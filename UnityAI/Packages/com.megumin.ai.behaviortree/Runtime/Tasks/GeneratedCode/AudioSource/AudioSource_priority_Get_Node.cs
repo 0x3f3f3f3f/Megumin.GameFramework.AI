@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_AudioSource_priority")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_priority")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_priority_Get_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

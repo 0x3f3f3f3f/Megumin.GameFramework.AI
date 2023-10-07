@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_CapsuleCast")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("CapsuleCast(Vector3, Vector3, Single, Vector3, Single, Int32, QueryTriggerInteraction)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_CapsuleCast_Vector3_Vector3_Single_Vector3_Single_Int32_QueryTriggerInteraction_Node : BTActionNode
     {
         [Space]

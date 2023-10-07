@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Play")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Play")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Play_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_Raycast")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Raycast(Vector3, Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_Raycast_Vector3_Vector3_Method_Decorator : ConditionDecorator
     {
         [Space]

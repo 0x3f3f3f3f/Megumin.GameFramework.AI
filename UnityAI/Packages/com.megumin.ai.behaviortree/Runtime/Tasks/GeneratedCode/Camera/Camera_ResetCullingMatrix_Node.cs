@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_ResetCullingMatrix")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ResetCullingMatrix")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_ResetCullingMatrix_Node : BTActionNode<UnityEngine.Camera>
     {
         protected override Status OnTick(BTNode from, object options = null)

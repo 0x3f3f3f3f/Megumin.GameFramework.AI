@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_SetActive")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("SetActive(Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_SetActive_Boolean_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_SyncTransforms")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("SyncTransforms")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_SyncTransforms_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

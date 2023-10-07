@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_updateUpAxis")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_updateUpAxis")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_updateUpAxis_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_CeilToInt")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("CeilToInt(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_CeilToInt_Vector2_Node : BTActionNode
     {
         [Space]

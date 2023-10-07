@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_CreatePrimitive")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("CreatePrimitive(PrimitiveType)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_CreatePrimitive_PrimitiveType_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

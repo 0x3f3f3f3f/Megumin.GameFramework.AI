@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Time_fixedDeltaTime")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("Set_fixedDeltaTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_fixedDeltaTime_Set_Node : BTActionNode
     {
         [Space]

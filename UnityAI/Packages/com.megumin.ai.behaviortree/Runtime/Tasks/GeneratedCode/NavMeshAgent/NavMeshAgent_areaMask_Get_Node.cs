@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_NavMeshAgent_areaMask")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Get_areaMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_areaMask_Get_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

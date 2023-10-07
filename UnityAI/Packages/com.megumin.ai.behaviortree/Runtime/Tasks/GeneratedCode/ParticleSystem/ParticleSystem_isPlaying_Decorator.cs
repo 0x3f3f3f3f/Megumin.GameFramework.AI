@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_isPlaying")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("isPlaying")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_isPlaying_Decorator : ConditionDecorator<UnityEngine.ParticleSystem>
     {
         [Space]

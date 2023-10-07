@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_areVRStereoViewMatricesWithinSingleCullTolerance")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("areVRStereoViewMatricesWithinSingleCullTolerance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_areVRStereoViewMatricesWithinSingleCullTolerance_Decorator : ConditionDecorator<UnityEngine.Camera>
     {
         [Space]

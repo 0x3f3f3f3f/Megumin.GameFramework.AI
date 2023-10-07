@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_forceRenderingOff")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("forceRenderingOff")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_forceRenderingOff_Decorator : ConditionDecorator<UnityEngine.Renderer>
     {
         [Space]

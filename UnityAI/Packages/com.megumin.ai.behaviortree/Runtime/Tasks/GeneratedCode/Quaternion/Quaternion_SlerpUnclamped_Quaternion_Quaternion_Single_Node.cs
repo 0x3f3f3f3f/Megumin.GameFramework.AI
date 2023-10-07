@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_SlerpUnclamped")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("SlerpUnclamped(Quaternion, Quaternion, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_SlerpUnclamped_Quaternion_Quaternion_Single_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_SetPlaybackState")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("SetPlaybackState(PlaybackState)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_SetPlaybackState_PlaybackState_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_FieldOfViewToFocalLength")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("FieldOfViewToFocalLength(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_FieldOfViewToFocalLength_Single_Single_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

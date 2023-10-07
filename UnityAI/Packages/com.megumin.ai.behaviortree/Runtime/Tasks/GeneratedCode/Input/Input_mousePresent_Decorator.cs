@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_mousePresent")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("mousePresent")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_mousePresent_Decorator : ConditionDecorator
     {
         [Space]

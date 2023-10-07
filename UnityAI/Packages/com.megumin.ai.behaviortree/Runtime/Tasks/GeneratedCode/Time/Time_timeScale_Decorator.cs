@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Time_timeScale")]
     [Category("UnityEngine/Time")]
     [AddComponentMenu("timeScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Time_timeScale_Decorator : CompareDecorator<float>
     {
         [Space]

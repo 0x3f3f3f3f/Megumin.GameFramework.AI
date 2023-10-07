@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_commandBufferCount")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("commandBufferCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_commandBufferCount_Decorator : CompareDecorator<UnityEngine.Camera, int>
     {
         [Space]

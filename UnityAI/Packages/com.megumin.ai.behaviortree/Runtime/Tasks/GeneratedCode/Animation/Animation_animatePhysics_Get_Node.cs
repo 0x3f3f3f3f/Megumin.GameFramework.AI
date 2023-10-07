@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animation_animatePhysics")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Get_animatePhysics")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_animatePhysics_Get_Node : BTActionNode<UnityEngine.Animation>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_NextPowerOfTwo")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("NextPowerOfTwo(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_NextPowerOfTwo_Int32_Node : BTActionNode
     {
         [Space]

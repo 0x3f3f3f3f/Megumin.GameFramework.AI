@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Renderer_enabled")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_enabled")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_enabled_Get_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

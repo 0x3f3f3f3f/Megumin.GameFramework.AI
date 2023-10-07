@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_NavMeshAgent_agentTypeID")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_agentTypeID")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_agentTypeID_Set_Node : BTActionNode<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

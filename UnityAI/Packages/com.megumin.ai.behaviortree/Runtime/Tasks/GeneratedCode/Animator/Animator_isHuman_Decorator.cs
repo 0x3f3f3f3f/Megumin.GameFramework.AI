@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_isHuman")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("isHuman")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_isHuman_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_LinearToGammaSpace")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("LinearToGammaSpace(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_LinearToGammaSpace_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

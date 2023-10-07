@@ -19,6 +19,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputActionAsset_Disable")]
     [Category("UnityEngine/InputActionAsset")]
     [AddComponentMenu("Disable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputActionAsset_Disable_Node : BTActionNode
     {
         [Space]

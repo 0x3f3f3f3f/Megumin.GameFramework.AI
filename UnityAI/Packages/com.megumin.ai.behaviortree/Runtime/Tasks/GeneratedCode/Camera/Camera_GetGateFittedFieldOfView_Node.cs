@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_GetGateFittedFieldOfView")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("GetGateFittedFieldOfView")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_GetGateFittedFieldOfView_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

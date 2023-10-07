@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_VerticalToHorizontalFieldOfView")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("VerticalToHorizontalFieldOfView(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_VerticalToHorizontalFieldOfView_Single_Single_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_GetSceneByBuildIndex")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("GetSceneByBuildIndex(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_GetSceneByBuildIndex_Int32_Node : BTActionNode
     {
         [Space]

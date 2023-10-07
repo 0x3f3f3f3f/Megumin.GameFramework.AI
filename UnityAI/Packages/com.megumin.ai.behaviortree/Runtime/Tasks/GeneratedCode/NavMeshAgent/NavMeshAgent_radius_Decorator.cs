@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_radius")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_radius_Decorator : CompareDecorator<UnityEngine.AI.NavMeshAgent, float>
     {
         [Space]

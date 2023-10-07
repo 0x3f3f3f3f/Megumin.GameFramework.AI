@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Collider_ClosestPointOnBounds")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("ClosestPointOnBounds(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Collider_ClosestPointOnBounds_Vector3_Node : BTActionNode<UnityEngine.Collider>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_RemoveCommandBuffers")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("RemoveCommandBuffers(LightEvent)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_RemoveCommandBuffers_LightEvent_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

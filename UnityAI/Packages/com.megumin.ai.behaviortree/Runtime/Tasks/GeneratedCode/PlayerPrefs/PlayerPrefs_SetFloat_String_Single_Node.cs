@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_SetFloat")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("SetFloat(String, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_SetFloat_String_Single_Node : BTActionNode
     {
         [Space]

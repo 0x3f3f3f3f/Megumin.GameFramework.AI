@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_useAutoMass")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("useAutoMass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_useAutoMass_Decorator : ConditionDecorator<UnityEngine.Rigidbody2D>
     {
         [Space]

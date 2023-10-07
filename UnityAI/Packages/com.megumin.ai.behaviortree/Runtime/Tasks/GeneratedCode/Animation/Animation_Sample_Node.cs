@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Sample")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Sample")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Sample_Node : BTActionNode<UnityEngine.Animation>
     {
         protected override Status OnTick(BTNode from, object options = null)

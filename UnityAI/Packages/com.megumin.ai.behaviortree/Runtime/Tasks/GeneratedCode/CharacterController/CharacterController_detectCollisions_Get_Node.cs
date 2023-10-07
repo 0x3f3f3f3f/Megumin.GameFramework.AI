@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_CharacterController_detectCollisions")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_detectCollisions")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_detectCollisions_Get_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

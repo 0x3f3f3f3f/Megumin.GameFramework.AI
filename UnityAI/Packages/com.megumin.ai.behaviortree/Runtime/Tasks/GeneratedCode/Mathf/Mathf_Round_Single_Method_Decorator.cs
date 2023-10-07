@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Round")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Round(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Round_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

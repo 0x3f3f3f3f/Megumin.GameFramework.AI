@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_RemoveCommandBuffers")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("RemoveCommandBuffers(CameraEvent)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_RemoveCommandBuffers_CameraEvent_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_Simulate")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Simulate(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_Simulate_Single_Method_Decorator : ConditionDecorator
     {
         [Space]

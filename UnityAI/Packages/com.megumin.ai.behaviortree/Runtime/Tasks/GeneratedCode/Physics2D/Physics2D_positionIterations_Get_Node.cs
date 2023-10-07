@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_positionIterations")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_positionIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_positionIterations_Get_Node : BTActionNode
     {
         [Space]

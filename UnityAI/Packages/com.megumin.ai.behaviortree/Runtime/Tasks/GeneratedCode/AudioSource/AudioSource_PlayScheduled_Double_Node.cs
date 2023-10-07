@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_PlayScheduled")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("PlayScheduled(Double)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_PlayScheduled_Double_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

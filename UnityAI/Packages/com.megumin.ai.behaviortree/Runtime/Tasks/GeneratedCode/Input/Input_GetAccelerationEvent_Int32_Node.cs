@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetAccelerationEvent")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetAccelerationEvent(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetAccelerationEvent_Int32_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_SetAmbisonicDecoderFloat")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("SetAmbisonicDecoderFloat(Int32, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_SetAmbisonicDecoderFloat_Int32_Single_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

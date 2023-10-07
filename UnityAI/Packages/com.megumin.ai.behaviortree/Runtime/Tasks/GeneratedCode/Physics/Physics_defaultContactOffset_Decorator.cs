@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_defaultContactOffset")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("defaultContactOffset")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultContactOffset_Decorator : CompareDecorator<float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Mathf_Epsilon")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Get_Epsilon")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Epsilon_Get_Node : BTActionNode
     {
         [Space]

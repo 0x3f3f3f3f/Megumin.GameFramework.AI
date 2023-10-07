@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_updatePosition")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("updatePosition")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_updatePosition_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_sleepThreshold")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("sleepThreshold")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_sleepThreshold_Decorator : CompareDecorator<float>
     {
         [Space]

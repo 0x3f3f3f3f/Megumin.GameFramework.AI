@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_baumgarteScale")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_baumgarteScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_baumgarteScale_Set_Node : BTActionNode
     {
         [Space]

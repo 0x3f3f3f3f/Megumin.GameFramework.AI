@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_shadowNearPlane")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("shadowNearPlane")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowNearPlane_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

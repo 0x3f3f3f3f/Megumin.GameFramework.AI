@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_FloatToHalf")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("FloatToHalf(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_FloatToHalf_Single_Node : BTActionNode
     {
         [Space]

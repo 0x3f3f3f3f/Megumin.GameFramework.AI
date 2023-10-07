@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_IsPowerOfTwo")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("IsPowerOfTwo(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_IsPowerOfTwo_Int32_Method_Decorator : ConditionDecorator
     {
         [Space]

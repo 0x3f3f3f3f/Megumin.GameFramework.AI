@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_PlayableDirector_time")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Get_time")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_time_Get_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         [Space]

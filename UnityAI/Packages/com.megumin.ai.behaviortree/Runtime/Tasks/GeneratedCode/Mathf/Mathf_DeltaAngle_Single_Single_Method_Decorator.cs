@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_DeltaAngle")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("DeltaAngle(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_DeltaAngle_Single_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

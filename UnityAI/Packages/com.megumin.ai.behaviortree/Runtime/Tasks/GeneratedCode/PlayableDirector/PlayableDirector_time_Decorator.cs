@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_time")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("time")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_time_Decorator : CompareDecorator<UnityEngine.Playables.PlayableDirector, double>
     {
         [Space]

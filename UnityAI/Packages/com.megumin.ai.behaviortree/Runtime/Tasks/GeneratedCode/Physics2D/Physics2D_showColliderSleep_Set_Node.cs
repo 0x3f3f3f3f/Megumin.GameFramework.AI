@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_showColliderSleep")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_showColliderSleep")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderSleep_Set_Node : BTActionNode
     {

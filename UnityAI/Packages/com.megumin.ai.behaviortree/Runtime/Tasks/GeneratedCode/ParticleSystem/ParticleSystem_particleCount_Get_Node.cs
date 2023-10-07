@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_ParticleSystem_particleCount")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Get_particleCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_particleCount_Get_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

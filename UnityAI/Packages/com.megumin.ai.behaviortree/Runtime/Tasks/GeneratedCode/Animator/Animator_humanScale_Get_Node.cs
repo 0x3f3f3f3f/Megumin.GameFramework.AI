@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Animator_humanScale")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_humanScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_humanScale_Get_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

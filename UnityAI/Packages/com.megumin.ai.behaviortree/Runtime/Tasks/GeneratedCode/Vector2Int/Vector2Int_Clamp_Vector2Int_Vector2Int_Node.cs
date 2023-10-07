@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_Clamp")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("Clamp(Vector2Int, Vector2Int)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_Clamp_Vector2Int_Vector2Int_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_AddTorque")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("AddTorque(Single, Single, Single, ForceMode)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_AddTorque_Single_Single_Single_ForceMode_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_FlushDisconnectedDevices")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("FlushDisconnectedDevices")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_FlushDisconnectedDevices_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

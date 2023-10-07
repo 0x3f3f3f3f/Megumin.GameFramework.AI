@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_ResetAspect")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ResetAspect")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_ResetAspect_Node : BTActionNode<UnityEngine.Camera>
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_Update")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Update(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_Update_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_gravityScale")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("gravityScale")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_gravityScale_Decorator : CompareDecorator<UnityEngine.Rigidbody2D, float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Collider_hasModifiableContacts")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("Set_hasModifiableContacts")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Collider_hasModifiableContacts_Set_Node : BTActionNode<UnityEngine.Collider>
     {
         [Space]

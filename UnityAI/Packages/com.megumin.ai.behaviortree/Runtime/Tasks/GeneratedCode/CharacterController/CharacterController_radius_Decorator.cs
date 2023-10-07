@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_radius")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("radius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_radius_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

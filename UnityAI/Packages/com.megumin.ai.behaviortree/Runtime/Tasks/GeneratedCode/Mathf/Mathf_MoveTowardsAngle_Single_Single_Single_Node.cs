@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_MoveTowardsAngle")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("MoveTowardsAngle(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_MoveTowardsAngle_Single_Single_Single_Node : BTActionNode
     {
         [Space]

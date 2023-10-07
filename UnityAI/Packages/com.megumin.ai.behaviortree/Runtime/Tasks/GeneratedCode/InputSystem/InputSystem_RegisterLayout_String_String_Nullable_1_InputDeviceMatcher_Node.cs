@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_RegisterLayout")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("RegisterLayout(String, String, Nullable`1)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_RegisterLayout_String_String_Nullable_1_InputDeviceMatcher_Node : BTActionNode
     {
         [Space]

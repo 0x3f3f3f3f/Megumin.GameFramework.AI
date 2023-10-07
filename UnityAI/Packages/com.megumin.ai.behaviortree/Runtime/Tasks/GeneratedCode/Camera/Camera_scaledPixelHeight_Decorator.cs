@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_scaledPixelHeight")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("scaledPixelHeight")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_scaledPixelHeight_Decorator : CompareDecorator<UnityEngine.Camera, int>
     {
         [Space]

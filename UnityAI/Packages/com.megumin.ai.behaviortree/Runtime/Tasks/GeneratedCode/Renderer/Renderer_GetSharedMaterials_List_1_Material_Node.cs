@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_GetSharedMaterials")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("GetSharedMaterials(List`1)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_GetSharedMaterials_List_1_Material_Node : BTActionNode<UnityEngine.Renderer>
     {
         [Space]

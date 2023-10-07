@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_reuseCollisionCallbacks")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("reuseCollisionCallbacks")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_reuseCollisionCallbacks_Decorator : ConditionDecorator
     {
         [Space]

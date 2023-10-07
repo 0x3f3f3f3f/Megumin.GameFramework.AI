@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_fireEvents")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("fireEvents")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_fireEvents_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

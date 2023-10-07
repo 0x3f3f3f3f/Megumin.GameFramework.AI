@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetLayerName")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetLayerName(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetLayerName_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

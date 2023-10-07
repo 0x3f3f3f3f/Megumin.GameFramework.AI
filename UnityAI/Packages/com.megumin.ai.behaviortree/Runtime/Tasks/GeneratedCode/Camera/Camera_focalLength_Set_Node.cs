@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_focalLength")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_focalLength")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_focalLength_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_MovePosition")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("MovePosition(Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_MovePosition_Vector2_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         [Space]

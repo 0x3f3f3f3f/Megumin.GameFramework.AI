@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_RoundToInt")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("RoundToInt(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_RoundToInt_Single_Node : BTActionNode
     {
         [Space]

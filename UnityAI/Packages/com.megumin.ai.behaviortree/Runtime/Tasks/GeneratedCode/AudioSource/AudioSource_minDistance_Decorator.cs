@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_minDistance")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("minDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_minDistance_Decorator : CompareDecorator<UnityEngine.AudioSource, float>
     {
         [Space]

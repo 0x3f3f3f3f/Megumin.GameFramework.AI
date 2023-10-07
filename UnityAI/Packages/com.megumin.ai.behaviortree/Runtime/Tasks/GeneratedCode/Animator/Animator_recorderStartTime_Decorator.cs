@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_recorderStartTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("recorderStartTime")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_recorderStartTime_Decorator : CompareDecorator<UnityEngine.Animator, float>
     {
         [Space]

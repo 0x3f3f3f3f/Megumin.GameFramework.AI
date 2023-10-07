@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_CheckBox")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("CheckBox(Vector3, Vector3, Quaternion, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_CheckBox_Vector3_Vector3_Quaternion_Int32_Method_Decorator : ConditionDecorator
     {
         [Space]

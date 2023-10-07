@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Camera_fieldOfView")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_fieldOfView")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_fieldOfView_Get_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

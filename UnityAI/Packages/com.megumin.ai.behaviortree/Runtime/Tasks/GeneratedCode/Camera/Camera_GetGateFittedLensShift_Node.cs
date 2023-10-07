@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_GetGateFittedLensShift")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("GetGateFittedLensShift")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_GetGateFittedLensShift_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

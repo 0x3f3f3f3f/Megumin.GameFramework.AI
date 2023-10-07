@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Reflect")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Reflect(Vector2, Vector2)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Reflect_Vector2_Vector2_Node : BTActionNode
     {
         [Space]

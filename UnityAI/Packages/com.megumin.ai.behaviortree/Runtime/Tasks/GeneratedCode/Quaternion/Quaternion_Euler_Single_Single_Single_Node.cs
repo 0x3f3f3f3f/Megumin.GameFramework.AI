@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Euler")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Euler(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Euler_Single_Single_Single_Node : BTActionNode
     {
         [Space]

@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics_queriesHitTriggers")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Set_queriesHitTriggers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_queriesHitTriggers_Set_Node : BTActionNode
     {
         [Space]

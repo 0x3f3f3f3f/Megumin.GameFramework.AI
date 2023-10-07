@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("SceneManager_GetActiveScene")]
     [Category("UnityEngine/SceneManager")]
     [AddComponentMenu("GetActiveScene")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class SceneManager_GetActiveScene_Node : BTActionNode
     {
         [Space]

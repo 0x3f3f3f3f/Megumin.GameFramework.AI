@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_SetTrails")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("SetTrails(Trails)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_SetTrails_Trails_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

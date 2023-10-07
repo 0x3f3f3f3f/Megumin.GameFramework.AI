@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_touchPressureSupported")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_touchPressureSupported")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_touchPressureSupported_Get_Node : BTActionNode
     {
         [Space]

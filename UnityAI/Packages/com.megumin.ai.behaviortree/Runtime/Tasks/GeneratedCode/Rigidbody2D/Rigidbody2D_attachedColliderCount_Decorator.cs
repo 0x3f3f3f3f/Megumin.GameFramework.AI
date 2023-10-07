@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_attachedColliderCount")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("attachedColliderCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_attachedColliderCount_Decorator : CompareDecorator<UnityEngine.Rigidbody2D, int>
     {
         [Space]

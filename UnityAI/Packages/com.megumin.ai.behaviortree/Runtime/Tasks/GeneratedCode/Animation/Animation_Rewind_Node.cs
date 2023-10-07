@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animation_Rewind")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Rewind")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animation_Rewind_Node : BTActionNode<UnityEngine.Animation>
     {
         protected override Status OnTick(BTNode from, object options = null)

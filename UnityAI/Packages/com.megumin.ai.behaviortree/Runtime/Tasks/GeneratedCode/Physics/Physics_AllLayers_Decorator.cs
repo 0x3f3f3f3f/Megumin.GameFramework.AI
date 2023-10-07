@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_AllLayers")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("AllLayers")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_AllLayers_Decorator : CompareDecorator<int>
     {
         [Space]

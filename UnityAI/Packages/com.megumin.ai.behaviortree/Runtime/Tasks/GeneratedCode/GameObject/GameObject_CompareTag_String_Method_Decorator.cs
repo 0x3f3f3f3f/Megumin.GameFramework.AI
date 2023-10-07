@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("GameObject_CompareTag")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("CompareTag(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_CompareTag_String_Method_Decorator : ConditionDecorator<UnityEngine.GameObject>
     {
         [Space]

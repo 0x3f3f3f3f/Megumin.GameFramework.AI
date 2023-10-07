@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_Update")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("Update")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_Update_Node : BTActionNode
     {
         protected override Status OnTick(BTNode from, object options = null)

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_minMoveDistance")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("minMoveDistance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_minMoveDistance_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

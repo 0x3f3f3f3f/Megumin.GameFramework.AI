@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Light_shadowNearPlane")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_shadowNearPlane")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_shadowNearPlane_Get_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_ParticleSystem_isPaused")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Get_isPaused")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_isPaused_Get_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

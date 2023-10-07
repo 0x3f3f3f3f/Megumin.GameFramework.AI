@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody2D_Sleep")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Sleep")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody2D_Sleep_Node : BTActionNode<UnityEngine.Rigidbody2D>
     {
         protected override Status OnTick(BTNode from, object options = null)

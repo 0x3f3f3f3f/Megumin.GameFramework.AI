@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_ParticleSystem_proceduralSimulationSupported")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Get_proceduralSimulationSupported")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_proceduralSimulationSupported_Get_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

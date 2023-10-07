@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Light_bounceIntensity")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Set_bounceIntensity")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_bounceIntensity_Set_Node : BTActionNode<UnityEngine.Light>
     {
         [Space]

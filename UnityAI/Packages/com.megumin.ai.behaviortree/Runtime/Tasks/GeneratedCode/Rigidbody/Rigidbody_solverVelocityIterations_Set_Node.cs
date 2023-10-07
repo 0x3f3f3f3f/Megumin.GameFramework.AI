@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Rigidbody_solverVelocityIterations")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_solverVelocityIterations")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_solverVelocityIterations_Set_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

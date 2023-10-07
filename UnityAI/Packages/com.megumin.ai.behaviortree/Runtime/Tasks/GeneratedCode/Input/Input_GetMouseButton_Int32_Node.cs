@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Input_GetMouseButton")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("GetMouseButton(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_GetMouseButton_Int32_Node : BTActionNode
     {
         [Space]

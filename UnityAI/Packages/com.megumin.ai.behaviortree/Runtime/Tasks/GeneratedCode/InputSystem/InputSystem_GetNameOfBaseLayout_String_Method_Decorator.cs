@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_GetNameOfBaseLayout")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("GetNameOfBaseLayout(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_GetNameOfBaseLayout_String_Method_Decorator : CompareDecorator<string>
     {
         [Space]

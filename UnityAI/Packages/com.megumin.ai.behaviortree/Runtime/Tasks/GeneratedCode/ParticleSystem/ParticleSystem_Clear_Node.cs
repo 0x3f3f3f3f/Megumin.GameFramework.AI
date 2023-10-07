@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Clear")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Clear")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Clear_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         protected override Status OnTick(BTNode from, object options = null)

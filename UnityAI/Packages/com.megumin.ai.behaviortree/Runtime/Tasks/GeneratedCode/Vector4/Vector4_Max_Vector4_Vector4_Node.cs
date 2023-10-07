@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector4_Max")]
     [Category("UnityEngine/Vector4")]
     [AddComponentMenu("Max(Vector4, Vector4)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector4_Max_Vector4_Vector4_Node : BTActionNode
     {
         [Space]

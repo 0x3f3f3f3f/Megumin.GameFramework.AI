@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("NavMeshAgent_SetDestination")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("SetDestination(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class NavMeshAgent_SetDestination_Vector3_Method_Decorator : ConditionDecorator<UnityEngine.AI.NavMeshAgent>
     {
         [Space]

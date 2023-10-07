@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_GetSpectrumData")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("GetSpectrumData(Single[], Int32, FFTWindow)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_GetSpectrumData_SingleArray_Int32_FFTWindow_Node : BTActionNode<UnityEngine.AudioSource>
     {
         [Space]

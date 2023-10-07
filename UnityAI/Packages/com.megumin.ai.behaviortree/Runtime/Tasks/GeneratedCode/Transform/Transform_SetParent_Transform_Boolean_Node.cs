@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Transform_SetParent")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetParent(Transform, Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_SetParent_Transform_Boolean_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

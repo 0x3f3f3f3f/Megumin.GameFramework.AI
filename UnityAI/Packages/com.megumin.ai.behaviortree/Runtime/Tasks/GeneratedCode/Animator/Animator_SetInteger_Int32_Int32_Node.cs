@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetInteger")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetInteger(Int32, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetInteger_Int32_Int32_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

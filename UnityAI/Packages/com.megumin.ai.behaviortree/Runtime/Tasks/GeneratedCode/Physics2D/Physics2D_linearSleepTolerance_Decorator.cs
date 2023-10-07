@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_linearSleepTolerance")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("linearSleepTolerance")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_linearSleepTolerance_Decorator : CompareDecorator<float>
     {
         [Space]

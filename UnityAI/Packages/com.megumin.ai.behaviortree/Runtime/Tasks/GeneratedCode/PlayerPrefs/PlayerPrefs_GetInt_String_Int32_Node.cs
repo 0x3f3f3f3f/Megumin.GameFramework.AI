@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_GetInt")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("GetInt(String, Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_GetInt_String_Int32_Node : BTActionNode
     {
         [Space]

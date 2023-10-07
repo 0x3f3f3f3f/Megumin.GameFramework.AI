@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayableDirector_ClearReferenceValue")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("ClearReferenceValue(PropertyName)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayableDirector_ClearReferenceValue_PropertyName_Node : BTActionNode<UnityEngine.Playables.PlayableDirector>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_eventMask")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_eventMask")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_eventMask_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

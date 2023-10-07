@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Quaternion_Normalize")]
     [Category("UnityEngine/Quaternion")]
     [AddComponentMenu("Normalize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Quaternion_Normalize_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Input_simulateMouseWithTouches")]
     [Category("UnityEngine/Input")]
     [AddComponentMenu("Get_simulateMouseWithTouches")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Input_simulateMouseWithTouches_Get_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_SimpleMove")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("SimpleMove(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_SimpleMove_Vector3_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

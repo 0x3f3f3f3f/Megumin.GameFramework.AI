@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("CharacterController_skinWidth")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("skinWidth")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_skinWidth_Decorator : CompareDecorator<UnityEngine.CharacterController, float>
     {
         [Space]

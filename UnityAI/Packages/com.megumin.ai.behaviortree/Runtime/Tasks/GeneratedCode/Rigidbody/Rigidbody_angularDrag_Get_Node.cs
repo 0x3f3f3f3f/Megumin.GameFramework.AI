@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Rigidbody_angularDrag")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_angularDrag")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_angularDrag_Get_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

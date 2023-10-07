@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_autoSyncTransforms")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_autoSyncTransforms")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_autoSyncTransforms_Get_Node : BTActionNode
     {
         [Space]

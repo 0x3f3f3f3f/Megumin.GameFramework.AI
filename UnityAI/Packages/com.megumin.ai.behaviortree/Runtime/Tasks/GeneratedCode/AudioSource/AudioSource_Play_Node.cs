@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("AudioSource_Play")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Play")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class AudioSource_Play_Node : BTActionNode<UnityEngine.AudioSource>
     {
         protected override Status OnTick(BTNode from, object options = null)

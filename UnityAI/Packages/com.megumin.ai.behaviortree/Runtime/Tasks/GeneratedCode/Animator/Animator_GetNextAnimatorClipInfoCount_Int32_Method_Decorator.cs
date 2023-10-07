@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_GetNextAnimatorClipInfoCount")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("GetNextAnimatorClipInfoCount(Int32)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_GetNextAnimatorClipInfoCount_Int32_Method_Decorator : CompareDecorator<UnityEngine.Animator, int>
     {
         [Space]

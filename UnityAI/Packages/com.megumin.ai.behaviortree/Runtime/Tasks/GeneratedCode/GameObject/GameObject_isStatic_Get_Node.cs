@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_GameObject_isStatic")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("Get_isStatic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_isStatic_Get_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

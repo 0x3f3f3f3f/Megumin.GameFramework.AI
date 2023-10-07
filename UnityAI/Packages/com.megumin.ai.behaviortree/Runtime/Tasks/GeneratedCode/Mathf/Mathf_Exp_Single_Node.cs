@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Exp")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Exp(Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Exp_Single_Node : BTActionNode
     {
         [Space]

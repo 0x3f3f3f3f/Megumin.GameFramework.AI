@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics2D_queriesStartInColliders")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Get_queriesStartInColliders")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_queriesStartInColliders_Get_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_LerpAngle")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("LerpAngle(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_LerpAngle_Single_Single_Single_Method_Decorator : CompareDecorator<float>
     {
         [Space]

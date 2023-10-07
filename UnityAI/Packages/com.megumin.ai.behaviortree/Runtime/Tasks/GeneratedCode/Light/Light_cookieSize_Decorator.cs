@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Light_cookieSize")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("cookieSize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Light_cookieSize_Decorator : CompareDecorator<UnityEngine.Light, float>
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_orthographicSize")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("orthographicSize")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_orthographicSize_Decorator : CompareDecorator<UnityEngine.Camera, float>
     {
         [Space]

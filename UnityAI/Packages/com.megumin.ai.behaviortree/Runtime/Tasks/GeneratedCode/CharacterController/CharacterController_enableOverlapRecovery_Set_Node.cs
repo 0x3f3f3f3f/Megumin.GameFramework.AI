@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_CharacterController_enableOverlapRecovery")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Set_enableOverlapRecovery")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_enableOverlapRecovery_Set_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

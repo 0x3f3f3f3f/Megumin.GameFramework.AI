@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_Set")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("Set(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_Set_Single_Single_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_ClosestPointOnBounds")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("ClosestPointOnBounds(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_ClosestPointOnBounds_Vector3_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

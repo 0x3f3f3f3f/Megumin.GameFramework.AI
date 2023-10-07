@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Camera_aspect")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_aspect")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_aspect_Set_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

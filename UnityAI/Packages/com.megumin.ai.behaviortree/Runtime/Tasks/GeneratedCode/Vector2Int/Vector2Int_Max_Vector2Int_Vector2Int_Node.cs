@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2Int_Max")]
     [Category("UnityEngine/Vector2Int")]
     [AddComponentMenu("Max(Vector2Int, Vector2Int)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2Int_Max_Vector2Int_Vector2Int_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Animator_stabilizeFeet")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_stabilizeFeet")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_stabilizeFeet_Set_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

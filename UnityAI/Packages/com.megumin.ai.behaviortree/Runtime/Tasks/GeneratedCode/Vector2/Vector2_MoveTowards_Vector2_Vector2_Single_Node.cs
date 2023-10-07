@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Vector2_MoveTowards")]
     [Category("UnityEngine/Vector2")]
     [AddComponentMenu("MoveTowards(Vector2, Vector2, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Vector2_MoveTowards_Vector2_Vector2_Single_Node : BTActionNode
     {
         [Space]

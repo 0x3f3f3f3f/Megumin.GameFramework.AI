@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_WorldToScreenPoint")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("WorldToScreenPoint(Vector3)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_WorldToScreenPoint_Vector3_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

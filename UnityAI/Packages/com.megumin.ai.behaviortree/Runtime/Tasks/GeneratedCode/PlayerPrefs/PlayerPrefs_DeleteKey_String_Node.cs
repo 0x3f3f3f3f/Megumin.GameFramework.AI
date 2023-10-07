@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("PlayerPrefs_DeleteKey")]
     [Category("UnityEngine/PlayerPrefs")]
     [AddComponentMenu("DeleteKey(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class PlayerPrefs_DeleteKey_String_Node : BTActionNode
     {
         [Space]

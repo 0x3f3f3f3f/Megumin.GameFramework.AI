@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Transform_childCount")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("Get_childCount")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Transform_childCount_Get_Node : BTActionNode<UnityEngine.Transform>
     {
         [Space]

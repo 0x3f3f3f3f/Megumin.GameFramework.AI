@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_GameObject_layer")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("Get_layer")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class GameObject_layer_Get_Node : BTActionNode<UnityEngine.GameObject>
     {
         [Space]

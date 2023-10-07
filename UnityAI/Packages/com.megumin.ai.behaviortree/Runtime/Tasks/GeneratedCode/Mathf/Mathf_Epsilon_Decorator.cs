@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Epsilon")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Epsilon")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Epsilon_Decorator : CompareDecorator<float>
     {
         [Space]

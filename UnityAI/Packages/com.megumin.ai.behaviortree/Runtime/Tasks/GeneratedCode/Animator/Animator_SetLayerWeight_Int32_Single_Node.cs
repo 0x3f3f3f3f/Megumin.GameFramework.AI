@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_SetLayerWeight")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetLayerWeight(Int32, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_SetLayerWeight_Int32_Single_Node : BTActionNode<UnityEngine.Animator>
     {
         [Space]

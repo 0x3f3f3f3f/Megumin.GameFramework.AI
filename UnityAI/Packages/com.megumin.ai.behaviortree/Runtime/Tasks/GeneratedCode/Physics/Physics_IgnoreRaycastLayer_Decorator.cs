@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics_IgnoreRaycastLayer")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("IgnoreRaycastLayer")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_IgnoreRaycastLayer_Decorator : CompareDecorator<int>
     {
         [Space]

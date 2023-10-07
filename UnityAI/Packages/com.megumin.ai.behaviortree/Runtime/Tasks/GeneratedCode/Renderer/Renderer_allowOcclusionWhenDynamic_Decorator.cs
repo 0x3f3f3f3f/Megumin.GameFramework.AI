@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Renderer_allowOcclusionWhenDynamic")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("allowOcclusionWhenDynamic")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Renderer_allowOcclusionWhenDynamic_Decorator : ConditionDecorator<UnityEngine.Renderer>
     {
         [Space]

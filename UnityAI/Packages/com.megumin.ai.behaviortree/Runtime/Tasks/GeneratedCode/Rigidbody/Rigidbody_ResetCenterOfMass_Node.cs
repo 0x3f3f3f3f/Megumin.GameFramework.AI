@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Rigidbody_ResetCenterOfMass")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("ResetCenterOfMass")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_ResetCenterOfMass_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         protected override Status OnTick(BTNode from, object options = null)

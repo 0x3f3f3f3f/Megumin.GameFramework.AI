@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Physics_defaultMaxAngularSpeed")]
     [Category("UnityEngine/Physics")]
     [AddComponentMenu("Get_defaultMaxAngularSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics_defaultMaxAngularSpeed_Get_Node : BTActionNode
     {
         [Space]

@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("ParticleSystem_Simulate")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Simulate(Single, Boolean)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class ParticleSystem_Simulate_Single_Boolean_Node : BTActionNode<UnityEngine.ParticleSystem>
     {
         [Space]

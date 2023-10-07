@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Animator_writeDefaultValuesOnDisable")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("writeDefaultValuesOnDisable")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Animator_writeDefaultValuesOnDisable_Decorator : ConditionDecorator<UnityEngine.Animator>
     {
         [Space]

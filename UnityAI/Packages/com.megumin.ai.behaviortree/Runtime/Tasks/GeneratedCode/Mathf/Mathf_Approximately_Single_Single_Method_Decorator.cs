@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_Approximately")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("Approximately(Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_Approximately_Single_Single_Method_Decorator : ConditionDecorator
     {
         [Space]

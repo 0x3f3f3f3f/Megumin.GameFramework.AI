@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Mathf_MoveTowards")]
     [Category("UnityEngine/Mathf")]
     [AddComponentMenu("MoveTowards(Single, Single, Single)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Mathf_MoveTowards_Single_Single_Single_Node : BTActionNode
     {
         [Space]

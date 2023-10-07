@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Physics2D_showColliderAABB")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("showColliderAABB")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     [Obsolete("Obsolete API in a future version of Unity", true)]
     public sealed class Physics2D_showColliderAABB_Decorator : ConditionDecorator
     {

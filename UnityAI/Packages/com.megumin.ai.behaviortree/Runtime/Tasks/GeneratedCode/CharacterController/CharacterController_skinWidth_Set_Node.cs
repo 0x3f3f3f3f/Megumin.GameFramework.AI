@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_CharacterController_skinWidth")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Set_skinWidth")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class CharacterController_skinWidth_Set_Node : BTActionNode<UnityEngine.CharacterController>
     {
         [Space]

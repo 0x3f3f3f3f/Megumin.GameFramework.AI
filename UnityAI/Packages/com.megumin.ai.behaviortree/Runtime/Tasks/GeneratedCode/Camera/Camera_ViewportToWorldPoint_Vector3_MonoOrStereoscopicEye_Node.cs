@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_ViewportToWorldPoint")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ViewportToWorldPoint(Vector3, MonoOrStereoscopicEye)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_ViewportToWorldPoint_Vector3_MonoOrStereoscopicEye_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

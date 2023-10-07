@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_CalculateFrustumCorners")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("CalculateFrustumCorners(Rect, Single, MonoOrStereoscopicEye, Vector3[])")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_CalculateFrustumCorners_Rect_Single_MonoOrStereoscopicEye_Vector3Array_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

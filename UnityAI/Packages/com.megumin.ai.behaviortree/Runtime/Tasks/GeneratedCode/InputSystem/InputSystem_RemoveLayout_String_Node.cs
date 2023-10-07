@@ -18,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("InputSystem_RemoveLayout")]
     [Category("UnityEngine/InputSystem")]
     [AddComponentMenu("RemoveLayout(String)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class InputSystem_RemoveLayout_String_Node : BTActionNode
     {
         [Space]

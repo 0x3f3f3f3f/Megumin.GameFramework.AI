@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Camera_GetStereoNonJitteredProjectionMatrix")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("GetStereoNonJitteredProjectionMatrix(StereoscopicEye)")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Camera_GetStereoNonJitteredProjectionMatrix_StereoscopicEye_Node : BTActionNode<UnityEngine.Camera>
     {
         [Space]

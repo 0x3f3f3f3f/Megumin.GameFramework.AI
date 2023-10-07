@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("BoxCollider2D_edgeRadius")]
     [Category("UnityEngine/BoxCollider2D")]
     [AddComponentMenu("edgeRadius")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class BoxCollider2D_edgeRadius_Decorator : CompareDecorator<UnityEngine.BoxCollider2D, float>
     {
         [Space]

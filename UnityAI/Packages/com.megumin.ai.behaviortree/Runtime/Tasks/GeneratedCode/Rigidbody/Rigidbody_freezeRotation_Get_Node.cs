@@ -17,6 +17,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Get_Rigidbody_freezeRotation")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_freezeRotation")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Rigidbody_freezeRotation_Get_Node : BTActionNode<UnityEngine.Rigidbody>
     {
         [Space]

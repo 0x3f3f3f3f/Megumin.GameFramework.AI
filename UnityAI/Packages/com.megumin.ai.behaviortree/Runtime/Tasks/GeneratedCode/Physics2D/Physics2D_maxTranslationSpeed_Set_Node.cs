@@ -16,6 +16,7 @@ namespace Megumin.AI.BehaviorTree
     [DisplayName("Set_Physics2D_maxTranslationSpeed")]
     [Category("UnityEngine/Physics2D")]
     [AddComponentMenu("Set_maxTranslationSpeed")]
+    [CodeGeneratorInfo(Name = "Megumin.CSCodeGenerator")]
     public sealed class Physics2D_maxTranslationSpeed_Set_Node : BTActionNode
     {
         [Space]
