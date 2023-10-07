@@ -74,6 +74,14 @@ namespace Megumin.AI
         [Tooltip("Not valid on WebGL platform, does not support multithreading")]
         public bool AsyncInit = true;
         /// <summary>
+        /// 实例化之后，绑定代理对象前，延迟帧数。
+        /// </summary>
+        public Enable<int> BeforeBindAgentDelayFrame = new(false, 1);
+        /// <summary>
+        /// 绑定代理对象之后，解析可绑定对象前，延迟帧数。
+        /// </summary>
+        public Enable<int> BeforeParseBindingDelayFrame = new(false, 1);
+        /// <summary>
         /// 运行时通常不会修改meta信息，也不会修改树结构。可以考虑共享meta。
         /// </summary>
         public bool SharedMeta = true;

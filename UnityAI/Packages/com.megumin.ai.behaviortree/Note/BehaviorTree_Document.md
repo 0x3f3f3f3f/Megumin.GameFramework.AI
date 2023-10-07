@@ -83,6 +83,10 @@ BehaviorTreeRunner是执行行为树资产的组件。
   缺点是不会在当前帧立刻完成并执行行为树。  
   并且初始化过程不能调用unity方法。  
   （WebGL平台下无效，不支持多线程）  
++ BeforeBindAgentDelayFrame  
+  实例化之后，绑定代理对象前，延迟帧数。  
++ BeforeParseBindingDelayFrame  
+  绑定代理对象之后，解析可绑定对象前，延迟帧数。  
 - SharedMeta  
   同一个行为树文件创建的实例，共享meta信息，主要是节点描述，节点坐标等运行时无关信息。  
 - LazyInitSubtree  

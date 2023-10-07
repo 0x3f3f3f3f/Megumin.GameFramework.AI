@@ -83,6 +83,10 @@ InitOption:
   The disadvantage is that the behavior tree is not completed and executed immediately at the current frame.  
   And the initialization process cannot call the Unity method.  
   (Not valid on WebGL platform, does not support multithreading)  
++ BeforeBindAgentDelayFrame  
+  After instantiation, delay the number of frames before bind agent object.  
++ BeforeParseBindingDelayFrame  
+  After bind agent, delay the number of frames before ParseAllBindable.  
 - SharedMeta  
   Same behavior tree file in SharedMeta share meta information, mainly node descriptions, node coordinates and other runtime-independent information.  
 - LazyInitSubtree  

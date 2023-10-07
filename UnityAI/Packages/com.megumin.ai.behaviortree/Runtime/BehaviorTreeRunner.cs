@@ -12,6 +12,7 @@ using Debug = UnityEngine.Debug;
 
 namespace Megumin.AI.BehaviorTree
 {
+    [HelpURL("https://github.com/KumoKyaku/Megumin.AI.Samples/wiki/BehaviorTree_Document_en#component")]
     public class BehaviorTreeRunner : MonoBehaviour
     {
         //[field: SerializeField]
@@ -119,11 +120,31 @@ namespace Megumin.AI.BehaviorTree
                 BehaviourTree.InstanceName = gameObject.name;
 
                 //绑定代理对象
+                if (InitOption.BeforeBindAgentDelayFrame.Enabled)
+                {
+                    int dCount = InitOption.BeforeBindAgentDelayFrame.Value;
+                    if (dCount > 0)
+                    {
+                        await WaitFrames(dCount);
+                    }
+                }
+
                 InitEvents?.BeforeBindAgent?.Invoke(BehaviourTree, this);
                 BehaviourTree.BindAgent(agent);
                 InitEvents?.AfterBindAgent?.Invoke(BehaviourTree, this);
 
+
+
                 //解析绑定变量
+                if (InitOption.BeforeParseBindingDelayFrame.Enabled)
+                {
+                    int dCount = InitOption.BeforeParseBindingDelayFrame.Value;
+                    if (dCount > 0)
+                    {
+                        await WaitFrames(dCount);
+                    }
+                }
+
                 InitEvents?.BeforeParseBinding?.Invoke(BehaviourTree, this);
                 OverrideVariables?.ParseBinding(agent, true);
                 BehaviourTree.ParseAllBindable(agent);
@@ -138,7 +159,7 @@ namespace Megumin.AI.BehaviorTree
                 if (InitOption.DelayRandomFrame.Enabled)
                 {
                     //下限和上限都包括在内。
-                    delay = UnityEngine.Random.Range(delay, InitOption.DelayRandomFrame);
+                    delay = UnityEngine.Random.Range(delay, InitOption.DelayRandomFrame.Value);
                 }
 
                 if (delay > 0)
