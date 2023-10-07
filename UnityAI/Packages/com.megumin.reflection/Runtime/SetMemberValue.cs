@@ -127,6 +127,8 @@ namespace Megumin.Reflection
 
             //通过反射对成员赋值
             var members = instanceType?.GetMembers(BindingAttr);
+
+            //TODO 此处FirstOrDefault开销很大，需要优化
             var member = members?.FirstOrDefault(elem =>
             {
                 return !(elem is MethodInfo) && elem.Name == memberName;
