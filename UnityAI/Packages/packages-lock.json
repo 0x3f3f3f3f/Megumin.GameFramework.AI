@@ -16,7 +16,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.megumin.common": "1.0.4",
+        "com.megumin.common": "1.0.5",
         "com.megumin.binding": "1.1.0",
         "com.megumin.serialization": "1.1.0",
         "com.unity.settings-manager": "1.0.3",

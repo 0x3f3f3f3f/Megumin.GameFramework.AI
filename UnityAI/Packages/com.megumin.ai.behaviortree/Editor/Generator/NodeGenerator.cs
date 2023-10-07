@@ -732,6 +732,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                 generator.Push($"[Category(\"{category}\")]");
                 generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
+                generator.Push($"[CodeGeneratorInfo(Name = \"Megumin.CSCodeGenerator\")]");
 
                 if (Setting.ObsoleteAPIInFuture.Contains(className))
                 {
