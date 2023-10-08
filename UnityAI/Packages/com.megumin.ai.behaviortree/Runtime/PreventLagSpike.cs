@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Megumin.Binding;
 using Megumin.Reflection;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -18,7 +19,7 @@ namespace Megumin.AI.BehaviorTree
             return Task.Run(() => { WarmUpAll(); });
         }
 
-        //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        [UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static void WarmUpAll()
         {
             Profiler.BeginSample("WarmUpAll");
@@ -27,7 +28,16 @@ namespace Megumin.AI.BehaviorTree
 
             WarmUpTypeCacheGenericType();
 
-            //WarmUpNodeType();
+            WarmUpNodeType();
+
+            foreach (var item in VariableCreator.AllCreator)
+            {
+                var refVar = item.Create();
+                if (refVar != null)
+                {
+                    HotType(refVar.GetType());
+                }
+            }
 
             Profiler.EndSample();
         }
@@ -42,7 +52,16 @@ namespace Megumin.AI.BehaviorTree
                 //很多生成的节点完全不必要预热。应该设置个白名单
                 if (baseType.IsAssignableFrom(type))
                 {
-                    HotType(type);
+                    var attri = type.GetCustomAttributes(typeof(CodeGeneratorInfoAttribute), false);
+                    if (attri != null && attri.Length > 0)
+                    {
+                        //忽略生成的节点类型，这些类型太多了，不要预热
+                        continue;
+                    }
+                    else
+                    {
+                        HotType(type);
+                    }
                 }
             }
         }
@@ -63,6 +82,12 @@ namespace Megumin.AI.BehaviorTree
 
             typeof(Transform[]),
             typeof(List<Transform>),
+
+            typeof(BTNode[]),
+            typeof(List<BTNode>),
+
+            typeof(IDecorator[]),
+            typeof(List<IDecorator>),
         };
 
         /// <summary>
@@ -105,8 +130,22 @@ namespace Megumin.AI.BehaviorTree
             }
 
             var fields = type.GetFields();
+            foreach (var item in fields)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
+
             var props = type.GetProperties();
+            foreach (var item in props)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
+
             var methods = type.GetMethods();
+            foreach (var item in methods)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
         }
     }
 }
