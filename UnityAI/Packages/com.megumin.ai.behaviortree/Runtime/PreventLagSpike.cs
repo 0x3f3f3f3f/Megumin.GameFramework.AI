@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
@@ -55,7 +56,9 @@ namespace Megumin.AI.BehaviorTree
                 var refVar = item.Create();
                 if (refVar != null)
                 {
-                    HotType(refVar.GetType());
+                    Type type = refVar.GetType();
+                    HotType(type);
+                    WarmUpTypeReflection(type);
                 }
             }
         }
@@ -79,6 +82,7 @@ namespace Megumin.AI.BehaviorTree
                     else
                     {
                         HotType(type);
+                        WarmUpTypeReflection(type);
                     }
                 }
             }
@@ -116,17 +120,27 @@ namespace Megumin.AI.BehaviorTree
             foreach (var type in GenericType)
             {
                 HotType(type);
+                WarmUpTypeReflection(type);
             }
         }
 
         /// <summary>
-        /// 预热一个类型
+        /// TypeCache预热一个类型
         /// </summary>
         /// <param name="type"></param>
         public static void HotType(Type type)
         {
             TypeCache.HotType(type);
             TypeCache.HotType(type.FullName.StripTypeName(), type);
+        }
+
+        /// <summary>
+        /// 预热一个类型反射成员
+        /// </summary>
+        /// <param name="type"></param>
+        public static void WarmUpTypeReflection(Type type)
+        {
+            const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
             try
             {
@@ -139,7 +153,7 @@ namespace Megumin.AI.BehaviorTree
             }
 
             //预热反射成员
-            var members = type.GetMembers();
+            var members = type.GetMembers(bindingFlags);
 
             object[] attris = null;
             foreach (var item in members)
@@ -147,19 +161,19 @@ namespace Megumin.AI.BehaviorTree
                 attris = item.GetCustomAttributes(true);
             }
 
-            var fields = type.GetFields();
+            var fields = type.GetFields(bindingFlags);
             foreach (var item in fields)
             {
                 attris = item.GetCustomAttributes(true);
             }
 
-            var props = type.GetProperties();
+            var props = type.GetProperties(bindingFlags);
             foreach (var item in props)
             {
                 attris = item.GetCustomAttributes(true);
             }
 
-            var methods = type.GetMethods();
+            var methods = type.GetMethods(bindingFlags);
             foreach (var item in methods)
             {
                 attris = item.GetCustomAttributes(true);
