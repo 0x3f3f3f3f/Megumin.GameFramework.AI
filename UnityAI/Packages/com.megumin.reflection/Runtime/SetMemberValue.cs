@@ -90,6 +90,9 @@ namespace Megumin.Reflection
 
     public static class Extension_9E4697883E4048E9B612E58CDAB01B77
     {
+        public const BindingFlags SetMemberFlag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        public const BindingFlags SetMemberCallbackFlag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
         /// <summary>
         /// 使用反射对实例的一个成员赋值
         /// </summary>
@@ -100,15 +103,13 @@ namespace Megumin.Reflection
         /// <returns></returns>
         public static bool TrySetMemberValue<T>(this T instance, string memberName, object value)
         {
-            const BindingFlags BindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            const BindingFlags callbackflag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
             var instanceType = instance?.GetType();
 
             //类型设置了Callback 函数
             var instanceTypeMemberCallbacAttribute = instanceType?.GetCustomAttribute<SetMemberByAttribute>();
             if (string.IsNullOrEmpty(instanceTypeMemberCallbacAttribute?.FuncName) == false)
             {
-                var methond = instanceType.GetMethod(instanceTypeMemberCallbacAttribute.FuncName, callbackflag);
+                var methond = instanceType.GetMethod(instanceTypeMemberCallbacAttribute.FuncName, SetMemberCallbackFlag);
                 if (methond != null)
                 {
                     //此时value如果是复杂类型，可能只创建好了实例，还没有反序列化成员值
@@ -126,7 +127,7 @@ namespace Megumin.Reflection
             }
 
             //通过反射对成员赋值
-            var members = instanceType?.GetMembers(BindingAttr);
+            var members = instanceType?.GetMembers(SetMemberFlag);
 
             MemberInfo member = null;
             if (members != null)
@@ -187,7 +188,7 @@ namespace Megumin.Reflection
                 if (string.IsNullOrEmpty(perMemberCallbacAttribute?.FuncName) == false)
                 {
                     //针对某个成员，设置了callback
-                    var methond = instanceType.GetMethod(perMemberCallbacAttribute.FuncName, callbackflag);
+                    var methond = instanceType.GetMethod(perMemberCallbacAttribute.FuncName, SetMemberCallbackFlag);
                     if (methond != null)
                     {
                         //此时value如果是复杂类型，可能只创建好了实例，还没有反序列化成员值
@@ -564,11 +565,9 @@ namespace Megumin.Reflection
                 return;
             }
 
-            const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-
             type.GetCustomAttribute<SetMemberByAttribute>(); //0.1ms+
             //预热反射成员
-            var members = type.GetMembers(bindingFlags);
+            var members = type.GetMembers(SetMemberCallbackFlag);
 
             object[] attris = null;
             foreach (var item in members)
@@ -579,19 +578,19 @@ namespace Megumin.Reflection
                 var a3 = item.GetCustomAttribute<SetMemberByAttribute>();//0.1ms+
             }
 
-            var fields = type.GetFields(bindingFlags);
+            var fields = type.GetFields(SetMemberCallbackFlag);
             foreach (var item in fields)
             {
                 attris = item.GetCustomAttributes(true);
             }
 
-            var props = type.GetProperties(bindingFlags);
+            var props = type.GetProperties(SetMemberCallbackFlag);
             foreach (var item in props)
             {
                 attris = item.GetCustomAttributes(true);
             }
 
-            var methods = type.GetMethods(bindingFlags);
+            var methods = type.GetMethods(SetMemberCallbackFlag);
             foreach (var item in methods)
             {
                 attris = item.GetCustomAttributes(true);
