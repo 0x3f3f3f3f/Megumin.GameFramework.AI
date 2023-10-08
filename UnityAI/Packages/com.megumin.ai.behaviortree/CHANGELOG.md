@@ -19,6 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+## [1.2.1] - 2023-10-08
+### Added   
+- 增加代码生成器创建菜单  
+- 增加MyRefVar示例  
+- 增加初始化事件回调
+- 增加延迟加入Manager增加最小值设置
+- 在BindAgent和ParseBinding前增加延迟设置
+- 增加预热API
+- 优化Linq FirstOrDefault
+
+### Fixed  
+- 修复WebGL异步初始化bug
+
 ## [1.2.0] - 2023-09-29
 ### Added   
 - TypeCache 增加API：分离命名空间。  
