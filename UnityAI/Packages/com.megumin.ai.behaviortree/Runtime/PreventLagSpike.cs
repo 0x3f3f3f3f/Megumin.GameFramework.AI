@@ -33,11 +33,22 @@ namespace Megumin.AI.BehaviorTree
 
             WarmUpTypeCacheGenericType(); //2ms~20ms
 
+            WarmUpType();
+
             WarmUpNodeType();
 
             WarmUpRefVar();
 
             Profiler.EndSample();
+        }
+
+        private static void WarmUpType()
+        {
+            foreach (var type in WarmUpTypes)
+            {
+                HotType(type);
+                WarmUpTypeReflection(type);
+            }
         }
 
         /// <summary>
@@ -89,7 +100,13 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-        public static List<Type> GenericType = new List<Type>()
+        public static List<Type> WarmUpTypes = new List<Type>()
+        {
+            typeof(TreeMeta),
+            typeof(NodeMeta),
+        };
+
+        public static List<Type> GenericTypes = new List<Type>()
         {
             typeof(int[]),
             typeof(List<int>),
@@ -118,7 +135,7 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         public static void WarmUpTypeCacheGenericType()
         {
-            foreach (var type in GenericType)
+            foreach (var type in GenericTypes)
             {
                 HotType(type);
                 WarmUpTypeReflection(type);

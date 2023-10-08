@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Profiling;
+using Unity.Profiling;
 
 namespace Megumin
 {
@@ -105,8 +107,15 @@ namespace Megumin.Reflection
         {
             var instanceType = instance?.GetType();
 
+            var m = new ProfilerMarker($"{instanceType.Name}.{memberName}");
+            using var autoM = m.Auto();
+ 
             //类型设置了Callback 函数
+
+            Profiler.BeginSample($"{instanceType.Name}.{memberName}--1");
             var instanceTypeMemberCallbacAttribute = instanceType?.GetCustomAttribute<SetMemberByAttribute>();
+            Profiler.EndSample();
+
             if (string.IsNullOrEmpty(instanceTypeMemberCallbacAttribute?.FuncName) == false)
             {
                 var methond = instanceType.GetMethod(instanceTypeMemberCallbacAttribute.FuncName, SetMemberCallbackFlag);
@@ -127,7 +136,9 @@ namespace Megumin.Reflection
             }
 
             //通过反射对成员赋值
+            Profiler.BeginSample($"{instanceType.Name}.{memberName}--2");
             var members = instanceType?.GetMembers(SetMemberFlag);
+            Profiler.EndSample();
 
             MemberInfo member = null;
             if (members != null)
@@ -146,6 +157,10 @@ namespace Megumin.Reflection
                         break;
                     }
                 }
+            }
+            else
+            {
+                return false;
             }
 
             if (member == null)
@@ -180,6 +195,16 @@ namespace Megumin.Reflection
                 }
             }
 
+
+            if (member == null)
+            {
+                //没有找到成员直接返回false
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                Debug.LogWarning($"{instanceType.Name}.{memberName} can not found.");
+#endif
+                return false;
+            }
+
             try
             {
                 Type valueType = value?.GetType();
@@ -205,6 +230,8 @@ namespace Megumin.Reflection
                         Debug.LogWarning($"{instanceTypeMemberCallbacAttribute.FuncName} can not found.");
                     }
                 }
+
+                Profiler.BeginSample($"{instanceType.Name}.{memberName}--3");
 
                 if (member is FieldInfo fieldInfo)
                 {
@@ -239,6 +266,8 @@ namespace Megumin.Reflection
                     }
                     propertyInfo.SetValue(instance, value);
                 }
+
+                Profiler.EndSample();
             }
             catch (Exception e)
             {
@@ -564,6 +593,9 @@ namespace Megumin.Reflection
             {
                 return;
             }
+
+            var name = type.Name;
+            var fullName = type.FullName;
 
             type.GetCustomAttribute<SetMemberByAttribute>(); //0.1ms+
             //预热反射成员
