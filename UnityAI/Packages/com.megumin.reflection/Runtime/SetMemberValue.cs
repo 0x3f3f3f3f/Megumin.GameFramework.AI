@@ -128,11 +128,24 @@ namespace Megumin.Reflection
             //通过反射对成员赋值
             var members = instanceType?.GetMembers(BindingAttr);
 
-            //TODO 此处FirstOrDefault开销很大，需要优化
-            var member = members?.FirstOrDefault(elem =>
+            MemberInfo member = null;
+            if (members != null)
             {
-                return !(elem is MethodInfo) && elem.Name == memberName;
-            });
+                //此处FirstOrDefault开销很大，优化为foreach。
+                foreach (var elem in members)
+                {
+                    if (elem is MethodInfo)
+                    {
+                        continue;
+                    }
+
+                    if (elem.Name == memberName)
+                    {
+                        member = elem;
+                        break;
+                    }
+                }
+            }
 
             if (member == null)
             {
