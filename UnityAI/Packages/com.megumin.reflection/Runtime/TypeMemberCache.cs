@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using Unity.Profiling;
@@ -55,7 +56,7 @@ namespace Megumin.Reflection
         /// <returns></returns>
         public abstract V Calculate(K key, bool forceReCache = false, object option = null);
 
-        protected static Dictionary<K, V> CacheDic { get; } = new();
+        protected static ConcurrentDictionary<K, V> CacheDic { get; } = new();
 
         public bool TryGetCache(in K key, out V value, object option = null)
         {
