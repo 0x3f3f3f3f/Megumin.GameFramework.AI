@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
             return Task.Run(() => { WarmUpAll(); });
         }
 
-        [UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+        //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static void WarmUpAll()
         {
             Profiler.BeginSample("WarmUpAll");
