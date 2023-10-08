@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Megumin.Binding;
 using Megumin.Reflection;
+using Megumin.Serialization;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -24,12 +25,31 @@ namespace Megumin.AI.BehaviorTree
         {
             Profiler.BeginSample("WarmUpAll");
 
-            TypeCache.CacheAllTypes();
+            TypeCache.CacheAllTypes();//200ms+
 
-            WarmUpTypeCacheGenericType();
+            WarmUpStaticMember();
+
+            WarmUpTypeCacheGenericType(); //2ms~20ms
 
             WarmUpNodeType();
 
+            WarmUpRefVar();
+
+            Profiler.EndSample();
+        }
+
+        /// <summary>
+        /// 预热静态类型，初始化静态成员
+        /// </summary>
+        public static void WarmUpStaticMember()
+        {
+            StringFormatter.TryDeserialize("System.Boolean", "true", out var _); //0.5ms~1.5ms
+            var rpn = TypeHelper.ReplacePartialName; //0.1ms+
+            var adps = TypeAdpter.Adpters; //0.1ms+
+        }
+
+        private static void WarmUpRefVar()
+        {
             foreach (var item in VariableCreator.AllCreator)
             {
                 var refVar = item.Create();
@@ -38,8 +58,6 @@ namespace Megumin.AI.BehaviorTree
                     HotType(refVar.GetType());
                 }
             }
-
-            Profiler.EndSample();
         }
 
         public static void WarmUpNodeType()
