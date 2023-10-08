@@ -552,6 +552,51 @@ namespace Megumin.Reflection
 
             return null;
         }
+
+        /// <summary>
+        /// 预热反射调用
+        /// </summary>
+        /// <param name="type"></param>
+        public static void WarmUpReflection_TrySetMember(this Type type)
+        {
+            if (type == null)
+            {
+                return;
+            }
+
+            const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+            type.GetCustomAttribute<SetMemberByAttribute>(); //0.1ms+
+            //预热反射成员
+            var members = type.GetMembers(bindingFlags);
+
+            object[] attris = null;
+            foreach (var item in members)
+            {
+                attris = item.GetCustomAttributes(true);
+                var a1 = item.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();//0.1ms+
+                var a2 = item.GetCustomAttribute<SerializationAliasAttribute>();//0.1ms+
+                var a3 = item.GetCustomAttribute<SetMemberByAttribute>();//0.1ms+
+            }
+
+            var fields = type.GetFields(bindingFlags);
+            foreach (var item in fields)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
+
+            var props = type.GetProperties(bindingFlags);
+            foreach (var item in props)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
+
+            var methods = type.GetMethods(bindingFlags);
+            foreach (var item in methods)
+            {
+                attris = item.GetCustomAttributes(true);
+            }
+        }
     }
 }
 

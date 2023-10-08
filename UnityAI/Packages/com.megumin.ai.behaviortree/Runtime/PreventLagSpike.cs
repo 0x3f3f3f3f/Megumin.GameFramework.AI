@@ -8,6 +8,7 @@ using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
 {
@@ -130,6 +131,11 @@ namespace Megumin.AI.BehaviorTree
         /// <param name="type"></param>
         public static void HotType(Type type)
         {
+            if (type == null)
+            {
+                return;
+            }
+
             TypeCache.HotType(type);
             TypeCache.HotType(type.FullName.StripTypeName(), type);
         }
@@ -140,7 +146,12 @@ namespace Megumin.AI.BehaviorTree
         /// <param name="type"></param>
         public static void WarmUpTypeReflection(Type type)
         {
-            const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            if (type == null)
+            {
+                return;
+            }
+
+            
 
             try
             {
@@ -152,32 +163,7 @@ namespace Megumin.AI.BehaviorTree
 
             }
 
-            //预热反射成员
-            var members = type.GetMembers(bindingFlags);
-
-            object[] attris = null;
-            foreach (var item in members)
-            {
-                attris = item.GetCustomAttributes(true);
-            }
-
-            var fields = type.GetFields(bindingFlags);
-            foreach (var item in fields)
-            {
-                attris = item.GetCustomAttributes(true);
-            }
-
-            var props = type.GetProperties(bindingFlags);
-            foreach (var item in props)
-            {
-                attris = item.GetCustomAttributes(true);
-            }
-
-            var methods = type.GetMethods(bindingFlags);
-            foreach (var item in methods)
-            {
-                attris = item.GetCustomAttributes(true);
-            }
+            type.WarmUpReflection_TrySetMember();
         }
     }
 }
