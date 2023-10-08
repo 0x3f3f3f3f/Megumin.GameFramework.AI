@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Megumin.AI
 {
     /// <summary>
-    /// TODO, 宏支持
+    /// 宏支持
     /// </summary>
     [Serializable]
     public class LogInfo

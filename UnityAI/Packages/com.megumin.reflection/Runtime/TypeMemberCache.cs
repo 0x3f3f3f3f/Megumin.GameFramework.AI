@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace Megumin.Reflection
 {
@@ -76,6 +78,8 @@ namespace Megumin.Reflection
     {
         public override MemberInfo[] Calculate((Type, BindingFlags) key, bool forceReCache = false, object option = null)
         {
+            //var m = new ProfilerMarker(key.Item1.Name);
+            //using var autoM = m.Auto();
             return key.Item1.GetMembers(key.Item2);
         }
     }

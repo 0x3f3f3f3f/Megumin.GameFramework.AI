@@ -107,14 +107,14 @@ namespace Megumin.Reflection
         {
             var instanceType = instance?.GetType();
 
-            var m = new ProfilerMarker($"{instanceType.Name}.{memberName}");
-            using var autoM = m.Auto();
+            //var m = new ProfilerMarker($"{instanceType.Name}.{memberName}");
+            //using var autoM = m.Auto();
 
             //类型设置了Callback 函数
 
-            Profiler.BeginSample($"{instanceType.Name}.{memberName}--1");
+            //Profiler.BeginSample($"{instanceType.Name}.{memberName}--1");
             var instanceTypeMemberCallbacAttribute = instanceType?.GetCacheCustomAttribute<SetMemberByAttribute>();
-            Profiler.EndSample();
+            //Profiler.EndSample();
 
             if (string.IsNullOrEmpty(instanceTypeMemberCallbacAttribute?.FuncName) == false)
             {
@@ -136,13 +136,13 @@ namespace Megumin.Reflection
             }
 
             //通过反射对成员赋值
-            Profiler.BeginSample($"{instanceType.Name}.{memberName}--2");
+            //Profiler.BeginSample($"{instanceType.Name}.{memberName}--2");
 
             //通过创建和使用缓存，每个行为树大约能节省5ms+
             //var members = instanceType?.GetMembers(SetMemberFlag);
             var members = instanceType?.GetCacheMembers(SetMemberFlag, useCache);
 
-            Profiler.EndSample();
+            //Profiler.EndSample();
 
             MemberInfo member = null;
             if (members != null)
@@ -235,7 +235,7 @@ namespace Megumin.Reflection
                     }
                 }
 
-                Profiler.BeginSample($"{instanceType.Name}.{memberName}--3");
+                //Profiler.BeginSample($"{instanceType.Name}.{memberName}--3");
 
                 if (member is FieldInfo fieldInfo)
                 {
@@ -271,7 +271,7 @@ namespace Megumin.Reflection
                     propertyInfo.SetValue(instance, value);
                 }
 
-                Profiler.EndSample();
+                //Profiler.EndSample();
             }
             catch (Exception e)
             {
@@ -608,6 +608,7 @@ namespace Megumin.Reflection
             //为GetCacheMembers创建和使用缓存，每个行为树大约能节省5ms+
             //var members = type.GetMembers(SetMemberCallbackFlag);
             var members = type.GetCacheMembers(SetMemberCallbackFlag, true);
+            var members2 = type.GetCacheMembers(SetMemberFlag, true);
 
             object[] attris = null;
             foreach (var item in members)

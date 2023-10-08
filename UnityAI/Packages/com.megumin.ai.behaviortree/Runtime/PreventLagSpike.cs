@@ -14,6 +14,9 @@ namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
     /// 防止尖峰帧卡顿，在合适的位置预热反射代码
+    /// 可以在合适的位置调用PreventLagSpike.WarmUpAll。  
+    /// 也可以打开RuntimeInitializeOnLoadMethod特性，这样程序启动时自动预热。  
+    /// 使用多线程预热更合适，但是无法确定预热完成时间。  
     /// </summary>
     public static class PreventLagSpike
     {
@@ -42,7 +45,7 @@ namespace Megumin.AI.BehaviorTree
             Profiler.EndSample();
         }
 
-        private static void WarmUpType()
+        public static void WarmUpType()
         {
             foreach (var type in WarmUpTypes)
             {
@@ -61,7 +64,7 @@ namespace Megumin.AI.BehaviorTree
             var adps = TypeAdpter.Adpters; //0.1ms+
         }
 
-        private static void WarmUpRefVar()
+        public static void WarmUpRefVar()
         {
             foreach (var item in VariableCreator.AllCreator)
             {
@@ -80,6 +83,9 @@ namespace Megumin.AI.BehaviorTree
             var megumin_ai_behaviortree_assembly = typeof(BehaviorTree).Assembly;
             var types = megumin_ai_behaviortree_assembly.GetTypes();
             var baseType = typeof(BehaviorTreeElement);
+
+            //List<Type> types2 = new List<Type>();
+
             foreach (var type in types)
             {
                 //很多生成的节点完全不必要预热。应该设置个白名单
@@ -93,11 +99,14 @@ namespace Megumin.AI.BehaviorTree
                     }
                     else
                     {
+                        //types2.Add(type);
                         HotType(type);
                         WarmUpTypeReflection(type);
                     }
                 }
             }
+
+            //types2.Clear();
         }
 
         public static List<Type> WarmUpTypes = new List<Type>()
@@ -106,6 +115,9 @@ namespace Megumin.AI.BehaviorTree
             typeof(NodeMeta),
             typeof(RefVar_Transform),
             typeof(RefVar_GameObject),
+            typeof(Destination),
+            typeof(LogInfo),
+            typeof(GameObjectFilter),
         };
 
         public static List<Type> GenericTypes = new List<Type>()
@@ -210,8 +222,6 @@ namespace Megumin.AI.BehaviorTree
             {
                 return;
             }
-
-
 
             try
             {
