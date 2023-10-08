@@ -80,9 +80,18 @@ namespace Megumin.Reflection
         }
     }
 
+    public class MemberAttributeCache : MemberCache<(MemberInfo, Type), Attribute>
+    {
+        public override Attribute Calculate((MemberInfo, Type) key, bool forceReCache = false, object option = null)
+        {
+            return key.Item1.GetCustomAttribute(key.Item2);
+        }
+    }
+
     public static class TypeMemberCache
     {
         public static readonly TypeAllMembersCache AllMember = new TypeAllMembersCache();
+        public static readonly MemberAttributeCache AttributeCache = new MemberAttributeCache();
 
         /// <summary>
         /// 通过缓存反射获取所有成员
@@ -107,5 +116,25 @@ namespace Megumin.Reflection
                 return type.GetMembers(flags);
             }
         }
+
+        public static T GetCacheCustomAttribute<T>(this MemberInfo memberInfo, bool useCache = true)
+            where T : Attribute
+        {
+            if (memberInfo == null)
+            {
+                return null;
+            }
+
+            if (useCache)
+            {
+                return AttributeCache.Get((memberInfo, typeof(T))) as T;
+            }
+            else
+            {
+                return memberInfo.GetCustomAttribute<T>();
+            }
+        }
+
+        //GetCustomAttributes 调用很少，不值得做缓存。
     }
 }

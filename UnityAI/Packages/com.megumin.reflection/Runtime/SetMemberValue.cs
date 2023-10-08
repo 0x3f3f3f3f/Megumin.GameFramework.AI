@@ -113,7 +113,7 @@ namespace Megumin.Reflection
             //类型设置了Callback 函数
 
             Profiler.BeginSample($"{instanceType.Name}.{memberName}--1");
-            var instanceTypeMemberCallbacAttribute = instanceType?.GetCustomAttribute<SetMemberByAttribute>();
+            var instanceTypeMemberCallbacAttribute = instanceType?.GetCacheCustomAttribute<SetMemberByAttribute>();
             Profiler.EndSample();
 
             if (string.IsNullOrEmpty(instanceTypeMemberCallbacAttribute?.FuncName) == false)
@@ -177,7 +177,7 @@ namespace Megumin.Reflection
                         continue;
                     }
 
-                    var attri = elem.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
+                    var attri = elem.GetCacheCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();
                     if (string.Equals(attri?.oldName, memberName))
                     {
                         member = elem;
@@ -213,7 +213,7 @@ namespace Megumin.Reflection
             {
                 Type valueType = value?.GetType();
 
-                var perMemberCallbacAttribute = member?.GetCustomAttribute<SetMemberByAttribute>();
+                var perMemberCallbacAttribute = member?.GetCacheCustomAttribute<SetMemberByAttribute>();
                 if (string.IsNullOrEmpty(perMemberCallbacAttribute?.FuncName) == false)
                 {
                     //针对某个成员，设置了callback
@@ -601,10 +601,11 @@ namespace Megumin.Reflection
             var name = type.Name;
             var fullName = type.FullName;
 
-            type.GetCustomAttribute<SetMemberByAttribute>(); //0.1ms+
+            //为GetCustomAttribute<T>创建和使用缓存，每个行为树大约能节省5ms+
+            type.GetCacheCustomAttribute<SetMemberByAttribute>(); //0.1ms+
 
             //预热反射成员
-            //通过创建和使用缓存，每个行为树大约能节省5ms+
+            //为GetCacheMembers创建和使用缓存，每个行为树大约能节省5ms+
             //var members = type.GetMembers(SetMemberCallbackFlag);
             var members = type.GetCacheMembers(SetMemberCallbackFlag, true);
 
@@ -612,9 +613,9 @@ namespace Megumin.Reflection
             foreach (var item in members)
             {
                 attris = item.GetCustomAttributes(true);
-                var a1 = item.GetCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();//0.1ms+
-                var a2 = item.GetCustomAttribute<SerializationAliasAttribute>();//0.1ms+
-                var a3 = item.GetCustomAttribute<SetMemberByAttribute>();//0.1ms+
+                var a1 = item.GetCacheCustomAttribute<UnityEngine.Serialization.FormerlySerializedAsAttribute>();//0.1ms+
+                var a2 = item.GetCacheCustomAttribute<SerializationAliasAttribute>();//0.1ms+
+                var a3 = item.GetCacheCustomAttribute<SetMemberByAttribute>();//0.1ms+
             }
 
             var fields = type.GetFields(SetMemberCallbackFlag);
