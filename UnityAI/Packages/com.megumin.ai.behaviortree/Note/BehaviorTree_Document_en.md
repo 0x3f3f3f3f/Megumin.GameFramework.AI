@@ -343,8 +343,6 @@ All changes to debug mode will not change the BehaviorTree asset, and the change
 - QQ Group: 
 - Discord: https://discord.gg/6VZbxZgTRU
 
-
-
-
-
+# Acknowledgements
+ZhangDi2018, Njyon,   
 

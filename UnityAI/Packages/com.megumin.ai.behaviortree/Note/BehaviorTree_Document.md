@@ -343,8 +343,6 @@ PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进�
 - QQ群： 
 - Discord: https://discord.gg/6VZbxZgTRU
 
-
-
-
-
+# 鸣谢列表
+ZhangDi2018, Njyon,   
 
