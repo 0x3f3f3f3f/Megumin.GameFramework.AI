@@ -104,30 +104,31 @@ namespace Megumin.AI.BehaviorTree
         {
             typeof(TreeMeta),
             typeof(NodeMeta),
+            typeof(RefVar_Transform),
+            typeof(RefVar_GameObject),
         };
 
         public static List<Type> GenericTypes = new List<Type>()
         {
-            typeof(int[]),
-            typeof(List<int>),
+            typeof(bool),
+            typeof(int),
+            typeof(float),
+            typeof(double),
+            typeof(string),
 
-            typeof(string[]),
-            typeof(List<string>),
+            typeof(Vector2),
+            typeof(Vector3),
+            typeof(Vector4),
+            typeof(Quaternion),
+            typeof(Color),
+            typeof(LayerMask),
 
-            typeof(Vector3[]),
-            typeof(List<Vector3>),
+            typeof(TagMask),
+            typeof(GameObject),
+            typeof(Transform),
 
-            typeof(GameObject[]),
-            typeof(List<GameObject>),
-
-            typeof(Transform[]),
-            typeof(List<Transform>),
-
-            typeof(BTNode[]),
-            typeof(List<BTNode>),
-
-            typeof(IDecorator[]),
-            typeof(List<IDecorator>),
+            typeof(BTNode),
+            typeof(IDecorator),
         };
 
         /// <summary>
@@ -135,10 +136,52 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         public static void WarmUpTypeCacheGenericType()
         {
+            var enableGeneric = typeof(Enable<>);
+            var listGeneric = typeof(List<>);
+            var refVarGeneric = typeof(RefVar<>);
+
             foreach (var type in GenericTypes)
             {
                 HotType(type);
                 WarmUpTypeReflection(type);
+
+                {
+                    //Enable
+                    var enable = enableGeneric.MakeGenericType(type);
+                    HotType(enable);
+                    WarmUpTypeReflection(enable);
+                }
+
+                {
+                    //RefVar
+                    var refvar = refVarGeneric.MakeGenericType(type);
+                    HotType(refvar);
+                    WarmUpTypeReflection(refvar);
+                }
+
+                {
+                    //Array
+                    var array = type.MakeArrayType();
+                    HotType(array);
+                    WarmUpTypeReflection(array);
+
+                    //Enable Array
+                    var enablearray = enableGeneric.MakeGenericType(array);
+                    HotType(enablearray);
+                    WarmUpTypeReflection(enablearray);
+                }
+
+                {
+                    //List
+                    var list = listGeneric.MakeGenericType(type);
+                    HotType(list);
+                    WarmUpTypeReflection(list);
+
+                    //Enable List
+                    var enablelist = enableGeneric.MakeGenericType(list);
+                    HotType(enablelist);
+                    WarmUpTypeReflection(enablelist);
+                }
             }
         }
 
@@ -168,7 +211,7 @@ namespace Megumin.AI.BehaviorTree
                 return;
             }
 
-            
+
 
             try
             {
