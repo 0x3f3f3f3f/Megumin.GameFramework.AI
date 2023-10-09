@@ -173,6 +173,7 @@ namespace Megumin.AI.BehaviorTree.Editor
         /// </summary>
         public void ForceReSaveAllAssetsInProject()
         {
+            HotTypeAlias(true);
             var all = CollectAllAsset<BehaviorTreeAsset_1_1>();
             InitOption ForceReSaveInitOption = new()
             {
