@@ -354,6 +354,8 @@ namespace Megumin.AI.BehaviorTree.Editor
             showInProject.clicked += ShowInProject;
 
             var file = root.Q<ToolbarMenu>("file");
+            file.menu.AppendAction("Open All Assets", a => OpenAllAssetsInProject(), a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Force Re-Serialization All Assets", a => ForceReSaveAllAssetsInProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("ShowTreeWapper", a => TreeView?.InspectorShowWapper(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("GenerateCode", a => GenerateCode(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Change GUID", a =>

@@ -156,6 +156,41 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
         }
 
+        /// <summary>
+        /// 一键打开项目中所有行为树资产
+        /// </summary>
+        public void OpenAllAssetsInProject()
+        {
+            var all = CollectAllAsset<BehaviorTreeAsset_1_1>();
+            foreach (var asset in all)
+            {
+                OnOpenAsset(asset.obj);
+            }
+        }
+
+        /// <summary>
+        /// 一键重新序列化所有资产，为了处理改类名后资产没有及时更新问题。
+        /// </summary>
+        public void ForceReSaveAllAssetsInProject()
+        {
+            var all = CollectAllAsset<BehaviorTreeAsset_1_1>();
+            InitOption ForceReSaveInitOption = new()
+            {
+                AsyncInit = false,
+                SharedMeta = false,
+                LazyInitSubtree = true,
+                UseGenerateCode = false,
+            };
+
+            foreach (var asset in all)
+            {
+                var tree = asset.obj.Instantiate(ForceReSaveInitOption);
+                asset.obj.SaveTree(tree);
+                EditorUtility.SetDirty(asset.obj);
+                AssetDatabase.SaveAssetIfDirty(asset.obj);
+                AssetDatabase.Refresh();
+            }
+        }
 
         static List<(T obj, string guid, long localId, string path)>
             CollectAllAsset<T>(List<string> collectFolder = null)
