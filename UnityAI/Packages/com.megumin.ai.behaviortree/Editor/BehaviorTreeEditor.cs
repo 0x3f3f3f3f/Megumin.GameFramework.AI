@@ -363,6 +363,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                                                         CurrentAsset.GUID = Guid.NewGuid().ToString();
                                                     }
                                                 }, a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Remove Editor", a => RemoveEditorFromProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var edit = root.Q<ToolbarMenu>("edit");
@@ -449,7 +450,39 @@ namespace Megumin.AI.BehaviorTree.Editor
                 }, a => DropdownMenuAction.Status.Normal);
         }
 
+        public void RemoveEditorFromProject()
+        {
+            var info =
+@"Remove Megumin.AI.BehaviorTree from Project?
 
+These folders will be deleted:
+
+Packages/com.megumin.ai
+Packages/com.megumin.ai.behaviortree
+Packages/com.megumin.binding
+Packages/com.megumin.common
+Packages/com.megumin.perception
+Packages/com.megumin.reflection
+Packages/com.megumin.serialization
+
+";
+            if (EditorUtility.DisplayDialog("Remove Editor From Project",
+                                            info,
+                                            "OK",
+                                            "Cancel"))
+            {
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.ai");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.ai.behaviortree");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.binding");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.common");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.perception");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.reflection");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.serialization");
+
+                var process = System.Diagnostics.Process.Start(PathUtility.PackagesPath);
+                AssetDatabase.Refresh();
+            }
+        }
 
         private void CreateBottomBar()
         {
