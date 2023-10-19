@@ -252,6 +252,8 @@ namespace Megumin.AI.BehaviorTree
         public virtual bool HasAbortLowerPriorityFlag(object options = null)
         {
             //TODO 增加version 缓存结果值？
+            //此处是否需要实时计算？应该实时计算，AbortType有可能在运行时更改
+
             //var hasAbort = Decorators.Any(static elem =>
             //{
             //    return elem is IAbortable abortable && (abortable.AbortType & AbortType.LowerPriority) != 0;
