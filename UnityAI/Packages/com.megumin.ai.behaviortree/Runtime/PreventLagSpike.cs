@@ -18,8 +18,17 @@ namespace Megumin.AI.BehaviorTree
     /// 也可以打开RuntimeInitializeOnLoadMethod特性，这样程序启动时自动预热。  
     /// 使用多线程预热更合适，但是无法确定预热完成时间。  
     /// </summary>
-    public static class PreventLagSpike
+    public class PreventLagSpike : MonoBehaviour
     {
+        public bool AwakeAutoWarmUpAll = false;
+        private void Awake()
+        {
+            if (AwakeAutoWarmUpAll)
+            {
+                WarmUpAll();
+            }
+        }
+
         public static Task WarmUpAllAsync()
         {
             return Task.Run(() => { WarmUpAll(); });
