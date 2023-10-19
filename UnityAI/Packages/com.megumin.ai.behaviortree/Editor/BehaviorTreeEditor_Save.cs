@@ -177,6 +177,18 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
         }
 
+        public void CloseOtherEditor()
+        {
+            BehaviorTreeEditor[] array = Resources.FindObjectsOfTypeAll(typeof(BehaviorTreeEditor)) as BehaviorTreeEditor[];
+            foreach (var item in array)
+            {
+                if (item != this)
+                {
+                    item.Close();
+                }
+            }
+        }
+
         /// <summary>
         /// 一键重新序列化所有资产，为了处理改类名后资产没有及时更新问题。
         /// </summary>
