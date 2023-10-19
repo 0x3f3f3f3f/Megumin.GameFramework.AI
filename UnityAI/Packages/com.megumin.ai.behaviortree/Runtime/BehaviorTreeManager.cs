@@ -54,7 +54,7 @@ namespace Megumin.AI.BehaviorTree
         private void OnApplicationQuit()
         {
             IsApplicationQuiting = true;
-            TreeDebugger?.StopDebug();
+            Debugger?.StopDebug();
         }
     }
 
@@ -123,7 +123,7 @@ namespace Megumin.AI.BehaviorTree
                 LateUpdateTree.Remove(tree);
             }
 
-            TreeDebugger?.AddDebugInstanceTree(tree);
+            Debugger?.AddDebugInstanceTree(tree);
         }
 
         List<BehaviorTree> needRemoveTree = new();
@@ -138,6 +138,10 @@ namespace Megumin.AI.BehaviorTree
             Profiler.BeginSample(tree.InstanceName);
             Profiler.BeginSample("TickTree");
             tree.Tick();
+
+#if !DISABLE_BEHAVIORTREE_DEBUG
+            tree?.Debugger?.SetDebugDirty();
+#endif
             Profiler.EndSample();
             Profiler.EndSample();
         }
@@ -154,7 +158,6 @@ namespace Megumin.AI.BehaviorTree
             Profiler.EndSample();
 
             RemoveImmediate();
-            TreeDebugger?.PostTick();
         }
 
         private void FixedUpdate()
@@ -169,7 +172,6 @@ namespace Megumin.AI.BehaviorTree
             Profiler.EndSample();
 
             RemoveImmediate();
-            TreeDebugger?.PostTick();
         }
 
         private void LateUpdate()
@@ -184,7 +186,6 @@ namespace Megumin.AI.BehaviorTree
             Profiler.EndSample();
 
             RemoveImmediate();
-            TreeDebugger?.PostTick();
         }
 
         void RemoveImmediate()
@@ -205,13 +206,12 @@ namespace Megumin.AI.BehaviorTree
 
     public partial class BehaviorTreeManager
     {
-        public static ITreeDebugger TreeDebugger { get; set; }
+        public static IDebuggerManager Debugger { get; set; }
     }
 
-    public interface ITreeDebugger
+    public interface IDebuggerManager
     {
         void AddDebugInstanceTree(BehaviorTree tree);
-        void PostTick();
         void StopDebug();
     }
 }

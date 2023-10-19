@@ -206,6 +206,14 @@ namespace Megumin.AI
     {
 
     }
+
+    /// <summary>
+    /// 树调试器
+    /// </summary>
+    public interface ITreeDebugger
+    {
+        void SetDebugDirty();
+    }
 }
 
 

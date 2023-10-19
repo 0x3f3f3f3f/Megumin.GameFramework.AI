@@ -18,7 +18,7 @@ namespace Megumin.AI.BehaviorTree.Editor
         bool isRunning = false;
         Status lastTickState = Status.Init;
 
-        internal void OnPostTick()
+        internal void DebugRefresh()
         {
             if (Decorator == null || Decorator.Owner == null)
             {

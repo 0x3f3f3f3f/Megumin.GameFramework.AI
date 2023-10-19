@@ -251,11 +251,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             //this.LogMethodName(hasUnsavedChanges);
         }
 
-        public void Update()
-        {
-
-        }
-
         public void CreateGUI()
         {
             if (BehaviorTreeEditor.EditorLog)
@@ -529,9 +524,9 @@ Packages/com.megumin.serialization
                 this.LogMethodName(TreeView);
             }
 
-            if (BehaviorTreeManager.TreeDebugger == null)
+            if (BehaviorTreeManager.Debugger == null)
             {
-                BehaviorTreeManager.TreeDebugger = new BehaviorTreeEditorDebugger();
+                BehaviorTreeManager.Debugger = new BehaviorTreeEditorDebuggerManager();
             }
         }
 

@@ -7,23 +7,12 @@ using System.Threading.Tasks;
 using Megumin.AI.Editor;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
-    internal class BehaviorTreeEditorDebugger : ITreeDebugger
+    internal class BehaviorTreeEditorDebuggerManager : IDebuggerManager
     {
-        public void PostTick()
-        {
-            //在所有打开的编辑器中找到 空闲的，符合当前tree的编辑器
-            foreach (var item in BehaviorTreeEditor.AllActiveEditor)
-            {
-                if (item.IsDebugMode && item.hasFocus)
-                {
-                    item.OnPostTick();
-                }
-            }
-        }
-
         public void AddDebugInstanceTree(BehaviorTree tree)
         {
             if (tree == null)
@@ -72,7 +61,7 @@ namespace Megumin.AI.BehaviorTree.Editor
         }
     }
 
-    public partial class BehaviorTreeEditor
+    public partial class BehaviorTreeEditor : ITreeDebugger
     {
         public static HashSet<BehaviorTreeEditor> AllActiveEditor { get; } = new();
         public bool IsDebugMode { get; set; }
@@ -98,7 +87,8 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
 
             TreeView.ReloadView(true);
-            OnPostTick();
+            tree.Debugger = this;
+            DebugRefresh();
             UpdateTitle();
         }
 
@@ -107,6 +97,8 @@ namespace Megumin.AI.BehaviorTree.Editor
             IsDebugMode = false;
             DebugInstance = null;
             rootVisualElement.SetToClassList(UssClassConst.debugMode, IsDebugMode);
+
+            TreeView.SOTree.Tree.Debugger = null;
             TreeView.SOTree.Tree = null;
 
             if (DebugInstanceGameObject != null)
@@ -154,7 +146,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             return false;
         }
 
-
         [MenuItem("Tools/Megumin/Log All Active BehaviorTreeEditor")]
         public static void TestButton()
         {
@@ -164,13 +155,33 @@ namespace Megumin.AI.BehaviorTree.Editor
             }
         }
 
+
+        public bool DebugDirty { get; set; }
+
+        public void SetDebugDirty()
+        {
+            DebugDirty = true;
+        }
+
+        public void Update()
+        {
+            if (IsDebugMode && DebugDirty)
+            {
+                //Debug.LogError($"{Time.frameCount} ---- {title}");
+                DebugRefresh();
+                DebugDirty = false;
+            }
+        }
+
         /// <summary>
         /// BehaviorTreeManager Tick后被调用
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        internal void OnPostTick()
+        internal void DebugRefresh()
         {
-            TreeView?.OnPostTick();
+            Profiler.BeginSample("DebugRefresh");
+            TreeView?.DebugRefresh();
+            Profiler.EndSample();
         }
     }
 }

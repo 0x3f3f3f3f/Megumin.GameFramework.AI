@@ -10,7 +10,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 {
     public partial class BehaviorTreeNodeView
     {
-        internal void OnPostTick()
+        internal void DebugRefresh()
         {
             if (Node == null)
             {
@@ -108,7 +108,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             if (Node is SubTree subTree)
             {
-                BehaviorTreeManager.TreeDebugger.AddDebugInstanceTree(subTree.BehaviourTree);
+                BehaviorTreeManager.Debugger.AddDebugInstanceTree(subTree.BehaviourTree);
             }
         }
 
