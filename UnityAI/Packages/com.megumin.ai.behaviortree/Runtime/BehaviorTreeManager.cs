@@ -135,14 +135,17 @@ namespace Megumin.AI.BehaviorTree
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void TickTree(BehaviorTree tree)
         {
-            Profiler.BeginSample(tree.InstanceName);
             Profiler.BeginSample("TickTree");
+
+            Profiler.BeginSample(tree.InstanceName);
+
             tree.Tick();
 
 #if !DISABLE_BEHAVIORTREE_DEBUG
             tree?.Debugger?.SetDebugDirty();
 #endif
             Profiler.EndSample();
+
             Profiler.EndSample();
         }
 
