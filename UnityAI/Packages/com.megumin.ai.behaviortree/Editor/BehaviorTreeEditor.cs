@@ -365,6 +365,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                                                         CurrentAsset.GUID = Guid.NewGuid().ToString();
                                                     }
                                                 }, a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Close All Editor", a => CloseAllEditorInProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Remove Editor", a => RemoveEditorFromProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
