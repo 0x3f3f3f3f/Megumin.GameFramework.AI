@@ -65,108 +65,122 @@ namespace Megumin.AI.BehaviorTree
         /// 由于可能是异步，防止多次实例化
         /// </summary>
         bool isIniting = false;
-        public async void EnableTree()
+        public async ValueTask InitTree()
         {
+            if (BehaviourTree != null)
+            {
+                return;
+            }
+
+            if (!BehaviorTreeAsset)
+            {
+                return;
+            }
+
             if (isIniting)
             {
                 return;
             }
+
             isIniting = true;
 
-            if (BehaviourTree == null && BehaviorTreeAsset)
+            RefFinder refFinder = null;
+
+            if (OverrideVariables != null)
             {
-                RefFinder refFinder = null;
-
-                if (OverrideVariables != null)
+                refFinder = new RefFinder();
+                if (OverrideUnityObjectRef != null)
                 {
-                    refFinder = new RefFinder();
-                    if (OverrideUnityObjectRef != null)
+                    foreach (var item in OverrideUnityObjectRef)
                     {
-                        foreach (var item in OverrideUnityObjectRef)
-                        {
-                            if (string.IsNullOrEmpty(item?.Name))
-                            {
-                                continue;
-                            }
-                            refFinder.RefDic[item.Name] = item;
-                        }
-                    }
-
-                    foreach (var item in OverrideVariables.Table)
-                    {
-                        if (string.IsNullOrEmpty(item?.RefName))
+                        if (string.IsNullOrEmpty(item?.Name))
                         {
                             continue;
                         }
-                        refFinder.RefDic[item.RefName] = item;
+                        refFinder.RefDic[item.Name] = item;
                     }
+                }
 
-                    if (refFinder.RefDic.Count == 0)
+                foreach (var item in OverrideVariables.Table)
+                {
+                    if (string.IsNullOrEmpty(item?.RefName))
                     {
-                        refFinder = null;
+                        continue;
                     }
+                    refFinder.RefDic[item.RefName] = item;
                 }
 
-                //声明一个临时变量，方式闭包捕获gameObject，造成在非主线程访问gameObject。
-                //防止 UnityException: get_gameObject can only be called from the main thread.
-                var agent = gameObject;
-
-                //实例行为树
-                InitEvents?.BeforeInstantiate?.Invoke(null, this);
-                BehaviourTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
-                InitEvents?.AfterInstantiate?.Invoke(BehaviourTree, this);
-
-                BehaviourTree.RunOption = RunOption;
-                BehaviourTree.InstanceName = gameObject.name;
-
-                //绑定代理对象
-                if (InitOption.BeforeBindAgentDelayFrame.Enabled)
+                if (refFinder.RefDic.Count == 0)
                 {
-                    int dCount = InitOption.BeforeBindAgentDelayFrame.Value;
-                    if (dCount > 0)
-                    {
-                        await WaitFrames(dCount);
-                    }
-                }
-
-                InitEvents?.BeforeBindAgent?.Invoke(BehaviourTree, this);
-                BehaviourTree.BindAgent(agent);
-                InitEvents?.AfterBindAgent?.Invoke(BehaviourTree, this);
-
-
-
-                //解析绑定变量
-                if (InitOption.BeforeParseBindingDelayFrame.Enabled)
-                {
-                    int dCount = InitOption.BeforeParseBindingDelayFrame.Value;
-                    if (dCount > 0)
-                    {
-                        await WaitFrames(dCount);
-                    }
-                }
-
-                InitEvents?.BeforeParseBinding?.Invoke(BehaviourTree, this);
-                OverrideVariables?.ParseBinding(agent, true);
-                BehaviourTree.ParseAllBindable(agent);
-                InitEvents?.AfterParseBinding?.Invoke(BehaviourTree, this);
-
-                var delay = 0;
-                if (InitOption.DelayMinFrame.Enabled)
-                {
-                    delay = InitOption.DelayMinFrame.Value;
-                }
-
-                if (InitOption.DelayRandomFrame.Enabled)
-                {
-                    //下限和上限都包括在内。
-                    delay = UnityEngine.Random.Range(delay, InitOption.DelayRandomFrame.Value);
-                }
-
-                if (delay > 0)
-                {
-                    await WaitFrames(delay);
+                    refFinder = null;
                 }
             }
+
+            //声明一个临时变量，方式闭包捕获gameObject，造成在非主线程访问gameObject。
+            //防止 UnityException: get_gameObject can only be called from the main thread.
+            var agent = gameObject;
+
+            //实例行为树
+            InitEvents?.BeforeInstantiate?.Invoke(null, this);
+            var newTree = await BehaviorTreeAsset.InstantiateAsync(InitOption, refFinder);
+            InitEvents?.AfterInstantiate?.Invoke(newTree, this);
+
+            newTree.RunOption = RunOption;
+            newTree.InstanceName = gameObject.name;
+
+            //绑定代理对象
+            if (InitOption.BeforeBindAgentDelayFrame.Enabled)
+            {
+                int dCount = InitOption.BeforeBindAgentDelayFrame.Value;
+                if (dCount > 0)
+                {
+                    await WaitFrames(dCount);
+                }
+            }
+
+            InitEvents?.BeforeBindAgent?.Invoke(newTree, this);
+            newTree.BindAgent(agent);
+            InitEvents?.AfterBindAgent?.Invoke(newTree, this);
+
+            //解析绑定变量
+            if (InitOption.BeforeParseBindingDelayFrame.Enabled)
+            {
+                int dCount = InitOption.BeforeParseBindingDelayFrame.Value;
+                if (dCount > 0)
+                {
+                    await WaitFrames(dCount);
+                }
+            }
+
+            InitEvents?.BeforeParseBinding?.Invoke(newTree, this);
+            OverrideVariables?.ParseBinding(agent, true);
+            newTree.ParseAllBindable(agent);
+            InitEvents?.AfterParseBinding?.Invoke(newTree, this);
+
+            var delay = 0;
+            if (InitOption.DelayMinFrame.Enabled)
+            {
+                delay = InitOption.DelayMinFrame.Value;
+            }
+
+            if (InitOption.DelayRandomFrame.Enabled)
+            {
+                //下限和上限都包括在内。
+                delay = UnityEngine.Random.Range(delay, InitOption.DelayRandomFrame.Value);
+            }
+
+            if (delay > 0)
+            {
+                await WaitFrames(delay);
+            }
+
+            BehaviourTree = newTree;
+            isIniting = false;
+        }
+
+        public async void EnableTree()
+        {
+            await InitTree();
 
             if (BehaviourTree != null)
             {
@@ -176,8 +190,6 @@ namespace Megumin.AI.BehaviorTree
                 BehaviourTree.IsRunning = true;
                 InitEvents?.AfterAddToManager?.Invoke(BehaviourTree, this);
             }
-
-            isIniting = false;
         }
 
         public void DisableTree()
