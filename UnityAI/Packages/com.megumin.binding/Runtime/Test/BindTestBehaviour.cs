@@ -123,6 +123,18 @@ namespace Megumin.Binding.Test
             = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]" };
 
         /// <summary>
+        /// Array索引器绑定 ✅
+        /// </summary>
+        public BindableValue<int> ArrayIntIndexer
+            = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ArrayIntTest[1]" };
+
+        /// <summary>
+        /// Array索引器绑定 ✅
+        /// </summary>
+        public BindableValue<string> ArrayStringIndexer
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ArrayStringTest[1]" };
+
+        /// <summary>
         /// List索引器绑定 ✅
         /// </summary>
         public BindableValue<int> ListIntIndexer

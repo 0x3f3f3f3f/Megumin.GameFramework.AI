@@ -41,6 +41,9 @@ namespace Megumin.Binding.Test
         public int MyIntProperty1 { get; set; } = 100;
         public int MyIntProperty2 => MyIntProperty2;
 
+        public int[] ArrayIntTest = new int[] { 16, 26, 36 };
+        public string[] ArrayStringTest = new string[] { "LiLei", "HanMeiMei" };
+
         public List<int> ListIntTest = new List<int>() { 15, 25, 35 };
         public List<string> ListStringTest = new List<string>() { "Tom", "Jerry" };
         public Dictionary<int, string> Dic_Int_StringTest = new Dictionary<int, string>()
