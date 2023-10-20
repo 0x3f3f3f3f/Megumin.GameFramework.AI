@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -1217,52 +1218,113 @@ namespace Megumin.Reflection
             try
             {
                 var match = GetIndexRegex.Match(memberName);
-
-                //为索引器创建委托
-                var props = instanceType.GetProperties();
-
-                //TODO: List Dictionary
-
-                //TODO： 索引器重载
-                var prop = props.FirstOrDefault(elem => elem.Name == "Item");
-
-                if (match.Success && prop != null)
+                if (match.Success)
                 {
                     var index = match.Groups["index"].Value;
 
-                    if (prop.CanRead)
+                    if (int.TryParse(index, out var intIndex))
                     {
-                        MethodInfo indexGet = prop.GetGetMethod();
-                        var indexType = indexGet.GetParameters()[0].ParameterType;
-
-                        hasMember = true;
-
-                        //这里无法避免装箱,反射调用索引器时同样也需要装箱
-                        object indexValue = Convert.ChangeType(index, indexType);
-
-                        Getter = () =>
+                        if (instance is IList<T> tList)
                         {
-                            //需要转型
-                            var result = indexGet.Invoke(instance, new object[] { indexValue });
-                            //如果正确匹配，返回值强转为T是安全的。
-                            return (T)result;
-                        };
-                        ParseResult |= CreateDelegateResult.Get;
+                            //针对IList进行优化
+                            hasMember = true;
+
+                            Getter = () =>
+                            {
+                                return tList[intIndex];
+                            };
+                            ParseResult |= CreateDelegateResult.Get;
+
+                            Setter = (T value) =>
+                            {
+                                tList[intIndex] = value;
+                            };
+                            ParseResult |= CreateDelegateResult.Set;
+                        }
+                        else if (instance is T[] tArray)
+                        {
+                            //针对数组进行优化
+                            hasMember = true;
+
+                            Getter = () =>
+                            {
+                                return tArray[intIndex];
+                            };
+                            ParseResult |= CreateDelegateResult.Get;
+
+                            Setter = (T value) =>
+                            {
+                                tArray[intIndex] = value;
+                            };
+                            ParseResult |= CreateDelegateResult.Set;
+                        }
+                        else if (instance is IDictionary<int, T> intDic)
+                        {
+                            //针对int字典进行优化
+                            hasMember = true;
+
+                            Getter = () =>
+                            {
+                                return intDic[intIndex];
+                            };
+                            ParseResult |= CreateDelegateResult.Get;
+
+                            Setter = (T value) =>
+                            {
+                                intDic[intIndex] = value;
+                            };
+                            ParseResult |= CreateDelegateResult.Set;
+                        }
                     }
 
-                    if (prop.CanWrite)
+                    if (hasMember == false)
                     {
-                        MethodInfo indexSet = prop.GetSetMethod();
-                        var indexType = indexSet.GetParameters()[0].ParameterType;
+                        //普通索引器 通用方式创建委托
 
-                        //这里无法避免装箱,反射调用索引器时同样也需要装箱
-                        object indexValue = Convert.ChangeType(index, indexType);
+                        //为索引器创建委托 
+                        var props = instanceType.GetProperties();
 
-                        Setter = (T value) =>
+                        //索引器是名字为Item的属性
+                        //TODO： 索引器重载
+                        var prop = props.FirstOrDefault(elem => elem.Name == "Item");
+                        if (prop != null)
                         {
-                            indexSet.Invoke(instance, new object[] { indexValue, value });
-                        };
-                        ParseResult |= CreateDelegateResult.Set;
+
+                            if (prop.CanRead)
+                            {
+                                MethodInfo indexGet = prop.GetGetMethod();
+                                var indexType = indexGet.GetParameters()[0].ParameterType;
+
+                                hasMember = true;
+
+                                //这里无法避免装箱,反射调用索引器时同样也需要装箱
+                                object indexValue = Convert.ChangeType(index, indexType);
+
+                                Getter = () =>
+                                {
+                                    //需要转型
+                                    var result = indexGet.Invoke(instance, new object[] { indexValue });
+                                    //如果正确匹配，返回值强转为T是安全的。
+                                    return (T)result;
+                                };
+                                ParseResult |= CreateDelegateResult.Get;
+                            }
+
+                            if (prop.CanWrite)
+                            {
+                                MethodInfo indexSet = prop.GetSetMethod();
+                                var indexType = indexSet.GetParameters()[0].ParameterType;
+
+                                //这里无法避免装箱,反射调用索引器时同样也需要装箱
+                                object indexValue = Convert.ChangeType(index, indexType);
+
+                                Setter = (T value) =>
+                                {
+                                    indexSet.Invoke(instance, new object[] { indexValue, value });
+                                };
+                                ParseResult |= CreateDelegateResult.Set;
+                            }
+                        }
                     }
                 }
             }
