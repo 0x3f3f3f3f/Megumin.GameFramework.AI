@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -1213,7 +1214,7 @@ namespace Megumin.Reflection
             ParseResult = CreateDelegateResult.None;
             Getter = null;
             Setter = null;
-            bool hasMember = false;
+            bool indexMatched = false;
 
             try
             {
@@ -1224,10 +1225,11 @@ namespace Megumin.Reflection
 
                     if (int.TryParse(index, out var intIndex))
                     {
+                        //针对Int索引器进行优化
                         if (instance is IList<T> tList)
                         {
                             //针对IList进行优化
-                            hasMember = true;
+                            indexMatched = true;
 
                             Getter = () =>
                             {
@@ -1244,7 +1246,7 @@ namespace Megumin.Reflection
                         else if (instance is T[] tArray)
                         {
                             //针对数组进行优化
-                            hasMember = true;
+                            indexMatched = true;
 
                             Getter = () =>
                             {
@@ -1261,8 +1263,7 @@ namespace Megumin.Reflection
                         else if (instance is IDictionary<int, T> intDic)
                         {
                             //针对int字典进行优化
-                            hasMember = true;
-
+                            indexMatched = true;
                             Getter = () =>
                             {
                                 return intDic[intIndex];
@@ -1277,7 +1278,31 @@ namespace Megumin.Reflection
                         }
                     }
 
-                    if (hasMember == false)
+                    if (indexMatched == false && instance is IDictionary<string, T> stringDic)
+                    {
+                        //针对string字典进行优化
+                        indexMatched = true;
+                        Getter = () =>
+                        {
+                            return stringDic[index];
+                        };
+                        ParseResult |= CreateDelegateResult.Get;
+
+                        Setter = (T value) =>
+                        {
+                            stringDic[index] = value;
+                        };
+                        ParseResult |= CreateDelegateResult.Set;
+                    }
+
+                    //if (instance is IDictionary objectDic)
+                    //{
+                    //    //TODO
+                    //    //针对通用字典进行优化
+                    //    indexMatched = true;
+                    //}
+
+                    if (indexMatched == false)
                     {
                         //普通索引器 通用方式创建委托
 
@@ -1295,7 +1320,7 @@ namespace Megumin.Reflection
                                 MethodInfo indexGet = prop.GetGetMethod();
                                 var indexType = indexGet.GetParameters()[0].ParameterType;
 
-                                hasMember = true;
+                                indexMatched = true;
 
                                 //这里无法避免装箱,反射调用索引器时同样也需要装箱
                                 object indexValue = Convert.ChangeType(index, indexType);
@@ -1333,7 +1358,7 @@ namespace Megumin.Reflection
                 Debug.LogWarning($"TryCreateIndexerDelegate:  {e}");
             }
 
-            return hasMember;
+            return indexMatched;
         }
 
         /// <summary>
