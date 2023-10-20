@@ -1221,6 +1221,8 @@ namespace Megumin.Reflection
                 //为索引器创建委托
                 var props = instanceType.GetProperties();
 
+                //TODO: List Dictionary
+
                 //TODO： 索引器重载
                 var prop = props.FirstOrDefault(elem => elem.Name == "Item");
 

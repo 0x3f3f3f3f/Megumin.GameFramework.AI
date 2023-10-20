@@ -41,6 +41,21 @@ namespace Megumin.Binding.Test
         public int MyIntProperty1 { get; set; } = 100;
         public int MyIntProperty2 => MyIntProperty2;
 
+        public List<int> ListIntTest = new List<int>() { 15, 25, 35 };
+        public List<string> ListStringTest = new List<string>() { "Tom", "Jerry" };
+        public Dictionary<int, string> Dic_Int_StringTest = new Dictionary<int, string>()
+        {
+            { 0, "Hello"},
+            { 1, "Goodmorning" },
+            { 25,"Bye" },
+        };
+
+        public Dictionary<string, int> Dic_String_IntTest = new Dictionary<string, int>()
+        {
+            { "a", 100 },
+            { "b", 200 },
+        };
+
         public int MyIntMethod1()
         {
             return MyIntField1;
@@ -127,7 +142,7 @@ namespace Megumin.Binding.Test
         /// <param name="key1"></param>
         /// <param name="key2"></param>
         /// <returns></returns>
-        public int this[int key1,string key2]
+        public int this[int key1, string key2]
         {
             get { return 1000; }
             set { }

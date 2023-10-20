@@ -48,6 +48,10 @@ MonoBehaviour:
   MyIntField1: 100
   MyIntField2: 200
   <MyIntProperty1>k__BackingField: 100
+  ListIntTest: 0f0000001900000023000000
+  ListStringTest:
+  - Tom
+  - Jerry
   MystringField1: HelloWorld1
   MystringField2: HelloWorld2
   <MystringProperty1>k__BackingField: MystringPropertyHelloWorld1
@@ -64,10 +68,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TestSO: {fileID: 11400000, guid: 60ffa9e55b58b7548af1fb4e2965a036, type: 2}
+  TestInt:
+    Key: 
+    IsBinding: 0
+    bindingPath: UnityEngine.GameObject/layer
+    defaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
   GameObjectTag:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/tag
+    bindingPath: UnityEngine.GameObject/tag
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -76,7 +89,7 @@ MonoBehaviour:
   TypeAdpterTestString2Object:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/tag
+    bindingPath: UnityEngine.GameObject/tag
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -84,7 +97,7 @@ MonoBehaviour:
   TypeAdpterTestInt2Object:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/layer
+    bindingPath: UnityEngine.GameObject/layer
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -92,7 +105,7 @@ MonoBehaviour:
   TypeAdpterTestInt2String:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/layer
+    bindingPath: UnityEngine.GameObject/layer
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -101,7 +114,7 @@ MonoBehaviour:
   TypeAdpterTestInt2Float:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/layer
+    bindingPath: UnityEngine.GameObject/layer
     defaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -110,7 +123,7 @@ MonoBehaviour:
   TypeAdpterTestGameObject2String:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.Transform/gameObject
+    bindingPath: UnityEngine.Transform/gameObject
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -119,7 +132,7 @@ MonoBehaviour:
   TypeAdpterTestTestInnerClass2String:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -128,7 +141,7 @@ MonoBehaviour:
   CustomTestField:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.CostomTest/MystringField1
+    bindingPath: Megumin.Binding.Test.CostomTest/MystringField1
     defaultValue: MathFailure
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -137,7 +150,7 @@ MonoBehaviour:
   CustomTestFieldByInterface:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringField1
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringField1
     defaultValue: MathFailure_CustomTestFieldByInterface
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -146,7 +159,7 @@ MonoBehaviour:
   CustomTestFieldByInterface2:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface2/MystringField1
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface2/MystringField1
     defaultValue: MathFailure_CustomTestFieldByInterface2
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -155,7 +168,7 @@ MonoBehaviour:
   CustomTestFieldByCostomTestClass:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.CostomTestClass/MystringField1
+    bindingPath: Megumin.Binding.Test.CostomTestClass/MystringField1
     defaultValue: MathFailure_CostomTestClass
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -164,7 +177,7 @@ MonoBehaviour:
   GameObjectTransformTag:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/transform/tag
+    bindingPath: UnityEngine.GameObject/transform/tag
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -173,7 +186,52 @@ MonoBehaviour:
   MyTestInnerClass:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  MyTestIndexer:
+    Key: 
+    IsBinding: 0
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]
+    defaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  ListIntIndexer:
+    Key: 
+    IsBinding: 0
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/ListIntTest[1]
+    defaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  ListStringIndexer:
+    Key: 
+    IsBinding: 0
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/ListStringTest[1]
+    defaultValue: 
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  DicIntIndexer:
+    Key: 
+    IsBinding: 0
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/Dic_String_IntTest[b]
+    defaultValue: 0
+    extnalObj: {fileID: 0}
+    xOffset: 0
+    yOffset: 0
+    IsStatic: 0
+  DicStringIndexer:
+    Key: 
+    IsBinding: 0
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/Dic_Int_StringTest[1]
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -182,7 +240,7 @@ MonoBehaviour:
   MyTestInnerClassDeep2:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -191,7 +249,7 @@ MonoBehaviour:
   ApplicationVersion:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.Application/version
+    bindingPath: UnityEngine.Application/version
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -200,7 +258,7 @@ MonoBehaviour:
   TimeFixedDeltaTime:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.Time/fixedDeltaTime
+    bindingPath: UnityEngine.Time/fixedDeltaTime
     defaultValue: 0
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -209,7 +267,7 @@ MonoBehaviour:
   DateTimeOffsetOffset:
     Key: 
     IsBinding: 0
-    BindingPath: System.DateTimeOffset/Now
+    bindingPath: System.DateTimeOffset/Now
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -217,7 +275,7 @@ MonoBehaviour:
   BindType:
     Key: 
     IsBinding: 0
-    BindingPath: System.DateTimeOffset
+    bindingPath: System.DateTimeOffset
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -225,7 +283,7 @@ MonoBehaviour:
   BindTypeProperty:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/TypeProperty1
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/TypeProperty1
     extnalObj: {fileID: 0}
     xOffset: 0
     yOffset: 0
@@ -233,7 +291,7 @@ MonoBehaviour:
   BindMethodArgs0:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod1()
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod1()
     defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs0
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -242,7 +300,7 @@ MonoBehaviour:
   BindMethodArgs1:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod2()
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethod2()
     defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -251,7 +309,7 @@ MonoBehaviour:
   BindMethodArgs1Set:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSet()
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSet()
     defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1Set
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -260,7 +318,7 @@ MonoBehaviour:
   BindMethodArgs1SetReturnString:
     Key: 
     IsBinding: 0
-    BindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSetReturnString()
+    bindingPath: Megumin.Binding.Test.ICostomTestInterface/MystringMethodSetReturnString()
     defaultValue: MathFailure_CustomTestFieldByInterface_BindMethodArgs1SetReturnString
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -269,7 +327,7 @@ MonoBehaviour:
   Test1:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.GameObject/ToString()
+    bindingPath: UnityEngine.GameObject/ToString()
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -278,7 +336,7 @@ MonoBehaviour:
   Test2:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.Application/version
+    bindingPath: UnityEngine.Application/version
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -287,7 +345,7 @@ MonoBehaviour:
   Test3:
     Key: 
     IsBinding: 0
-    BindingPath: UnityEngine.Application/version
+    bindingPath: UnityEngine.Application/version
     defaultValue: 
     extnalObj: {fileID: 0}
     xOffset: 0
@@ -305,7 +363,7 @@ MonoBehaviour:
       data:
         Key: 
         IsBinding: 0
-        BindingPath: UnityEngine.GameObject/layer
+        bindingPath: 
         defaultValue: 0
         extnalObj: {fileID: 0}
         xOffset: 0
@@ -316,7 +374,7 @@ MonoBehaviour:
       data:
         Key: 
         IsBinding: 0
-        BindingPath: UnityEngine.GameObject/tag
+        bindingPath: 
         defaultValue: 
         extnalObj: {fileID: 0}
         xOffset: 0

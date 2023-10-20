@@ -117,10 +117,34 @@ namespace Megumin.Binding.Test
             = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
-        /// 索引器绑定
+        /// 索引器绑定 ✅
         /// </summary>
         public BindableValue<int> MyTestIndexer
             = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]" };
+
+        /// <summary>
+        /// List索引器绑定 ✅
+        /// </summary>
+        public BindableValue<int> ListIntIndexer
+            = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ListIntTest[1]" };
+
+        /// <summary>
+        /// List索引器绑定 ✅
+        /// </summary>
+        public BindableValue<string> ListStringIndexer
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ListStringTest[1]" };
+
+        /// <summary>
+        /// 字典索引器绑定 ✅
+        /// </summary>
+        public BindableValue<int> DicIntIndexer
+            = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/Dic_String_IntTest[b]" };
+
+        /// <summary>
+        /// 字典索引器绑定 ✅
+        /// </summary>
+        public BindableValue<string> DicStringIndexer
+            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/Dic_Int_StringTest[1]" };
 
         /// <summary>
         /// 多级成员绑定 ✅

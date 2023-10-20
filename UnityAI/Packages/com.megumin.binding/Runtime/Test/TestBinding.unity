@@ -248,6 +248,186 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526]
+      value: Megumin.Binding Megumin.Binding.BindableValueInt
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527]
+      value: Megumin.Binding Megumin.Binding.BindableValueString
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528]
+      value: Megumin.Binding Megumin.Binding.BindableValueInt
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529]
+      value: Megumin.Binding Megumin.Binding.BindableValueString
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].Key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].yOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].IsStatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].IsBinding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].extnalObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].bindingPath
+      value: UnityEngine.GameObject/layer
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].bindingPath
+      value: UnityEngine.GameObject/tag
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].bindingPath
+      value: UnityEngine.GameObject/layer
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].bindingPath
+      value: UnityEngine.GameObject/tag
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312526].defaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312527].defaultValue
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312528].defaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861045395110770367, guid: d729452bea648e24f99d9f6826e71053,
+        type: 3}
+      propertyPath: managedReferences[9096287649221312529].defaultValue
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8049335969395993302, guid: d729452bea648e24f99d9f6826e71053,
         type: 3}
       propertyPath: m_Name
