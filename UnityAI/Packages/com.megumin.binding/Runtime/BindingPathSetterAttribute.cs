@@ -106,7 +106,7 @@ namespace Megumin.Binding
             new(EditorGUIUtility.IconContent("settings icon")) { tooltip = "Set BindingPath" };
 
         const int settingButtonWidth = 26;
-        const int testButtonWidth = 36;
+        const int testButtonWidth = 0;
 
         public static readonly BindingOptions bindingOptions = new();
         Dictionary<string, CreateDelegateResult> parseResult = new Dictionary<string, CreateDelegateResult>();
@@ -119,14 +119,13 @@ namespace Megumin.Binding
             buttonPosition.width = settingButtonWidth;
             buttonPosition.x += position.width - settingButtonWidth;
 
-            GUIContent testButton = new GUIContent() { text = "Test" };
-            var color = GUI.color;
 
+            var color = GUI.color;
             if (parseResult.TryGetValue(property.propertyPath, out var presult))
             {
                 var preResultString = $"ParseResult:  {presult}";
 
-                testButton.tooltip = preResultString;
+                settingIcon.tooltip = preResultString;
                 if (string.IsNullOrEmpty(label.tooltip))
                 {
                     label.tooltip = preResultString;
@@ -152,11 +151,19 @@ namespace Megumin.Binding
                         break;
                 }
             }
+            else
+            {
+                settingIcon.tooltip = "Set BindingPath";
+            }
 
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
 
-            bool click = GUI.Button(buttonPosition, settingIcon);
+            bool click = false;
+            using (new GUIColorScope(color))
+            {
+                click = GUI.Button(buttonPosition, settingIcon);
+            }
 
             if (click)
             {
@@ -164,19 +171,11 @@ namespace Megumin.Binding
                 SetOptionGO(property.serializedObject.targetObject);
             }
 
-            if (property.GetBindintString(click, out var str, gType, bindingOptions))
+            if (bindingOptions.Button == 2)
             {
-                property.stringValue = str;
-            }
-
-            var buttonPositionTest = position;
-            buttonPositionTest.width = testButtonWidth;
-            buttonPositionTest.x += position.width - settingButtonWidth - testButtonWidth;
-
-            using (new GUIColorScope(color))
-            {
-                if (GUI.Button(buttonPositionTest, testButton))
+                if (click)
                 {
+                    //鼠标中间点击 测试绑定
                     var obj = property.serializedObject.targetObject;
 
                     if (property.TryGetOwnerObject<IBindingParseable>(out var parseable))
@@ -186,10 +185,23 @@ namespace Megumin.Binding
                         {
                             gameObject = component.gameObject;
                         }
+
+                        //测试结果保存
                         parseResult[property.propertyPath]
                             = parseable.ParseBinding(gameObject, true);
+
+                        //输出测试结果日志
                         parseable.DebugParseResult();
                     }
+                }
+            }
+            else
+            {
+                if (property.GetBindintString(click, out var str, gType, bindingOptions))
+                {
+                    property.stringValue = str;
+                    //重写绑定后，删除测试结果
+                    parseResult.Remove(property.propertyPath);
                 }
             }
         }
