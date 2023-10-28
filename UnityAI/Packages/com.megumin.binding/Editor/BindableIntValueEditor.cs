@@ -9,8 +9,8 @@ using UnityEngine;
 
 namespace Megumin.Binding.Editor
 {
+    [Obsolete("Use BindingVar instead.", true)]
     [CustomPropertyDrawer(typeof(BindableValue<>), true)]
-    [CustomPropertyDrawer(typeof(BindableValueInt))]
     public class BindableIntValueEditor : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

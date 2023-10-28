@@ -6,16 +6,16 @@ namespace Megumin.Binding.Test
 {
     public class BindingsSO : ScriptableObject
     {
-        public BindableValue<int> BindInt
+        public BindingVar<int> BindInt
             = new BindableValueInt() { BindingPath = "UnityEngine.GameObject/layer" };
 
-        public BindableValue<int> NeedOverrideInt1
-            = new BindableValue<int>() { BindingPath = "UnityEngine.Time/captureFramerate" };
+        public BindingVar<int> NeedOverrideInt1
+            = new() { BindingPath = "UnityEngine.Time/captureFramerate" };
 
-        public BindableValue<int> NeedOverrideInt2
-            = new BindableValue<int>() { BindingPath = "UnityEngine.SceneManagement.SceneManager/sceneCountInBuildSettings" };
+        public BindingVar<int> NeedOverrideInt2
+            = new() { BindingPath = "UnityEngine.SceneManagement.SceneManager/sceneCountInBuildSettings" };
 
-        public BindableValue<int> NeedOverrideInt3
-            = new BindableValue<int>() { BindingPath = "UnityEngine.Application/targetFrameRate" };
+        public BindingVar<int> NeedOverrideInt3
+            = new() { BindingPath = "UnityEngine.Application/targetFrameRate" };
     }
 }
