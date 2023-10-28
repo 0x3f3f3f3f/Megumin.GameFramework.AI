@@ -119,6 +119,40 @@ namespace Megumin.Binding
             buttonPosition.width = settingButtonWidth;
             buttonPosition.x += position.width - settingButtonWidth;
 
+            GUIContent testButton = new GUIContent() { text = "Test" };
+            var color = GUI.color;
+
+            if (parseResult.TryGetValue(property.propertyPath, out var presult))
+            {
+                var preResultString = $"ParseResult:  {presult}";
+
+                testButton.tooltip = preResultString;
+                if (string.IsNullOrEmpty(label.tooltip))
+                {
+                    label.tooltip = preResultString;
+                }
+
+                switch (presult)
+                {
+                    case CreateDelegateResult.None:
+                        color = Color.red;
+                        break;
+                    case CreateDelegateResult.Get:
+                        color = Color.blue;
+                        break;
+                    case CreateDelegateResult.Set:
+                        color = Color.cyan;
+                        break;
+                    case CreateDelegateResult.Both:
+                        color = Color.green;
+                        break;
+                    case CreateDelegateResult.Method:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
 
@@ -139,60 +173,24 @@ namespace Megumin.Binding
             buttonPositionTest.width = testButtonWidth;
             buttonPositionTest.x += position.width - settingButtonWidth - testButtonWidth;
 
-            if (GUI.Button(buttonPositionTest, $"Test"))
+            using (new GUIColorScope(color))
             {
-                //通过property取得实例对象
-                //https://gist.github.com/douduck08/6d3e323b538a741466de00c30aa4b61f
-
-                var obj = property.serializedObject.targetObject;
-                object data = null;
-                if (property.propertyPath.EndsWith("]"))
+                if (GUI.Button(buttonPositionTest, testButton))
                 {
-                    data = property.managedReferenceValue;
-                }
-                else
-                {
-                    data = this.fieldInfo.GetValue(obj);
-                }
+                    var obj = property.serializedObject.targetObject;
 
-                if (data == null)
-                {
-
-                }
-
-                if (data is IBindingParseable parseable)
-                {
-                    GameObject gameObject = obj as GameObject;
-                    if (obj is Component component)
+                    if (property.TryGetOwnerObject<IBindingParseable>(out var parseable))
                     {
-                        gameObject = component.gameObject;
+                        GameObject gameObject = obj as GameObject;
+                        if (obj is Component component)
+                        {
+                            gameObject = component.gameObject;
+                        }
+                        parseResult[property.propertyPath]
+                            = parseable.ParseBinding(gameObject, true);
+                        parseable.DebugParseResult();
                     }
-                    parseResult[property.propertyPath]
-                        = parseable.ParseBinding(gameObject, true);
-                    parseable.DebugParseResult();
                 }
-
-                //fieldInfo = this.fieldInfo; 
-                //var field2 = this.fieldInfo;
-                //var v = field2.GetValue(property.serializedObject.targetObject);
-                //var index = property.enumValueIndex;
-
-                ////Debug.Log(property.serializedObject.targetObject);
-
-                //Type type = obj.GetType();
-                //var fieldInfo = type.GetField(property.propertyPath);
-                //var fValue = fieldInfo.GetValue(obj);
-
-                //if (fValue is IBindingParseable parseable)
-                //{
-                //    GameObject gameObject = obj as GameObject;
-                //    if (obj is Component component)
-                //    {
-                //        gameObject = component.gameObject;
-                //    }
-                //    parseable.ParseBinding(gameObject, true);
-                //    parseable.DebugParseResult();
-                //}
             }
         }
 
