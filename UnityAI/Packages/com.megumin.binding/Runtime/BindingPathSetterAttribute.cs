@@ -178,7 +178,7 @@ namespace Megumin.Binding
                     //鼠标中间点击 测试绑定
                     var obj = property.serializedObject.targetObject;
 
-                    if (property.TryGetOwnerObject<IBindingParseable>(out var parseable))
+                    if (property.TryGetOwner<IBindingParseable>(out var parseable))
                     {
                         GameObject gameObject = obj as GameObject;
                         if (obj is Component component)
