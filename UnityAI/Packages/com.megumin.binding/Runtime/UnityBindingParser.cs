@@ -334,7 +334,7 @@ namespace Megumin.Binding
                 {
                     //通过名字不能从Children获取组件，还是要自己先取得类型
                     //var comp = gameObject.GetComponent(typeFullName);
-                    var comp = gameObject.GetComponentInChildren(type);
+                    var comp = gameObject?.GetComponentInChildren(type);
                     if (comp)
                     {
                         return (comp, comp.GetType());
@@ -350,7 +350,7 @@ namespace Megumin.Binding
             }
             else
             {
-                var comp = gameObject.GetComponentInChildren(type);
+                var comp = gameObject?.GetComponentInChildren(type);
                 return (comp, type);
             }
         }

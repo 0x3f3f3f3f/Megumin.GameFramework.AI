@@ -186,6 +186,15 @@ namespace Megumin.Binding
                             gameObject = component.gameObject;
                         }
 
+                        if (!gameObject)
+                        {
+                            gameObject = Selection.activeGameObject;
+                            if (gameObject)
+                            {
+                                Debug.LogWarning($"Use {gameObject} Test BindingPath [{property.stringValue}]");
+                            }
+                        }
+
                         //测试结果保存
                         parseResult[property.propertyPath]
                             = parseable.ParseBinding(gameObject, true);

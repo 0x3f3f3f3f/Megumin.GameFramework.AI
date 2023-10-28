@@ -326,7 +326,7 @@ namespace Megumin.Reflection
             {
                 if (instance == null)
                 {
-                    Debug.LogError("instanceDelegate is null");
+                    Debug.LogWarning("TryCreateGetter: instance is null");
                 }
                 else
                 {
@@ -687,7 +687,7 @@ namespace Megumin.Reflection
             {
                 if (instance == null)
                 {
-                    Debug.LogWarning("instanceDelegate is null");
+                    Debug.LogWarning("TryCreateSetter: instance is null");
                 }
                 else
                 {
