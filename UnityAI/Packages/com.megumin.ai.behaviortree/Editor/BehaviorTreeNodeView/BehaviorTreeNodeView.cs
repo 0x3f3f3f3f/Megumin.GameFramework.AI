@@ -428,7 +428,7 @@ namespace Megumin.AI.BehaviorTree.Editor
         {
             //this.LogMethodName(evt.ToStringReflection(), "\n", evt.triggerEvent.ToStringReflection());
 
-            evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.Status.Normal);
+            //evt.menu.AppendAction("TestNode1", a => { }, DropdownMenuAction.Status.Normal);
             //this.LogMethodName();
             base.BuildContextualMenu(evt);
 
@@ -442,33 +442,37 @@ namespace Megumin.AI.BehaviorTree.Editor
 
                 evt.menu.AppendActionTODO("Breakpoint", a => { }, DropdownMenuAction.Status.Normal);
                 evt.menu.AppendSeparator();
-            }
 
-            evt.menu.AppendAction("Open Node Script", a => Node?.GetType().OpenScript(), DropdownMenuAction.Status.Normal);
-            evt.menu.AppendActionTODO("Open Node View Script", a => { }, DropdownMenuAction.Status.Normal);
-            evt.menu.AppendAction("Select Node Script", a => Node?.GetType().SelectScript(), DropdownMenuAction.Status.Normal);
-            evt.menu.AppendSeparator();
+                evt.menu.AppendAction("Open Node Script", a => Node?.GetType().OpenScript(), DropdownMenuAction.Status.Normal);
+                evt.menu.AppendActionTODO("Open Node View Script", a => { }, DropdownMenuAction.Status.Normal);
+                evt.menu.AppendAction("Select Node Script", a => Node?.GetType().SelectScript(), DropdownMenuAction.Status.Normal);
+                evt.menu.AppendSeparator();
 
-            evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
-            evt.menu.AppendSeparator();
+                evt.menu.AppendAction("Set Start", a => SetStart(), GetSetStartStatus);
+                evt.menu.AppendSeparator();
 
-            BuildContextualMenuDecorator(evt);
+                BuildContextualMenuDecorator(evt);
 
-            //Subtree
-            evt.menu.AppendAction("Convert To/Subtree",
-                a => { TreeView.ConvertToSubtree(Node); },
-                (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Normal);
-            evt.menu.AppendAction("Convert To/Inline Node",
-                a => { TreeView.InlineSubtree(Node as ISubtreeTreeElement); },
-                (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+                //Subtree
+                evt.menu.AppendAction("Convert To/Subtree",
+                    a => { TreeView.ConvertToSubtree(Node); },
+                    (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Disabled : DropdownMenuAction.Status.Normal);
+                evt.menu.AppendAction("Convert To/Inline Node",
+                    a => { TreeView.InlineSubtree(Node as ISubtreeTreeElement); },
+                    (Node is ISubtreeTreeElement) ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
 
-            AddConvetToMenu(evt);
+                AddConvetToMenu(evt);
 
-            evt.menu.AppendSeparator();
+                evt.menu.AppendSeparator();
 
-            if (Node is IBuildContextualMenuable buildable)
-            {
-                buildable.BuildContextualMenu(evt);
+                if (Node is IBuildContextualMenuable buildable)
+                {
+                    buildable.BuildContextualMenu(evt);
+                }
+
+                evt.menu.AppendSeparator();
+                evt.menu.AppendAction("Properties...", a => SONode?.OpenPropertyEditor(), DropdownMenuAction.Status.Normal);
+                evt.menu.AppendSeparator();
             }
         }
 
