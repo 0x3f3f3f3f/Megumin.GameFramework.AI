@@ -1,7 +1,7 @@
 {
   "name": "com.megumin.binding",
   "displayName": "Megumin Binding",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "unity": "2021.3",
   "description": "The parameter binding module code of the Megumin-Plugins.",
   "category": "Megumin",
@@ -20,7 +20,7 @@
     "url": "https://github.com/KumoKyaku"
   },
   "dependencies": {
-    "com.megumin.common": "1.0.3",
+    "com.megumin.common": "1.0.6",
     "com.megumin.serialization": "1.1.0"
   }
 }

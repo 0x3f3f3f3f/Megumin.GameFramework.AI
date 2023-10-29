@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+## [1.1.1] - 2023-10-29
+### Added   
+- 增加集合测试
+- 优化数组，列表，字典的索引器绑定
+
+### Changed  
+- 合并测试按钮和绑定按钮
+
+### Fixed  
+- 修复绑定路径测试
+
 ## [0.0.1] - 2022-12-05
 PackageWizard Fast Created.
 

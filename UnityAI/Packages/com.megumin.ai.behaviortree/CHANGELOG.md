@@ -19,6 +19,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+## [1.2.2] - 2023-10-29
+### Added   
+- 增加一键从项目中删除插件菜单
+- 增加一键重新保存所有行为树文件菜单
+- 增加安卓测试
+- 抽象初始化方法
+- 增加预热测试
+- 增加关闭所有编辑器窗口菜单
+- 增加关闭此外编辑器窗口菜单
+- 增加Properties菜单。整理上下文菜单
+
+### Changed  
+- 重构性能采样标记
+
+### Fixed  
+- 修复流程图map关键字 导致不能渲染bug
+- 修改优化文档
+- 优化预热代码
+- 优化Debug性能。debug调用放入EditorLoop中
+- 优化Tick中的Linq Any 
+
 ## [1.2.1] - 2023-10-08
 ### Added   
 - 增加代码生成器创建菜单  
