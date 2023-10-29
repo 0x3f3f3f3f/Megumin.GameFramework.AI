@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree.Editor
         public BehaviorTree DebugInstance { get; set; }
         internal void BeginDebug(BehaviorTree tree)
         {
-            this.LogMethodName();
+            //this.LogMethodName();
             IsDebugMode = true;
             DebugInstance = tree;
             rootVisualElement.SetToClassList(UssClassConst.debugMode, IsDebugMode);

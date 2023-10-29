@@ -112,13 +112,13 @@ namespace Megumin.AI.BehaviorTree
             {
                 CompletedCount++;
                 SucceededCount++;
-                Debug.Log($"tree complate. {treestate}");
+                GetLogger()?.WriteLine($"tree complate. {treestate}");
             }
             else if (treestate == Status.Failed)
             {
                 CompletedCount++;
                 FailedCount++;
-                Debug.Log($"tree complate. {treestate}");
+                GetLogger()?.WriteLine($"tree complate. {treestate}");
             }
             return treestate;
         }

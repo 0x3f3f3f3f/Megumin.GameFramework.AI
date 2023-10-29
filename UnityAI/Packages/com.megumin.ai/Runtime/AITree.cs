@@ -19,7 +19,7 @@ namespace Megumin.AI
         public string GUID { get; set; }
 
         [field: NonSerialized]
-        public TraceListener TraceListener { get; set; } = new UnityTraceListener();
+        public TraceListener TraceListener { get; set; }
         public RunOption RunOption { get; set; }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Megumin.AI
         public HashSet<IStartable> AllStartable { get; } = new();
         public HashSet<IResetable> AllResetable { get; } = new();
 
-        [Obsolete("use GetLogger instead")]
+        [Obsolete("use GetLogger instead", true)]
         [HideInCallstack]
         public virtual void Log(object message)
         {
@@ -44,6 +44,10 @@ namespace Megumin.AI
         {
             if (RunOption?.Log == true)
             {
+                if (TraceListener == null)
+                {
+                    TraceListener = new UnityTraceListener();
+                }
                 return TraceListener;
             }
 
