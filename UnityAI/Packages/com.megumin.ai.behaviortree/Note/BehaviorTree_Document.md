@@ -144,6 +144,8 @@ BehaviorTreeRunner是执行行为树资产的组件。
 但你必须保证行为树开始初始化绑定前添加组件，或者在添加组件后手动调用行为树的参数绑定方法。  
 即使最终绑定的组件不存在，也不会影响整个行为树执行。在访问这个变量时，可以返回类型的默认值。
 
+中键点击绑定按钮，可以测试绑定路径。  
+
 ## 自定义变量类型
 可以定义自己的变量类型，建议从`Megumin.Binding.RefVar<T>`继承。  
 还也可以创建一个VariableCreator，添加到`VariableCreator.AllCreator`中。  
@@ -344,5 +346,5 @@ PlayMode时选择Gameobject，并点击EditorTree打开编辑器，会自动进�
 - Discord: https://discord.gg/6VZbxZgTRU
 
 # 鸣谢列表
-ZhangDi2018, Njyon,   
+Hazukiaoi, ZhangDi2018, Njyon,    
 

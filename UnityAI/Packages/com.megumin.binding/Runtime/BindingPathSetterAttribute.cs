@@ -106,7 +106,7 @@ namespace Megumin.Binding
             new(EditorGUIUtility.IconContent("settings icon")) { tooltip = "Set BindingPath" };
 
         const int settingButtonWidth = 26;
-        const int testButtonWidth = 36;
+        const int testButtonWidth = 0;
 
         public static readonly BindingOptions bindingOptions = new();
         Dictionary<string, CreateDelegateResult> parseResult = new Dictionary<string, CreateDelegateResult>();
@@ -119,10 +119,51 @@ namespace Megumin.Binding
             buttonPosition.width = settingButtonWidth;
             buttonPosition.x += position.width - settingButtonWidth;
 
+
+            var color = GUI.color;
+            if (parseResult.TryGetValue(property.propertyPath, out var presult))
+            {
+                var preResultString = $"ParseResult:  {presult}";
+
+                settingIcon.tooltip = preResultString;
+                if (string.IsNullOrEmpty(label.tooltip))
+                {
+                    label.tooltip = preResultString;
+                }
+
+                switch (presult)
+                {
+                    case CreateDelegateResult.None:
+                        color = Color.red;
+                        break;
+                    case CreateDelegateResult.Get:
+                        color = Color.blue;
+                        break;
+                    case CreateDelegateResult.Set:
+                        color = Color.cyan;
+                        break;
+                    case CreateDelegateResult.Both:
+                        color = Color.green;
+                        break;
+                    case CreateDelegateResult.Method:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                settingIcon.tooltip = "Set BindingPath";
+            }
+
             UnityEditor.EditorGUI.PropertyField(propertyPosition, property, label, true);
             var gType = fieldInfo.DeclaringType.GetGenericArguments()[0];
 
-            bool click = GUI.Button(buttonPosition, settingIcon);
+            bool click = false;
+            using (new GUIColorScope(color))
+            {
+                click = GUI.Button(buttonPosition, settingIcon);
+            }
 
             if (click)
             {
@@ -130,69 +171,47 @@ namespace Megumin.Binding
                 SetOptionGO(property.serializedObject.targetObject);
             }
 
-            if (property.GetBindintString(click, out var str, gType, bindingOptions))
+            if (bindingOptions.Button == 2)
             {
-                property.stringValue = str;
-            }
-
-            var buttonPositionTest = position;
-            buttonPositionTest.width = testButtonWidth;
-            buttonPositionTest.x += position.width - settingButtonWidth - testButtonWidth;
-
-            if (GUI.Button(buttonPositionTest, $"Test"))
-            {
-                //通过property取得实例对象
-                //https://gist.github.com/douduck08/6d3e323b538a741466de00c30aa4b61f
-
-                var obj = property.serializedObject.targetObject;
-                object data = null;
-                if (property.propertyPath.EndsWith("]"))
+                if (click)
                 {
-                    data = property.managedReferenceValue;
-                }
-                else
-                {
-                    data = this.fieldInfo.GetValue(obj);
-                }
+                    //鼠标中间点击 测试绑定
+                    var obj = property.serializedObject.targetObject;
 
-                if (data == null)
-                {
-
-                }
-
-                if (data is IBindingParseable parseable)
-                {
-                    GameObject gameObject = obj as GameObject;
-                    if (obj is Component component)
+                    if (property.TryGetOwner<IBindingParseable>(out var parseable))
                     {
-                        gameObject = component.gameObject;
+                        GameObject gameObject = obj as GameObject;
+                        if (obj is Component component)
+                        {
+                            gameObject = component.gameObject;
+                        }
+
+                        if (!gameObject)
+                        {
+                            gameObject = Selection.activeGameObject;
+                            if (gameObject)
+                            {
+                                Debug.LogWarning($"Use {gameObject} Test BindingPath [{property.stringValue}]");
+                            }
+                        }
+
+                        //测试结果保存
+                        parseResult[property.propertyPath]
+                            = parseable.ParseBinding(gameObject, true);
+
+                        //输出测试结果日志
+                        parseable.DebugParseResult();
                     }
-                    parseResult[property.propertyPath]
-                        = parseable.ParseBinding(gameObject, true);
-                    parseable.DebugParseResult();
                 }
-
-                //fieldInfo = this.fieldInfo; 
-                //var field2 = this.fieldInfo;
-                //var v = field2.GetValue(property.serializedObject.targetObject);
-                //var index = property.enumValueIndex;
-
-                ////Debug.Log(property.serializedObject.targetObject);
-
-                //Type type = obj.GetType();
-                //var fieldInfo = type.GetField(property.propertyPath);
-                //var fValue = fieldInfo.GetValue(obj);
-
-                //if (fValue is IBindingParseable parseable)
-                //{
-                //    GameObject gameObject = obj as GameObject;
-                //    if (obj is Component component)
-                //    {
-                //        gameObject = component.gameObject;
-                //    }
-                //    parseable.ParseBinding(gameObject, true);
-                //    parseable.DebugParseResult();
-                //}
+            }
+            else
+            {
+                if (property.GetBindintString(click, out var str, gType, bindingOptions))
+                {
+                    property.stringValue = str;
+                    //重写绑定后，删除测试结果
+                    parseResult.Remove(property.propertyPath);
+                }
             }
         }
 

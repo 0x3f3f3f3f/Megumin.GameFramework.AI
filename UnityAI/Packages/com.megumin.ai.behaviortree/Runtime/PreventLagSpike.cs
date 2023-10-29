@@ -16,19 +16,56 @@ namespace Megumin.AI.BehaviorTree
     /// 防止尖峰帧卡顿，在合适的位置预热反射代码
     /// 可以在合适的位置调用PreventLagSpike.WarmUpAll。  
     /// 也可以打开RuntimeInitializeOnLoadMethod特性，这样程序启动时自动预热。  
-    /// 使用多线程预热更合适，但是无法确定预热完成时间。  
+    /// 强烈建议使用多线程预热，使用多线程预热更合适，但是无法确定预热完成时间。  
     /// </summary>
-    public static class PreventLagSpike
+    public class PreventLagSpike : MonoBehaviour
     {
+        public bool AwakeAutoWarmUpAll = false;
+        /// <summary>
+        /// 强烈建议使用多线程预热
+        /// </summary>
+        public bool UseAsync = true;
+        private void Awake()
+        {
+            if (AwakeAutoWarmUpAll)
+            {
+                if (UseAsync)
+                {
+                    WarmUpAllAsync();
+                }
+                else
+                {
+                    WarmUpAll();
+                }
+            }
+        }
+
+        //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static Task WarmUpAllAsync()
         {
             return Task.Run(() => { WarmUpAll(); });
         }
 
+        public static bool WarmUped = false;
+
         //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static void WarmUpAll()
         {
+            //在PC Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz   3.60 GHz  大约耗费 1000ms+
+            //在Android Redmi Note 12 Turbo 第二代骁龙7+ 八核2.91GHz     IL2CPP 3000ms+ Mono 6000ms+
+            //在Nokia N1 IL2CPP 50000ms+ Mono 测试场景没有成功运行。
+
+            if (WarmUped)
+            {
+                return;
+            }
+
+            WarmUped = true;
+
             Profiler.BeginSample("WarmUpAll");
+
+            //预热Task.Run
+            Task.Run(() => { });
 
             TypeCache.CacheAllTypes();//200ms+
 

@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Megumin.Binding
 {
+    [Obsolete("Use BindingVar instead.", true)]
     [Serializable]
     public class BindableValue<T> : IVariable, IVariable<T>, IBindable, IBindingParseable
     {
@@ -117,15 +118,16 @@ namespace Megumin.Binding
         }
     }
 
-    [Serializable]
-    public class BindableValueInt : BindableValue<int>
-    {
 
+    [Serializable]
+    internal class BindableValueInt : BindingVar<int>
+    {
+        public string Key;
     }
 
     [Serializable]
-    public class BindableValueString : BindableValue<string>
+    internal class BindableValueString : BindingVar<string>
     {
-
+        public string Key;
     }
 }

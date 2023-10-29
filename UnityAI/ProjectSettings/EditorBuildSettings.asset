@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Samples/BehaviorTree/Patrol/Patrol2.unity
+    guid: eaaa79870cff5d84eadd0801850ae1e7
+  - enabled: 1
     path: Assets/Samples/BehaviorTree/Patrol/Patrol.unity
     guid: c678fe20dd2969b4196ef3ee49a6e86c
   - enabled: 1

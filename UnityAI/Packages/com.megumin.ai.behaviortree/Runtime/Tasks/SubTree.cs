@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
 
             if (Application.isPlaying && BehaviourTree != null)
             {
-                BehaviorTreeManager.TreeDebugger?.AddDebugInstanceTree(BehaviourTree);
+                BehaviorTreeManager.Debugger?.AddDebugInstanceTree(BehaviourTree);
             }
         }
 

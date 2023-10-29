@@ -251,11 +251,6 @@ namespace Megumin.AI.BehaviorTree.Editor
             //this.LogMethodName(hasUnsavedChanges);
         }
 
-        public void Update()
-        {
-
-        }
-
         public void CreateGUI()
         {
             if (BehaviorTreeEditor.EditorLog)
@@ -354,6 +349,8 @@ namespace Megumin.AI.BehaviorTree.Editor
             showInProject.clicked += ShowInProject;
 
             var file = root.Q<ToolbarMenu>("file");
+            file.menu.AppendAction("Open All Assets", a => OpenAllAssetsInProject(), a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Force Re-Serialization All Assets", a => ForceReSaveAllAssetsInProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("ShowTreeWapper", a => TreeView?.InspectorShowWapper(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("GenerateCode", a => GenerateCode(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Change GUID", a =>
@@ -363,6 +360,11 @@ namespace Megumin.AI.BehaviorTree.Editor
                                                         CurrentAsset.GUID = Guid.NewGuid().ToString();
                                                     }
                                                 }, a => DropdownMenuAction.Status.Normal);
+
+            file.menu.AppendAction("Close Other Editor", a => CloseOtherEditor(), a => DropdownMenuAction.Status.Normal);
+            file.menu.AppendAction("Close All Editor", a => CloseAllEditorInProject(), a => DropdownMenuAction.Status.Normal);
+
+            file.menu.AppendAction("Remove Editor", a => RemoveEditorFromProject(), a => DropdownMenuAction.Status.Normal);
             file.menu.AppendAction("Save", a => SaveAsset(), a => DropdownMenuAction.Status.Normal);
 
             var edit = root.Q<ToolbarMenu>("edit");
@@ -449,7 +451,39 @@ namespace Megumin.AI.BehaviorTree.Editor
                 }, a => DropdownMenuAction.Status.Normal);
         }
 
+        public void RemoveEditorFromProject()
+        {
+            var info =
+@"Remove Megumin.AI.BehaviorTree from Project?
 
+These folders will be deleted:
+
+Packages/com.megumin.ai
+Packages/com.megumin.ai.behaviortree
+Packages/com.megumin.binding
+Packages/com.megumin.common
+Packages/com.megumin.perception
+Packages/com.megumin.reflection
+Packages/com.megumin.serialization
+
+";
+            if (EditorUtility.DisplayDialog("Remove Editor From Project",
+                                            info,
+                                            "OK",
+                                            "Cancel"))
+            {
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.ai");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.ai.behaviortree");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.binding");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.common");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.perception");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.reflection");
+                PathUtility.TryDeleleFromProject("Packages/com.megumin.serialization");
+
+                var process = System.Diagnostics.Process.Start(PathUtility.PackagesPath);
+                AssetDatabase.Refresh();
+            }
+        }
 
         private void CreateBottomBar()
         {
@@ -490,9 +524,9 @@ namespace Megumin.AI.BehaviorTree.Editor
                 this.LogMethodName(TreeView);
             }
 
-            if (BehaviorTreeManager.TreeDebugger == null)
+            if (BehaviorTreeManager.Debugger == null)
             {
-                BehaviorTreeManager.TreeDebugger = new BehaviorTreeEditorDebugger();
+                BehaviorTreeManager.Debugger = new BehaviorTreeEditorDebuggerManager();
             }
         }
 

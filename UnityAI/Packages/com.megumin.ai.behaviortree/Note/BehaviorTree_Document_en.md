@@ -144,6 +144,8 @@ Note: You can bind parameters to members of a component that does not exist on t
 However, you must ensure that you add components before the behavior tree starts initializing bindings, or manually call the behavior tree's parameter binding functions after adding components.  
 Even if the final bound component does not exist, it does not affect the entire behavior tree execution. When accessing this variable, you can return the default value of the type.  
 
+Middle-click the bind button, can test the BindingPath.  
+
 ## Custom Variable Type
 Can define your own variable type, which is recommended to inherit from `Megumin.Binding.RefVar<T>`.  
 Also can also create a VariableCreator, added to the `VariableCreator.AllCreator`.  
@@ -344,5 +346,5 @@ All changes to debug mode will not change the BehaviorTree asset, and the change
 - Discord: https://discord.gg/6VZbxZgTRU
 
 # Acknowledgements
-ZhangDi2018, Njyon,   
+Hazukiaoi, ZhangDi2018, Njyon,    
 

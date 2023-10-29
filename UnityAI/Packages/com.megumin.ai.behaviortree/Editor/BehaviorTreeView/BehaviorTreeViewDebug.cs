@@ -14,19 +14,19 @@ namespace Megumin.AI.BehaviorTree.Editor
     //调试相关代码
     public partial class BehaviorTreeView
     {
-        internal void OnPostTick()
+        internal void DebugRefresh()
         {
             var list = graphElements.ToList();
             foreach (var item in graphElements)
             {
                 if (item is BehaviorTreeNodeView nodeView)
                 {
-                    nodeView.OnPostTick();
+                    nodeView.DebugRefresh();
                 }
 
                 if (item is BehaviorTreeDecoratorView decoratorView)
                 {
-                    decoratorView.OnPostTick();
+                    decoratorView.DebugRefresh();
                 }
             }
         }

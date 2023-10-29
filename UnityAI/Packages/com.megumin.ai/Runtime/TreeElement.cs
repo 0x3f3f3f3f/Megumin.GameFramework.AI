@@ -35,7 +35,7 @@ namespace Megumin.AI
         [field: NonSerialized]
         public TraceListener TraceListener { [DebuggerStepThrough] get; [DebuggerStepThrough] set; } = null;
 
-        [Obsolete("use GetLogger instead")]
+        [Obsolete("use GetLogger instead", true)]
         [HideInCallstack]
         public virtual void Log(object message)
         {
@@ -64,7 +64,7 @@ namespace Megumin.AI
             }
             else
             {
-                return Tree?.GetLogger();
+                return Tree?.GetLogger(key);
             }
         }
 

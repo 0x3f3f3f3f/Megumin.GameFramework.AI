@@ -92,6 +92,9 @@ namespace Megumin.AI.BehaviorTree.Editor
             evt.menu.AppendActionTODO("Open Decorator View Script", a => { }, DropdownMenuAction.Status.Normal);
             evt.menu.AppendAction("Select Decorator Script", a => Decorator?.GetType().SelectScript(), DropdownMenuAction.Status.Normal);
             evt.menu.AppendSeparator();
+
+            evt.menu.AppendAction("Properties...", a => SODecorator?.OpenPropertyEditor(), DropdownMenuAction.Status.Normal);
+            evt.menu.AppendSeparator();
         }
 
         public BehaviorTreeNodeView NodeView { get; internal set; }

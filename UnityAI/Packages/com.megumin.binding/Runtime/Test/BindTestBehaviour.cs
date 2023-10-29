@@ -19,221 +19,257 @@ namespace Megumin.Binding.Test
         /// <summary>
         /// 属性绑定 ✅
         /// </summary>
-        public BindableValue<int> TestInt
-            = new BindableValue<int>() { BindingPath = "UnityEngine.GameObject/layer" };
+        public BindingVar<int> TestInt
+            = new() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
         /// 属性绑定 ✅
         /// </summary>
-        public BindableValue<string> GameObjectTag
-            = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/tag" };
+        public BindingVar<string> GameObjectTag
+            = new() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<object> TypeAdpterTestString2Object
-            = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/tag" };
+        public BindingVar<object> TypeAdpterTestString2Object
+            = new() { BindingPath = "UnityEngine.GameObject/tag" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<object> TypeAdpterTestInt2Object
-            = new BindableValue<object>() { BindingPath = "UnityEngine.GameObject/layer" };
+        public BindingVar<object> TypeAdpterTestInt2Object
+            = new() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<string> TypeAdpterTestInt2String
-            = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/layer" };
+        public BindingVar<string> TypeAdpterTestInt2String
+            = new() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<float> TypeAdpterTestInt2Float
-            = new BindableValue<float>() { BindingPath = "UnityEngine.GameObject/layer" };
+        public BindingVar<float> TypeAdpterTestInt2Float
+            = new() { BindingPath = "UnityEngine.GameObject/layer" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<string> TypeAdpterTestGameObject2String
-            = new BindableValue<string>() { BindingPath = "UnityEngine.Transform/gameObject" };
+        public BindingVar<string> TypeAdpterTestGameObject2String
+            = new() { BindingPath = "UnityEngine.Transform/gameObject" };
 
         /// <summary>
         /// 类型自动适配，自动转型 ✅
         /// </summary>
-        public BindableValue<string> TypeAdpterTestTestInnerClass2String
-            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField" };
+        public BindingVar<string> TypeAdpterTestTestInnerClass2String
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField" };
 
         /// <summary>
         /// 字段绑定 ✅
         /// </summary>
-        public BindableValue<string> CustomTestField
-            = new BindableValue<string>()
+        public BindingVar<string> CustomTestField
+            = new()
             {
-                DefaultValue = "MathFailure",
+                value = "MathFailure",
                 BindingPath = "Megumin.Binding.Test.CostomTest/MystringField1"
             };
 
         /// <summary>
         /// 接口字段绑定。接口是用来取得Component的，后续字符串成员不一定时接口的成员。 ✅
         /// </summary>
-        public BindableValue<string> CustomTestFieldByInterface
-            = new BindableValue<string>()
+        public BindingVar<string> CustomTestFieldByInterface
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface",
+                value = "MathFailure_CustomTestFieldByInterface",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringField1"
             };
 
         /// <summary>
         /// 接口字段绑定。测试绑定为接口但是无法找到组件。 预期结果： 无法解析，但是不能造成崩溃。 ✅
         /// </summary>
-        public BindableValue<string> CustomTestFieldByInterface2
-            = new BindableValue<string>()
+        public BindingVar<string> CustomTestFieldByInterface2
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface2",
+                value = "MathFailure_CustomTestFieldByInterface2",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface2/MystringField1"
             };
 
         /// <summary>
         /// 接口字段绑定。测试绑定为非组件非静态类型。 预期结果： 无法解析，但是不能造成崩溃。 ✅
         /// </summary>
-        public BindableValue<string> CustomTestFieldByCostomTestClass
-            = new BindableValue<string>()
+        public BindingVar<string> CustomTestFieldByCostomTestClass
+            = new()
             {
-                DefaultValue = "MathFailure_CostomTestClass",
+                value = "MathFailure_CostomTestClass",
                 BindingPath = "Megumin.Binding.Test.CostomTestClass/MystringField1"
             };
 
         /// <summary>
         /// 多级成员绑定 ✅
         /// </summary>
-        public BindableValue<string> GameObjectTransformTag
-            = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/transform/tag" };
+        public BindingVar<string> GameObjectTransformTag
+            = new() { BindingPath = "UnityEngine.GameObject/transform/tag" };
 
         /// <summary>
         /// 多级成员绑定 ✅
         /// </summary>
-        public BindableValue<string> MyTestInnerClass
-            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
+        public BindingVar<string> MyTestInnerClass
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MystringField1" };
 
         /// <summary>
-        /// 索引器绑定
+        /// 索引器绑定 ✅
         /// </summary>
-        public BindableValue<int> MyTestIndexer
-            = new BindableValue<int>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]" };
+        public BindingVar<int> MyTestIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField[10]" };
+
+        /// <summary>
+        /// Array索引器绑定 ✅
+        /// </summary>
+        public BindingVar<int> ArrayIntIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ArrayIntTest[1]" };
+
+        /// <summary>
+        /// Array索引器绑定 ✅
+        /// </summary>
+        public BindingVar<string> ArrayStringIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ArrayStringTest[1]" };
+
+        /// <summary>
+        /// List索引器绑定 ✅
+        /// </summary>
+        public BindingVar<int> ListIntIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ListIntTest[1]" };
+
+        /// <summary>
+        /// List索引器绑定 ✅
+        /// </summary>
+        public BindingVar<string> ListStringIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/ListStringTest[1]" };
+
+        /// <summary>
+        /// 字典索引器绑定 ✅
+        /// </summary>
+        public BindingVar<int> DicIntIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/Dic_String_IntTest[b]" };
+
+        /// <summary>
+        /// 字典索引器绑定 ✅
+        /// </summary>
+        public BindingVar<string> DicStringIndexer
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/Dic_Int_StringTest[1]" };
 
         /// <summary>
         /// 多级成员绑定 ✅
         /// </summary>
-        public BindableValue<string> MyTestInnerClassDeep2
-            = new BindableValue<string>() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
+        public BindingVar<string> MyTestInnerClassDeep2
+            = new() { BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MyTestInnerClassField/MyTestInnerClassDeep2/MystringField1" };
 
 
         /// <summary>
         /// 静态类型绑定 ✅
         /// </summary>
-        public BindableValue<string> ApplicationVersion
-            = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };
+        public BindingVar<string> ApplicationVersion
+            = new() { BindingPath = "UnityEngine.Application/version" };
 
         /// <summary>
         /// 静态类型绑定 ✅
         /// </summary>
-        public BindableValue<float> TimeFixedDeltaTime
-            = new BindableValue<float>() { BindingPath = "UnityEngine.Time/fixedDeltaTime" };
+        public BindingVar<float> TimeFixedDeltaTime
+            = new() { BindingPath = "UnityEngine.Time/fixedDeltaTime" };
 
         /// <summary>
         /// 绑定非序列化类型 ✅
         /// </summary>
-        public BindableValue<DateTimeOffset> DateTimeOffsetOffset
-            = new BindableValue<DateTimeOffset>()
+        public BindingVar<DateTimeOffset> DateTimeOffsetOffset
+            = new()
             {
-                DefaultValue = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default),
+                value = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default),
                 BindingPath = "System.DateTimeOffset/Now",
             };
 
         /// <summary>
         /// 绑定非序列化类型 ✅
         /// </summary>
-        public BindableValue<Type> BindType
-            = new BindableValue<Type>()
+        public BindingVar<Type> BindType
+            = new()
             {
-                DefaultValue = typeof(System.Version),
+                value = typeof(System.Version),
                 BindingPath = "System.DateTimeOffset",
             };
 
         /// <summary>
         /// 绑定非序列化类型 ✅
         /// </summary>
-        public BindableValue<Type> BindTypeProperty
-            = new BindableValue<Type>()
+        public BindingVar<Type> BindTypeProperty
+            = new()
             {
-                DefaultValue = typeof(System.Version),
+                value = typeof(System.Version),
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/TypeProperty1",
             };
 
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
-        public BindableValue<string> BindMethodArgs0
-            = new BindableValue<string>()
+        public BindingVar<string> BindMethodArgs0
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs0",
+                value = "MathFailure_CustomTestFieldByInterface_BindMethodArgs0",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethod1()"
             };
 
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
-        public BindableValue<string> BindMethodArgs1
-            = new BindableValue<string>()
+        public BindingVar<string> BindMethodArgs1
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1",
+                value = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethod2()"
             };
 
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
-        public BindableValue<string> BindMethodArgs1Set
-            = new BindableValue<string>()
+        public BindingVar<string> BindMethodArgs1Set
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1Set",
+                value = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1Set",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethodSet()"
             };
 
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
-        public BindableValue<string> BindMethodArgs1SetReturnString
-            = new BindableValue<string>()
+        public BindingVar<string> BindMethodArgs1SetReturnString
+            = new()
             {
-                DefaultValue = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1SetReturnString",
+                value = "MathFailure_CustomTestFieldByInterface_BindMethodArgs1SetReturnString",
                 BindingPath = "Megumin.Binding.Test.ICostomTestInterface/MystringMethodSetReturnString()"
             };
 
         /// <summary>
         /// 绑定方法（0个参数，或者1个参数的某些特殊方法） ✅
         /// </summary>
-        public BindableValue<string> Test1
-            = new BindableValue<string>() { BindingPath = "UnityEngine.GameObject/ToString()" };
+        public BindingVar<string> Test1
+            = new() { BindingPath = "UnityEngine.GameObject/ToString()" };
 
         /// <summary>
         /// 绑定泛型方法 TODO
         /// </summary>
-        public BindableValue<string> Test2
-            = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };
+        public BindingVar<string> Test2
+            = new() { BindingPath = "UnityEngine.Application/version" };
 
         /// <summary>
         /// 绑定扩展方法 TODO
         /// </summary>
-        public BindableValue<string> Test3
-           = new BindableValue<string>() { BindingPath = "UnityEngine.Application/version" };
+        public BindingVar<string> Test3
+           = new() { BindingPath = "UnityEngine.Application/version" };
 
         [SerializeReference]
-        public List<BindableValueInt> IBindables = new List<BindableValueInt>();
+        internal List<BindableValueInt> IBindables = new();
 
         [SerializeReference]
-        public List<IVariable> InterfaceTest = new List<IVariable>()
+        public List<IVariable> InterfaceTest = new()
         {
             new BindableValueInt() { BindingPath = "UnityEngine.GameObject/layer" },
             new BindableValueString() { BindingPath = "UnityEngine.GameObject/tag" },
@@ -304,24 +340,24 @@ namespace Megumin.Binding.Test
         public IVariable<int> mydata2 = new BindableValueInt();
 
         [SerializeReference]
-        public IVariable<int> mydata3 = new BindableValue<int>();
+        public IVariable<int> mydata3 = new BindingVar<int>();
 
         [SerializeReference]
-        public IVariable mydata4 = new BindableValue<int>();
+        public IVariable mydata4 = new BindingVar<int>();
 
         [SerializeReference]
         public List<IVariable> DatasList1 = new List<IVariable>()
         {
-            new BindableValueInt(){ Value = 101},
-            new BindableValue<int>{ Value = 102},
-            new BindableValue<string>{Value = "MydataList_102"}
+            new BindableValueInt(){ value = 101},
+            new BindingVar<int>{ value = 102},
+            new BindingVar<string>{value = "MydataList_102"}
         };
 
         [SerializeReference]
         public List<IVariable<int>> DatasList2 = new List<IVariable<int>>()
         {
-            new BindableValueInt(){ Value = 101},
-            new BindableValue<int>{ Value = 102},
+            new BindableValueInt(){ value = 101},
+            new BindingVar<int>{ value = 102},
         };
 
 #endif
@@ -335,7 +371,7 @@ namespace Megumin.Binding.Test
             GUILayout.BeginArea(new Rect(100, Screen.height / 2, Screen.width - 200, Screen.height / 2));
             GUILayout.Label($"DebugString  :  {debugString}", GUILayout.ExpandWidth(true));
 
-            List<(IBindingParseable, string Name)> testBind = new List<(IBindingParseable, string Name)>();
+            List<(IBindingParseable, string Name)> testBind = new();
 
             var fields = this.GetType().GetFields();
 
