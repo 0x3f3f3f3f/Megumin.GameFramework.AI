@@ -5,9 +5,9 @@
 - BindingPath 语法:  (类型：组件类|静态类|接口)/成员/....../成员/成员。  
 - BindingPath 区分大小写。  
 
-+ 常用类型是 `RefVar<T>`
-+ 解析方法是 `ParseBindingResult ParseBinding(object bindInstance, bool force = false, object options = null);`
-+ 解析器类是 `BindingParser` , `UnityBindingParser`
++ 常用类型是 `RefVar<T>`，`BindingVar<T>`
++ 解析方法是 `CreateDelegateResult ParseBinding(object bindInstance, bool force = false, object options = null);`
++ 解析器类是 `BindingParser`，`UnityBindingParser`
 
 ```cs
 [Flags]
@@ -20,9 +20,38 @@ public enum CreateDelegateResult
     Get = 1 << 0,
     Set = 1 << 1,
     Both = Get | Set,
+    Method = 1 << 2,
 }
 ```
 
+示例：
+```cs
+//绑定到GameObject.layer
+public BindingVar<int> BindLayer = new() { BindingPath = "UnityEngine.GameObject/layer" };
+public BindingVar<float> TimeFixedDeltaTime = new() { BindingPath = "UnityEngine.Time/fixedDeltaTime" };
+
+public BindingVar<DateTimeOffset> DateTimeOffsetOffset
+    = new()
+    {
+        value = new DateTimeOffset(2000, 1, 1, 0, 0, 0, default),
+        BindingPath = "System.DateTimeOffset/Now",
+    };
+
+public void Test()
+{
+    //Parse
+    BindLayer.ParseBinding(gameObject);
+
+    //如果绑定的成员是静态的，ParseBinding时传入参数被忽略，即使是null，仍然可以解析成功。
+    TimeFixedDeltaTime.ParseBinding(gameObject);
+    DateTimeOffsetOffset.ParseBinding(null);
+
+    //Get Layer
+    int layer = BindLayer;
+    //Set Layer
+    BindLayer = LayerMask.NameToLayer("Player");
+}
+```
 ## 支持列表
 - [x] 绑定字段
 - [x] 绑定属性
@@ -52,6 +81,8 @@ public enum CreateDelegateResult
 左键点击齿轮，快速绑定。  
 右键点击齿轮，全局绑定。
 中键点击齿轮，测试绑定。
+
+更多的时候，也可以手动填写字符串，应对绑定按钮无法显示的情况。  
 
 ## 性能
 - 最好只绑定一个级别成员，深度越大，性能越低。
