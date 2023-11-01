@@ -380,27 +380,30 @@ namespace Megumin.Reflection
         /// <param name="logworning"></param>
         static void AddToDic(Dictionary<string, Type> dic, Type type, bool logworning = false)
         {
-            //可能存在同名类型 internal,internal Component类型仍然可以挂在gameobject上，所以也要缓存。
-            if (dic.TryGetValue(type.FullName, out var old))
+            lock (dic)
             {
-                if (old != type && old.IsPublic.CompareTo(type.IsPublic) <= 0)
+                //可能存在同名类型 internal,internal Component类型仍然可以挂在gameobject上，所以也要缓存。
+                if (dic.TryGetValue(type.FullName, out var old))
                 {
-                    //Public 优先 。
-                    //后添加的替换先添加的。
-                    //Unity比System优先，程序集字母顺序unity靠后，自动满足条件。
+                    if (old != type && old.IsPublic.CompareTo(type.IsPublic) <= 0)
+                    {
+                        //Public 优先 。
+                        //后添加的替换先添加的。
+                        //Unity比System优先，程序集字母顺序unity靠后，自动满足条件。
+                        dic[type.FullName] = type;
+                    }
+
+                    if (LogCacheWorning || logworning)
+                    {
+                        Debug.LogWarning($"Key already have  [{type.FullName}]" +
+                        $"\n    {type.Assembly.FullName}" +
+                        $"\n    {old.Assembly.FullName}");
+                    }
+                }
+                else
+                {
                     dic[type.FullName] = type;
                 }
-
-                if (LogCacheWorning || logworning)
-                {
-                    Debug.LogWarning($"Key already have  [{type.FullName}]" +
-                    $"\n    {type.Assembly.FullName}" +
-                    $"\n    {old.Assembly.FullName}");
-                }
-            }
-            else
-            {
-                dic[type.FullName] = type;
             }
         }
 
@@ -483,6 +486,8 @@ namespace Megumin.Reflection
                 }
             }
 
+            UnityEngine.Profiling.Profiler.BeginSample("CacheAssembly");
+
             var assemblyAllType = assembly.GetTypes();
             foreach (var extype in assemblyAllType)
             {
@@ -505,6 +510,8 @@ namespace Megumin.Reflection
                 //#endif
 
             }
+
+            UnityEngine.Profiling.Profiler.EndSample();
 
             return true;
         }
@@ -876,19 +883,61 @@ namespace Megumin.Reflection
         }
 
         /// <summary>
-        /// TODO,编辑模式初始化时加个进度条
+        /// 异步缓存所有类型
         /// </summary>
         /// <param name="forceRecache"></param>
-        /// <param name="assemblyFilter">过滤掉一些不常用程序集，返回true时程序集不会被缓存</param>
+        /// <param name="assemblyFilter"></param>
         /// <returns></returns>
         public static Task CacheAllTypesAsync(bool forceRecache = false, Func<Assembly, bool> assemblyFilter = null)
         {
+
             return Task.Run(() => { CacheAllTypes(forceRecache, assemblyFilter); });
+            
+            //测试发现，下面的代码反而更慢，没有找到原因
+            //lock (cachelock)
+            //{
+            //    //using ProgressBarScope sope = new("CacheAllTypes");
+
+            //    if (forceRecache)
+            //    {
+            //        CachedAssemblyName.Clear();
+            //    }
+
+            //    if (CacheTypeInit == false || forceRecache)
+            //    {
+            //        UnityEngine.Profiling.Profiler.BeginSample("Cache AppDomain Assemblies Async");
+
+            //        var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName);
+
+            //        //var debugabs = assemblies.ToArray();
+
+            //        List<Task<bool>> alltask = new List<Task<bool>>();
+
+            //        foreach (var assembly in assemblies)
+            //        {
+            //            if (assemblyFilter?.Invoke(assembly) ?? false)
+            //            {
+            //                continue;
+            //            }
+
+            //            var task = CacheAssemblyAsync(assembly, forceRecache);
+            //            alltask.Add(task);
+            //        }
+
+            //        CacheTypeInit = true;
+
+            //        UnityEngine.Profiling.Profiler.EndSample();
+
+            //        return Task.WhenAll(alltask);
+            //    }
+
+            //    return Task.CompletedTask;
+            //}
         }
 
-        public static Task CacheAssemblyAsync(Assembly assembly, bool forceRecache = false)
+        public static Task<bool> CacheAssemblyAsync(Assembly assembly, bool forceRecache = false)
         {
-            return Task.Run(() => { CacheAssembly(assembly, forceRecache); });
+            return Task.Run(() => { return CacheAssembly(assembly, forceRecache); });
         }
 
         /// <summary>
