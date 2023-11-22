@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Megumin.AI.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -369,6 +370,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             var edit = root.Q<ToolbarMenu>("edit");
             edit.menu.AppendAction("HotTypeAlias", a => HotTypeAlias(true), a => DropdownMenuAction.Status.Normal);
+            edit.menu.AppendAction("LogNodeType", a => LogNodeType(), a => DropdownMenuAction.Status.Normal);
 
             var prefs = root.Q<ToolbarMenu>("prefs");
 
@@ -449,6 +451,53 @@ namespace Megumin.AI.BehaviorTree.Editor
                 {
                     System.Diagnostics.Process.Start("https://github.com/KumoKyaku/Megumin.AI.Samples/milestones");
                 }, a => DropdownMenuAction.Status.Normal);
+        }
+
+        public void LogNodeType()
+        {
+            var actions = Megumin.Reflection.TypeCache.GetTypesDerivedFrom<BTActionNode>().Where(IsNodeType);
+            var parents = Megumin.Reflection.TypeCache.GetTypesDerivedFrom<BTParentNode>().Where(IsNodeType);
+            var conditions = Megumin.Reflection.TypeCache.GetTypesDerivedFrom<IConditionDecorator>().Where(IsNodeType);
+
+            ///是不是真正的节点类型
+            static bool IsNodeType(Type elem)
+            {
+                if (elem.IsAbstract)
+                {
+                    return false;
+                }
+
+                if (elem.IsInterface)
+                {
+                    return false;
+                }
+
+                if (elem.IsGenericTypeDefinition)
+                {
+                    return false;
+                }
+
+                if (elem.IsGenericType && elem.IsConstructedGenericType == false)
+                {
+                    return false;
+                }
+
+                return elem.IsClass;
+            }
+
+            static string LogDetail(IEnumerable<Type> Types)
+            {
+                string types = "\n";
+                foreach (var item in Types)
+                {
+                    types += "    "+ item.FullName + "\n";
+                }
+                return types;
+            }
+
+            Debug.Log($"ActionNode:{actions.Count()}    {LogDetail(actions)}");
+            Debug.Log($"ParentNode:{parents.Count()}    {LogDetail(parents)}");
+            Debug.Log($"ConditionDecorator:{conditions.Count()}    {LogDetail(conditions)}");
         }
 
         public void RemoveEditorFromProject()
