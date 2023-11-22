@@ -83,7 +83,7 @@ namespace Megumin.AI.BehaviorTree
         bool CheckCondition(object options = null);
     }
 
-    internal interface IPreDecorator : IDecorator
+    public interface IPreDecorator : IDecorator
     {
         /// <summary>
         /// 在Node Enter 之前被调用。
@@ -101,7 +101,7 @@ namespace Megumin.AI.BehaviorTree
         void OnPreNodeTick(object options = null);
     }
 
-    internal interface IPostDecorator : IDecorator
+    public interface IPostDecorator : IDecorator
     {
         /// <summary>
         /// 在 Node Exit 之后被调用。只有这样才能实现Loop装饰器。
@@ -113,7 +113,7 @@ namespace Megumin.AI.BehaviorTree
         Status AfterNodeExit(Status result, object options = null);
     }
 
-    internal interface IAbortDecorator : IDecorator
+    public interface IAbortDecorator : IDecorator
     {
         /// <summary>
         /// 在Abort函数中，OnAbort函数之后被调用

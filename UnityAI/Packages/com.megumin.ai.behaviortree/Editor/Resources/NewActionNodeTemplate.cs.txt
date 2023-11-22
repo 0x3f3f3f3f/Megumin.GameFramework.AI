@@ -1,0 +1,34 @@
+﻿using System;
+using System.ComponentModel;
+using Megumin;
+using Megumin.Binding;
+using Megumin.Perception;
+using Megumin.Reflection;
+using Megumin.Serialization;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace Megumin.AI.BehaviorTree
+{
+    [Serializable]
+    [DisplayName("#SCRIPTNAME#")]
+    [Category("Custom")]
+    //[AddComponentMenu("#SCRIPTNAME#")]
+    //[Color(1f, 47f / 51f, 0.0156862754f, 1f)]
+    //[Icon("")]
+    //[SerializationAlias("Megumin.AI.BehaviorTree.#SCRIPTNAME#")]
+    //[HelpURL(URL.WikiDecorator + "#SCRIPTNAME#")]
+    public sealed class #SCRIPTNAME# : BTActionNode
+    {
+        public RefVar_Float Float = new() { value = 5.0f };
+
+        public bool Success = true;
+        protected override Status OnTick(BTNode from, object options = null)
+        {
+            return Success ? Status.Succeeded : Status.Failed;
+        }
+    }
+}
+
+
+

@@ -1,0 +1,40 @@
+﻿using System;
+using System.Diagnostics;
+
+namespace Megumin.Binding
+{
+    [Serializable]
+    public class #SCRIPTNAME#
+    {
+
+    }
+
+    [Serializable]
+    [DebuggerTypeProxy(typeof(DebugView))]
+    public class RefVar_#SCRIPTNAME# : RefVar<#SCRIPTNAME#> { }
+
+    public class VariableCreator_#SCRIPTNAME# : VariableCreator
+    {
+        public override string Name { get; set; } = "Custom/#SCRIPTNAME#";
+
+        public override IRefable Create()
+        {
+            return new RefVar_#SCRIPTNAME#() { RefName = "#SCRIPTNAME#" };
+        }
+
+#if UNITY_EDITOR
+        [UnityEditor.InitializeOnLoadMethod]
+#endif
+        //[UnityEngine.RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void AddToAllCreator()
+        {
+            VariableCreator.AllCreator.Add(new VariableCreator_#SCRIPTNAME#());
+            //Or insert.
+            //VariableCreator.AllCreator.Insert(0,new VariableCreator_#SCRIPTNAME#());
+        }
+    }
+
+}
+
+
+
