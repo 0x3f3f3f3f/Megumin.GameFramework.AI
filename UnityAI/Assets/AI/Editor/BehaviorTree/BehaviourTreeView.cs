@@ -30,9 +30,9 @@ namespace Megumin.GameFramework.AI.BehaviorTree.Editor
 
             //this.SetupZoom(0.5f, 2f,0.8f,1f);
 
-            MiniMap child = new MiniMap();
-            child.name = "minimap";
-            this.AddElement(child);
+            //MiniMap child = new MiniMap();
+            //child.name = "minimap";
+            //this.AddElement(child);
         }
 
         public Node CreateNode()
