@@ -2007,6 +2007,8 @@ MonoBehaviour:
         Enabled: 0
         Value: []
   ExcludeSelf: 1
+  ExcludeAncestorOrSelf: 1
+  ExcludeDescendantOrSelf: 1
   InChildrenSensors:
   - {fileID: 0}
   InSensor: []

@@ -51,7 +51,7 @@
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "com.megumin.common": "1.0.4"
+        "com.megumin.common": "1.0.7"
       }
     },
     "com.megumin.referenceviewer": {
