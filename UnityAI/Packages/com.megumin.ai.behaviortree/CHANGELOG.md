@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!--
 ## [Unreleased] - YYYY-MM-NN
 
-### Added   
+### Added  
 ### Changed  
 ### Deprecated  
 ### Removed  
@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - YYYY-MM-NN
 
 ## [1.3.0]
+### Added  
+- 节点增加异步执行模式
+  
 ### Changed  
 - BTNode.OnTick虚方法默认返回值由Succeeded改为Running。
 

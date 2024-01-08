@@ -155,6 +155,15 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
+        /// 异步Tick。需要设置<seealso cref="TickMode"/>。
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ValueTask<bool> OnTickAsync(BTNode from, object options = null)
+        {
+            return new ValueTask<bool>(result: true);
+        }
+
+        /// <summary>
         /// 根据调用节点返回不同的结果值，使调用节点忽略当前节点。
         /// <para/> 父节点是Selctor 返回Failed，可以允许Selctor 跳过当前节点继续执行下个节点而是直接失败。
         /// </summary>

@@ -71,6 +71,18 @@ namespace Megumin.AI
         //IsCompleted => State == Status.Succeeded || State == Status.Failed;
     }
 
+    /// <summary>
+    /// 核心执行模式，轮询还是异步。用于Node，State等执行方式。
+    /// </summary>
+    [Flags]
+    public enum ExcuteCoreMode
+    {
+        None = 0,
+        Tick = 1 << 1,
+        Async = 1 << 2,
+        Both = Tick | Async,
+    }
+
     public enum CompletedResult
     {
         Succeeded = 1,

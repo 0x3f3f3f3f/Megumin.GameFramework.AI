@@ -136,12 +136,12 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 允许
+        /// 运行当前节点
         /// </summary>
         /// <param name="from"></param>
         /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Running(BTNode from, object options = null)
+        protected virtual void Running(BTNode from, object options = null)
         {
             //Enter Exit函数理论上不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
@@ -161,7 +161,7 @@ namespace Megumin.AI.BehaviorTree
             //这里额外判断Running，防止Enter过程中已经完成。
             if (State == Status.Running)
             {
-                State = OnTick(from, options);
+                TickCore(from, options);
             }
 
             if (IsCompleted)
@@ -171,6 +171,65 @@ namespace Megumin.AI.BehaviorTree
                     //与enter互斥对应
                     //如果没有调用Enter，那么应不应该调用Exit？
                     Exit(options);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否同时使用TickTask。默认值时<see cref="ExcuteCoreMode.Tick"/>。
+        /// 当<see cref="ExcuteCoreMode.Both"/>，任意一个完成时，节点完成。同时完成时，使用TickTask结果。
+        /// </summary>
+        public virtual ExcuteCoreMode TickMode => ExcuteCoreMode.Tick;
+
+        /// <summary>
+        /// 异步Tick任务，由<see cref="OnTickAsync(BTNode, object)"/>创建
+        /// </summary>
+        internal protected ValueTask<bool> TickTask;
+
+        /// <summary>
+        /// <see cref="TickTask"/>本次运行是不是已经创建了
+        /// </summary>
+        internal protected bool IsTickTaskCreated { get; set; } = false;
+
+        /// <summary>
+        /// 这个方法用于扩展异步Tick。
+        /// 当OnTick，TickTask，任意一个完成时，节点完成。同时完成时，使用TickTask结果。
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="options"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual void TickCore(BTNode from, object options = null)
+        {
+            if (TickMode == ExcuteCoreMode.Tick)
+            {
+                State = OnTick(from, options);
+            }
+            else if (TickMode == ExcuteCoreMode.Both)
+            {
+                State = OnTick(from, options);
+
+                if (IsTickTaskCreated == false)
+                {
+                    TickTask = OnTickAsync(from, options);
+                    IsTickTaskCreated = true;
+                }
+
+                if (TickTask.IsCompleted)
+                {
+                    State = TickTask.Result ? Status.Succeeded : Status.Failed;
+                }
+            }
+            else if (TickMode == ExcuteCoreMode.Async)
+            {
+                if (IsTickTaskCreated == false)
+                {
+                    TickTask = OnTickAsync(from, options);
+                    IsTickTaskCreated = true;
+                }
+
+                if (TickTask.IsCompleted)
+                {
+                    State = TickTask.Result ? Status.Succeeded : Status.Failed;
                 }
             }
         }
@@ -208,6 +267,9 @@ namespace Megumin.AI.BehaviorTree
             IsExecutedPreDecorator = false;
             IsExecutedEnter = false;
             IsInnerRunning = false;
+
+            IsTickTaskCreated = false;
+            TickTask = default;
         }
 
         /// <summary>
