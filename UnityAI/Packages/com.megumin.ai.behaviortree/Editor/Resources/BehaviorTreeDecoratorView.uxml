@@ -1,24 +1,28 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Packages/com.megumin.ai/Editor/BehaviorTree/Resources/BehaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BehaviorTreeDecoratorView" />
-    <ui:VisualElement name="contentContainer" class="border decoratorCenter" style="flex-direction: row;">
-        <ui:VisualElement name="decoratorBody" style="flex-grow: 1;">
-            <ui:VisualElement name="titleBar" style="flex-direction: row; flex-grow: 1; align-items: center;">
-                <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
-                <ui:Label text="I" display-tooltip-when-elided="true" name="invertMarker" tooltip="Condition result is invert." class="invertMarker" />
-                <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" class="title" />
+    <Style src="project://database/Packages/com.megumin.ai.behaviortree/Editor/Resources/BehaviorTreeDecoratorView.uss?fileID=7433441132597879392&amp;guid=cb9b1b6b6642f954f8d6b3ea1d580658&amp;type=3#BehaviorTreeDecoratorView" />
+    <ui:VisualElement name="contentContainer" class="border">
+        <ui:VisualElement name="decoratorCenter" class="decoratorCenter" style="flex-direction: row;">
+            <ui:VisualElement name="decoratorBody" style="flex-grow: 1;">
+                <ui:VisualElement name="titleBar" style="flex-direction: row; flex-grow: 1; align-items: center;">
+                    <ui:Button display-tooltip-when-elided="true" name="icon" class="treeElementIcon" />
+                    <ui:Label text="I" display-tooltip-when-elided="true" name="invertMarker" tooltip="Condition result is invert." class="invertMarker" />
+                    <ui:Label text="Label" display-tooltip-when-elided="true" name="title-label" class="title" />
+                </ui:VisualElement>
+                <ui:VisualElement name="decoratorDetailContainer" class="decoratorDetailContainer">
+                    <ui:Label text="This is detail" display-tooltip-when-elided="true" name="decoratorDetail" class="decoratorDetail" />
+                </ui:VisualElement>
+                <ui:VisualElement name="expendContainer" class="expendContainer" />
             </ui:VisualElement>
-            <ui:VisualElement name="decoratorDetailContainer" class="decoratorDetailContainer">
-                <ui:Label text="This is detail" display-tooltip-when-elided="true" name="decoratorDetail" class="decoratorDetail" />
+            <ui:VisualElement name="markerContainer" class="markerContainer">
+                <ui:Label text="C↓" display-tooltip-when-elided="true" name="cMarker" class="marker markerLabel cMarker" />
+                <ui:Label text="F↓" display-tooltip-when-elided="true" name="fMarker" class="marker markerLabel fMarker" />
+                <ui:Label text="B↑" display-tooltip-when-elided="true" name="bMarker" class="marker markerLabel bMarker" />
+                <ui:Label text="A↑" display-tooltip-when-elided="true" name="aMarker" class="marker markerLabel aMarker" />
+            </ui:VisualElement>
+            <ui:VisualElement name="toprightBadgeContainer" picking-mode="Ignore" class="badgeContainer top right">
+                <ui:Button display-tooltip-when-elided="true" name="abortType" class="abortType" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="markerContainer" class="markerContainer">
-            <ui:Label text="C↓" display-tooltip-when-elided="true" name="cMarker" class="marker markerLabel cMarker" />
-            <ui:Label text="F↓" display-tooltip-when-elided="true" name="fMarker" class="marker markerLabel fMarker" />
-            <ui:Label text="B↑" display-tooltip-when-elided="true" name="bMarker" class="marker markerLabel bMarker" />
-            <ui:Label text="A↑" display-tooltip-when-elided="true" name="aMarker" class="marker markerLabel aMarker" />
-        </ui:VisualElement>
-        <ui:VisualElement name="toprightBadgeContainer" picking-mode="Ignore" class="badgeContainer top right">
-            <ui:Button display-tooltip-when-elided="true" name="abortType" class="abortType" />
-        </ui:VisualElement>
+        <ui:VisualElement name="expendContainer" class="expendContainer" />
     </ui:VisualElement>
 </ui:UXML>

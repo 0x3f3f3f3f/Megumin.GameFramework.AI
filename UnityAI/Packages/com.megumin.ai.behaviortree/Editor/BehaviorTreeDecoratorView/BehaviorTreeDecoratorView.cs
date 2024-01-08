@@ -17,11 +17,14 @@ namespace Megumin.AI.BehaviorTree.Editor
     {
         public override VisualElement contentContainer => ContentContainer;
         public VisualElement ContentContainer { get; private set; }
+        public VisualElement Body { get; private set; }
         public Button Icon { get; private set; }
         public Label InvertMarker { get; private set; }
         public Button AbortTypeButton { get; private set; }
         public Label Title { get; }
         public VisualElement DetailContainer { get; private set; }
+        public VisualElement BodyExpendContainer { get; private set; }
+        public VisualElement ContentExpendContainer { get; private set; }
         public Label Detail { get; private set; }
         public VisualElement CMarker { get; private set; }
         public VisualElement FMarker { get; private set; }
@@ -36,6 +39,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             visualTree.CloneTree(this);
 
             ContentContainer = this.Q("contentContainer");
+            Body = this.Q("decoratorBody");
             Icon = this.Q<Button>("icon", "treeElementIcon");
             InvertMarker = this.Q<Label>("invertMarker");
             AbortTypeButton = this.Q<Button>("abortType", "abortType");
@@ -43,6 +47,9 @@ namespace Megumin.AI.BehaviorTree.Editor
 
             DetailContainer = this.Q("decoratorDetailContainer");
             Detail = this.Q<Label>("decoratorDetail");
+
+            BodyExpendContainer = Body.Q("expendContainer");
+            ContentExpendContainer = ContentContainer.Q("expendContainer");
 
             CMarker = this.Q("cMarker");
             FMarker = this.Q("fMarker");

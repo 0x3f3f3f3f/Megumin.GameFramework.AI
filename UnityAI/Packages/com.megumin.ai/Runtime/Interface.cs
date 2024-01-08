@@ -214,6 +214,12 @@ namespace Megumin.AI
     {
         void SetDebugDirty();
     }
+
+    public interface IViewBodyExpandable 
+    {
+        VisualElement GetBodyExpend();
+    }
+
 }
 
 
