@@ -892,7 +892,7 @@ namespace Megumin.Reflection
         {
 
             return Task.Run(() => { CacheAllTypes(forceRecache, assemblyFilter); });
-            
+
             //测试发现，下面的代码反而更慢，没有找到原因
             //lock (cachelock)
             //{
@@ -1028,6 +1028,20 @@ namespace Megumin.Reflection
                     }
                 }
             }
+
+#if UNITY_2019_1_OR_NEWER
+            var moveFromAttri = type.GetCustomAttribute<UnityEngine.Scripting.APIUpdating.MovedFromAttribute>();
+            if (moveFromAttri != null)
+            {
+                var dataField = moveFromAttri.GetType().GetField("data", BindingFlags.NonPublic | BindingFlags.Instance);
+                var data = dataField.GetValue(moveFromAttri);
+                var className = data.GetType().GetField("className", BindingFlags.Public | BindingFlags.Instance).GetValue(data);
+                var nameSpace = data.GetType().GetField("nameSpace", BindingFlags.Public | BindingFlags.Instance).GetValue(data);
+                var assembly = data.GetType().GetField("assembly", BindingFlags.Public | BindingFlags.Instance).GetValue(data);
+                hotType[$"{nameSpace}.{className}"] = type;
+            }
+#endif
+
         }
 
         /// <summary>
