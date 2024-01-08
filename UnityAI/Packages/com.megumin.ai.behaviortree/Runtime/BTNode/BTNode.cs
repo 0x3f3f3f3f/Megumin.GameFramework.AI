@@ -119,6 +119,16 @@ namespace Megumin.AI.BehaviorTree
         protected virtual void OnEnter(object options = null) { }
 
         /// <summary>
+        /// 第一次执行进入节点,并返回状态值
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        protected virtual Status OnEnter2(object options = null) 
+        {
+            return State;
+        }
+
+        /// <summary>
         /// 退出节点时调用
         /// </summary>
         /// <remarks>

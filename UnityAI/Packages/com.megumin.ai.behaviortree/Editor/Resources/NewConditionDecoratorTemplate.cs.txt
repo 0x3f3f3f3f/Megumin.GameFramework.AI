@@ -1,0 +1,33 @@
+﻿using System;
+using System.ComponentModel;
+using Megumin;
+using Megumin.Binding;
+using Megumin.Perception;
+using Megumin.Reflection;
+using Megumin.Serialization;
+using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.Serialization;
+
+namespace Megumin.AI.BehaviorTree
+{
+    [Serializable]
+    [DisplayName("#SCRIPTNAME#")]
+    [Category("Custom")]
+    //[AddComponentMenu("#SCRIPTNAME#")]
+    //[Color(1f, 47f / 51f, 0.0156862754f, 1f)]
+    //[Icon("")]
+    //[SerializationAlias("Megumin.AI.BehaviorTree.#SCRIPTNAME#")]
+    //[MovedFrom(true, sourceNamespace: "Megumin.AI.BehaviorTree", sourceAssembly: null, sourceClassName: "#SCRIPTNAME#")]
+    //[HelpURL(URL.WikiDecorator + "#SCRIPTNAME#")]
+    public sealed class #SCRIPTNAME# : ConditionDecorator
+    {
+        protected override bool OnCheckCondition(object options = null)
+        {
+            return true;
+        }
+    }
+}
+
+
+

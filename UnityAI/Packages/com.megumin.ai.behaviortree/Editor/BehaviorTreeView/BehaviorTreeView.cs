@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
-    public partial class BehaviorTreeView : GraphView, IDisposable
+    public partial class BehaviorTreeView : GraphView, IDisposable, ITreeView
     {
         public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
 
@@ -612,7 +612,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             ReloadAllNodeView();
         }
 
-        internal void RefreshAllNodeEnabled()
+        public void RefreshAllNodeEnabled()
         {
             foreach (var item in graphElements)
             {

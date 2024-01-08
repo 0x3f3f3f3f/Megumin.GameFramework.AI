@@ -32,6 +32,7 @@
                 <ui:VisualElement name="detailContainer" class="detailContainer">
                     <ui:Label text="Wait: waitTime. Left: 0.5" display-tooltip-when-elided="true" name="detail" class="detail" />
                 </ui:VisualElement>
+                <ui:VisualElement name="expendContainer" class="expendContainer" />
                 <ui:VisualElement name="toprightBadgeContainer" picking-mode="Ignore" class="badgeContainer top right">
                     <ui:Label text="-1" display-tooltip-when-elided="true" name="nodeIndex" class="nodeIndex nodeBadge" />
                     <ui:Button display-tooltip-when-elided="true" name="abortType" class="nodeBadge nodeAbortType abortType" />
@@ -39,6 +40,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="contents">
                 <ui:Label display-tooltip-when-elided="true" name="description" class="contentLabel" />
+                <ui:VisualElement name="expendContainer" class="expendContainer" />
                 <ui:Label display-tooltip-when-elided="true" name="guid" class="contentLabel" />
                 <ui:VisualElement name="divider" class="horizontal" />
             </ui:VisualElement>

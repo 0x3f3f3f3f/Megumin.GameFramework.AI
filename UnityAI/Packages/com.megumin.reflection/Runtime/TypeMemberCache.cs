@@ -93,6 +93,9 @@ namespace Megumin.Reflection
         }
     }
 
+    /// <summary>
+    /// https://github.com/mgravell/fast-member 无法再IL2CPP下工作，只能实现一个简单的缓存机制。
+    /// </summary>
     public static class TypeMemberCache
     {
         public static readonly TypeAllMembersCache AllMember = new TypeAllMembersCache();

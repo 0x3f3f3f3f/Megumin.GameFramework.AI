@@ -13,6 +13,18 @@ namespace Megumin.Reflection.Editor
             Megumin.Reflection.TypeCache.Test();
         }
 
+        [MenuItem("Tools/Megumin/Reflection/TypeCache CacheAllTypes")]
+        public static void CacheAllTypes()
+        {
+            Megumin.Reflection.TypeCache.CacheAllTypes();
+        }
+
+        [MenuItem("Tools/Megumin/Reflection/TypeCache CacheAllTypesAsync")]
+        public static void CacheAllTypesAsync()
+        {
+            Megumin.Reflection.TypeCache.CacheAllTypesAsync().Wait();
+        }
+
         [MenuItem("Tools/Megumin/Reflection/TypeCache Clear")]
         public static void Clear()
         {

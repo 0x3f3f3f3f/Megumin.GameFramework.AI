@@ -38,6 +38,9 @@ namespace Megumin.AI.BehaviorTree.Editor
             DetailContainer = this.Q("detailContainer");
             Detail = this.Q<Label>("detail");
 
+            BodyExpendContainer = Body.Q("expendContainer");
+            ContentExpendContainer = this.Q("contents").Q("expendContainer");
+
             ToprightBadgeContainer = this.Q("toprightBadgeContainer");
             AbortTypeButton = ToprightBadgeContainer.Q<Button>("abortType", "abortType");
 
@@ -101,6 +104,8 @@ namespace Megumin.AI.BehaviorTree.Editor
         public Button Icon { get; private set; }
         public Label DynamicMarker { get; private set; }
         public VisualElement DetailContainer { get; private set; }
+        public VisualElement BodyExpendContainer { get; private set; }
+        public VisualElement ContentExpendContainer { get; private set; }
         public Label Detail { get; private set; }
         public VisualElement ToprightBadgeContainer { get; private set; }
         public Button AbortTypeButton { get; private set; }
@@ -270,6 +275,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             title = titleString;
 
             RefreshDetail();
+            RefreshBodyExpend();
             RefreshNodeIndex();
             RefreshAbortTypeUI();
 
@@ -316,6 +322,17 @@ namespace Megumin.AI.BehaviorTree.Editor
             ValidNodeData();
         }
 
+        public void RefreshBodyExpend()
+        {
+            //增加用户自定义面板扩展Body部分
+            if (Node is IViewBodyExpandable expandable)
+            {
+                BodyExpendContainer.Clear();
+                var ex = expandable.GetBodyExpend(this);
+                BodyExpendContainer.Add(ex);
+            }
+        }
+
         internal protected void ValidNodeData()
         {
             //验证节点参数
@@ -344,6 +361,15 @@ namespace Megumin.AI.BehaviorTree.Editor
             this.SetToClassList(nameof(BTActionNode), Node is BTActionNode);
             this.SetToClassList(nameof(BTParentNode), Node is BTParentNode);
             this.SetToClassList(nameof(BTConditionNode), Node is BTConditionNode);
+        }
+
+        /// <summary>
+        /// Debug是动态刷新的UI。
+        /// </summary>
+        public void RefreshOnDebug()
+        {
+            RefreshDetail();
+            RefreshBodyExpend();
         }
 
         internal void RefreshDetail()
@@ -571,5 +597,10 @@ namespace Megumin.AI.BehaviorTree.Editor
                 }
             }
         }
+    }
+
+    partial class BehaviorTreeNodeView : INodeView
+    {
+        ITreeView INodeView.TreeView => TreeView;
     }
 }

@@ -54,7 +54,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             isRunning = Node.State == Status.Running;
             if (isRunning)
             {
-                RefreshDetail();
+                RefreshOnDebug();
             }
             else
             {
@@ -114,7 +114,7 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         private void UpdateCompletedState()
         {
-            RefreshDetail();
+            RefreshOnDebug();
 
             bool hasChanged = false;
             var isSucceeded = Node.State == Status.Succeeded;
