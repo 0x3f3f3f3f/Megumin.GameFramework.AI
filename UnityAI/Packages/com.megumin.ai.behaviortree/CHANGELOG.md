@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+## [1.2.3] - 2024-01-08
+
+### Added  
+- 增加TypeCache优化测试
+- 统计打印各类型节点数量
+- 创建代码模板
+- 增加状态机标准接口
+- 增加OnEnter2虚方法，方便修改执行状态
+- 增加body扩展
+- 支持MoveFromAttribute
+
 ## [1.2.2] - 2023-10-29
 ### Added   
 - 增加一键从项目中删除插件菜单
