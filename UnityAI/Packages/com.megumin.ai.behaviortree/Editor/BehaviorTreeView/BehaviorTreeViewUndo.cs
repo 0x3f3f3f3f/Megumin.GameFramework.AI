@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
-    public partial class BehaviorTreeView
+    public partial class BehaviorTreeView : IUndoRegister
     {
         internal HashSetScope UndoMute = new();
 

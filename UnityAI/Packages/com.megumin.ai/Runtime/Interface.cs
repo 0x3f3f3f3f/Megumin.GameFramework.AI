@@ -215,11 +215,26 @@ namespace Megumin.AI
         void SetDebugDirty();
     }
 
-    public interface IViewBodyExpandable 
+    public interface IViewBodyExpandable
     {
-        VisualElement GetBodyExpend();
+        VisualElement GetBodyExpend(INodeView nodeView);
     }
 
+    public interface IUndoRegister
+    {
+        void IncrementChangeVersion(string name);
+    }
+
+    public interface ITreeView : IUndoRegister
+    {
+        void ReloadView(bool force = false);
+    }
+
+    public interface INodeView
+    {
+        ITreeView TreeView { get; }
+        void ReloadView(bool force = false);
+    }
 }
 
 

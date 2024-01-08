@@ -328,7 +328,7 @@ namespace Megumin.AI.BehaviorTree.Editor
             if (Node is IViewBodyExpandable expandable)
             {
                 BodyExpendContainer.Clear();
-                var ex = expandable.GetBodyExpend();
+                var ex = expandable.GetBodyExpend(this);
                 BodyExpendContainer.Add(ex);
             }
         }
@@ -597,5 +597,10 @@ namespace Megumin.AI.BehaviorTree.Editor
                 }
             }
         }
+    }
+
+    partial class BehaviorTreeNodeView : INodeView
+    {
+        ITreeView INodeView.TreeView => TreeView;
     }
 }
