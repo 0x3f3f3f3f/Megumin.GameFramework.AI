@@ -6,6 +6,7 @@ using Megumin.Perception;
 using Megumin.Reflection;
 using Megumin.Serialization;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.Serialization;
 
 namespace Megumin.AI.BehaviorTree
@@ -17,6 +18,7 @@ namespace Megumin.AI.BehaviorTree
     //[Color(1f, 47f / 51f, 0.0156862754f, 1f)]
     //[Icon("")]
     //[SerializationAlias("Megumin.AI.BehaviorTree.#SCRIPTNAME#")]
+    //[MovedFrom(true, sourceNamespace: "Megumin.AI.BehaviorTree", sourceAssembly: null, sourceClassName: "#SCRIPTNAME#")]
     //[HelpURL(URL.WikiDecorator + "#SCRIPTNAME#")]
     public class #SCRIPTNAME# : BTDecorator,
         IPreDecorator,
