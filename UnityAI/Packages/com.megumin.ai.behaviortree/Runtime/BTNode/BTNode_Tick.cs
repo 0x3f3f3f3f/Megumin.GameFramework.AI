@@ -184,6 +184,7 @@ namespace Megumin.AI.BehaviorTree
         {
             GetLogger(LogConst.ChangeNode)?.WriteLine($"[{Time.time:0.00}] Enter Node {this}");
             OnEnter(options);
+            State = OnEnter2(options);
         }
 
         /// <summary>
