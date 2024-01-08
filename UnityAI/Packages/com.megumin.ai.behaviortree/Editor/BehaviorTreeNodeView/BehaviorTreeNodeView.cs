@@ -363,6 +363,15 @@ namespace Megumin.AI.BehaviorTree.Editor
             this.SetToClassList(nameof(BTConditionNode), Node is BTConditionNode);
         }
 
+        /// <summary>
+        /// Debug是动态刷新的UI。
+        /// </summary>
+        public void RefreshOnDebug()
+        {
+            RefreshDetail();
+            RefreshBodyExpend();
+        }
+
         internal void RefreshDetail()
         {
             var showDetail = false;
