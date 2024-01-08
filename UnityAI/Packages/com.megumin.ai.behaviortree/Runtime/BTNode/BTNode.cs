@@ -150,7 +150,8 @@ namespace Megumin.AI.BehaviorTree
         /// <returns></returns>
         protected virtual Status OnTick(BTNode from, object options = null)
         {
-            return Status.Succeeded;
+            //这里默认返回Running。当用户使用OnTickAsync，并且不重写OnTick时，保证节点不会意外结束。
+            return Status.Running;
         }
 
         /// <summary>

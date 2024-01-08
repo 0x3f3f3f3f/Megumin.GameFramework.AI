@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+## [1.3.0]
+### Changed  
+- BTNode.OnTick虚方法默认返回值由Succeeded改为Running。
+
 ## [1.2.3] - 2024-01-08
 
 ### Added  
