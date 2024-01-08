@@ -123,7 +123,7 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        protected virtual Status OnEnter2(object options = null) 
+        protected virtual Status OnEnter2(object options = null)
         {
             return State;
         }
