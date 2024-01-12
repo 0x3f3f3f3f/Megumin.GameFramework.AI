@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6c198d45dc33548bed0239408b0976, type: 3}
   m_Name: CopyDocs
   m_EditorClassIdentifier: 
+  FileCopy:
+  - File:
+    - Packages/com.megumin.ai.behaviortree/CHANGELOG.md
+    Overwrite: 1
+    Targets:
+    - ../../Megumin.AI.Samples.wiki
   DirectoryCopy:
   - Source: Packages/com.megumin.ai.behaviortree/Note
     DeleteTargetFolderBeforeCopy: 0
