@@ -653,7 +653,7 @@ namespace Megumin.Reflection
         /// <param name="methodInfo"></param>
         /// <param name="instanceType"></param>
         /// <param name="instance"></param>
-        /// <param name="getter"></param>
+        /// <param name="setter"></param>
         /// <param name="instanceIsGetDelegate"></param>
         /// <returns></returns>
         /// <remarks>接收一个目标参数的方法</remarks>
