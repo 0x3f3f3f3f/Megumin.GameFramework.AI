@@ -12,7 +12,13 @@ using UnityEngine.Serialization;
 namespace Megumin.AI.BehaviorTree
 {
     //需要绘制引用节点UI Ref需要扩展
-    // Goto 节点，大杀器，但是极容易导致运行时bug
+
+    /// <summary>
+    /// Goto 节点，大杀器，极大程度弥补行为树的不足。
+    /// 部分等价与菱形环形结构，突破了树形结构的限制。
+    /// 但是也是混乱的开端。潘多拉魔盒。极容易导致运行时bug。
+    /// 尽可能小心使用这个节点。
+    /// </summary>
     [Serializable]
     [DisplayName("Goto")]
     [Category("Custom")]
@@ -24,7 +30,18 @@ namespace Megumin.AI.BehaviorTree
     //[HelpURL(URL.WikiDecorator + "Goto")]
     public sealed class Goto : BTActionNode
     {
-        //public BTNode target;
+        [RefSetter]
+        public BTNode target;
+
+        protected override Status OnTick(BTNode from, object options = null)
+        {
+            if (target != null)
+            {
+                return target.Tick(this, options);
+            }
+
+            return GetIgnoreResult(from);
+        }
     }
 }
 

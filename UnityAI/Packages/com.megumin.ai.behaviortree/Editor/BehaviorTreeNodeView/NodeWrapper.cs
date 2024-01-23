@@ -9,7 +9,10 @@ using UnityEditor.Experimental.GraphView;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
-    public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
+    public abstract class TreeElementWrapper : ScriptableObject,
+        IRefVariableFinder,
+        IRefFinder2222,
+        ITreeElementWrapper
     {
         [ReadOnlyInInspector]
         public MonoScript NodeScript;
@@ -57,6 +60,16 @@ namespace Megumin.AI.BehaviorTree.Editor
         public void Export(IRefable currentValue)
         {
             TreeView.Blackboard.AddNewVariable(currentValue);
+        }
+
+        public IEnumerable<(string OptionDisplay, object Value)> GetRefObjs(RefSetterAttribute refSetterAttribute)
+        {
+            List<(string OptionDisplay, object Value)> result = new();
+            foreach (var node in Tree.AllNodes)
+            {
+                result.Add((node.ShortGUID, node));
+            }
+            return result;
         }
     }
 

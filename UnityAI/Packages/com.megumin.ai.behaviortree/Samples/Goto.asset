@@ -43,6 +43,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 1cabfb85-854b-4297-8890-dcdff7461320.Decorators
+    - Name: target
+      Type: $ref
+      Value: b0d4f7d7-aa45-4e0a-8fb8-811b2ad3bd87
     - Name: GUID
       Type: System.String
       Value: 1cabfb85-854b-4297-8890-dcdff7461320
@@ -152,6 +155,12 @@ MonoBehaviour:
       Type: System.String
       Value: ebe78fcb-e00d-4271-8fd4-de9dd5fcb484
   decorators:
+  - Name: 11507adc-0f94-4d1e-a198-a617103474df
+    Type: Megumin.AI.BehaviorTree.Inverter_Decorator
+    Member:
+    - Name: GUID
+      Type: System.String
+      Value: 11507adc-0f94-4d1e-a198-a617103474df
   - Name: 6bfb6c55-5e84-4c61-ae15-96b27b126a3e
     Type: Megumin.AI.BehaviorTree.Loop_Decorator
     Member:
@@ -236,7 +245,10 @@ MonoBehaviour:
       Value: 493
   - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
-    Member: []
+    Member:
+    - Name: 0
+      Type: $ref
+      Value: 11507adc-0f94-4d1e-a198-a617103474df
   - Name: 4631cdc9-5c22-4564-80a0-f59c0d1dff76.Meta
     Type: Megumin.AI.BehaviorTree.NodeMeta
     Member:
