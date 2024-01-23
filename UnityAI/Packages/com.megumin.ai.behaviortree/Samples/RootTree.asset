@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: RootTree
   m_EditorClassIdentifier: 
-  Version: 1.0.1
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: a09424f0-5e5c-491d-9aa4-c8c8a80e110f
   <StartNodeGUID>k__BackingField: 25ca660d-8494-4efd-9d53-c6e3d61ae3d7
   UseSerializeReferenceGeneric: 0

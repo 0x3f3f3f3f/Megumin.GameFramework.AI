@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Actor3_See
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 19f9fe1f-733b-4fa1-a63c-6a87e8c52d60
   <StartNodeGUID>k__BackingField: ca9cd4fe-a316-48b8-8fe7-ddd0eaed07c5
   UseSerializeReferenceGeneric: 0
@@ -420,9 +420,6 @@ MonoBehaviour:
   - Name: 5de7c254-132f-42a8-aba1-2f48dfb5d4f0.Filter.Exclude
     Type: Megumin.Enable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject]]]]
     Member:
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
     - Name: Value
       Type: $ref
       Value: 5de7c254-132f-42a8-aba1-2f48dfb5d4f0.Filter.Exclude.Value
@@ -431,10 +428,7 @@ MonoBehaviour:
     Member: []
   - Name: 5de7c254-132f-42a8-aba1-2f48dfb5d4f0.Filter.LayerMask
     Type: Megumin.Enable`1[[UnityEngine.LayerMask]]
-    Member:
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
+    Member: []
   - Name: 5de7c254-132f-42a8-aba1-2f48dfb5d4f0.Filter.TagMask
     Type: Megumin.Enable`1[[Megumin.TagMask, Megumin.Common]]
     Member:
@@ -762,9 +756,6 @@ MonoBehaviour:
   - Name: dc7d18a5-22d3-47ea-8169-d44db3d55999.Filter.Exclude
     Type: Megumin.Enable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject]]]]
     Member:
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
     - Name: Value
       Type: $ref
       Value: dc7d18a5-22d3-47ea-8169-d44db3d55999.Filter.Exclude.Value
@@ -773,10 +764,7 @@ MonoBehaviour:
     Member: []
   - Name: dc7d18a5-22d3-47ea-8169-d44db3d55999.Filter.LayerMask
     Type: Megumin.Enable`1[[UnityEngine.LayerMask]]
-    Member:
-    - Name: Enabled
-      Type: System.Boolean
-      Value: False
+    Member: []
   - Name: dc7d18a5-22d3-47ea-8169-d44db3d55999.Filter.TagMask
     Type: Megumin.Enable`1[[Megumin.TagMask, Megumin.Common]]
     Member:

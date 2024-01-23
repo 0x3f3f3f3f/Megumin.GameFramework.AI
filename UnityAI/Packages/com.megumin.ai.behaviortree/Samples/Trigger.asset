@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Trigger
   m_EditorClassIdentifier: 
-  Version: 1.0.1
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: a4dc8fa1-e186-496a-b32f-77d2fc8f8e20
   <StartNodeGUID>k__BackingField: 488cea0e-ddd3-44ce-8945-218de76d270f
   UseSerializeReferenceGeneric: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: AnimalWow
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 7d50877f-8003-47fd-b244-11a8a8a88043
   <StartNodeGUID>k__BackingField: 07585099-76be-483b-973b-30026b856089
   UseSerializeReferenceGeneric: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Actor1_Patrol
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: c45ccefe-1223-4280-8f58-1ca1bae204b3
   <StartNodeGUID>k__BackingField: 73f56cae-a6ca-4405-871a-4863e0c2e24d
   UseSerializeReferenceGeneric: 0

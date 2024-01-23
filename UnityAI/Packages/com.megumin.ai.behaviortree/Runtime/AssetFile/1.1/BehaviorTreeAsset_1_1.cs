@@ -14,7 +14,10 @@ namespace Megumin.AI.BehaviorTree
     [CreateAssetMenu(fileName = "BehaviorTree", menuName = "Megumin/AI/BehaviorTreeAsset")]
     public partial class BehaviorTreeAsset_1_1 : ScriptableObject, IBehaviorTreeAsset
     {
-        public string Version = new Version(1, 1, 0).ToString();
+        public static Version CodeVersion = new(1, 1, 1);
+        [FormerlySerializedAs("Version")]
+        public string SerializationVersion = CodeVersion.ToString();
+
         [field: ContextMenuItem("ChangeGUID", "ChangeGUID")]
         [field: SerializeField]
         public string GUID { get; set; } = Guid.NewGuid().ToString();
@@ -43,6 +46,7 @@ namespace Megumin.AI.BehaviorTree
                 return false;
             }
 
+            SerializationVersion = CodeVersion.ToString();
             SharedMeta.Clear();
 
             if (!Guid.TryParse(tree.GUID, out var _))
@@ -389,7 +393,9 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
-            void DeserializeObj(Dictionary<ObjectData, object> cache)
+            ///反序列化树的节点和装饰器
+            ///反序列化树的其他引用成员。
+            void DeserializeObj(Dictionary<ObjectData, object> cache, bool isTreeElement = true)
             {
                 foreach (var item in cache)
                 {
@@ -404,7 +410,16 @@ namespace Megumin.AI.BehaviorTree
                             }
                         }
 
-                        tree.InitAddTreeRefObj(value);
+                        if (isTreeElement)
+                        {
+                            tree.InitAddObjTreeElement(value);
+                        }
+                        else
+                        {
+                            //其他引用成员可能也有TreeElement类型，注意不要添加到树的节点集合中。
+                            tree.InitAddObjNotTreeElement(value);
+                        }
+
                     }
                 }
             }
@@ -412,9 +427,9 @@ namespace Megumin.AI.BehaviorTree
             //反序列化树节点 节点父子关系和装饰器关系自动关联
             //先反序列化引用对象，在反序列化装饰，最后反序列化节点。
             //这样可以尽量保证SetMemberByAttribute调用时，引用对象已经反序列化完毕。
-            DeserializeObj(treeObjCache);
-            DeserializeObj(decoratorObjCache);
-            DeserializeObj(nodeObjCache);
+            DeserializeObj(treeObjCache, false);
+            DeserializeObj(decoratorObjCache, true);
+            DeserializeObj(nodeObjCache, true);
 
             //设置开始节点 装饰器Owner
             foreach (var node in tree.AllNodes)
