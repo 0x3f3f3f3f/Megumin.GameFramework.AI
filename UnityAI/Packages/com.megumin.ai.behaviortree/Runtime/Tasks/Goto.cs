@@ -32,17 +32,14 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "Goto")]
     public sealed class Goto : BTActionNode, IDataValidable, IDetailable
     {
-        public int Test;
-        [RefSetter]
-        public BTNode target;
-        public int Test2;
-        public RefVar_Float test3;
+        [RefSetter(Filter = "Node", CanExpand = true, ReadOnly = true)]
+        public BTNode TargetNode;
 
         protected override Status OnTick(BTNode from, object options = null)
         {
-            if (target != null)
+            if (TargetNode != null)
             {
-                return target.Tick(this, options);
+                return TargetNode.Tick(this, options);
             }
 
             return GetIgnoreResult(from);
@@ -50,7 +47,7 @@ namespace Megumin.AI.BehaviorTree
 
         public (int Result, string ToolTip) Valid()
         {
-            if (target == null)
+            if (TargetNode == null)
             {
                 return (-1, "no target, ignore this");
             }
@@ -60,9 +57,9 @@ namespace Megumin.AI.BehaviorTree
 
         public string GetDetail()
         {
-            if (target != null)
+            if (TargetNode != null)
             {
-                return $"Target: {target.ShortGUID}";
+                return $"idx:{TargetNode.Index}  {TargetNode.ShortGUID}";
             }
             return null;
         }

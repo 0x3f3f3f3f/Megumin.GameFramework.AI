@@ -43,9 +43,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 1cabfb85-854b-4297-8890-dcdff7461320.Decorators
-    - Name: target
+    - Name: TargetNode
       Type: $ref
-      Value: b0d4f7d7-aa45-4e0a-8fb8-811b2ad3bd87
+      Value: 34fcac99-226a-4534-8c1d-842db7c65c39
     - Name: GUID
       Type: System.String
       Value: 1cabfb85-854b-4297-8890-dcdff7461320
