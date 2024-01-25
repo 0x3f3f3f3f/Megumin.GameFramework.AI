@@ -21,6 +21,9 @@ namespace Megumin.AI.BehaviorTree
     /// 但是也是混乱的开端。潘多拉魔盒。极容易导致运行时bug。
     /// 尽可能小心使用这个节点。
     /// </summary>
+    /// <remarks>
+    /// 因为不按照树形结构执行，可能导致事件系统触发错误。
+    /// </remarks>
     [Serializable]
     [DisplayName("Goto")]
     [Category("Utility")]

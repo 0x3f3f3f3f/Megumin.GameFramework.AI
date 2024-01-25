@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
         public RefVar_String EventName;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            Tree.SendEvent(EventName, this);
+            Tree.SendEvent(EventName.Value, this);
             return Status.Succeeded;
         }
 

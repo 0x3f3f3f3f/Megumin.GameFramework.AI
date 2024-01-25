@@ -23,7 +23,7 @@ namespace Megumin.AI.BehaviorTree
         public RefVar_String TriggerName;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            Tree.SetTrigger(TriggerName, this);
+            Tree.SetTrigger(TriggerName.Value, this);
             return Status.Succeeded;
         }
 
