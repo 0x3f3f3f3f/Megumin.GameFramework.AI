@@ -54,7 +54,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.EnterNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
             return result;
         }
@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
         }
     }

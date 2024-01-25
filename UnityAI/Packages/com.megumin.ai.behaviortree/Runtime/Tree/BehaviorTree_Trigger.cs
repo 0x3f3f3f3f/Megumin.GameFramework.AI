@@ -11,35 +11,17 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 触发器可以长久存在，直到被Reset，通常时获取触发器后，立刻Reset，也就是设计为仅被响应一次。
         /// </summary>
-        Dictionary<object, TriggerData> triggerCache = new();
+        internal Dictionary<object, EventContext> triggerCache = new();
 
-        public class TriggerData
-        {
-            public object Trigger { get; set; }
-            public object Arg1 { get; internal set; }
-            public object Arg2 { get; internal set; }
-            public object Arg3 { get; internal set; }
-
-            /// <summary>
-            /// 由行为树外部触发时，值为null
-            /// </summary>
-            public BTNode SendNode { get; set; }
-            public int SendTick { get; set; }
-            public int UsedCount { get; set; }
-            public BehaviorTree Tree { get; set; }
-            public int Priority { get; internal set; }
-
-            public void Use()
-            {
-                UsedCount++;
-                if (Tree != null)
-                {
-                    Tree.triggerCache.Remove(Trigger);
-                }
-            }
-        }
-
+        [Obsolete("Use SendTrigger instead.")]
         public bool SetTrigger<T>(T trigger,
+                                  BTNode sendNode = null,
+                                  object arg1 = null,
+                                  object arg2 = null,
+                                  object arg3 = null,
+                                  int priority = 0) => SendTrigger(trigger, sendNode, arg1, arg2, arg3, priority);
+
+        public bool SendTrigger<T>(T trigger,
                                   BTNode sendNode = null,
                                   object arg1 = null,
                                   object arg2 = null,
@@ -60,7 +42,7 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
-            TriggerData eventData = new();
+            TriggerData<T> eventData = new();
             eventData.Tree = this;
             eventData.SendTick = TotalTickCount;
             eventData.SendNode = sendNode;
@@ -75,7 +57,7 @@ namespace Megumin.AI.BehaviorTree
             return true;
         }
 
-        public bool TryGetTrigger<T>(T trigger, out TriggerData triggerData)
+        public bool TryGetTrigger<T>(T trigger, out TriggerData<T> triggerData)
         {
             if (trigger is null)
             {
@@ -83,9 +65,13 @@ namespace Megumin.AI.BehaviorTree
                 return false;
             }
 
-            if (triggerCache.TryGetValue(trigger, out triggerData))
+            if (triggerCache.TryGetValue(trigger, out var data))
             {
-                return true;
+                if (data is TriggerData<T> gData)
+                {
+                    triggerData = gData;
+                    return true;
+                }
             }
 
             triggerData = null;
@@ -98,13 +84,13 @@ namespace Megumin.AI.BehaviorTree
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        public bool TryGetTrigger<T>(out TriggerData data)
+        public bool TryGetTrigger<T>(out TriggerData<T> data)
         {
             foreach (var item in triggerCache)
             {
-                if (item.Key is T)
+                if (item.Key is T && item.Value is TriggerData<T> gData)
                 {
-                    data = item.Value;
+                    data = gData;
                     return true;
                 }
             }
@@ -113,6 +99,28 @@ namespace Megumin.AI.BehaviorTree
             return false;
         }
 
+        /// <summary>
+        /// 根据类型获取所有事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="eventDatas"></param>
+        /// <returns></returns>
+        public bool TryGetTriggers<T>(List<TriggerData<T>> eventDatas)
+        {
+            bool hasValue = false;
+            foreach (var item in triggerCache)
+            {
+                if (item.Key is T && item.Value is TriggerData<T> gData)
+                {
+                    eventDatas.Add(gData);
+                    hasValue = true;
+                }
+            }
+
+            return hasValue;
+        }
+
+        [Obsolete("use RemoveTrigger instead.")]
         public void ResetTrigger(object trigger)
         {
             triggerCache.Remove(trigger);

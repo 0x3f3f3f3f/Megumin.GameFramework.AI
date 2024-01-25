@@ -11,24 +11,7 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 事件生命周期为一个tick，事件可以被多次响应
         /// </summary>
-        Dictionary<object, EventData> eventCache = new();
-
-        public class EventData
-        {
-            public object Evt { get; set; }
-            public object Arg1 { get; internal set; }
-            public object Arg2 { get; internal set; }
-            public object Arg3 { get; internal set; }
-
-            /// <summary>
-            /// 由行为树外部触发时，值为null
-            /// </summary>
-            public BTNode SendNode { get; set; }
-            public int SendTick { get; set; }
-            public int UsedCount { get; set; }
-            public BehaviorTree Tree { get; set; }
-            public int Priority { get; internal set; }
-        }
+        Dictionary<object, EventContext> eventCache = new();
 
         List<object> removeKey = new();
         protected void RemoveLifeEndEventData()
@@ -74,12 +57,12 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
-            EventData eventData = new();
+            EventData<T> eventData = new();
             eventData.Tree = this;
             eventData.SendTick = TotalTickCount;
             eventData.SendNode = sendNode;
 
-            eventData.Evt = evt;
+            eventData.Event = evt;
             eventData.Arg1 = arg1;
             eventData.Arg2 = arg2;
             eventData.Arg3 = arg3;
@@ -89,7 +72,7 @@ namespace Megumin.AI.BehaviorTree
             return true;
         }
 
-        public bool TryGetEvent<T>(T evt, BTNode checkNode, out EventData eventData)
+        public bool TryGetEvent<T>(T evt, out EventData<T> eventData, BTNode checkNode)
         {
             if (evt is null)
             {
@@ -99,44 +82,75 @@ namespace Megumin.AI.BehaviorTree
 
             if (eventCache.TryGetValue(evt, out var evtData))
             {
-                eventData = evtData;
-                if (CheckTimeOut(evtData, checkNode))
+                if (evtData is EventData<T> gData)
                 {
-                    return false;
-                }
-                else
-                {
-                    return true;
+                    eventData = gData;
+                    if (CheckTimeOut(gData.SendTick, gData.SendNode, checkNode))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
             }
             eventData = null;
             return false;
         }
 
+
         /// <summary>
         /// 根据事件类型获取，因为用了Dictionary，多个同类型同时存在时，不确定返回哪一个。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
+        /// <param name="eventData"></param>
         /// <returns></returns>
-        public bool TryGetEvent<T>(BTNode checkNode, out EventData data)
+        public bool TryGetEvent<T>(out EventData<T> eventData, BTNode checkNode)
         {
             foreach (var item in eventCache)
             {
-                if (item.Key is T)
+                if (item.Key is T && item.Value is EventData<T> gData)
                 {
-                    if (CheckTimeOut(item.Value, checkNode))
+                    if (CheckTimeOut(gData.SendTick, gData.SendNode, checkNode))
                     {
                         continue;
                     }
 
-                    data = item.Value;
+                    eventData = gData;
                     return true;
                 }
             }
 
-            data = null;
+            eventData = null;
             return false;
+        }
+
+        /// <summary>
+        /// 根据类型获取所有事件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="eventDatas"></param>
+        /// <param name="checkNode"></param>
+        /// <returns></returns>
+        public bool TryGetEvents<T>(List<EventData<T>> eventDatas, BTNode checkNode)
+        {
+            bool hasValue = false;
+            foreach (var item in eventCache)
+            {
+                if (item.Key is T && item.Value is EventData<T> gData)
+                {
+                    if (CheckTimeOut(gData.SendTick, gData.SendNode, checkNode))
+                    {
+                        continue;
+                    }
+
+                    eventDatas.Add(gData);
+                    hasValue = true;
+                }
+            }
+
+            return hasValue;
         }
 
         public void RemoveEvent<T>(T evt)
@@ -152,14 +166,15 @@ namespace Megumin.AI.BehaviorTree
         /// <summary>
         /// 根据节点位置，判断事件是否超时
         /// </summary>
-        /// <param name="evtData"></param>
+        /// <param name="eventSendTick"></param>
+        /// <param name="eventSendNode"></param>
         /// <param name="checkNode"></param>
         /// <returns></returns>
-        public bool CheckTimeOut(EventData evtData, BTNode checkNode)
+        public bool CheckTimeOut(int eventSendTick, BTNode eventSendNode, BTNode checkNode)
         {
             //事件的生命周期是发送节点 到下次一次tick 发送节点，总共一个Tick
 
-            if (TotalTickCount <= evtData.SendTick)
+            if (TotalTickCount <= eventSendTick)
             {
                 //当前执行Tick，不超时
                 return false;
@@ -168,14 +183,14 @@ namespace Megumin.AI.BehaviorTree
             {
                 //发送事件之后一帧的Tick
 
-                if (evtData.SendNode == null)
+                if (eventSendNode == null)
                 {
                     //行为树外部触发的事件，执行Tick大于发送Tick认为是超时。
                     return true;
                 }
                 else
                 {
-                    if (IsBehind(evtData.SendNode, checkNode))
+                    if (IsBehind(eventSendNode, checkNode))
                     {
                         //测试节点在发送节点后面，那么在上一个Tick以及执行过了，认为是超时。
                         return true;

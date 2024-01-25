@@ -17,13 +17,14 @@ namespace Megumin.AI.BehaviorTree
     /// 触发器生命周期为永久，但仅能被使用一次。
     /// </remarks>
     [Category("Action")]
+    [DisplayName("SendTrigger")]
     [HelpURL(URL.WikiTask + "SetTrigger")]
     public class SetTrigger : BTActionNode, IDetailable
     {
         public RefVar_String TriggerName;
         protected override Status OnTick(BTNode from, object options = null)
         {
-            Tree.SetTrigger(TriggerName.Value, this);
+            Tree.SendTrigger(TriggerName.Value, this);
             return Status.Succeeded;
         }
 
