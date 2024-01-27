@@ -315,7 +315,7 @@ namespace Megumin.Reflection
     {
         public override Transform Convert(GameObject value)
         {
-            return value.transform;
+            return value?.transform;
         }
     }
 
@@ -323,7 +323,7 @@ namespace Megumin.Reflection
     {
         public override GameObject Convert(Transform value)
         {
-            return value.gameObject;
+            return value?.gameObject;
         }
     }
 
@@ -331,7 +331,7 @@ namespace Megumin.Reflection
     {
         public override GameObject Convert(Component value)
         {
-            return value.gameObject;
+            return value?.gameObject;
         }
     }
 
@@ -339,7 +339,7 @@ namespace Megumin.Reflection
     {
         public override Transform Convert(Component value)
         {
-            return value.transform;
+            return value?.transform;
         }
     }
 }
