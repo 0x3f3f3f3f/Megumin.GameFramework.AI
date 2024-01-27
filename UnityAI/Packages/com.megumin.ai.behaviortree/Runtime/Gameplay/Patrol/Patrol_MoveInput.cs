@@ -57,7 +57,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveInput")]
+    [DisplayName("Patrol_MoveInput  (Dir)")]
     [Description("Transform_List IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Transform_List(IMoveInputable<Vector3>)")]
@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveInput")]
+    [DisplayName("Patrol_MoveInput  (Dir)")]
     [Description("Random InsideCircle IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Random InsideCircle(IMoveInputable<Vector3>)")]

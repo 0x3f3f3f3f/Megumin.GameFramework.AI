@@ -52,7 +52,7 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("d_navmeshdata icon")]
-    [DisplayName("MoveTo")]
+    [DisplayName("MoveTo (Pos)")]
     [Description("IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("MoveTo(IMoveToable<Vector3>)")]

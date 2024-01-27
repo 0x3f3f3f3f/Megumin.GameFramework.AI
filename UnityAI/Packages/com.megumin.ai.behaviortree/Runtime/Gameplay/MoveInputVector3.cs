@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [Icon("d_navmeshdata icon")]
-    [DisplayName("MoveTo")]
+    [DisplayName("MoveTo  (Dir)")]
     [Description("IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("MoveTo(IMoveInputable<Vector3>)")]

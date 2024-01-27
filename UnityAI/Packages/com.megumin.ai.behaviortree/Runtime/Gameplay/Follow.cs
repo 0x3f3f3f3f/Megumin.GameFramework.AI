@@ -188,7 +188,7 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("buildsettings.android@2x")]
-    [DisplayName("Follow")]
+    [DisplayName("Follow (Dir)")]
     [Description("Follow IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Follow GameObject(IMoveInputable<Vector3>)")]
@@ -210,7 +210,7 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("buildsettings.android@2x")]
-    [DisplayName("Follow")]
+    [DisplayName("Follow (Pos)")]
     [Description("Follow IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Follow GameObject(IMoveToable<Vector3>)")]
