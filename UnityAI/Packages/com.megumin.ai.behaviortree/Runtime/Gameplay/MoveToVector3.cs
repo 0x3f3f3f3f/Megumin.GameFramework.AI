@@ -10,7 +10,7 @@ namespace Megumin.AI.BehaviorTree
     public abstract class MoveToBase<T> : BTActionNode<T>
     {
         [Space]
-        public float StopingDistance = 0.25f;
+        public StopingDistance StopingDistance = new();
 
         public bool IgnoreYAxis = true;
 
@@ -25,6 +25,7 @@ namespace Megumin.AI.BehaviorTree
 
         protected override void OnEnter(object options = null)
         {
+            StopingDistance.Cal(GameObject);
             InternalMoveTo();
         }
 
@@ -65,7 +66,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void InternalMoveTo()
         {
             Last = GetDestination();
-            MyAgent.MoveTo(Last);
+            MyAgent.MoveTo(Last, StopingDistance);
 
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }

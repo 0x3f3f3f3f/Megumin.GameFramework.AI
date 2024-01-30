@@ -18,7 +18,7 @@ namespace Megumin.AI.BehaviorTree
         /// <returns>
         /// 是否成功设置目的地
         /// </returns>
-        bool MoveTo(T destination);
+        bool MoveTo(T destination, float stoppingDistance = 0);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         /// <param name="moveDirection"></param>
         /// <returns></returns>
-        void MoveInput(T moveDirection);
+        void MoveInput(T moveDirection, float stoppingDistance = 0);
     }
 
 }

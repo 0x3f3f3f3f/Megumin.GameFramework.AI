@@ -6,11 +6,12 @@ using Megumin.Binding;
 using Megumin.Timers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 简单跟随
+    /// 简单跟随，永远不会返回成功，会持续运行。
     /// </summary>
 
     public abstract class FollowBase<T> : OneChildNode<T>, IOutputPortInfoy<string>, IDetailable
@@ -18,11 +19,7 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public bool IgnoreYAxis = true;
 
-        /// <summary>
-        /// 最大停止距离
-        /// </summary>
-        [Space]
-        public float StopingDistance = 0.8f;
+        public StopingDistance StopingDistance = new();
 
         /// <summary>
         /// 触发再次跟随移动距离
@@ -41,6 +38,7 @@ namespace Megumin.AI.BehaviorTree
 
         public RefVar_GameObject Target;
 
+
         protected override void OnEnter(object options = null)
         {
             base.OnEnter(options);
@@ -49,6 +47,7 @@ namespace Megumin.AI.BehaviorTree
             if (Target?.Value)
             {
                 Last = Target.Value.transform.position;
+                StopingDistance.Cal(GameObject, Target.Value);
             }
             else
             {
@@ -128,14 +127,20 @@ namespace Megumin.AI.BehaviorTree
                     return Status.Running;
                 }
 
+                if (Child0 == null)
+                {
+                    //没有子节点，暂时处于等待模式，防止立刻进行Refollow.
+                    return Status.Running;
+                }
+
                 //在目标附近，执行子节点
-                var childResult = Child0?.Tick(this, options);
+                var childResult = Child0.Tick(this, options);
                 if (childResult == Status.Running)
                 {
                     return Status.Running;
                 }
 
-                //子节点完成，返回跟随模式
+                //子节点完成，返回跟随模式。子节点的执行结果忽略，对Follow节点不造成影响。
                 InChild = false;
                 return Status.Running;
             }
@@ -176,7 +181,7 @@ namespace Megumin.AI.BehaviorTree
                     var left = RefollowWaiter.GetLeftTime(RefollowWait);
                     if (left > 0)
                     {
-                        return $"{CurrentDistance:0.000}  Wait:{RefollowWaiter.GetLeftTime(RefollowWait):0.000}";
+                        return $"{CurrentDistance:0.000}  Wait:{left:0.000}";
                     }
                 }
 
@@ -200,12 +205,12 @@ namespace Megumin.AI.BehaviorTree
         {
             //跟随移动，设置移动方向
             var dir = Last - Transform.position;
-            MyAgent.MoveInput(dir);
+            MyAgent.MoveInput(dir, StopingDistance);
         }
 
         protected override void OnArrivedTarget()
         {
-            MyAgent.MoveInput(Vector3.zero);
+            MyAgent.MoveInput(Vector3.zero, StopingDistance);
         }
     }
 
@@ -219,7 +224,7 @@ namespace Megumin.AI.BehaviorTree
     {
         protected override void OnFollowingTarget()
         {
-            MyAgent.MoveTo(Last);
+            MyAgent.MoveTo(Last, StopingDistance);
         }
 
         protected override void OnArrivedTarget()
@@ -239,6 +244,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnFollowingTarget()
         {
             MyAgent.SetDestination(Last);
+            MyAgent.stoppingDistance = StopingDistance;
         }
 
         protected override void OnArrivedTarget()
@@ -246,6 +252,7 @@ namespace Megumin.AI.BehaviorTree
 
         }
     }
+
 }
 
 

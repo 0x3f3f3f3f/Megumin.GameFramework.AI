@@ -27,13 +27,13 @@ namespace Megumin.AI.BehaviorTree
             if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
             {
                 PatrolPath.Arrive(destination);
-                MyAgent.MoveInput(Vector3.zero);
+                MyAgent.MoveInput(Vector3.zero, StopingDistance);
                 return (true, Status.Running);
             }
             else
             {
                 var dir = destination - Transform.position;
-                MyAgent.MoveInput(dir);
+                MyAgent.MoveInput(dir, StopingDistance);
             }
 
             return (false, Status.Running);

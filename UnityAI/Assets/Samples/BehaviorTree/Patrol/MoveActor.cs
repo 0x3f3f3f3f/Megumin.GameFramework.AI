@@ -16,7 +16,7 @@ public class MoveActor : MonoBehaviour, IMoveToable<Vector3>
     }
 
 
-    public bool MoveTo(Vector3 destination)
+    public bool MoveTo(Vector3 destination, float stoppingDistance)
     {
         if (destinationMarker)
         {
@@ -37,7 +37,7 @@ public class MoveActor : MonoBehaviour, IMoveToable<Vector3>
     {
         if (testTarget)
         {
-            MoveTo(testTarget.position);
+            MoveTo(testTarget.position, 0.1f);
         }
     }
 }

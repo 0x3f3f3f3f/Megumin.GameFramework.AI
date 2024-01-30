@@ -18,12 +18,13 @@ namespace Megumin.AI.BehaviorTree
         public Destination destination;
 
         [Space]
-        public float StopingDistance = 0.25f;
+        public StopingDistance StopingDistance = new();
 
         public bool IgnoreYAxis = true;
 
         protected override bool OnCheckCondition(object options = null)
         {
+            StopingDistance.Cal(GameObject, destination.Target);
             return Transform.IsArrive(destination.GetDestination(), StopingDistance, IgnoreYAxis);
         }
     }

@@ -55,7 +55,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (PatrolPath.TryGetNextDestination(Transform, out var next))
             {
-                if (MyAgent.MoveTo(next))
+                if (MyAgent.MoveTo(next, StopingDistance))
                 {
                     destination = next;
                     return true;

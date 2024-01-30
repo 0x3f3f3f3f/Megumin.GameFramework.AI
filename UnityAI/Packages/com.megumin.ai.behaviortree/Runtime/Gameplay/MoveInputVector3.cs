@@ -14,7 +14,7 @@ namespace Megumin.AI.BehaviorTree
     public class MoveInputVector3 : BTActionNode<IMoveInputable<Vector3>>
     {
         [Space]
-        public float StopingDistance = 0.25f;
+        public StopingDistance StopingDistance = new();
 
         public bool IgnoreYAxis = true;
 
@@ -33,6 +33,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnEnter(object options = null)
         {
             base.OnEnter(options);
+            StopingDistance.Cal(GameObject, null);
             Last = GetDestination();
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }
@@ -51,14 +52,14 @@ namespace Megumin.AI.BehaviorTree
 
             if (Transform.IsArrive(Last, StopingDistance, IgnoreYAxis))
             {
-                MyAgent.MoveInput(Vector3.zero);
+                MyAgent.MoveInput(Vector3.zero, StopingDistance);
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
                 return Status.Succeeded;
             }
             else
             {
                 var dir = Last - Transform.position;
-                MyAgent.MoveInput(dir);
+                MyAgent.MoveInput(dir, StopingDistance);
             }
 
             return Status.Running;
