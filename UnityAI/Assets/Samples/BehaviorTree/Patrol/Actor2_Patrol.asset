@@ -43,6 +43,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Decorators
+    - Name: ArriveChecker
+      Type: $ref
+      Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.ArriveChecker
     - Name: PatrolPath
       Type: $ref
       Value: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.PatrolPath
@@ -93,6 +96,9 @@ MonoBehaviour:
     - Name: bindingPath
       Type: System.String
       Value: 
+  - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.ArriveChecker
+    Type: Megumin.AI.ArriveChecker
+    Member: []
   - Name: e81cc40a-c198-4aed-ae1d-ea8adf4c4df4.Children
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member:
