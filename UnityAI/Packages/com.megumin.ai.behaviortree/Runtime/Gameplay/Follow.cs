@@ -17,9 +17,7 @@ namespace Megumin.AI.BehaviorTree
     public abstract class FollowBase<T> : OneChildNode<T>, IOutputPortInfoy<string>, IDetailable
     {
         [Space]
-        public bool IgnoreYAxis = true;
-
-        public StopingDistance StopingDistance = new();
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
         /// 触发再次跟随移动距离
@@ -47,7 +45,7 @@ namespace Megumin.AI.BehaviorTree
             if (Target?.Value)
             {
                 Last = Target.Value.transform.position;
-                StopingDistance.Cal(GameObject, Target.Value);
+                ArriveChecker.CalStopingDistance(GameObject, Target.Value);
             }
             else
             {
@@ -85,7 +83,6 @@ namespace Megumin.AI.BehaviorTree
         protected override Status OnTick(BTNode from, object options = null)
         {
             //这里的逻辑可以看作一个小型的状态机
-
 
             if (Target?.Value)
             {
@@ -145,7 +142,7 @@ namespace Megumin.AI.BehaviorTree
                 return Status.Running;
             }
 
-            if (Transform.IsArrive(Last, out CurrentDistance, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, Last, out CurrentDistance))
             {
                 //跟随足够接近目标，转为执行子节点。
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
@@ -205,12 +202,12 @@ namespace Megumin.AI.BehaviorTree
         {
             //跟随移动，设置移动方向
             var dir = Last - Transform.position;
-            MyAgent.MoveInput(dir, StopingDistance);
+            MyAgent.MoveInput(dir, ArriveChecker, ArriveChecker.DistanceScale);
         }
 
         protected override void OnArrivedTarget()
         {
-            MyAgent.MoveInput(Vector3.zero, StopingDistance);
+            MyAgent.MoveInput(Vector3.zero, ArriveChecker, ArriveChecker.DistanceScale);
         }
     }
 
@@ -224,7 +221,7 @@ namespace Megumin.AI.BehaviorTree
     {
         protected override void OnFollowingTarget()
         {
-            MyAgent.MoveTo(Last, StopingDistance);
+            MyAgent.MoveTo(Last, ArriveChecker, ArriveChecker.DistanceScale);
         }
 
         protected override void OnArrivedTarget()
@@ -244,7 +241,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnFollowingTarget()
         {
             MyAgent.SetDestination(Last);
-            MyAgent.stoppingDistance = StopingDistance;
+            MyAgent.stoppingDistance = ArriveChecker;
         }
 
         protected override void OnArrivedTarget()

@@ -24,16 +24,16 @@ namespace Megumin.AI.BehaviorTree
 
         public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
         {
-            if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, destination))
             {
                 PatrolPath.Arrive(destination);
-                MyAgent.MoveInput(Vector3.zero, StopingDistance);
+                MyAgent.MoveInput(Vector3.zero, ArriveChecker, ArriveChecker.DistanceScale);
                 return (true, Status.Running);
             }
             else
             {
                 var dir = destination - Transform.position;
-                MyAgent.MoveInput(dir, StopingDistance);
+                MyAgent.MoveInput(dir, ArriveChecker, ArriveChecker.DistanceScale);
             }
 
             return (false, Status.Running);

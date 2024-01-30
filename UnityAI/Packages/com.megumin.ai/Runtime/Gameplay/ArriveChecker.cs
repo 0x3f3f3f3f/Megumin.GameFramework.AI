@@ -5,8 +5,11 @@ using System;
 
 namespace Megumin.AI
 {
+    /// <summary>
+    /// 检查对象是否到达目标地点
+    /// </summary>
     [Serializable]
-    public class StopingDistance
+    public class ArriveChecker
     {
         /// <summary>
         /// 手动设置的最大停止距离
@@ -27,7 +30,7 @@ namespace Megumin.AI
         [ReadOnlyInInspector]
         public float FinalStopingDistance = 0;
 
-        public float Cal(GameObject me, GameObject target = null)
+        public float CalStopingDistance(GameObject me, GameObject target = null)
         {
             if (UseColliderRadius)
             {
@@ -53,9 +56,9 @@ namespace Megumin.AI
             return FinalStopingDistance;
         }
 
-        public static implicit operator float(StopingDistance stopingDistance)
+        public static implicit operator float(ArriveChecker checker)
         {
-            return stopingDistance?.FinalStopingDistance ?? 0;
+            return checker?.FinalStopingDistance ?? 0;
         }
 
         /// <summary>
@@ -96,6 +99,41 @@ namespace Megumin.AI
 
             radius = 0;
             return false;
+        }
+
+        [Space]
+        [Tooltip("计算距离时，根据设置忽略指定轴向的距离，例如忽略Y轴就设置为 new Vector3(1, 0, 1)")]
+        public Vector3 DistanceScale = new(1, 0, 1);
+
+        public bool IsArrive(Transform transform,
+                             Vector3 destination,
+                             out float distance)
+        {
+            if (transform)
+            {
+                var to = destination - transform.position;
+
+                to.Scale(DistanceScale);
+
+                distance = to.magnitude;
+
+                if (distance <= stopingDistance)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                distance = float.MaxValue;
+            }
+
+            return false;
+        }
+
+        public bool IsArrive(Transform transform,
+                             Vector3 destination)
+        {
+            return IsArrive(transform, destination, out var _);
         }
     }
 }

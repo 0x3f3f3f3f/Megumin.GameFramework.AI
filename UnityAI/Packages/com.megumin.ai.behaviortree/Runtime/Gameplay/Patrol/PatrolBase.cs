@@ -15,8 +15,7 @@ namespace Megumin.AI.BehaviorTree
         where P : PatrolPath<Vector3>
     {
         [Space]
-        public bool IgnoreYAxis = true;
-        public StopingDistance StopingDistance = new();
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
         /// 巡逻路径
@@ -40,7 +39,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnEnter(object options = null)
         {
             base.OnEnter(options);
-            StopingDistance.Cal(GameObject, null);
+            ArriveChecker.CalStopingDistance(GameObject, null);
         }
     }
 }

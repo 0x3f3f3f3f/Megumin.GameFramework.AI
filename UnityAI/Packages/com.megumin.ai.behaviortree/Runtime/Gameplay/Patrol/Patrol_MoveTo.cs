@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
 
         public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
         {
-            if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, destination))
             {
                 PatrolPath.Arrive(destination);
                 return (true, Status.Running);
@@ -55,7 +55,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (PatrolPath.TryGetNextDestination(Transform, out var next))
             {
-                if (MyAgent.MoveTo(next, StopingDistance))
+                if (MyAgent.MoveTo(next, ArriveChecker, ArriveChecker.DistanceScale))
                 {
                     destination = next;
                     return true;

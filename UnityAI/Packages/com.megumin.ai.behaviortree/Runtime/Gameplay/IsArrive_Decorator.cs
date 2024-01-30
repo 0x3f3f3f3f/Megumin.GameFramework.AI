@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Megumin.Reflection;
@@ -18,19 +19,19 @@ namespace Megumin.AI.BehaviorTree
         public Destination destination;
 
         [Space]
-        public StopingDistance StopingDistance = new();
-
-        public bool IgnoreYAxis = true;
+        public ArriveChecker ArriveChecker = new();
 
         protected override bool OnCheckCondition(object options = null)
         {
-            StopingDistance.Cal(GameObject, destination.Target);
-            return Transform.IsArrive(destination.GetDestination(), StopingDistance, IgnoreYAxis);
+            ArriveChecker.CalStopingDistance(GameObject, destination.Target);
+            return ArriveChecker.IsArrive(Transform, destination.GetDestination());
         }
     }
 
+    [Obsolete("Use ArriveChecker instead.", true)]
     public static class IsArriveExtension_92E68C3DEDCB402DAA5B29E31646509D
     {
+        [Obsolete("Use ArriveChecker instead.", true)]
         public static bool IsArrive(this Transform transform,
                                     Vector3 destination,
                                     float stopingDistance = 0.25f,
@@ -39,6 +40,7 @@ namespace Megumin.AI.BehaviorTree
             return IsArrive(transform, destination, out var _, stopingDistance, ignoreYAxis);
         }
 
+        [Obsolete("Use ArriveChecker instead.", true)]
         public static bool IsArrive(this Transform transform,
                                     Vector3 destination,
                                     out float distance,
