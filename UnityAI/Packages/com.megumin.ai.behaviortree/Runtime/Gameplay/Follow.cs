@@ -37,9 +37,9 @@ namespace Megumin.AI.BehaviorTree
         public RefVar_GameObject Target;
 
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             InChild = false;
             LostMode = false;
             if (Target?.Value)

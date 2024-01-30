@@ -16,9 +16,9 @@ namespace Megumin.AI.BehaviorTree
         [ReadOnlyInInspector]
         public List<int> CurrentOrder = new List<int>();
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
 
             if (Priority == null)
             {
@@ -132,9 +132,9 @@ namespace Megumin.AI.BehaviorTree
         [ReadOnlyInInspector]
         public List<int> CurrentOrder = new List<int>();
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
 
             if (Priority == null)
             {

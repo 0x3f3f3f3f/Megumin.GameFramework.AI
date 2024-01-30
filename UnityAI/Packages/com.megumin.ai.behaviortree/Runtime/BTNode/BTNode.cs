@@ -116,14 +116,14 @@ namespace Megumin.AI.BehaviorTree
         /// <remarks>
         /// 可以在方法内部修改State值，允许在不经过OnTick阶段的情况下直接完成节点。
         /// </remarks>
-        protected virtual void OnEnter(object options = null) { }
+        protected virtual void OnEnter(BTNode from, object options = null) { }
 
         /// <summary>
         /// 第一次执行进入节点,并返回状态值
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        protected virtual Status OnEnter2(object options = null)
+        protected virtual Status OnEnter2(BTNode from, object options = null)
         {
             return State;
         }
@@ -134,13 +134,13 @@ namespace Megumin.AI.BehaviorTree
         /// <remarks>
         /// 不建议在方法内部修改State值，可能会导致流程错误
         /// </remarks>
-        protected virtual void OnExit(Status result, object options = null) { }
+        protected virtual void OnExit(BTNode from, Status result, object options = null) { }
 
         /// <summary>
         /// 节点被终止时调用
         /// </summary>
         /// <param name="options"></param>
-        protected virtual void OnAbort(object options = null) { }
+        protected virtual void OnAbort(BTNode from, object options = null) { }
 
         /// <summary>
         /// 轮询子类

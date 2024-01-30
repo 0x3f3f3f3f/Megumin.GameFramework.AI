@@ -15,9 +15,9 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "StateChild0")]
     public abstract class StateChild0 : OneChildNode
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             InChild = false;
         }
 
@@ -82,9 +82,9 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "StateChild0")]
     public abstract class StateChild0<T> : OneChildNode<T>
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             InChild = false;
         }
 
@@ -142,9 +142,9 @@ namespace Megumin.AI.BehaviorTree
     [Obsolete("失败设计，当otherNode为null时，OnChildComp无法被调用", true)]
     public abstract class PassThrough : OneChildNode
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             otherNode = null;
         }
 

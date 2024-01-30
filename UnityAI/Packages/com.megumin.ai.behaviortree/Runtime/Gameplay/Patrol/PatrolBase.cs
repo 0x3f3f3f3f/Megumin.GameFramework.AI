@@ -36,9 +36,9 @@ namespace Megumin.AI.BehaviorTree
 
         public string OutputPortInfo => "OnArrivedCheckPoint";
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             ArriveChecker.CalStopingDistance(GameObject, null);
         }
     }

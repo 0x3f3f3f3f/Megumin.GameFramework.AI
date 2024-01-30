@@ -15,12 +15,12 @@ namespace Megumin.AI.BehaviorTree
 
         public int CurrentIndex { get; protected set; } = -1;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             CurrentIndex = 0;
         }
 
-        protected override void OnAbort(object options = null)
+        protected override void OnAbort(BTNode from, object options = null)
         {
             foreach (var item in Children)
             {
@@ -36,12 +36,12 @@ namespace Megumin.AI.BehaviorTree
     {
         public int CurrentIndex { get; protected set; } = -1;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             CurrentIndex = 0;
         }
 
-        protected override void OnAbort(object options = null)
+        protected override void OnAbort(BTNode from, object options = null)
         {
             foreach (var item in Children)
             {

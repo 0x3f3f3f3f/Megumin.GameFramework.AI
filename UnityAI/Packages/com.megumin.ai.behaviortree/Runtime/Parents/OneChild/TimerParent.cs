@@ -18,9 +18,9 @@ namespace Megumin.AI.BehaviorTree
 
         internal protected IWaitTimeable<double> WaitTimeable;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
 
             switch (TimeType)
             {

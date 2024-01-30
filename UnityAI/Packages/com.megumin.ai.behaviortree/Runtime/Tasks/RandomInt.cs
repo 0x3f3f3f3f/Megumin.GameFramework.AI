@@ -21,9 +21,9 @@ namespace Megumin.AI.BehaviorTree
         [Space]
         public RefVar_Int SaveTo;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             if (UseRange)
             {
                 SaveTo?.SetValue(Random.Range(Min, Max));

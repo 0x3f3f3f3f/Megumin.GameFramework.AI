@@ -27,9 +27,9 @@ namespace Megumin.AI.BehaviorTree
 
         protected Vector3 Last;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             ArriveChecker.CalStopingDistance(GameObject, null);
             Last = GetDestination();
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");

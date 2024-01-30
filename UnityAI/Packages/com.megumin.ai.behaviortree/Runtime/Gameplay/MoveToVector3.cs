@@ -21,7 +21,7 @@ namespace Megumin.AI.BehaviorTree
 
         protected Vector3 Last;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             ArriveChecker.CalStopingDistance(GameObject);
             InternalMoveTo();

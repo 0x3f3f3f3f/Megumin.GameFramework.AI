@@ -145,6 +145,7 @@ namespace Megumin.AI.BehaviorTree
         {
             //Enter Exit函数理论上不允许修改State状态。
             //Enter Exit本质是OnTick的拆分，状态始终应该由OnTick决定状态。
+            //通过使用中发现Enter修改State还是比较常见的用法。既然Enter 是OnTick的拆分，那么修改State也合情合理。
 
             IsInnerRunning = true;
             State = Status.Running;
@@ -152,7 +153,7 @@ namespace Megumin.AI.BehaviorTree
             if (IsExecutedEnter == false)
             {
                 IsExecutedEnter = true;
-                Enter(options);
+                Enter(from, options);
             }
 
             //OnTick 阶段
@@ -170,7 +171,7 @@ namespace Megumin.AI.BehaviorTree
                 {
                     //与enter互斥对应
                     //如果没有调用Enter，那么应不应该调用Exit？
-                    Exit(options);
+                    Exit(from, options);
                 }
             }
         }
@@ -239,11 +240,11 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Enter(object options = null)
+        private void Enter(BTNode from, object options = null)
         {
             GetLogger(LogConst.ChangeNode)?.WriteLine($"[{Time.time:0.00}] Enter Node {this}");
-            OnEnter(options);
-            State = OnEnter2(options);
+            OnEnter(from, options);
+            State = OnEnter2(from, options);
         }
 
         /// <summary>
@@ -251,9 +252,9 @@ namespace Megumin.AI.BehaviorTree
         /// </summary>
         /// <param name="options"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Exit(object options = null)
+        private void Exit(BTNode from, object options = null)
         {
-            OnExit(State, options);
+            OnExit(from, State, options);
             GetLogger(LogConst.ChangeNode)?.WriteLine($"[{Time.time:0.00}] Exit Node [{State}]  :  {this}");
         }
 
@@ -359,13 +360,13 @@ namespace Megumin.AI.BehaviorTree
             State = Status.Failed;
             FailedCode = FailedCode.Abort;
 
-            OnAbort(options);
+            OnAbort(from, options);
 
             if (IsExecutedEnter)
             {
                 //与enter互斥对应
                 //如果没有调用Enter，那么应不应该调用Exit？
-                Exit(options);
+                Exit(from, options);
             }
 
             State = ExecuteAbortDecorator(options);

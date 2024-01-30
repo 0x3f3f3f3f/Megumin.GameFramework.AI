@@ -44,7 +44,7 @@ namespace Megumin.AI.BehaviorTree
         public FinishMode FinishMode = FinishMode.AnyFailed;
 
         bool firstTick = false;
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             firstTick = true;
         }

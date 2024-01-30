@@ -10,9 +10,9 @@ namespace Megumin.AI.BehaviorTree
         where T : IMoveToable<Vector3>
         where P : PatrolPath<Vector3>
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             if (TryMoveNext(ref destination))
             {
 

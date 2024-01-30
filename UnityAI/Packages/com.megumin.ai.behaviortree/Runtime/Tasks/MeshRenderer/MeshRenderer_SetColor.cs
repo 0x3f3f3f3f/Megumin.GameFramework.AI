@@ -20,9 +20,9 @@ namespace Megumin.AI.BehaviorTree
         public RefVar_String ColorName = new RefVar_String() { value = "_BaseColor" };
         public RefVar_Color TargetColor = new RefVar_Color() { value = Color.white };
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             Material[] materials = null;
             if (ChangeInstanceMats)
             {

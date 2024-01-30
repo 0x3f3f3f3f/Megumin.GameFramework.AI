@@ -23,9 +23,9 @@ namespace Megumin.AI.BehaviorTree
 
         BTNode currentChild;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             currentChild = null;
             currentRandom = -1;
 
