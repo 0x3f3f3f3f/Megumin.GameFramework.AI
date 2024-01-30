@@ -117,7 +117,7 @@ namespace Megumin.AI
 
                 distance = to.magnitude;
 
-                if (distance <= stopingDistance)
+                if (distance <= FinalStopingDistance)
                 {
                     return true;
                 }
