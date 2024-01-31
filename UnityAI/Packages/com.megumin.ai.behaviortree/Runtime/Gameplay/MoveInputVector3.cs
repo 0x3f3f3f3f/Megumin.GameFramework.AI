@@ -30,7 +30,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnEnter(BTNode from, object options = null)
         {
             base.OnEnter(from, options);
-            ArriveChecker.CalStopingDistance(GameObject, null);
+            ArriveChecker.CalStopingDistance(GameObject, destination.Target);
             Last = GetDestination();
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }

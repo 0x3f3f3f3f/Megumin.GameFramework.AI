@@ -61,6 +61,19 @@ namespace Megumin.AI
             {
                 switch (Type)
                 {
+                    case DestinationType.Auto:
+                        {
+                            if (Dest_GameObject?.Value)
+                            {
+                                return Dest_GameObject.Value;
+                            }
+
+                            if (Dest_Transform?.Value)
+                            {
+                                return Dest_Transform.Value.gameObject;
+                            }
+                        }
+                        break;
                     case DestinationType.Transform:
                         if (Dest_Transform.Value)
                         {

@@ -10,8 +10,10 @@ namespace Megumin.AI.BehaviorTree
     public abstract class MoveToBase<T> : BTActionNode<T>
     {
         [Space]
-        public ArriveChecker ArriveChecker = new();
+        public Destination destination;
 
+        [Space]
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
         /// 移动过程中目的地改变，自动重新设置目的地
@@ -23,12 +25,15 @@ namespace Megumin.AI.BehaviorTree
 
         protected override void OnEnter(BTNode from, object options = null)
         {
-            ArriveChecker.CalStopingDistance(GameObject);
+            ArriveChecker.CalStopingDistance(GameObject, destination.Target);
             InternalMoveTo();
         }
 
         protected abstract void InternalMoveTo();
-        protected abstract Vector3 GetDestination();
+        protected virtual Vector3 GetDestination()
+        {
+            return destination.GetDestination();
+        }
 
         protected override Status OnTick(BTNode from, object options = null)
         {
@@ -58,20 +63,12 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "MoveToVector3")]
     public sealed class MoveToVector3 : MoveToBase<IMoveToable<Vector3>>
     {
-        [Space]
-        public Destination destination;
-
         protected override void InternalMoveTo()
         {
             Last = GetDestination();
             MyAgent.MoveTo(Last, ArriveChecker, ArriveChecker.DistanceScale);
 
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
-        }
-
-        protected override Vector3 GetDestination()
-        {
-            return destination.GetDestination();
         }
     }
 }

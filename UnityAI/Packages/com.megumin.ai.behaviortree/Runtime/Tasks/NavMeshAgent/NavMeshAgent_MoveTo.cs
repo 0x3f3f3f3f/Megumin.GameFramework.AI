@@ -17,9 +17,6 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "NavMeshAgent_MoveTo")]
     public class NavMeshAgent_MoveTo : MoveToBase<NavMeshAgent>
     {
-        [Space]
-        public Destination destination;
-
         protected override void InternalMoveTo()
         {
             Last = GetDestination();
@@ -27,12 +24,6 @@ namespace Megumin.AI.BehaviorTree
             this.Transform.LookAt(Last);
 
             GetLogger()?.WriteLine($"MyAgent : {MyAgent}  <color=#89CFF0>MoveTo</color>  Des : {destination?.Dest_Transform?.Value.name}    {Last}");
-        }
-
-
-        protected override Vector3 GetDestination()
-        {
-            return destination.GetDestination();
         }
     }
 }
