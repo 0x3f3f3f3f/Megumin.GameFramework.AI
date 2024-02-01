@@ -111,7 +111,8 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 第一次执行进入节点
+        /// 第一次执行进入节点。
+        /// OnEnter 和 OnEnter2都有必要。在Enter环节改变state也是有需求的。类似于条件检测，但是又有区别。
         /// </summary>
         /// <remarks>
         /// 可以在方法内部修改State值，允许在不经过OnTick阶段的情况下直接完成节点。
@@ -129,7 +130,8 @@ namespace Megumin.AI.BehaviorTree
         }
 
         /// <summary>
-        /// 退出节点时调用
+        /// 退出节点时调用。
+        /// 用于节点清理等工作，重置或者释放一些临时变量。
         /// </summary>
         /// <remarks>
         /// 不建议在方法内部修改State值，可能会导致流程错误
