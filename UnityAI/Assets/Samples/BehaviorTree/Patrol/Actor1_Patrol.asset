@@ -88,12 +88,12 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342.Decorators
-    - Name: ArriveChecker
-      Type: $ref
-      Value: 5565396e-4920-46be-b6f8-e39a76f0e342.ArriveChecker
     - Name: destination
       Type: $ref
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342.destination
+    - Name: ArriveChecker
+      Type: $ref
+      Value: 5565396e-4920-46be-b6f8-e39a76f0e342.ArriveChecker
     - Name: GUID
       Type: System.String
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342
