@@ -19,12 +19,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
-## [1.3.0]
+## [1.3.0] - 2024-02-10
 ### Added  
 - 节点增加异步执行模式
+- 增加Goto节点
+- 允许间接引用其他节点
   
 ### Changed  
 - BTNode.OnTick虚方法默认返回值由Succeeded改为Running。
+- 重构Event Trigger，现在可以携带更多参数。支持泛型事件。
+- 破坏性API更改： OnEnter OnExit增加BTNode from参数
+- 重构  GetIgnoreResult(BTNode from)。去除对Selector节点的引用
+- 重构移动等节点，现在允许智能获取对象碰撞盒半径。
+
+### Fixed  
+- 修改TypeCache测试
+- 修复类型适配器引起的空引用
 
 ## [1.2.3] - 2024-01-08
 
