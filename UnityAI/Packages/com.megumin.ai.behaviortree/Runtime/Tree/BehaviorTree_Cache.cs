@@ -53,8 +53,21 @@ namespace Megumin.AI.BehaviorTree
             nodeIndexVersion = version;
         }
 
-
+        [Obsolete("Use InitAddObjTreeElement and InitAddObjNotTreeElement instead.")]
         public void InitAddTreeRefObj<T>(T value)
+        {
+            InitAddObjTreeElement(value);
+
+            InitAddObjToInterfaceCollection(value);
+        }
+
+        /// <summary>
+        /// 初始化添加直接属于树的节点装饰器，但是不包含节点成员值的node类型。
+        /// 当节点引用其他节点时，可能会出现多次添加。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public void InitAddObjTreeElement<T>(T value)
         {
             if (value is BTNode node)
             {
@@ -68,6 +81,19 @@ namespace Megumin.AI.BehaviorTree
 
             InitAddObjToInterfaceCollection(value);
         }
+
+        /// <summary>
+        /// 添加间接引用对象。
+        /// 添加不是树直接所属的树节点和装饰器到树中。
+        /// 当节点引用其他节点时，可能会出现多次添加。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public void InitAddObjNotTreeElement<T>(T value)
+        {
+            InitAddObjToInterfaceCollection(value);
+        }
+
 
         /// <summary>
         /// 测试是否含有接口，并缓存到指定容器中，方便同意调用。

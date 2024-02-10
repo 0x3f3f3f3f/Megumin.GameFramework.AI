@@ -417,37 +417,37 @@ namespace Megumin.AI.BehaviorTree
             //以上添加到树 0 参数实例
 
             //添加普通对象
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_GameObject);
-            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta);
-            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators);
-            tree.InitAddTreeRefObj(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
-            tree.InitAddTreeRefObj(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info);
-            tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Meta);
-            tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Decorators);
-            tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_Children);
-            tree.InitAddTreeRefObj(temp_46091aac_2293_44bf_881e_5e3476886543_WaitTime);
-            tree.InitAddTreeRefObj(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Meta);
-            tree.InitAddTreeRefObj(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Decorators);
-            tree.InitAddTreeRefObj(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_WaitTime);
-            tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta);
-            tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
-            tree.InitAddTreeRefObj(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Text);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_Transform);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info_Ref_GameObject);
+            tree.InitAddObjNotTreeElement(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Meta);
+            tree.InitAddObjNotTreeElement(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_Decorators);
+            tree.InitAddObjNotTreeElement(temp_2dfe0c27_6bca_4af7_ba6b_a1631d859f78_WaitTime);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Meta);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Decorators);
+            tree.InitAddObjNotTreeElement(temp_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707_Info);
+            tree.InitAddObjNotTreeElement(temp_46091aac_2293_44bf_881e_5e3476886543_Meta);
+            tree.InitAddObjNotTreeElement(temp_46091aac_2293_44bf_881e_5e3476886543_Decorators);
+            tree.InitAddObjNotTreeElement(temp_46091aac_2293_44bf_881e_5e3476886543_Children);
+            tree.InitAddObjNotTreeElement(temp_46091aac_2293_44bf_881e_5e3476886543_WaitTime);
+            tree.InitAddObjNotTreeElement(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Meta);
+            tree.InitAddObjNotTreeElement(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_Decorators);
+            tree.InitAddObjNotTreeElement(temp_62f41474_7568_45c7_946e_cdf5ad45fff4_WaitTime);
+            tree.InitAddObjNotTreeElement(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Meta);
+            tree.InitAddObjNotTreeElement(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Decorators);
+            tree.InitAddObjNotTreeElement(temp_a734621c_96b6_4a26_898c_0e4d45f5dba2_Children);
             //以上添加到树 19 普通对象
 
             //添加装饰器
-            tree.InitAddTreeRefObj(deco_f215473e_1bd7_451b_9d38_79a052d9b203);
+            tree.InitAddObjTreeElement(deco_f215473e_1bd7_451b_9d38_79a052d9b203);
             //以上添加到树 1 装饰器
 
             //添加节点
-            tree.InitAddTreeRefObj(node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78);
-            tree.InitAddTreeRefObj(node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707);
-            tree.InitAddTreeRefObj(node_46091aac_2293_44bf_881e_5e3476886543);
-            tree.InitAddTreeRefObj(node_62f41474_7568_45c7_946e_cdf5ad45fff4);
-            tree.InitAddTreeRefObj(node_a734621c_96b6_4a26_898c_0e4d45f5dba2);
+            tree.InitAddObjTreeElement(node_2dfe0c27_6bca_4af7_ba6b_a1631d859f78);
+            tree.InitAddObjTreeElement(node_2f7d3ba7_cfbb_416a_a003_e1d3ed6f0707);
+            tree.InitAddObjTreeElement(node_46091aac_2293_44bf_881e_5e3476886543);
+            tree.InitAddObjTreeElement(node_62f41474_7568_45c7_946e_cdf5ad45fff4);
+            tree.InitAddObjTreeElement(node_a734621c_96b6_4a26_898c_0e4d45f5dba2);
             //以上添加到树 5 节点
 
             #endregion

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: RandomOne
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 6c36e75c-3b0e-4fb9-9725-a1ea87d9da9d
   <StartNodeGUID>k__BackingField: a6073e3c-ee8f-482f-83fe-86b1d46aeb34
   UseSerializeReferenceGeneric: 0

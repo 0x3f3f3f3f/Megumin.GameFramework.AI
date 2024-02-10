@@ -11,9 +11,9 @@ namespace Megumin
             Megumin.Reflection.TypeCache.CacheAllTypes();
         }
 
-        public static void CacheAllTypesAsync()
+        public static async void CacheAllTypesAsync()
         {
-            Megumin.Reflection.TypeCache.CacheAllTypesAsync().Wait();
+            await Megumin.Reflection.TypeCache.CacheAllTypesAsync();
             Debug.Log("CacheAllTypesAsync End");
         }
 

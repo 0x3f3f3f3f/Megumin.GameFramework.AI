@@ -9,9 +9,9 @@ namespace Megumin.AI.BehaviorTree
         where T : IMoveInputable<Vector3>
         where P : PatrolPath<Vector3>
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             if (PatrolPath.TryGetNextDestination(Transform, out var next))
             {
                 destination = next;
@@ -24,16 +24,16 @@ namespace Megumin.AI.BehaviorTree
 
         public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
         {
-            if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, destination))
             {
                 PatrolPath.Arrive(destination);
-                MyAgent.MoveInput(Vector3.zero);
+                MyAgent.MoveInput(Vector3.zero, ArriveChecker, ArriveChecker.DistanceScale);
                 return (true, Status.Running);
             }
             else
             {
                 var dir = destination - Transform.position;
-                MyAgent.MoveInput(dir);
+                MyAgent.MoveInput(dir, ArriveChecker, ArriveChecker.DistanceScale);
             }
 
             return (false, Status.Running);
@@ -57,7 +57,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveInput")]
+    [DisplayName("Patrol_MoveInput  (Dir)")]
     [Description("Transform_List IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Transform_List(IMoveInputable<Vector3>)")]
@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveInput")]
+    [DisplayName("Patrol_MoveInput  (Dir)")]
     [Description("Random InsideCircle IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Random InsideCircle(IMoveInputable<Vector3>)")]

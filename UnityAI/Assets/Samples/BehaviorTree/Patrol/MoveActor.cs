@@ -15,8 +15,18 @@ public class MoveActor : MonoBehaviour, IMoveToable<Vector3>
         agent = GetComponent<NavMeshAgent>();
     }
 
+    public Transform testTarget;
 
-    public bool MoveTo(Vector3 destination)
+    [Editor]
+    public void Test()
+    {
+        if (testTarget)
+        {
+            MoveTo(testTarget.position, 0.1f);
+        }
+    }
+
+    public bool MoveTo(Vector3 destination, float stoppingDistance = 0, Vector3? distanceScale = null)
     {
         if (destinationMarker)
         {
@@ -28,16 +38,5 @@ public class MoveActor : MonoBehaviour, IMoveToable<Vector3>
             return agent.SetDestination(destination);
         }
         return false;
-    }
-
-    public Transform testTarget;
-
-    [Editor]
-    public void Test()
-    {
-        if (testTarget)
-        {
-            MoveTo(testTarget.position);
-        }
     }
 }

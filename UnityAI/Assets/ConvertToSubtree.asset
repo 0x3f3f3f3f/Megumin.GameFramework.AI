@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: ConvertToSubtree
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 1562e46d-7cb1-42de-876a-698ba8ccf958
   <StartNodeGUID>k__BackingField: a14f5dda-51ed-4d9b-a573-f2fd2ba8e9ab
   UseSerializeReferenceGeneric: 0

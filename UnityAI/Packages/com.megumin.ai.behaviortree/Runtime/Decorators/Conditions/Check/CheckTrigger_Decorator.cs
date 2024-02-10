@@ -34,11 +34,11 @@ namespace Megumin.AI.BehaviorTree
 
         protected override bool OnCheckCondition(object options = null)
         {
-            if (Tree.TryGetTrigger(TriggerName, out var eventData))
+            if (Tree.TryGetTrigger(TriggerName.Value, out var eventData))
             {
                 if (ResetTrigger == WhenResetTrigger.Immediate)
                 {
-                    Tree.ResetTrigger(TriggerName);
+                    eventData.Use();
                 }
                 return true;
             }
@@ -54,7 +54,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.EnterNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
             return result;
         }
@@ -71,7 +71,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (ResetTrigger == WhenResetTrigger.LeaveNode)
             {
-                Tree.ResetTrigger(TriggerName);
+                Tree.RemoveTrigger(TriggerName.Value);
             }
         }
     }

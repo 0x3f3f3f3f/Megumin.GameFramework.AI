@@ -174,9 +174,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -194,6 +203,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -236,9 +276,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -256,6 +305,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -277,6 +357,123 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &362910967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362910968}
+  - component: {fileID: 362910969}
+  m_Layer: 0
+  m_Name: GotoAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &362910968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362910967}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 343.75998, y: 627.9298, z: 7.5307555}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &362910969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362910967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97672047d59919945853bfeb83fdc913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BehaviorTreeAsset: {fileID: 11400000, guid: 2ec1f3681f807c44bbd318186cb2a170, type: 2}
+  TickMode: 1
+  AutoEnable: 1
+  <OnEnabled>k__BackingField: 64
+  <OnDisabled>k__BackingField: 128
+  InitOption:
+    AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
+    SharedMeta: 1
+    LazyInitSubtree: 0
+    UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
+    DelayRandomFrame:
+      Enabled: 0
+      Value: 30
+  RunOption:
+    FrameInterval:
+      Enabled: 0
+      Value: 1
+    TimeInterval:
+      Enabled: 0
+      Value: 0.1
+    RealtimeInterval:
+      Enabled: 0
+      Value: 0.1
+    <Log>k__BackingField: 0
+    <Order>k__BackingField: 0
+    <OnSucceeded>k__BackingField: 0
+    <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+  OverrideUnityObjectRef: []
+  OverrideVariables:
+    Table: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &677827573
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &677827574
 Transform:
   m_ObjectHideFlags: 0
@@ -328,9 +525,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -348,6 +554,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -390,9 +627,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -410,6 +656,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -467,9 +744,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -487,6 +773,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -524,7 +841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1165640950
 Transform:
   m_ObjectHideFlags: 0
@@ -559,9 +876,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -579,6 +905,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -621,9 +978,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -641,6 +1007,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -713,9 +1110,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -733,6 +1139,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -775,9 +1212,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -795,6 +1241,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -867,9 +1344,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -887,6 +1373,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -944,9 +1461,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -964,6 +1490,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -1006,9 +1563,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -1026,6 +1592,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -1098,9 +1695,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -1118,6 +1724,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []
@@ -1175,9 +1812,18 @@ MonoBehaviour:
   <OnDisabled>k__BackingField: 128
   InitOption:
     AsyncInit: 1
+    BeforeBindAgentDelayFrame:
+      Enabled: 0
+      Value: 1
+    BeforeParseBindingDelayFrame:
+      Enabled: 0
+      Value: 1
     SharedMeta: 1
     LazyInitSubtree: 0
     UseGenerateCode: 0
+    DelayMinFrame:
+      Enabled: 0
+      Value: 1
     DelayRandomFrame:
       Enabled: 0
       Value: 30
@@ -1195,6 +1841,37 @@ MonoBehaviour:
     <Order>k__BackingField: 0
     <OnSucceeded>k__BackingField: 0
     <OnFailed>k__BackingField: 0
+  InitEvents:
+    BeforeInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterInstantiate:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterBindAgent:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterParseBinding:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterAddToManager:
+      m_PersistentCalls:
+        m_Calls: []
+    BeforeRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterRemoveFromManager:
+      m_PersistentCalls:
+        m_Calls: []
   OverrideUnityObjectRef: []
   OverrideVariables:
     Table: []

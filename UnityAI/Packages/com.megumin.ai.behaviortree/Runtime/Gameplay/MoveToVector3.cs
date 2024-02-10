@@ -10,10 +10,10 @@ namespace Megumin.AI.BehaviorTree
     public abstract class MoveToBase<T> : BTActionNode<T>
     {
         [Space]
-        public float StopingDistance = 0.25f;
+        public Destination destination;
 
-        public bool IgnoreYAxis = true;
-
+        [Space]
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
         /// 移动过程中目的地改变，自动重新设置目的地
@@ -23,13 +23,17 @@ namespace Megumin.AI.BehaviorTree
 
         protected Vector3 Last;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
+            ArriveChecker.CalStopingDistance(GameObject, destination.Target);
             InternalMoveTo();
         }
 
         protected abstract void InternalMoveTo();
-        protected abstract Vector3 GetDestination();
+        protected virtual Vector3 GetDestination()
+        {
+            return destination.GetDestination();
+        }
 
         protected override Status OnTick(BTNode from, object options = null)
         {
@@ -41,7 +45,7 @@ namespace Megumin.AI.BehaviorTree
                 }
             }
 
-            if (Transform.IsArrive(Last, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, Last))
             {
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
                 return Status.Succeeded;
@@ -52,27 +56,19 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("d_navmeshdata icon")]
-    [DisplayName("MoveTo")]
+    [DisplayName("MoveTo (Pos)")]
     [Description("IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("MoveTo(IMoveToable<Vector3>)")]
     [HelpURL(URL.WikiTask + "MoveToVector3")]
     public sealed class MoveToVector3 : MoveToBase<IMoveToable<Vector3>>
     {
-        [Space]
-        public Destination destination;
-
         protected override void InternalMoveTo()
         {
             Last = GetDestination();
-            MyAgent.MoveTo(Last);
+            MyAgent.MoveTo(Last, ArriveChecker, ArriveChecker.DistanceScale);
 
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
-        }
-
-        protected override Vector3 GetDestination()
-        {
-            return destination.GetDestination();
         }
     }
 }

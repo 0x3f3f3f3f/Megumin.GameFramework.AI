@@ -54,6 +54,44 @@ namespace Megumin.AI
 
             return Dest_Vector;
         }
+
+        public GameObject Target
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case DestinationType.Auto:
+                        {
+                            if (Dest_GameObject?.Value)
+                            {
+                                return Dest_GameObject.Value;
+                            }
+
+                            if (Dest_Transform?.Value)
+                            {
+                                return Dest_Transform.Value.gameObject;
+                            }
+                        }
+                        break;
+                    case DestinationType.Transform:
+                        if (Dest_Transform.Value)
+                        {
+                            return Dest_Transform.Value.gameObject;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    case DestinationType.GameObject:
+                        return Dest_GameObject.Value;
+                    default:
+                        break;
+                }
+
+                return null;
+            }
+        }
     }
 }
 

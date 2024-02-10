@@ -16,6 +16,12 @@ namespace Megumin.AI.BehaviorTree
 
         public BTNode AddNode(BTNode node)
         {
+            if (node == null || string.IsNullOrEmpty(node.GUID))
+            {
+                GetLogger()?.WriteLine($"Invalid node will add to tree. {node}");
+                return node;
+            }
+
             if (AllNodes.Contains(node))
             {
 

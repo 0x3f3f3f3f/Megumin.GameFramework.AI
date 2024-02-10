@@ -20,7 +20,7 @@ namespace Megumin.AI.BehaviorTree
         public RefVar_Transform_List DestinationList;
 
         int index = 0;
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             var list = DestinationList?.Value;
             if (list == null || list.Count == 0)

@@ -283,6 +283,10 @@ namespace Megumin.AI.BehaviorTree.Editor
             TreeView = root.Q<BehaviorTreeView>("behaviorTreeView");
             TreeView.EditorWindow = this;
 
+            //解决2023.2 版本按键事件不响应问题。
+            //https://forum.unity.com/threads/graphview-delete-key-doesnt-work-on-2023-1-0a19.1363674/
+            TreeView.focusable = true;
+
             CreateTopbar();
             CreateBottomBar();
 

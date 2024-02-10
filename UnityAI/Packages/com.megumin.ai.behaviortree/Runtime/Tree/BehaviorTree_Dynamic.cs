@@ -51,7 +51,7 @@ namespace Megumin.AI.BehaviorTree
                 RecursiveAdd(item.Value);
             }
 
-            InitAddTreeRefObj(member);
+            InitAddObjTreeElement(member);
         }
 
         /// <summary>

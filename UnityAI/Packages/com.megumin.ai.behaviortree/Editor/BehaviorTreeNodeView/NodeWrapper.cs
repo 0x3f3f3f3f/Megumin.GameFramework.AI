@@ -9,7 +9,10 @@ using UnityEditor.Experimental.GraphView;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
-    public abstract class TreeElementWrapper : ScriptableObject, IRefVariableFinder, ITreeElementWrapper
+    public abstract class TreeElementWrapper : ScriptableObject,
+        IRefVariableFinder,
+        IRefSetterCollection,
+        ITreeElementWrapper
     {
         [ReadOnlyInInspector]
         public MonoScript NodeScript;
@@ -57,6 +60,59 @@ namespace Megumin.AI.BehaviorTree.Editor
         public void Export(IRefable currentValue)
         {
             TreeView.Blackboard.AddNewVariable(currentValue);
+        }
+
+        public IEnumerable<(string OptionDisplay, object Value)> GetRefObjs(string filter = null, string[] category = null, Type[] type = null)
+        {
+            List<(string OptionDisplay, object Value)> result = new();
+            var nodeFlag = false;
+            var decoFlag = false;
+
+            if (string.IsNullOrEmpty(filter) && category == null)
+            {
+                //没有设置类别时，使用节点
+                nodeFlag = true;
+            }
+
+            if (filter?.Contains("node", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                nodeFlag = true;
+            }
+
+            if (filter?.Contains("deco", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                decoFlag = true;
+            }
+
+            foreach (var item in TreeView.graphElements)
+            {
+                if (nodeFlag && item is BehaviorTreeNodeView nodeView)
+                {
+                    result.Add(($"{nodeView.Node.Index,-2}  {nodeView.Node.ShortGUID}  {nodeView.title}", nodeView.Node));
+                }
+
+                if (decoFlag && item is BehaviorTreeDecoratorView decoratorView)
+                {
+                    result.Add(($"Deco {decoratorView.title} {decoratorView.Decorator.GUID}", decoratorView.Decorator));
+                }
+            }
+
+            return result;
+        }
+
+        public bool EqualsRef(object lhs, object rhs)
+        {
+            if (lhs is BehaviorTreeElement le)
+            {
+                return le.GUID == (rhs as BehaviorTreeElement)?.GUID;
+            }
+
+            if (rhs is BehaviorTreeElement re)
+            {
+                return re.GUID == (lhs as BehaviorTreeElement)?.GUID;
+            }
+
+            return lhs == rhs;
         }
     }
 

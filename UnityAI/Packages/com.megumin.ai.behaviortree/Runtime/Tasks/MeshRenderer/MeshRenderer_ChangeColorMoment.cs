@@ -24,9 +24,9 @@ namespace Megumin.AI.BehaviorTree
         Color[] orignalColors;
         int ColorID = 0;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             ColorID = Shader.PropertyToID(ColorName);
 
             if (ChangeInstanceMats)
@@ -51,12 +51,12 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-        protected override void OnExit(Status result, object options = null)
+        protected override void OnExit(BTNode from, Status result, object options = null)
         {
             RestoreColor();
         }
 
-        protected override void OnAbort(object options = null)
+        protected override void OnAbort(BTNode from, object options = null)
         {
             RestoreColor();
         }

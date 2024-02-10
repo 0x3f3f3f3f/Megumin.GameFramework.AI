@@ -19,7 +19,7 @@ namespace Megumin.AI.BehaviorTree
     //[Icon("")]
     //[SerializationAlias("Megumin.AI.BehaviorTree.#SCRIPTNAME#")]
     //[MovedFrom(true, sourceNamespace: "Megumin.AI.BehaviorTree", sourceAssembly: null, sourceClassName: "#SCRIPTNAME#")]
-    //[HelpURL(URL.WikiDecorator + "#SCRIPTNAME#")]
+    //[HelpURL(URL.WikiTask + "#SCRIPTNAME#")]
     public sealed class #SCRIPTNAME# : BTActionNode
     {
         public RefVar_Float Float = new() { value = 5.0f };

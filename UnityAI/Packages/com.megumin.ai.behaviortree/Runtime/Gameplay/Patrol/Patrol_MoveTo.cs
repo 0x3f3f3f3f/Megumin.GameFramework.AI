@@ -10,9 +10,9 @@ namespace Megumin.AI.BehaviorTree
         where T : IMoveToable<Vector3>
         where P : PatrolPath<Vector3>
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             if (TryMoveNext(ref destination))
             {
 
@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
 
         public override (bool ChangeTo, Status Result) OnTickSelf(BTNode from, object options = null)
         {
-            if (Transform.IsArrive(destination, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, destination))
             {
                 PatrolPath.Arrive(destination);
                 return (true, Status.Running);
@@ -55,7 +55,7 @@ namespace Megumin.AI.BehaviorTree
         {
             if (PatrolPath.TryGetNextDestination(Transform, out var next))
             {
-                if (MyAgent.MoveTo(next))
+                if (MyAgent.MoveTo(next, ArriveChecker, ArriveChecker.DistanceScale))
                 {
                     destination = next;
                     return true;
@@ -69,7 +69,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveTo")]
+    [DisplayName("Patrol_MoveTo (Pos)")]
     [Description("Transform_List IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Transform_List(IMoveToable<Vector3>)")]
@@ -82,7 +82,7 @@ namespace Megumin.AI.BehaviorTree
     /// 巡逻节点
     /// </summary>
     [Icon("d_navmeshdata icon")]
-    [DisplayName("Patrol_MoveTo")]
+    [DisplayName("Patrol_MoveTo (Pos)")]
     [Description("Random InsideCircle IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Patrol Random InsideCircle(IMoveToable<Vector3>)")]

@@ -15,12 +15,22 @@ namespace Megumin.AI.BehaviorTree
 
         public int CurrentIndex { get; protected set; } = -1;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             CurrentIndex = 0;
         }
 
-        protected override void OnAbort(object options = null)
+        protected override Status OnEnter2(BTNode from, object options = null)
+        {
+            ///没有子节点时，忽略当前节点。
+            if (Children.Count == 0)
+            {
+                return GetIgnoreResult(from);
+            }
+            return State;
+        }
+
+        protected override void OnAbort(BTNode from, object options = null)
         {
             foreach (var item in Children)
             {
@@ -36,12 +46,22 @@ namespace Megumin.AI.BehaviorTree
     {
         public int CurrentIndex { get; protected set; } = -1;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             CurrentIndex = 0;
         }
 
-        protected override void OnAbort(object options = null)
+        protected override Status OnEnter2(BTNode from, object options = null)
+        {
+            ///没有子节点时，忽略当前节点。
+            if (Children.Count == 0)
+            {
+                return GetIgnoreResult(from);
+            }
+            return State;
+        }
+
+        protected override void OnAbort(BTNode from, object options = null)
         {
             foreach (var item in Children)
             {

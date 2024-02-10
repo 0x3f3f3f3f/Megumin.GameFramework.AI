@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Megumin.AI.BehaviorTree
 {
     [Icon("d_navmeshdata icon")]
-    [DisplayName("MoveTo")]
+    [DisplayName("MoveTo  (Dir)")]
     [Description("IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("MoveTo(IMoveInputable<Vector3>)")]
@@ -14,13 +14,10 @@ namespace Megumin.AI.BehaviorTree
     public class MoveInputVector3 : BTActionNode<IMoveInputable<Vector3>>
     {
         [Space]
-        public float StopingDistance = 0.25f;
-
-        public bool IgnoreYAxis = true;
-
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
-        /// 移动过程中目的地改变，自动重新设置目的地
+        /// 绉诲姩杩囩▼涓洰鐨勫湴鏀瑰彉锛岃嚜鍔ㄩ噸鏂拌缃洰鐨勫湴
         /// </summary>
         [Space]
         public bool KeepDestinationNew = false;
@@ -30,9 +27,10 @@ namespace Megumin.AI.BehaviorTree
 
         protected Vector3 Last;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
+            ArriveChecker.CalStopingDistance(GameObject, destination.Target);
             Last = GetDestination();
             GetLogger()?.WriteLine($"MoveTo MyAgent : {MyAgent}  Des : {destination?.Dest_Transform?.Value.name} Last:{Last}");
         }
@@ -49,16 +47,16 @@ namespace Megumin.AI.BehaviorTree
                 Last = GetDestination();
             }
 
-            if (Transform.IsArrive(Last, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, Last))
             {
-                MyAgent.MoveInput(Vector3.zero);
+                MyAgent.MoveInput(Vector3.zero, ArriveChecker, ArriveChecker.DistanceScale);
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
                 return Status.Succeeded;
             }
             else
             {
                 var dir = Last - Transform.position;
-                MyAgent.MoveInput(dir);
+                MyAgent.MoveInput(dir, ArriveChecker, ArriveChecker.DistanceScale);
             }
 
             return Status.Running;

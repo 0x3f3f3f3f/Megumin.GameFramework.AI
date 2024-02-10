@@ -405,6 +405,8 @@ namespace Megumin.Binding
             }
         }
 
+        public static GUIContent ExportContent = new GUIContent("Export", "RefName con not null");
+
         public void OnGUISelector(Rect position,
                                   SerializedProperty property,
                                   GUIContent label,
@@ -493,7 +495,7 @@ namespace Megumin.Binding
 
                 using (new UnityEditor.EditorGUI.DisabledGroupScope(enableExport == false))
                 {
-                    if (GUI.Button(exportButtonPos, "Export"))
+                    if (GUI.Button(exportButtonPos, ExportContent))
                     {
                         treeWrapper.Export(currentValue);
                     }

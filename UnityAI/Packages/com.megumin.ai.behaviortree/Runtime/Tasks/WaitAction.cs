@@ -28,9 +28,9 @@ namespace Megumin.AI.BehaviorTree
         //如果有的Wait返回成功，有的Wait返回失败，相同的节点返回不同返回值，
         //在UI上无法表现出Wait节点的差异性，会给用户造成困惑，非常不容理解。
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
 
             switch (TimeType)
             {
@@ -78,9 +78,9 @@ namespace Megumin.AI.BehaviorTree
 
         private IWaitTimeable<double> WaitTimeable;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
 
             switch (TimeType)
             {

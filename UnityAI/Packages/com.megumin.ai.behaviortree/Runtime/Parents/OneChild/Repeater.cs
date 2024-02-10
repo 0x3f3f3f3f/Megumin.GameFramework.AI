@@ -24,7 +24,7 @@ namespace Megumin.AI.BehaviorTree
 
         int completeCount = 0;
 
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             completeCount = 0;
         }

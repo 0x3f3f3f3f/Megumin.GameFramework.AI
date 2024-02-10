@@ -15,6 +15,11 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "Selector")]
     public class Selector : CompositeNode, IDynamicable
     {
+        protected override Status GetResultIfChildIgnored(BTNode ignoredChild)
+        {
+            return Status.Failed;
+        }
+
         protected override Status OnTick(BTNode from, object options = null)
         {
             for (int i = 0; i < Children.Count; i++)

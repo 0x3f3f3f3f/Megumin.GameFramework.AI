@@ -32,7 +32,7 @@ namespace Megumin.AI.BehaviorTree
         protected IWaitTimeable<double> waitTimeable { get; } = new WaitGameTime();
 
         protected int count = 0;
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             waitTimeable.WaitStart();
             count++;

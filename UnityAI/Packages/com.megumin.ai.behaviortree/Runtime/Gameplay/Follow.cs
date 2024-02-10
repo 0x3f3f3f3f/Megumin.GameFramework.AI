@@ -6,23 +6,18 @@ using Megumin.Binding;
 using Megumin.Timers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 namespace Megumin.AI.BehaviorTree
 {
     /// <summary>
-    /// 简单跟随
+    /// 简单跟随，永远不会返回成功，会持续运行。
     /// </summary>
 
     public abstract class FollowBase<T> : OneChildNode<T>, IOutputPortInfoy<string>, IDetailable
     {
         [Space]
-        public bool IgnoreYAxis = true;
-
-        /// <summary>
-        /// 最大停止距离
-        /// </summary>
-        [Space]
-        public float StopingDistance = 0.8f;
+        public ArriveChecker ArriveChecker = new();
 
         /// <summary>
         /// 触发再次跟随移动距离
@@ -41,14 +36,16 @@ namespace Megumin.AI.BehaviorTree
 
         public RefVar_GameObject Target;
 
-        protected override void OnEnter(object options = null)
+
+        protected override void OnEnter(BTNode from, object options = null)
         {
-            base.OnEnter(options);
+            base.OnEnter(from, options);
             InChild = false;
             LostMode = false;
             if (Target?.Value)
             {
                 Last = Target.Value.transform.position;
+                ArriveChecker.CalStopingDistance(GameObject, Target.Value);
             }
             else
             {
@@ -86,7 +83,6 @@ namespace Megumin.AI.BehaviorTree
         protected override Status OnTick(BTNode from, object options = null)
         {
             //这里的逻辑可以看作一个小型的状态机
-
 
             if (Target?.Value)
             {
@@ -128,19 +124,25 @@ namespace Megumin.AI.BehaviorTree
                     return Status.Running;
                 }
 
+                if (Child0 == null)
+                {
+                    //没有子节点，暂时处于等待模式，防止立刻进行Refollow.
+                    return Status.Running;
+                }
+
                 //在目标附近，执行子节点
-                var childResult = Child0?.Tick(this, options);
+                var childResult = Child0.Tick(this, options);
                 if (childResult == Status.Running)
                 {
                     return Status.Running;
                 }
 
-                //子节点完成，返回跟随模式
+                //子节点完成，返回跟随模式。子节点的执行结果忽略，对Follow节点不造成影响。
                 InChild = false;
                 return Status.Running;
             }
 
-            if (Transform.IsArrive(Last, out CurrentDistance, StopingDistance, IgnoreYAxis))
+            if (ArriveChecker.IsArrive(Transform, Last, out CurrentDistance))
             {
                 //跟随足够接近目标，转为执行子节点。
                 GetLogger()?.WriteLine($"MoveTo Succeeded: {Last}");
@@ -176,7 +178,7 @@ namespace Megumin.AI.BehaviorTree
                     var left = RefollowWaiter.GetLeftTime(RefollowWait);
                     if (left > 0)
                     {
-                        return $"{CurrentDistance:0.000}  Wait:{RefollowWaiter.GetLeftTime(RefollowWait):0.000}";
+                        return $"{CurrentDistance:0.000}  Wait:{left:0.000}";
                     }
                 }
 
@@ -188,7 +190,7 @@ namespace Megumin.AI.BehaviorTree
     }
 
     [Icon("buildsettings.android@2x")]
-    [DisplayName("Follow")]
+    [DisplayName("Follow (Dir)")]
     [Description("Follow IMoveInputable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Follow GameObject(IMoveInputable<Vector3>)")]
@@ -200,17 +202,17 @@ namespace Megumin.AI.BehaviorTree
         {
             //跟随移动，设置移动方向
             var dir = Last - Transform.position;
-            MyAgent.MoveInput(dir);
+            MyAgent.MoveInput(dir, ArriveChecker, ArriveChecker.DistanceScale);
         }
 
         protected override void OnArrivedTarget()
         {
-            MyAgent.MoveInput(Vector3.zero);
+            MyAgent.MoveInput(Vector3.zero, ArriveChecker, ArriveChecker.DistanceScale);
         }
     }
 
     [Icon("buildsettings.android@2x")]
-    [DisplayName("Follow")]
+    [DisplayName("Follow (Pos)")]
     [Description("Follow IMoveToable<Vector3>")]
     [Category("Gameplay")]
     [AddComponentMenu("Follow GameObject(IMoveToable<Vector3>)")]
@@ -219,7 +221,7 @@ namespace Megumin.AI.BehaviorTree
     {
         protected override void OnFollowingTarget()
         {
-            MyAgent.MoveTo(Last);
+            MyAgent.MoveTo(Last, ArriveChecker, ArriveChecker.DistanceScale);
         }
 
         protected override void OnArrivedTarget()
@@ -239,6 +241,7 @@ namespace Megumin.AI.BehaviorTree
         protected override void OnFollowingTarget()
         {
             MyAgent.SetDestination(Last);
+            MyAgent.stoppingDistance = ArriveChecker;
         }
 
         protected override void OnArrivedTarget()
@@ -246,6 +249,7 @@ namespace Megumin.AI.BehaviorTree
 
         }
     }
+
 }
 
 

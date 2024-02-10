@@ -428,7 +428,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                             continue;
                         }
 
-                        generator.Push($"tree.InitAddTreeRefObj({declaredObjs[item].VarName});");
+                        generator.Push($"tree.InitAddObjNotTreeElement({declaredObjs[item].VarName});");
                         objCount++;
                     }
                     generator.Push($"//以上添加到树 {objCount} 普通对象");
@@ -437,7 +437,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                     generator.Push($"//添加装饰器");
                     foreach (var item in decos)
                     {
-                        generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
+                        generator.Push($"tree.InitAddObjTreeElement({item.Value.VarName});");
                     }
                     generator.Push($"//以上添加到树 {decos.Count} 装饰器");
                     generator.PushBlankLines();
@@ -445,7 +445,7 @@ namespace Megumin.AI.BehaviorTree.Editor
                     generator.Push($"//添加节点");
                     foreach (var item in nodes)
                     {
-                        generator.Push($"tree.InitAddTreeRefObj({item.Value.VarName});");
+                        generator.Push($"tree.InitAddObjTreeElement({item.Value.VarName});");
                     }
                     generator.Push($"//以上添加到树 {nodes.Count} 节点");
                     generator.PushBlankLines();

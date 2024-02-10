@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Actor1_Patrol
   m_EditorClassIdentifier: 
-  Version: 1.1.0
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: c45ccefe-1223-4280-8f58-1ca1bae204b3
   <StartNodeGUID>k__BackingField: 73f56cae-a6ca-4405-871a-4863e0c2e24d
   UseSerializeReferenceGeneric: 0
@@ -67,6 +67,9 @@ MonoBehaviour:
     - Name: Decorators
       Type: $ref
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Decorators
+    - Name: ArriveChecker
+      Type: $ref
+      Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.ArriveChecker
     - Name: PatrolPath
       Type: $ref
       Value: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.PatrolPath
@@ -88,6 +91,9 @@ MonoBehaviour:
     - Name: destination
       Type: $ref
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342.destination
+    - Name: ArriveChecker
+      Type: $ref
+      Value: 5565396e-4920-46be-b6f8-e39a76f0e342.ArriveChecker
     - Name: GUID
       Type: System.String
       Value: 5565396e-4920-46be-b6f8-e39a76f0e342
@@ -210,6 +216,9 @@ MonoBehaviour:
     - Name: Comment
       Type: System.String
       Value: 
+  - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.ArriveChecker
+    Type: Megumin.AI.ArriveChecker
+    Member: []
   - Name: 4d978c58-15dd-4c4f-90e6-2bb3d415cc71.Children
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.BTNode]]
     Member: []
@@ -246,6 +255,9 @@ MonoBehaviour:
     - Name: DestinationList
       Type: $ref
       Value: DesList
+  - Name: 5565396e-4920-46be-b6f8-e39a76f0e342.ArriveChecker
+    Type: Megumin.AI.ArriveChecker
+    Member: []
   - Name: 5565396e-4920-46be-b6f8-e39a76f0e342.Decorators
     Type: System.Collections.Generic.List`1[[Megumin.AI.BehaviorTree.IDecorator]]
     Member: []

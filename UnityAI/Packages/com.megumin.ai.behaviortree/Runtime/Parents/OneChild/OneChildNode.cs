@@ -25,7 +25,7 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-        protected override void OnAbort(object options = null)
+        protected override void OnAbort(BTNode from, object options = null)
         {
             Child0.Abort(this, options);
         }
@@ -50,7 +50,7 @@ namespace Megumin.AI.BehaviorTree
             }
         }
 
-        protected override void OnAbort(object options = null)
+        protected override void OnAbort(BTNode from, object options = null)
         {
             if (Child0?.State == Status.Running)
             {

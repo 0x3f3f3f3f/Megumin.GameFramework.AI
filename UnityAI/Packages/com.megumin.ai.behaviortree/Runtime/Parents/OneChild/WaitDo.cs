@@ -15,10 +15,10 @@ namespace Megumin.AI.BehaviorTree
     [HelpURL(URL.WikiTask + "WaitDo")]
     public class WaitDo : TimerParent, IDetailable
     {
-        protected override void OnEnter(object options = null)
+        protected override void OnEnter(BTNode from, object options = null)
         {
             enterChild = false;
-            base.OnEnter(options);
+            base.OnEnter(from, options);
         }
 
         protected bool enterChild = false;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: Event
   m_EditorClassIdentifier: 
-  Version: 1.0.1
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 8de66378-10f6-4b07-91c8-a18c79426e56
   <StartNodeGUID>k__BackingField: 7472fd12-bcd1-4358-9988-6d57615e0f51
   UseSerializeReferenceGeneric: 0

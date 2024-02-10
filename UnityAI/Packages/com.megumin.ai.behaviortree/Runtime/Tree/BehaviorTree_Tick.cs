@@ -106,7 +106,6 @@ namespace Megumin.AI.BehaviorTree
         internal protected Status CoreTick(BTNode from = null, object options = null)
         {
             treestate = TickStartNode(from, options);
-            TotalTickCount++;
 
             if (treestate == Status.Succeeded)
             {
@@ -120,6 +119,9 @@ namespace Megumin.AI.BehaviorTree
                 FailedCount++;
                 GetLogger()?.WriteLine($"tree complate. {treestate}");
             }
+
+            ///在Tick最末尾更新TotalTickCount。
+            TotalTickCount++;
             return treestate;
         }
 

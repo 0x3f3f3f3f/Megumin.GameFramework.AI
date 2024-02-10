@@ -23,7 +23,7 @@ namespace Megumin.AI.BehaviorTree
 
         protected override bool OnCheckCondition(object options = null)
         {
-            if (Tree.TryGetEvent(EventName, Owner, out var eventData))
+            if (Tree.TryGetEvent(EventName.Value, out var eventData, Owner))
             {
                 return true;
             }

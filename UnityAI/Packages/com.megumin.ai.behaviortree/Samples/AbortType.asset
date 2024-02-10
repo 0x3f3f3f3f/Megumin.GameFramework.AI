@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24eb528ebc97814a88d65c7618bfc70, type: 3}
   m_Name: AbortType
   m_EditorClassIdentifier: 
-  Version: 1.0.1
+  SerializationVersion: 1.1.1
   <GUID>k__BackingField: 68acc691-1c3c-40f1-b8c4-4d3eaf77a5c6
   <StartNodeGUID>k__BackingField: 8842f6ab-3690-42dd-82a6-e06307b530d0
   UseSerializeReferenceGeneric: 0
