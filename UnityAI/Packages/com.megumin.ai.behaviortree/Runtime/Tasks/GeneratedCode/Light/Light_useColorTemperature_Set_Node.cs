@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Light Icon")]
+    [Icon("Light Icon")]
     [DisplayName("Set_Light_useColorTemperature")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Set_useColorTemperature")]

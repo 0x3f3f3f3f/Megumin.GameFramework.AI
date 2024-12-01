@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animation Icon")]
+    [Icon("Animation Icon")]
     [DisplayName("Animation_SyncLayer")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("SyncLayer(Int32)")]

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody2D Icon")]
+    [Icon("Rigidbody2D Icon")]
     [DisplayName("Rigidbody2D_IsTouching")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("IsTouching(ContactFilter2D)")]

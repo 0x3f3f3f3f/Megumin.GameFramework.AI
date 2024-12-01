@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_AudioSource Icon")]
+    [Icon("AudioSource Icon")]
     [DisplayName("Get_AudioSource_spatialBlend")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("Get_spatialBlend")]

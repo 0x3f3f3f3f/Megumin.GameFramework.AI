@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Camera_useOcclusionCulling")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("useOcclusionCulling")]

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Set_Rigidbody_maxAngularVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Set_maxAngularVelocity")]

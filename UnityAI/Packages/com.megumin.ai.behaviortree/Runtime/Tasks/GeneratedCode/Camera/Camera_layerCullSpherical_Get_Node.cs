@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Get_Camera_layerCullSpherical")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_layerCullSpherical")]

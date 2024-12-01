@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_CapsuleCollider Icon")]
+    [Icon("CapsuleCollider Icon")]
     [DisplayName("CapsuleCollider_radius")]
     [Category("UnityEngine/CapsuleCollider")]
     [AddComponentMenu("radius")]

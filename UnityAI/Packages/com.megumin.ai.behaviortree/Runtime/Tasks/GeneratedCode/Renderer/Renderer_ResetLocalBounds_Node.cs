@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_DefaultAsset Icon")]
+    [Icon("DefaultAsset Icon")]
     [DisplayName("Renderer_ResetLocalBounds")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("ResetLocalBounds")]

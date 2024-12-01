@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_PlayableDirector Icon")]
+    [Icon("PlayableDirector Icon")]
     [DisplayName("PlayableDirector_DeferredEvaluate")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("DeferredEvaluate")]

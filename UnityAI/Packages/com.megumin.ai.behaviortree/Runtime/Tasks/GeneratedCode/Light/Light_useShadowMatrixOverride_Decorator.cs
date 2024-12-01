@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Light Icon")]
+    [Icon("Light Icon")]
     [DisplayName("Light_useShadowMatrixOverride")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("useShadowMatrixOverride")]

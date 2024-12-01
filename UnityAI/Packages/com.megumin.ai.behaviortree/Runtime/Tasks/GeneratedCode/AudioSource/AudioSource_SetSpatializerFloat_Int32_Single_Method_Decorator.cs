@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_AudioSource Icon")]
+    [Icon("AudioSource Icon")]
     [DisplayName("AudioSource_SetSpatializerFloat")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("SetSpatializerFloat(Int32, Single)")]

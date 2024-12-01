@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Megumin.Reflection;
 using UnityEngine.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Megumin.AI.BehaviorTree.Editor
 {
@@ -22,7 +23,6 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         [Space]
         public bool MultiThreading = true;
-        public Enable<string> Define;
 
         [Space]
         public List<Enable<string>> Assemblys = new()
@@ -32,19 +32,73 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         public List<Enable<string>> Types = new();
 
-        [Space]
-        [FormerlySerializedAs("IgnoreMethods")]
-        public List<string> IgnoreGeneratedClass = new();
 
-        public List<string> ObsoleteAPIInFuture = new();
-
+        /// <summary>
+        /// 节点生成选项
+        /// </summary>
+        /// <remarks>
+        /// 用于解决API废弃，不同版本支持不同的问题
+        /// </remarks>
         [Serializable]
-        public class IconReplace
+        public class GenerateOption
         {
-            public string Type;
-            public string IconPath;
-            public Texture2D Icon;
+            /// <summary>
+            /// 默认生成选项
+            /// </summary>
+            public static GenerateOption Default { get; } = new();
+            //用于匹配的正则表达式
+            public string Regex;
+            /// <summary>
+            /// 忽略生成
+            /// </summary>
+            public bool IgnoreGenerated = false;
+            /// <summary>
+            /// 编译宏。
+            /// </summary>
+            /// <remarks>
+            /// 不需要StartEnd，直接拼成一个字符就行了。例如：UNITY_5_3_OR_NEWER && !UNITY_2021_3_OR_NEWER
+            /// </remarks>
+            public string CompileMacro;
+            //public string StartMacro;
+            //public string EndMacro;
+            public bool ObsoleteGenerated = false;
+            public string ObsoleteMessage = "Obsolete API in a future version of Unity";
+            public bool ObsoleteError = false;
+            public string OverrideIconPath;
+            public Texture2D OverrideIconTexture2D;
+            public string OverrideCategory;
+            public string OverrideDisplayName;
+
+            public Regex RegexInstance { get; internal set; }
+            public string OverrideIconTexture2DCacheString { get; set; }
+            /// <summary>
+            /// 设定的节点图标
+            /// </summary>
+            public string OverrideIcon
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(OverrideIconPath))
+                    {
+                        return OverrideIconTexture2DCacheString;
+                    }
+                    else
+                    {
+                        return OverrideIconPath;
+                    }
+                }
+            }
         }
+
+        /// <summary>
+        /// 根据要生成的节点的名字的生成设置
+        /// </summary>
+        [Space]
+        public List<GenerateOption> ClassNameOptions = new();
+        /// <summary>
+        /// 根据成员的所在的声明的类型名字的生成设置
+        /// </summary>
+        public List<GenerateOption> DeclearTypeNameOptions = new();
 
         [Serializable]
         public class CategoryReplace
@@ -54,7 +108,6 @@ namespace Megumin.AI.BehaviorTree.Editor
         }
 
         [Space]
-        public List<IconReplace> ReplaceIcon = new();
         public List<CategoryReplace> ReplaceCategory = new();
 
         [Space]
@@ -76,6 +129,9 @@ namespace Megumin.AI.BehaviorTree.Editor
 
         List<Task> alltask = new();
         System.Random random = new();
+        /// <summary>
+        /// 当前插件环境支持的节点参数类型，包含了用户自定义类型
+        /// </summary>
         List<object> variableTemplate = new();
 
 
@@ -116,12 +172,57 @@ namespace Megumin.AI.BehaviorTree.Editor
             return false;
         }
 
+        /// <summary>
+        /// 获取最匹配的生成参数，优先使用生成节点的类名测试，然后使用声明类型测试。
+        /// 如果没有找到则返回空。
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public GenerateOption FindGenerateOption(string className, Type type)
+        {
+            foreach (var item in ClassNameOptions)
+            {
+                if (item.RegexInstance != null && item.RegexInstance.IsMatch(className))
+                {
+                    return item;
+                }
+            }
+
+            foreach (var item in DeclearTypeNameOptions)
+            {
+                if (item.RegexInstance != null && item.RegexInstance.IsMatch(type.FullName))
+                {
+                    return item;
+                }
+            }
+
+            return GenerateOption.Default;
+        }
+
         string OutputDir = "";
         [ContextMenu("Generate")]
         public void Generate()
         {
+            //获取输出路径
             OutputDir = AssetDatabase.GetAssetPath(OutputFolder);
 
+            //初始化正则表达式
+            foreach (var item in ClassNameOptions.Concat(DeclearTypeNameOptions))
+            {
+                if (!string.IsNullOrEmpty(item.Regex))
+                {
+                    Regex regex = new Regex(item.Regex);
+                    item.RegexInstance = regex;
+                }
+
+                if (item.OverrideIconTexture2D)
+                {
+                    item.OverrideIconTexture2DCacheString = AssetDatabase.GetAssetPath(item.OverrideIconTexture2D);
+                }
+            }
+
+            //获取支持的参数类型
             var list = VariableCreator.AllCreator;
             foreach (var item in list)
             {
@@ -133,54 +234,12 @@ namespace Megumin.AI.BehaviorTree.Editor
                 variableTemplate.Add(v);
             }
 
-            HashSet<Type> types = new();
+            HashSet<Type> types = ClollectGenrateType();
 
-            foreach (var item in Assemblys)
-            {
-                if (item.Enabled)
-                {
-                    Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                    var assm = assemblies.FirstOrDefault(elem => elem.GetName().Name == item.Value);
-                    if (assm != null)
-                    {
-                        foreach (var type in assm.GetTypes())
-                        {
-                            types.Add(type);
-                        }
-                    }
-                }
-            }
-
-            foreach (var item in Types)
-            {
-                if (item.Enabled)
-                {
-                    if (Megumin.Reflection.TypeCache.TryGetType(item, out var type))
-                    {
-                        types.Add(type);
-                    }
-                }
-            }
-
-
+            //统计Icon列表，计算Icon重写值
             foreach (var item in types)
             {
                 typeIcon[item] = AssetPreview.GetMiniTypeThumbnail(item)?.name;
-            }
-
-            foreach (var item in ReplaceIcon)
-            {
-                if (Megumin.Reflection.TypeCache.TryGetType(item.Type, out var type))
-                {
-                    if (item.Icon)
-                    {
-                        typeIcon[type] = AssetDatabase.GetAssetPath(item.Icon);
-                    }
-                    else
-                    {
-                        typeIcon[type] = item.IconPath;
-                    }
-                }
             }
 
             alltask.Clear();
@@ -210,6 +269,46 @@ namespace Megumin.AI.BehaviorTree.Editor
             Task.WaitAll(alltask.ToArray());
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
+        }
+
+        /// <summary>
+        /// 收集要生成节点的类型。
+        /// </summary>
+        /// <returns></returns>
+        public HashSet<Type> ClollectGenrateType()
+        {
+            HashSet<Type> types = new();
+
+            //从程序集中获取
+            foreach (var item in Assemblys)
+            {
+                if (item.Enabled)
+                {
+                    Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                    var assm = assemblies.FirstOrDefault(elem => elem.GetName().Name == item.Value);
+                    if (assm != null)
+                    {
+                        foreach (var type in assm.GetTypes())
+                        {
+                            types.Add(type);
+                        }
+                    }
+                }
+            }
+
+            //从配置的名字中获取
+            foreach (var item in Types)
+            {
+                if (item.Enabled)
+                {
+                    if (Megumin.Reflection.TypeCache.TryGetType(item, out var type))
+                    {
+                        types.Add(type);
+                    }
+                }
+            }
+
+            return types;
         }
 
         Dictionary<Type, string> typeIcon = new();
@@ -360,10 +459,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             //忽略指定方法
                             var className = GetClassName(type, member);
                             className += "_Decorator";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             if (TargetTypeCan2Deco(filed.FieldType) == false)
                             {
@@ -376,6 +471,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             generator.MemberInfo = member;
                             generator.Type = type;
                             generator.Setting = this;
+                            generator.GenerateOption = FindGenerateOption(className, type);
 
                             if (generator.CheckPath())
                             {
@@ -387,10 +483,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         {
                             var className = GetClassName(type, member);
                             className += "_Get_Node";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             var generator = new FeildProperty2GetNode();
                             generator.ClassName = className;
@@ -398,6 +490,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             generator.MemberInfo = member;
                             generator.Type = type;
                             generator.Setting = this;
+                            generator.GenerateOption = FindGenerateOption(className, type);
 
                             if (generator.CheckPath())
                             {
@@ -425,10 +518,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
                             var className = GetClassName(type, member);
                             className += "_Set_Node";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             var generator = new FeildProperty2SetNode();
                             generator.ClassName = className;
@@ -436,6 +525,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             generator.MemberInfo = member;
                             generator.Type = type;
                             generator.Setting = this;
+                            generator.GenerateOption = FindGenerateOption(className, type);
 
                             if (generator.CheckPath())
                             {
@@ -462,10 +552,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             //忽略指定方法
                             var className = GetClassName(type, member);
                             className += "_Decorator";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             if (TargetTypeCan2Deco(prop.PropertyType) == false)
                             {
@@ -480,6 +566,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                                 generator.MemberInfo = member;
                                 generator.Type = type;
                                 generator.Setting = this;
+                                generator.GenerateOption = FindGenerateOption(className, type);
 
                                 if (generator.CheckPath())
                                 {
@@ -492,10 +579,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         {
                             var className = GetClassName(type, member);
                             className += "_Get_Node";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             if (prop.CanRead)
                             {
@@ -505,6 +588,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                                 generator.MemberInfo = member;
                                 generator.Type = type;
                                 generator.Setting = this;
+                                generator.GenerateOption = FindGenerateOption(className, type);
 
                                 if (generator.CheckPath())
                                 {
@@ -517,10 +601,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         {
                             var className = GetClassName(type, member);
                             className += "_Set_Node";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             if (type.IsValueType)
                             {
@@ -536,6 +616,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                                 generator.MemberInfo = member;
                                 generator.Type = type;
                                 generator.Setting = this;
+                                generator.GenerateOption = FindGenerateOption(className, type);
 
                                 if (generator.CheckPath())
                                 {
@@ -589,10 +670,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         {
                             var className = GetClassName(type, member);
                             className += "_Node";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             var generator = new Method2NodeGenerator();
                             generator.ClassName = className;
@@ -600,6 +677,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             generator.MemberInfo = member;
                             generator.Type = type;
                             generator.Setting = this;
+                            generator.GenerateOption = FindGenerateOption(className, type);
 
                             if (generator.CheckPath())
                             {
@@ -611,10 +689,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         {
                             var className = GetClassName(type, member);
                             className += "_Method_Decorator";
-                            if (IgnoreGeneratedClass.Contains(className))
-                            {
-                                continue;
-                            }
 
                             if (TargetTypeCan2Deco(method.ReturnType) == false)
                             {
@@ -627,6 +701,7 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                             generator.MemberInfo = member;
                             generator.Type = type;
                             generator.Setting = this;
+                            generator.GenerateOption = FindGenerateOption(className, type);
 
                             if (generator.CheckPath())
                             {
@@ -663,6 +738,8 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
             public MemberInfo MemberInfo { get; internal set; }
             public Type Type { get; internal set; }
             public NodeGenerator Setting { get; internal set; }
+            public GenerateOption GenerateOption { get; internal set; }
+
             public bool IsStatic { get; set; }
 
             public string path;
@@ -700,7 +777,38 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 return true;
             }
 
-            public abstract void Generate();
+            public void Generate()
+            {
+                if (GenerateOption != null)
+                {
+                    if (GenerateOption.IgnoreGenerated)
+                    {
+                        return;
+                    }
+                }
+                bool useCompileMacro = !string.IsNullOrEmpty(GenerateOption.CompileMacro);
+                string compileMacro = GenerateOption.CompileMacro;
+
+                if (useCompileMacro)
+                {
+                    generator.Push($"#if {compileMacro}");
+                    generator.PushBlankLines();
+                }
+
+                GenerateCore();
+
+                if (useCompileMacro)
+                {
+                    generator.PushBlankLines();
+                    generator.Push($"#endif");
+                }
+
+                generator.PushBlankLines(4);
+
+                generator.Generate(path);
+            }
+
+            protected abstract void GenerateCore();
 
             public void GenerateUsing(CSCodeGenerator generator)
             {
@@ -714,9 +822,18 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
             public void GenerateAttribute(Type type, MemberInfo member, string className, CSCodeGenerator generator)
             {
-                if (Setting.typeIcon.TryGetValue(type, out var iconName) && string.IsNullOrEmpty(iconName) == false)
+                if (string.IsNullOrEmpty(GenerateOption.OverrideIcon))
                 {
-                    generator.Push($"[Icon(\"{iconName}\")]");
+                    //没有设定Icon，使用Unity的类型Icon
+                    if (Setting.typeIcon.TryGetValue(type, out var iconName) && string.IsNullOrEmpty(iconName) == false)
+                    {
+                        generator.Push($"[Icon(\"{iconName}\")]");
+                    }
+                }
+                else
+                {
+                    //包含重写Icon，直接使用重写Icon
+                    generator.Push($"[Icon(\"{GenerateOption.OverrideIcon}\")]");
                 }
 
                 generator.Push($"[DisplayName(\"$(DisplayName)\")]");
@@ -734,9 +851,14 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 generator.Push($"[AddComponentMenu(\"$(MenuName)\")]");
                 generator.Push($"[CodeGeneratorInfo(Name = \"Megumin.CSCodeGenerator\")]");
 
-                if (Setting.ObsoleteAPIInFuture.Contains(className))
+                //if (Setting.ObsoleteAPIInFuture.Contains(className))
+                //{
+                //    generator.Push($"[Obsolete(\"Obsolete API in a future version of Unity\", true)]");
+                //}
+
+                if (GenerateOption.ObsoleteGenerated)
                 {
-                    generator.Push($"[Obsolete(\"Obsolete API in a future version of Unity\", true)]");
+                    generator.Push($"[Obsolete(\"{GenerateOption.ObsoleteMessage}\", {GenerateOption.ObsoleteError.ToCode()})]");
                 }
             }
 
@@ -893,20 +1015,14 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                 }
             }
 
-            public override void Generate()
+            protected override void GenerateCore()
             {
                 string className = ClassName;
-                var Define = Setting.Define;
+
                 var type = Type;
                 var method = MemberInfo as MethodInfo;
 
                 AddMacro();
-                if (Define.Enabled)
-                {
-                    generator.Push($"#if {Define.Value}");
-                    generator.PushBlankLines();
-                }
-
                 GenerateUsing(generator);
 
                 generator.Push($"namespace {CodeGenerator.Namespace}");
@@ -925,15 +1041,6 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                         GenerateMainMethod(type, method);
                     }
                 }
-
-                if (Define.Enabled)
-                {
-                    generator.PushBlankLines();
-                    generator.Push($"#endif");
-                }
-
-                generator.PushBlankLines(4);
-                generator.Generate(path);
             }
 
             public virtual void GenerateMainMethod(Type type, MethodInfo method)
@@ -1050,22 +1157,14 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
 
         public class FeildProperty2DecoGenerator : Generator
         {
-            public override void Generate()
+            protected override void GenerateCore()
             {
                 string className = ClassName;
-                var Define = Setting.Define;
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
 
                 AddMacro();
-
-                if (Define.Enabled)
-                {
-                    generator.Push($"#if {Define.Value}");
-                    generator.PushBlankLines();
-                }
-
                 GenerateUsing(generator);
 
                 generator.Push($"namespace {CodeGenerator.Namespace}");
@@ -1112,38 +1211,20 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                     }
                 }
 
-
-                if (Define.Enabled)
-                {
-                    generator.PushBlankLines();
-                    generator.Push($"#endif");
-                }
-
-                generator.PushBlankLines(4);
-
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, false);
-                generator.Generate(path);
             }
         }
 
         public class FeildProperty2GetNode : Generator
         {
-            public override void Generate()
+            protected override void GenerateCore()
             {
                 string className = ClassName;
-                var Define = Setting.Define;
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
 
                 AddMacro();
-
-                if (Define.Enabled)
-                {
-                    generator.Push($"#if {Define.Value}");
-                    generator.PushBlankLines();
-                }
-
                 GenerateUsing(generator);
 
                 generator.Push($"namespace {CodeGenerator.Namespace}");
@@ -1171,39 +1252,22 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                     }
                 }
 
-                if (Define.Enabled)
-                {
-                    generator.PushBlankLines();
-                    generator.Push($"#endif");
-                }
-
-                generator.PushBlankLines(4);
-
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
                 generator.Macro["$(DisplayName)"] = $"Get_{type.Name}_{member.Name}";
                 generator.Macro["$(MenuName)"] = $"Get_{GetMenuName(type, member)}";
-                generator.Generate(path);
             }
         }
 
         public class FeildProperty2SetNode : Generator
         {
-            public override void Generate()
+            protected override void GenerateCore()
             {
                 string className = ClassName;
-                var Define = Setting.Define;
                 var type = Type;
                 var member = MemberInfo;
                 var memberType = member.GetMemberType();
 
                 AddMacro();
-
-                if (Define.Enabled)
-                {
-                    generator.Push($"#if {Define.Value}");
-                    generator.PushBlankLines();
-                }
-
                 GenerateUsing(generator);
 
                 generator.Push($"namespace {CodeGenerator.Namespace}");
@@ -1231,17 +1295,9 @@ protected override Status OnTick(BTNode $(BTNodeFrom), object $(ObjectOptions) =
                     }
                 }
 
-                if (Define.Enabled)
-                {
-                    generator.PushBlankLines();
-                    generator.Push($"#endif");
-                }
-
-                generator.PushBlankLines(4);
                 generator.Macro["$(BaseClassName)"] = GetBaseTypeString(memberType, UseComponent, true);
                 generator.Macro["$(DisplayName)"] = $"Set_{type.Name}_{member.Name}";
                 generator.Macro["$(MenuName)"] = $"Set_{GetMenuName(type, member)}";
-                generator.Generate(path);
             }
         }
     }

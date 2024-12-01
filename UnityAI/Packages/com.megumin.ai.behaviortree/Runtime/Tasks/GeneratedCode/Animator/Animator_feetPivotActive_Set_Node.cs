@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Set_Animator_feetPivotActive")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Set_feetPivotActive")]

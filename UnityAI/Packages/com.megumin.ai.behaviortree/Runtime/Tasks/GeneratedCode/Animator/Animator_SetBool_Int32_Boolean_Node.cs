@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Animator_SetBool")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("SetBool(Int32, Boolean)")]

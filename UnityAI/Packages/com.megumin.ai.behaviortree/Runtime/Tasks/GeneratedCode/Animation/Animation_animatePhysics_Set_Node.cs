@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animation Icon")]
+    [Icon("Animation Icon")]
     [DisplayName("Set_Animation_animatePhysics")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Set_animatePhysics")]

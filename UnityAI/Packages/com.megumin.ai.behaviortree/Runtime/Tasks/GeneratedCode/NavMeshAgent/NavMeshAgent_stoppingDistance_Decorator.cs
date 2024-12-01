@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_NavMeshAgent Icon")]
+    [Icon("NavMeshAgent Icon")]
     [DisplayName("NavMeshAgent_stoppingDistance")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("stoppingDistance")]

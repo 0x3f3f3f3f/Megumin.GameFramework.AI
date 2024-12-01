@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Get_Animator_isHuman")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("Get_isHuman")]

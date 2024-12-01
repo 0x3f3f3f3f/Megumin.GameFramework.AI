@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Transform Icon")]
+    [Icon("Transform Icon")]
     [DisplayName("Transform_SetAsFirstSibling")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetAsFirstSibling")]

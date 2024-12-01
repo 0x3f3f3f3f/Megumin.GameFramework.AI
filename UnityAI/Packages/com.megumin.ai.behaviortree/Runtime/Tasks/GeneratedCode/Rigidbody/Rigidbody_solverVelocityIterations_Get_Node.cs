@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Get_Rigidbody_solverVelocityIterations")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_solverVelocityIterations")]

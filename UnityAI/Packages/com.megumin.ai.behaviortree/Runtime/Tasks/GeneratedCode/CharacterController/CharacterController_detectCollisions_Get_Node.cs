@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_CharacterController Icon")]
+    [Icon("CharacterController Icon")]
     [DisplayName("Get_CharacterController_detectCollisions")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("Get_detectCollisions")]

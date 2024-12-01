@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Get_Rigidbody_detectCollisions")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("Get_detectCollisions")]

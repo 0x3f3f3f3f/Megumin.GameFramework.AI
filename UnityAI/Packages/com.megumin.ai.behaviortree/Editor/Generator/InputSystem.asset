@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutputFolder: {fileID: 102900000, guid: 35de0703654dd0144955ac937e1eb5ad, type: 3}
   MultiThreading: 1
-  Define:
-    Enabled: 1
-    Value: ENABLE_INPUT_SYSTEM
   Assemblys:
   - Enabled: 0
     Value: Assembly-CSharp
@@ -25,9 +22,18 @@ MonoBehaviour:
     Value: UnityEngine.InputSystem.InputSystem
   - Enabled: 1
     Value: UnityEngine.InputSystem.InputActionAsset
-  IgnoreGeneratedClass: []
-  ObsoleteAPIInFuture: []
-  ReplaceIcon: []
+  ClassNameOptions: []
+  DeclearTypeNameOptions:
+  - Regex: .*
+    IgnoreGenerated: 0
+    CompileMacro: ENABLE_INPUT_SYSTEM
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
   ReplaceCategory:
   - oldValue: UnityEngine/InputSystem
     newValue: UnityEngine
@@ -39,3 +45,4 @@ MonoBehaviour:
   Proterty2Deco: 1
   Method2Node: 1
   Method2Deco: 1
+  OutputNamespace: Megumin.AI.BehaviorTree

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_NavMeshAgent Icon")]
+    [Icon("NavMeshAgent Icon")]
     [DisplayName("Set_NavMeshAgent_acceleration")]
     [Category("UnityEngine/NavMeshAgent")]
     [AddComponentMenu("Set_acceleration")]

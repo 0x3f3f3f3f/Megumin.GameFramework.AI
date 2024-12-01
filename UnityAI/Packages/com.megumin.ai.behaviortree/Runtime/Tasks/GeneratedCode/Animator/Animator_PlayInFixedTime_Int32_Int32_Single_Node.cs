@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Animator_PlayInFixedTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("PlayInFixedTime(Int32, Int32, Single)")]

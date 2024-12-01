@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Light Icon")]
+    [Icon("Light Icon")]
     [DisplayName("Light_spotAngle")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("spotAngle")]
