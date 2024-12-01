@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutputFolder: {fileID: 102900000, guid: 35de0703654dd0144955ac937e1eb5ad, type: 3}
   MultiThreading: 1
-  Define:
-    Enabled: 0
-    Value: Test
   Assemblys:
   - Enabled: 0
     Value: Assembly-CSharp
@@ -87,85 +84,198 @@ MonoBehaviour:
     Value: UnityEngine.Vector4
   - Enabled: 1
     Value: UnityEngine.SceneManagement.SceneManager
-  IgnoreGeneratedClass:
-  - Input_IsJoystickPreconfigured_String
-  - Light_SetLightDirty
-  - Light_shadowAngle
-  - Light_shadowRadius
-  - Quaternion_Item
-  - Vector2_Item
-  - Vector2Int_Item
-  - Vector3_Item
-  - Vector3Int_Item
-  - Vector4_Item
-  - Vector4Int_Item
-  - Input_IsJoystickPreconfigured_String_Node
-  - Input_IsJoystickPreconfigured_String_Decorator
-  - Input_IsJoystickPreconfigured_String_Method_Decorator
-  - Light_SetLightDirty_Node
-  - Light_SetLightDirty_Decorator
-  - Light_shadowAngle_Decorator
-  - Light_shadowRadius_Decorator
-  - Quaternion_Item_Decorator
-  - Vector2_Item_Decorator
-  - Vector2Int_Item_Decorator
-  - Vector3_Item_Decorator
-  - Vector3Int_Item_Decorator
-  - Vector4_Item_Decorator
-  - Vector4Int_Item_Decorator
-  - ParticleSystem_GetParticles_NativeArray_1_Particle
-  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Int32
-  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32
-  - ParticleSystem_SetParticles_NativeArray_1_Particle
-  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32
-  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32
-  - ParticleSystem_GetParticles_NativeArray_1_Particle_Node
-  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Int32_Node
-  - ParticleSystem_GetParticles_NativeArray_1_Particle_Int32_Node
-  - ParticleSystem_SetParticles_NativeArray_1_Particle_Node
-  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Int32_Node
-  - ParticleSystem_SetParticles_NativeArray_1_Particle_Int32_Node
-  ObsoleteAPIInFuture:
-  - Physics2D_alwaysShowColliders
-  - Physics2D_contactArrowScale
-  - Physics2D_showColliderAABB
-  - Physics2D_showColliderContacts
-  - Physics2D_showColliderSleep
-  - Physics2D_velocityThreshold
-  - Physics_autoSimulation
-  - Physics_RebuildBroadphaseRegions_Bounds_Int32
-  - Physics2D_alwaysShowColliders_Decorator
-  - Physics2D_contactArrowScale_Decorator
-  - Physics2D_showColliderAABB_Decorator
-  - Physics2D_showColliderContacts_Decorator
-  - Physics2D_showColliderSleep_Decorator
-  - Physics2D_velocityThreshold_Decorator
-  - Physics_autoSimulation_Decorator
-  - Physics_RebuildBroadphaseRegions_Bounds_Int32_Node
-  - Physics2D_alwaysShowColliders_Get_Node
-  - Physics2D_alwaysShowColliders_Set_Node
-  - Physics2D_contactArrowScale_Get_Node
-  - Physics2D_contactArrowScale_Set_Node
-  - Physics2D_showColliderAABB_Get_Node
-  - Physics2D_showColliderAABB_Set_Node
-  - Physics2D_showColliderContacts_Get_Node
-  - Physics2D_showColliderContacts_Set_Node
-  - Physics2D_showColliderSleep_Get_Node
-  - Physics2D_showColliderSleep_Set_Node
-  - Physics2D_velocityThreshold_Get_Node
-  - Physics2D_velocityThreshold_Set_Node
-  - Physics_autoSimulation_Get_Node
-  - Physics_autoSimulation_Set_Node
-  ReplaceIcon:
-  - Type: UnityEngine.Input
-    IconPath: standaloneinputmodule icon
-    Icon: {fileID: 0}
-  - Type: UnityEngine.Mathf
-    IconPath: d_collabcreate icon
-    Icon: {fileID: 0}
-  - Type: UnityEngine.Time
-    IconPath: d_unityeditor.animationwindow@2x
-    Icon: {fileID: 0}
+  ClassNameOptions:
+  - Regex: .*ReadOnlySpan
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: .*_Span_
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: .*ParticleSystem_(G|S)etParticles_NativeArray_1_Particle
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Input_IsJoystickPreconfigured_String_.*
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: .*Vector\d(Int)?_Item
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Light_SetLightDirty
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Light_shadowAngle
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Light_shadowRadius
+    IgnoreGenerated: 1
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_alwaysShowColliders.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_contactArrowScale.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_showColliderAABB.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_showColliderContacts.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_showColliderSleep.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics2D_velocityThreshold.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics_autoSimulation.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: Physics_RebuildBroadphaseRegions_Bounds_Int32.*
+    IgnoreGenerated: 0
+    CompileMacro: '!UNITY_2023_1_OR_NEWER'
+    ObsoleteGenerated: 1
+    ObsoleteMessage: Obsolete API in a future version of Unity
+    ObsoleteError: 1
+    OverrideIconPath: 
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  DeclearTypeNameOptions:
+  - Regex: UnityEngine.Input
+    IgnoreGenerated: 0
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: standaloneinputmodule icon
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: UnityEngine.Mathf
+    IgnoreGenerated: 0
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: d_collabcreate icon
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
+  - Regex: UnityEngine.Time
+    IgnoreGenerated: 0
+    CompileMacro: 
+    ObsoleteGenerated: 0
+    ObsoleteMessage: 
+    ObsoleteError: 0
+    OverrideIconPath: d_unityeditor.animationwindow@2x
+    OverrideIconTexture2D: {fileID: 0}
+    OverrideCategory: 
+    OverrideDisplayName: 
   ReplaceCategory:
   - oldValue: UnityEngine/AI
     newValue: UnityEngine
