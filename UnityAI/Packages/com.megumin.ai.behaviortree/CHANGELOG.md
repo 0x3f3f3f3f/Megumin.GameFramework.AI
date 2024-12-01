@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - YYYY-MM-NN
 
+
+## [1.3.1] - 2024-12-01
+### Fixed 
+- 修复在Unity6版本编译错误。
+
+
 ## [1.3.0] - 2024-02-10
 ### Added  
 - 节点增加异步执行模式
