@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_CharacterController Icon")]
+    [Icon("CharacterController Icon")]
     [DisplayName("CharacterController_stepOffset")]
     [Category("UnityEngine/CharacterController")]
     [AddComponentMenu("stepOffset")]

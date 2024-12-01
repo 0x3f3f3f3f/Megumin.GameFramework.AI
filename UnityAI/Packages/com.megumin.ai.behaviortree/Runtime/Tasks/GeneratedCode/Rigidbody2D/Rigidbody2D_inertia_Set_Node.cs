@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody2D Icon")]
+    [Icon("Rigidbody2D Icon")]
     [DisplayName("Set_Rigidbody2D_inertia")]
     [Category("UnityEngine/Rigidbody2D")]
     [AddComponentMenu("Set_inertia")]

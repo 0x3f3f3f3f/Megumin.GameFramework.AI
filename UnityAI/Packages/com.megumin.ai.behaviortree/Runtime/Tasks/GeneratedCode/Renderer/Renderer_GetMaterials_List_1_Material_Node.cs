@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_DefaultAsset Icon")]
+    [Icon("DefaultAsset Icon")]
     [DisplayName("Renderer_GetMaterials")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("GetMaterials(List`1)")]

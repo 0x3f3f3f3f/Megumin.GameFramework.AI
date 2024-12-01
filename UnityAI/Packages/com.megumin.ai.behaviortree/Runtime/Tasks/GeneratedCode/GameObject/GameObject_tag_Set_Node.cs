@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_GameObject Icon")]
+    [Icon("GameObject Icon")]
     [DisplayName("Set_GameObject_tag")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("Set_tag")]

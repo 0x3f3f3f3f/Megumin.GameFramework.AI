@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_ParticleSystem Icon")]
+    [Icon("ParticleSystem Icon")]
     [DisplayName("Get_ParticleSystem_proceduralSimulationSupported")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("Get_proceduralSimulationSupported")]

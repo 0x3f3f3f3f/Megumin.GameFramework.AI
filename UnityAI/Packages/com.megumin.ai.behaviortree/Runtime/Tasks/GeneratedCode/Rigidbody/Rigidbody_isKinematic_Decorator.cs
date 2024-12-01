@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Rigidbody_isKinematic")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("isKinematic")]

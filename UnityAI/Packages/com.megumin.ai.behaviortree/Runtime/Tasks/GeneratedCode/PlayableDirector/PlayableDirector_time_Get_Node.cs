@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_PlayableDirector Icon")]
+    [Icon("PlayableDirector Icon")]
     [DisplayName("Get_PlayableDirector_time")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Get_time")]

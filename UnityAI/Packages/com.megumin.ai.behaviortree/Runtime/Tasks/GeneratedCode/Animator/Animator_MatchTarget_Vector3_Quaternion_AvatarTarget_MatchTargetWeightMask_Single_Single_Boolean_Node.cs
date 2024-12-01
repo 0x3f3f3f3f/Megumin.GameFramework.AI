@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Animator_MatchTarget")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("MatchTarget(Vector3, Quaternion, AvatarTarget, MatchTargetWeightMask, Single, Single, Boolean)")]

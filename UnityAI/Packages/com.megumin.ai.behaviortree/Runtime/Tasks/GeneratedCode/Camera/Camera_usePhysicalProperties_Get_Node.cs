@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Get_Camera_usePhysicalProperties")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Get_usePhysicalProperties")]

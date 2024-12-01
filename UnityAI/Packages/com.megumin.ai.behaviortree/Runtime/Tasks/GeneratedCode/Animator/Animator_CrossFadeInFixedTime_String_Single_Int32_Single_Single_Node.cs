@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Animator_CrossFadeInFixedTime")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("CrossFadeInFixedTime(String, Single, Int32, Single, Single)")]

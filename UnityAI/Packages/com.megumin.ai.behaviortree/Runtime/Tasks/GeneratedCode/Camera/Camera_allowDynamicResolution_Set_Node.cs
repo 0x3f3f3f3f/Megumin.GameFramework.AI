@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Set_Camera_allowDynamicResolution")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("Set_allowDynamicResolution")]

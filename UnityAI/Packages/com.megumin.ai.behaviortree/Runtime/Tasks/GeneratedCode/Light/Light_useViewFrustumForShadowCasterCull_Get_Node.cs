@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Light Icon")]
+    [Icon("Light Icon")]
     [DisplayName("Get_Light_useViewFrustumForShadowCasterCull")]
     [Category("UnityEngine/Light")]
     [AddComponentMenu("Get_useViewFrustumForShadowCasterCull")]

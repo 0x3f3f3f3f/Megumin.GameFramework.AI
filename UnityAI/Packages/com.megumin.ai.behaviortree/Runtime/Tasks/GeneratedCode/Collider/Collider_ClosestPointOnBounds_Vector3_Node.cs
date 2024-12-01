@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_DefaultAsset Icon")]
+    [Icon("DefaultAsset Icon")]
     [DisplayName("Collider_ClosestPointOnBounds")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("ClosestPointOnBounds(Vector3)")]

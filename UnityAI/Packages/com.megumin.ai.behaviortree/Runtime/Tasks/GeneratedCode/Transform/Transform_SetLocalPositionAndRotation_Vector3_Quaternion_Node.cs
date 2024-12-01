@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Transform Icon")]
+    [Icon("Transform Icon")]
     [DisplayName("Transform_SetLocalPositionAndRotation")]
     [Category("UnityEngine/Transform")]
     [AddComponentMenu("SetLocalPositionAndRotation(Vector3, Quaternion)")]

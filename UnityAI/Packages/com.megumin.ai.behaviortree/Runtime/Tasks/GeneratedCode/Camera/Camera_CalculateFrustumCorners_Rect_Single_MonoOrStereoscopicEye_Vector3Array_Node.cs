@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Camera_CalculateFrustumCorners")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("CalculateFrustumCorners(Rect, Single, MonoOrStereoscopicEye, Vector3[])")]

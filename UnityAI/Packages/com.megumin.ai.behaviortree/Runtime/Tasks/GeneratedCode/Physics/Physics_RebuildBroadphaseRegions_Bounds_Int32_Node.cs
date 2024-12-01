@@ -5,6 +5,8 @@
 ///CodeGenericSourceFilePath: Packages/com.megumin.ai.behaviortree/Editor/Generator/NodeGeneraotr.asset
 ///********************************************************************************************************************************
 
+#if !UNITY_2023_1_OR_NEWER
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +33,8 @@ namespace Megumin.AI.BehaviorTree
         }
     }
 }
+
+#endif
 
 
 

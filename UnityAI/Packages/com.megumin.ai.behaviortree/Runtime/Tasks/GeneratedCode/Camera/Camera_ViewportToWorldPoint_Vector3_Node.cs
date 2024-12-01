@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Camera_ViewportToWorldPoint")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ViewportToWorldPoint(Vector3)")]

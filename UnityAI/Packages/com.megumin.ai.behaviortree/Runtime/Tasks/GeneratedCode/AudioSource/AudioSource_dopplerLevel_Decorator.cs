@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_AudioSource Icon")]
+    [Icon("AudioSource Icon")]
     [DisplayName("AudioSource_dopplerLevel")]
     [Category("UnityEngine/AudioSource")]
     [AddComponentMenu("dopplerLevel")]

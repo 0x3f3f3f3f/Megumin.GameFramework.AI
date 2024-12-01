@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_GameObject Icon")]
+    [Icon("GameObject Icon")]
     [DisplayName("GameObject_SendMessage")]
     [Category("UnityEngine/GameObject")]
     [AddComponentMenu("SendMessage(String)")]

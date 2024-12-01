@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Rigidbody_GetPointVelocity")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("GetPointVelocity(Vector3)")]

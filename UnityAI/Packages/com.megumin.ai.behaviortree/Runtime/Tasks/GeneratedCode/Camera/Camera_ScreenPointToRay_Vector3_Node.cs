@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Camera Icon")]
+    [Icon("Camera Icon")]
     [DisplayName("Camera_ScreenPointToRay")]
     [Category("UnityEngine/Camera")]
     [AddComponentMenu("ScreenPointToRay(Vector3)")]

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_PlayableDirector Icon")]
+    [Icon("PlayableDirector Icon")]
     [DisplayName("Set_PlayableDirector_playOnAwake")]
     [Category("UnityEngine/PlayableDirector")]
     [AddComponentMenu("Set_playOnAwake")]

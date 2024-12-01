@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animation Icon")]
+    [Icon("Animation Icon")]
     [DisplayName("Animation_Stop")]
     [Category("UnityEngine/Animation")]
     [AddComponentMenu("Stop(String)")]

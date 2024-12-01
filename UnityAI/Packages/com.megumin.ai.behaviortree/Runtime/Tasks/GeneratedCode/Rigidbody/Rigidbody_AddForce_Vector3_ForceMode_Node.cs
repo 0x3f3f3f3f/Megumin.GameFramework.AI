@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Rigidbody Icon")]
+    [Icon("Rigidbody Icon")]
     [DisplayName("Rigidbody_AddForce")]
     [Category("UnityEngine/Rigidbody")]
     [AddComponentMenu("AddForce(Vector3, ForceMode)")]

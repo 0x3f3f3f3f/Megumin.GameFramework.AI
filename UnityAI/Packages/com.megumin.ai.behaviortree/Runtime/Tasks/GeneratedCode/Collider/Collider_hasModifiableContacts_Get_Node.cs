@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_DefaultAsset Icon")]
+    [Icon("DefaultAsset Icon")]
     [DisplayName("Get_Collider_hasModifiableContacts")]
     [Category("UnityEngine/Collider")]
     [AddComponentMenu("Get_hasModifiableContacts")]

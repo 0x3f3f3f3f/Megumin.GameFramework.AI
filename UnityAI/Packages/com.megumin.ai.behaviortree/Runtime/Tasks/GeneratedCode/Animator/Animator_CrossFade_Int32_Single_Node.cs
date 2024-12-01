@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_Animator Icon")]
+    [Icon("Animator Icon")]
     [DisplayName("Animator_CrossFade")]
     [Category("UnityEngine/Animator")]
     [AddComponentMenu("CrossFade(Int32, Single)")]

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_DefaultAsset Icon")]
+    [Icon("DefaultAsset Icon")]
     [DisplayName("Get_Renderer_allowOcclusionWhenDynamic")]
     [Category("UnityEngine/Renderer")]
     [AddComponentMenu("Get_allowOcclusionWhenDynamic")]

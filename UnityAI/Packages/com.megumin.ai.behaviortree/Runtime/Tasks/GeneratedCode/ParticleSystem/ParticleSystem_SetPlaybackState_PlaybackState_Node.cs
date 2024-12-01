@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_ParticleSystem Icon")]
+    [Icon("ParticleSystem Icon")]
     [DisplayName("ParticleSystem_SetPlaybackState")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("SetPlaybackState(PlaybackState)")]

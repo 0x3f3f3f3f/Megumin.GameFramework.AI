@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Megumin.AI.BehaviorTree
 {
-    [Icon("d_ParticleSystem Icon")]
+    [Icon("ParticleSystem Icon")]
     [DisplayName("ParticleSystem_GetCustomParticleData")]
     [Category("UnityEngine/ParticleSystem")]
     [AddComponentMenu("GetCustomParticleData(List`1, ParticleSystemCustomData)")]
